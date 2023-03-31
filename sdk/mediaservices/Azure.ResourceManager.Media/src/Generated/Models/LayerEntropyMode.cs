@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static LayerEntropyMode Cabac { get; } = new LayerEntropyMode(CabacValue);
         /// <summary> Context Adaptive Variable Length Coder (CAVLC) entropy encoding. </summary>
         public static LayerEntropyMode Cavlc { get; } = new LayerEntropyMode(CavlcValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LayerEntropyMode"/> values are the same. </summary>
         public static bool operator ==(LayerEntropyMode left, LayerEntropyMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LayerEntropyMode"/> values are not the same. </summary>

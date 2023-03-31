@@ -29,6 +29,9 @@ namespace Azure.Maps.Search.Models
         public static MapsQueryType Nearby { get; } = new MapsQueryType(NearbyValue);
         /// <summary> Search was performed globally, without biasing to a certain latitude and longitude, and no defined radius. </summary>
         public static MapsQueryType Global { get; } = new MapsQueryType(GlobalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MapsQueryType"/> values are the same. </summary>
         public static bool operator ==(MapsQueryType left, MapsQueryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapsQueryType"/> values are not the same. </summary>

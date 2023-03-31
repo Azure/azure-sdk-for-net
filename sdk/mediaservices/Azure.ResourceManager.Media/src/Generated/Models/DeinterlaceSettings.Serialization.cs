@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Parity))
             {
                 writer.WritePropertyName("parity"u8);
-                writer.WriteStringValue(Parity.Value.ToString());
+                writer.WriteStringValue(Parity.Value.ToSerialString());
             }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                writer.WriteStringValue(Mode.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

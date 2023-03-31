@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static SecretsType Sas { get; } = new SecretsType(SasValue);
         /// <summary> ServicePrincipal. </summary>
         public static SecretsType ServicePrincipal { get; } = new SecretsType(ServicePrincipalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecretsType"/> values are the same. </summary>
         public static bool operator ==(SecretsType left, SecretsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecretsType"/> values are not the same. </summary>

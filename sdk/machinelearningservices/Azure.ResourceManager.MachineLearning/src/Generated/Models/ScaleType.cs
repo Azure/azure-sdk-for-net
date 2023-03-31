@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ScaleType Default { get; } = new ScaleType(DefaultValue);
         /// <summary> TargetUtilization. </summary>
         public static ScaleType TargetUtilization { get; } = new ScaleType(TargetUtilizationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScaleType"/> values are the same. </summary>
         public static bool operator ==(ScaleType left, ScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScaleType"/> values are not the same. </summary>

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in AllowedTrainingAlgorithms)
                     {
-                        writer.WriteStringValue(item.ToString());
+                        writer.WriteStringValue(item.ToSerialString());
                     }
                     writer.WriteEndArray();
                 }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in BlockedTrainingAlgorithms)
                     {
-                        writer.WriteStringValue(item.ToString());
+                        writer.WriteStringValue(item.ToSerialString());
                     }
                     writer.WriteEndArray();
                 }

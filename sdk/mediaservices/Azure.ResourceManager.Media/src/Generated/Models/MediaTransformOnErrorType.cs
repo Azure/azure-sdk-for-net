@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaTransformOnErrorType StopProcessingJob { get; } = new MediaTransformOnErrorType(StopProcessingJobValue);
         /// <summary> Tells the service that if this TransformOutput fails, then allow any other TransformOutput to continue. </summary>
         public static MediaTransformOnErrorType ContinueJob { get; } = new MediaTransformOnErrorType(ContinueJobValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaTransformOnErrorType"/> values are the same. </summary>
         public static bool operator ==(MediaTransformOnErrorType left, MediaTransformOnErrorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaTransformOnErrorType"/> values are not the same. </summary>

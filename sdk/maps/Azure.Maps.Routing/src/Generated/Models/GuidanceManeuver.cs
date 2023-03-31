@@ -122,6 +122,9 @@ namespace Azure.Maps.Routing.Models
         public static GuidanceManeuver WaypointRight { get; } = new GuidanceManeuver(WaypointRightValue);
         /// <summary> You have reached the waypoint. </summary>
         public static GuidanceManeuver WaypointReached { get; } = new GuidanceManeuver(WaypointReachedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GuidanceManeuver"/> values are the same. </summary>
         public static bool operator ==(GuidanceManeuver left, GuidanceManeuver right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GuidanceManeuver"/> values are not the same. </summary>

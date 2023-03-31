@@ -38,6 +38,9 @@ namespace Azure.Maps.Search
         public static SearchIndex Streets { get; } = new SearchIndex(StreetsValue);
         /// <summary> Cross Streets (Intersections). </summary>
         public static SearchIndex CrossStreets { get; } = new SearchIndex(CrossStreetsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SearchIndex"/> values are the same. </summary>
         public static bool operator ==(SearchIndex left, SearchIndex right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchIndex"/> values are not the same. </summary>

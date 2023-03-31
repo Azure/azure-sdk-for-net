@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MetricCriteriaOperator LessThan { get; } = new MetricCriteriaOperator(LessThanValue);
         /// <summary> LessThanOrEqual. </summary>
         public static MetricCriteriaOperator LessThanOrEqual { get; } = new MetricCriteriaOperator(LessThanOrEqualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MetricCriteriaOperator"/> values are the same. </summary>
         public static bool operator ==(MetricCriteriaOperator left, MetricCriteriaOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricCriteriaOperator"/> values are not the same. </summary>

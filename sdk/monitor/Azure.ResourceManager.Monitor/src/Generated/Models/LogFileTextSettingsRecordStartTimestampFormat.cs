@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static LogFileTextSettingsRecordStartTimestampFormat DdMmmYyyyHhMmSsZzz { get; } = new LogFileTextSettingsRecordStartTimestampFormat(DdMmmYyyyHhMmSsZzzValue);
         /// <summary> yyyy-MM-ddTHH:mm:ssK. </summary>
         public static LogFileTextSettingsRecordStartTimestampFormat YyyyMmDdTHHMmSsK { get; } = new LogFileTextSettingsRecordStartTimestampFormat(YyyyMmDdTHHMmSsKValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogFileTextSettingsRecordStartTimestampFormat"/> values are the same. </summary>
         public static bool operator ==(LogFileTextSettingsRecordStartTimestampFormat left, LogFileTextSettingsRecordStartTimestampFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogFileTextSettingsRecordStartTimestampFormat"/> values are not the same. </summary>

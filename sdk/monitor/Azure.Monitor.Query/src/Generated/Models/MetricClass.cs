@@ -38,6 +38,9 @@ namespace Azure.Monitor.Query.Models
         public static MetricClass Latency { get; } = new MetricClass(LatencyValue);
         /// <summary> Saturation. </summary>
         public static MetricClass Saturation { get; } = new MetricClass(SaturationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MetricClass"/> values are the same. </summary>
         public static bool operator ==(MetricClass left, MetricClass right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricClass"/> values are not the same. </summary>

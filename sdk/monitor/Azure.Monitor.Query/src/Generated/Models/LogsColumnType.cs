@@ -53,6 +53,9 @@ namespace Azure.Monitor.Query.Models
         public static LogsColumnType Decimal { get; } = new LogsColumnType(DecimalValue);
         /// <summary> timespan. </summary>
         public static LogsColumnType Timespan { get; } = new LogsColumnType(TimespanValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogsColumnType"/> values are the same. </summary>
         public static bool operator ==(LogsColumnType left, LogsColumnType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogsColumnType"/> values are not the same. </summary>

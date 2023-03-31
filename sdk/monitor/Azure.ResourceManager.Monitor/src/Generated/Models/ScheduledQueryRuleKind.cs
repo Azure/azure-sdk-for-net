@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static ScheduledQueryRuleKind LogAlert { get; } = new ScheduledQueryRuleKind(LogAlertValue);
         /// <summary> LogToMetric. </summary>
         public static ScheduledQueryRuleKind LogToMetric { get; } = new ScheduledQueryRuleKind(LogToMetricValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScheduledQueryRuleKind"/> values are the same. </summary>
         public static bool operator ==(ScheduledQueryRuleKind left, ScheduledQueryRuleKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduledQueryRuleKind"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static IssueOrigin Inbound { get; } = new IssueOrigin(InboundValue);
         /// <summary> Outbound. </summary>
         public static IssueOrigin Outbound { get; } = new IssueOrigin(OutboundValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IssueOrigin"/> values are the same. </summary>
         public static bool operator ==(IssueOrigin left, IssueOrigin right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IssueOrigin"/> values are not the same. </summary>

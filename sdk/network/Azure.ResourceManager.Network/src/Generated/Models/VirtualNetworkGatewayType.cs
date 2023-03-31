@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualNetworkGatewayType ExpressRoute { get; } = new VirtualNetworkGatewayType(ExpressRouteValue);
         /// <summary> LocalGateway. </summary>
         public static VirtualNetworkGatewayType LocalGateway { get; } = new VirtualNetworkGatewayType(LocalGatewayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayType"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkGatewayType left, VirtualNetworkGatewayType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayType"/> values are not the same. </summary>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("operator"u8);
-            writer.WriteStringValue(Operator.ToString());
+            writer.WriteStringValue(Operator.ToSerialString());
             writer.WritePropertyName("alertSensitivity"u8);
-            writer.WriteStringValue(AlertSensitivity.ToString());
+            writer.WriteStringValue(AlertSensitivity.ToSerialString());
             writer.WritePropertyName("failingPeriods"u8);
             writer.WriteObjectValue(FailingPeriods);
             if (Optional.IsDefined(IgnoreDataBefore))
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(IgnoreDataBefore.Value, "O");
             }
             writer.WritePropertyName("criterionType"u8);
-            writer.WriteStringValue(CriterionType.ToString());
+            writer.WriteStringValue(CriterionType.ToSerialString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("metricName"u8);
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(MetricNamespace);
             }
             writer.WritePropertyName("timeAggregation"u8);
-            writer.WriteStringValue(TimeAggregation.ToString());
+            writer.WriteStringValue(TimeAggregation.ToSerialString());
             if (Optional.IsCollectionDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);

@@ -29,6 +29,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public static DataPointType Measurement { get; } = new DataPointType(MeasurementValue);
         /// <summary> Aggregation. </summary>
         public static DataPointType Aggregation { get; } = new DataPointType(AggregationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataPointType"/> values are the same. </summary>
         public static bool operator ==(DataPointType left, DataPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataPointType"/> values are not the same. </summary>

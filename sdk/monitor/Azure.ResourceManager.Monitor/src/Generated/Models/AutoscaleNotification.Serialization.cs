@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("operation"u8);
-            writer.WriteStringValue(Operation.ToString());
+            writer.WriteStringValue(Operation.ToSerialString());
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("samplingAlgorithmType"u8);
-            writer.WriteStringValue(SamplingAlgorithmType.ToString());
+            writer.WriteStringValue(SamplingAlgorithmType.ToSerialString());
             writer.WriteEndObject();
         }
 

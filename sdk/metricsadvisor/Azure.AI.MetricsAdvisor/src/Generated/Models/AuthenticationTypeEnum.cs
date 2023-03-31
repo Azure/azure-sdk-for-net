@@ -41,6 +41,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static AuthenticationTypeEnum ServicePrincipal { get; } = new AuthenticationTypeEnum(ServicePrincipalValue);
         /// <summary> ServicePrincipalInKV. </summary>
         public static AuthenticationTypeEnum ServicePrincipalInKV { get; } = new AuthenticationTypeEnum(ServicePrincipalInKVValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AuthenticationTypeEnum"/> values are the same. </summary>
         public static bool operator ==(AuthenticationTypeEnum left, AuthenticationTypeEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthenticationTypeEnum"/> values are not the same. </summary>

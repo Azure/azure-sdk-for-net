@@ -28,6 +28,9 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private const string ActiveValue = "Active";
         private const string ResolvedValue = "Resolved";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AnomalyIncidentStatus"/> values are the same. </summary>
         public static bool operator ==(AnomalyIncidentStatus left, AnomalyIncidentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnomalyIncidentStatus"/> values are not the same. </summary>

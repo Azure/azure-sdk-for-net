@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
             if (Optional.IsDefined(ClusterType))
             {
                 writer.WritePropertyName("clusterType"u8);
-                writer.WriteStringValue(ClusterType.Value.ToString());
+                writer.WriteStringValue(ClusterType.Value.ToSerialString());
             }
             if (Optional.IsDefined(StorageAccount))
             {

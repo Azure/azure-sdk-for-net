@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static PlatformType AKSHCI { get; } = new PlatformType(AKSHCIValue);
         /// <summary> If this option is chosen, you must set one of &quot;azureStackHciCluster&quot;, &quot;connectedCluster&quot; or &quot;customLocation&quot;. If multiple are set, they must be consistent with each other. </summary>
         public static PlatformType ThreePAzureStackHCI { get; } = new PlatformType(ThreePAzureStackHCIValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PlatformType"/> values are the same. </summary>
         public static bool operator ==(PlatformType left, PlatformType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlatformType"/> values are not the same. </summary>

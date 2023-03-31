@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static WebApplicationFirewallAction Block { get; } = new WebApplicationFirewallAction(BlockValue);
         /// <summary> Log. </summary>
         public static WebApplicationFirewallAction Log { get; } = new WebApplicationFirewallAction(LogValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallAction"/> values are the same. </summary>
         public static bool operator ==(WebApplicationFirewallAction left, WebApplicationFirewallAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallAction"/> values are not the same. </summary>

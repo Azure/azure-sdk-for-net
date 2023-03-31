@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> SAP-HANA. </summary>
         public static NetAppApplicationType SapHana { get; } = new NetAppApplicationType(SapHanaValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppApplicationType"/> values are the same. </summary>
         public static bool operator ==(NetAppApplicationType left, NetAppApplicationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppApplicationType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EnergyServices.Models
         public static EnergyServiceNameUnavailableReason Invalid { get; } = new EnergyServiceNameUnavailableReason(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static EnergyServiceNameUnavailableReason AlreadyExists { get; } = new EnergyServiceNameUnavailableReason(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EnergyServiceNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(EnergyServiceNameUnavailableReason left, EnergyServiceNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnergyServiceNameUnavailableReason"/> values are not the same. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("mode"u8);
-            writer.WriteStringValue(Mode.ToString());
+            writer.WriteStringValue(Mode.ToSerialString());
             writer.WriteEndObject();
         }
 

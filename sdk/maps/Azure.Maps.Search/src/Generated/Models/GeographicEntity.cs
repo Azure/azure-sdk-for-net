@@ -45,6 +45,9 @@ namespace Azure.Maps.Search
         public static GeographicEntity MunicipalitySubdivision { get; } = new GeographicEntity(MunicipalitySubdivisionValue);
         /// <summary> PostalCodeArea. </summary>
         public static GeographicEntity PostalCodeArea { get; } = new GeographicEntity(PostalCodeAreaValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GeographicEntity"/> values are the same. </summary>
         public static bool operator ==(GeographicEntity left, GeographicEntity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GeographicEntity"/> values are not the same. </summary>

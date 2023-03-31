@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("computeType"u8);
-            writer.WriteStringValue(ComputeType.ToString());
+            writer.WriteStringValue(ComputeType.ToSerialString());
             if (Optional.IsDefined(ComputeLocation))
             {
                 writer.WritePropertyName("computeLocation"u8);

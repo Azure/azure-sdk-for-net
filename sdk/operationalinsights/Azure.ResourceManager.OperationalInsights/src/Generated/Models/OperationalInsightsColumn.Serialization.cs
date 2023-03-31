@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ColumnType.Value.ToString());
+                writer.WriteStringValue(ColumnType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DataTypeHint))
             {
                 writer.WritePropertyName("dataTypeHint"u8);
-                writer.WriteStringValue(DataTypeHint.Value.ToString());
+                writer.WriteStringValue(DataTypeHint.Value.ToSerialString());
             }
             if (Optional.IsDefined(DisplayName))
             {

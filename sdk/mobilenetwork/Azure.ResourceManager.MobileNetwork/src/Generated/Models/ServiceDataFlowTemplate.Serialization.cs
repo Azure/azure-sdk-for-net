@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WritePropertyName("templateName"u8);
             writer.WriteStringValue(TemplateName);
             writer.WritePropertyName("direction"u8);
-            writer.WriteStringValue(Direction.ToString());
+            writer.WriteStringValue(Direction.ToSerialString());
             writer.WritePropertyName("protocol"u8);
             writer.WriteStartArray();
             foreach (var item in Protocol)

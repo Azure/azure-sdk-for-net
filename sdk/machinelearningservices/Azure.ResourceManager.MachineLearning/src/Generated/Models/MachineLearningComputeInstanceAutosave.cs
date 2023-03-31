@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningComputeInstanceAutosave Local { get; } = new MachineLearningComputeInstanceAutosave(LocalValue);
         /// <summary> Remote. </summary>
         public static MachineLearningComputeInstanceAutosave Remote { get; } = new MachineLearningComputeInstanceAutosave(RemoteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningComputeInstanceAutosave"/> values are the same. </summary>
         public static bool operator ==(MachineLearningComputeInstanceAutosave left, MachineLearningComputeInstanceAutosave right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningComputeInstanceAutosave"/> values are not the same. </summary>

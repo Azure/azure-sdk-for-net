@@ -25,6 +25,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string WholeSeriesValue = "All";
         private const string SeriesGroupValue = "Dimension";
         private const string TopNValue = "TopN";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MetricAnomalyAlertScopeType"/> values are the same. </summary>
         public static bool operator ==(MetricAnomalyAlertScopeType left, MetricAnomalyAlertScopeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricAnomalyAlertScopeType"/> values are not the same. </summary>

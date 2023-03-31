@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static ObsoleteVersion Obsolete { get; } = new ObsoleteVersion(ObsoleteValue);
         /// <summary> This version is not obsolete for use in new packet core control plane deployments. </summary>
         public static ObsoleteVersion NotObsolete { get; } = new ObsoleteVersion(NotObsoleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ObsoleteVersion"/> values are the same. </summary>
         public static bool operator ==(ObsoleteVersion left, ObsoleteVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ObsoleteVersion"/> values are not the same. </summary>

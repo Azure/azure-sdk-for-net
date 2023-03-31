@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Media.Models
         public static PlayReadySecurityLevel SL2000 { get; } = new PlayReadySecurityLevel(SL2000Value);
         /// <summary> For hardened devices only. Hardware protection. </summary>
         public static PlayReadySecurityLevel SL3000 { get; } = new PlayReadySecurityLevel(SL3000Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PlayReadySecurityLevel"/> values are the same. </summary>
         public static bool operator ==(PlayReadySecurityLevel left, PlayReadySecurityLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlayReadySecurityLevel"/> values are not the same. </summary>

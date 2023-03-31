@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static JobOutputType MlflowModel { get; } = new JobOutputType(MlflowModelValue);
         /// <summary> triton_model. </summary>
         public static JobOutputType TritonModel { get; } = new JobOutputType(TritonModelValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobOutputType"/> values are the same. </summary>
         public static bool operator ==(JobOutputType left, JobOutputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobOutputType"/> values are not the same. </summary>

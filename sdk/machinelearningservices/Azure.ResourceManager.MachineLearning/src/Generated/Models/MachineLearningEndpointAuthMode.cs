@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningEndpointAuthMode Key { get; } = new MachineLearningEndpointAuthMode(KeyValue);
         /// <summary> AADToken. </summary>
         public static MachineLearningEndpointAuthMode AadToken { get; } = new MachineLearningEndpointAuthMode(AadTokenValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningEndpointAuthMode"/> values are the same. </summary>
         public static bool operator ==(MachineLearningEndpointAuthMode left, MachineLearningEndpointAuthMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningEndpointAuthMode"/> values are not the same. </summary>

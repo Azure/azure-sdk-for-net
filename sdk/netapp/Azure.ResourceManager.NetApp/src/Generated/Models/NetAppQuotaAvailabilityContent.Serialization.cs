@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(AvailabilityResourceType.ToString());
+            writer.WriteStringValue(AvailabilityResourceType.ToSerialString());
             writer.WritePropertyName("resourceGroup"u8);
             writer.WriteStringValue(ResourceGroup);
             writer.WriteEndObject();

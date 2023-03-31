@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Network.Models
                 JsonSerializer.Serialize(writer, LocalNetworkGateway2);
             }
             writer.WritePropertyName("connectionType"u8);
-            writer.WriteStringValue(ConnectionType.ToString());
+            writer.WriteStringValue(ConnectionType.ToSerialString());
             if (Optional.IsDefined(ConnectionProtocol))
             {
                 writer.WritePropertyName("connectionProtocol"u8);
-                writer.WriteStringValue(ConnectionProtocol.Value.ToString());
+                writer.WriteStringValue(ConnectionProtocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(RoutingWeight))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ConnectionMode))
             {
                 writer.WritePropertyName("connectionMode"u8);
-                writer.WriteStringValue(ConnectionMode.Value.ToString());
+                writer.WriteStringValue(ConnectionMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(SharedKey))
             {

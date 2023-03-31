@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Orbital.Models
         public static OrbitalContactProtocol Tcp { get; } = new OrbitalContactProtocol(TcpValue);
         /// <summary> UDP. </summary>
         public static OrbitalContactProtocol Udp { get; } = new OrbitalContactProtocol(UdpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OrbitalContactProtocol"/> values are the same. </summary>
         public static bool operator ==(OrbitalContactProtocol left, OrbitalContactProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrbitalContactProtocol"/> values are not the same. </summary>

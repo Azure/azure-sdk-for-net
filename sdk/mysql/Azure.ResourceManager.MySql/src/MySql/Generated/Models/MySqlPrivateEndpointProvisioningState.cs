@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.MySql.Models
         public static MySqlPrivateEndpointProvisioningState Failed { get; } = new MySqlPrivateEndpointProvisioningState(FailedValue);
         /// <summary> Rejecting. </summary>
         public static MySqlPrivateEndpointProvisioningState Rejecting { get; } = new MySqlPrivateEndpointProvisioningState(RejectingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlPrivateEndpointProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MySqlPrivateEndpointProvisioningState left, MySqlPrivateEndpointProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlPrivateEndpointProvisioningState"/> values are not the same. </summary>

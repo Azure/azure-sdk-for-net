@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningComputePowerAction Start { get; } = new MachineLearningComputePowerAction(StartValue);
         /// <summary> Stop. </summary>
         public static MachineLearningComputePowerAction Stop { get; } = new MachineLearningComputePowerAction(StopValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningComputePowerAction"/> values are the same. </summary>
         public static bool operator ==(MachineLearningComputePowerAction left, MachineLearningComputePowerAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningComputePowerAction"/> values are not the same. </summary>

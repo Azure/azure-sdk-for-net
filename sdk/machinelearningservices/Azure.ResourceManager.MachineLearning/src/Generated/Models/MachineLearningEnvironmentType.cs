@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningEnvironmentType Curated { get; } = new MachineLearningEnvironmentType(CuratedValue);
         /// <summary> UserCreated. </summary>
         public static MachineLearningEnvironmentType UserCreated { get; } = new MachineLearningEnvironmentType(UserCreatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningEnvironmentType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningEnvironmentType left, MachineLearningEnvironmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningEnvironmentType"/> values are not the same. </summary>

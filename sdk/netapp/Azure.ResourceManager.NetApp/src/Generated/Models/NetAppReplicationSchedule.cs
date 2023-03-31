@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppReplicationSchedule Hourly { get; } = new NetAppReplicationSchedule(HourlyValue);
         /// <summary> daily. </summary>
         public static NetAppReplicationSchedule Daily { get; } = new NetAppReplicationSchedule(DailyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppReplicationSchedule"/> values are the same. </summary>
         public static bool operator ==(NetAppReplicationSchedule left, NetAppReplicationSchedule right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppReplicationSchedule"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppMirrorState Mirrored { get; } = new NetAppMirrorState(MirroredValue);
         /// <summary> Broken. </summary>
         public static NetAppMirrorState Broken { get; } = new NetAppMirrorState(BrokenValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppMirrorState"/> values are the same. </summary>
         public static bool operator ==(NetAppMirrorState left, NetAppMirrorState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppMirrorState"/> values are not the same. </summary>

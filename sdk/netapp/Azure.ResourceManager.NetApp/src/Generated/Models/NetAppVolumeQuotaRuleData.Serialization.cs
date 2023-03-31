@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(QuotaType))
             {
                 writer.WritePropertyName("quotaType"u8);
-                writer.WriteStringValue(QuotaType.Value.ToString());
+                writer.WriteStringValue(QuotaType.Value.ToSerialString());
             }
             if (Optional.IsDefined(QuotaTarget))
             {

@@ -62,6 +62,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorMetricUnit NanoCores { get; } = new MonitorMetricUnit(NanoCoresValue);
         /// <summary> BitsPerSecond. </summary>
         public static MonitorMetricUnit BitsPerSecond { get; } = new MonitorMetricUnit(BitsPerSecondValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MonitorMetricUnit"/> values are the same. </summary>
         public static bool operator ==(MonitorMetricUnit left, MonitorMetricUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorMetricUnit"/> values are not the same. </summary>

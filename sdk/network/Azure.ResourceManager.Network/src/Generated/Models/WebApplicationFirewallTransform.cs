@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         public static WebApplicationFirewallTransform RemoveNulls { get; } = new WebApplicationFirewallTransform(RemoveNullsValue);
         /// <summary> HtmlEntityDecode. </summary>
         public static WebApplicationFirewallTransform HtmlEntityDecode { get; } = new WebApplicationFirewallTransform(HtmlEntityDecodeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallTransform"/> values are the same. </summary>
         public static bool operator ==(WebApplicationFirewallTransform left, WebApplicationFirewallTransform right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallTransform"/> values are not the same. </summary>

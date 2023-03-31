@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningShortSeriesHandlingConfiguration Pad { get; } = new MachineLearningShortSeriesHandlingConfiguration(PadValue);
         /// <summary> All the short series will be dropped. </summary>
         public static MachineLearningShortSeriesHandlingConfiguration Drop { get; } = new MachineLearningShortSeriesHandlingConfiguration(DropValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningShortSeriesHandlingConfiguration"/> values are the same. </summary>
         public static bool operator ==(MachineLearningShortSeriesHandlingConfiguration left, MachineLearningShortSeriesHandlingConfiguration right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningShortSeriesHandlingConfiguration"/> values are not the same. </summary>

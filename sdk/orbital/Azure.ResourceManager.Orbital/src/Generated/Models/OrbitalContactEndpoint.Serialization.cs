@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WritePropertyName("port"u8);
             writer.WriteStringValue(Port);
             writer.WritePropertyName("protocol"u8);
-            writer.WriteStringValue(Protocol.ToString());
+            writer.WriteStringValue(Protocol.ToSerialString());
             writer.WriteEndObject();
         }
 

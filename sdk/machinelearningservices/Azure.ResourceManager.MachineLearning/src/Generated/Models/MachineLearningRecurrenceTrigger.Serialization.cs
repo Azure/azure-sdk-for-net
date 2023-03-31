@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("frequency"u8);
-            writer.WriteStringValue(Frequency.ToString());
+            writer.WriteStringValue(Frequency.ToSerialString());
             writer.WritePropertyName("interval"u8);
             writer.WriteNumberValue(Interval);
             if (Optional.IsDefined(Schedule))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(TimeZone);
             }
             writer.WritePropertyName("triggerType"u8);
-            writer.WriteStringValue(TriggerType.ToString());
+            writer.WriteStringValue(TriggerType.ToSerialString());
             writer.WriteEndObject();
         }
 

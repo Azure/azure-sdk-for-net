@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsTableProvisioningState InProgress { get; } = new OperationalInsightsTableProvisioningState(InProgressValue);
         /// <summary> Table state is stable and without changes, table is unlocked and open for new updates. </summary>
         public static OperationalInsightsTableProvisioningState Succeeded { get; } = new OperationalInsightsTableProvisioningState(SucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsTableProvisioningState"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsTableProvisioningState left, OperationalInsightsTableProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsTableProvisioningState"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningEncryptionStatus Enabled { get; } = new MachineLearningEncryptionStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static MachineLearningEncryptionStatus Disabled { get; } = new MachineLearningEncryptionStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningEncryptionStatus"/> values are the same. </summary>
         public static bool operator ==(MachineLearningEncryptionStatus left, MachineLearningEncryptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningEncryptionStatus"/> values are not the same. </summary>

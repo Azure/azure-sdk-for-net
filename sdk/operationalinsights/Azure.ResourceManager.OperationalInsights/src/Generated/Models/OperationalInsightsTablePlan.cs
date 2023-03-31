@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsTablePlan Basic { get; } = new OperationalInsightsTablePlan(BasicValue);
         /// <summary> Logs  that allow monitoring and analytics. </summary>
         public static OperationalInsightsTablePlan Analytics { get; } = new OperationalInsightsTablePlan(AnalyticsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsTablePlan"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsTablePlan left, OperationalInsightsTablePlan right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsTablePlan"/> values are not the same. </summary>

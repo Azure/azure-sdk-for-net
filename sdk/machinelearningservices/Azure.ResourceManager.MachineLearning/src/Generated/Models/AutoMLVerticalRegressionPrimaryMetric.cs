@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static AutoMLVerticalRegressionPrimaryMetric R2Score { get; } = new AutoMLVerticalRegressionPrimaryMetric(R2ScoreValue);
         /// <summary> The Normalized Mean Absolute Error (NMAE) is a validation metric to compare the Mean Absolute Error (MAE) of (time) series with different scales. </summary>
         public static AutoMLVerticalRegressionPrimaryMetric NormalizedMeanAbsoluteError { get; } = new AutoMLVerticalRegressionPrimaryMetric(NormalizedMeanAbsoluteErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutoMLVerticalRegressionPrimaryMetric"/> values are the same. </summary>
         public static bool operator ==(AutoMLVerticalRegressionPrimaryMetric left, AutoMLVerticalRegressionPrimaryMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutoMLVerticalRegressionPrimaryMetric"/> values are not the same. </summary>

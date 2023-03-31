@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayRequestRoutingRuleType Basic { get; } = new ApplicationGatewayRequestRoutingRuleType(BasicValue);
         /// <summary> PathBasedRouting. </summary>
         public static ApplicationGatewayRequestRoutingRuleType PathBasedRouting { get; } = new ApplicationGatewayRequestRoutingRuleType(PathBasedRoutingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationGatewayRequestRoutingRuleType"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewayRequestRoutingRuleType left, ApplicationGatewayRequestRoutingRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayRequestRoutingRuleType"/> values are not the same. </summary>

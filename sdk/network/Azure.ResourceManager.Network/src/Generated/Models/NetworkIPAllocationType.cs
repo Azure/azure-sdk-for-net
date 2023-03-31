@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkIPAllocationType Undefined { get; } = new NetworkIPAllocationType(UndefinedValue);
         /// <summary> Hypernet. </summary>
         public static NetworkIPAllocationType Hypernet { get; } = new NetworkIPAllocationType(HypernetValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkIPAllocationType"/> values are the same. </summary>
         public static bool operator ==(NetworkIPAllocationType left, NetworkIPAllocationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkIPAllocationType"/> values are not the same. </summary>

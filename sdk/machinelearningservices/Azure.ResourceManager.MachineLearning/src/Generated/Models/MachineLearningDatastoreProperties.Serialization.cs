@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("credentials"u8);
             writer.WriteObjectValue(Credentials);
             writer.WritePropertyName("datastoreType"u8);
-            writer.WriteStringValue(DatastoreType.ToString());
+            writer.WriteStringValue(DatastoreType.ToSerialString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)

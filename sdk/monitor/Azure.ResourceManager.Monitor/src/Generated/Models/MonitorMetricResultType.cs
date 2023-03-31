@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorMetricResultType Data { get; } = new MonitorMetricResultType(DataValue);
         /// <summary> Metadata. </summary>
         public static MonitorMetricResultType Metadata { get; } = new MonitorMetricResultType(MetadataValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MonitorMetricResultType"/> values are the same. </summary>
         public static bool operator ==(MonitorMetricResultType left, MonitorMetricResultType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorMetricResultType"/> values are not the same. </summary>

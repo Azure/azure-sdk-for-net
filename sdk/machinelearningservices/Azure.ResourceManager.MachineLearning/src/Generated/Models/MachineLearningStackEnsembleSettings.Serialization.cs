@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(StackMetaLearnerType))
             {
                 writer.WritePropertyName("stackMetaLearnerType"u8);
-                writer.WriteStringValue(StackMetaLearnerType.Value.ToString());
+                writer.WriteStringValue(StackMetaLearnerType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

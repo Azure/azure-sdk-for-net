@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static StochasticOptimizer Adam { get; } = new StochasticOptimizer(AdamValue);
         /// <summary> AdamW is a variant of the optimizer Adam that has an improved implementation of weight decay. </summary>
         public static StochasticOptimizer Adamw { get; } = new StochasticOptimizer(AdamwValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StochasticOptimizer"/> values are the same. </summary>
         public static bool operator ==(StochasticOptimizer left, StochasticOptimizer right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StochasticOptimizer"/> values are not the same. </summary>

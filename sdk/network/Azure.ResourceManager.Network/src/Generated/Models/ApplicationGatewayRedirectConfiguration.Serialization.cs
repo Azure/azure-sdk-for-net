@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(RedirectType))
             {
                 writer.WritePropertyName("redirectType"u8);
-                writer.WriteStringValue(RedirectType.Value.ToString());
+                writer.WriteStringValue(RedirectType.Value.ToSerialString());
             }
             if (Optional.IsDefined(TargetListener))
             {

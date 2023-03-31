@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppRelationshipStatus Idle { get; } = new NetAppRelationshipStatus(IdleValue);
         /// <summary> Transferring. </summary>
         public static NetAppRelationshipStatus Transferring { get; } = new NetAppRelationshipStatus(TransferringValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppRelationshipStatus"/> values are the same. </summary>
         public static bool operator ==(NetAppRelationshipStatus left, NetAppRelationshipStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppRelationshipStatus"/> values are not the same. </summary>

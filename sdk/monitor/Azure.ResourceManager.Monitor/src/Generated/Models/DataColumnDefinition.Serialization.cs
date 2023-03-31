@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(DefinitionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(DefinitionType.Value.ToString());
+                writer.WriteStringValue(DefinitionType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

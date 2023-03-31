@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualNetworkGatewayConnectionType ExpressRoute { get; } = new VirtualNetworkGatewayConnectionType(ExpressRouteValue);
         /// <summary> VPNClient. </summary>
         public static VirtualNetworkGatewayConnectionType VpnClient { get; } = new VirtualNetworkGatewayConnectionType(VpnClientValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionType"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkGatewayConnectionType left, VirtualNetworkGatewayConnectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionType"/> values are not the same. </summary>

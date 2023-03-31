@@ -29,6 +29,9 @@ namespace Azure.Maps.Routing
         public static VehicleEngineType Combustion { get; } = new VehicleEngineType(CombustionValue);
         /// <summary> Electric engine. </summary>
         public static VehicleEngineType Electric { get; } = new VehicleEngineType(ElectricValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VehicleEngineType"/> values are the same. </summary>
         public static bool operator ==(VehicleEngineType left, VehicleEngineType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VehicleEngineType"/> values are not the same. </summary>

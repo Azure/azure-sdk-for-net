@@ -68,6 +68,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningComputeInstanceState Unknown { get; } = new MachineLearningComputeInstanceState(UnknownValue);
         /// <summary> Unusable. </summary>
         public static MachineLearningComputeInstanceState Unusable { get; } = new MachineLearningComputeInstanceState(UnusableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningComputeInstanceState"/> values are the same. </summary>
         public static bool operator ==(MachineLearningComputeInstanceState left, MachineLearningComputeInstanceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningComputeInstanceState"/> values are not the same. </summary>

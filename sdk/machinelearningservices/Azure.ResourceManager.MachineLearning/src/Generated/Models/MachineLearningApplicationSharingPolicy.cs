@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningApplicationSharingPolicy Personal { get; } = new MachineLearningApplicationSharingPolicy(PersonalValue);
         /// <summary> Shared. </summary>
         public static MachineLearningApplicationSharingPolicy Shared { get; } = new MachineLearningApplicationSharingPolicy(SharedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningApplicationSharingPolicy"/> values are the same. </summary>
         public static bool operator ==(MachineLearningApplicationSharingPolicy left, MachineLearningApplicationSharingPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningApplicationSharingPolicy"/> values are not the same. </summary>

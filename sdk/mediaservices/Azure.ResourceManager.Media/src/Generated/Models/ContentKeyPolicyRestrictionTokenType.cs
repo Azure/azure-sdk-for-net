@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static ContentKeyPolicyRestrictionTokenType Swt { get; } = new ContentKeyPolicyRestrictionTokenType(SwtValue);
         /// <summary> JSON Web Token. </summary>
         public static ContentKeyPolicyRestrictionTokenType Jwt { get; } = new ContentKeyPolicyRestrictionTokenType(JwtValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContentKeyPolicyRestrictionTokenType"/> values are the same. </summary>
         public static bool operator ==(ContentKeyPolicyRestrictionTokenType left, ContentKeyPolicyRestrictionTokenType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentKeyPolicyRestrictionTokenType"/> values are not the same. </summary>

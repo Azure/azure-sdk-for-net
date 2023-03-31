@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningOperationTrigger Schedule { get; } = new MachineLearningOperationTrigger(ScheduleValue);
         /// <summary> IdleShutdown. </summary>
         public static MachineLearningOperationTrigger IdleShutdown { get; } = new MachineLearningOperationTrigger(IdleShutdownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningOperationTrigger"/> values are the same. </summary>
         public static bool operator ==(MachineLearningOperationTrigger left, MachineLearningOperationTrigger right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningOperationTrigger"/> values are not the same. </summary>

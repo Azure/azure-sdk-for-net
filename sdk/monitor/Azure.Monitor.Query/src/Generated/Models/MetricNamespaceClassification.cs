@@ -30,6 +30,9 @@ namespace Azure.Monitor.Query.Models
         public static MetricNamespaceClassification Platform { get; } = new MetricNamespaceClassification(PlatformValue);
         /// <summary> Custom. </summary>
         public static MetricNamespaceClassification Custom { get; } = new MetricNamespaceClassification(CustomValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MetricNamespaceClassification"/> values are the same. </summary>
         public static bool operator ==(MetricNamespaceClassification left, MetricNamespaceClassification right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricNamespaceClassification"/> values are not the same. </summary>

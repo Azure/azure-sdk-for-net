@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static WebApplicationFirewallRuleType MatchRule { get; } = new WebApplicationFirewallRuleType(MatchRuleValue);
         /// <summary> Invalid. </summary>
         public static WebApplicationFirewallRuleType Invalid { get; } = new WebApplicationFirewallRuleType(InvalidValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallRuleType"/> values are the same. </summary>
         public static bool operator ==(WebApplicationFirewallRuleType left, WebApplicationFirewallRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallRuleType"/> values are not the same. </summary>

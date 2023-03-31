@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MySql.Models
         public static MySqlPublicNetworkAccessEnum Enabled { get; } = new MySqlPublicNetworkAccessEnum(EnabledValue);
         /// <summary> Disabled. </summary>
         public static MySqlPublicNetworkAccessEnum Disabled { get; } = new MySqlPublicNetworkAccessEnum(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlPublicNetworkAccessEnum"/> values are the same. </summary>
         public static bool operator ==(MySqlPublicNetworkAccessEnum left, MySqlPublicNetworkAccessEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlPublicNetworkAccessEnum"/> values are not the same. </summary>

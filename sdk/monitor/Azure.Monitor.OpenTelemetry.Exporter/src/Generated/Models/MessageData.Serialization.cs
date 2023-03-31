@@ -20,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             if (Optional.IsDefined(SeverityLevel))
             {
                 writer.WritePropertyName("severityLevel"u8);
-                writer.WriteStringValue(SeverityLevel.Value.ToString());
+                writer.WriteStringValue(SeverityLevel.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Properties))
             {

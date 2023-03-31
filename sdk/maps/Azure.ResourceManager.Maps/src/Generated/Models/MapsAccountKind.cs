@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Maps.Models
         public static MapsAccountKind Gen1 { get; } = new MapsAccountKind(Gen1Value);
         /// <summary> Gen2. </summary>
         public static MapsAccountKind Gen2 { get; } = new MapsAccountKind(Gen2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MapsAccountKind"/> values are the same. </summary>
         public static bool operator ==(MapsAccountKind left, MapsAccountKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapsAccountKind"/> values are not the same. </summary>

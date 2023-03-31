@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static H265VideoProfile Main { get; } = new H265VideoProfile(MainValue);
         /// <summary> Main 10 profile (https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding#Main_10). </summary>
         public static H265VideoProfile Main10 { get; } = new H265VideoProfile(Main10Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="H265VideoProfile"/> values are the same. </summary>
         public static bool operator ==(H265VideoProfile left, H265VideoProfile right) => left.Equals(right);
         /// <summary> Determines if two <see cref="H265VideoProfile"/> values are not the same. </summary>

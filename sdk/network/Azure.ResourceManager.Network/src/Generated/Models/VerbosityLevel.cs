@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VerbosityLevel Minimum { get; } = new VerbosityLevel(MinimumValue);
         /// <summary> Full. </summary>
         public static VerbosityLevel Full { get; } = new VerbosityLevel(FullValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VerbosityLevel"/> values are the same. </summary>
         public static bool operator ==(VerbosityLevel left, VerbosityLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VerbosityLevel"/> values are not the same. </summary>

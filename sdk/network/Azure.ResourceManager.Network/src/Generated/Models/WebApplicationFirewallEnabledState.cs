@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static WebApplicationFirewallEnabledState Disabled { get; } = new WebApplicationFirewallEnabledState(DisabledValue);
         /// <summary> Enabled. </summary>
         public static WebApplicationFirewallEnabledState Enabled { get; } = new WebApplicationFirewallEnabledState(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallEnabledState"/> values are the same. </summary>
         public static bool operator ==(WebApplicationFirewallEnabledState left, WebApplicationFirewallEnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallEnabledState"/> values are not the same. </summary>

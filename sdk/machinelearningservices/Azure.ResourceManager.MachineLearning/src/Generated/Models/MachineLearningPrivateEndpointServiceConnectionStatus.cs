@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningPrivateEndpointServiceConnectionStatus Disconnected { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus(DisconnectedValue);
         /// <summary> Timeout. </summary>
         public static MachineLearningPrivateEndpointServiceConnectionStatus Timeout { get; } = new MachineLearningPrivateEndpointServiceConnectionStatus(TimeoutValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(MachineLearningPrivateEndpointServiceConnectionStatus left, MachineLearningPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

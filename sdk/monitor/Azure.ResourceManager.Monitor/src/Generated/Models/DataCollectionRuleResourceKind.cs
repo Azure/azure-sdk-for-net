@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DataCollectionRuleResourceKind Linux { get; } = new DataCollectionRuleResourceKind(LinuxValue);
         /// <summary> Windows. </summary>
         public static DataCollectionRuleResourceKind Windows { get; } = new DataCollectionRuleResourceKind(WindowsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataCollectionRuleResourceKind"/> values are the same. </summary>
         public static bool operator ==(DataCollectionRuleResourceKind left, DataCollectionRuleResourceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataCollectionRuleResourceKind"/> values are not the same. </summary>

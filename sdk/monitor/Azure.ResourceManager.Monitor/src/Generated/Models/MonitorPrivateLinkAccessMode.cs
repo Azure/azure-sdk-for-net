@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorPrivateLinkAccessMode Open { get; } = new MonitorPrivateLinkAccessMode(OpenValue);
         /// <summary> PrivateOnly. </summary>
         public static MonitorPrivateLinkAccessMode PrivateOnly { get; } = new MonitorPrivateLinkAccessMode(PrivateOnlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MonitorPrivateLinkAccessMode"/> values are the same. </summary>
         public static bool operator ==(MonitorPrivateLinkAccessMode left, MonitorPrivateLinkAccessMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorPrivateLinkAccessMode"/> values are not the same. </summary>

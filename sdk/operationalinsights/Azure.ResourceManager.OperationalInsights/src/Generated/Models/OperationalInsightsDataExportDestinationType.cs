@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsDataExportDestinationType StorageAccount { get; } = new OperationalInsightsDataExportDestinationType(StorageAccountValue);
         /// <summary> EventHub. </summary>
         public static OperationalInsightsDataExportDestinationType EventHub { get; } = new OperationalInsightsDataExportDestinationType(EventHubValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsDataExportDestinationType"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsDataExportDestinationType left, OperationalInsightsDataExportDestinationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsDataExportDestinationType"/> values are not the same. </summary>

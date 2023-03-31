@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("endpointType"u8);
-                writer.WriteStringValue(EndpointType.Value.ToString());
+                writer.WriteStringValue(EndpointType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReplicationSchedule))
             {
                 writer.WritePropertyName("replicationSchedule"u8);
-                writer.WriteStringValue(ReplicationSchedule.Value.ToString());
+                writer.WriteStringValue(ReplicationSchedule.Value.ToSerialString());
             }
             writer.WritePropertyName("remoteVolumeResourceId"u8);
             writer.WriteStringValue(RemoteVolumeResourceId);

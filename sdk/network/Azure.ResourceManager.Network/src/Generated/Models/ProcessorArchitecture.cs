@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ProcessorArchitecture Amd64 { get; } = new ProcessorArchitecture(Amd64Value);
         /// <summary> X86. </summary>
         public static ProcessorArchitecture X86 { get; } = new ProcessorArchitecture(X86Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProcessorArchitecture"/> values are the same. </summary>
         public static bool operator ==(ProcessorArchitecture left, ProcessorArchitecture right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProcessorArchitecture"/> values are not the same. </summary>

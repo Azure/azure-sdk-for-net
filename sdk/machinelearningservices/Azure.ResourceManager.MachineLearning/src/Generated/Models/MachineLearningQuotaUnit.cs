@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Count. </summary>
         public static MachineLearningQuotaUnit Count { get; } = new MachineLearningQuotaUnit(CountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningQuotaUnit"/> values are the same. </summary>
         public static bool operator ==(MachineLearningQuotaUnit left, MachineLearningQuotaUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningQuotaUnit"/> values are not the same. </summary>

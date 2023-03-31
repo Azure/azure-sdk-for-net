@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static AuthorizationUseStatus Available { get; } = new AuthorizationUseStatus(AvailableValue);
         /// <summary> InUse. </summary>
         public static AuthorizationUseStatus InUse { get; } = new AuthorizationUseStatus(InUseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AuthorizationUseStatus"/> values are the same. </summary>
         public static bool operator ==(AuthorizationUseStatus left, AuthorizationUseStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthorizationUseStatus"/> values are not the same. </summary>

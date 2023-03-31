@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MetricCriteriaTimeAggregationType Maximum { get; } = new MetricCriteriaTimeAggregationType(MaximumValue);
         /// <summary> Total. </summary>
         public static MetricCriteriaTimeAggregationType Total { get; } = new MetricCriteriaTimeAggregationType(TotalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MetricCriteriaTimeAggregationType"/> values are the same. </summary>
         public static bool operator ==(MetricCriteriaTimeAggregationType left, MetricCriteriaTimeAggregationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricCriteriaTimeAggregationType"/> values are not the same. </summary>

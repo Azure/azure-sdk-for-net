@@ -38,6 +38,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public static SeverityLevel Error { get; } = new SeverityLevel(ErrorValue);
         /// <summary> Critical. </summary>
         public static SeverityLevel Critical { get; } = new SeverityLevel(CriticalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SeverityLevel"/> values are the same. </summary>
         public static bool operator ==(SeverityLevel left, SeverityLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SeverityLevel"/> values are not the same. </summary>

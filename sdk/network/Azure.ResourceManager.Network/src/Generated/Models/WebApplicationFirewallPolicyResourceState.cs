@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         public static WebApplicationFirewallPolicyResourceState Disabled { get; } = new WebApplicationFirewallPolicyResourceState(DisabledValue);
         /// <summary> Deleting. </summary>
         public static WebApplicationFirewallPolicyResourceState Deleting { get; } = new WebApplicationFirewallPolicyResourceState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallPolicyResourceState"/> values are the same. </summary>
         public static bool operator ==(WebApplicationFirewallPolicyResourceState left, WebApplicationFirewallPolicyResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallPolicyResourceState"/> values are not the same. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
-                writer.WriteStringValue(StatusCode.Value.ToString());
+                writer.WriteStringValue(StatusCode.Value.ToSerialString());
             }
             if (Optional.IsDefined(CustomErrorPageUri))
             {

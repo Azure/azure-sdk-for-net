@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static DeinterlaceMode Off { get; } = new DeinterlaceMode(OffValue);
         /// <summary> Apply automatic pixel adaptive de-interlacing on each frame in the input video. </summary>
         public static DeinterlaceMode AutoPixelAdaptive { get; } = new DeinterlaceMode(AutoPixelAdaptiveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeinterlaceMode"/> values are the same. </summary>
         public static bool operator ==(DeinterlaceMode left, DeinterlaceMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeinterlaceMode"/> values are not the same. </summary>

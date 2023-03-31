@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static PreemptionCapability NotPreempt { get; } = new PreemptionCapability(NotPreemptValue);
         /// <summary> May preempt. </summary>
         public static PreemptionCapability MayPreempt { get; } = new PreemptionCapability(MayPreemptValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PreemptionCapability"/> values are the same. </summary>
         public static bool operator ==(PreemptionCapability left, PreemptionCapability right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PreemptionCapability"/> values are not the same. </summary>

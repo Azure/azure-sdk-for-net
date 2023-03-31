@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static DestinationPortBehavior None { get; } = new DestinationPortBehavior(NoneValue);
         /// <summary> ListenIfAvailable. </summary>
         public static DestinationPortBehavior ListenIfAvailable { get; } = new DestinationPortBehavior(ListenIfAvailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DestinationPortBehavior"/> values are the same. </summary>
         public static bool operator ==(DestinationPortBehavior left, DestinationPortBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DestinationPortBehavior"/> values are not the same. </summary>

@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Access))
             {
                 writer.WritePropertyName("access"u8);
-                writer.WriteStringValue(Access.Value.ToString());
+                writer.WriteStringValue(Access.Value.ToSerialString());
             }
             if (Optional.IsDefined(RouteFilterRuleType))
             {
                 writer.WritePropertyName("routeFilterRuleType"u8);
-                writer.WriteStringValue(RouteFilterRuleType.Value.ToString());
+                writer.WriteStringValue(RouteFilterRuleType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Communities))
             {

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ConnectionMonitorTestConfigurationProtocol Http { get; } = new ConnectionMonitorTestConfigurationProtocol(HttpValue);
         /// <summary> Icmp. </summary>
         public static ConnectionMonitorTestConfigurationProtocol Icmp { get; } = new ConnectionMonitorTestConfigurationProtocol(IcmpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConnectionMonitorTestConfigurationProtocol"/> values are the same. </summary>
         public static bool operator ==(ConnectionMonitorTestConfigurationProtocol left, ConnectionMonitorTestConfigurationProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionMonitorTestConfigurationProtocol"/> values are not the same. </summary>

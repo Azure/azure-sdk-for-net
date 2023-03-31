@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerConfigurationSource SystemDefault { get; } = new MySqlFlexibleServerConfigurationSource(SystemDefaultValue);
         /// <summary> user-override. </summary>
         public static MySqlFlexibleServerConfigurationSource UserOverride { get; } = new MySqlFlexibleServerConfigurationSource(UserOverrideValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerConfigurationSource"/> values are the same. </summary>
         public static bool operator ==(MySqlFlexibleServerConfigurationSource left, MySqlFlexibleServerConfigurationSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerConfigurationSource"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaStorageAuthentication System { get; } = new MediaStorageAuthentication(SystemValue);
         /// <summary> Managed Identity authentication. </summary>
         public static MediaStorageAuthentication ManagedIdentity { get; } = new MediaStorageAuthentication(ManagedIdentityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaStorageAuthentication"/> values are the same. </summary>
         public static bool operator ==(MediaStorageAuthentication left, MediaStorageAuthentication right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaStorageAuthentication"/> values are not the same. </summary>

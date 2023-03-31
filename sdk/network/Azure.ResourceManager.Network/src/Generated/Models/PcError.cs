@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Network.Models
         public static PcError LocalFileFailed { get; } = new PcError(LocalFileFailedValue);
         /// <summary> StorageFailed. </summary>
         public static PcError StorageFailed { get; } = new PcError(StorageFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PcError"/> values are the same. </summary>
         public static bool operator ==(PcError left, PcError right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PcError"/> values are not the same. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Media.Models
         public static RotationSetting Rotate180 { get; } = new RotationSetting(Rotate180Value);
         /// <summary> Rotate 270 degrees clockwise. </summary>
         public static RotationSetting Rotate270 { get; } = new RotationSetting(Rotate270Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RotationSetting"/> values are the same. </summary>
         public static bool operator ==(RotationSetting left, RotationSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RotationSetting"/> values are not the same. </summary>

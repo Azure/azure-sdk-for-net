@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MySql.Models
         public static MySqlInfrastructureEncryption Enabled { get; } = new MySqlInfrastructureEncryption(EnabledValue);
         /// <summary> Additional (2nd) layer of encryption for data at rest. </summary>
         public static MySqlInfrastructureEncryption Disabled { get; } = new MySqlInfrastructureEncryption(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlInfrastructureEncryption"/> values are the same. </summary>
         public static bool operator ==(MySqlInfrastructureEncryption left, MySqlInfrastructureEncryption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlInfrastructureEncryption"/> values are not the same. </summary>

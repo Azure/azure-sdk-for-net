@@ -68,6 +68,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningJobStatus Paused { get; } = new MachineLearningJobStatus(PausedValue);
         /// <summary> Default job status if not mapped to all other statuses. </summary>
         public static MachineLearningJobStatus Unknown { get; } = new MachineLearningJobStatus(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningJobStatus"/> values are the same. </summary>
         public static bool operator ==(MachineLearningJobStatus left, MachineLearningJobStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningJobStatus"/> values are not the same. </summary>

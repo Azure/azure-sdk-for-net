@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningWorkspaceQuotaStatus OperationNotSupportedForSku { get; } = new MachineLearningWorkspaceQuotaStatus(OperationNotSupportedForSkuValue);
         /// <summary> OperationNotEnabledForRegion. </summary>
         public static MachineLearningWorkspaceQuotaStatus OperationNotEnabledForRegion { get; } = new MachineLearningWorkspaceQuotaStatus(OperationNotEnabledForRegionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningWorkspaceQuotaStatus"/> values are the same. </summary>
         public static bool operator ==(MachineLearningWorkspaceQuotaStatus left, MachineLearningWorkspaceQuotaStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningWorkspaceQuotaStatus"/> values are not the same. </summary>

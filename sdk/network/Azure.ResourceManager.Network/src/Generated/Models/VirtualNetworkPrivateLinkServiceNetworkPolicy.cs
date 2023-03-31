@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualNetworkPrivateLinkServiceNetworkPolicy Enabled { get; } = new VirtualNetworkPrivateLinkServiceNetworkPolicy(EnabledValue);
         /// <summary> Disabled. </summary>
         public static VirtualNetworkPrivateLinkServiceNetworkPolicy Disabled { get; } = new VirtualNetworkPrivateLinkServiceNetworkPolicy(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualNetworkPrivateLinkServiceNetworkPolicy"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkPrivateLinkServiceNetworkPolicy left, VirtualNetworkPrivateLinkServiceNetworkPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkPrivateLinkServiceNetworkPolicy"/> values are not the same. </summary>

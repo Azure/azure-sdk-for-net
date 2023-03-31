@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static ScaleRuleMetricDimensionOperationType EqualsValue { get; } = new ScaleRuleMetricDimensionOperationType(EqualsValueValue);
         /// <summary> NotEquals. </summary>
         public static ScaleRuleMetricDimensionOperationType NotEquals { get; } = new ScaleRuleMetricDimensionOperationType(NotEqualsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScaleRuleMetricDimensionOperationType"/> values are the same. </summary>
         public static bool operator ==(ScaleRuleMetricDimensionOperationType left, ScaleRuleMetricDimensionOperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScaleRuleMetricDimensionOperationType"/> values are not the same. </summary>

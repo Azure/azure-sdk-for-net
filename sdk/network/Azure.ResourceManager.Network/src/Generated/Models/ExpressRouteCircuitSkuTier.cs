@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ExpressRouteCircuitSkuTier Basic { get; } = new ExpressRouteCircuitSkuTier(BasicValue);
         /// <summary> Local. </summary>
         public static ExpressRouteCircuitSkuTier Local { get; } = new ExpressRouteCircuitSkuTier(LocalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExpressRouteCircuitSkuTier"/> values are the same. </summary>
         public static bool operator ==(ExpressRouteCircuitSkuTier left, ExpressRouteCircuitSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteCircuitSkuTier"/> values are not the same. </summary>

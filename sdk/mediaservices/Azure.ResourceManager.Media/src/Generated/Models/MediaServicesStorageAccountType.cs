@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaServicesStorageAccountType Primary { get; } = new MediaServicesStorageAccountType(PrimaryValue);
         /// <summary> A secondary storage account for the Media Services account. </summary>
         public static MediaServicesStorageAccountType Secondary { get; } = new MediaServicesStorageAccountType(SecondaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaServicesStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(MediaServicesStorageAccountType left, MediaServicesStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaServicesStorageAccountType"/> values are not the same. </summary>

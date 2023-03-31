@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static InterleaveOutput NonInterleavedOutput { get; } = new InterleaveOutput(NonInterleavedOutputValue);
         /// <summary> The output includes both audio and video. </summary>
         public static InterleaveOutput InterleavedOutput { get; } = new InterleaveOutput(InterleavedOutputValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InterleaveOutput"/> values are the same. </summary>
         public static bool operator ==(InterleaveOutput left, InterleaveOutput right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InterleaveOutput"/> values are not the same. </summary>

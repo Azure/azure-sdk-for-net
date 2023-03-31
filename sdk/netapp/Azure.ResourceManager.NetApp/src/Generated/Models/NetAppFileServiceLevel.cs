@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppFileServiceLevel Ultra { get; } = new NetAppFileServiceLevel(UltraValue);
         /// <summary> Zone redundant storage service level. </summary>
         public static NetAppFileServiceLevel StandardZrs { get; } = new NetAppFileServiceLevel(StandardZrsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppFileServiceLevel"/> values are the same. </summary>
         public static bool operator ==(NetAppFileServiceLevel left, NetAppFileServiceLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppFileServiceLevel"/> values are not the same. </summary>

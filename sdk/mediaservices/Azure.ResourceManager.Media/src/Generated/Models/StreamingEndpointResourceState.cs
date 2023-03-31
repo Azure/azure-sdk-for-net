@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Media.Models
         public static StreamingEndpointResourceState Deleting { get; } = new StreamingEndpointResourceState(DeletingValue);
         /// <summary> The streaming endpoint is increasing or decreasing scale units. </summary>
         public static StreamingEndpointResourceState Scaling { get; } = new StreamingEndpointResourceState(ScalingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamingEndpointResourceState"/> values are the same. </summary>
         public static bool operator ==(StreamingEndpointResourceState left, StreamingEndpointResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingEndpointResourceState"/> values are not the same. </summary>

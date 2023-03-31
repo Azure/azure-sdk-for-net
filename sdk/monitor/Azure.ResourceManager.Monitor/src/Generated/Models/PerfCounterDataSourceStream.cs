@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static PerfCounterDataSourceStream MicrosoftPerf { get; } = new PerfCounterDataSourceStream(MicrosoftPerfValue);
         /// <summary> Microsoft-InsightsMetrics. </summary>
         public static PerfCounterDataSourceStream MicrosoftInsightsMetrics { get; } = new PerfCounterDataSourceStream(MicrosoftInsightsMetricsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PerfCounterDataSourceStream"/> values are the same. </summary>
         public static bool operator ==(PerfCounterDataSourceStream left, PerfCounterDataSourceStream right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PerfCounterDataSourceStream"/> values are not the same. </summary>

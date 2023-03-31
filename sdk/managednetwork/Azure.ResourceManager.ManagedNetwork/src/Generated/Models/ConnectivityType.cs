@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         public static ConnectivityType HubAndSpokeTopology { get; } = new ConnectivityType(HubAndSpokeTopologyValue);
         /// <summary> MeshTopology. </summary>
         public static ConnectivityType MeshTopology { get; } = new ConnectivityType(MeshTopologyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConnectivityType"/> values are the same. </summary>
         public static bool operator ==(ConnectivityType left, ConnectivityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectivityType"/> values are not the same. </summary>

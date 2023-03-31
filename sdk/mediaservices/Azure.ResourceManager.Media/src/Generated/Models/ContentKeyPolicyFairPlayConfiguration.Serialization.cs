@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteNull("fairPlayPfx");
             }
             writer.WritePropertyName("rentalAndLeaseKeyType"u8);
-            writer.WriteStringValue(RentalAndLeaseKeyType.ToString());
+            writer.WriteStringValue(RentalAndLeaseKeyType.ToSerialString());
             writer.WritePropertyName("rentalDuration"u8);
             writer.WriteNumberValue(RentalDuration);
             if (Optional.IsDefined(OfflineRentalConfiguration))

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static DatastoreType AzureDataLakeGen2 { get; } = new DatastoreType(AzureDataLakeGen2Value);
         /// <summary> AzureFile. </summary>
         public static DatastoreType AzureFile { get; } = new DatastoreType(AzureFileValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DatastoreType"/> values are the same. </summary>
         public static bool operator ==(DatastoreType left, DatastoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatastoreType"/> values are not the same. </summary>

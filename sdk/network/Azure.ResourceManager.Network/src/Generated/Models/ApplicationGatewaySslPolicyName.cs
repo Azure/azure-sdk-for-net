@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewaySslPolicyName AppGwSslPolicy20170401 { get; } = new ApplicationGatewaySslPolicyName(AppGwSslPolicy20170401Value);
         /// <summary> AppGwSslPolicy20170401S. </summary>
         public static ApplicationGatewaySslPolicyName AppGwSslPolicy20170401S { get; } = new ApplicationGatewaySslPolicyName(AppGwSslPolicy20170401SValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySslPolicyName"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewaySslPolicyName left, ApplicationGatewaySslPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewaySslPolicyName"/> values are not the same. </summary>

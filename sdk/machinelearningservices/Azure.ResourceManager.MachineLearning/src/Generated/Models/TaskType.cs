@@ -77,6 +77,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Named Entity Recognition (NER) is the ability to take free-form text and identify the occurrences of entities such as people, locations, organizations, and more.
         /// </summary>
         public static TaskType TextNER { get; } = new TaskType(TextNERValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TaskType"/> values are the same. </summary>
         public static bool operator ==(TaskType left, TaskType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TaskType"/> values are not the same. </summary>

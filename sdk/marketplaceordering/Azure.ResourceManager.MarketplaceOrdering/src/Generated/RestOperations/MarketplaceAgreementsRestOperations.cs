@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.MarketplaceOrdering/offerTypes/", false);
-            uri.AppendPath(offerType.ToString(), true);
+            uri.AppendPath(offerType.ToSerialString(), true);
             uri.AppendPath("/publishers/", false);
             uri.AppendPath(publisherId, true);
             uri.AppendPath("/offers/", false);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.MarketplaceOrdering/offerTypes/", false);
-            uri.AppendPath(offerType.ToString(), true);
+            uri.AppendPath(offerType.ToSerialString(), true);
             uri.AppendPath("/publishers/", false);
             uri.AppendPath(publisherId, true);
             uri.AppendPath("/offers/", false);

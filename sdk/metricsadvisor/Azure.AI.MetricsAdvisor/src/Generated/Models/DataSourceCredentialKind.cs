@@ -26,6 +26,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string DataLakeSharedKeyValue = "DataLakeGen2SharedKey";
         private const string ServicePrincipalValue = "ServicePrincipal";
         private const string ServicePrincipalInKeyVaultValue = "ServicePrincipalInKV";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataSourceCredentialKind"/> values are the same. </summary>
         public static bool operator ==(DataSourceCredentialKind left, DataSourceCredentialKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataSourceCredentialKind"/> values are not the same. </summary>

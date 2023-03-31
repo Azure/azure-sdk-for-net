@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayTier StandardV2 { get; } = new ApplicationGatewayTier(StandardV2Value);
         /// <summary> WAF_v2. </summary>
         public static ApplicationGatewayTier WAFV2 { get; } = new ApplicationGatewayTier(WAFV2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationGatewayTier"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewayTier left, ApplicationGatewayTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayTier"/> values are not the same. </summary>

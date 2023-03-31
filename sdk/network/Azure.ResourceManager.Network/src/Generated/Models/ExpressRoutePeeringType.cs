@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ExpressRoutePeeringType AzurePrivatePeering { get; } = new ExpressRoutePeeringType(AzurePrivatePeeringValue);
         /// <summary> MicrosoftPeering. </summary>
         public static ExpressRoutePeeringType MicrosoftPeering { get; } = new ExpressRoutePeeringType(MicrosoftPeeringValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExpressRoutePeeringType"/> values are the same. </summary>
         public static bool operator ==(ExpressRoutePeeringType left, ExpressRoutePeeringType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRoutePeeringType"/> values are not the same. </summary>

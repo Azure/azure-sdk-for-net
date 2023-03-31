@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in CipherSuites)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MinProtocolVersion))
             {
                 writer.WritePropertyName("minProtocolVersion"u8);
-                writer.WriteStringValue(MinProtocolVersion.Value.ToString());
+                writer.WriteStringValue(MinProtocolVersion.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

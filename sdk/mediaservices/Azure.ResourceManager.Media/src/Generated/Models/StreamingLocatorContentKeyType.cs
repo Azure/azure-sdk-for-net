@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static StreamingLocatorContentKeyType CommonEncryptionCbcs { get; } = new StreamingLocatorContentKeyType(CommonEncryptionCbcsValue);
         /// <summary> Envelope Encryption. </summary>
         public static StreamingLocatorContentKeyType EnvelopeEncryption { get; } = new StreamingLocatorContentKeyType(EnvelopeEncryptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamingLocatorContentKeyType"/> values are the same. </summary>
         public static bool operator ==(StreamingLocatorContentKeyType left, StreamingLocatorContentKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingLocatorContentKeyType"/> values are not the same. </summary>

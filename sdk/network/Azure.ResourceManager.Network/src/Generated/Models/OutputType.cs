@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Workspace. </summary>
         public static OutputType Workspace { get; } = new OutputType(WorkspaceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OutputType"/> values are the same. </summary>
         public static bool operator ==(OutputType left, OutputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OutputType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static CapacityPoolQosType Auto { get; } = new CapacityPoolQosType(AutoValue);
         /// <summary> qos type Manual. </summary>
         public static CapacityPoolQosType Manual { get; } = new CapacityPoolQosType(ManualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CapacityPoolQosType"/> values are the same. </summary>
         public static bool operator ==(CapacityPoolQosType left, CapacityPoolQosType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CapacityPoolQosType"/> values are not the same. </summary>

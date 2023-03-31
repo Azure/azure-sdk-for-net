@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaServicesProvisioningState InProgress { get; } = new MediaServicesProvisioningState(InProgressValue);
         /// <summary> Provisioning state succeeded. </summary>
         public static MediaServicesProvisioningState Succeeded { get; } = new MediaServicesProvisioningState(SucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaServicesProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MediaServicesProvisioningState left, MediaServicesProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaServicesProvisioningState"/> values are not the same. </summary>

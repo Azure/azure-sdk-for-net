@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DataCollectionRuleProvisioningState Succeeded { get; } = new DataCollectionRuleProvisioningState(SucceededValue);
         /// <summary> Failed. </summary>
         public static DataCollectionRuleProvisioningState Failed { get; } = new DataCollectionRuleProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataCollectionRuleProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DataCollectionRuleProvisioningState left, DataCollectionRuleProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataCollectionRuleProvisioningState"/> values are not the same. </summary>

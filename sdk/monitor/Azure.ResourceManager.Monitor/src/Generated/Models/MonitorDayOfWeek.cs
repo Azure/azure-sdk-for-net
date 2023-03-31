@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorDayOfWeek Friday { get; } = new MonitorDayOfWeek(FridayValue);
         /// <summary> Saturday. </summary>
         public static MonitorDayOfWeek Saturday { get; } = new MonitorDayOfWeek(SaturdayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MonitorDayOfWeek"/> values are the same. </summary>
         public static bool operator ==(MonitorDayOfWeek left, MonitorDayOfWeek right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorDayOfWeek"/> values are not the same. </summary>

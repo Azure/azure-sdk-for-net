@@ -35,6 +35,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string MySqlValue = "MySql";
         private const string PostgreSqlValue = "PostgreSql";
         private const string SqlServerValue = "SqlServer";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataFeedSourceKind"/> values are the same. </summary>
         public static bool operator ==(DataFeedSourceKind left, DataFeedSourceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedSourceKind"/> values are not the same. </summary>

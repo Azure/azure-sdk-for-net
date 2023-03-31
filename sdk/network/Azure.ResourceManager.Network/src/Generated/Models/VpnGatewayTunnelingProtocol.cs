@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnGatewayTunnelingProtocol IkeV2 { get; } = new VpnGatewayTunnelingProtocol(IkeV2Value);
         /// <summary> OpenVPN. </summary>
         public static VpnGatewayTunnelingProtocol OpenVpn { get; } = new VpnGatewayTunnelingProtocol(OpenVpnValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VpnGatewayTunnelingProtocol"/> values are the same. </summary>
         public static bool operator ==(VpnGatewayTunnelingProtocol left, VpnGatewayTunnelingProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VpnGatewayTunnelingProtocol"/> values are not the same. </summary>

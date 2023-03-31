@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("applicationType"u8);
-                writer.WriteStringValue(ApplicationType.Value.ToString());
+                writer.WriteStringValue(ApplicationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ApplicationIdentifier))
             {

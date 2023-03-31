@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsTableSubType Classic { get; } = new OperationalInsightsTableSubType(ClassicValue);
         /// <summary> A table eligible to have data sent into it via any of the means supported by Data Collection Rules: the Data Collection Endpoint API, ingestion-time transformations, or any other mechanism provided by Data Collection Rules. </summary>
         public static OperationalInsightsTableSubType DataCollectionRuleBased { get; } = new OperationalInsightsTableSubType(DataCollectionRuleBasedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsTableSubType"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsTableSubType left, OperationalInsightsTableSubType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsTableSubType"/> values are not the same. </summary>

@@ -51,6 +51,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningStackMetaLearnerType LightGBMRegressor { get; } = new MachineLearningStackMetaLearnerType(LightGBMRegressorValue);
         /// <summary> LinearRegression. </summary>
         public static MachineLearningStackMetaLearnerType LinearRegression { get; } = new MachineLearningStackMetaLearnerType(LinearRegressionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningStackMetaLearnerType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningStackMetaLearnerType left, MachineLearningStackMetaLearnerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningStackMetaLearnerType"/> values are not the same. </summary>

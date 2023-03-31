@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         public static IkeIntegrity GcmAes256 { get; } = new IkeIntegrity(GcmAes256Value);
         /// <summary> GCMAES128. </summary>
         public static IkeIntegrity GcmAes128 { get; } = new IkeIntegrity(GcmAes128Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IkeIntegrity"/> values are the same. </summary>
         public static bool operator ==(IkeIntegrity left, IkeIntegrity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IkeIntegrity"/> values are not the same. </summary>

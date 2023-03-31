@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static StorageInsightState OK { get; } = new StorageInsightState(OKValue);
         /// <summary> ERROR. </summary>
         public static StorageInsightState Error { get; } = new StorageInsightState(ErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageInsightState"/> values are the same. </summary>
         public static bool operator ==(StorageInsightState left, StorageInsightState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageInsightState"/> values are not the same. </summary>

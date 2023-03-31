@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static WebApplicationFirewallMode Prevention { get; } = new WebApplicationFirewallMode(PreventionValue);
         /// <summary> Detection. </summary>
         public static WebApplicationFirewallMode Detection { get; } = new WebApplicationFirewallMode(DetectionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallMode"/> values are the same. </summary>
         public static bool operator ==(WebApplicationFirewallMode left, WebApplicationFirewallMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallMode"/> values are not the same. </summary>

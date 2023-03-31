@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(PlatformType.ToString());
+            writer.WriteStringValue(PlatformType.ToSerialString());
             if (Optional.IsDefined(AzureStackEdgeDevice))
             {
                 writer.WritePropertyName("azureStackEdgeDevice"u8);

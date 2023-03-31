@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(FeatureLags))
             {
                 writer.WritePropertyName("featureLags"u8);
-                writer.WriteStringValue(FeatureLags.Value.ToString());
+                writer.WriteStringValue(FeatureLags.Value.ToSerialString());
             }
             if (Optional.IsDefined(ForecastHorizon))
             {
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ShortSeriesHandlingConfig))
             {
                 writer.WritePropertyName("shortSeriesHandlingConfig"u8);
-                writer.WriteStringValue(ShortSeriesHandlingConfig.Value.ToString());
+                writer.WriteStringValue(ShortSeriesHandlingConfig.Value.ToSerialString());
             }
             if (Optional.IsDefined(TargetAggregateFunction))
             {
                 writer.WritePropertyName("targetAggregateFunction"u8);
-                writer.WriteStringValue(TargetAggregateFunction.Value.ToString());
+                writer.WriteStringValue(TargetAggregateFunction.Value.ToSerialString());
             }
             if (Optional.IsDefined(TargetLags))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(UseStl))
             {
                 writer.WritePropertyName("useStl"u8);
-                writer.WriteStringValue(UseStl.Value.ToString());
+                writer.WriteStringValue(UseStl.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

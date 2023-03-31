@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             if (Optional.IsDefined(AutoGrow))
             {
                 writer.WritePropertyName("autoGrow"u8);
-                writer.WriteStringValue(AutoGrow.Value.ToString());
+                writer.WriteStringValue(AutoGrow.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

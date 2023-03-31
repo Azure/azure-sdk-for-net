@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VpnNatRuleType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(VpnNatRuleType.Value.ToString());
+                writer.WriteStringValue(VpnNatRuleType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                writer.WriteStringValue(Mode.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(InternalMappings))
             {

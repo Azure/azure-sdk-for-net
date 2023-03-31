@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         public static CommissionedState Decommissioning { get; } = new CommissionedState(DecommissioningValue);
         /// <summary> Deprovisioning. </summary>
         public static CommissionedState Deprovisioning { get; } = new CommissionedState(DeprovisioningValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CommissionedState"/> values are the same. </summary>
         public static bool operator ==(CommissionedState left, CommissionedState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommissionedState"/> values are not the same. </summary>

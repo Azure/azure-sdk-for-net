@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static RegionStorageToNetworkProximity T2 { get; } = new RegionStorageToNetworkProximity(T2Value);
         /// <summary> Standard T1 and T2 network connectivity. </summary>
         public static RegionStorageToNetworkProximity T1AndT2 { get; } = new RegionStorageToNetworkProximity(T1AndT2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RegionStorageToNetworkProximity"/> values are the same. </summary>
         public static bool operator ==(RegionStorageToNetworkProximity left, RegionStorageToNetworkProximity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RegionStorageToNetworkProximity"/> values are not the same. </summary>

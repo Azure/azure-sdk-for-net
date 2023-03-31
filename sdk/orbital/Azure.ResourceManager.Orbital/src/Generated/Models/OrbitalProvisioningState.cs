@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Orbital.Models
         public static OrbitalProvisioningState Updating { get; } = new OrbitalProvisioningState(UpdatingValue);
         /// <summary> Deleting. </summary>
         public static OrbitalProvisioningState Deleting { get; } = new OrbitalProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OrbitalProvisioningState"/> values are the same. </summary>
         public static bool operator ==(OrbitalProvisioningState left, OrbitalProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrbitalProvisioningState"/> values are not the same. </summary>

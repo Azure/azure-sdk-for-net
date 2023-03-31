@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ApplicationSharingPolicy))
             {
                 writer.WritePropertyName("applicationSharingPolicy"u8);
-                writer.WriteStringValue(ApplicationSharingPolicy.Value.ToString());
+                writer.WriteStringValue(ApplicationSharingPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(SshSettings))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ComputeInstanceAuthorizationType != null)
                 {
                     writer.WritePropertyName("computeInstanceAuthorizationType"u8);
-                    writer.WriteStringValue(ComputeInstanceAuthorizationType.Value.ToString());
+                    writer.WriteStringValue(ComputeInstanceAuthorizationType.Value.ToSerialString());
                 }
                 else
                 {

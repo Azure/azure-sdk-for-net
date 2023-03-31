@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> text. </summary>
         public static LogFilesDataSourceFormat Text { get; } = new LogFilesDataSourceFormat(TextValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogFilesDataSourceFormat"/> values are the same. </summary>
         public static bool operator ==(LogFilesDataSourceFormat left, LogFilesDataSourceFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogFilesDataSourceFormat"/> values are not the same. </summary>

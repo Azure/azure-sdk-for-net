@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ThreatIntelMode))
             {
                 writer.WritePropertyName("threatIntelMode"u8);
-                writer.WriteStringValue(ThreatIntelMode.Value.ToString());
+                writer.WriteStringValue(ThreatIntelMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(VirtualHub))
             {

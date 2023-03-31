@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Media.Models
                 if (StorageAuthentication != null)
                 {
                     writer.WritePropertyName("storageAuthentication"u8);
-                    writer.WriteStringValue(StorageAuthentication.Value.ToString());
+                    writer.WriteStringValue(StorageAuthentication.Value.ToSerialString());
                 }
                 else
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Media.Models
                 if (PublicNetworkAccess != null)
                 {
                     writer.WritePropertyName("publicNetworkAccess"u8);
-                    writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                    writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
                 }
                 else
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
-                writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
+                writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

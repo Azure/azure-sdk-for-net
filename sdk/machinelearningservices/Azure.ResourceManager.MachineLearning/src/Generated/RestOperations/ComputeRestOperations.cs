@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath("/computes/", false);
             uri.AppendPath(computeName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("underlyingResourceAction", underlyingResourceAction.ToString(), true);
+            uri.AppendQuery("underlyingResourceAction", underlyingResourceAction.ToSerialString(), true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

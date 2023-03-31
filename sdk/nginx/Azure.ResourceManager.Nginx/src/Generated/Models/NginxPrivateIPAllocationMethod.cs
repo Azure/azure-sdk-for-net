@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Nginx.Models
         public static NginxPrivateIPAllocationMethod Static { get; } = new NginxPrivateIPAllocationMethod(StaticValue);
         /// <summary> Dynamic. </summary>
         public static NginxPrivateIPAllocationMethod Dynamic { get; } = new NginxPrivateIPAllocationMethod(DynamicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NginxPrivateIPAllocationMethod"/> values are the same. </summary>
         public static bool operator ==(NginxPrivateIPAllocationMethod left, NginxPrivateIPAllocationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NginxPrivateIPAllocationMethod"/> values are not the same. </summary>

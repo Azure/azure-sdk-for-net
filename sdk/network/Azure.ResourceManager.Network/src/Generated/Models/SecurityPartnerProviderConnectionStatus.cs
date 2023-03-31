@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static SecurityPartnerProviderConnectionStatus Connected { get; } = new SecurityPartnerProviderConnectionStatus(ConnectedValue);
         /// <summary> NotConnected. </summary>
         public static SecurityPartnerProviderConnectionStatus NotConnected { get; } = new SecurityPartnerProviderConnectionStatus(NotConnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityPartnerProviderConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityPartnerProviderConnectionStatus left, SecurityPartnerProviderConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityPartnerProviderConnectionStatus"/> values are not the same. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             if (Optional.IsDefined(EmissionType))
             {
                 writer.WritePropertyName("emissionType"u8);
-                writer.WriteStringValue(EmissionType.Value.ToString());
+                writer.WriteStringValue(EmissionType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(EmissionDestinations))
             {

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppEndpointType Source { get; } = new NetAppEndpointType(SourceValue);
         /// <summary> dst. </summary>
         public static NetAppEndpointType Destination { get; } = new NetAppEndpointType(DestinationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppEndpointType"/> values are the same. </summary>
         public static bool operator ==(NetAppEndpointType left, NetAppEndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppEndpointType"/> values are not the same. </summary>

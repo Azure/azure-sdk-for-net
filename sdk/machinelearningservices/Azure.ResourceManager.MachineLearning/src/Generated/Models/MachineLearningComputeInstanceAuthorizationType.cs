@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> personal. </summary>
         public static MachineLearningComputeInstanceAuthorizationType Personal { get; } = new MachineLearningComputeInstanceAuthorizationType(PersonalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningComputeInstanceAuthorizationType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningComputeInstanceAuthorizationType left, MachineLearningComputeInstanceAuthorizationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningComputeInstanceAuthorizationType"/> values are not the same. </summary>

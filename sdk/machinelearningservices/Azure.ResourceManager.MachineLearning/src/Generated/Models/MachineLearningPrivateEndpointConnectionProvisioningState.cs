@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningPrivateEndpointConnectionProvisioningState Deleting { get; } = new MachineLearningPrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static MachineLearningPrivateEndpointConnectionProvisioningState Failed { get; } = new MachineLearningPrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MachineLearningPrivateEndpointConnectionProvisioningState left, MachineLearningPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

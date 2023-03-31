@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(SecurityProviderName))
             {
                 writer.WritePropertyName("securityProviderName"u8);
-                writer.WriteStringValue(SecurityProviderName.Value.ToString());
+                writer.WriteStringValue(SecurityProviderName.Value.ToSerialString());
             }
             if (Optional.IsDefined(VirtualHub))
             {

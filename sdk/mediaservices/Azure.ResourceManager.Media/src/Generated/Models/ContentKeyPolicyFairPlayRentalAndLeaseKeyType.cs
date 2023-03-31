@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Media.Models
         public static ContentKeyPolicyFairPlayRentalAndLeaseKeyType PersistentUnlimited { get; } = new ContentKeyPolicyFairPlayRentalAndLeaseKeyType(PersistentUnlimitedValue);
         /// <summary> Content key can be persisted and the valid duration is limited by the Rental Duration value. </summary>
         public static ContentKeyPolicyFairPlayRentalAndLeaseKeyType PersistentLimited { get; } = new ContentKeyPolicyFairPlayRentalAndLeaseKeyType(PersistentLimitedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContentKeyPolicyFairPlayRentalAndLeaseKeyType"/> values are the same. </summary>
         public static bool operator ==(ContentKeyPolicyFairPlayRentalAndLeaseKeyType left, ContentKeyPolicyFairPlayRentalAndLeaseKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentKeyPolicyFairPlayRentalAndLeaseKeyType"/> values are not the same. </summary>

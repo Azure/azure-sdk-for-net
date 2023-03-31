@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Days)
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WriteStringValue(item.ToSerialString());
             }
             writer.WriteEndArray();
             writer.WritePropertyName("hours"u8);

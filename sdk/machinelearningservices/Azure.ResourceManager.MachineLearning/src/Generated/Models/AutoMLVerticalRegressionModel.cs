@@ -67,6 +67,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static AutoMLVerticalRegressionModel LightGBM { get; } = new AutoMLVerticalRegressionModel(LightGBMValue);
         /// <summary> XGBoostRegressor: Extreme Gradient Boosting Regressor is a supervised machine learning model using ensemble of base learners. </summary>
         public static AutoMLVerticalRegressionModel XGBoostRegressor { get; } = new AutoMLVerticalRegressionModel(XGBoostRegressorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutoMLVerticalRegressionModel"/> values are the same. </summary>
         public static bool operator ==(AutoMLVerticalRegressionModel left, AutoMLVerticalRegressionModel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutoMLVerticalRegressionModel"/> values are not the same. </summary>

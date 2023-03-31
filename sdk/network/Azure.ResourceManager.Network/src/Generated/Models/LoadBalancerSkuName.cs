@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static LoadBalancerSkuName Standard { get; } = new LoadBalancerSkuName(StandardValue);
         /// <summary> Gateway. </summary>
         public static LoadBalancerSkuName Gateway { get; } = new LoadBalancerSkuName(GatewayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LoadBalancerSkuName"/> values are the same. </summary>
         public static bool operator ==(LoadBalancerSkuName left, LoadBalancerSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoadBalancerSkuName"/> values are not the same. </summary>

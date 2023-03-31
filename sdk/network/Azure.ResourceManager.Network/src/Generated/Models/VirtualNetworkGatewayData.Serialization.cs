@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(GatewayType))
             {
                 writer.WritePropertyName("gatewayType"u8);
-                writer.WriteStringValue(GatewayType.Value.ToString());
+                writer.WriteStringValue(GatewayType.Value.ToSerialString());
             }
             if (Optional.IsDefined(VpnType))
             {
                 writer.WritePropertyName("vpnType"u8);
-                writer.WriteStringValue(VpnType.Value.ToString());
+                writer.WriteStringValue(VpnType.Value.ToSerialString());
             }
             if (Optional.IsDefined(VpnGatewayGeneration))
             {
                 writer.WritePropertyName("vpnGatewayGeneration"u8);
-                writer.WriteStringValue(VpnGatewayGeneration.Value.ToString());
+                writer.WriteStringValue(VpnGatewayGeneration.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnableBgp))
             {

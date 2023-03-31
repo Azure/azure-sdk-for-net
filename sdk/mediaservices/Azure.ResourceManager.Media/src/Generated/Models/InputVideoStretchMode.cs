@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static InputVideoStretchMode AutoSize { get; } = new InputVideoStretchMode(AutoSizeValue);
         /// <summary> Pad the output (with either letterbox or pillar box) to honor the output resolution, while ensuring that the active video region in the output has the same aspect ratio as the input. For example, if the input is 1920x1080 and the encoding preset asks for 1280x1280, then the output will be at 1280x1280, which contains an inner rectangle of 1280x720 at aspect ratio of 16:9, and pillar box regions 280 pixels wide at the left and right. </summary>
         public static InputVideoStretchMode AutoFit { get; } = new InputVideoStretchMode(AutoFitValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InputVideoStretchMode"/> values are the same. </summary>
         public static bool operator ==(InputVideoStretchMode left, InputVideoStretchMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InputVideoStretchMode"/> values are not the same. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningMountState UnmountFailed { get; } = new MachineLearningMountState(UnmountFailedValue);
         /// <summary> Unmounted. </summary>
         public static MachineLearningMountState Unmounted { get; } = new MachineLearningMountState(UnmountedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningMountState"/> values are the same. </summary>
         public static bool operator ==(MachineLearningMountState left, MachineLearningMountState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningMountState"/> values are not the same. </summary>

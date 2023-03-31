@@ -29,6 +29,9 @@ namespace Azure.Maps.Routing.Models
         public static DrivingSide Left { get; } = new DrivingSide(LeftValue);
         /// <summary> Right side. </summary>
         public static DrivingSide Right { get; } = new DrivingSide(RightValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DrivingSide"/> values are the same. </summary>
         public static bool operator ==(DrivingSide left, DrivingSide right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DrivingSide"/> values are not the same. </summary>

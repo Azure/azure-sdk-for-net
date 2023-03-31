@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static LoadBalancerSkuTier Regional { get; } = new LoadBalancerSkuTier(RegionalValue);
         /// <summary> Global. </summary>
         public static LoadBalancerSkuTier Global { get; } = new LoadBalancerSkuTier(GlobalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LoadBalancerSkuTier"/> values are the same. </summary>
         public static bool operator ==(LoadBalancerSkuTier left, LoadBalancerSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoadBalancerSkuTier"/> values are not the same. </summary>

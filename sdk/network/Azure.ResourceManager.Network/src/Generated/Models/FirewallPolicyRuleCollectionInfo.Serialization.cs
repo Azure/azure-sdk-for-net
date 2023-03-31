@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ruleCollectionType"u8);
-            writer.WriteStringValue(RuleCollectionType.ToString());
+            writer.WriteStringValue(RuleCollectionType.ToSerialString());
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);

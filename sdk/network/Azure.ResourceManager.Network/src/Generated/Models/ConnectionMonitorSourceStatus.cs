@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ConnectionMonitorSourceStatus Active { get; } = new ConnectionMonitorSourceStatus(ActiveValue);
         /// <summary> Inactive. </summary>
         public static ConnectionMonitorSourceStatus Inactive { get; } = new ConnectionMonitorSourceStatus(InactiveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConnectionMonitorSourceStatus"/> values are the same. </summary>
         public static bool operator ==(ConnectionMonitorSourceStatus left, ConnectionMonitorSourceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionMonitorSourceStatus"/> values are not the same. </summary>

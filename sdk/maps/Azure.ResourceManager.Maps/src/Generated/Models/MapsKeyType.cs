@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Maps.Models
         public static MapsKeyType Primary { get; } = new MapsKeyType(PrimaryValue);
         /// <summary> secondary. </summary>
         public static MapsKeyType Secondary { get; } = new MapsKeyType(SecondaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MapsKeyType"/> values are the same. </summary>
         public static bool operator ==(MapsKeyType left, MapsKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapsKeyType"/> values are not the same. </summary>

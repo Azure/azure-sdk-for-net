@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             if (Optional.IsDefined(VmSize))
             {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(VmPriority))
             {
                 writer.WritePropertyName("vmPriority"u8);
-                writer.WriteStringValue(VmPriority.Value.ToString());
+                writer.WriteStringValue(VmPriority.Value.ToSerialString());
             }
             if (Optional.IsDefined(VirtualMachineImage))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(RemoteLoginPortPublicAccess))
             {
                 writer.WritePropertyName("remoteLoginPortPublicAccess"u8);
-                writer.WriteStringValue(RemoteLoginPortPublicAccess.Value.ToString());
+                writer.WriteStringValue(RemoteLoginPortPublicAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnableNodePublicIP))
             {

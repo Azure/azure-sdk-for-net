@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsColumnDataTypeHint ArmPath { get; } = new OperationalInsightsColumnDataTypeHint(ArmPathValue);
         /// <summary> A standard V4/V6 ip address following the standard shape, x.x.x.x/y:y:y:y:y:y:y:y. </summary>
         public static OperationalInsightsColumnDataTypeHint IP { get; } = new OperationalInsightsColumnDataTypeHint(IPValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsColumnDataTypeHint"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsColumnDataTypeHint left, OperationalInsightsColumnDataTypeHint right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsColumnDataTypeHint"/> values are not the same. </summary>

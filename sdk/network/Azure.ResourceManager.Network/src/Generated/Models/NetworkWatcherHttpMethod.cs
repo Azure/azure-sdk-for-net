@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Get. </summary>
         public static NetworkWatcherHttpMethod Get { get; } = new NetworkWatcherHttpMethod(GetValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkWatcherHttpMethod"/> values are the same. </summary>
         public static bool operator ==(NetworkWatcherHttpMethod left, NetworkWatcherHttpMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkWatcherHttpMethod"/> values are not the same. </summary>

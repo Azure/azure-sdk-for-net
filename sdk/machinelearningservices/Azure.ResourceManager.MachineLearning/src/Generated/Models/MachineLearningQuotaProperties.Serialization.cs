@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
-                writer.WriteStringValue(Unit.Value.ToString());
+                writer.WriteStringValue(Unit.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

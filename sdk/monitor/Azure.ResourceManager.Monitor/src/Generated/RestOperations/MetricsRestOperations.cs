@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Monitor
             }
             if (resultType != null)
             {
-                uri.AppendQuery("resultType", resultType.Value.ToString(), true);
+                uri.AppendQuery("resultType", resultType.Value.ToSerialString(), true);
             }
             if (metricnamespace != null)
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Monitor
             }
             if (resultType != null)
             {
-                uri.AppendQuery("resultType", resultType.Value.ToString(), true);
+                uri.AppendQuery("resultType", resultType.Value.ToSerialString(), true);
             }
             if (metricnamespace != null)
             {

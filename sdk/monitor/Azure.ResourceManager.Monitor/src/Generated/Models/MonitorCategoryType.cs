@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorCategoryType Metrics { get; } = new MonitorCategoryType(MetricsValue);
         /// <summary> Logs. </summary>
         public static MonitorCategoryType Logs { get; } = new MonitorCategoryType(LogsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MonitorCategoryType"/> values are the same. </summary>
         public static bool operator ==(MonitorCategoryType left, MonitorCategoryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorCategoryType"/> values are not the same. </summary>

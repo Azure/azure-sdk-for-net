@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MixedReality.Models
 {
     /// <summary> serial of key to be regenerated. </summary>
-    public enum MixedRealityAccountKeySerial
+    public enum MixedRealityAccountKeySerial : int
     {
         /// <summary> The Primary Key. </summary>
         Primary = 1,

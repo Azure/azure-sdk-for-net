@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// AP is calculated for each class and averaged to get the MAP.
         /// </summary>
         public static InstanceSegmentationPrimaryMetric MeanAveragePrecision { get; } = new InstanceSegmentationPrimaryMetric(MeanAveragePrecisionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InstanceSegmentationPrimaryMetric"/> values are the same. </summary>
         public static bool operator ==(InstanceSegmentationPrimaryMetric left, InstanceSegmentationPrimaryMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstanceSegmentationPrimaryMetric"/> values are not the same. </summary>

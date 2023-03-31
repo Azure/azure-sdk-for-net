@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnAuthenticationType Radius { get; } = new VpnAuthenticationType(RadiusValue);
         /// <summary> AAD. </summary>
         public static VpnAuthenticationType AAD { get; } = new VpnAuthenticationType(AADValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VpnAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(VpnAuthenticationType left, VpnAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VpnAuthenticationType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static TrackPropertyType Unknown { get; } = new TrackPropertyType(UnknownValue);
         /// <summary> Track FourCC. </summary>
         public static TrackPropertyType FourCC { get; } = new TrackPropertyType(FourCCValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrackPropertyType"/> values are the same. </summary>
         public static bool operator ==(TrackPropertyType left, TrackPropertyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrackPropertyType"/> values are not the same. </summary>

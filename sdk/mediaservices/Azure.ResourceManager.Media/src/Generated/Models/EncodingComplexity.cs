@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static EncodingComplexity Balanced { get; } = new EncodingComplexity(BalancedValue);
         /// <summary> Configures the encoder to use settings optimized to produce higher quality output at the expense of slower overall encode time. </summary>
         public static EncodingComplexity Quality { get; } = new EncodingComplexity(QualityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EncodingComplexity"/> values are the same. </summary>
         public static bool operator ==(EncodingComplexity left, EncodingComplexity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EncodingComplexity"/> values are not the same. </summary>

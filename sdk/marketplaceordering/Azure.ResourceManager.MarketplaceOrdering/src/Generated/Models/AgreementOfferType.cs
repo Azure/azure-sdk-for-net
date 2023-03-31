@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Models
 
         /// <summary> virtualmachine. </summary>
         public static AgreementOfferType Virtualmachine { get; } = new AgreementOfferType(VirtualmachineValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AgreementOfferType"/> values are the same. </summary>
         public static bool operator ==(AgreementOfferType left, AgreementOfferType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgreementOfferType"/> values are not the same. </summary>

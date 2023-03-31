@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Media.Models
         public static StreamingPolicyStreamingProtocol SmoothStreaming { get; } = new StreamingPolicyStreamingProtocol(SmoothStreamingValue);
         /// <summary> Download protocol. </summary>
         public static StreamingPolicyStreamingProtocol Download { get; } = new StreamingPolicyStreamingProtocol(DownloadValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamingPolicyStreamingProtocol"/> values are the same. </summary>
         public static bool operator ==(StreamingPolicyStreamingProtocol left, StreamingPolicyStreamingProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingPolicyStreamingProtocol"/> values are not the same. </summary>

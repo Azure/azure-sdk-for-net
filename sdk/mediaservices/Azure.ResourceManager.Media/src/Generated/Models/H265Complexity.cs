@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static H265Complexity Balanced { get; } = new H265Complexity(BalancedValue);
         /// <summary> Tells the encoder to use settings that are optimized to produce higher quality output at the expense of slower overall encode time. </summary>
         public static H265Complexity Quality { get; } = new H265Complexity(QualityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="H265Complexity"/> values are the same. </summary>
         public static bool operator ==(H265Complexity left, H265Complexity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="H265Complexity"/> values are not the same. </summary>

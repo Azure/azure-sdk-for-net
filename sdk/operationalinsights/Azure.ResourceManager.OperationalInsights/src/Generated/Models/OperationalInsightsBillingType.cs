@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsBillingType Cluster { get; } = new OperationalInsightsBillingType(ClusterValue);
         /// <summary> Workspaces. </summary>
         public static OperationalInsightsBillingType Workspaces { get; } = new OperationalInsightsBillingType(WorkspacesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsBillingType"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsBillingType left, OperationalInsightsBillingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsBillingType"/> values are not the same. </summary>

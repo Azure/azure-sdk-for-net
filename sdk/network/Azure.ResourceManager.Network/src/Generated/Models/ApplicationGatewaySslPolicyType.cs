@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewaySslPolicyType Predefined { get; } = new ApplicationGatewaySslPolicyType(PredefinedValue);
         /// <summary> Custom. </summary>
         public static ApplicationGatewaySslPolicyType Custom { get; } = new ApplicationGatewaySslPolicyType(CustomValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySslPolicyType"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewaySslPolicyType left, ApplicationGatewaySslPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewaySslPolicyType"/> values are not the same. </summary>

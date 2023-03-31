@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.MySql.Models
         public static MySqlPrivateLinkServiceConnectionStateStatus Rejected { get; } = new MySqlPrivateLinkServiceConnectionStateStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static MySqlPrivateLinkServiceConnectionStateStatus Disconnected { get; } = new MySqlPrivateLinkServiceConnectionStateStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlPrivateLinkServiceConnectionStateStatus"/> values are the same. </summary>
         public static bool operator ==(MySqlPrivateLinkServiceConnectionStateStatus left, MySqlPrivateLinkServiceConnectionStateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlPrivateLinkServiceConnectionStateStatus"/> values are not the same. </summary>

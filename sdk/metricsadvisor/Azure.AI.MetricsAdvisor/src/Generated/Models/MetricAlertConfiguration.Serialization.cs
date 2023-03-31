@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("anomalyDetectionConfigurationId"u8);
             writer.WriteStringValue(DetectionConfigurationId);
             writer.WritePropertyName("anomalyScopeType"u8);
-            writer.WriteStringValue(AnomalyScopeType.ToString());
+            writer.WriteStringValue(AnomalyScopeType.ToSerialString());
             if (Optional.IsDefined(UseDetectionResultToFilterAnomalies))
             {
                 writer.WritePropertyName("negationOperation"u8);

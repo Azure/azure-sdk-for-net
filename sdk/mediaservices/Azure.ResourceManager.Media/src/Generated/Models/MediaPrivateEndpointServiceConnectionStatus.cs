@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaPrivateEndpointServiceConnectionStatus Approved { get; } = new MediaPrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static MediaPrivateEndpointServiceConnectionStatus Rejected { get; } = new MediaPrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(MediaPrivateEndpointServiceConnectionStatus left, MediaPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

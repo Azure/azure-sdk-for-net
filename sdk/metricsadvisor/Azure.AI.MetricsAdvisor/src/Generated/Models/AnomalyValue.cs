@@ -25,6 +25,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string AutoDetectValue = "AutoDetect";
         private const string AnomalyValue1 = "Anomaly";
         private const string NotAnomalyValue = "NotAnomaly";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AnomalyValue"/> values are the same. </summary>
         public static bool operator ==(AnomalyValue left, AnomalyValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnomalyValue"/> values are not the same. </summary>

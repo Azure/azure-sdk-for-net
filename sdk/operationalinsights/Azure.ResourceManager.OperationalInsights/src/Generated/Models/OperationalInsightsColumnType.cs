@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsColumnType Guid { get; } = new OperationalInsightsColumnType(GuidValue);
         /// <summary> dynamic. </summary>
         public static OperationalInsightsColumnType Dynamic { get; } = new OperationalInsightsColumnType(DynamicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsColumnType"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsColumnType left, OperationalInsightsColumnType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsColumnType"/> values are not the same. </summary>

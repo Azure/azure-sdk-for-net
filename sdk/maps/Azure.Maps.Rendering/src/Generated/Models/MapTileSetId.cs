@@ -162,6 +162,9 @@ namespace Azure.Maps.Rendering
         public static MapTileSetId MicrosoftTrafficReducedMain { get; } = new MapTileSetId(MicrosoftTrafficReducedMainValue);
         /// <summary> incident tiles in vector. </summary>
         public static MapTileSetId MicrosoftTrafficIncident { get; } = new MapTileSetId(MicrosoftTrafficIncidentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MapTileSetId"/> values are the same. </summary>
         public static bool operator ==(MapTileSetId left, MapTileSetId right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapTileSetId"/> values are not the same. </summary>

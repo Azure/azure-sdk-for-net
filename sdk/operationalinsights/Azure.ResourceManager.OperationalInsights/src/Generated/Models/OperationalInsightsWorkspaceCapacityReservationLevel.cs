@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The capacity reservation level in GB for this workspace, when CapacityReservation sku is selected. </summary>
-    public enum OperationalInsightsWorkspaceCapacityReservationLevel
+    public enum OperationalInsightsWorkspaceCapacityReservationLevel : int
     {
         /// <summary> 100. </summary>
         OneHundred = 100,

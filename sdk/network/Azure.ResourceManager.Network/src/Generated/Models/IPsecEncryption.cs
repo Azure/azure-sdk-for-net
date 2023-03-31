@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Network.Models
         public static IPsecEncryption GcmAes192 { get; } = new IPsecEncryption(GcmAes192Value);
         /// <summary> GCMAES256. </summary>
         public static IPsecEncryption GcmAes256 { get; } = new IPsecEncryption(GcmAes256Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IPsecEncryption"/> values are the same. </summary>
         public static bool operator ==(IPsecEncryption left, IPsecEncryption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IPsecEncryption"/> values are not the same. </summary>

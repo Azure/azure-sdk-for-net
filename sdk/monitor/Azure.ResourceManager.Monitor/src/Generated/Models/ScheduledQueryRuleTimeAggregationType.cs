@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static ScheduledQueryRuleTimeAggregationType Maximum { get; } = new ScheduledQueryRuleTimeAggregationType(MaximumValue);
         /// <summary> Total. </summary>
         public static ScheduledQueryRuleTimeAggregationType Total { get; } = new ScheduledQueryRuleTimeAggregationType(TotalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScheduledQueryRuleTimeAggregationType"/> values are the same. </summary>
         public static bool operator ==(ScheduledQueryRuleTimeAggregationType left, ScheduledQueryRuleTimeAggregationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduledQueryRuleTimeAggregationType"/> values are not the same. </summary>

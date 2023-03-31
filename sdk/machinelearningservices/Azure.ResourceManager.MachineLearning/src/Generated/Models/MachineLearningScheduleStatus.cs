@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningScheduleStatus Enabled { get; } = new MachineLearningScheduleStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static MachineLearningScheduleStatus Disabled { get; } = new MachineLearningScheduleStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningScheduleStatus"/> values are the same. </summary>
         public static bool operator ==(MachineLearningScheduleStatus left, MachineLearningScheduleStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningScheduleStatus"/> values are not the same. </summary>

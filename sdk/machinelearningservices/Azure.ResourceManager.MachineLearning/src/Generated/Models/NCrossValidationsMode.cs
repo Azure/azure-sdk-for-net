@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static NCrossValidationsMode Auto { get; } = new NCrossValidationsMode(AutoValue);
         /// <summary> Use custom N-Cross validations value. </summary>
         public static NCrossValidationsMode Custom { get; } = new NCrossValidationsMode(CustomValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NCrossValidationsMode"/> values are the same. </summary>
         public static bool operator ==(NCrossValidationsMode left, NCrossValidationsMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NCrossValidationsMode"/> values are not the same. </summary>

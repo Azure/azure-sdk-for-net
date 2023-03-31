@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static SimState Enabled { get; } = new SimState(EnabledValue);
         /// <summary> The SIM cannot be enabled because some of the associated configuration is invalid. </summary>
         public static SimState Invalid { get; } = new SimState(InvalidValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SimState"/> values are the same. </summary>
         public static bool operator ==(SimState left, SimState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SimState"/> values are not the same. </summary>

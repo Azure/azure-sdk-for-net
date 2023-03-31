@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorOdataType MicrosoftAzureMonitorMultipleResourceMultipleMetricCriteria { get; } = new MonitorOdataType(MicrosoftAzureMonitorMultipleResourceMultipleMetricCriteriaValue);
         /// <summary> Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria. </summary>
         public static MonitorOdataType MicrosoftAzureMonitorWebtestLocationAvailabilityCriteria { get; } = new MonitorOdataType(MicrosoftAzureMonitorWebtestLocationAvailabilityCriteriaValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MonitorOdataType"/> values are the same. </summary>
         public static bool operator ==(MonitorOdataType left, MonitorOdataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorOdataType"/> values are not the same. </summary>

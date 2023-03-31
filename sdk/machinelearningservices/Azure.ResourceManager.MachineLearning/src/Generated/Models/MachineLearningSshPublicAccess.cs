@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningSshPublicAccess Enabled { get; } = new MachineLearningSshPublicAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static MachineLearningSshPublicAccess Disabled { get; } = new MachineLearningSshPublicAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningSshPublicAccess"/> values are the same. </summary>
         public static bool operator ==(MachineLearningSshPublicAccess left, MachineLearningSshPublicAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningSshPublicAccess"/> values are not the same. </summary>

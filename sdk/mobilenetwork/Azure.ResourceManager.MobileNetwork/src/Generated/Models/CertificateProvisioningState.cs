@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static CertificateProvisioningState Provisioned { get; } = new CertificateProvisioningState(ProvisionedValue);
         /// <summary> The certificate failed to be provisioned. The &quot;reason&quot; property explains why. </summary>
         public static CertificateProvisioningState Failed { get; } = new CertificateProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CertificateProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CertificateProvisioningState left, CertificateProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CertificateProvisioningState"/> values are not the same. </summary>

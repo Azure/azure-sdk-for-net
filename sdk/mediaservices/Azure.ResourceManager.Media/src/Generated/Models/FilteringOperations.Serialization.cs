@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Rotation))
             {
                 writer.WritePropertyName("rotation"u8);
-                writer.WriteStringValue(Rotation.Value.ToString());
+                writer.WriteStringValue(Rotation.Value.ToSerialString());
             }
             if (Optional.IsDefined(Crop))
             {

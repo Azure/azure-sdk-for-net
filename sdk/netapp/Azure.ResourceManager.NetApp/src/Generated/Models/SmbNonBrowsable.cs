@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static SmbNonBrowsable Disabled { get; } = new SmbNonBrowsable(DisabledValue);
         /// <summary> smbNonBrowsable share setting is enabled. </summary>
         public static SmbNonBrowsable Enabled { get; } = new SmbNonBrowsable(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SmbNonBrowsable"/> values are the same. </summary>
         public static bool operator ==(SmbNonBrowsable left, SmbNonBrowsable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SmbNonBrowsable"/> values are not the same. </summary>

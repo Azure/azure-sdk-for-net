@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("direction"u8);
-            writer.WriteStringValue(Direction.ToString());
+            writer.WriteStringValue(Direction.ToSerialString());
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol);
             writer.WritePropertyName("source"u8);

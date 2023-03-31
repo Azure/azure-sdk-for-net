@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Cipher))
             {
                 writer.WritePropertyName("cipher"u8);
-                writer.WriteStringValue(Cipher.Value.ToString());
+                writer.WriteStringValue(Cipher.Value.ToSerialString());
             }
             if (Optional.IsDefined(SciState))
             {
                 writer.WritePropertyName("sciState"u8);
-                writer.WriteStringValue(SciState.Value.ToString());
+                writer.WriteStringValue(SciState.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

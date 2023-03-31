@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static PcProtocol Udp { get; } = new PcProtocol(UdpValue);
         /// <summary> Any. </summary>
         public static PcProtocol Any { get; } = new PcProtocol(AnyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PcProtocol"/> values are the same. </summary>
         public static bool operator ==(PcProtocol left, PcProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PcProtocol"/> values are not the same. </summary>

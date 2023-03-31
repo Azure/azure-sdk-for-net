@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static SamplingAlgorithmType Random { get; } = new SamplingAlgorithmType(RandomValue);
         /// <summary> Bayesian. </summary>
         public static SamplingAlgorithmType Bayesian { get; } = new SamplingAlgorithmType(BayesianValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SamplingAlgorithmType"/> values are the same. </summary>
         public static bool operator ==(SamplingAlgorithmType left, SamplingAlgorithmType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SamplingAlgorithmType"/> values are not the same. </summary>

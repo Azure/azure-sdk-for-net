@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Streams)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

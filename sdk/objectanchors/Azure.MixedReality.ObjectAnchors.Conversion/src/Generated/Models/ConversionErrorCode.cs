@@ -65,6 +65,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public static ConversionErrorCode TooManyRigPoses { get; } = new ConversionErrorCode(TooManyRigPosesValue);
         /// <summary> The provided asset was corrupted, malformed, or otherwise unable to be converted in its provided format. </summary>
         public static ConversionErrorCode AssetCannotBeConverted { get; } = new ConversionErrorCode(AssetCannotBeConvertedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConversionErrorCode"/> values are the same. </summary>
         public static bool operator ==(ConversionErrorCode left, ConversionErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConversionErrorCode"/> values are not the same. </summary>

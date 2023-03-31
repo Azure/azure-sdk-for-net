@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.NetApp
             writer.WritePropertyName("size"u8);
             writer.WriteNumberValue(Size);
             writer.WritePropertyName("serviceLevel"u8);
-            writer.WriteStringValue(ServiceLevel.ToString());
+            writer.WriteStringValue(ServiceLevel.ToSerialString());
             if (Optional.IsDefined(QosType))
             {
                 writer.WritePropertyName("qosType"u8);
-                writer.WriteStringValue(QosType.Value.ToString());
+                writer.WriteStringValue(QosType.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsCoolAccessEnabled))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetApp
                 if (EncryptionType != null)
                 {
                     writer.WritePropertyName("encryptionType"u8);
-                    writer.WriteStringValue(EncryptionType.Value.ToString());
+                    writer.WriteStringValue(EncryptionType.Value.ToSerialString());
                 }
                 else
                 {

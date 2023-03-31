@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static CircuitConnectionStatus Connecting { get; } = new CircuitConnectionStatus(ConnectingValue);
         /// <summary> Disconnected. </summary>
         public static CircuitConnectionStatus Disconnected { get; } = new CircuitConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CircuitConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(CircuitConnectionStatus left, CircuitConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CircuitConnectionStatus"/> values are not the same. </summary>

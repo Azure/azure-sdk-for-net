@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkAccess Allow { get; } = new NetworkAccess(AllowValue);
         /// <summary> Deny. </summary>
         public static NetworkAccess Deny { get; } = new NetworkAccess(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkAccess"/> values are the same. </summary>
         public static bool operator ==(NetworkAccess left, NetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkAccess"/> values are not the same. </summary>

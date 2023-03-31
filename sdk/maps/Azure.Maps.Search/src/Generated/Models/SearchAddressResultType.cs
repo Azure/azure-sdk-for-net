@@ -38,6 +38,9 @@ namespace Azure.Maps.Search.Models
         public static SearchAddressResultType AddressRange { get; } = new SearchAddressResultType(AddressRangeValue);
         /// <summary> Cross Street. </summary>
         public static SearchAddressResultType CrossStreet { get; } = new SearchAddressResultType(CrossStreetValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SearchAddressResultType"/> values are the same. </summary>
         public static bool operator ==(SearchAddressResultType left, SearchAddressResultType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchAddressResultType"/> values are not the same. </summary>

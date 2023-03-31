@@ -35,6 +35,9 @@ namespace Azure.Maps.Routing.Models
         public static TrafficIncidentCategory RoadClosure { get; } = new TrafficIncidentCategory(RoadClosureValue);
         /// <summary> Other. </summary>
         public static TrafficIncidentCategory Other { get; } = new TrafficIncidentCategory(OtherValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrafficIncidentCategory"/> values are the same. </summary>
         public static bool operator ==(TrafficIncidentCategory left, TrafficIncidentCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficIncidentCategory"/> values are not the same. </summary>

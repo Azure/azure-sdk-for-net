@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsDataIngestionStatus SubscriptionSuspended { get; } = new OperationalInsightsDataIngestionStatus(SubscriptionSuspendedValue);
         /// <summary> 80% of daily cap quota reached. </summary>
         public static OperationalInsightsDataIngestionStatus ApproachingQuota { get; } = new OperationalInsightsDataIngestionStatus(ApproachingQuotaValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsDataIngestionStatus"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsDataIngestionStatus left, OperationalInsightsDataIngestionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsDataIngestionStatus"/> values are not the same. </summary>

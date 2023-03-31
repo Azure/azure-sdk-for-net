@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnGatewayGeneration Generation1 { get; } = new VpnGatewayGeneration(Generation1Value);
         /// <summary> Generation2. </summary>
         public static VpnGatewayGeneration Generation2 { get; } = new VpnGatewayGeneration(Generation2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VpnGatewayGeneration"/> values are the same. </summary>
         public static bool operator ==(VpnGatewayGeneration left, VpnGatewayGeneration right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VpnGatewayGeneration"/> values are not the same. </summary>

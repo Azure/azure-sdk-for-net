@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(InsightsToExtract))
             {
                 writer.WritePropertyName("insightsToExtract"u8);
-                writer.WriteStringValue(InsightsToExtract.Value.ToString());
+                writer.WriteStringValue(InsightsToExtract.Value.ToSerialString());
             }
             if (Optional.IsDefined(AudioLanguage))
             {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                writer.WriteStringValue(Mode.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ExperimentalOptions))
             {

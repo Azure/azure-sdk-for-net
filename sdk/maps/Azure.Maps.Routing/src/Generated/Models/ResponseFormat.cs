@@ -29,6 +29,9 @@ namespace Azure.Maps.Routing.Models
         public static ResponseFormat Json { get; } = new ResponseFormat(JsonValue);
         /// <summary> [The Extensible Markup Language](https://www.w3.org/TR/xml/). </summary>
         public static ResponseFormat Xml { get; } = new ResponseFormat(XmlValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResponseFormat"/> values are the same. </summary>
         public static bool operator ==(ResponseFormat left, ResponseFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResponseFormat"/> values are not the same. </summary>

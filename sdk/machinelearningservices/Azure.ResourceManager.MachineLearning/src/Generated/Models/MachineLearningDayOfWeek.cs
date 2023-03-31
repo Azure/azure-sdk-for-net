@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningDayOfWeek Saturday { get; } = new MachineLearningDayOfWeek(SaturdayValue);
         /// <summary> Sunday weekday. </summary>
         public static MachineLearningDayOfWeek Sunday { get; } = new MachineLearningDayOfWeek(SundayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningDayOfWeek"/> values are the same. </summary>
         public static bool operator ==(MachineLearningDayOfWeek left, MachineLearningDayOfWeek right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningDayOfWeek"/> values are not the same. </summary>

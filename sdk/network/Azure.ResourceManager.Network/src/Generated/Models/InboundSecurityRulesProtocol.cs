@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static InboundSecurityRulesProtocol Tcp { get; } = new InboundSecurityRulesProtocol(TcpValue);
         /// <summary> UDP. </summary>
         public static InboundSecurityRulesProtocol Udp { get; } = new InboundSecurityRulesProtocol(UdpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InboundSecurityRulesProtocol"/> values are the same. </summary>
         public static bool operator ==(InboundSecurityRulesProtocol left, InboundSecurityRulesProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InboundSecurityRulesProtocol"/> values are not the same. </summary>

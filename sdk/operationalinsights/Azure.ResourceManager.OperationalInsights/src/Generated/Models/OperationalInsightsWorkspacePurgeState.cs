@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsWorkspacePurgeState Pending { get; } = new OperationalInsightsWorkspacePurgeState(PendingValue);
         /// <summary> completed. </summary>
         public static OperationalInsightsWorkspacePurgeState Completed { get; } = new OperationalInsightsWorkspacePurgeState(CompletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsWorkspacePurgeState"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsWorkspacePurgeState left, OperationalInsightsWorkspacePurgeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsWorkspacePurgeState"/> values are not the same. </summary>

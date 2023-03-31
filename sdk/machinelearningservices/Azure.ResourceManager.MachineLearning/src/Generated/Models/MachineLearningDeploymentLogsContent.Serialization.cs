@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ContainerType))
             {
                 writer.WritePropertyName("containerType"u8);
-                writer.WriteStringValue(ContainerType.Value.ToString());
+                writer.WriteStringValue(ContainerType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Tail))
             {

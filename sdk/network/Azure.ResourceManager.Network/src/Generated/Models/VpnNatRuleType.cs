@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnNatRuleType Static { get; } = new VpnNatRuleType(StaticValue);
         /// <summary> Dynamic. </summary>
         public static VpnNatRuleType Dynamic { get; } = new VpnNatRuleType(DynamicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VpnNatRuleType"/> values are the same. </summary>
         public static bool operator ==(VpnNatRuleType left, VpnNatRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VpnNatRuleType"/> values are not the same. </summary>

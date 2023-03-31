@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(PlatformType))
             {
                 writer.WritePropertyName("platformType"u8);
-                writer.WriteStringValue(PlatformType.Value.ToString());
+                writer.WriteStringValue(PlatformType.Value.ToSerialString());
             }
             if (Optional.IsDefined(VersionState))
             {
                 writer.WritePropertyName("versionState"u8);
-                writer.WriteStringValue(VersionState.Value.ToString());
+                writer.WriteStringValue(VersionState.Value.ToSerialString());
             }
             if (Optional.IsDefined(MinimumPlatformSoftwareVersion))
             {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(RecommendedVersion))
             {
                 writer.WritePropertyName("recommendedVersion"u8);
-                writer.WriteStringValue(RecommendedVersion.Value.ToString());
+                writer.WriteStringValue(RecommendedVersion.Value.ToSerialString());
             }
             if (Optional.IsDefined(ObsoleteVersion))
             {
                 writer.WritePropertyName("obsoleteVersion"u8);
-                writer.WriteStringValue(ObsoleteVersion.Value.ToString());
+                writer.WriteStringValue(ObsoleteVersion.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

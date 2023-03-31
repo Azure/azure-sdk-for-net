@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
-                writer.WriteStringValue(Priority.Value.ToString());
+                writer.WriteStringValue(Priority.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(CorrelationData))
             {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("DimensionName"u8);
             writer.WriteStringValue(DimensionName);
             writer.WritePropertyName("Operator"u8);
-            writer.WriteStringValue(Operator.ToString());
+            writer.WriteStringValue(Operator.ToSerialString());
             writer.WritePropertyName("Values"u8);
             writer.WriteStartArray();
             foreach (var item in Values)

@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("changePointValue"u8);
-            writer.WriteStringValue(ChangePointValue.ToString());
+            writer.WriteStringValue(ChangePointValue.ToSerialString());
             writer.WriteEndObject();
         }
 

@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WritePropertyName("bandwidthMHz"u8);
             writer.WriteNumberValue(BandwidthMHz);
             writer.WritePropertyName("direction"u8);
-            writer.WriteStringValue(Direction.ToString());
+            writer.WriteStringValue(Direction.ToSerialString());
             writer.WritePropertyName("polarization"u8);
-            writer.WriteStringValue(Polarization.ToString());
+            writer.WriteStringValue(Polarization.ToSerialString());
             writer.WriteEndObject();
         }
 

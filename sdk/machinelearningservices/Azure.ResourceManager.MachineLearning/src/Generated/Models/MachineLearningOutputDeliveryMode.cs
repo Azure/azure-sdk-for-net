@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningOutputDeliveryMode ReadWriteMount { get; } = new MachineLearningOutputDeliveryMode(ReadWriteMountValue);
         /// <summary> Upload. </summary>
         public static MachineLearningOutputDeliveryMode Upload { get; } = new MachineLearningOutputDeliveryMode(UploadValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningOutputDeliveryMode"/> values are the same. </summary>
         public static bool operator ==(MachineLearningOutputDeliveryMode left, MachineLearningOutputDeliveryMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningOutputDeliveryMode"/> values are not the same. </summary>

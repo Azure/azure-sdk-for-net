@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static IdentityConfigurationType AmlToken { get; } = new IdentityConfigurationType(AmlTokenValue);
         /// <summary> UserIdentity. </summary>
         public static IdentityConfigurationType UserIdentity { get; } = new IdentityConfigurationType(UserIdentityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IdentityConfigurationType"/> values are the same. </summary>
         public static bool operator ==(IdentityConfigurationType left, IdentityConfigurationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IdentityConfigurationType"/> values are not the same. </summary>

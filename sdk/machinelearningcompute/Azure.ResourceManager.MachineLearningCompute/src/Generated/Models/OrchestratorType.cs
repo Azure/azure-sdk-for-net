@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static OrchestratorType Kubernetes { get; } = new OrchestratorType(KubernetesValue);
         /// <summary> None. </summary>
         public static OrchestratorType None { get; } = new OrchestratorType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OrchestratorType"/> values are the same. </summary>
         public static bool operator ==(OrchestratorType left, OrchestratorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrchestratorType"/> values are not the same. </summary>

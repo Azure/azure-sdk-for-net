@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static FilterTrackPropertyCompareOperation Equal { get; } = new FilterTrackPropertyCompareOperation(EqualValue);
         /// <summary> The not equal operation. </summary>
         public static FilterTrackPropertyCompareOperation NotEqual { get; } = new FilterTrackPropertyCompareOperation(NotEqualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FilterTrackPropertyCompareOperation"/> values are the same. </summary>
         public static bool operator ==(FilterTrackPropertyCompareOperation left, FilterTrackPropertyCompareOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FilterTrackPropertyCompareOperation"/> values are not the same. </summary>

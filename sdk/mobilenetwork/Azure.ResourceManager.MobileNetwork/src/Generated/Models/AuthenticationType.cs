@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static AuthenticationType AAD { get; } = new AuthenticationType(AADValue);
         /// <summary> Use locally stored passwords to authenticate the user. </summary>
         public static AuthenticationType Password { get; } = new AuthenticationType(PasswordValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AuthenticationType"/> values are the same. </summary>
         public static bool operator ==(AuthenticationType left, AuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthenticationType"/> values are not the same. </summary>

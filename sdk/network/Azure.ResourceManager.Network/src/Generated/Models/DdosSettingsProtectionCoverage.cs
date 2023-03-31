@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static DdosSettingsProtectionCoverage Basic { get; } = new DdosSettingsProtectionCoverage(BasicValue);
         /// <summary> Standard. </summary>
         public static DdosSettingsProtectionCoverage Standard { get; } = new DdosSettingsProtectionCoverage(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DdosSettingsProtectionCoverage"/> values are the same. </summary>
         public static bool operator ==(DdosSettingsProtectionCoverage left, DdosSettingsProtectionCoverage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DdosSettingsProtectionCoverage"/> values are not the same. </summary>

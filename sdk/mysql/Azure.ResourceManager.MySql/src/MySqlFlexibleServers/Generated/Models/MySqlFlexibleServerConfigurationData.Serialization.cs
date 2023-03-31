@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source.Value.ToString());
+                writer.WriteStringValue(Source.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

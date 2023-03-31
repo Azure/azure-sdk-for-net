@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static GatewayLoadBalancerTunnelInterfaceType Internal { get; } = new GatewayLoadBalancerTunnelInterfaceType(InternalValue);
         /// <summary> External. </summary>
         public static GatewayLoadBalancerTunnelInterfaceType External { get; } = new GatewayLoadBalancerTunnelInterfaceType(ExternalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GatewayLoadBalancerTunnelInterfaceType"/> values are the same. </summary>
         public static bool operator ==(GatewayLoadBalancerTunnelInterfaceType left, GatewayLoadBalancerTunnelInterfaceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GatewayLoadBalancerTunnelInterfaceType"/> values are not the same. </summary>

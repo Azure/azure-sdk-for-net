@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("scaleType"u8);
-            writer.WriteStringValue(ScaleType.ToString());
+            writer.WriteStringValue(ScaleType.ToSerialString());
             writer.WriteEndObject();
         }
 

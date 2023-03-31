@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningRecurrenceFrequency Week { get; } = new MachineLearningRecurrenceFrequency(WeekValue);
         /// <summary> Month frequency. </summary>
         public static MachineLearningRecurrenceFrequency Month { get; } = new MachineLearningRecurrenceFrequency(MonthValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningRecurrenceFrequency"/> values are the same. </summary>
         public static bool operator ==(MachineLearningRecurrenceFrequency left, MachineLearningRecurrenceFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningRecurrenceFrequency"/> values are not the same. </summary>

@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaJobErrorCode ContentUnsupported { get; } = new MediaJobErrorCode(ContentUnsupportedValue);
         /// <summary> There was an error verifying to the account identity. Check and fix the identity configurations and retry. If unsuccessful, please contact support. </summary>
         public static MediaJobErrorCode IdentityUnsupported { get; } = new MediaJobErrorCode(IdentityUnsupportedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaJobErrorCode"/> values are the same. </summary>
         public static bool operator ==(MediaJobErrorCode left, MediaJobErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaJobErrorCode"/> values are not the same. </summary>

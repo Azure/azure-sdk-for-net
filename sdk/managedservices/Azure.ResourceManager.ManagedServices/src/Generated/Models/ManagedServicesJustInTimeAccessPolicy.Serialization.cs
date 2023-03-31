@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("multiFactorAuthProvider"u8);
-            writer.WriteStringValue(MultiFactorAuthProvider.ToString());
+            writer.WriteStringValue(MultiFactorAuthProvider.ToSerialString());
             if (Optional.IsDefined(MaximumActivationDuration))
             {
                 writer.WritePropertyName("maximumActivationDuration"u8);

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

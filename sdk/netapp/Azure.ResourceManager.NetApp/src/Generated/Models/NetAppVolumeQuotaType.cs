@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppVolumeQuotaType IndividualUserQuota { get; } = new NetAppVolumeQuotaType(IndividualUserQuotaValue);
         /// <summary> Individual group quota. </summary>
         public static NetAppVolumeQuotaType IndividualGroupQuota { get; } = new NetAppVolumeQuotaType(IndividualGroupQuotaValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppVolumeQuotaType"/> values are the same. </summary>
         public static bool operator ==(NetAppVolumeQuotaType left, NetAppVolumeQuotaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppVolumeQuotaType"/> values are not the same. </summary>

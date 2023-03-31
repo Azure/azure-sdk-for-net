@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Network.Models
         public static OwaspCrsExclusionEntrySelectorMatchOperator EndsWith { get; } = new OwaspCrsExclusionEntrySelectorMatchOperator(EndsWithValue);
         /// <summary> EqualsAny. </summary>
         public static OwaspCrsExclusionEntrySelectorMatchOperator EqualsAny { get; } = new OwaspCrsExclusionEntrySelectorMatchOperator(EqualsAnyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OwaspCrsExclusionEntrySelectorMatchOperator"/> values are the same. </summary>
         public static bool operator ==(OwaspCrsExclusionEntrySelectorMatchOperator left, OwaspCrsExclusionEntrySelectorMatchOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OwaspCrsExclusionEntrySelectorMatchOperator"/> values are not the same. </summary>

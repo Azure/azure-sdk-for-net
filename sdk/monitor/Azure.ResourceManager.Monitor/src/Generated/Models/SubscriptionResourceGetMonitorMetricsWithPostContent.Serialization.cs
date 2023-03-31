@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(ResultType))
             {
                 writer.WritePropertyName("resultType"u8);
-                writer.WriteStringValue(ResultType.Value.ToString());
+                writer.WriteStringValue(ResultType.Value.ToSerialString());
             }
             if (Optional.IsDefined(MetricNamespace))
             {

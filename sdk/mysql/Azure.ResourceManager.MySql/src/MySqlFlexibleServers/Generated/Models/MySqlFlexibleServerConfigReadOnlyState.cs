@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerConfigReadOnlyState True { get; } = new MySqlFlexibleServerConfigReadOnlyState(TrueValue);
         /// <summary> False. </summary>
         public static MySqlFlexibleServerConfigReadOnlyState False { get; } = new MySqlFlexibleServerConfigReadOnlyState(FalseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerConfigReadOnlyState"/> values are the same. </summary>
         public static bool operator ==(MySqlFlexibleServerConfigReadOnlyState left, MySqlFlexibleServerConfigReadOnlyState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerConfigReadOnlyState"/> values are not the same. </summary>

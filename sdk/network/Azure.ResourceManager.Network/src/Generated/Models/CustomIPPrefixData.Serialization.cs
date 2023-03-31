@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(CommissionedState))
             {
                 writer.WritePropertyName("commissionedState"u8);
-                writer.WriteStringValue(CommissionedState.Value.ToString());
+                writer.WriteStringValue(CommissionedState.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

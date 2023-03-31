@@ -29,6 +29,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string AndValue = "AND";
         private const string OrValue = "OR";
         private const string XorValue = "XOR";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MetricAlertConfigurationsOperator"/> values are the same. </summary>
         public static bool operator ==(MetricAlertConfigurationsOperator left, MetricAlertConfigurationsOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricAlertConfigurationsOperator"/> values are not the same. </summary>

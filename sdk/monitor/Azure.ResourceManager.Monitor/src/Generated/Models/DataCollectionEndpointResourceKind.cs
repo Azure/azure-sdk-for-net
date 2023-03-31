@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DataCollectionEndpointResourceKind Linux { get; } = new DataCollectionEndpointResourceKind(LinuxValue);
         /// <summary> Windows. </summary>
         public static DataCollectionEndpointResourceKind Windows { get; } = new DataCollectionEndpointResourceKind(WindowsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataCollectionEndpointResourceKind"/> values are the same. </summary>
         public static bool operator ==(DataCollectionEndpointResourceKind left, DataCollectionEndpointResourceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataCollectionEndpointResourceKind"/> values are not the same. </summary>

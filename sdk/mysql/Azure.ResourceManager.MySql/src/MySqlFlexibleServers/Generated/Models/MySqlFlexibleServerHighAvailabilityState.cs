@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerHighAvailabilityState FailingOver { get; } = new MySqlFlexibleServerHighAvailabilityState(FailingOverValue);
         /// <summary> RemovingStandby. </summary>
         public static MySqlFlexibleServerHighAvailabilityState RemovingStandby { get; } = new MySqlFlexibleServerHighAvailabilityState(RemovingStandbyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerHighAvailabilityState"/> values are the same. </summary>
         public static bool operator ==(MySqlFlexibleServerHighAvailabilityState left, MySqlFlexibleServerHighAvailabilityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerHighAvailabilityState"/> values are not the same. </summary>

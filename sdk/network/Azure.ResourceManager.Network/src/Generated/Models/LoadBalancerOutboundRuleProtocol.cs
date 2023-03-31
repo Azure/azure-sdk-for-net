@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static LoadBalancerOutboundRuleProtocol Udp { get; } = new LoadBalancerOutboundRuleProtocol(UdpValue);
         /// <summary> All. </summary>
         public static LoadBalancerOutboundRuleProtocol All { get; } = new LoadBalancerOutboundRuleProtocol(AllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LoadBalancerOutboundRuleProtocol"/> values are the same. </summary>
         public static bool operator ==(LoadBalancerOutboundRuleProtocol left, LoadBalancerOutboundRuleProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoadBalancerOutboundRuleProtocol"/> values are not the same. </summary>

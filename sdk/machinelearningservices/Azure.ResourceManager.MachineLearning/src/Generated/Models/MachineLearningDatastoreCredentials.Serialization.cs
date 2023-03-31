@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("credentialsType"u8);
-            writer.WriteStringValue(CredentialsType.ToString());
+            writer.WriteStringValue(CredentialsType.ToSerialString());
             writer.WriteEndObject();
         }
 

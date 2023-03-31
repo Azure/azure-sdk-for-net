@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
-                writer.WriteStringValue(Permissions.Value.ToString());
+                writer.WriteStringValue(Permissions.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExpireOn))
             {

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningRemoteLoginPortPublicAccess Disabled { get; } = new MachineLearningRemoteLoginPortPublicAccess(DisabledValue);
         /// <summary> NotSpecified. </summary>
         public static MachineLearningRemoteLoginPortPublicAccess NotSpecified { get; } = new MachineLearningRemoteLoginPortPublicAccess(NotSpecifiedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningRemoteLoginPortPublicAccess"/> values are the same. </summary>
         public static bool operator ==(MachineLearningRemoteLoginPortPublicAccess left, MachineLearningRemoteLoginPortPublicAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningRemoteLoginPortPublicAccess"/> values are not the same. </summary>

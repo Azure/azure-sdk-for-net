@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(EgressPublicNetworkAccess))
             {
                 writer.WritePropertyName("egressPublicNetworkAccess"u8);
-                writer.WriteStringValue(EgressPublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(EgressPublicNetworkAccess.Value.ToSerialString());
             }
             writer.WritePropertyName("endpointComputeType"u8);
-            writer.WriteStringValue(EndpointComputeType.ToString());
+            writer.WriteStringValue(EndpointComputeType.ToSerialString());
             if (Optional.IsDefined(InstanceType))
             {
                 if (InstanceType != null)

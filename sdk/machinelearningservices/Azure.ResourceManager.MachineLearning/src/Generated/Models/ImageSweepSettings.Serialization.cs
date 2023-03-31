@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("samplingAlgorithm"u8);
-            writer.WriteStringValue(SamplingAlgorithm.ToString());
+            writer.WriteStringValue(SamplingAlgorithm.ToSerialString());
             writer.WriteEndObject();
         }
 

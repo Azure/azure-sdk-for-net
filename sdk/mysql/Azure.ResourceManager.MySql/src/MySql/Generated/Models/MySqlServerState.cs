@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.MySql.Models
         public static MySqlServerState Disabled { get; } = new MySqlServerState(DisabledValue);
         /// <summary> Inaccessible. </summary>
         public static MySqlServerState Inaccessible { get; } = new MySqlServerState(InaccessibleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlServerState"/> values are the same. </summary>
         public static bool operator ==(MySqlServerState left, MySqlServerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlServerState"/> values are not the same. </summary>

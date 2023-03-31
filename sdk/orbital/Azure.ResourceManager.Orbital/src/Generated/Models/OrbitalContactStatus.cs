@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Orbital.Models
         public static OrbitalContactStatus Failed { get; } = new OrbitalContactStatus(FailedValue);
         /// <summary> providerCancelled. </summary>
         public static OrbitalContactStatus ProviderCancelled { get; } = new OrbitalContactStatus(ProviderCancelledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OrbitalContactStatus"/> values are the same. </summary>
         public static bool operator ==(OrbitalContactStatus left, OrbitalContactStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrbitalContactStatus"/> values are not the same. </summary>

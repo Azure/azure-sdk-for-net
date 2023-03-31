@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Media.Models
         public static LiveEventResourceState Stopping { get; } = new LiveEventResourceState(StoppingValue);
         /// <summary> The live event is being deleted. No billing occurs in this transient state. Updates or streaming are not allowed during this state. </summary>
         public static LiveEventResourceState Deleting { get; } = new LiveEventResourceState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LiveEventResourceState"/> values are the same. </summary>
         public static bool operator ==(LiveEventResourceState left, LiveEventResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LiveEventResourceState"/> values are not the same. </summary>

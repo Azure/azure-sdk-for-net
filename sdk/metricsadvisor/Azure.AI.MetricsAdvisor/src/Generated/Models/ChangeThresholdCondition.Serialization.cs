@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("withinRange"u8);
             writer.WriteBooleanValue(WithinRange);
             writer.WritePropertyName("anomalyDetectorDirection"u8);
-            writer.WriteStringValue(AnomalyDetectorDirection.ToString());
+            writer.WriteStringValue(AnomalyDetectorDirection.ToSerialString());
             writer.WritePropertyName("suppressCondition"u8);
             writer.WriteObjectValue(SuppressCondition);
             writer.WriteEndObject();

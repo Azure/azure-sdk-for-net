@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static SeasonalityMode Auto { get; } = new SeasonalityMode(AutoValue);
         /// <summary> Use the custom seasonality value. </summary>
         public static SeasonalityMode Custom { get; } = new SeasonalityMode(CustomValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SeasonalityMode"/> values are the same. </summary>
         public static bool operator ==(SeasonalityMode left, SeasonalityMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SeasonalityMode"/> values are not the same. </summary>

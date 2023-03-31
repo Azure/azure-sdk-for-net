@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name.ToString());
+            writer.WriteStringValue(Name.ToSerialString());
             if (Optional.IsDefined(CapacityReservationLevel))
             {
                 writer.WritePropertyName("capacityReservationLevel"u8);
-                writer.WriteNumberValue((int)CapacityReservationLevel.Value);
+                writer.WriteNumberValue(CapacityReservationLevel.Value.ToSerialInt32());
             }
             writer.WriteEndObject();
         }

@@ -77,6 +77,9 @@ namespace Azure.Maps.Rendering
         public static LocalizedMapView Auto { get; } = new LocalizedMapView(AutoValue);
         /// <summary> Unified View (Others). </summary>
         public static LocalizedMapView Unified { get; } = new LocalizedMapView(UnifiedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LocalizedMapView"/> values are the same. </summary>
         public static bool operator ==(LocalizedMapView left, LocalizedMapView right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LocalizedMapView"/> values are not the same. </summary>

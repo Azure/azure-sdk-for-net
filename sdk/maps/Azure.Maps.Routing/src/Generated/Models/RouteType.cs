@@ -35,6 +35,9 @@ namespace Azure.Maps.Routing
         public static RouteType Economy { get; } = new RouteType(EconomyValue);
         /// <summary> Includes interesting or challenging roads and uses as few motorways as possible. You can choose the level of turns included and also the degree of hilliness. See the hilliness and windingness parameters for how to set this. There is a limit of 900 km on routes planned with `routeType`=thrilling. </summary>
         public static RouteType Thrilling { get; } = new RouteType(ThrillingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RouteType"/> values are the same. </summary>
         public static bool operator ==(RouteType left, RouteType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouteType"/> values are not the same. </summary>

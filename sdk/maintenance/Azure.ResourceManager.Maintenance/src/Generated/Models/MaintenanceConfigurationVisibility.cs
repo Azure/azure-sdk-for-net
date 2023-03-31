@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static MaintenanceConfigurationVisibility Custom { get; } = new MaintenanceConfigurationVisibility(CustomValue);
         /// <summary> Visible to all users. </summary>
         public static MaintenanceConfigurationVisibility Public { get; } = new MaintenanceConfigurationVisibility(PublicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MaintenanceConfigurationVisibility"/> values are the same. </summary>
         public static bool operator ==(MaintenanceConfigurationVisibility left, MaintenanceConfigurationVisibility right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaintenanceConfigurationVisibility"/> values are not the same. </summary>

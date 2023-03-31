@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualNetworkGatewayConnectionMode ResponderOnly { get; } = new VirtualNetworkGatewayConnectionMode(ResponderOnlyValue);
         /// <summary> InitiatorOnly. </summary>
         public static VirtualNetworkGatewayConnectionMode InitiatorOnly { get; } = new VirtualNetworkGatewayConnectionMode(InitiatorOnlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionMode"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkGatewayConnectionMode left, VirtualNetworkGatewayConnectionMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionMode"/> values are not the same. </summary>

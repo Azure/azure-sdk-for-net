@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ConnectionMonitorEndpointType MMAWorkspaceMachine { get; } = new ConnectionMonitorEndpointType(MMAWorkspaceMachineValue);
         /// <summary> MMAWorkspaceNetwork. </summary>
         public static ConnectionMonitorEndpointType MMAWorkspaceNetwork { get; } = new ConnectionMonitorEndpointType(MMAWorkspaceNetworkValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointType"/> values are the same. </summary>
         public static bool operator ==(ConnectionMonitorEndpointType left, ConnectionMonitorEndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointType"/> values are not the same. </summary>

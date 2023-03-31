@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaJobState Queued { get; } = new MediaJobState(QueuedValue);
         /// <summary> The job is being scheduled to run on an available resource. This is a transient state, between queued and processing states. </summary>
         public static MediaJobState Scheduled { get; } = new MediaJobState(ScheduledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaJobState"/> values are the same. </summary>
         public static bool operator ==(MediaJobState left, MediaJobState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaJobState"/> values are not the same. </summary>

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WritePropertyName("controlPlaneAccessInterface"u8);
             writer.WriteObjectValue(ControlPlaneAccessInterface);
             writer.WritePropertyName("sku"u8);
-            writer.WriteStringValue(Sku.ToString());
+            writer.WriteStringValue(Sku.ToSerialString());
             if (Optional.IsDefined(UeMtu))
             {
                 writer.WritePropertyName("ueMtu"u8);

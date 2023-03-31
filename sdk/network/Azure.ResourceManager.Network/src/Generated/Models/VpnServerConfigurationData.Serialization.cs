@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VpnProtocols)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VpnAuthenticationTypes)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

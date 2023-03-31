@@ -25,6 +25,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string BothValue = "Both";
         private const string DownValue = "Down";
         private const string UpValue = "Up";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BoundaryDirection"/> values are the same. </summary>
         public static bool operator ==(BoundaryDirection left, BoundaryDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BoundaryDirection"/> values are not the same. </summary>

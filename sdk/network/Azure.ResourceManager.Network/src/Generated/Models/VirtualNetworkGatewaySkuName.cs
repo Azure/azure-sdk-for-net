@@ -74,6 +74,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualNetworkGatewaySkuName ErGw2AZ { get; } = new VirtualNetworkGatewaySkuName(ErGw2AZValue);
         /// <summary> ErGw3AZ. </summary>
         public static VirtualNetworkGatewaySkuName ErGw3AZ { get; } = new VirtualNetworkGatewaySkuName(ErGw3AZValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewaySkuName"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkGatewaySkuName left, VirtualNetworkGatewaySkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewaySkuName"/> values are not the same. </summary>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("dataType"u8);
-            writer.WriteStringValue(DataType.ToString());
+            writer.WriteStringValue(DataType.ToSerialString());
             writer.WritePropertyName("dataUri"u8);
             writer.WriteStringValue(DataUri.AbsoluteUri);
             if (Optional.IsDefined(IsAnonymous))

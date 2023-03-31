@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteObjectValue(Configurations);
             }
             writer.WritePropertyName("presetName"u8);
-            writer.WriteStringValue(PresetName.ToString());
+            writer.WriteStringValue(PresetName.ToSerialString());
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();

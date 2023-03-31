@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("anomalyValue"u8);
-            writer.WriteStringValue(AnomalyValue.ToString());
+            writer.WriteStringValue(AnomalyValue.ToSerialString());
             writer.WriteEndObject();
         }
 

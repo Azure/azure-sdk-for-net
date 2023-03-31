@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ExpressRouteLinkConnectorType LC { get; } = new ExpressRouteLinkConnectorType(LCValue);
         /// <summary> SC. </summary>
         public static ExpressRouteLinkConnectorType SC { get; } = new ExpressRouteLinkConnectorType(SCValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExpressRouteLinkConnectorType"/> values are the same. </summary>
         public static bool operator ==(ExpressRouteLinkConnectorType left, ExpressRouteLinkConnectorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteLinkConnectorType"/> values are not the same. </summary>

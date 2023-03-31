@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningOSType Linux { get; } = new MachineLearningOSType(LinuxValue);
         /// <summary> Windows. </summary>
         public static MachineLearningOSType Windows { get; } = new MachineLearningOSType(WindowsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningOSType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningOSType left, MachineLearningOSType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningOSType"/> values are not the same. </summary>

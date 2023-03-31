@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> JSON. </summary>
         public static MachineLearningValueFormat Json { get; } = new MachineLearningValueFormat(JsonValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningValueFormat"/> values are the same. </summary>
         public static bool operator ==(MachineLearningValueFormat left, MachineLearningValueFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningValueFormat"/> values are not the same. </summary>

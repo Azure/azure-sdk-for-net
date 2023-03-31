@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DynamicThresholdOperator LessThan { get; } = new DynamicThresholdOperator(LessThanValue);
         /// <summary> GreaterOrLessThan. </summary>
         public static DynamicThresholdOperator GreaterOrLessThan { get; } = new DynamicThresholdOperator(GreaterOrLessThanValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynamicThresholdOperator"/> values are the same. </summary>
         public static bool operator ==(DynamicThresholdOperator left, DynamicThresholdOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicThresholdOperator"/> values are not the same. </summary>

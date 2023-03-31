@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsTableCreator Microsoft { get; } = new OperationalInsightsTableCreator(MicrosoftValue);
         /// <summary> Tables created by the owner of the Workspace, and only found in this Workspace. </summary>
         public static OperationalInsightsTableCreator Customer { get; } = new OperationalInsightsTableCreator(CustomerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsTableCreator"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsTableCreator left, OperationalInsightsTableCreator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsTableCreator"/> values are not the same. </summary>

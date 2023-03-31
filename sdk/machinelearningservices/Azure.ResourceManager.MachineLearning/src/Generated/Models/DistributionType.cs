@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static DistributionType TensorFlow { get; } = new DistributionType(TensorFlowValue);
         /// <summary> Mpi. </summary>
         public static DistributionType Mpi { get; } = new DistributionType(MpiValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DistributionType"/> values are the same. </summary>
         public static bool operator ==(DistributionType left, DistributionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DistributionType"/> values are not the same. </summary>

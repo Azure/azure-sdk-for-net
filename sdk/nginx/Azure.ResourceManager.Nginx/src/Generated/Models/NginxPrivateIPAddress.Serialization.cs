@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
-                writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
+                writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToSerialString());
             }
             if (Optional.IsDefined(SubnetId))
             {

@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DataColumnDefinitionType Datetime { get; } = new DataColumnDefinitionType(DatetimeValue);
         /// <summary> dynamic. </summary>
         public static DataColumnDefinitionType Dynamic { get; } = new DataColumnDefinitionType(DynamicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataColumnDefinitionType"/> values are the same. </summary>
         public static bool operator ==(DataColumnDefinitionType left, DataColumnDefinitionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataColumnDefinitionType"/> values are not the same. </summary>

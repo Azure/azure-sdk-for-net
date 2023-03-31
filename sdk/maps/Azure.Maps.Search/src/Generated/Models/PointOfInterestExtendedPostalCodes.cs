@@ -26,6 +26,9 @@ namespace Azure.Maps.Search
         private const string NoneValue = "None";
         /// <summary> None. </summary>
         public static PointOfInterestExtendedPostalCodes None { get; } = new PointOfInterestExtendedPostalCodes(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PointOfInterestExtendedPostalCodes"/> values are the same. </summary>
         public static bool operator ==(PointOfInterestExtendedPostalCodes left, PointOfInterestExtendedPostalCodes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PointOfInterestExtendedPostalCodes"/> values are not the same. </summary>

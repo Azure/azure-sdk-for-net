@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(VerbosityLevel))
             {
                 writer.WritePropertyName("verbosityLevel"u8);
-                writer.WriteStringValue(VerbosityLevel.Value.ToString());
+                writer.WriteStringValue(VerbosityLevel.Value.ToSerialString());
             }
             writer.WritePropertyName("profiles"u8);
             writer.WriteStartArray();

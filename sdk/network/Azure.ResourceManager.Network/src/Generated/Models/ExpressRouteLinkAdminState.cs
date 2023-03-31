@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ExpressRouteLinkAdminState Enabled { get; } = new ExpressRouteLinkAdminState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static ExpressRouteLinkAdminState Disabled { get; } = new ExpressRouteLinkAdminState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExpressRouteLinkAdminState"/> values are the same. </summary>
         public static bool operator ==(ExpressRouteLinkAdminState left, ExpressRouteLinkAdminState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteLinkAdminState"/> values are not the same. </summary>

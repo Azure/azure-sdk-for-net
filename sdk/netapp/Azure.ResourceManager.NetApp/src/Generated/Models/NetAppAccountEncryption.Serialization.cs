@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(KeySource))
             {
                 writer.WritePropertyName("keySource"u8);
-                writer.WriteStringValue(KeySource.Value.ToString());
+                writer.WriteStringValue(KeySource.Value.ToSerialString());
             }
             if (Optional.IsDefined(KeyVaultProperties))
             {

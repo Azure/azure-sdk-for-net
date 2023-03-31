@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Maps
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind.Value.ToString());
+                writer.WriteStringValue(Kind.Value.ToSerialString());
             }
             if (Optional.IsDefined(Properties))
             {

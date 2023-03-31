@@ -41,6 +41,9 @@ namespace Azure.Maps.Routing.Models
         public static GuidanceInstructionType DirectionInfo { get; } = new GuidanceInstructionType(DirectionInfoValue);
         /// <summary> Way point location. </summary>
         public static GuidanceInstructionType LocationWaypoint { get; } = new GuidanceInstructionType(LocationWaypointValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GuidanceInstructionType"/> values are the same. </summary>
         public static bool operator ==(GuidanceInstructionType left, GuidanceInstructionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GuidanceInstructionType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkIPVersion IPv4 { get; } = new NetworkIPVersion(IPv4Value);
         /// <summary> IPv6. </summary>
         public static NetworkIPVersion IPv6 { get; } = new NetworkIPVersion(IPv6Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkIPVersion"/> values are the same. </summary>
         public static bool operator ==(NetworkIPVersion left, NetworkIPVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkIPVersion"/> values are not the same. </summary>

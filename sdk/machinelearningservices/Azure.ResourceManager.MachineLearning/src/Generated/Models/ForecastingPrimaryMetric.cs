@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ForecastingPrimaryMetric R2Score { get; } = new ForecastingPrimaryMetric(R2ScoreValue);
         /// <summary> The Normalized Mean Absolute Error (NMAE) is a validation metric to compare the Mean Absolute Error (MAE) of (time) series with different scales. </summary>
         public static ForecastingPrimaryMetric NormalizedMeanAbsoluteError { get; } = new ForecastingPrimaryMetric(NormalizedMeanAbsoluteErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ForecastingPrimaryMetric"/> values are the same. </summary>
         public static bool operator ==(ForecastingPrimaryMetric left, ForecastingPrimaryMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ForecastingPrimaryMetric"/> values are not the same. </summary>

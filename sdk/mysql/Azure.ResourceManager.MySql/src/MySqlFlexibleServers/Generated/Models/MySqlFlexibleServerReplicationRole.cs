@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerReplicationRole Source { get; } = new MySqlFlexibleServerReplicationRole(SourceValue);
         /// <summary> Replica. </summary>
         public static MySqlFlexibleServerReplicationRole Replica { get; } = new MySqlFlexibleServerReplicationRole(ReplicaValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerReplicationRole"/> values are the same. </summary>
         public static bool operator ==(MySqlFlexibleServerReplicationRole left, MySqlFlexibleServerReplicationRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerReplicationRole"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static TrafficControlPermission Enabled { get; } = new TrafficControlPermission(EnabledValue);
         /// <summary> Traffic matching this rule is not allowed to flow. </summary>
         public static TrafficControlPermission Blocked { get; } = new TrafficControlPermission(BlockedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrafficControlPermission"/> values are the same. </summary>
         public static bool operator ==(TrafficControlPermission left, TrafficControlPermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficControlPermission"/> values are not the same. </summary>

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(TimeAggregation))
             {
                 writer.WritePropertyName("timeAggregation"u8);
-                writer.WriteStringValue(TimeAggregation.Value.ToString());
+                writer.WriteStringValue(TimeAggregation.Value.ToSerialString());
             }
             if (Optional.IsDefined(MetricMeasureColumn))
             {

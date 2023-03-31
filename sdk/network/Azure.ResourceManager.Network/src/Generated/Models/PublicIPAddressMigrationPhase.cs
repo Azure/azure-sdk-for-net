@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Network.Models
         public static PublicIPAddressMigrationPhase Abort { get; } = new PublicIPAddressMigrationPhase(AbortValue);
         /// <summary> Committed. </summary>
         public static PublicIPAddressMigrationPhase Committed { get; } = new PublicIPAddressMigrationPhase(CommittedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PublicIPAddressMigrationPhase"/> values are the same. </summary>
         public static bool operator ==(PublicIPAddressMigrationPhase left, PublicIPAddressMigrationPhase right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PublicIPAddressMigrationPhase"/> values are not the same. </summary>

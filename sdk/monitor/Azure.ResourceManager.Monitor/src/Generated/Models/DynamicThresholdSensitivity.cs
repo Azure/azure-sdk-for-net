@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DynamicThresholdSensitivity Medium { get; } = new DynamicThresholdSensitivity(MediumValue);
         /// <summary> High. </summary>
         public static DynamicThresholdSensitivity High { get; } = new DynamicThresholdSensitivity(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynamicThresholdSensitivity"/> values are the same. </summary>
         public static bool operator ==(DynamicThresholdSensitivity left, DynamicThresholdSensitivity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicThresholdSensitivity"/> values are not the same. </summary>

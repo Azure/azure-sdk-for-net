@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static SearchSortEnum Asc { get; } = new SearchSortEnum(AscValue);
         /// <summary> desc. </summary>
         public static SearchSortEnum Desc { get; } = new SearchSortEnum(DescValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SearchSortEnum"/> values are the same. </summary>
         public static bool operator ==(SearchSortEnum left, SearchSortEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchSortEnum"/> values are not the same. </summary>

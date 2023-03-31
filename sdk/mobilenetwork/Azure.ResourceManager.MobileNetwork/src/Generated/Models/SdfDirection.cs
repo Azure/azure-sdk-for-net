@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static SdfDirection Downlink { get; } = new SdfDirection(DownlinkValue);
         /// <summary> Traffic flowing both to and from the UE. </summary>
         public static SdfDirection Bidirectional { get; } = new SdfDirection(BidirectionalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SdfDirection"/> values are the same. </summary>
         public static bool operator ==(SdfDirection left, SdfDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SdfDirection"/> values are not the same. </summary>

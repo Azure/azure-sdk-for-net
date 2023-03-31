@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             if (Optional.IsDefined(DestinationType))
             {
                 writer.WritePropertyName("destinationType"u8);
-                writer.WriteStringValue(DestinationType.Value.ToString());
+                writer.WriteStringValue(DestinationType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

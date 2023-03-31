@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningLoadBalancerType PublicIP { get; } = new MachineLearningLoadBalancerType(PublicIPValue);
         /// <summary> InternalLoadBalancer. </summary>
         public static MachineLearningLoadBalancerType InternalLoadBalancer { get; } = new MachineLearningLoadBalancerType(InternalLoadBalancerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningLoadBalancerType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningLoadBalancerType left, MachineLearningLoadBalancerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningLoadBalancerType"/> values are not the same. </summary>

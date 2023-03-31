@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MySql.Models
         public static MySqlStorageAutogrow Enabled { get; } = new MySqlStorageAutogrow(EnabledValue);
         /// <summary> Disabled. </summary>
         public static MySqlStorageAutogrow Disabled { get; } = new MySqlStorageAutogrow(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlStorageAutogrow"/> values are the same. </summary>
         public static bool operator ==(MySqlStorageAutogrow left, MySqlStorageAutogrow right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlStorageAutogrow"/> values are not the same. </summary>

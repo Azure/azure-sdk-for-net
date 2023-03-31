@@ -74,6 +74,9 @@ namespace Azure.ResourceManager.Media.Models
         public static EncoderNamedPreset H265SingleBitrate1080P { get; } = new EncoderNamedPreset(H265SingleBitrate1080PValue);
         /// <summary> Produces an MP4 file where the video is encoded with H.265 codec at 9500 kbps and a picture height of 2160 pixels, and the stereo audio is encoded with AAC-LC codec at 128 kbps. </summary>
         public static EncoderNamedPreset H265SingleBitrate4K { get; } = new EncoderNamedPreset(H265SingleBitrate4KValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EncoderNamedPreset"/> values are the same. </summary>
         public static bool operator ==(EncoderNamedPreset left, EncoderNamedPreset right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EncoderNamedPreset"/> values are not the same. </summary>

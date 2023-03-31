@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(FeedbackType))
             {
                 writer.WritePropertyName("feedbackType"u8);
-                writer.WriteStringValue(FeedbackType.Value.ToString());
+                writer.WriteStringValue(FeedbackType.Value.ToSerialString());
             }
             if (Optional.IsDefined(StartTime))
             {

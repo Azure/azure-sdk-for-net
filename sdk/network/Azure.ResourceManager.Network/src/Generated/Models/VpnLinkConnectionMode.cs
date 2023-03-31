@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnLinkConnectionMode ResponderOnly { get; } = new VpnLinkConnectionMode(ResponderOnlyValue);
         /// <summary> InitiatorOnly. </summary>
         public static VpnLinkConnectionMode InitiatorOnly { get; } = new VpnLinkConnectionMode(InitiatorOnlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VpnLinkConnectionMode"/> values are the same. </summary>
         public static bool operator ==(VpnLinkConnectionMode left, VpnLinkConnectionMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VpnLinkConnectionMode"/> values are not the same. </summary>

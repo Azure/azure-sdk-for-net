@@ -86,6 +86,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static SyslogDataSourceFacilityName Local7 { get; } = new SyslogDataSourceFacilityName(Local7Value);
         /// <summary> *. </summary>
         public static SyslogDataSourceFacilityName Asterisk { get; } = new SyslogDataSourceFacilityName(AsteriskValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SyslogDataSourceFacilityName"/> values are the same. </summary>
         public static bool operator ==(SyslogDataSourceFacilityName left, SyslogDataSourceFacilityName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyslogDataSourceFacilityName"/> values are not the same. </summary>

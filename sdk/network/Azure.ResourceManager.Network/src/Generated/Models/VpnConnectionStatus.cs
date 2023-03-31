@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnConnectionStatus Connected { get; } = new VpnConnectionStatus(ConnectedValue);
         /// <summary> NotConnected. </summary>
         public static VpnConnectionStatus NotConnected { get; } = new VpnConnectionStatus(NotConnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VpnConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(VpnConnectionStatus left, VpnConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VpnConnectionStatus"/> values are not the same. </summary>

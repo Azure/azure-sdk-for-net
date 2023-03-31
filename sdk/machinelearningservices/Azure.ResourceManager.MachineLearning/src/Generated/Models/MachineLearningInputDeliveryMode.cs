@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningInputDeliveryMode EvalMount { get; } = new MachineLearningInputDeliveryMode(EvalMountValue);
         /// <summary> EvalDownload. </summary>
         public static MachineLearningInputDeliveryMode EvalDownload { get; } = new MachineLearningInputDeliveryMode(EvalDownloadValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningInputDeliveryMode"/> values are the same. </summary>
         public static bool operator ==(MachineLearningInputDeliveryMode left, MachineLearningInputDeliveryMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningInputDeliveryMode"/> values are not the same. </summary>

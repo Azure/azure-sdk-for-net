@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ProbeProtocol Tcp { get; } = new ProbeProtocol(TcpValue);
         /// <summary> Https. </summary>
         public static ProbeProtocol Https { get; } = new ProbeProtocol(HttpsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProbeProtocol"/> values are the same. </summary>
         public static bool operator ==(ProbeProtocol left, ProbeProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProbeProtocol"/> values are not the same. </summary>

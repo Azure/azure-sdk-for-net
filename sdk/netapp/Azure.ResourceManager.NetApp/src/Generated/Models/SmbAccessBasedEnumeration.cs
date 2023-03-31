@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static SmbAccessBasedEnumeration Disabled { get; } = new SmbAccessBasedEnumeration(DisabledValue);
         /// <summary> smbAccessBasedEnumeration share setting is enabled. </summary>
         public static SmbAccessBasedEnumeration Enabled { get; } = new SmbAccessBasedEnumeration(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SmbAccessBasedEnumeration"/> values are the same. </summary>
         public static bool operator ==(SmbAccessBasedEnumeration left, SmbAccessBasedEnumeration right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SmbAccessBasedEnumeration"/> values are not the same. </summary>

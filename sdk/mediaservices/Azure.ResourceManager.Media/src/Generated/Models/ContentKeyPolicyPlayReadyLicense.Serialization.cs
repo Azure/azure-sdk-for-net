@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(SecurityLevel))
             {
                 writer.WritePropertyName("securityLevel"u8);
-                writer.WriteStringValue(SecurityLevel.Value.ToString());
+                writer.WriteStringValue(SecurityLevel.Value.ToSerialString());
             }
             if (Optional.IsDefined(BeginOn))
             {
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteObjectValue(PlayRight);
             }
             writer.WritePropertyName("licenseType"u8);
-            writer.WriteStringValue(LicenseType.ToString());
+            writer.WriteStringValue(LicenseType.ToSerialString());
             writer.WritePropertyName("contentKeyLocation"u8);
             writer.WriteObjectValue(ContentKeyLocation);
             writer.WritePropertyName("contentType"u8);
-            writer.WriteStringValue(ContentType.ToString());
+            writer.WriteStringValue(ContentType.ToSerialString());
             writer.WriteEndObject();
         }
 

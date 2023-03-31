@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static RecommendedVersion Recommended { get; } = new RecommendedVersion(RecommendedValue);
         /// <summary> This is not the recommended version to use for new packet core control plane deployments. </summary>
         public static RecommendedVersion NotRecommended { get; } = new RecommendedVersion(NotRecommendedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecommendedVersion"/> values are the same. </summary>
         public static bool operator ==(RecommendedVersion left, RecommendedVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecommendedVersion"/> values are not the same. </summary>

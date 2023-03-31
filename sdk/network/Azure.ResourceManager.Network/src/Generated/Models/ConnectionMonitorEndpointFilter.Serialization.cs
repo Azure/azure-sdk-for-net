@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(FilterType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(FilterType.Value.ToString());
+                writer.WriteStringValue(FilterType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Items))
             {

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkTrafficDirection Inbound { get; } = new NetworkTrafficDirection(InboundValue);
         /// <summary> Outbound. </summary>
         public static NetworkTrafficDirection Outbound { get; } = new NetworkTrafficDirection(OutboundValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkTrafficDirection"/> values are the same. </summary>
         public static bool operator ==(NetworkTrafficDirection left, NetworkTrafficDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkTrafficDirection"/> values are not the same. </summary>

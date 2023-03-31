@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ExpressRouteCircuitPeeringAdvertisedPublicPrefixState Configured { get; } = new ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(ConfiguredValue);
         /// <summary> ValidationNeeded. </summary>
         public static ExpressRouteCircuitPeeringAdvertisedPublicPrefixState ValidationNeeded { get; } = new ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(ValidationNeededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExpressRouteCircuitPeeringAdvertisedPublicPrefixState"/> values are the same. </summary>
         public static bool operator ==(ExpressRouteCircuitPeeringAdvertisedPublicPrefixState left, ExpressRouteCircuitPeeringAdvertisedPublicPrefixState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteCircuitPeeringAdvertisedPublicPrefixState"/> values are not the same. </summary>

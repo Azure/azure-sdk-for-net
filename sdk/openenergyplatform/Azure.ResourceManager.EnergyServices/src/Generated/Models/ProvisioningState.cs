@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.EnergyServices.Models
         public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
         /// <summary> Updating. </summary>
         public static ProvisioningState Updating { get; } = new ProvisioningState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ManagedServices.Models
         public static MultiFactorAuthProvider Azure { get; } = new MultiFactorAuthProvider(AzureValue);
         /// <summary> None. </summary>
         public static MultiFactorAuthProvider None { get; } = new MultiFactorAuthProvider(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MultiFactorAuthProvider"/> values are the same. </summary>
         public static bool operator ==(MultiFactorAuthProvider left, MultiFactorAuthProvider right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MultiFactorAuthProvider"/> values are not the same. </summary>

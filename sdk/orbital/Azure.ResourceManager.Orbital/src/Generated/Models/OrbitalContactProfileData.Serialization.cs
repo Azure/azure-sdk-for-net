@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Orbital
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(MinimumViableContactDuration))
             {

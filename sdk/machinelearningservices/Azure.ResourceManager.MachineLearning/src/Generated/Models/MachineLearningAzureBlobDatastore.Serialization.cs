@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ServiceDataAccessAuthIdentity))
             {
                 writer.WritePropertyName("serviceDataAccessAuthIdentity"u8);
-                writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToString());
+                writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToSerialString());
             }
             writer.WritePropertyName("credentials"u8);
             writer.WriteObjectValue(Credentials);
             writer.WritePropertyName("datastoreType"u8);
-            writer.WriteStringValue(DatastoreType.ToString());
+            writer.WriteStringValue(DatastoreType.ToSerialString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)

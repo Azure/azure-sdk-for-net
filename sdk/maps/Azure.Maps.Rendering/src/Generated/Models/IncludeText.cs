@@ -29,6 +29,9 @@ namespace Azure.Maps.Rendering
         public static IncludeText Yes { get; } = new IncludeText(YesValue);
         /// <summary> Exclude textual data from response. Only images and country names will be in response. </summary>
         public static IncludeText No { get; } = new IncludeText(NoValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IncludeText"/> values are the same. </summary>
         public static bool operator ==(IncludeText left, IncludeText right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IncludeText"/> values are not the same. </summary>

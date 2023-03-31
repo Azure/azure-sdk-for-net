@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             if (Optional.IsDefined(ReplicationRole))
             {
                 writer.WritePropertyName("replicationRole"u8);
-                writer.WriteStringValue(ReplicationRole.Value.ToString());
+                writer.WriteStringValue(ReplicationRole.Value.ToSerialString());
             }
             if (Optional.IsDefined(DataEncryption))
             {

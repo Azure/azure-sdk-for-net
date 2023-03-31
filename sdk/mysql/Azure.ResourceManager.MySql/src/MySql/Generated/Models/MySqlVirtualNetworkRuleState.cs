@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.MySql.Models
         public static MySqlVirtualNetworkRuleState Deleting { get; } = new MySqlVirtualNetworkRuleState(DeletingValue);
         /// <summary> Unknown. </summary>
         public static MySqlVirtualNetworkRuleState Unknown { get; } = new MySqlVirtualNetworkRuleState(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlVirtualNetworkRuleState"/> values are the same. </summary>
         public static bool operator ==(MySqlVirtualNetworkRuleState left, MySqlVirtualNetworkRuleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlVirtualNetworkRuleState"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayOperationalState Running { get; } = new ApplicationGatewayOperationalState(RunningValue);
         /// <summary> Stopping. </summary>
         public static ApplicationGatewayOperationalState Stopping { get; } = new ApplicationGatewayOperationalState(StoppingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationGatewayOperationalState"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewayOperationalState left, ApplicationGatewayOperationalState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayOperationalState"/> values are not the same. </summary>

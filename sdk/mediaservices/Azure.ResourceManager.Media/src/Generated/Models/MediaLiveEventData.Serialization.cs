@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in StreamOptions)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

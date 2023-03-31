@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static BastionHostSkuName Basic { get; } = new BastionHostSkuName(BasicValue);
         /// <summary> Standard. </summary>
         public static BastionHostSkuName Standard { get; } = new BastionHostSkuName(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BastionHostSkuName"/> values are the same. </summary>
         public static bool operator ==(BastionHostSkuName left, BastionHostSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BastionHostSkuName"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static AzureFirewallNetworkRuleProtocol Any { get; } = new AzureFirewallNetworkRuleProtocol(AnyValue);
         /// <summary> ICMP. </summary>
         public static AzureFirewallNetworkRuleProtocol Icmp { get; } = new AzureFirewallNetworkRuleProtocol(IcmpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AzureFirewallNetworkRuleProtocol"/> values are the same. </summary>
         public static bool operator ==(AzureFirewallNetworkRuleProtocol left, AzureFirewallNetworkRuleProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureFirewallNetworkRuleProtocol"/> values are not the same. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
             writer.WritePropertyName("firewallMode"u8);
-            writer.WriteStringValue(FirewallMode.ToString());
+            writer.WriteStringValue(FirewallMode.ToSerialString());
             writer.WritePropertyName("ruleSetType"u8);
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);

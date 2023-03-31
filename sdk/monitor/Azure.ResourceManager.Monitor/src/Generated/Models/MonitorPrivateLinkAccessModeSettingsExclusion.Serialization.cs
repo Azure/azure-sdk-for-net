@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(QueryAccessMode))
             {
                 writer.WritePropertyName("queryAccessMode"u8);
-                writer.WriteStringValue(QueryAccessMode.Value.ToString());
+                writer.WriteStringValue(QueryAccessMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(IngestionAccessMode))
             {
                 writer.WritePropertyName("ingestionAccessMode"u8);
-                writer.WriteStringValue(IngestionAccessMode.Value.ToString());
+                writer.WriteStringValue(IngestionAccessMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

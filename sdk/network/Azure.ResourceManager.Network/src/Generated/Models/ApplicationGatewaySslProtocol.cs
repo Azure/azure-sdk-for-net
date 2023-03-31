@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.Network.Models
         private const string Tls1_0Value = "TLSv1_0";
         private const string Tls1_1Value = "TLSv1_1";
         private const string Tls1_2Value = "TLSv1_2";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySslProtocol"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewaySslProtocol left, ApplicationGatewaySslProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewaySslProtocol"/> values are not the same. </summary>

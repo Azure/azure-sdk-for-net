@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static SecurityRuleAccess Allow { get; } = new SecurityRuleAccess(AllowValue);
         /// <summary> Deny. </summary>
         public static SecurityRuleAccess Deny { get; } = new SecurityRuleAccess(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityRuleAccess"/> values are the same. </summary>
         public static bool operator ==(SecurityRuleAccess left, SecurityRuleAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityRuleAccess"/> values are not the same. </summary>

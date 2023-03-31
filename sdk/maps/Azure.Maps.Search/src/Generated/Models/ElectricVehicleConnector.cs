@@ -44,6 +44,9 @@ namespace Azure.Maps.Search
         public static ElectricVehicleConnector Chademo { get; } = new ElectricVehicleConnector(ChademoValue);
         /// <summary> The Tesla connector is the regionally specific Tesla Supercharger connector. I.e. it refers to either Tesla&apos;s proprietary connector, sometimes referred to as Tesla Port mostly limited to North America or the modified Type 2 (DC over Type 2) in Europe. </summary>
         public static ElectricVehicleConnector Tesla { get; } = new ElectricVehicleConnector(TeslaValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ElectricVehicleConnector"/> values are the same. </summary>
         public static bool operator ==(ElectricVehicleConnector left, ElectricVehicleConnector right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElectricVehicleConnector"/> values are not the same. </summary>

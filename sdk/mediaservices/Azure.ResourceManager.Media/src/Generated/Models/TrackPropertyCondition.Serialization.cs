@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Media.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("property"u8);
-            writer.WriteStringValue(Property.ToString());
+            writer.WriteStringValue(Property.ToSerialString());
             writer.WritePropertyName("operation"u8);
-            writer.WriteStringValue(Operation.ToString());
+            writer.WriteStringValue(Operation.ToSerialString());
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);

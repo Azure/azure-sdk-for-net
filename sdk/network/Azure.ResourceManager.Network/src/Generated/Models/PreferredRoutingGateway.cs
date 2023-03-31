@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static PreferredRoutingGateway VpnGateway { get; } = new PreferredRoutingGateway(VpnGatewayValue);
         /// <summary> None. </summary>
         public static PreferredRoutingGateway None { get; } = new PreferredRoutingGateway(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PreferredRoutingGateway"/> values are the same. </summary>
         public static bool operator ==(PreferredRoutingGateway left, PreferredRoutingGateway right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PreferredRoutingGateway"/> values are not the same. </summary>

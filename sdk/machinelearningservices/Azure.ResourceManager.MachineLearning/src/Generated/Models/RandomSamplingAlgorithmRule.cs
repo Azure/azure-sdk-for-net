@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static RandomSamplingAlgorithmRule Random { get; } = new RandomSamplingAlgorithmRule(RandomValue);
         /// <summary> Sobol. </summary>
         public static RandomSamplingAlgorithmRule Sobol { get; } = new RandomSamplingAlgorithmRule(SobolValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RandomSamplingAlgorithmRule"/> values are the same. </summary>
         public static bool operator ==(RandomSamplingAlgorithmRule left, RandomSamplingAlgorithmRule right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RandomSamplingAlgorithmRule"/> values are not the same. </summary>

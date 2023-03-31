@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WritePropertyName("imageConstraintForAnalogComputerMonitorRestriction"u8);
             writer.WriteBooleanValue(HasImageConstraintForAnalogComputerMonitorRestriction);
             writer.WritePropertyName("allowPassingVideoContentToUnknownOutput"u8);
-            writer.WriteStringValue(AllowPassingVideoContentToUnknownOutput.ToString());
+            writer.WriteStringValue(AllowPassingVideoContentToUnknownOutput.ToSerialString());
             if (Optional.IsDefined(UncompressedDigitalVideoOutputProtectionLevel))
             {
                 writer.WritePropertyName("uncompressedDigitalVideoOpl"u8);

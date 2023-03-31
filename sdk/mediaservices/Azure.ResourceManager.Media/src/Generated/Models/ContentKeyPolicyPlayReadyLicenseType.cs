@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static ContentKeyPolicyPlayReadyLicenseType NonPersistent { get; } = new ContentKeyPolicyPlayReadyLicenseType(NonPersistentValue);
         /// <summary> Persistent license. Allows offline playback. </summary>
         public static ContentKeyPolicyPlayReadyLicenseType Persistent { get; } = new ContentKeyPolicyPlayReadyLicenseType(PersistentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContentKeyPolicyPlayReadyLicenseType"/> values are the same. </summary>
         public static bool operator ==(ContentKeyPolicyPlayReadyLicenseType left, ContentKeyPolicyPlayReadyLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentKeyPolicyPlayReadyLicenseType"/> values are not the same. </summary>

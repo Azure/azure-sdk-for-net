@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(LearningRateScheduler))
             {
                 writer.WritePropertyName("learningRateScheduler"u8);
-                writer.WriteStringValue(LearningRateScheduler.Value.ToString());
+                writer.WriteStringValue(LearningRateScheduler.Value.ToSerialString());
             }
             if (Optional.IsDefined(ModelName))
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Optimizer))
             {
                 writer.WritePropertyName("optimizer"u8);
-                writer.WriteStringValue(Optimizer.Value.ToString());
+                writer.WriteStringValue(Optimizer.Value.ToSerialString());
             }
             if (Optional.IsDefined(RandomSeed))
             {

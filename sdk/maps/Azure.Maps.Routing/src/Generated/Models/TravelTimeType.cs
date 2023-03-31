@@ -29,6 +29,9 @@ namespace Azure.Maps.Routing
         public static TravelTimeType None { get; } = new TravelTimeType(NoneValue);
         /// <summary> Computes travel times for all types of traffic information and specifies all results in the fields noTrafficTravelTimeInSeconds, historicTrafficTravelTimeInSeconds and liveTrafficIncidentsTravelTimeInSeconds being included in the summaries in the route response. </summary>
         public static TravelTimeType All { get; } = new TravelTimeType(AllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TravelTimeType"/> values are the same. </summary>
         public static bool operator ==(TravelTimeType left, TravelTimeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TravelTimeType"/> values are not the same. </summary>

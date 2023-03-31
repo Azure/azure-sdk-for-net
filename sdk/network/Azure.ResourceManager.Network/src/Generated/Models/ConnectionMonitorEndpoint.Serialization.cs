@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(EndpointType.Value.ToString());
+                writer.WriteStringValue(EndpointType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ResourceId))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(CoverageLevel))
             {
                 writer.WritePropertyName("coverageLevel"u8);
-                writer.WriteStringValue(CoverageLevel.Value.ToString());
+                writer.WriteStringValue(CoverageLevel.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

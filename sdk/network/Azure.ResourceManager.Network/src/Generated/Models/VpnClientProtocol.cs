@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnClientProtocol Sstp { get; } = new VpnClientProtocol(SstpValue);
         /// <summary> OpenVPN. </summary>
         public static VpnClientProtocol OpenVpn { get; } = new VpnClientProtocol(OpenVpnValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VpnClientProtocol"/> values are the same. </summary>
         public static bool operator ==(VpnClientProtocol left, VpnClientProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VpnClientProtocol"/> values are not the same. </summary>

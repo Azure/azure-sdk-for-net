@@ -29,6 +29,9 @@ namespace Azure.Maps.Rendering
         public static MapImageStyle Main { get; } = new MapImageStyle(MainValue);
         /// <summary> Dark grey version of the Azure Maps main style. </summary>
         public static MapImageStyle Dark { get; } = new MapImageStyle(DarkValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MapImageStyle"/> values are the same. </summary>
         public static bool operator ==(MapImageStyle left, MapImageStyle right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapImageStyle"/> values are not the same. </summary>

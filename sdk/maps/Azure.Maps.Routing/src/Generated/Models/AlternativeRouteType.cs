@@ -29,6 +29,9 @@ namespace Azure.Maps.Routing
         public static AlternativeRouteType AnyRoute { get; } = new AlternativeRouteType(AnyRouteValue);
         /// <summary> Return an alternative route only if it is better than the reference route according to the given planning criteria. </summary>
         public static AlternativeRouteType BetterRoute { get; } = new AlternativeRouteType(BetterRouteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AlternativeRouteType"/> values are the same. </summary>
         public static bool operator ==(AlternativeRouteType left, AlternativeRouteType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlternativeRouteType"/> values are not the same. </summary>

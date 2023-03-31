@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualNetworkGatewayConnectionProtocol IkeV2 { get; } = new VirtualNetworkGatewayConnectionProtocol(IkeV2Value);
         /// <summary> IKEv1. </summary>
         public static VirtualNetworkGatewayConnectionProtocol IkeV1 { get; } = new VirtualNetworkGatewayConnectionProtocol(IkeV1Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionProtocol"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkGatewayConnectionProtocol left, VirtualNetworkGatewayConnectionProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionProtocol"/> values are not the same. </summary>

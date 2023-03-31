@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ExpressRouteLinkMacSecSciState Disabled { get; } = new ExpressRouteLinkMacSecSciState(DisabledValue);
         /// <summary> Enabled. </summary>
         public static ExpressRouteLinkMacSecSciState Enabled { get; } = new ExpressRouteLinkMacSecSciState(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExpressRouteLinkMacSecSciState"/> values are the same. </summary>
         public static bool operator ==(ExpressRouteLinkMacSecSciState left, ExpressRouteLinkMacSecSciState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteLinkMacSecSciState"/> values are not the same. </summary>

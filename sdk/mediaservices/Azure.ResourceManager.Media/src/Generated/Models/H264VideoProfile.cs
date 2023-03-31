@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Media.Models
         public static H264VideoProfile High422 { get; } = new H264VideoProfile(High422Value);
         /// <summary> High 4:4:4 predictive profile. </summary>
         public static H264VideoProfile High444 { get; } = new H264VideoProfile(High444Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="H264VideoProfile"/> values are the same. </summary>
         public static bool operator ==(H264VideoProfile left, H264VideoProfile right) => left.Equals(right);
         /// <summary> Determines if two <see cref="H264VideoProfile"/> values are not the same. </summary>

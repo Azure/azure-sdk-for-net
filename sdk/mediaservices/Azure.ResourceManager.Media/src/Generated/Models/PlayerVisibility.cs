@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static PlayerVisibility Hidden { get; } = new PlayerVisibility(HiddenValue);
         /// <summary> The track is visible to video player. </summary>
         public static PlayerVisibility Visible { get; } = new PlayerVisibility(VisibleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PlayerVisibility"/> values are the same. </summary>
         public static bool operator ==(PlayerVisibility left, PlayerVisibility right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlayerVisibility"/> values are not the same. </summary>

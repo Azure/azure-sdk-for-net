@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Network.Models
         public static IkeEncryption GcmAes256 { get; } = new IkeEncryption(GcmAes256Value);
         /// <summary> GCMAES128. </summary>
         public static IkeEncryption GcmAes128 { get; } = new IkeEncryption(GcmAes128Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IkeEncryption"/> values are the same. </summary>
         public static bool operator ==(IkeEncryption left, IkeEncryption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IkeEncryption"/> values are not the same. </summary>

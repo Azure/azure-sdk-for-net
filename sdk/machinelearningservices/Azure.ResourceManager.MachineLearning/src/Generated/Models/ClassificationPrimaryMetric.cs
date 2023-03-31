@@ -48,6 +48,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ClassificationPrimaryMetric AveragePrecisionScoreWeighted { get; } = new ClassificationPrimaryMetric(AveragePrecisionScoreWeightedValue);
         /// <summary> The arithmetic mean of precision for each class, weighted by number of true instances in each class. </summary>
         public static ClassificationPrimaryMetric PrecisionScoreWeighted { get; } = new ClassificationPrimaryMetric(PrecisionScoreWeightedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClassificationPrimaryMetric"/> values are the same. </summary>
         public static bool operator ==(ClassificationPrimaryMetric left, ClassificationPrimaryMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClassificationPrimaryMetric"/> values are not the same. </summary>

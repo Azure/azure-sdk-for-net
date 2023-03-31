@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Community. </summary>
         public static RouteFilterRuleType Community { get; } = new RouteFilterRuleType(CommunityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RouteFilterRuleType"/> values are the same. </summary>
         public static bool operator ==(RouteFilterRuleType left, RouteFilterRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouteFilterRuleType"/> values are not the same. </summary>

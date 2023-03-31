@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(RuleType))
             {
                 writer.WritePropertyName("ruleType"u8);
-                writer.WriteStringValue(RuleType.Value.ToString());
+                writer.WriteStringValue(RuleType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Priority))
             {

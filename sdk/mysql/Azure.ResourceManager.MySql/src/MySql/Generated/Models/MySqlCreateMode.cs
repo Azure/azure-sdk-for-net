@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.MySql.Models
         public static MySqlCreateMode GeoRestore { get; } = new MySqlCreateMode(GeoRestoreValue);
         /// <summary> Replica. </summary>
         public static MySqlCreateMode Replica { get; } = new MySqlCreateMode(ReplicaValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlCreateMode"/> values are the same. </summary>
         public static bool operator ==(MySqlCreateMode left, MySqlCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlCreateMode"/> values are not the same. </summary>

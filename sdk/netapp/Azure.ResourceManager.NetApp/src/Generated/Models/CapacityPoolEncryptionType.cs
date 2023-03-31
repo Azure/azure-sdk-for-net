@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static CapacityPoolEncryptionType Single { get; } = new CapacityPoolEncryptionType(SingleValue);
         /// <summary> EncryptionType Double, volumes will use double encryption at rest. </summary>
         public static CapacityPoolEncryptionType Double { get; } = new CapacityPoolEncryptionType(DoubleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CapacityPoolEncryptionType"/> values are the same. </summary>
         public static bool operator ==(CapacityPoolEncryptionType left, CapacityPoolEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CapacityPoolEncryptionType"/> values are not the same. </summary>

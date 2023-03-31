@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VpnLinkConnectionMode))
             {
                 writer.WritePropertyName("vpnLinkConnectionMode"u8);
-                writer.WriteStringValue(VpnLinkConnectionMode.Value.ToString());
+                writer.WriteStringValue(VpnLinkConnectionMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(VpnConnectionProtocolType))
             {
                 writer.WritePropertyName("vpnConnectionProtocolType"u8);
-                writer.WriteStringValue(VpnConnectionProtocolType.Value.ToString());
+                writer.WriteStringValue(VpnConnectionProtocolType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ConnectionBandwidth))
             {

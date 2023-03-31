@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(CategoryType))
             {
                 writer.WritePropertyName("categoryType"u8);
-                writer.WriteStringValue(CategoryType.Value.ToString());
+                writer.WriteStringValue(CategoryType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(CategoryGroups))
             {

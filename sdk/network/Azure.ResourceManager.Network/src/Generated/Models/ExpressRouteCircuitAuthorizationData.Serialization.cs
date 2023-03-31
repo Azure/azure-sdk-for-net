@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AuthorizationUseStatus))
             {
                 writer.WritePropertyName("authorizationUseStatus"u8);
-                writer.WriteStringValue(AuthorizationUseStatus.Value.ToString());
+                writer.WriteStringValue(AuthorizationUseStatus.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

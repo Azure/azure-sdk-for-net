@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static SystemServiceType ScoringFrontEnd { get; } = new SystemServiceType(ScoringFrontEndValue);
         /// <summary> BatchFrontEnd. </summary>
         public static SystemServiceType BatchFrontEnd { get; } = new SystemServiceType(BatchFrontEndValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SystemServiceType"/> values are the same. </summary>
         public static bool operator ==(SystemServiceType left, SystemServiceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SystemServiceType"/> values are not the same. </summary>

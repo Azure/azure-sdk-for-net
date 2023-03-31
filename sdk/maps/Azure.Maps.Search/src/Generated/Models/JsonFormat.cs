@@ -26,6 +26,9 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> [The JavaScript Object Notation Data Interchange Format](https://tools.ietf.org/html/rfc8259). </summary>
         public static JsonFormat Json { get; } = new JsonFormat(JsonValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JsonFormat"/> values are the same. </summary>
         public static bool operator ==(JsonFormat left, JsonFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JsonFormat"/> values are not the same. </summary>
