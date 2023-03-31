@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static A2ARecoveryAvailabilityType AvailabilitySet { get; } = new A2ARecoveryAvailabilityType(AvailabilitySetValue);
         /// <summary> AvailabilityZone. </summary>
         public static A2ARecoveryAvailabilityType AvailabilityZone { get; } = new A2ARecoveryAvailabilityType(AvailabilityZoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="A2ARecoveryAvailabilityType"/> values are the same. </summary>
         public static bool operator ==(A2ARecoveryAvailabilityType left, A2ARecoveryAvailabilityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="A2ARecoveryAvailabilityType"/> values are not the same. </summary>

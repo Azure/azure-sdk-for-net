@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         public static ManagementGroupChildType MicrosoftManagementManagementGroups { get; } = new ManagementGroupChildType(MicrosoftManagementManagementGroupsValue);
         /// <summary> /subscriptions. </summary>
         public static ManagementGroupChildType Subscriptions { get; } = new ManagementGroupChildType(SubscriptionsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagementGroupChildType"/> values are the same. </summary>
         public static bool operator ==(ManagementGroupChildType left, ManagementGroupChildType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagementGroupChildType"/> values are not the same. </summary>

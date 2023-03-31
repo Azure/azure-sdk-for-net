@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static ResourceTypeName Shared { get; } = new ResourceTypeName(SharedValue);
         /// <summary> serviceSpecific. </summary>
         public static ResourceTypeName ServiceSpecific { get; } = new ResourceTypeName(ServiceSpecificValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceTypeName"/> values are the same. </summary>
         public static bool operator ==(ResourceTypeName left, ResourceTypeName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceTypeName"/> values are not the same. </summary>

@@ -68,6 +68,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static MoverResourceMoveState DeleteSourcePending { get; } = new MoverResourceMoveState(DeleteSourcePendingValue);
         /// <summary> ResourceMoveCompleted. </summary>
         public static MoverResourceMoveState ResourceMoveCompleted { get; } = new MoverResourceMoveState(ResourceMoveCompletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MoverResourceMoveState"/> values are the same. </summary>
         public static bool operator ==(MoverResourceMoveState left, MoverResourceMoveState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MoverResourceMoveState"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupPrivateEndpointConnectionProvisioningState Failed { get; } = new BackupPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Pending. </summary>
         public static BackupPrivateEndpointConnectionProvisioningState Pending { get; } = new BackupPrivateEndpointConnectionProvisioningState(PendingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(BackupPrivateEndpointConnectionProvisioningState left, BackupPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

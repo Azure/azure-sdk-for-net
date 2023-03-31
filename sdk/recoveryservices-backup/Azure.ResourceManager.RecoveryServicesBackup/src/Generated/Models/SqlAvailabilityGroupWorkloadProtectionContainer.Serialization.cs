@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
-                writer.WriteStringValue(WorkloadType.Value.ToString());
+                writer.WriteStringValue(WorkloadType.Value.ToSerialString());
             }
             if (Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operationType"u8);
-                writer.WriteStringValue(OperationType.Value.ToString());
+                writer.WriteStringValue(OperationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
+                writer.WriteStringValue(BackupManagementType.Value.ToSerialString());
             }
             if (Optional.IsDefined(RegistrationStatus))
             {

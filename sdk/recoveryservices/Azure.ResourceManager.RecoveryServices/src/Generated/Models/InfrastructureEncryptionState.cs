@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static InfrastructureEncryptionState Enabled { get; } = new InfrastructureEncryptionState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static InfrastructureEncryptionState Disabled { get; } = new InfrastructureEncryptionState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InfrastructureEncryptionState"/> values are the same. </summary>
         public static bool operator ==(InfrastructureEncryptionState left, InfrastructureEncryptionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InfrastructureEncryptionState"/> values are not the same. </summary>

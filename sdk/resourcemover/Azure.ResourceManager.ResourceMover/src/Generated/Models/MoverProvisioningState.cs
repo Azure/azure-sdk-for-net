@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static MoverProvisioningState Creating { get; } = new MoverProvisioningState(CreatingValue);
         /// <summary> Failed. </summary>
         public static MoverProvisioningState Failed { get; } = new MoverProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MoverProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MoverProvisioningState left, MoverProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MoverProvisioningState"/> values are not the same. </summary>

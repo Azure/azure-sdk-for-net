@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static JitApproverType User { get; } = new JitApproverType(UserValue);
         /// <summary> group. </summary>
         public static JitApproverType Group { get; } = new JitApproverType(GroupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JitApproverType"/> values are the same. </summary>
         public static bool operator ==(JitApproverType left, JitApproverType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JitApproverType"/> values are not the same. </summary>

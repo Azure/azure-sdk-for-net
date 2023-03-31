@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static SqlDataDirectoryType Data { get; } = new SqlDataDirectoryType(DataValue);
         /// <summary> Log. </summary>
         public static SqlDataDirectoryType Log { get; } = new SqlDataDirectoryType(LogValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlDataDirectoryType"/> values are the same. </summary>
         public static bool operator ==(SqlDataDirectoryType left, SqlDataDirectoryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlDataDirectoryType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Relay.Models
         public static RelayNetworkRuleSetDefaultAction Allow { get; } = new RelayNetworkRuleSetDefaultAction(AllowValue);
         /// <summary> Deny. </summary>
         public static RelayNetworkRuleSetDefaultAction Deny { get; } = new RelayNetworkRuleSetDefaultAction(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RelayNetworkRuleSetDefaultAction"/> values are the same. </summary>
         public static bool operator ==(RelayNetworkRuleSetDefaultAction left, RelayNetworkRuleSetDefaultAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelayNetworkRuleSetDefaultAction"/> values are not the same. </summary>

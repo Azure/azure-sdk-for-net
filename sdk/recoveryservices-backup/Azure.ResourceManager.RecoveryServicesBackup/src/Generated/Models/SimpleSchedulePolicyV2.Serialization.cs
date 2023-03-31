@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ScheduleRunFrequency))
             {
                 writer.WritePropertyName("scheduleRunFrequency"u8);
-                writer.WriteStringValue(ScheduleRunFrequency.Value.ToString());
+                writer.WriteStringValue(ScheduleRunFrequency.Value.ToSerialString());
             }
             if (Optional.IsDefined(HourlySchedule))
             {

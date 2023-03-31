@@ -29,6 +29,9 @@ namespace Azure.MixedReality.RemoteRendering
         public static RenderingServerSize Standard { get; } = new RenderingServerSize(StandardValue);
         /// <summary> Premium rendering session size. </summary>
         public static RenderingServerSize Premium { get; } = new RenderingServerSize(PremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RenderingServerSize"/> values are the same. </summary>
         public static bool operator ==(RenderingServerSize left, RenderingServerSize right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RenderingServerSize"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static BooleanEnum True { get; } = new BooleanEnum(TrueValue);
         /// <summary> FALSE. </summary>
         public static BooleanEnum False { get; } = new BooleanEnum(FalseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BooleanEnum"/> values are the same. </summary>
         public static bool operator ==(BooleanEnum left, BooleanEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BooleanEnum"/> values are not the same. </summary>

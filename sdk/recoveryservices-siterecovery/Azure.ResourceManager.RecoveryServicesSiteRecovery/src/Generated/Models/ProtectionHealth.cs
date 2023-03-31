@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static ProtectionHealth Warning { get; } = new ProtectionHealth(WarningValue);
         /// <summary> Critical. </summary>
         public static ProtectionHealth Critical { get; } = new ProtectionHealth(CriticalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProtectionHealth"/> values are the same. </summary>
         public static bool operator ==(ProtectionHealth left, ProtectionHealth right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProtectionHealth"/> values are not the same. </summary>

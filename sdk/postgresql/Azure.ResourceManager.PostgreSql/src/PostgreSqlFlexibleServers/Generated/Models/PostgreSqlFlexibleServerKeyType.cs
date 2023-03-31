@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerKeyType SystemAssigned { get; } = new PostgreSqlFlexibleServerKeyType(SystemAssignedValue);
         /// <summary> AzureKeyVault. </summary>
         public static PostgreSqlFlexibleServerKeyType AzureKeyVault { get; } = new PostgreSqlFlexibleServerKeyType(AzureKeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerKeyType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerKeyType left, PostgreSqlFlexibleServerKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerKeyType"/> values are not the same. </summary>

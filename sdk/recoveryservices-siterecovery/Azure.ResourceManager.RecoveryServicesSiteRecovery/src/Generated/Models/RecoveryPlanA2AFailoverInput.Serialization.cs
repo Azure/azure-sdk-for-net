@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryPointType"u8);
-            writer.WriteStringValue(RecoveryPointType.ToString());
+            writer.WriteStringValue(RecoveryPointType.ToSerialString());
             if (Optional.IsDefined(CloudServiceCreationOption))
             {
                 writer.WritePropertyName("cloudServiceCreationOption"u8);
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(MultiVmSyncPointOption))
             {
                 writer.WritePropertyName("multiVmSyncPointOption"u8);
-                writer.WriteStringValue(MultiVmSyncPointOption.Value.ToString());
+                writer.WriteStringValue(MultiVmSyncPointOption.Value.ToSerialString());
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);

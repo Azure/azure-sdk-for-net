@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerNameUnavailableReason Invalid { get; } = new PostgreSqlFlexibleServerNameUnavailableReason(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static PostgreSqlFlexibleServerNameUnavailableReason AlreadyExists { get; } = new PostgreSqlFlexibleServerNameUnavailableReason(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerNameUnavailableReason left, PostgreSqlFlexibleServerNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerNameUnavailableReason"/> values are not the same. </summary>

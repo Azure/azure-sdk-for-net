@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static EventStatusValue Active { get; } = new EventStatusValue(ActiveValue);
         /// <summary> Resolved. </summary>
         public static EventStatusValue Resolved { get; } = new EventStatusValue(ResolvedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventStatusValue"/> values are the same. </summary>
         public static bool operator ==(EventStatusValue left, EventStatusValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventStatusValue"/> values are not the same. </summary>

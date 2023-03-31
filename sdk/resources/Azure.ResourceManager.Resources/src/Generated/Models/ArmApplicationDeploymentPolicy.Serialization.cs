@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("deploymentMode"u8);
-            writer.WriteStringValue(DeploymentMode.ToString());
+            writer.WriteStringValue(DeploymentMode.ToSerialString());
             writer.WriteEndObject();
         }
 

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static DefaultMode Firewall { get; } = new DefaultMode(FirewallValue);
         /// <summary> NONE. </summary>
         public static DefaultMode None { get; } = new DefaultMode(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DefaultMode"/> values are the same. </summary>
         public static bool operator ==(DefaultMode left, DefaultMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DefaultMode"/> values are not the same. </summary>

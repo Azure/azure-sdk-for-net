@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static RestorePointType SnapshotFull { get; } = new RestorePointType(SnapshotFullValue);
         /// <summary> SnapshotCopyOnlyFull. </summary>
         public static RestorePointType SnapshotCopyOnlyFull { get; } = new RestorePointType(SnapshotCopyOnlyFullValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RestorePointType"/> values are the same. </summary>
         public static bool operator ==(RestorePointType left, RestorePointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RestorePointType"/> values are not the same. </summary>

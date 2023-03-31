@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static AgentVersionStatus UpdateRequired { get; } = new AgentVersionStatus(UpdateRequiredValue);
         /// <summary> SecurityUpdateRequired. </summary>
         public static AgentVersionStatus SecurityUpdateRequired { get; } = new AgentVersionStatus(SecurityUpdateRequiredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AgentVersionStatus"/> values are the same. </summary>
         public static bool operator ==(AgentVersionStatus left, AgentVersionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentVersionStatus"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static ResourceValidation ReservedWords { get; } = new ResourceValidation(ReservedWordsValue);
         /// <summary> ProfaneWords. </summary>
         public static ResourceValidation ProfaneWords { get; } = new ResourceValidation(ProfaneWordsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceValidation"/> values are the same. </summary>
         public static bool operator ==(ResourceValidation left, ResourceValidation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceValidation"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static ArmApplicationManagementMode Unmanaged { get; } = new ArmApplicationManagementMode(UnmanagedValue);
         /// <summary> Managed. </summary>
         public static ArmApplicationManagementMode Managed { get; } = new ArmApplicationManagementMode(ManagedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ArmApplicationManagementMode"/> values are the same. </summary>
         public static bool operator ==(ArmApplicationManagementMode left, ArmApplicationManagementMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArmApplicationManagementMode"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <summary> default. </summary>
         public static IssueNameParameter Default { get; } = new IssueNameParameter(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IssueNameParameter"/> values are the same. </summary>
         public static bool operator ==(IssueNameParameter left, IssueNameParameter right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IssueNameParameter"/> values are not the same. </summary>

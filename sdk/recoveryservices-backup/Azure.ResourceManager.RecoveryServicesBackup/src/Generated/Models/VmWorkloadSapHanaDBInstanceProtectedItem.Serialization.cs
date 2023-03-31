@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
-                writer.WriteStringValue(ProtectionState.Value.ToString());
+                writer.WriteStringValue(ProtectionState.Value.ToSerialString());
             }
             if (Optional.IsDefined(LastBackupStatus))
             {
                 writer.WritePropertyName("lastBackupStatus"u8);
-                writer.WriteStringValue(LastBackupStatus.Value.ToString());
+                writer.WriteStringValue(LastBackupStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(LastBackupOn))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ProtectedItemHealthStatus))
             {
                 writer.WritePropertyName("protectedItemHealthStatus"u8);
-                writer.WriteStringValue(ProtectedItemHealthStatus.Value.ToString());
+                writer.WriteStringValue(ProtectedItemHealthStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExtendedInfo))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
+                writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(DeferredDeletedOn))
             {

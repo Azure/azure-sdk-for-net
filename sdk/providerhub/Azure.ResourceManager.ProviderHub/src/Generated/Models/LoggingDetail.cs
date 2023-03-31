@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static LoggingDetail None { get; } = new LoggingDetail(NoneValue);
         /// <summary> Body. </summary>
         public static LoggingDetail Body { get; } = new LoggingDetail(BodyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LoggingDetail"/> values are the same. </summary>
         public static bool operator ==(LoggingDetail left, LoggingDetail right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoggingDetail"/> values are not the same. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(AuthType))
             {
                 writer.WritePropertyName("authType"u8);
-                writer.WriteStringValue(AuthType.Value.ToString());
+                writer.WriteStringValue(AuthType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Certificate))
             {

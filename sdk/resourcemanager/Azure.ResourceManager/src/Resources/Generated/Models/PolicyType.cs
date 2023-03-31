@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static PolicyType Custom { get; } = new PolicyType(CustomValue);
         /// <summary> Static. </summary>
         public static PolicyType Static { get; } = new PolicyType(StaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyType"/> values are the same. </summary>
         public static bool operator ==(PolicyType left, PolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyType"/> values are not the same. </summary>

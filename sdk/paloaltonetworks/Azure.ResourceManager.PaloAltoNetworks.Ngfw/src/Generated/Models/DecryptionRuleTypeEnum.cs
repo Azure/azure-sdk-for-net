@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static DecryptionRuleTypeEnum SSLInboundInspection { get; } = new DecryptionRuleTypeEnum(SSLInboundInspectionValue);
         /// <summary> None. </summary>
         public static DecryptionRuleTypeEnum None { get; } = new DecryptionRuleTypeEnum(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DecryptionRuleTypeEnum"/> values are the same. </summary>
         public static bool operator ==(DecryptionRuleTypeEnum left, DecryptionRuleTypeEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DecryptionRuleTypeEnum"/> values are not the same. </summary>

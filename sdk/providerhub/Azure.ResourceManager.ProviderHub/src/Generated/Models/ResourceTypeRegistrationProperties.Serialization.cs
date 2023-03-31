@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(RoutingType))
             {
                 writer.WritePropertyName("routingType"u8);
-                writer.WriteStringValue(RoutingType.Value.ToString());
+                writer.WriteStringValue(RoutingType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Regionality))
             {
                 writer.WritePropertyName("regionality"u8);
-                writer.WriteStringValue(Regionality.Value.ToString());
+                writer.WriteStringValue(Regionality.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Endpoints))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(MarketplaceType))
             {
                 writer.WritePropertyName("marketplaceType"u8);
-                writer.WriteStringValue(MarketplaceType.Value.ToString());
+                writer.WriteStringValue(MarketplaceType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(SwaggerSpecifications))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnableThirdPartyS2S))
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ResourceDeletionPolicy))
             {
                 writer.WritePropertyName("resourceDeletionPolicy"u8);
-                writer.WriteStringValue(ResourceDeletionPolicy.Value.ToString());
+                writer.WriteStringValue(ResourceDeletionPolicy.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ResourceConcurrencyControlOptions))
             {

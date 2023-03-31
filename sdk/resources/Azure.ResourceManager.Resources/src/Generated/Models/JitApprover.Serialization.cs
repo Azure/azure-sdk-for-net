@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ApproverType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ApproverType.Value.ToString());
+                writer.WriteStringValue(ApproverType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DisplayName))
             {

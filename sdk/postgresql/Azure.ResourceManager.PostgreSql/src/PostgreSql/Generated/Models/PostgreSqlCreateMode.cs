@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static PostgreSqlCreateMode GeoRestore { get; } = new PostgreSqlCreateMode(GeoRestoreValue);
         /// <summary> Replica. </summary>
         public static PostgreSqlCreateMode Replica { get; } = new PostgreSqlCreateMode(ReplicaValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlCreateMode"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlCreateMode left, PostgreSqlCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlCreateMode"/> values are not the same. </summary>

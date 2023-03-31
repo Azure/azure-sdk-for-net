@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Includes version information with the Template Spec. </summary>
         public static TemplateSpecExpandKind Versions { get; } = new TemplateSpecExpandKind(VersionsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TemplateSpecExpandKind"/> values are the same. </summary>
         public static bool operator ==(TemplateSpecExpandKind left, TemplateSpecExpandKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TemplateSpecExpandKind"/> values are not the same. </summary>

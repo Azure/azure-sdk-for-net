@@ -38,6 +38,9 @@ namespace Azure.MixedReality.RemoteRendering
         public static AssetConversionStatus Failed { get; } = new AssetConversionStatus(FailedValue);
         /// <summary> The conversion has succeeded. Check the &apos;output&apos; field for output asset location. This is a terminal state. </summary>
         public static AssetConversionStatus Succeeded { get; } = new AssetConversionStatus(SucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AssetConversionStatus"/> values are the same. </summary>
         public static bool operator ==(AssetConversionStatus left, AssetConversionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssetConversionStatus"/> values are not the same. </summary>

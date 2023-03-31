@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public static CapacityProvisioningState Preparing { get; } = new CapacityProvisioningState(PreparingValue);
         /// <summary> Scaling. </summary>
         public static CapacityProvisioningState Scaling { get; } = new CapacityProvisioningState(ScalingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CapacityProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CapacityProvisioningState left, CapacityProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CapacityProvisioningState"/> values are not the same. </summary>

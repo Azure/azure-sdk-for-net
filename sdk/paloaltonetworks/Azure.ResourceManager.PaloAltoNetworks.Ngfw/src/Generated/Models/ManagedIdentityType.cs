@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static ManagedIdentityType UserAssigned { get; } = new ManagedIdentityType(UserAssignedValue);
         /// <summary> SystemAssigned,UserAssigned. </summary>
         public static ManagedIdentityType SystemAndUserAssigned { get; } = new ManagedIdentityType(SystemAndUserAssignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedIdentityType"/> values are the same. </summary>
         public static bool operator ==(ManagedIdentityType left, ManagedIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedIdentityType"/> values are not the same. </summary>

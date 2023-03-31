@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(TargetVmSecurityType))
             {
                 writer.WritePropertyName("targetVmSecurityType"u8);
-                writer.WriteStringValue(TargetVmSecurityType.Value.ToString());
+                writer.WriteStringValue(TargetVmSecurityType.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsTargetVmSecureBootEnabled))
             {

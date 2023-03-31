@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static PostgreSqlPrivateLinkServiceConnectionStateStatus Rejected { get; } = new PostgreSqlPrivateLinkServiceConnectionStateStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static PostgreSqlPrivateLinkServiceConnectionStateStatus Disconnected { get; } = new PostgreSqlPrivateLinkServiceConnectionStateStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlPrivateLinkServiceConnectionStateStatus"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlPrivateLinkServiceConnectionStateStatus left, PostgreSqlPrivateLinkServiceConnectionStateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlPrivateLinkServiceConnectionStateStatus"/> values are not the same. </summary>

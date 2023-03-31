@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static ResourceDeletionPolicy CascadeDeleteAll { get; } = new ResourceDeletionPolicy(CascadeDeleteAllValue);
         /// <summary> CascadeDeleteProxyOnlyChildren. </summary>
         public static ResourceDeletionPolicy CascadeDeleteProxyOnlyChildren { get; } = new ResourceDeletionPolicy(CascadeDeleteProxyOnlyChildrenValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceDeletionPolicy"/> values are the same. </summary>
         public static bool operator ==(ResourceDeletionPolicy left, ResourceDeletionPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceDeletionPolicy"/> values are not the same. </summary>

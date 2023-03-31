@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action);
             writer.WritePropertyName("direction"u8);
-            writer.WriteStringValue(Direction.ToString());
+            writer.WriteStringValue(Direction.ToSerialString());
             writer.WritePropertyName("detailLevel"u8);
-            writer.WriteStringValue(DetailLevel.ToString());
+            writer.WriteStringValue(DetailLevel.ToSerialString());
             if (Optional.IsDefined(HiddenPropertyPaths))
             {
                 writer.WritePropertyName("hiddenPropertyPaths"u8);

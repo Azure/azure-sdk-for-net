@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static OperationsDefinitionActionType NotSpecified { get; } = new OperationsDefinitionActionType(NotSpecifiedValue);
         /// <summary> Internal. </summary>
         public static OperationsDefinitionActionType Internal { get; } = new OperationsDefinitionActionType(InternalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationsDefinitionActionType"/> values are the same. </summary>
         public static bool operator ==(OperationsDefinitionActionType left, OperationsDefinitionActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationsDefinitionActionType"/> values are not the same. </summary>

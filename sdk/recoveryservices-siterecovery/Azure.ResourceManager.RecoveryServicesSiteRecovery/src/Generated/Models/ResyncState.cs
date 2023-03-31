@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static ResyncState PreparedForResynchronization { get; } = new ResyncState(PreparedForResynchronizationValue);
         /// <summary> StartedResynchronization. </summary>
         public static ResyncState StartedResynchronization { get; } = new ResyncState(StartedResynchronizationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResyncState"/> values are the same. </summary>
         public static bool operator ==(ResyncState left, ResyncState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResyncState"/> values are not the same. </summary>

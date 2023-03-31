@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static LegacyPeeringsKind Direct { get; } = new LegacyPeeringsKind(DirectValue);
         /// <summary> Exchange. </summary>
         public static LegacyPeeringsKind Exchange { get; } = new LegacyPeeringsKind(ExchangeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LegacyPeeringsKind"/> values are the same. </summary>
         public static bool operator ==(LegacyPeeringsKind left, LegacyPeeringsKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LegacyPeeringsKind"/> values are not the same. </summary>

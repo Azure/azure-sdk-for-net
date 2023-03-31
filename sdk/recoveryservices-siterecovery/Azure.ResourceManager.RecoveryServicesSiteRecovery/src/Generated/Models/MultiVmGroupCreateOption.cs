@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static MultiVmGroupCreateOption AutoCreated { get; } = new MultiVmGroupCreateOption(AutoCreatedValue);
         /// <summary> UserSpecified. </summary>
         public static MultiVmGroupCreateOption UserSpecified { get; } = new MultiVmGroupCreateOption(UserSpecifiedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MultiVmGroupCreateOption"/> values are the same. </summary>
         public static bool operator ==(MultiVmGroupCreateOption left, MultiVmGroupCreateOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MultiVmGroupCreateOption"/> values are not the same. </summary>

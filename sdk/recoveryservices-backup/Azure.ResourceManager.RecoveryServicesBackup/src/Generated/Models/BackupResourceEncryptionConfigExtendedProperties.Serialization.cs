@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(EncryptionAtRestType))
             {
                 writer.WritePropertyName("encryptionAtRestType"u8);
-                writer.WriteStringValue(EncryptionAtRestType.Value.ToString());
+                writer.WriteStringValue(EncryptionAtRestType.Value.ToSerialString());
             }
             if (Optional.IsDefined(KeyUri))
             {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(LastUpdateStatus))
             {
                 writer.WritePropertyName("lastUpdateStatus"u8);
-                writer.WriteStringValue(LastUpdateStatus.Value.ToString());
+                writer.WriteStringValue(LastUpdateStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(InfrastructureEncryptionState))
             {
                 writer.WritePropertyName("infrastructureEncryptionState"u8);
-                writer.WriteStringValue(InfrastructureEncryptionState.Value.ToString());
+                writer.WriteStringValue(InfrastructureEncryptionState.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

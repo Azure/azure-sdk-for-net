@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static RecoveryPlanPointType LatestCrashConsistent { get; } = new RecoveryPlanPointType(LatestCrashConsistentValue);
         /// <summary> LatestProcessed. </summary>
         public static RecoveryPlanPointType LatestProcessed { get; } = new RecoveryPlanPointType(LatestProcessedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecoveryPlanPointType"/> values are the same. </summary>
         public static bool operator ==(RecoveryPlanPointType left, RecoveryPlanPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryPlanPointType"/> values are not the same. </summary>

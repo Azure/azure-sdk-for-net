@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringLearnedType ViaServiceProvider { get; } = new PeeringLearnedType(ViaServiceProviderValue);
         /// <summary> ViaSession. </summary>
         public static PeeringLearnedType ViaSession { get; } = new PeeringLearnedType(ViaSessionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PeeringLearnedType"/> values are the same. </summary>
         public static bool operator ==(PeeringLearnedType left, PeeringLearnedType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringLearnedType"/> values are not the same. </summary>

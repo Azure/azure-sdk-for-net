@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(AppliedScopeType))
             {
                 writer.WritePropertyName("appliedScopeType"u8);
-                writer.WriteStringValue(AppliedScopeType.Value.ToString());
+                writer.WriteStringValue(AppliedScopeType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AppliedScopes))
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(InstanceFlexibility))
             {
                 writer.WritePropertyName("instanceFlexibility"u8);
-                writer.WriteStringValue(InstanceFlexibility.Value.ToString());
+                writer.WriteStringValue(InstanceFlexibility.Value.ToSerialString());
             }
             if (Optional.IsDefined(Name))
             {

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static ScriptType AzurePowerShell { get; } = new ScriptType(AzurePowerShellValue);
         /// <summary> AzureCLI. </summary>
         public static ScriptType AzureCLI { get; } = new ScriptType(AzureCLIValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScriptType"/> values are the same. </summary>
         public static bool operator ==(ScriptType left, ScriptType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptType"/> values are not the same. </summary>

@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Purview.Models
         public static PurviewProvisioningState Succeeded { get; } = new PurviewProvisioningState(SucceededValue);
         /// <summary> Canceled. </summary>
         public static PurviewProvisioningState Canceled { get; } = new PurviewProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PurviewProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PurviewProvisioningState left, PurviewProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PurviewProvisioningState"/> values are not the same. </summary>

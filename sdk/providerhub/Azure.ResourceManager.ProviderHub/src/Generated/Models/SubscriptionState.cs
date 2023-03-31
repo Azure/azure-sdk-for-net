@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static SubscriptionState Disabled { get; } = new SubscriptionState(DisabledValue);
         /// <summary> Deleted. </summary>
         public static SubscriptionState Deleted { get; } = new SubscriptionState(DeletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SubscriptionState"/> values are the same. </summary>
         public static bool operator ==(SubscriptionState left, SubscriptionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SubscriptionState"/> values are not the same. </summary>

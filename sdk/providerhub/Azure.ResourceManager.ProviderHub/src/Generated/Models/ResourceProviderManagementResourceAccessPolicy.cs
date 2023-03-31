@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static ResourceProviderManagementResourceAccessPolicy AcisReadAllowed { get; } = new ResourceProviderManagementResourceAccessPolicy(AcisReadAllowedValue);
         /// <summary> AcisActionAllowed. </summary>
         public static ResourceProviderManagementResourceAccessPolicy AcisActionAllowed { get; } = new ResourceProviderManagementResourceAccessPolicy(AcisActionAllowedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceProviderManagementResourceAccessPolicy"/> values are the same. </summary>
         public static bool operator ==(ResourceProviderManagementResourceAccessPolicy left, ResourceProviderManagementResourceAccessPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceProviderManagementResourceAccessPolicy"/> values are not the same. </summary>

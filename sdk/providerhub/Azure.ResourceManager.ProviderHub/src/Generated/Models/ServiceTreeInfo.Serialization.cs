@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(Readiness))
             {
                 writer.WritePropertyName("readiness"u8);
-                writer.WriteStringValue(Readiness.Value.ToString());
+                writer.WriteStringValue(Readiness.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

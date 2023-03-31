@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static ImmutabilityState Unlocked { get; } = new ImmutabilityState(UnlockedValue);
         /// <summary> Locked. </summary>
         public static ImmutabilityState Locked { get; } = new ImmutabilityState(LockedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImmutabilityState"/> values are the same. </summary>
         public static bool operator ==(ImmutabilityState left, ImmutabilityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImmutabilityState"/> values are not the same. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static ProtectionIntentItemType AzureWorkloadAutoProtectionIntent { get; } = new ProtectionIntentItemType(AzureWorkloadAutoProtectionIntentValue);
         /// <summary> AzureWorkloadSQLAutoProtectionIntent. </summary>
         public static ProtectionIntentItemType AzureWorkloadSqlAutoProtectionIntent { get; } = new ProtectionIntentItemType(AzureWorkloadSqlAutoProtectionIntentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProtectionIntentItemType"/> values are the same. </summary>
         public static bool operator ==(ProtectionIntentItemType left, ProtectionIntentItemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProtectionIntentItemType"/> values are not the same. </summary>

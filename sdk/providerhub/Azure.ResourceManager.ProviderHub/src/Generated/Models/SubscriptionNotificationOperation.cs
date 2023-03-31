@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static SubscriptionNotificationOperation BillingCancellation { get; } = new SubscriptionNotificationOperation(BillingCancellationValue);
         /// <summary> UndoSoftDelete. </summary>
         public static SubscriptionNotificationOperation UndoSoftDelete { get; } = new SubscriptionNotificationOperation(UndoSoftDeleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SubscriptionNotificationOperation"/> values are the same. </summary>
         public static bool operator ==(SubscriptionNotificationOperation left, SubscriptionNotificationOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SubscriptionNotificationOperation"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Models
         public static SystemAssignedServiceIdentityType None { get; } = new SystemAssignedServiceIdentityType(NoneValue);
         /// <summary> SystemAssigned. </summary>
         public static SystemAssignedServiceIdentityType SystemAssigned { get; } = new SystemAssignedServiceIdentityType(SystemAssignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SystemAssignedServiceIdentityType"/> values are the same. </summary>
         public static bool operator ==(SystemAssignedServiceIdentityType left, SystemAssignedServiceIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SystemAssignedServiceIdentityType"/> values are not the same. </summary>

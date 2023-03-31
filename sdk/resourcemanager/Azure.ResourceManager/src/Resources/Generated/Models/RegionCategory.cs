@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static RegionCategory Extended { get; } = new RegionCategory(ExtendedValue);
         /// <summary> Other. </summary>
         public static RegionCategory Other { get; } = new RegionCategory(OtherValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RegionCategory"/> values are the same. </summary>
         public static bool operator ==(RegionCategory left, RegionCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RegionCategory"/> values are not the same. </summary>

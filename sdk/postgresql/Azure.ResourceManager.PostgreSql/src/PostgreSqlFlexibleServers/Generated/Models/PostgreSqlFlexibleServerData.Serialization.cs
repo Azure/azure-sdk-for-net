@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version.Value.ToString());
+                writer.WriteStringValue(Version.Value.ToSerialString());
             }
             if (Optional.IsDefined(Storage))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (Optional.IsDefined(ReplicationRole))
             {
                 writer.WritePropertyName("replicationRole"u8);
-                writer.WriteStringValue(ReplicationRole.Value.ToString());
+                writer.WriteStringValue(ReplicationRole.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReplicaCapacity))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
+                writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

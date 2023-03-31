@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static LoggingDirection Request { get; } = new LoggingDirection(RequestValue);
         /// <summary> Response. </summary>
         public static LoggingDirection Response { get; } = new LoggingDirection(ResponseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LoggingDirection"/> values are the same. </summary>
         public static bool operator ==(LoggingDirection left, LoggingDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoggingDirection"/> values are not the same. </summary>

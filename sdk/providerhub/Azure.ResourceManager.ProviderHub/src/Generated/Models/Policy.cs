@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Policy NotSpecified { get; } = new Policy(NotSpecifiedValue);
         /// <summary> SynchronizeBeginExtension. </summary>
         public static Policy SynchronizeBeginExtension { get; } = new Policy(SynchronizeBeginExtensionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Policy"/> values are the same. </summary>
         public static bool operator ==(Policy left, Policy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Policy"/> values are not the same. </summary>

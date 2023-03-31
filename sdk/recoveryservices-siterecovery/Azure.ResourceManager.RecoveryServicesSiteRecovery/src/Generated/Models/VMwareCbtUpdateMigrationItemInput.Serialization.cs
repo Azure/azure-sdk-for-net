@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
-                writer.WriteStringValue(LicenseType.Value.ToString());
+                writer.WriteStringValue(LicenseType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SqlServerLicenseType))
             {
                 writer.WritePropertyName("sqlServerLicenseType"u8);
-                writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
+                writer.WriteStringValue(SqlServerLicenseType.Value.ToSerialString());
             }
             if (Optional.IsDefined(PerformAutoResync))
             {

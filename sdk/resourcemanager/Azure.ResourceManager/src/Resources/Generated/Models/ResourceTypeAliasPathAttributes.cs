@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static ResourceTypeAliasPathAttributes None { get; } = new ResourceTypeAliasPathAttributes(NoneValue);
         /// <summary> The token that the alias path is referring to is modifiable by policies with &apos;modify&apos; effect. </summary>
         public static ResourceTypeAliasPathAttributes Modifiable { get; } = new ResourceTypeAliasPathAttributes(ModifiableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceTypeAliasPathAttributes"/> values are the same. </summary>
         public static bool operator ==(ResourceTypeAliasPathAttributes left, ResourceTypeAliasPathAttributes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceTypeAliasPathAttributes"/> values are not the same. </summary>

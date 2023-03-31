@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static RecoveryServicesPrivateEndpointConnectionStatus Rejected { get; } = new RecoveryServicesPrivateEndpointConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static RecoveryServicesPrivateEndpointConnectionStatus Disconnected { get; } = new RecoveryServicesPrivateEndpointConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecoveryServicesPrivateEndpointConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(RecoveryServicesPrivateEndpointConnectionStatus left, RecoveryServicesPrivateEndpointConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryServicesPrivateEndpointConnectionStatus"/> values are not the same. </summary>

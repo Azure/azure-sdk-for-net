@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static ScheduleRunType Weekly { get; } = new ScheduleRunType(WeeklyValue);
         /// <summary> Hourly. </summary>
         public static ScheduleRunType Hourly { get; } = new ScheduleRunType(HourlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScheduleRunType"/> values are the same. </summary>
         public static bool operator ==(ScheduleRunType left, ScheduleRunType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduleRunType"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static DiskReplicationProgressHealth NoProgress { get; } = new DiskReplicationProgressHealth(NoProgressValue);
         /// <summary> Queued. </summary>
         public static DiskReplicationProgressHealth Queued { get; } = new DiskReplicationProgressHealth(QueuedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskReplicationProgressHealth"/> values are the same. </summary>
         public static bool operator ==(DiskReplicationProgressHealth left, DiskReplicationProgressHealth right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskReplicationProgressHealth"/> values are not the same. </summary>

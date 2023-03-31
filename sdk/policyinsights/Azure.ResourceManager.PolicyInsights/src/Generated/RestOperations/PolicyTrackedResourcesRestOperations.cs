@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/managementGroups/", false);
             uri.AppendPath(managementGroupName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyTrackedResources/", false);
-            uri.AppendPath(policyTrackedResourceType.ToString(), true);
+            uri.AppendPath(policyTrackedResourceType.ToSerialString(), true);
             uri.AppendPath("/queryResults", false);
             if (policyQuerySettings?.Top != null)
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyTrackedResources/", false);
-            uri.AppendPath(policyTrackedResourceType.ToString(), true);
+            uri.AppendPath(policyTrackedResourceType.ToSerialString(), true);
             uri.AppendPath("/queryResults", false);
             if (policyQuerySettings?.Top != null)
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyTrackedResources/", false);
-            uri.AppendPath(policyTrackedResourceType.ToString(), true);
+            uri.AppendPath(policyTrackedResourceType.ToSerialString(), true);
             uri.AppendPath("/queryResults", false);
             if (policyQuerySettings?.Top != null)
             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyTrackedResources/", false);
-            uri.AppendPath(policyTrackedResourceType.ToString(), true);
+            uri.AppendPath(policyTrackedResourceType.ToSerialString(), true);
             uri.AppendPath("/queryResults", false);
             if (policyQuerySettings?.Top != null)
             {

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseClusteringPolicy EnterpriseCluster { get; } = new RedisEnterpriseClusteringPolicy(EnterpriseClusterValue);
         /// <summary> OSSCluster. </summary>
         public static RedisEnterpriseClusteringPolicy OssCluster { get; } = new RedisEnterpriseClusteringPolicy(OssClusterValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisEnterpriseClusteringPolicy"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseClusteringPolicy left, RedisEnterpriseClusteringPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseClusteringPolicy"/> values are not the same. </summary>

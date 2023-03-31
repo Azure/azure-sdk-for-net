@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static SeverityValue Warning { get; } = new SeverityValue(WarningValue);
         /// <summary> Error. </summary>
         public static SeverityValue Error { get; } = new SeverityValue(ErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SeverityValue"/> values are the same. </summary>
         public static bool operator ==(SeverityValue left, SeverityValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SeverityValue"/> values are not the same. </summary>

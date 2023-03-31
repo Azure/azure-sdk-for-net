@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RetentionScheduleFormatType))
             {
                 writer.WritePropertyName("retentionScheduleFormatType"u8);
-                writer.WriteStringValue(RetentionScheduleFormatType.Value.ToString());
+                writer.WriteStringValue(RetentionScheduleFormatType.Value.ToSerialString());
             }
             if (Optional.IsDefined(RetentionScheduleDaily))
             {

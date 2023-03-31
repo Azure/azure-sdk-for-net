@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseEvictionPolicy VolatileRandom { get; } = new RedisEnterpriseEvictionPolicy(VolatileRandomValue);
         /// <summary> NoEviction. </summary>
         public static RedisEnterpriseEvictionPolicy NoEviction { get; } = new RedisEnterpriseEvictionPolicy(NoEvictionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisEnterpriseEvictionPolicy"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseEvictionPolicy left, RedisEnterpriseEvictionPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseEvictionPolicy"/> values are not the same. </summary>

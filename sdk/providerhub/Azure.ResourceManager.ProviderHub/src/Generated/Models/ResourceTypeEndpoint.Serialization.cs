@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("endpointType"u8);
-                writer.WriteStringValue(EndpointType.Value.ToString());
+                writer.WriteStringValue(EndpointType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

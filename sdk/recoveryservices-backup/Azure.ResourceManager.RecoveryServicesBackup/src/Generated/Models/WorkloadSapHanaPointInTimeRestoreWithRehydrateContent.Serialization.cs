@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryType))
             {
                 writer.WritePropertyName("recoveryType"u8);
-                writer.WriteStringValue(RecoveryType.Value.ToString());
+                writer.WriteStringValue(RecoveryType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SourceResourceId))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryMode))
             {
                 writer.WritePropertyName("recoveryMode"u8);
-                writer.WriteStringValue(RecoveryMode.Value.ToString());
+                writer.WriteStringValue(RecoveryMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(TargetVirtualMachineId))
             {

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Purview.Models
         public static PurviewPrivateLinkServiceStatus Rejected { get; } = new PurviewPrivateLinkServiceStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static PurviewPrivateLinkServiceStatus Disconnected { get; } = new PurviewPrivateLinkServiceStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PurviewPrivateLinkServiceStatus"/> values are the same. </summary>
         public static bool operator ==(PurviewPrivateLinkServiceStatus left, PurviewPrivateLinkServiceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PurviewPrivateLinkServiceStatus"/> values are not the same. </summary>

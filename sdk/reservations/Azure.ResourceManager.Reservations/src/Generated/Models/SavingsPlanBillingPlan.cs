@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> P1M. </summary>
         public static SavingsPlanBillingPlan P1M { get; } = new SavingsPlanBillingPlan(P1MValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SavingsPlanBillingPlan"/> values are the same. </summary>
         public static bool operator ==(SavingsPlanBillingPlan left, SavingsPlanBillingPlan right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SavingsPlanBillingPlan"/> values are not the same. </summary>

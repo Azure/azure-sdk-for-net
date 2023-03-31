@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ManagedIdentityType.ToString());
+            writer.WriteStringValue(ManagedIdentityType.ToSerialString());
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);

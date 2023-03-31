@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerCreateModeForUpdate Default { get; } = new PostgreSqlFlexibleServerCreateModeForUpdate(DefaultValue);
         /// <summary> Update. </summary>
         public static PostgreSqlFlexibleServerCreateModeForUpdate Update { get; } = new PostgreSqlFlexibleServerCreateModeForUpdate(UpdateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerCreateModeForUpdate"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerCreateModeForUpdate left, PostgreSqlFlexibleServerCreateModeForUpdate right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerCreateModeForUpdate"/> values are not the same. </summary>

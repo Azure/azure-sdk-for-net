@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(MetricType.ToString());
+            writer.WriteStringValue(MetricType.ToSerialString());
             writer.WritePropertyName("limit"u8);
             writer.WriteNumberValue(Limit);
             if (Optional.IsDefined(Interval))

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(AlertsForAllJobFailures))
             {
                 writer.WritePropertyName("alertsForAllJobFailures"u8);
-                writer.WriteStringValue(AlertsForAllJobFailures.Value.ToString());
+                writer.WriteStringValue(AlertsForAllJobFailures.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static MessageScope NotSpecified { get; } = new MessageScope(NotSpecifiedValue);
         /// <summary> RegisteredSubscriptions. </summary>
         public static MessageScope RegisteredSubscriptions { get; } = new MessageScope(RegisteredSubscriptionsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MessageScope"/> values are the same. </summary>
         public static bool operator ==(MessageScope left, MessageScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageScope"/> values are not the same. </summary>

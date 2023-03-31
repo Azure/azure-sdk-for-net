@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static JitApprovalMode AutoApprove { get; } = new JitApprovalMode(AutoApproveValue);
         /// <summary> ManualApprove. </summary>
         public static JitApprovalMode ManualApprove { get; } = new JitApprovalMode(ManualApproveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JitApprovalMode"/> values are the same. </summary>
         public static bool operator ==(JitApprovalMode left, JitApprovalMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JitApprovalMode"/> values are not the same. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryType))
             {
                 writer.WritePropertyName("recoveryType"u8);
-                writer.WriteStringValue(RecoveryType.Value.ToString());
+                writer.WriteStringValue(RecoveryType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SourceResourceId))
             {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(CopyOptions))
             {
                 writer.WritePropertyName("copyOptions"u8);
-                writer.WriteStringValue(CopyOptions.Value.ToString());
+                writer.WriteStringValue(CopyOptions.Value.ToSerialString());
             }
             if (Optional.IsDefined(RestoreRequestType))
             {
                 writer.WritePropertyName("restoreRequestType"u8);
-                writer.WriteStringValue(RestoreRequestType.Value.ToString());
+                writer.WriteStringValue(RestoreRequestType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(RestoreFileSpecs))
             {

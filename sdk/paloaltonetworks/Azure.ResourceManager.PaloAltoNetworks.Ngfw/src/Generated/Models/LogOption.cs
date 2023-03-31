@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static LogOption SameDestination { get; } = new LogOption(SameDestinationValue);
         /// <summary> INDIVIDUAL_DESTINATION. </summary>
         public static LogOption IndividualDestination { get; } = new LogOption(IndividualDestinationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogOption"/> values are the same. </summary>
         public static bool operator ==(LogOption left, LogOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogOption"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerIdentityType SystemAssigned { get; } = new PostgreSqlFlexibleServerIdentityType(SystemAssignedValue);
         /// <summary> UserAssigned. </summary>
         public static PostgreSqlFlexibleServerIdentityType UserAssigned { get; } = new PostgreSqlFlexibleServerIdentityType(UserAssignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerIdentityType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerIdentityType left, PostgreSqlFlexibleServerIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerIdentityType"/> values are not the same. </summary>

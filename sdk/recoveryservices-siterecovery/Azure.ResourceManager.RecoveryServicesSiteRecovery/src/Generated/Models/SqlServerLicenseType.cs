@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static SqlServerLicenseType Payg { get; } = new SqlServerLicenseType(PaygValue);
         /// <summary> AHUB. </summary>
         public static SqlServerLicenseType Ahub { get; } = new SqlServerLicenseType(AhubValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlServerLicenseType"/> values are the same. </summary>
         public static bool operator ==(SqlServerLicenseType left, SqlServerLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlServerLicenseType"/> values are not the same. </summary>

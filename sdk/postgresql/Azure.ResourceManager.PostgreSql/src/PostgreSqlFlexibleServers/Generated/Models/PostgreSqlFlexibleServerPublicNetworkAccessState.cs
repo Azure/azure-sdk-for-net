@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerPublicNetworkAccessState Enabled { get; } = new PostgreSqlFlexibleServerPublicNetworkAccessState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static PostgreSqlFlexibleServerPublicNetworkAccessState Disabled { get; } = new PostgreSqlFlexibleServerPublicNetworkAccessState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerPublicNetworkAccessState left, PostgreSqlFlexibleServerPublicNetworkAccessState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/> values are not the same. </summary>

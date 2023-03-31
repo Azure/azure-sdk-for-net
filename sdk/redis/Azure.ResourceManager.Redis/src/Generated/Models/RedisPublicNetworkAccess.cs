@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Redis.Models
         public static RedisPublicNetworkAccess Enabled { get; } = new RedisPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static RedisPublicNetworkAccess Disabled { get; } = new RedisPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(RedisPublicNetworkAccess left, RedisPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisPublicNetworkAccess"/> values are not the same. </summary>

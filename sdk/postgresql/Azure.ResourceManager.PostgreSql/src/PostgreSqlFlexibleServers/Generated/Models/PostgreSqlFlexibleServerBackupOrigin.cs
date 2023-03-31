@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Full. </summary>
         public static PostgreSqlFlexibleServerBackupOrigin Full { get; } = new PostgreSqlFlexibleServerBackupOrigin(FullValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerBackupOrigin"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerBackupOrigin left, PostgreSqlFlexibleServerBackupOrigin right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerBackupOrigin"/> values are not the same. </summary>

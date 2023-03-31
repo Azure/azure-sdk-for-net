@@ -71,6 +71,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupItemType SapAseDatabase { get; } = new BackupItemType(SapAseDatabaseValue);
         /// <summary> SAPHanaDBInstance. </summary>
         public static BackupItemType SapHanaDBInstance { get; } = new BackupItemType(SapHanaDBInstanceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupItemType"/> values are the same. </summary>
         public static bool operator ==(BackupItemType left, BackupItemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupItemType"/> values are not the same. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(WorkLoadType))
             {
                 writer.WritePropertyName("workLoadType"u8);
-                writer.WriteStringValue(WorkLoadType.Value.ToString());
+                writer.WriteStringValue(WorkLoadType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SchedulePolicy))
             {

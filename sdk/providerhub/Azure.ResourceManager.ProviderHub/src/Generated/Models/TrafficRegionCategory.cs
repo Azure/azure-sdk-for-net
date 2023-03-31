@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static TrafficRegionCategory RestOfTheWorldGroupOne { get; } = new TrafficRegionCategory(RestOfTheWorldGroupOneValue);
         /// <summary> RestOfTheWorldGroupTwo. </summary>
         public static TrafficRegionCategory RestOfTheWorldGroupTwo { get; } = new TrafficRegionCategory(RestOfTheWorldGroupTwoValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrafficRegionCategory"/> values are the same. </summary>
         public static bool operator ==(TrafficRegionCategory left, TrafficRegionCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficRegionCategory"/> values are not the same. </summary>

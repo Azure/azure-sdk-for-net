@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryType))
             {
                 writer.WritePropertyName("recoveryType"u8);
-                writer.WriteStringValue(RecoveryType.Value.ToString());
+                writer.WriteStringValue(RecoveryType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SourceResourceId))
             {

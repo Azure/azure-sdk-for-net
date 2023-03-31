@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStringValue(Timeout);
             }
             writer.WritePropertyName("fabricLocation"u8);
-            writer.WriteStringValue(FabricLocation.ToString());
+            writer.WriteStringValue(FabricLocation.ToSerialString());
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();

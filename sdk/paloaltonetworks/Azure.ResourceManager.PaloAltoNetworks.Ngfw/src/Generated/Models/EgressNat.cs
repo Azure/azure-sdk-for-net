@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static EgressNat Disabled { get; } = new EgressNat(DisabledValue);
         /// <summary> ENABLED. </summary>
         public static EgressNat Enabled { get; } = new EgressNat(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EgressNat"/> values are the same. </summary>
         public static bool operator ==(EgressNat left, EgressNat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EgressNat"/> values are not the same. </summary>

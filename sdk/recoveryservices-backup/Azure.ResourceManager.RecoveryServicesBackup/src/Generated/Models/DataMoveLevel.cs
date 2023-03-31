@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static DataMoveLevel Vault { get; } = new DataMoveLevel(VaultValue);
         /// <summary> Container. </summary>
         public static DataMoveLevel Container { get; } = new DataMoveLevel(ContainerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataMoveLevel"/> values are the same. </summary>
         public static bool operator ==(DataMoveLevel left, DataMoveLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataMoveLevel"/> values are not the same. </summary>

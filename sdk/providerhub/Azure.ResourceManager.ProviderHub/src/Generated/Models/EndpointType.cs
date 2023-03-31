@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static EndpointType Production { get; } = new EndpointType(ProductionValue);
         /// <summary> TestInProduction. </summary>
         public static EndpointType TestInProduction { get; } = new EndpointType(TestInProductionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EndpointType"/> values are the same. </summary>
         public static bool operator ==(EndpointType left, EndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EndpointType"/> values are not the same. </summary>

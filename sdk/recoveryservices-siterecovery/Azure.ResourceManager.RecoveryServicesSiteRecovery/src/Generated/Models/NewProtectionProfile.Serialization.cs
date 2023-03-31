@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
             }
             writer.WritePropertyName("multiVmSyncStatus"u8);
-            writer.WriteStringValue(MultiVmSyncStatus.ToString());
+            writer.WriteStringValue(MultiVmSyncStatus.ToSerialString());
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
             writer.WriteEndObject();

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static EnabledDnsType Custom { get; } = new EnabledDnsType(CustomValue);
         /// <summary> AZURE. </summary>
         public static EnabledDnsType Azure { get; } = new EnabledDnsType(AzureValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EnabledDnsType"/> values are the same. </summary>
         public static bool operator ==(EnabledDnsType left, EnabledDnsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnabledDnsType"/> values are not the same. </summary>

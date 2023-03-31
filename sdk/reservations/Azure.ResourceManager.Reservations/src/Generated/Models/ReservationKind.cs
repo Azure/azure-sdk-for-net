@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Microsoft.Compute. </summary>
         public static ReservationKind MicrosoftCompute { get; } = new ReservationKind(MicrosoftComputeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReservationKind"/> values are the same. </summary>
         public static bool operator ==(ReservationKind left, ReservationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReservationKind"/> values are not the same. </summary>

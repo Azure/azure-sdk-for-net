@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static FeaturesPolicy Any { get; } = new FeaturesPolicy(AnyValue);
         /// <summary> All. </summary>
         public static FeaturesPolicy All { get; } = new FeaturesPolicy(AllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FeaturesPolicy"/> values are the same. </summary>
         public static bool operator ==(FeaturesPolicy left, FeaturesPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FeaturesPolicy"/> values are not the same. </summary>

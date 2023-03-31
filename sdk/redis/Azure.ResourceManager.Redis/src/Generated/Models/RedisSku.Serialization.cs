@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Redis.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name.ToString());
+            writer.WriteStringValue(Name.ToSerialString());
             writer.WritePropertyName("family"u8);
-            writer.WriteStringValue(Family.ToString());
+            writer.WriteStringValue(Family.ToSerialString());
             writer.WritePropertyName("capacity"u8);
             writer.WriteNumberValue(Capacity);
             writer.WriteEndObject();

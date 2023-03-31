@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public static ResourceZoneRedundantSetting Enable { get; } = new ResourceZoneRedundantSetting(EnableValue);
         /// <summary> Disable. </summary>
         public static ResourceZoneRedundantSetting Disable { get; } = new ResourceZoneRedundantSetting(DisableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceZoneRedundantSetting"/> values are the same. </summary>
         public static bool operator ==(ResourceZoneRedundantSetting left, ResourceZoneRedundantSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceZoneRedundantSetting"/> values are not the same. </summary>

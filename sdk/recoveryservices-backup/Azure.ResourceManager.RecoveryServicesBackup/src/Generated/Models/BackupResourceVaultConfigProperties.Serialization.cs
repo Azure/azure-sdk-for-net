@@ -19,27 +19,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(StorageModelType))
             {
                 writer.WritePropertyName("storageModelType"u8);
-                writer.WriteStringValue(StorageModelType.Value.ToString());
+                writer.WriteStringValue(StorageModelType.Value.ToSerialString());
             }
             if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
-                writer.WriteStringValue(StorageType.Value.ToString());
+                writer.WriteStringValue(StorageType.Value.ToSerialString());
             }
             if (Optional.IsDefined(StorageTypeState))
             {
                 writer.WritePropertyName("storageTypeState"u8);
-                writer.WriteStringValue(StorageTypeState.Value.ToString());
+                writer.WriteStringValue(StorageTypeState.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnhancedSecurityState))
             {
                 writer.WritePropertyName("enhancedSecurityState"u8);
-                writer.WriteStringValue(EnhancedSecurityState.Value.ToString());
+                writer.WriteStringValue(EnhancedSecurityState.Value.ToSerialString());
             }
             if (Optional.IsDefined(SoftDeleteFeatureState))
             {
                 writer.WritePropertyName("softDeleteFeatureState"u8);
-                writer.WriteStringValue(SoftDeleteFeatureState.Value.ToString());
+                writer.WriteStringValue(SoftDeleteFeatureState.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {

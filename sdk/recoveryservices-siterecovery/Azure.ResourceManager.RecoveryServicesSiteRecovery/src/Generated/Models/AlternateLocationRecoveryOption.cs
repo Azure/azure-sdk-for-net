@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static AlternateLocationRecoveryOption CreateVmIfNotFound { get; } = new AlternateLocationRecoveryOption(CreateVmIfNotFoundValue);
         /// <summary> NoAction. </summary>
         public static AlternateLocationRecoveryOption NoAction { get; } = new AlternateLocationRecoveryOption(NoActionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AlternateLocationRecoveryOption"/> values are the same. </summary>
         public static bool operator ==(AlternateLocationRecoveryOption left, AlternateLocationRecoveryOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlternateLocationRecoveryOption"/> values are not the same. </summary>

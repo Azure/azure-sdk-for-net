@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(RuleState))
             {
                 writer.WritePropertyName("ruleState"u8);
-                writer.WriteStringValue(RuleState.Value.ToString());
+                writer.WriteStringValue(RuleState.Value.ToSerialString());
             }
             if (Optional.IsDefined(Source))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(NegateSource))
             {
                 writer.WritePropertyName("negateSource"u8);
-                writer.WriteStringValue(NegateSource.Value.ToString());
+                writer.WriteStringValue(NegateSource.Value.ToSerialString());
             }
             if (Optional.IsDefined(Destination))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(NegateDestination))
             {
                 writer.WritePropertyName("negateDestination"u8);
-                writer.WriteStringValue(NegateDestination.Value.ToString());
+                writer.WriteStringValue(NegateDestination.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Applications))
             {
@@ -101,17 +101,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("actionType"u8);
-                writer.WriteStringValue(ActionType.Value.ToString());
+                writer.WriteStringValue(ActionType.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnableLogging))
             {
                 writer.WritePropertyName("enableLogging"u8);
-                writer.WriteStringValue(EnableLogging.Value.ToString());
+                writer.WriteStringValue(EnableLogging.Value.ToSerialString());
             }
             if (Optional.IsDefined(DecryptionRuleType))
             {
                 writer.WritePropertyName("decryptionRuleType"u8);
-                writer.WriteStringValue(DecryptionRuleType.Value.ToString());
+                writer.WriteStringValue(DecryptionRuleType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Tags))
             {

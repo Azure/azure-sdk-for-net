@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static PlannedFailoverStatus Cancelled { get; } = new PlannedFailoverStatus(CancelledValue);
         /// <summary> Unknown. </summary>
         public static PlannedFailoverStatus Unknown { get; } = new PlannedFailoverStatus(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PlannedFailoverStatus"/> values are the same. </summary>
         public static bool operator ==(PlannedFailoverStatus left, PlannedFailoverStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlannedFailoverStatus"/> values are not the same. </summary>

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(FailoverDeploymentModel))
             {
                 writer.WritePropertyName("failoverDeploymentModel"u8);
-                writer.WriteStringValue(FailoverDeploymentModel.Value.ToString());
+                writer.WriteStringValue(FailoverDeploymentModel.Value.ToSerialString());
             }
             writer.WritePropertyName("groups"u8);
             writer.WriteStartArray();

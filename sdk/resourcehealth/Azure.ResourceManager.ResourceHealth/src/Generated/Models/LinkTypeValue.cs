@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static LinkTypeValue Button { get; } = new LinkTypeValue(ButtonValue);
         /// <summary> Hyperlink. </summary>
         public static LinkTypeValue Hyperlink { get; } = new LinkTypeValue(HyperlinkValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LinkTypeValue"/> values are the same. </summary>
         public static bool operator ==(LinkTypeValue left, LinkTypeValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkTypeValue"/> values are not the same. </summary>

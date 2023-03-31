@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static SecurityServicesTypeEnum FileBlocking { get; } = new SecurityServicesTypeEnum(FileBlockingValue);
         /// <summary> dnsSubscription. </summary>
         public static SecurityServicesTypeEnum DnsSubscription { get; } = new SecurityServicesTypeEnum(DnsSubscriptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityServicesTypeEnum"/> values are the same. </summary>
         public static bool operator ==(SecurityServicesTypeEnum left, SecurityServicesTypeEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityServicesTypeEnum"/> values are not the same. </summary>

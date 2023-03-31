@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static DataSyncStatus ForDownTime { get; } = new DataSyncStatus(ForDownTimeValue);
         /// <summary> ForSynchronization. </summary>
         public static DataSyncStatus ForSynchronization { get; } = new DataSyncStatus(ForSynchronizationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataSyncStatus"/> values are the same. </summary>
         public static bool operator ==(DataSyncStatus left, DataSyncStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataSyncStatus"/> values are not the same. </summary>

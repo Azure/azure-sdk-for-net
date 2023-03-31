@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerHAState Healthy { get; } = new PostgreSqlFlexibleServerHAState(HealthyValue);
         /// <summary> RemovingStandby. </summary>
         public static PostgreSqlFlexibleServerHAState RemovingStandby { get; } = new PostgreSqlFlexibleServerHAState(RemovingStandbyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHAState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerHAState left, PostgreSqlFlexibleServerHAState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHAState"/> values are not the same. </summary>

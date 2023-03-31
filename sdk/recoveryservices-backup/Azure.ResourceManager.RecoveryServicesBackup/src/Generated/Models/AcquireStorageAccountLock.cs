@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static AcquireStorageAccountLock Acquire { get; } = new AcquireStorageAccountLock(AcquireValue);
         /// <summary> NotAcquire. </summary>
         public static AcquireStorageAccountLock NotAcquire { get; } = new AcquireStorageAccountLock(NotAcquireValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AcquireStorageAccountLock"/> values are the same. </summary>
         public static bool operator ==(AcquireStorageAccountLock left, AcquireStorageAccountLock right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcquireStorageAccountLock"/> values are not the same. </summary>

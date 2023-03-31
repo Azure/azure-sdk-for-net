@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(InfrastructureEncryption))
             {
                 writer.WritePropertyName("infrastructureEncryption"u8);
-                writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
+                writer.WriteStringValue(InfrastructureEncryption.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

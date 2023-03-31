@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ResourceTypeName))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceTypeName.Value.ToString());
+                writer.WriteStringValue(ResourceTypeName.Value.ToSerialString());
             }
             if (Optional.IsDefined(Properties))
             {

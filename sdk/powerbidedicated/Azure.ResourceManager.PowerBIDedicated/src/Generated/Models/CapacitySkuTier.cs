@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public static CapacitySkuTier Premium { get; } = new CapacitySkuTier(PremiumValue);
         /// <summary> AutoPremiumHost. </summary>
         public static CapacitySkuTier AutoPremiumHost { get; } = new CapacitySkuTier(AutoPremiumHostValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CapacitySkuTier"/> values are the same. </summary>
         public static bool operator ==(CapacitySkuTier left, CapacitySkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CapacitySkuTier"/> values are not the same. </summary>

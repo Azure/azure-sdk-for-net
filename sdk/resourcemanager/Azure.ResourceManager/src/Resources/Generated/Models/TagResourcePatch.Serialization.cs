@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(PatchMode))
             {
                 writer.WritePropertyName("operation"u8);
-                writer.WriteStringValue(PatchMode.Value.ToString());
+                writer.WriteStringValue(PatchMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(Properties))
             {

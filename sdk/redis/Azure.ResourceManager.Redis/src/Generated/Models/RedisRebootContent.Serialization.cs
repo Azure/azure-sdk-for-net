@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(RebootType))
             {
                 writer.WritePropertyName("rebootType"u8);
-                writer.WriteStringValue(RebootType.Value.ToString());
+                writer.WriteStringValue(RebootType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ShardId))
             {

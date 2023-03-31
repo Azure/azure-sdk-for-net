@@ -41,6 +41,9 @@ namespace Azure.Quantum.Jobs.Models
         public static JsonPatchOperation Copy { get; } = new JsonPatchOperation(CopyValue);
         /// <summary> test. </summary>
         public static JsonPatchOperation Test { get; } = new JsonPatchOperation(TestValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JsonPatchOperation"/> values are the same. </summary>
         public static bool operator ==(JsonPatchOperation left, JsonPatchOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JsonPatchOperation"/> values are not the same. </summary>

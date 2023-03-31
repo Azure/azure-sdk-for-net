@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static MarketplaceSubscriptionStatus NotStarted { get; } = new MarketplaceSubscriptionStatus(NotStartedValue);
         /// <summary> FulfillmentRequested. </summary>
         public static MarketplaceSubscriptionStatus FulfillmentRequested { get; } = new MarketplaceSubscriptionStatus(FulfillmentRequestedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionStatus"/> values are the same. </summary>
         public static bool operator ==(MarketplaceSubscriptionStatus left, MarketplaceSubscriptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionStatus"/> values are not the same. </summary>

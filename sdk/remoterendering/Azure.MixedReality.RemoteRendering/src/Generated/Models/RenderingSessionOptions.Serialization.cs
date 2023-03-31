@@ -18,7 +18,7 @@ namespace Azure.MixedReality.RemoteRendering
             writer.WritePropertyName("maxLeaseTimeMinutes"u8);
             writer.WriteNumberValue(MaxLeaseTimeMinutes);
             writer.WritePropertyName("size"u8);
-            writer.WriteStringValue(Size.ToString());
+            writer.WriteStringValue(Size.ToSerialString());
             writer.WriteEndObject();
         }
     }

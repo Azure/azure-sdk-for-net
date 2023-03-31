@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(TieringMode))
             {
                 writer.WritePropertyName("tieringMode"u8);
-                writer.WriteStringValue(TieringMode.Value.ToString());
+                writer.WriteStringValue(TieringMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(DurationValue))
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(DurationType))
             {
                 writer.WritePropertyName("durationType"u8);
-                writer.WriteStringValue(DurationType.Value.ToString());
+                writer.WriteStringValue(DurationType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

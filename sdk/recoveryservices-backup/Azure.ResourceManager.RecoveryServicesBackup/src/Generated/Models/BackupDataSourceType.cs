@@ -71,6 +71,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupDataSourceType SapAseDatabase { get; } = new BackupDataSourceType(SapAseDatabaseValue);
         /// <summary> SAPHanaDBInstance. </summary>
         public static BackupDataSourceType SapHanaDBInstance { get; } = new BackupDataSourceType(SapHanaDBInstanceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupDataSourceType"/> values are the same. </summary>
         public static bool operator ==(BackupDataSourceType left, BackupDataSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupDataSourceType"/> values are not the same. </summary>

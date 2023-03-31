@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(AofFrequency))
             {
                 writer.WritePropertyName("aofFrequency"u8);
-                writer.WriteStringValue(AofFrequency.Value.ToString());
+                writer.WriteStringValue(AofFrequency.Value.ToSerialString());
             }
             if (Optional.IsDefined(RdbFrequency))
             {
                 writer.WritePropertyName("rdbFrequency"u8);
-                writer.WriteStringValue(RdbFrequency.Value.ToString());
+                writer.WriteStringValue(RdbFrequency.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

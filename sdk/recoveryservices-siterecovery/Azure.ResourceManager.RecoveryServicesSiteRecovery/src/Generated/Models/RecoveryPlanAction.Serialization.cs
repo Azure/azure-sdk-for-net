@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartArray();
             foreach (var item in FailoverTypes)
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WriteStringValue(item.ToSerialString());
             }
             writer.WriteEndArray();
             writer.WritePropertyName("failoverDirections"u8);
             writer.WriteStartArray();
             foreach (var item in FailoverDirections)
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WriteStringValue(item.ToSerialString());
             }
             writer.WriteEndArray();
             writer.WritePropertyName("customDetails"u8);

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static Severity Error { get; } = new Severity(ErrorValue);
         /// <summary> Info. </summary>
         public static Severity Info { get; } = new Severity(InfoValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Severity"/> values are the same. </summary>
         public static bool operator ==(Severity left, Severity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Severity"/> values are not the same. </summary>

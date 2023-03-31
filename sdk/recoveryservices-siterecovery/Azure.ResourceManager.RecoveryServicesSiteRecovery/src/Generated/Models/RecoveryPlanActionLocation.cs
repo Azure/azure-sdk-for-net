@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static RecoveryPlanActionLocation Primary { get; } = new RecoveryPlanActionLocation(PrimaryValue);
         /// <summary> Recovery. </summary>
         public static RecoveryPlanActionLocation Recovery { get; } = new RecoveryPlanActionLocation(RecoveryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecoveryPlanActionLocation"/> values are the same. </summary>
         public static bool operator ==(RecoveryPlanActionLocation left, RecoveryPlanActionLocation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryPlanActionLocation"/> values are not the same. </summary>

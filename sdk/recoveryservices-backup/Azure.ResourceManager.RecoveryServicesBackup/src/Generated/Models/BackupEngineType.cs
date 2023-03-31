@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupEngineType DpmBackupEngine { get; } = new BackupEngineType(DpmBackupEngineValue);
         /// <summary> AzureBackupServerEngine. </summary>
         public static BackupEngineType AzureBackupServerEngine { get; } = new BackupEngineType(AzureBackupServerEngineValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupEngineType"/> values are the same. </summary>
         public static bool operator ==(BackupEngineType left, BackupEngineType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupEngineType"/> values are not the same. </summary>

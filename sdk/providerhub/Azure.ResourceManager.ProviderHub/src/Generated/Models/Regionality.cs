@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Regionality Global { get; } = new Regionality(GlobalValue);
         /// <summary> Regional. </summary>
         public static Regionality Regional { get; } = new Regionality(RegionalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Regionality"/> values are the same. </summary>
         public static bool operator ==(Regionality left, Regionality right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Regionality"/> values are not the same. </summary>

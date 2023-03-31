@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static TagPatchMode Merge { get; } = new TagPatchMode(MergeValue);
         /// <summary> The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
         public static TagPatchMode Delete { get; } = new TagPatchMode(DeleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TagPatchMode"/> values are the same. </summary>
         public static bool operator ==(TagPatchMode left, TagPatchMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TagPatchMode"/> values are not the same. </summary>

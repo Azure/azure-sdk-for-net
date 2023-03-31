@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(TargetAvailabilityZone))
             {
                 writer.WritePropertyName("targetAvailabilityZone"u8);
-                writer.WriteStringValue(TargetAvailabilityZone.Value.ToString());
+                writer.WriteStringValue(TargetAvailabilityZone.Value.ToSerialString());
             }
             if (Optional.IsDefined(TargetVmSize))
             {

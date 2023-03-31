@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Relay.Models
         public static RelayPrivateLinkConnectionStatus Rejected { get; } = new RelayPrivateLinkConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static RelayPrivateLinkConnectionStatus Disconnected { get; } = new RelayPrivateLinkConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RelayPrivateLinkConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(RelayPrivateLinkConnectionStatus left, RelayPrivateLinkConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelayPrivateLinkConnectionStatus"/> values are not the same. </summary>

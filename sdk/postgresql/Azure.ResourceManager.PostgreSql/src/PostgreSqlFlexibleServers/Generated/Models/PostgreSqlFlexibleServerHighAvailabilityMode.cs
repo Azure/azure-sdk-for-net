@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerHighAvailabilityMode ZoneRedundant { get; } = new PostgreSqlFlexibleServerHighAvailabilityMode(ZoneRedundantValue);
         /// <summary> SameZone. </summary>
         public static PostgreSqlFlexibleServerHighAvailabilityMode SameZone { get; } = new PostgreSqlFlexibleServerHighAvailabilityMode(SameZoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerHighAvailabilityMode left, PostgreSqlFlexibleServerHighAvailabilityMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/> values are not the same. </summary>

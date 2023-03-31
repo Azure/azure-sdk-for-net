@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WritePropertyName("logStorageAccountId"u8);
             writer.WriteStringValue(LogStorageAccountId);
             writer.WritePropertyName("diskType"u8);
-            writer.WriteStringValue(DiskType.ToString());
+            writer.WriteStringValue(DiskType.ToSerialString());
             if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);

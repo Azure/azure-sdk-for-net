@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("requiredFeaturesPolicy"u8);
-            writer.WriteStringValue(RequiredFeaturesPolicy.ToString());
+            writer.WriteStringValue(RequiredFeaturesPolicy.ToSerialString());
             writer.WriteEndObject();
         }
 

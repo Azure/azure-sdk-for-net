@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Redis.Models
         public static RedisPrivateEndpointServiceConnectionStatus Approved { get; } = new RedisPrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static RedisPrivateEndpointServiceConnectionStatus Rejected { get; } = new RedisPrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(RedisPrivateEndpointServiceConnectionStatus left, RedisPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

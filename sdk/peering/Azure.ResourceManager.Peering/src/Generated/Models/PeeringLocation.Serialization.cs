@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind.Value.ToString());
+                writer.WriteStringValue(Kind.Value.ToSerialString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();

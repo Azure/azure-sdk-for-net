@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static PostgreSqlSkuTier GeneralPurpose { get; } = new PostgreSqlSkuTier(GeneralPurposeValue);
         /// <summary> MemoryOptimized. </summary>
         public static PostgreSqlSkuTier MemoryOptimized { get; } = new PostgreSqlSkuTier(MemoryOptimizedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlSkuTier"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlSkuTier left, PostgreSqlSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlSkuTier"/> values are not the same. </summary>

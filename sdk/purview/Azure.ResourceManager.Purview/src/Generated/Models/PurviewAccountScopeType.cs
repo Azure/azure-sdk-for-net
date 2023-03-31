@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Purview.Models
         public static PurviewAccountScopeType Tenant { get; } = new PurviewAccountScopeType(TenantValue);
         /// <summary> Subscription. </summary>
         public static PurviewAccountScopeType Subscription { get; } = new PurviewAccountScopeType(SubscriptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PurviewAccountScopeType"/> values are the same. </summary>
         public static bool operator ==(PurviewAccountScopeType left, PurviewAccountScopeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PurviewAccountScopeType"/> values are not the same. </summary>

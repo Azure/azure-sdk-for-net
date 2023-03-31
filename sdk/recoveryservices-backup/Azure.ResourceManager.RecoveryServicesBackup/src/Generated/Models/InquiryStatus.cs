@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static InquiryStatus Success { get; } = new InquiryStatus(SuccessValue);
         /// <summary> Failed. </summary>
         public static InquiryStatus Failed { get; } = new InquiryStatus(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InquiryStatus"/> values are the same. </summary>
         public static bool operator ==(InquiryStatus left, InquiryStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InquiryStatus"/> values are not the same. </summary>

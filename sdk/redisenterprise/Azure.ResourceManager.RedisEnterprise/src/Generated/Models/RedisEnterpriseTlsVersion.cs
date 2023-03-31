@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         private const string Tls1_0Value = "1.0";
         private const string Tls1_1Value = "1.1";
         private const string Tls1_2Value = "1.2";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisEnterpriseTlsVersion"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseTlsVersion left, RedisEnterpriseTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseTlsVersion"/> values are not the same. </summary>

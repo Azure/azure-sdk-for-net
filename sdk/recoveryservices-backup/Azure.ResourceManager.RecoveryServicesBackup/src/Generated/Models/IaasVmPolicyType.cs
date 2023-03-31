@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static IaasVmPolicyType V1 { get; } = new IaasVmPolicyType(V1Value);
         /// <summary> V2. </summary>
         public static IaasVmPolicyType V2 { get; } = new IaasVmPolicyType(V2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IaasVmPolicyType"/> values are the same. </summary>
         public static bool operator ==(IaasVmPolicyType left, IaasVmPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IaasVmPolicyType"/> values are not the same. </summary>

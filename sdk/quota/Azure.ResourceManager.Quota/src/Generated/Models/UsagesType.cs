@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Quota.Models
         public static UsagesType Individual { get; } = new UsagesType(IndividualValue);
         /// <summary> Combined. </summary>
         public static UsagesType Combined { get; } = new UsagesType(CombinedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UsagesType"/> values are the same. </summary>
         public static bool operator ==(UsagesType left, UsagesType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UsagesType"/> values are not the same. </summary>

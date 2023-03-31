@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static BillingCycle Weekly { get; } = new BillingCycle(WeeklyValue);
         /// <summary> MONTHLY. </summary>
         public static BillingCycle Monthly { get; } = new BillingCycle(MonthlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BillingCycle"/> values are the same. </summary>
         public static bool operator ==(BillingCycle left, BillingCycle right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingCycle"/> values are not the same. </summary>

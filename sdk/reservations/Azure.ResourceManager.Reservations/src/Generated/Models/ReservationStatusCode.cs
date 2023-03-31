@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static ReservationStatusCode Expired { get; } = new ReservationStatusCode(ExpiredValue);
         /// <summary> Succeeded. </summary>
         public static ReservationStatusCode Succeeded { get; } = new ReservationStatusCode(SucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReservationStatusCode"/> values are the same. </summary>
         public static bool operator ==(ReservationStatusCode left, ReservationStatusCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReservationStatusCode"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Redis.Models
         public static RedisSkuName Standard { get; } = new RedisSkuName(StandardValue);
         /// <summary> Premium. </summary>
         public static RedisSkuName Premium { get; } = new RedisSkuName(PremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisSkuName"/> values are the same. </summary>
         public static bool operator ==(RedisSkuName left, RedisSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisSkuName"/> values are not the same. </summary>

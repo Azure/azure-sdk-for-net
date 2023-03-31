@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(DirectPeeringType))
             {
                 writer.WritePropertyName("directPeeringType"u8);
-                writer.WriteStringValue(DirectPeeringType.Value.ToString());
+                writer.WriteStringValue(DirectPeeringType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

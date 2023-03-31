@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(GeoRedundantBackup))
             {
                 writer.WritePropertyName("geoRedundantBackup"u8);
-                writer.WriteStringValue(GeoRedundantBackup.Value.ToString());
+                writer.WriteStringValue(GeoRedundantBackup.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

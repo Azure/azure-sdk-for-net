@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public static Mode Gen1 { get; } = new Mode(Gen1Value);
         /// <summary> Gen2. </summary>
         public static Mode Gen2 { get; } = new Mode(Gen2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Mode"/> values are the same. </summary>
         public static bool operator ==(Mode left, Mode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Mode"/> values are not the same. </summary>

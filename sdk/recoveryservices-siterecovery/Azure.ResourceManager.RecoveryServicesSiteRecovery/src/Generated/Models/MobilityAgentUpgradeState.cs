@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static MobilityAgentUpgradeState Completed { get; } = new MobilityAgentUpgradeState(CompletedValue);
         /// <summary> Commit. </summary>
         public static MobilityAgentUpgradeState Commit { get; } = new MobilityAgentUpgradeState(CommitValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MobilityAgentUpgradeState"/> values are the same. </summary>
         public static bool operator ==(MobilityAgentUpgradeState left, MobilityAgentUpgradeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobilityAgentUpgradeState"/> values are not the same. </summary>

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteStringValue(Scope.Value.ToString());
+                writer.WriteStringValue(Scope.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AssociatedSubscriptions))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(DefaultMode))
             {
                 writer.WritePropertyName("defaultMode"u8);
-                writer.WriteStringValue(DefaultMode.Value.ToString());
+                writer.WriteStringValue(DefaultMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(MinAppIdVersion))
             {

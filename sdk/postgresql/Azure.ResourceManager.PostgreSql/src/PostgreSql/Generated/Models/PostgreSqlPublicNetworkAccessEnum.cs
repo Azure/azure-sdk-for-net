@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static PostgreSqlPublicNetworkAccessEnum Enabled { get; } = new PostgreSqlPublicNetworkAccessEnum(EnabledValue);
         /// <summary> Disabled. </summary>
         public static PostgreSqlPublicNetworkAccessEnum Disabled { get; } = new PostgreSqlPublicNetworkAccessEnum(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlPublicNetworkAccessEnum"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlPublicNetworkAccessEnum left, PostgreSqlPublicNetworkAccessEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlPublicNetworkAccessEnum"/> values are not the same. </summary>

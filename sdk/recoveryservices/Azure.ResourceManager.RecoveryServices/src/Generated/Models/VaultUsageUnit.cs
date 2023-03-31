@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static VaultUsageUnit CountPerSecond { get; } = new VaultUsageUnit(CountPerSecondValue);
         /// <summary> BytesPerSecond. </summary>
         public static VaultUsageUnit BytesPerSecond { get; } = new VaultUsageUnit(BytesPerSecondValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VaultUsageUnit"/> values are the same. </summary>
         public static bool operator ==(VaultUsageUnit left, VaultUsageUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VaultUsageUnit"/> values are not the same. </summary>

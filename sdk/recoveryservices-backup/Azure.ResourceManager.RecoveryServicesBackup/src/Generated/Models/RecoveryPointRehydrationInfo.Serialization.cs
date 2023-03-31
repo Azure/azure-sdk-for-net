@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RehydrationPriority))
             {
                 writer.WritePropertyName("rehydrationPriority"u8);
-                writer.WriteStringValue(RehydrationPriority.Value.ToString());
+                writer.WriteStringValue(RehydrationPriority.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

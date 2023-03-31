@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(ClientProtocol))
             {
                 writer.WritePropertyName("clientProtocol"u8);
-                writer.WriteStringValue(ClientProtocol.Value.ToString());
+                writer.WriteStringValue(ClientProtocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(Port))
             {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(ClusteringPolicy))
             {
                 writer.WritePropertyName("clusteringPolicy"u8);
-                writer.WriteStringValue(ClusteringPolicy.Value.ToString());
+                writer.WriteStringValue(ClusteringPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(EvictionPolicy))
             {
                 writer.WritePropertyName("evictionPolicy"u8);
-                writer.WriteStringValue(EvictionPolicy.Value.ToString());
+                writer.WriteStringValue(EvictionPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(Persistence))
             {

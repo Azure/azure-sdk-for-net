@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static VmReplicationProgressHealth SlowProgress { get; } = new VmReplicationProgressHealth(SlowProgressValue);
         /// <summary> NoProgress. </summary>
         public static VmReplicationProgressHealth NoProgress { get; } = new VmReplicationProgressHealth(NoProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VmReplicationProgressHealth"/> values are the same. </summary>
         public static bool operator ==(VmReplicationProgressHealth left, VmReplicationProgressHealth right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmReplicationProgressHealth"/> values are not the same. </summary>

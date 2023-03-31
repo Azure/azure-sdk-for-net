@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static ResourceTypeRegistrationPropertiesMarketplaceType Bypass { get; } = new ResourceTypeRegistrationPropertiesMarketplaceType(BypassValue);
         /// <summary> Store. </summary>
         public static ResourceTypeRegistrationPropertiesMarketplaceType Store { get; } = new ResourceTypeRegistrationPropertiesMarketplaceType(StoreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceTypeRegistrationPropertiesMarketplaceType"/> values are the same. </summary>
         public static bool operator ==(ResourceTypeRegistrationPropertiesMarketplaceType left, ResourceTypeRegistrationPropertiesMarketplaceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceTypeRegistrationPropertiesMarketplaceType"/> values are not the same. </summary>

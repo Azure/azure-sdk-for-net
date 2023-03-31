@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(JobOutputType))
             {
                 writer.WritePropertyName("jobOutputType"u8);
-                writer.WriteStringValue(JobOutputType.Value.ToString());
+                writer.WriteStringValue(JobOutputType.Value.ToSerialString());
             }
             if (Optional.IsDefined(JobName))
             {

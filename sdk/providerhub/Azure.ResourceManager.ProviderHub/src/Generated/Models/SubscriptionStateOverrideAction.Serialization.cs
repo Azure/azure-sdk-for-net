@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("state"u8);
-            writer.WriteStringValue(State.ToString());
+            writer.WriteStringValue(State.ToSerialString());
             writer.WritePropertyName("action"u8);
-            writer.WriteStringValue(Action.ToString());
+            writer.WriteStringValue(Action.ToSerialString());
             writer.WriteEndObject();
         }
 

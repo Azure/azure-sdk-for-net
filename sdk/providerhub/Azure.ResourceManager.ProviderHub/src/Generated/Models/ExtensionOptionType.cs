@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static ExtensionOptionType DoNotMergeExistingReadOnlyAndSecretProperties { get; } = new ExtensionOptionType(DoNotMergeExistingReadOnlyAndSecretPropertiesValue);
         /// <summary> IncludeInternalMetadata. </summary>
         public static ExtensionOptionType IncludeInternalMetadata { get; } = new ExtensionOptionType(IncludeInternalMetadataValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExtensionOptionType"/> values are the same. </summary>
         public static bool operator ==(ExtensionOptionType left, ExtensionOptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExtensionOptionType"/> values are not the same. </summary>

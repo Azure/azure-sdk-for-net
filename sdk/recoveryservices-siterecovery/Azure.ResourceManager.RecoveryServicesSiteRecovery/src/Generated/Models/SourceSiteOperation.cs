@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static SourceSiteOperation Required { get; } = new SourceSiteOperation(RequiredValue);
         /// <summary> NotRequired. </summary>
         public static SourceSiteOperation NotRequired { get; } = new SourceSiteOperation(NotRequiredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SourceSiteOperation"/> values are the same. </summary>
         public static bool operator ==(SourceSiteOperation left, SourceSiteOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceSiteOperation"/> values are not the same. </summary>

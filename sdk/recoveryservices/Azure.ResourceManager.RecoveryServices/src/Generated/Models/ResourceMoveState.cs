@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static ResourceMoveState CriticalFailure { get; } = new ResourceMoveState(CriticalFailureValue);
         /// <summary> PartialSuccess. </summary>
         public static ResourceMoveState PartialSuccess { get; } = new ResourceMoveState(PartialSuccessValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceMoveState"/> values are the same. </summary>
         public static bool operator ==(ResourceMoveState left, ResourceMoveState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceMoveState"/> values are not the same. </summary>

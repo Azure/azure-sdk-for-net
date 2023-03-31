@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static ArmApplicationDeploymentMode Incremental { get; } = new ArmApplicationDeploymentMode(IncrementalValue);
         /// <summary> Complete. </summary>
         public static ArmApplicationDeploymentMode Complete { get; } = new ArmApplicationDeploymentMode(CompleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ArmApplicationDeploymentMode"/> values are the same. </summary>
         public static bool operator ==(ArmApplicationDeploymentMode left, ArmApplicationDeploymentMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArmApplicationDeploymentMode"/> values are not the same. </summary>

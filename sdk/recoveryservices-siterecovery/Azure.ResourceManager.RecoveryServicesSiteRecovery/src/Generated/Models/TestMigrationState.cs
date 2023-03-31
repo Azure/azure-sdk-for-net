@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static TestMigrationState TestMigrationCompletedWithInformation { get; } = new TestMigrationState(TestMigrationCompletedWithInformationValue);
         /// <summary> TestMigrationPartiallySucceeded. </summary>
         public static TestMigrationState TestMigrationPartiallySucceeded { get; } = new TestMigrationState(TestMigrationPartiallySucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TestMigrationState"/> values are the same. </summary>
         public static bool operator ==(TestMigrationState left, TestMigrationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TestMigrationState"/> values are not the same. </summary>

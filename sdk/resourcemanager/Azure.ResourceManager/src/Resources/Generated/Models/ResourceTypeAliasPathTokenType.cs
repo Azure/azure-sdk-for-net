@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static ResourceTypeAliasPathTokenType Number { get; } = new ResourceTypeAliasPathTokenType(NumberValue);
         /// <summary> The token type is boolean. </summary>
         public static ResourceTypeAliasPathTokenType Boolean { get; } = new ResourceTypeAliasPathTokenType(BooleanValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceTypeAliasPathTokenType"/> values are the same. </summary>
         public static bool operator ==(ResourceTypeAliasPathTokenType left, ResourceTypeAliasPathTokenType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceTypeAliasPathTokenType"/> values are not the same. </summary>

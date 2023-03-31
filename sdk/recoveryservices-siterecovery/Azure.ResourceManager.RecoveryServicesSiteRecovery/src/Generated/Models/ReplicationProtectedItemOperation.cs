@@ -65,6 +65,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static ReplicationProtectedItemOperation SwitchProtection { get; } = new ReplicationProtectedItemOperation(SwitchProtectionValue);
         /// <summary> CompleteMigration. </summary>
         public static ReplicationProtectedItemOperation CompleteMigration { get; } = new ReplicationProtectedItemOperation(CompleteMigrationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReplicationProtectedItemOperation"/> values are the same. </summary>
         public static bool operator ==(ReplicationProtectedItemOperation left, ReplicationProtectedItemOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReplicationProtectedItemOperation"/> values are not the same. </summary>

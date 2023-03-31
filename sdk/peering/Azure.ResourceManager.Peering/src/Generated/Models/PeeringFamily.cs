@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringFamily Direct { get; } = new PeeringFamily(DirectValue);
         /// <summary> Exchange. </summary>
         public static PeeringFamily Exchange { get; } = new PeeringFamily(ExchangeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PeeringFamily"/> values are the same. </summary>
         public static bool operator ==(PeeringFamily left, PeeringFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringFamily"/> values are not the same. </summary>

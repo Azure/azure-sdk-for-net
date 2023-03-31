@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static PossibleOperationsDirection PrimaryToRecovery { get; } = new PossibleOperationsDirection(PrimaryToRecoveryValue);
         /// <summary> RecoveryToPrimary. </summary>
         public static PossibleOperationsDirection RecoveryToPrimary { get; } = new PossibleOperationsDirection(RecoveryToPrimaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PossibleOperationsDirection"/> values are the same. </summary>
         public static bool operator ==(PossibleOperationsDirection left, PossibleOperationsDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PossibleOperationsDirection"/> values are not the same. </summary>

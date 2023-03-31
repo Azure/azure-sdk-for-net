@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary> default. </summary>
         public static PolicyTrackedResourceType Default { get; } = new PolicyTrackedResourceType(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyTrackedResourceType"/> values are the same. </summary>
         public static bool operator ==(PolicyTrackedResourceType left, PolicyTrackedResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyTrackedResourceType"/> values are not the same. </summary>

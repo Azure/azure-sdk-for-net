@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static LookingGlassCommand Ping { get; } = new LookingGlassCommand(PingValue);
         /// <summary> BgpRoute. </summary>
         public static LookingGlassCommand BgpRoute { get; } = new LookingGlassCommand(BgpRouteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LookingGlassCommand"/> values are the same. </summary>
         public static bool operator ==(LookingGlassCommand left, LookingGlassCommand right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LookingGlassCommand"/> values are not the same. </summary>

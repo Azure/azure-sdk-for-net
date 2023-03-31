@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(OptInHeaders))
             {
                 writer.WritePropertyName("optInHeaders"u8);
-                writer.WriteStringValue(OptInHeaders.Value.ToString());
+                writer.WriteStringValue(OptInHeaders.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

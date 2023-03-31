@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public static IdentityType ManagedIdentity { get; } = new IdentityType(ManagedIdentityValue);
         /// <summary> Key. </summary>
         public static IdentityType Key { get; } = new IdentityType(KeyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IdentityType"/> values are the same. </summary>
         public static bool operator ==(IdentityType left, IdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IdentityType"/> values are not the same. </summary>

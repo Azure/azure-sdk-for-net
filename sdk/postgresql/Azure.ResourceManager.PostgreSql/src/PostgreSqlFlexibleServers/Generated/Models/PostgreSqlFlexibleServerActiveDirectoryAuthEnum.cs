@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerActiveDirectoryAuthEnum Enabled { get; } = new PostgreSqlFlexibleServerActiveDirectoryAuthEnum(EnabledValue);
         /// <summary> Disabled. </summary>
         public static PostgreSqlFlexibleServerActiveDirectoryAuthEnum Disabled { get; } = new PostgreSqlFlexibleServerActiveDirectoryAuthEnum(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerActiveDirectoryAuthEnum"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerActiveDirectoryAuthEnum left, PostgreSqlFlexibleServerActiveDirectoryAuthEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerActiveDirectoryAuthEnum"/> values are not the same. </summary>

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version.Value.ToString());
+                writer.WriteStringValue(Version.Value.ToSerialString());
             }
             if (Optional.IsDefined(SslEnforcement))
             {
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.PostgreSql
             if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
-                writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
+                writer.WriteStringValue(MinimalTlsVersion.Value.ToSerialString());
             }
             if (Optional.IsDefined(InfrastructureEncryption))
             {
                 writer.WritePropertyName("infrastructureEncryption"u8);
-                writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
+                writer.WriteStringValue(InfrastructureEncryption.Value.ToSerialString());
             }
             if (Optional.IsDefined(UserVisibleState))
             {
                 writer.WritePropertyName("userVisibleState"u8);
-                writer.WriteStringValue(UserVisibleState.Value.ToString());
+                writer.WriteStringValue(UserVisibleState.Value.ToSerialString());
             }
             if (Optional.IsDefined(FullyQualifiedDomainName))
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.PostgreSql
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

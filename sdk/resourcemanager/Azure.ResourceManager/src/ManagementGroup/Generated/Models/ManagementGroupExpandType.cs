@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         public static ManagementGroupExpandType Path { get; } = new ManagementGroupExpandType(PathValue);
         /// <summary> ancestors. </summary>
         public static ManagementGroupExpandType Ancestors { get; } = new ManagementGroupExpandType(AncestorsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagementGroupExpandType"/> values are the same. </summary>
         public static bool operator ==(ManagementGroupExpandType left, ManagementGroupExpandType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagementGroupExpandType"/> values are not the same. </summary>

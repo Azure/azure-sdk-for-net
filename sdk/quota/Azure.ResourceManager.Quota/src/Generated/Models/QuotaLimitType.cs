@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Quota.Models
         public static QuotaLimitType Independent { get; } = new QuotaLimitType(IndependentValue);
         /// <summary> Shared. </summary>
         public static QuotaLimitType Shared { get; } = new QuotaLimitType(SharedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="QuotaLimitType"/> values are the same. </summary>
         public static bool operator ==(QuotaLimitType left, QuotaLimitType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QuotaLimitType"/> values are not the same. </summary>

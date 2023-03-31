@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerFailoverMode PlannedSwitchover { get; } = new PostgreSqlFlexibleServerFailoverMode(PlannedSwitchoverValue);
         /// <summary> ForcedSwitchover. </summary>
         public static PostgreSqlFlexibleServerFailoverMode ForcedSwitchover { get; } = new PostgreSqlFlexibleServerFailoverMode(ForcedSwitchoverValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFailoverMode"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerFailoverMode left, PostgreSqlFlexibleServerFailoverMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFailoverMode"/> values are not the same. </summary>

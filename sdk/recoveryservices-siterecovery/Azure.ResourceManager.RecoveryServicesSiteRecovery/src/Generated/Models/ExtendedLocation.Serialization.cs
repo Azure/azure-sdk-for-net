@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ExtendedLocationType.ToString());
+            writer.WriteStringValue(ExtendedLocationType.ToSerialString());
             writer.WriteEndObject();
         }
 

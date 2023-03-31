@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseClientProtocol Encrypted { get; } = new RedisEnterpriseClientProtocol(EncryptedValue);
         /// <summary> Plaintext. </summary>
         public static RedisEnterpriseClientProtocol PlainText { get; } = new RedisEnterpriseClientProtocol(PlainTextValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisEnterpriseClientProtocol"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseClientProtocol left, RedisEnterpriseClientProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseClientProtocol"/> values are not the same. </summary>

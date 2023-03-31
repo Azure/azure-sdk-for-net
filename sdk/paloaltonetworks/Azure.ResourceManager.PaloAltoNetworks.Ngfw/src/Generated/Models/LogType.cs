@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static LogType DLP { get; } = new LogType(DLPValue);
         /// <summary> AUDIT. </summary>
         public static LogType Audit { get; } = new LogType(AuditValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogType"/> values are the same. </summary>
         public static bool operator ==(LogType left, LogType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogType"/> values are not the same. </summary>

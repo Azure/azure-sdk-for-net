@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseCustomerManagedKeyIdentityType SystemAssignedIdentity { get; } = new RedisEnterpriseCustomerManagedKeyIdentityType(SystemAssignedIdentityValue);
         /// <summary> userAssignedIdentity. </summary>
         public static RedisEnterpriseCustomerManagedKeyIdentityType UserAssignedIdentity { get; } = new RedisEnterpriseCustomerManagedKeyIdentityType(UserAssignedIdentityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisEnterpriseCustomerManagedKeyIdentityType"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseCustomerManagedKeyIdentityType left, RedisEnterpriseCustomerManagedKeyIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseCustomerManagedKeyIdentityType"/> values are not the same. </summary>

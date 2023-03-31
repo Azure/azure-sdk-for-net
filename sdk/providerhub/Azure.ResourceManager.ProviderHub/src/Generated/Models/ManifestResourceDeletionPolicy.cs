@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static ManifestResourceDeletionPolicy Cascade { get; } = new ManifestResourceDeletionPolicy(CascadeValue);
         /// <summary> Force. </summary>
         public static ManifestResourceDeletionPolicy Force { get; } = new ManifestResourceDeletionPolicy(ForceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManifestResourceDeletionPolicy"/> values are the same. </summary>
         public static bool operator ==(ManifestResourceDeletionPolicy left, ManifestResourceDeletionPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManifestResourceDeletionPolicy"/> values are not the same. </summary>

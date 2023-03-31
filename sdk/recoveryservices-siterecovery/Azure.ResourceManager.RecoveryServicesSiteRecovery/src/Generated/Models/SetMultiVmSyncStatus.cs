@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static SetMultiVmSyncStatus Enable { get; } = new SetMultiVmSyncStatus(EnableValue);
         /// <summary> Disable. </summary>
         public static SetMultiVmSyncStatus Disable { get; } = new SetMultiVmSyncStatus(DisableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SetMultiVmSyncStatus"/> values are the same. </summary>
         public static bool operator ==(SetMultiVmSyncStatus left, SetMultiVmSyncStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SetMultiVmSyncStatus"/> values are not the same. </summary>

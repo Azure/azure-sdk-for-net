@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static RetentionDurationType Months { get; } = new RetentionDurationType(MonthsValue);
         /// <summary> Years. </summary>
         public static RetentionDurationType Years { get; } = new RetentionDurationType(YearsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RetentionDurationType"/> values are the same. </summary>
         public static bool operator ==(RetentionDurationType left, RetentionDurationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RetentionDurationType"/> values are not the same. </summary>

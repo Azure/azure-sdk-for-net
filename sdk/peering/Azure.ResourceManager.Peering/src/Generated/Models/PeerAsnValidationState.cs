@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeerAsnValidationState Approved { get; } = new PeerAsnValidationState(ApprovedValue);
         /// <summary> Failed. </summary>
         public static PeerAsnValidationState Failed { get; } = new PeerAsnValidationState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PeerAsnValidationState"/> values are the same. </summary>
         public static bool operator ==(PeerAsnValidationState left, PeerAsnValidationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeerAsnValidationState"/> values are not the same. </summary>

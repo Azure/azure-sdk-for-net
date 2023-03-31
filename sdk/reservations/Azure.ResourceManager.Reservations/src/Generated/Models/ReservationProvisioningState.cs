@@ -62,6 +62,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static ReservationProvisioningState Split { get; } = new ReservationProvisioningState(SplitValue);
         /// <summary> Merged. </summary>
         public static ReservationProvisioningState Merged { get; } = new ReservationProvisioningState(MergedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReservationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ReservationProvisioningState left, ReservationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReservationProvisioningState"/> values are not the same. </summary>

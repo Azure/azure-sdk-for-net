@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static ScriptProvisioningState Failed { get; } = new ScriptProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static ScriptProvisioningState Canceled { get; } = new ScriptProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScriptProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ScriptProvisioningState left, ScriptProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptProvisioningState"/> values are not the same. </summary>

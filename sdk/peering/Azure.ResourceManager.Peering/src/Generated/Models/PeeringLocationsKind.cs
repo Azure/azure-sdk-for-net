@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringLocationsKind Direct { get; } = new PeeringLocationsKind(DirectValue);
         /// <summary> Exchange. </summary>
         public static PeeringLocationsKind Exchange { get; } = new PeeringLocationsKind(ExchangeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PeeringLocationsKind"/> values are the same. </summary>
         public static bool operator ==(PeeringLocationsKind left, PeeringLocationsKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringLocationsKind"/> values are not the same. </summary>

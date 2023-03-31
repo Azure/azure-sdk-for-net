@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static VaultDedupState Enabled { get; } = new VaultDedupState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static VaultDedupState Disabled { get; } = new VaultDedupState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VaultDedupState"/> values are the same. </summary>
         public static bool operator ==(VaultDedupState left, VaultDedupState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VaultDedupState"/> values are not the same. </summary>

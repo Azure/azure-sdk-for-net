@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static PostgreSqlGeoRedundantBackup Enabled { get; } = new PostgreSqlGeoRedundantBackup(EnabledValue);
         /// <summary> Disabled. </summary>
         public static PostgreSqlGeoRedundantBackup Disabled { get; } = new PostgreSqlGeoRedundantBackup(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlGeoRedundantBackup"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlGeoRedundantBackup left, PostgreSqlGeoRedundantBackup right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlGeoRedundantBackup"/> values are not the same. </summary>

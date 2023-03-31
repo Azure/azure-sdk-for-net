@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(FailoverMode))
             {
                 writer.WritePropertyName("failoverMode"u8);
-                writer.WriteStringValue(FailoverMode.Value.ToString());
+                writer.WriteStringValue(FailoverMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

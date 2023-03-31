@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Quantum.Models
         public static Status Deleted { get; } = new Status(DeletedValue);
         /// <summary> Failed. </summary>
         public static Status Failed { get; } = new Status(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Status"/> values are the same. </summary>
         public static bool operator ==(Status left, Status right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Status"/> values are not the same. </summary>

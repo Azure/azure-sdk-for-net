@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static WorkloadOperationType Register { get; } = new WorkloadOperationType(RegisterValue);
         /// <summary> Reregister. </summary>
         public static WorkloadOperationType Reregister { get; } = new WorkloadOperationType(ReregisterValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkloadOperationType"/> values are the same. </summary>
         public static bool operator ==(WorkloadOperationType left, WorkloadOperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadOperationType"/> values are not the same. </summary>

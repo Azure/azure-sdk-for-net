@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringConnectionState TypeChangeRequested { get; } = new PeeringConnectionState(TypeChangeRequestedValue);
         /// <summary> TypeChangeInProgress. </summary>
         public static PeeringConnectionState TypeChangeInProgress { get; } = new PeeringConnectionState(TypeChangeInProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PeeringConnectionState"/> values are the same. </summary>
         public static bool operator ==(PeeringConnectionState left, PeeringConnectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringConnectionState"/> values are not the same. </summary>

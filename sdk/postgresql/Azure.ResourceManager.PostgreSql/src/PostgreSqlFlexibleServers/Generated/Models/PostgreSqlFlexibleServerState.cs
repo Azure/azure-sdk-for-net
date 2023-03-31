@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerState Stopped { get; } = new PostgreSqlFlexibleServerState(StoppedValue);
         /// <summary> Updating. </summary>
         public static PostgreSqlFlexibleServerState Updating { get; } = new PostgreSqlFlexibleServerState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerState left, PostgreSqlFlexibleServerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerState"/> values are not the same. </summary>

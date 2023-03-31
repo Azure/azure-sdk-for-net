@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseProvisioningStatus Updating { get; } = new RedisEnterpriseProvisioningStatus(UpdatingValue);
         /// <summary> Deleting. </summary>
         public static RedisEnterpriseProvisioningStatus Deleting { get; } = new RedisEnterpriseProvisioningStatus(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisEnterpriseProvisioningStatus"/> values are the same. </summary>
         public static bool operator ==(RedisEnterpriseProvisioningStatus left, RedisEnterpriseProvisioningStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseProvisioningStatus"/> values are not the same. </summary>

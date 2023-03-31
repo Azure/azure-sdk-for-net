@@ -65,6 +65,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static AgentUpgradeBlockedReason InvalidDriverVersion { get; } = new AgentUpgradeBlockedReason(InvalidDriverVersionValue);
         /// <summary> Unknown. </summary>
         public static AgentUpgradeBlockedReason Unknown { get; } = new AgentUpgradeBlockedReason(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AgentUpgradeBlockedReason"/> values are the same. </summary>
         public static bool operator ==(AgentUpgradeBlockedReason left, AgentUpgradeBlockedReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentUpgradeBlockedReason"/> values are not the same. </summary>

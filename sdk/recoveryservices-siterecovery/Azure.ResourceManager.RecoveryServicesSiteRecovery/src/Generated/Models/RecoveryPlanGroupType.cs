@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static RecoveryPlanGroupType Boot { get; } = new RecoveryPlanGroupType(BootValue);
         /// <summary> Failover. </summary>
         public static RecoveryPlanGroupType Failover { get; } = new RecoveryPlanGroupType(FailoverValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecoveryPlanGroupType"/> values are the same. </summary>
         public static bool operator ==(RecoveryPlanGroupType left, RecoveryPlanGroupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryPlanGroupType"/> values are not the same. </summary>

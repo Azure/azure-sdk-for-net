@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static ReservationOperationStatus Cancelled { get; } = new ReservationOperationStatus(CancelledValue);
         /// <summary> Pending. </summary>
         public static ReservationOperationStatus Pending { get; } = new ReservationOperationStatus(PendingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReservationOperationStatus"/> values are the same. </summary>
         public static bool operator ==(ReservationOperationStatus left, ReservationOperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReservationOperationStatus"/> values are not the same. </summary>

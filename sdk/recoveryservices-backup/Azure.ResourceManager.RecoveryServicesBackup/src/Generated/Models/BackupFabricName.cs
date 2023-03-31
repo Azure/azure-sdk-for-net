@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupFabricName Invalid { get; } = new BackupFabricName(InvalidValue);
         /// <summary> Azure. </summary>
         public static BackupFabricName Azure { get; } = new BackupFabricName(AzureValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupFabricName"/> values are the same. </summary>
         public static bool operator ==(BackupFabricName left, BackupFabricName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupFabricName"/> values are not the same. </summary>

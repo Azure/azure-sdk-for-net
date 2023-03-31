@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static StandardTierStorageRedundancy GeoRedundant { get; } = new StandardTierStorageRedundancy(GeoRedundantValue);
         /// <summary> ZoneRedundant. </summary>
         public static StandardTierStorageRedundancy ZoneRedundant { get; } = new StandardTierStorageRedundancy(ZoneRedundantValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StandardTierStorageRedundancy"/> values are the same. </summary>
         public static bool operator ==(StandardTierStorageRedundancy left, StandardTierStorageRedundancy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StandardTierStorageRedundancy"/> values are not the same. </summary>

@@ -197,6 +197,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static ReservationErrorResponseCode SelfServiceRefundNotSupported { get; } = new ReservationErrorResponseCode(SelfServiceRefundNotSupportedValue);
         /// <summary> RefundLimitExceeded. </summary>
         public static ReservationErrorResponseCode RefundLimitExceeded { get; } = new ReservationErrorResponseCode(RefundLimitExceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReservationErrorResponseCode"/> values are the same. </summary>
         public static bool operator ==(ReservationErrorResponseCode left, ReservationErrorResponseCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReservationErrorResponseCode"/> values are not the same. </summary>

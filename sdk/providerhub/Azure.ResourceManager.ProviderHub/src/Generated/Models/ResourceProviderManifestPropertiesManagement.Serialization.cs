@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ResourceAccessPolicy))
             {
                 writer.WritePropertyName("resourceAccessPolicy"u8);
-                writer.WriteStringValue(ResourceAccessPolicy.Value.ToString());
+                writer.WriteStringValue(ResourceAccessPolicy.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ResourceAccessRoles))
             {

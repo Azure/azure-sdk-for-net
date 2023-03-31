@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static OptInHeaderType SignedAuxiliaryTokens { get; } = new OptInHeaderType(SignedAuxiliaryTokensValue);
         /// <summary> UnboundedClientGroupMembership. </summary>
         public static OptInHeaderType UnboundedClientGroupMembership { get; } = new OptInHeaderType(UnboundedClientGroupMembershipValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OptInHeaderType"/> values are the same. </summary>
         public static bool operator ==(OptInHeaderType left, OptInHeaderType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OptInHeaderType"/> values are not the same. </summary>

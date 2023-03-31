@@ -29,6 +29,9 @@ namespace Azure.Quantum.Jobs.Models
         public static DimensionScope Workspace { get; } = new DimensionScope(WorkspaceValue);
         /// <summary> Subscription. </summary>
         public static DimensionScope Subscription { get; } = new DimensionScope(SubscriptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DimensionScope"/> values are the same. </summary>
         public static bool operator ==(DimensionScope left, DimensionScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DimensionScope"/> values are not the same. </summary>

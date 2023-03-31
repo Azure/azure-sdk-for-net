@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static ResourceProviderCapabilitiesEffect Allow { get; } = new ResourceProviderCapabilitiesEffect(AllowValue);
         /// <summary> Disallow. </summary>
         public static ResourceProviderCapabilitiesEffect Disallow { get; } = new ResourceProviderCapabilitiesEffect(DisallowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceProviderCapabilitiesEffect"/> values are the same. </summary>
         public static bool operator ==(ResourceProviderCapabilitiesEffect left, ResourceProviderCapabilitiesEffect right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceProviderCapabilitiesEffect"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Models
         public static EncryptionStatus Enabled { get; } = new EncryptionStatus(EnabledValue);
         /// <summary> disabled. </summary>
         public static EncryptionStatus Disabled { get; } = new EncryptionStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EncryptionStatus"/> values are the same. </summary>
         public static bool operator ==(EncryptionStatus left, EncryptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EncryptionStatus"/> values are not the same. </summary>

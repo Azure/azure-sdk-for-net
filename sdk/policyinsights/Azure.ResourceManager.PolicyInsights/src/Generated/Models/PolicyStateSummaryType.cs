@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary> latest. </summary>
         public static PolicyStateSummaryType Latest { get; } = new PolicyStateSummaryType(LatestValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyStateSummaryType"/> values are the same. </summary>
         public static bool operator ==(PolicyStateSummaryType left, PolicyStateSummaryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyStateSummaryType"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static ArmApplicationArtifactName Authorizations { get; } = new ArmApplicationArtifactName(AuthorizationsValue);
         /// <summary> CustomRoleDefinition. </summary>
         public static ArmApplicationArtifactName CustomRoleDefinition { get; } = new ArmApplicationArtifactName(CustomRoleDefinitionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ArmApplicationArtifactName"/> values are the same. </summary>
         public static bool operator ==(ArmApplicationArtifactName left, ArmApplicationArtifactName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArmApplicationArtifactName"/> values are not the same. </summary>

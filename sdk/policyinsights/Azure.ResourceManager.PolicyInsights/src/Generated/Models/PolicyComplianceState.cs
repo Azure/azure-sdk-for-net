@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static PolicyComplianceState NonCompliant { get; } = new PolicyComplianceState(NonCompliantValue);
         /// <summary> The compliance state of the resource is not known. </summary>
         public static PolicyComplianceState Unknown { get; } = new PolicyComplianceState(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyComplianceState"/> values are the same. </summary>
         public static bool operator ==(PolicyComplianceState left, PolicyComplianceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyComplianceState"/> values are not the same. </summary>

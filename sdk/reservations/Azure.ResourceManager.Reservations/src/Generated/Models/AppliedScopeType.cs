@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static AppliedScopeType Shared { get; } = new AppliedScopeType(SharedValue);
         /// <summary> ManagementGroup. </summary>
         public static AppliedScopeType ManagementGroup { get; } = new AppliedScopeType(ManagementGroupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppliedScopeType"/> values are the same. </summary>
         public static bool operator ==(AppliedScopeType left, AppliedScopeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppliedScopeType"/> values are not the same. </summary>

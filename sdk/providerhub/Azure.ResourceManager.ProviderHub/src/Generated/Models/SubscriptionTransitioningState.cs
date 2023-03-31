@@ -62,6 +62,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static SubscriptionTransitioningState SuspendedToDeleted { get; } = new SubscriptionTransitioningState(SuspendedToDeletedValue);
         /// <summary> SuspendedToUnregistered. </summary>
         public static SubscriptionTransitioningState SuspendedToUnregistered { get; } = new SubscriptionTransitioningState(SuspendedToUnregisteredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SubscriptionTransitioningState"/> values are the same. </summary>
         public static bool operator ==(SubscriptionTransitioningState left, SubscriptionTransitioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SubscriptionTransitioningState"/> values are not the same. </summary>

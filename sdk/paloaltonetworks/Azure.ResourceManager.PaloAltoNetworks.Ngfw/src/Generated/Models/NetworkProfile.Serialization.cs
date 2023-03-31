@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WriteObjectValue(VwanConfiguration);
             }
             writer.WritePropertyName("networkType"u8);
-            writer.WriteStringValue(NetworkType.ToString());
+            writer.WriteStringValue(NetworkType.ToSerialString());
             writer.WritePropertyName("publicIps"u8);
             writer.WriteStartArray();
             foreach (var item in PublicIPs)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("enableEgressNat"u8);
-            writer.WriteStringValue(EnableEgressNat.ToString());
+            writer.WriteStringValue(EnableEgressNat.ToSerialString());
             if (Optional.IsCollectionDefined(EgressNatIP))
             {
                 writer.WritePropertyName("egressNatIp"u8);

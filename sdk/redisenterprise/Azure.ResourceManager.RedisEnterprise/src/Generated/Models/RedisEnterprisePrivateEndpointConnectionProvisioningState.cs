@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterprisePrivateEndpointConnectionProvisioningState Deleting { get; } = new RedisEnterprisePrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static RedisEnterprisePrivateEndpointConnectionProvisioningState Failed { get; } = new RedisEnterprisePrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RedisEnterprisePrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(RedisEnterprisePrivateEndpointConnectionProvisioningState left, RedisEnterprisePrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterprisePrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

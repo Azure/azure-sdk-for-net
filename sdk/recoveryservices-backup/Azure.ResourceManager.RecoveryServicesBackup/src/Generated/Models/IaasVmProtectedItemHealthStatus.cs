@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static IaasVmProtectedItemHealthStatus ActionSuggested { get; } = new IaasVmProtectedItemHealthStatus(ActionSuggestedValue);
         /// <summary> Invalid. </summary>
         public static IaasVmProtectedItemHealthStatus Invalid { get; } = new IaasVmProtectedItemHealthStatus(InvalidValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IaasVmProtectedItemHealthStatus"/> values are the same. </summary>
         public static bool operator ==(IaasVmProtectedItemHealthStatus left, IaasVmProtectedItemHealthStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IaasVmProtectedItemHealthStatus"/> values are not the same. </summary>

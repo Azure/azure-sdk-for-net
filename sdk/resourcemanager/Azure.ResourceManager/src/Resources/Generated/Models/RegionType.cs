@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static RegionType Physical { get; } = new RegionType(PhysicalValue);
         /// <summary> Logical. </summary>
         public static RegionType Logical { get; } = new RegionType(LogicalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RegionType"/> values are the same. </summary>
         public static bool operator ==(RegionType left, RegionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RegionType"/> values are not the same. </summary>

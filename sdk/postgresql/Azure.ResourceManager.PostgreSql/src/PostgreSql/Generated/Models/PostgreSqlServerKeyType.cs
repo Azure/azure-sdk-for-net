@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         /// <summary> AzureKeyVault. </summary>
         public static PostgreSqlServerKeyType AzureKeyVault { get; } = new PostgreSqlServerKeyType(AzureKeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlServerKeyType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlServerKeyType left, PostgreSqlServerKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlServerKeyType"/> values are not the same. </summary>

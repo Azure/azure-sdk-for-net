@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static TieringMode TierAfter { get; } = new TieringMode(TierAfterValue);
         /// <summary> DoNotTier. </summary>
         public static TieringMode DoNotTier { get; } = new TieringMode(DoNotTierValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TieringMode"/> values are the same. </summary>
         public static bool operator ==(TieringMode left, TieringMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TieringMode"/> values are not the same. </summary>

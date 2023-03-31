@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         public static State Preparing { get; } = new State(PreparingValue);
         /// <summary> Scaling. </summary>
         public static State Scaling { get; } = new State(ScalingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="State"/> values are the same. </summary>
         public static bool operator ==(State left, State right) => left.Equals(right);
         /// <summary> Determines if two <see cref="State"/> values are not the same. </summary>

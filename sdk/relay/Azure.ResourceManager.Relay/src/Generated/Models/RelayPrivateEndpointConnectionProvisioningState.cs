@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Relay.Models
         public static RelayPrivateEndpointConnectionProvisioningState Canceled { get; } = new RelayPrivateEndpointConnectionProvisioningState(CanceledValue);
         /// <summary> Failed. </summary>
         public static RelayPrivateEndpointConnectionProvisioningState Failed { get; } = new RelayPrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RelayPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(RelayPrivateEndpointConnectionProvisioningState left, RelayPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelayPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

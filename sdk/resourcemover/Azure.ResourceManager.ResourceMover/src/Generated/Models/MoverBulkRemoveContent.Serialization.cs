@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(MoverResourceInputType))
             {
                 writer.WritePropertyName("moveResourceInputType"u8);
-                writer.WriteStringValue(MoverResourceInputType.Value.ToString());
+                writer.WriteStringValue(MoverResourceInputType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

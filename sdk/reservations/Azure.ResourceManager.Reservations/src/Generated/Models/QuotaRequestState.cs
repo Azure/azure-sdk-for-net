@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static QuotaRequestState Failed { get; } = new QuotaRequestState(FailedValue);
         /// <summary> InProgress. </summary>
         public static QuotaRequestState InProgress { get; } = new QuotaRequestState(InProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="QuotaRequestState"/> values are the same. </summary>
         public static bool operator ==(QuotaRequestState left, QuotaRequestState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QuotaRequestState"/> values are not the same. </summary>

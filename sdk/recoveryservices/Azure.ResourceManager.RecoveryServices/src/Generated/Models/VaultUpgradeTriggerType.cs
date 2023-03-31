@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static VaultUpgradeTriggerType UserTriggered { get; } = new VaultUpgradeTriggerType(UserTriggeredValue);
         /// <summary> ForcedUpgrade. </summary>
         public static VaultUpgradeTriggerType ForcedUpgrade { get; } = new VaultUpgradeTriggerType(ForcedUpgradeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VaultUpgradeTriggerType"/> values are the same. </summary>
         public static bool operator ==(VaultUpgradeTriggerType left, VaultUpgradeTriggerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VaultUpgradeTriggerType"/> values are not the same. </summary>

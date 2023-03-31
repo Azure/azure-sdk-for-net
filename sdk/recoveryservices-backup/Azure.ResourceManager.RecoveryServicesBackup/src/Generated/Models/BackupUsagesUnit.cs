@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static BackupUsagesUnit CountPerSecond { get; } = new BackupUsagesUnit(CountPerSecondValue);
         /// <summary> BytesPerSecond. </summary>
         public static BackupUsagesUnit BytesPerSecond { get; } = new BackupUsagesUnit(BytesPerSecondValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupUsagesUnit"/> values are the same. </summary>
         public static bool operator ==(BackupUsagesUnit left, BackupUsagesUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupUsagesUnit"/> values are not the same. </summary>

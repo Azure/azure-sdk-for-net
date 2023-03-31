@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringSize Metered { get; } = new PeeringSize(MeteredValue);
         /// <summary> Unlimited. </summary>
         public static PeeringSize Unlimited { get; } = new PeeringSize(UnlimitedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PeeringSize"/> values are the same. </summary>
         public static bool operator ==(PeeringSize left, PeeringSize right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringSize"/> values are not the same. </summary>

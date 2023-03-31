@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AgentAutoUpdateStatus))
             {
                 writer.WritePropertyName("agentAutoUpdateStatus"u8);
-                writer.WriteStringValue(AgentAutoUpdateStatus.Value.ToString());
+                writer.WriteStringValue(AgentAutoUpdateStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(AutomationAccountArmId))
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AutomationAccountAuthenticationType))
             {
                 writer.WritePropertyName("automationAccountAuthenticationType"u8);
-                writer.WriteStringValue(AutomationAccountAuthenticationType.Value.ToString());
+                writer.WriteStringValue(AutomationAccountAuthenticationType.Value.ToSerialString());
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static AvailabilityStateValue Degraded { get; } = new AvailabilityStateValue(DegradedValue);
         /// <summary> Unknown. </summary>
         public static AvailabilityStateValue Unknown { get; } = new AvailabilityStateValue(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvailabilityStateValue"/> values are the same. </summary>
         public static bool operator ==(AvailabilityStateValue left, AvailabilityStateValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvailabilityStateValue"/> values are not the same. </summary>

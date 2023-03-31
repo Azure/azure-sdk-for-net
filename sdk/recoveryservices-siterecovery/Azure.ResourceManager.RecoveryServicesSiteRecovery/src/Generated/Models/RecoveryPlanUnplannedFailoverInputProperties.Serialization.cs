@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("failoverDirection"u8);
-            writer.WriteStringValue(FailoverDirection.ToString());
+            writer.WriteStringValue(FailoverDirection.ToSerialString());
             writer.WritePropertyName("sourceSiteOperations"u8);
-            writer.WriteStringValue(SourceSiteOperations.ToString());
+            writer.WriteStringValue(SourceSiteOperations.ToSerialString());
             if (Optional.IsCollectionDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);

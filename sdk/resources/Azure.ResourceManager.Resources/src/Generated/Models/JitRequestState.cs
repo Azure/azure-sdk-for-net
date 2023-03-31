@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static JitRequestState Expired { get; } = new JitRequestState(ExpiredValue);
         /// <summary> Timeout. </summary>
         public static JitRequestState Timeout { get; } = new JitRequestState(TimeoutValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JitRequestState"/> values are the same. </summary>
         public static bool operator ==(JitRequestState left, JitRequestState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JitRequestState"/> values are not the same. </summary>

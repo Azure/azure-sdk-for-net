@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("protectionIntentItemType"u8);
-            writer.WriteStringValue(ProtectionIntentItemType.ToString());
+            writer.WriteStringValue(ProtectionIntentItemType.ToSerialString());
             if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
+                writer.WriteStringValue(BackupManagementType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SourceResourceId))
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
-                writer.WriteStringValue(ProtectionState.Value.ToString());
+                writer.WriteStringValue(ProtectionState.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

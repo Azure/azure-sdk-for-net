@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerReplicationRole GeoSyncReplica { get; } = new PostgreSqlFlexibleServerReplicationRole(GeoSyncReplicaValue);
         /// <summary> GeoAsyncReplica. </summary>
         public static PostgreSqlFlexibleServerReplicationRole GeoAsyncReplica { get; } = new PostgreSqlFlexibleServerReplicationRole(GeoAsyncReplicaValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerReplicationRole"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerReplicationRole left, PostgreSqlFlexibleServerReplicationRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerReplicationRole"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static SubscriptionReregistrationResult ForcedUpdate { get; } = new SubscriptionReregistrationResult(ForcedUpdateValue);
         /// <summary> Failed. </summary>
         public static SubscriptionReregistrationResult Failed { get; } = new SubscriptionReregistrationResult(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SubscriptionReregistrationResult"/> values are the same. </summary>
         public static bool operator ==(SubscriptionReregistrationResult left, SubscriptionReregistrationResult right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SubscriptionReregistrationResult"/> values are not the same. </summary>

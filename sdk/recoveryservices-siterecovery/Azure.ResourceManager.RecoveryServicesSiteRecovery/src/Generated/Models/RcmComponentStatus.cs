@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static RcmComponentStatus Critical { get; } = new RcmComponentStatus(CriticalValue);
         /// <summary> Unknown. </summary>
         public static RcmComponentStatus Unknown { get; } = new RcmComponentStatus(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RcmComponentStatus"/> values are the same. </summary>
         public static bool operator ==(RcmComponentStatus left, RcmComponentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RcmComponentStatus"/> values are not the same. </summary>

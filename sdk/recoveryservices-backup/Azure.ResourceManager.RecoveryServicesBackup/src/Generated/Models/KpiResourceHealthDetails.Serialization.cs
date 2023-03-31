@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ResourceHealthStatus))
             {
                 writer.WritePropertyName("resourceHealthStatus"u8);
-                writer.WriteStringValue(ResourceHealthStatus.Value.ToString());
+                writer.WriteStringValue(ResourceHealthStatus.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ResourceHealthDetails))
             {

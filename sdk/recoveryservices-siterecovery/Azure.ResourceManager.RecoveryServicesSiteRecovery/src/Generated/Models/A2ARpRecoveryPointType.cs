@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static A2ARpRecoveryPointType LatestCrashConsistent { get; } = new A2ARpRecoveryPointType(LatestCrashConsistentValue);
         /// <summary> LatestProcessed. </summary>
         public static A2ARpRecoveryPointType LatestProcessed { get; } = new A2ARpRecoveryPointType(LatestProcessedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="A2ARpRecoveryPointType"/> values are the same. </summary>
         public static bool operator ==(A2ARpRecoveryPointType left, A2ARpRecoveryPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="A2ARpRecoveryPointType"/> values are not the same. </summary>

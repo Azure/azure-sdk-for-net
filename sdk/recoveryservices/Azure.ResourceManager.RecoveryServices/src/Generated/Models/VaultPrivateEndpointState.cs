@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static VaultPrivateEndpointState None { get; } = new VaultPrivateEndpointState(NoneValue);
         /// <summary> Enabled. </summary>
         public static VaultPrivateEndpointState Enabled { get; } = new VaultPrivateEndpointState(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VaultPrivateEndpointState"/> values are the same. </summary>
         public static bool operator ==(VaultPrivateEndpointState left, VaultPrivateEndpointState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VaultPrivateEndpointState"/> values are not the same. </summary>

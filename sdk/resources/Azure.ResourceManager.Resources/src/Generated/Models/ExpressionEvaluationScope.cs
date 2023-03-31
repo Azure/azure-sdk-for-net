@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static ExpressionEvaluationScope Outer { get; } = new ExpressionEvaluationScope(OuterValue);
         /// <summary> Inner. </summary>
         public static ExpressionEvaluationScope Inner { get; } = new ExpressionEvaluationScope(InnerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExpressionEvaluationScope"/> values are the same. </summary>
         public static bool operator ==(ExpressionEvaluationScope left, ExpressionEvaluationScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressionEvaluationScope"/> values are not the same. </summary>
