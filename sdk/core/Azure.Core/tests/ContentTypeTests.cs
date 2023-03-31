@@ -22,6 +22,8 @@ namespace Azure.Core.Tests
             Assert.IsTrue(contentType.Equals(new ContentType(aj)));
             Assert.IsTrue(contentType.Equals((object)aj));
             Assert.IsTrue(contentType.Equals((object)new ContentType(aj)));
+            Assert.IsFalse(contentType.Equals("text/plain"));
+            Assert.IsFalse(contentType.Equals(null));
 
             string aos = "application/octet-stream";
             contentType = ContentType.ApplicationOctetStream;
@@ -30,6 +32,8 @@ namespace Azure.Core.Tests
             Assert.IsTrue(contentType.Equals(new ContentType(aos)));
             Assert.IsTrue(contentType.Equals((object)aos));
             Assert.IsTrue(contentType.Equals((object)new ContentType(aos)));
+            Assert.IsFalse(contentType.Equals("text/plain"));
+            Assert.IsFalse(contentType.Equals(null));
 
             string pt = "text/plain";
             contentType = ContentType.TextPlain;
@@ -38,6 +42,8 @@ namespace Azure.Core.Tests
             Assert.IsTrue(contentType.Equals(new ContentType(pt)));
             Assert.IsTrue(contentType.Equals((object)pt));
             Assert.IsTrue(contentType.Equals((object)new ContentType(pt)));
+            Assert.IsFalse(contentType.Equals("application/json"));
+            Assert.IsFalse(contentType.Equals(null));
         }
     }
 }

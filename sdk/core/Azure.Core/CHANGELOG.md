@@ -10,6 +10,7 @@
 
 - Set the Activity status to `Error` on failed activity source activities.
 - Mark the `Azure.Core.Http.Request` span as failed if the request fails with an exception thrown in the pipeline.
+- Fixed equality comparison when comparing a `string` to a `ContentType` instance.
 
 ### Other Changes
 
