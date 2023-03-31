@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Network.Models
         public static DHGroup Ecp384 { get; } = new DHGroup(Ecp384Value);
         /// <summary> DHGroup24. </summary>
         public static DHGroup DHGroup24 { get; } = new DHGroup(DHGroup24Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DHGroup"/> values are the same. </summary>
         public static bool operator ==(DHGroup left, DHGroup right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DHGroup"/> values are not the same. </summary>

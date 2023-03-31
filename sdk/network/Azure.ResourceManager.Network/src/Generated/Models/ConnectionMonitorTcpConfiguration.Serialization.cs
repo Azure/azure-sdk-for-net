@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(DestinationPortBehavior))
             {
                 writer.WritePropertyName("destinationPortBehavior"u8);
-                writer.WriteStringValue(DestinationPortBehavior.Value.ToString());
+                writer.WriteStringValue(DestinationPortBehavior.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

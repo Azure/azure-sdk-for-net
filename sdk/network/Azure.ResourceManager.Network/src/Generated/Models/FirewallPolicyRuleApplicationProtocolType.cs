@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static FirewallPolicyRuleApplicationProtocolType Http { get; } = new FirewallPolicyRuleApplicationProtocolType(HttpValue);
         /// <summary> Https. </summary>
         public static FirewallPolicyRuleApplicationProtocolType Https { get; } = new FirewallPolicyRuleApplicationProtocolType(HttpsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FirewallPolicyRuleApplicationProtocolType"/> values are the same. </summary>
         public static bool operator ==(FirewallPolicyRuleApplicationProtocolType left, FirewallPolicyRuleApplicationProtocolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirewallPolicyRuleApplicationProtocolType"/> values are not the same. </summary>

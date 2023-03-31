@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("jobDefinition"u8);
             writer.WriteObjectValue(JobDefinition);
             writer.WritePropertyName("actionType"u8);
-            writer.WriteStringValue(ActionType.ToString());
+            writer.WriteStringValue(ActionType.ToSerialString());
             writer.WriteEndObject();
         }
 

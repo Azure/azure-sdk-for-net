@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualNetworkGatewayConnectionStatus Connected { get; } = new VirtualNetworkGatewayConnectionStatus(ConnectedValue);
         /// <summary> NotConnected. </summary>
         public static VirtualNetworkGatewayConnectionStatus NotConnected { get; } = new VirtualNetworkGatewayConnectionStatus(NotConnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkGatewayConnectionStatus left, VirtualNetworkGatewayConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionStatus"/> values are not the same. </summary>

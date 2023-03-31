@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppBackupType Manual { get; } = new NetAppBackupType(ManualValue);
         /// <summary> Scheduled backup. </summary>
         public static NetAppBackupType Scheduled { get; } = new NetAppBackupType(ScheduledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppBackupType"/> values are the same. </summary>
         public static bool operator ==(NetAppBackupType left, NetAppBackupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppBackupType"/> values are not the same. </summary>

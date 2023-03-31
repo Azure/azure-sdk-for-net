@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningDiagnoseResultLevel Error { get; } = new MachineLearningDiagnoseResultLevel(ErrorValue);
         /// <summary> Information. </summary>
         public static MachineLearningDiagnoseResultLevel Information { get; } = new MachineLearningDiagnoseResultLevel(InformationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningDiagnoseResultLevel"/> values are the same. </summary>
         public static bool operator ==(MachineLearningDiagnoseResultLevel left, MachineLearningDiagnoseResultLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningDiagnoseResultLevel"/> values are not the same. </summary>

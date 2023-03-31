@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> DNAT. </summary>
         public static FirewallPolicyNatRuleCollectionActionType Dnat { get; } = new FirewallPolicyNatRuleCollectionActionType(DnatValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FirewallPolicyNatRuleCollectionActionType"/> values are the same. </summary>
         public static bool operator ==(FirewallPolicyNatRuleCollectionActionType left, FirewallPolicyNatRuleCollectionActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirewallPolicyNatRuleCollectionActionType"/> values are not the same. </summary>

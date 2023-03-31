@@ -38,6 +38,9 @@ namespace Azure.Maps.Routing.Models
         public static DelayMagnitude Major { get; } = new DelayMagnitude(MajorValue);
         /// <summary> Undefined, used for road closures and other indefinite delays. </summary>
         public static DelayMagnitude Undefined { get; } = new DelayMagnitude(UndefinedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DelayMagnitude"/> values are the same. </summary>
         public static bool operator ==(DelayMagnitude left, DelayMagnitude right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DelayMagnitude"/> values are not the same. </summary>

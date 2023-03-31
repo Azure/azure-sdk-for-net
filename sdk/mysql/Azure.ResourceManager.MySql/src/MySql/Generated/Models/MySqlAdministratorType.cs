@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.MySql.Models
 
         /// <summary> ActiveDirectory. </summary>
         public static MySqlAdministratorType ActiveDirectory { get; } = new MySqlAdministratorType(ActiveDirectoryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlAdministratorType"/> values are the same. </summary>
         public static bool operator ==(MySqlAdministratorType left, MySqlAdministratorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlAdministratorType"/> values are not the same. </summary>

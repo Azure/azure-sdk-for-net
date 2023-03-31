@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppKeySource MicrosoftNetApp { get; } = new NetAppKeySource(MicrosoftNetAppValue);
         /// <summary> Customer-managed key encryption. </summary>
         public static NetAppKeySource MicrosoftKeyVault { get; } = new NetAppKeySource(MicrosoftKeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppKeySource"/> values are the same. </summary>
         public static bool operator ==(NetAppKeySource left, NetAppKeySource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppKeySource"/> values are not the same. </summary>

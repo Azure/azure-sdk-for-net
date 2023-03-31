@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppAccountActiveDirectoryStatus Error { get; } = new NetAppAccountActiveDirectoryStatus(ErrorValue);
         /// <summary> Active Directory Updating. </summary>
         public static NetAppAccountActiveDirectoryStatus Updating { get; } = new NetAppAccountActiveDirectoryStatus(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppAccountActiveDirectoryStatus"/> values are the same. </summary>
         public static bool operator ==(NetAppAccountActiveDirectoryStatus left, NetAppAccountActiveDirectoryStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppAccountActiveDirectoryStatus"/> values are not the same. </summary>

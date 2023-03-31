@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayFirewallMode Detection { get; } = new ApplicationGatewayFirewallMode(DetectionValue);
         /// <summary> Prevention. </summary>
         public static ApplicationGatewayFirewallMode Prevention { get; } = new ApplicationGatewayFirewallMode(PreventionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationGatewayFirewallMode"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewayFirewallMode left, ApplicationGatewayFirewallMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayFirewallMode"/> values are not the same. </summary>

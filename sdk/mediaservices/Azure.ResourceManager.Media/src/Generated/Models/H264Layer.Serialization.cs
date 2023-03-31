@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteStringValue(Profile.Value.ToString());
+                writer.WriteStringValue(Profile.Value.ToSerialString());
             }
             if (Optional.IsDefined(Level))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(EntropyMode))
             {
                 writer.WritePropertyName("entropyMode"u8);
-                writer.WriteStringValue(EntropyMode.Value.ToString());
+                writer.WriteStringValue(EntropyMode.Value.ToSerialString());
             }
             writer.WritePropertyName("bitrate"u8);
             writer.WriteNumberValue(Bitrate);

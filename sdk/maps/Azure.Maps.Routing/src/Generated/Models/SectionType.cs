@@ -59,6 +59,9 @@ namespace Azure.Maps.Routing
         public static SectionType Carpool { get; } = new SectionType(CarpoolValue);
         /// <summary> Sections of the route that are located within urban areas. </summary>
         public static SectionType Urban { get; } = new SectionType(UrbanValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SectionType"/> values are the same. </summary>
         public static bool operator ==(SectionType left, SectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SectionType"/> values are not the same. </summary>

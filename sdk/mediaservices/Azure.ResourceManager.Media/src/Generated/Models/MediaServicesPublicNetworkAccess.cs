@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaServicesPublicNetworkAccess Enabled { get; } = new MediaServicesPublicNetworkAccess(EnabledValue);
         /// <summary> Public network access is disabled. </summary>
         public static MediaServicesPublicNetworkAccess Disabled { get; } = new MediaServicesPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaServicesPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(MediaServicesPublicNetworkAccess left, MediaServicesPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaServicesPublicNetworkAccess"/> values are not the same. </summary>

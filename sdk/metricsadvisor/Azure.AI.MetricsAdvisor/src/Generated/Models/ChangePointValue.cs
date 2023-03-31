@@ -25,6 +25,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string AutoDetectValue = "AutoDetect";
         private const string ChangePointValue1 = "ChangePoint";
         private const string NotChangePointValue = "NotChangePoint";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ChangePointValue"/> values are the same. </summary>
         public static bool operator ==(ChangePointValue left, ChangePointValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChangePointValue"/> values are not the same. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(EncodingType))
             {
                 writer.WritePropertyName("encodingType"u8);
-                writer.WriteStringValue(EncodingType.Value.ToString());
+                writer.WriteStringValue(EncodingType.Value.ToSerialString());
             }
             if (Optional.IsDefined(PresetName))
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
                 if (StretchMode != null)
                 {
                     writer.WritePropertyName("stretchMode"u8);
-                    writer.WriteStringValue(StretchMode.Value.ToString());
+                    writer.WriteStringValue(StretchMode.Value.ToSerialString());
                 }
                 else
                 {

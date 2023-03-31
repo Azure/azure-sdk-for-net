@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkIPAllocationMethod Static { get; } = new NetworkIPAllocationMethod(StaticValue);
         /// <summary> Dynamic. </summary>
         public static NetworkIPAllocationMethod Dynamic { get; } = new NetworkIPAllocationMethod(DynamicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkIPAllocationMethod"/> values are the same. </summary>
         public static bool operator ==(NetworkIPAllocationMethod left, NetworkIPAllocationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkIPAllocationMethod"/> values are not the same. </summary>

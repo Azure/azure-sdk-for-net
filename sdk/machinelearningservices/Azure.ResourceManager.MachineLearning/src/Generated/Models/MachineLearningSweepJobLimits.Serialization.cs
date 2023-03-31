@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("jobLimitsType"u8);
-            writer.WriteStringValue(JobLimitsType.ToString());
+            writer.WriteStringValue(JobLimitsType.ToSerialString());
             if (Optional.IsDefined(Timeout))
             {
                 if (Timeout != null)

@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(virtualNetworkPeeringName, true);
             if (syncRemoteAddressSpace != null)
             {
-                uri.AppendQuery("syncRemoteAddressSpace", syncRemoteAddressSpace.Value.ToString(), true);
+                uri.AppendQuery("syncRemoteAddressSpace", syncRemoteAddressSpace.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static CredentialsType Sas { get; } = new CredentialsType(SasValue);
         /// <summary> ServicePrincipal. </summary>
         public static CredentialsType ServicePrincipal { get; } = new CredentialsType(ServicePrincipalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CredentialsType"/> values are the same. </summary>
         public static bool operator ==(CredentialsType left, CredentialsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CredentialsType"/> values are not the same. </summary>

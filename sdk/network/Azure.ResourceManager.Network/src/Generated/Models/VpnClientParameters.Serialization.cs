@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ProcessorArchitecture))
             {
                 writer.WritePropertyName("processorArchitecture"u8);
-                writer.WriteStringValue(ProcessorArchitecture.Value.ToString());
+                writer.WriteStringValue(ProcessorArchitecture.Value.ToSerialString());
             }
             if (Optional.IsDefined(AuthenticationMethod))
             {
                 writer.WritePropertyName("authenticationMethod"u8);
-                writer.WriteStringValue(AuthenticationMethod.Value.ToString());
+                writer.WriteStringValue(AuthenticationMethod.Value.ToSerialString());
             }
             if (Optional.IsDefined(RadiusServerAuthCertificate))
             {

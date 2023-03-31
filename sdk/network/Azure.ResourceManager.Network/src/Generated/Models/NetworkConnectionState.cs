@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkConnectionState Unreachable { get; } = new NetworkConnectionState(UnreachableValue);
         /// <summary> Unknown. </summary>
         public static NetworkConnectionState Unknown { get; } = new NetworkConnectionState(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkConnectionState"/> values are the same. </summary>
         public static bool operator ==(NetworkConnectionState left, NetworkConnectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkConnectionState"/> values are not the same. </summary>

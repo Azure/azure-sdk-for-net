@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningSkuScaleType Manual { get; } = new MachineLearningSkuScaleType(ManualValue);
         /// <summary> Fixed set of nodes. </summary>
         public static MachineLearningSkuScaleType None { get; } = new MachineLearningSkuScaleType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningSkuScaleType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningSkuScaleType left, MachineLearningSkuScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningSkuScaleType"/> values are not the same. </summary>

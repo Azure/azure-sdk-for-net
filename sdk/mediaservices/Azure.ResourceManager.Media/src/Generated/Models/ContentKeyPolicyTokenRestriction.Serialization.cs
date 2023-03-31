@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("restrictionTokenType"u8);
-            writer.WriteStringValue(RestrictionTokenType.ToString());
+            writer.WriteStringValue(RestrictionTokenType.ToSerialString());
             if (Optional.IsDefined(OpenIdConnectDiscoveryDocument))
             {
                 writer.WritePropertyName("openIdConnectDiscoveryDocument"u8);

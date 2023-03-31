@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningMountAction Mount { get; } = new MachineLearningMountAction(MountValue);
         /// <summary> Unmount. </summary>
         public static MachineLearningMountAction Unmount { get; } = new MachineLearningMountAction(UnmountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningMountAction"/> values are the same. </summary>
         public static bool operator ==(MachineLearningMountAction left, MachineLearningMountAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningMountAction"/> values are not the same. </summary>

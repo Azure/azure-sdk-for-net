@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningNodeState Leaving { get; } = new MachineLearningNodeState(LeavingValue);
         /// <summary> preempted. </summary>
         public static MachineLearningNodeState Preempted { get; } = new MachineLearningNodeState(PreemptedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningNodeState"/> values are the same. </summary>
         public static bool operator ==(MachineLearningNodeState left, MachineLearningNodeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningNodeState"/> values are not the same. </summary>

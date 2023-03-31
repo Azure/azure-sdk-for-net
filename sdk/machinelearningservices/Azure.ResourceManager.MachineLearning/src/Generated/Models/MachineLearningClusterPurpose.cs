@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningClusterPurpose DenseProd { get; } = new MachineLearningClusterPurpose(DenseProdValue);
         /// <summary> DevTest. </summary>
         public static MachineLearningClusterPurpose DevTest { get; } = new MachineLearningClusterPurpose(DevTestValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningClusterPurpose"/> values are the same. </summary>
         public static bool operator ==(MachineLearningClusterPurpose left, MachineLearningClusterPurpose right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningClusterPurpose"/> values are not the same. </summary>

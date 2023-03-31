@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.ManagedServices.Models
         public static ManagedServicesProvisioningState Succeeded { get; } = new ManagedServicesProvisioningState(SucceededValue);
         /// <summary> Updating. </summary>
         public static ManagedServicesProvisioningState Updating { get; } = new ManagedServicesProvisioningState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedServicesProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ManagedServicesProvisioningState left, ManagedServicesProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedServicesProvisioningState"/> values are not the same. </summary>

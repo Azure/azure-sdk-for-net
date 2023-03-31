@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkProvisioningState Deleting { get; } = new NetworkProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static NetworkProvisioningState Failed { get; } = new NetworkProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkProvisioningState"/> values are the same. </summary>
         public static bool operator ==(NetworkProvisioningState left, NetworkProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkProvisioningState"/> values are not the same. </summary>

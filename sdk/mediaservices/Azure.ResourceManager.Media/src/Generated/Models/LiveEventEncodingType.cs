@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Media.Models
         public static LiveEventEncodingType PassthroughBasic { get; } = new LiveEventEncodingType(PassthroughBasicValue);
         /// <summary> The ingested stream passes through the live event from the contribution encoder without any further processing. Live transcription is available. Ingestion bitrate limits are much higher and up to 3 concurrent live outputs are allowed. </summary>
         public static LiveEventEncodingType PassthroughStandard { get; } = new LiveEventEncodingType(PassthroughStandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LiveEventEncodingType"/> values are the same. </summary>
         public static bool operator ==(LiveEventEncodingType left, LiveEventEncodingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LiveEventEncodingType"/> values are not the same. </summary>

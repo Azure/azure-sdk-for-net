@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static AudioAnalysisMode Standard { get; } = new AudioAnalysisMode(StandardValue);
         /// <summary> This mode performs speech-to-text transcription and generation of a VTT subtitle/caption file. The output of this mode includes an Insights JSON file including only the keywords, transcription,and timing information. Automatic language detection and speaker diarization are not included in this mode. </summary>
         public static AudioAnalysisMode Basic { get; } = new AudioAnalysisMode(BasicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AudioAnalysisMode"/> values are the same. </summary>
         public static bool operator ==(AudioAnalysisMode left, AudioAnalysisMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AudioAnalysisMode"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningNetwork Bridge { get; } = new MachineLearningNetwork(BridgeValue);
         /// <summary> Host. </summary>
         public static MachineLearningNetwork Host { get; } = new MachineLearningNetwork(HostValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningNetwork"/> values are the same. </summary>
         public static bool operator ==(MachineLearningNetwork left, MachineLearningNetwork right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningNetwork"/> values are not the same. </summary>

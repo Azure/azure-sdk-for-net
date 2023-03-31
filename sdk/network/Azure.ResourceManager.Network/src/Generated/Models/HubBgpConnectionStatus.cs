@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static HubBgpConnectionStatus Connected { get; } = new HubBgpConnectionStatus(ConnectedValue);
         /// <summary> NotConnected. </summary>
         public static HubBgpConnectionStatus NotConnected { get; } = new HubBgpConnectionStatus(NotConnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HubBgpConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(HubBgpConnectionStatus left, HubBgpConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HubBgpConnectionStatus"/> values are not the same. </summary>

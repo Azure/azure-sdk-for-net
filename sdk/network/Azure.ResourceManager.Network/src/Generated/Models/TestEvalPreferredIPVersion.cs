@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static TestEvalPreferredIPVersion IPv4 { get; } = new TestEvalPreferredIPVersion(IPv4Value);
         /// <summary> IPv6. </summary>
         public static TestEvalPreferredIPVersion IPv6 { get; } = new TestEvalPreferredIPVersion(IPv6Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TestEvalPreferredIPVersion"/> values are the same. </summary>
         public static bool operator ==(TestEvalPreferredIPVersion left, TestEvalPreferredIPVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TestEvalPreferredIPVersion"/> values are not the same. </summary>

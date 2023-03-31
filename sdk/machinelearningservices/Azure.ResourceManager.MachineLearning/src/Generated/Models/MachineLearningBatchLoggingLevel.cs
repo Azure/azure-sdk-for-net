@@ -36,6 +36,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningBatchLoggingLevel Warning { get; } = new MachineLearningBatchLoggingLevel(WarningValue);
         /// <summary> Debug. </summary>
         public static MachineLearningBatchLoggingLevel Debug { get; } = new MachineLearningBatchLoggingLevel(DebugValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningBatchLoggingLevel"/> values are the same. </summary>
         public static bool operator ==(MachineLearningBatchLoggingLevel left, MachineLearningBatchLoggingLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningBatchLoggingLevel"/> values are not the same. </summary>

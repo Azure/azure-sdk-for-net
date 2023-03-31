@@ -59,6 +59,9 @@ namespace Azure.Maps.Routing.Models
         public static ResponseSectionType Carpool { get; } = new ResponseSectionType(CarpoolValue);
         /// <summary> Sections of the route that are located within urban areas. </summary>
         public static ResponseSectionType Urban { get; } = new ResponseSectionType(UrbanValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResponseSectionType"/> values are the same. </summary>
         public static bool operator ==(ResponseSectionType left, ResponseSectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResponseSectionType"/> values are not the same. </summary>

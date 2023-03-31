@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Microsoft-Syslog. </summary>
         public static SyslogDataSourceStream MicrosoftSyslog { get; } = new SyslogDataSourceStream(MicrosoftSyslogValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SyslogDataSourceStream"/> values are the same. </summary>
         public static bool operator ==(SyslogDataSourceStream left, SyslogDataSourceStream right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyslogDataSourceStream"/> values are not the same. </summary>

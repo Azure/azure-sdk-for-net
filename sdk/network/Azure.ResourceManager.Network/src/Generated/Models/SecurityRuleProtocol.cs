@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         public static SecurityRuleProtocol Asterisk { get; } = new SecurityRuleProtocol(AsteriskValue);
         /// <summary> Ah. </summary>
         public static SecurityRuleProtocol Ah { get; } = new SecurityRuleProtocol(AhValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityRuleProtocol"/> values are the same. </summary>
         public static bool operator ==(SecurityRuleProtocol left, SecurityRuleProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityRuleProtocol"/> values are not the same. </summary>

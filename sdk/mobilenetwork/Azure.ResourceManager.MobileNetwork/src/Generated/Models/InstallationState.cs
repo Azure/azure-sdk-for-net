@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static InstallationState RollingBack { get; } = new InstallationState(RollingBackValue);
         /// <summary> The packet core is in failed state. </summary>
         public static InstallationState Failed { get; } = new InstallationState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InstallationState"/> values are the same. </summary>
         public static bool operator ==(InstallationState left, InstallationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstallationState"/> values are not the same. </summary>

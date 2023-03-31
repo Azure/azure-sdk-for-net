@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static GatewayLoadBalancerTunnelProtocol Native { get; } = new GatewayLoadBalancerTunnelProtocol(NativeValue);
         /// <summary> VXLAN. </summary>
         public static GatewayLoadBalancerTunnelProtocol Vxlan { get; } = new GatewayLoadBalancerTunnelProtocol(VxlanValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GatewayLoadBalancerTunnelProtocol"/> values are the same. </summary>
         public static bool operator ==(GatewayLoadBalancerTunnelProtocol left, GatewayLoadBalancerTunnelProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GatewayLoadBalancerTunnelProtocol"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static DeinterlaceParity TopFieldFirst { get; } = new DeinterlaceParity(TopFieldFirstValue);
         /// <summary> Apply bottom field first processing of input video. </summary>
         public static DeinterlaceParity BottomFieldFirst { get; } = new DeinterlaceParity(BottomFieldFirstValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeinterlaceParity"/> values are the same. </summary>
         public static bool operator ==(DeinterlaceParity left, DeinterlaceParity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeinterlaceParity"/> values are not the same. </summary>

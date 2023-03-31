@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         public static PrivateStorePlanStatus Approved { get; } = new PrivateStorePlanStatus(ApprovedValue);
         /// <summary> None. </summary>
         public static PrivateStorePlanStatus None { get; } = new PrivateStorePlanStatus(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PrivateStorePlanStatus"/> values are the same. </summary>
         public static bool operator ==(PrivateStorePlanStatus left, PrivateStorePlanStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateStorePlanStatus"/> values are not the same. </summary>

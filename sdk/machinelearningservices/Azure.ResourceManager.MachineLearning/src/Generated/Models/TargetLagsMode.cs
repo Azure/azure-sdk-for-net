@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static TargetLagsMode Auto { get; } = new TargetLagsMode(AutoValue);
         /// <summary> Use the custom target lags. </summary>
         public static TargetLagsMode Custom { get; } = new TargetLagsMode(CustomValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TargetLagsMode"/> values are the same. </summary>
         public static bool operator ==(TargetLagsMode left, TargetLagsMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TargetLagsMode"/> values are not the same. </summary>

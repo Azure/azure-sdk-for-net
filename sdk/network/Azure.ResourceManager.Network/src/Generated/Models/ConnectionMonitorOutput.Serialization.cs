@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(OutputType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(OutputType.Value.ToString());
+                writer.WriteStringValue(OutputType.Value.ToSerialString());
             }
             if (Optional.IsDefined(WorkspaceSettings))
             {

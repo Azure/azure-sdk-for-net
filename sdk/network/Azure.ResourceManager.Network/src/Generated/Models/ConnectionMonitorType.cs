@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ConnectionMonitorType MultiEndpoint { get; } = new ConnectionMonitorType(MultiEndpointValue);
         /// <summary> SingleSourceDestination. </summary>
         public static ConnectionMonitorType SingleSourceDestination { get; } = new ConnectionMonitorType(SingleSourceDestinationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConnectionMonitorType"/> values are the same. </summary>
         public static bool operator ==(ConnectionMonitorType left, ConnectionMonitorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionMonitorType"/> values are not the same. </summary>

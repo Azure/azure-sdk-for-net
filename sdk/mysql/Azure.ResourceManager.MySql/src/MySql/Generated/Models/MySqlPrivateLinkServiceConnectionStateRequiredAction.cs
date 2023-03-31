@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.MySql.Models
 
         /// <summary> None. </summary>
         public static MySqlPrivateLinkServiceConnectionStateRequiredAction None { get; } = new MySqlPrivateLinkServiceConnectionStateRequiredAction(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlPrivateLinkServiceConnectionStateRequiredAction"/> values are the same. </summary>
         public static bool operator ==(MySqlPrivateLinkServiceConnectionStateRequiredAction left, MySqlPrivateLinkServiceConnectionStateRequiredAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlPrivateLinkServiceConnectionStateRequiredAction"/> values are not the same. </summary>

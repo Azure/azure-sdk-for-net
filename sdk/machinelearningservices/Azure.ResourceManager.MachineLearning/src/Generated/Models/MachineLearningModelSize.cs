@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningModelSize Large { get; } = new MachineLearningModelSize(LargeValue);
         /// <summary> Extra large size. </summary>
         public static MachineLearningModelSize ExtraLarge { get; } = new MachineLearningModelSize(ExtraLargeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningModelSize"/> values are the same. </summary>
         public static bool operator ==(MachineLearningModelSize left, MachineLearningModelSize right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningModelSize"/> values are not the same. </summary>

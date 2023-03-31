@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaJobPriority Normal { get; } = new MediaJobPriority(NormalValue);
         /// <summary> Used for TransformOutputs that should take precedence over others. </summary>
         public static MediaJobPriority High { get; } = new MediaJobPriority(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaJobPriority"/> values are the same. </summary>
         public static bool operator ==(MediaJobPriority left, MediaJobPriority right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaJobPriority"/> values are not the same. </summary>

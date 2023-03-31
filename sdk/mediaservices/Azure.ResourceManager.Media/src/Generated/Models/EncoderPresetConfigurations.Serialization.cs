@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Complexity))
             {
                 writer.WritePropertyName("complexity"u8);
-                writer.WriteStringValue(Complexity.Value.ToString());
+                writer.WriteStringValue(Complexity.Value.ToSerialString());
             }
             if (Optional.IsDefined(InterleaveOutput))
             {
                 writer.WritePropertyName("interleaveOutput"u8);
-                writer.WriteStringValue(InterleaveOutput.Value.ToString());
+                writer.WriteStringValue(InterleaveOutput.Value.ToSerialString());
             }
             if (Optional.IsDefined(KeyFrameIntervalInSeconds))
             {

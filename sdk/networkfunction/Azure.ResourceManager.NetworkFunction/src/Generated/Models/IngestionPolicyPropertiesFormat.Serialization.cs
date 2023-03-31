@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             if (Optional.IsDefined(IngestionType))
             {
                 writer.WritePropertyName("ingestionType"u8);
-                writer.WriteStringValue(IngestionType.Value.ToString());
+                writer.WriteStringValue(IngestionType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(IngestionSources))
             {

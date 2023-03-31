@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("saDataSizeKilobytes"u8);
             writer.WriteNumberValue(SaDataSizeKilobytes);
             writer.WritePropertyName("ipsecEncryption"u8);
-            writer.WriteStringValue(IPsecEncryption.ToString());
+            writer.WriteStringValue(IPsecEncryption.ToSerialString());
             writer.WritePropertyName("ipsecIntegrity"u8);
-            writer.WriteStringValue(IPsecIntegrity.ToString());
+            writer.WriteStringValue(IPsecIntegrity.ToSerialString());
             writer.WritePropertyName("ikeEncryption"u8);
-            writer.WriteStringValue(IkeEncryption.ToString());
+            writer.WriteStringValue(IkeEncryption.ToSerialString());
             writer.WritePropertyName("ikeIntegrity"u8);
-            writer.WriteStringValue(IkeIntegrity.ToString());
+            writer.WriteStringValue(IkeIntegrity.ToSerialString());
             writer.WritePropertyName("dhGroup"u8);
-            writer.WriteStringValue(DhGroup.ToString());
+            writer.WriteStringValue(DhGroup.ToSerialString());
             writer.WritePropertyName("pfsGroup"u8);
-            writer.WriteStringValue(PfsGroup.ToString());
+            writer.WriteStringValue(PfsGroup.ToSerialString());
             writer.WriteEndObject();
         }
 

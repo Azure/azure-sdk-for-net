@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static JobLimitsType Command { get; } = new JobLimitsType(CommandValue);
         /// <summary> Sweep. </summary>
         public static JobLimitsType Sweep { get; } = new JobLimitsType(SweepValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobLimitsType"/> values are the same. </summary>
         public static bool operator ==(JobLimitsType left, JobLimitsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobLimitsType"/> values are not the same. </summary>

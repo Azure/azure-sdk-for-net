@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnNatRuleMode EgressSnat { get; } = new VpnNatRuleMode(EgressSnatValue);
         /// <summary> IngressSnat. </summary>
         public static VpnNatRuleMode IngressSnat { get; } = new VpnNatRuleMode(IngressSnatValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VpnNatRuleMode"/> values are the same. </summary>
         public static bool operator ==(VpnNatRuleMode left, VpnNatRuleMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VpnNatRuleMode"/> values are not the same. </summary>

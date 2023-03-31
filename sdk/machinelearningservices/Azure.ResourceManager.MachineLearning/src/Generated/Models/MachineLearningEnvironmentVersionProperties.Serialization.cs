@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(AutoRebuild))
             {
                 writer.WritePropertyName("autoRebuild"u8);
-                writer.WriteStringValue(AutoRebuild.Value.ToString());
+                writer.WriteStringValue(AutoRebuild.Value.ToSerialString());
             }
             if (Optional.IsDefined(Build))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsAnonymous))
             {

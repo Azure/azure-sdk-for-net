@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static SiteProvisioningState Provisioned { get; } = new SiteProvisioningState(ProvisionedValue);
         /// <summary> The resource failed to be provisioned on this site. </summary>
         public static SiteProvisioningState Failed { get; } = new SiteProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SiteProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SiteProvisioningState left, SiteProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SiteProvisioningState"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static MaintenanceImpactType Restart { get; } = new MaintenanceImpactType(RestartValue);
         /// <summary> Pending updates can redeploy resource. </summary>
         public static MaintenanceImpactType Redeploy { get; } = new MaintenanceImpactType(RedeployValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MaintenanceImpactType"/> values are the same. </summary>
         public static bool operator ==(MaintenanceImpactType left, MaintenanceImpactType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaintenanceImpactType"/> values are not the same. </summary>

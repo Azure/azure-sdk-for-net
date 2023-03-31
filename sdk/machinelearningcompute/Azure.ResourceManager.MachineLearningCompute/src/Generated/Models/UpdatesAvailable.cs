@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static UpdatesAvailable Yes { get; } = new UpdatesAvailable(YesValue);
         /// <summary> No. </summary>
         public static UpdatesAvailable No { get; } = new UpdatesAvailable(NoValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UpdatesAvailable"/> values are the same. </summary>
         public static bool operator ==(UpdatesAvailable left, UpdatesAvailable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpdatesAvailable"/> values are not the same. </summary>

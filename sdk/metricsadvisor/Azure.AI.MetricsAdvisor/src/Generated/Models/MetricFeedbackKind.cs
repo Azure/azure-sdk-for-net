@@ -26,6 +26,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string ChangePointValue = "ChangePoint";
         private const string PeriodValue = "Period";
         private const string CommentValue = "Comment";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MetricFeedbackKind"/> values are the same. </summary>
         public static bool operator ==(MetricFeedbackKind left, MetricFeedbackKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricFeedbackKind"/> values are not the same. </summary>

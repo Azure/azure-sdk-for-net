@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> USD. </summary>
         public static MachineLearningBillingCurrency Usd { get; } = new MachineLearningBillingCurrency(UsdValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningBillingCurrency"/> values are the same. </summary>
         public static bool operator ==(MachineLearningBillingCurrency left, MachineLearningBillingCurrency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningBillingCurrency"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningKeyType Primary { get; } = new MachineLearningKeyType(PrimaryValue);
         /// <summary> Secondary. </summary>
         public static MachineLearningKeyType Secondary { get; } = new MachineLearningKeyType(SecondaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningKeyType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningKeyType left, MachineLearningKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningKeyType"/> values are not the same. </summary>

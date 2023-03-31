@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("autoSnooze"u8);
             writer.WriteNumberValue(AutoSnooze);
             writer.WritePropertyName("snoozeScope"u8);
-            writer.WriteStringValue(SnoozeScope.ToString());
+            writer.WriteStringValue(SnoozeScope.ToSerialString());
             writer.WritePropertyName("onlyForSuccessive"u8);
             writer.WriteBooleanValue(IsOnlyForSuccessive);
             writer.WriteEndObject();

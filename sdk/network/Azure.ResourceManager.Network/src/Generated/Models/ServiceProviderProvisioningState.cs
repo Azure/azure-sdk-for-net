@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ServiceProviderProvisioningState Provisioned { get; } = new ServiceProviderProvisioningState(ProvisionedValue);
         /// <summary> Deprovisioning. </summary>
         public static ServiceProviderProvisioningState Deprovisioning { get; } = new ServiceProviderProvisioningState(DeprovisioningValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceProviderProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ServiceProviderProvisioningState left, ServiceProviderProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceProviderProvisioningState"/> values are not the same. </summary>

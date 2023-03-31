@@ -29,6 +29,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string HourlyValue = "Hourly";
         private const string PerMinuteValue = "Minutely";
         private const string CustomValue = "Custom";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataFeedGranularityType"/> values are the same. </summary>
         public static bool operator ==(DataFeedGranularityType left, DataFeedGranularityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedGranularityType"/> values are not the same. </summary>

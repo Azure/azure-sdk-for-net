@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(AccountType.ToString());
+            writer.WriteStringValue(AccountType.ToSerialString());
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningSourceType Datastore { get; } = new MachineLearningSourceType(DatastoreValue);
         /// <summary> URI. </summary>
         public static MachineLearningSourceType Uri { get; } = new MachineLearningSourceType(UriValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningSourceType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningSourceType left, MachineLearningSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningSourceType"/> values are not the same. </summary>

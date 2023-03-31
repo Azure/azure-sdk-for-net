@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(PreemptionCapability))
             {
                 writer.WritePropertyName("preemptionCapability"u8);
-                writer.WriteStringValue(PreemptionCapability.Value.ToString());
+                writer.WriteStringValue(PreemptionCapability.Value.ToSerialString());
             }
             if (Optional.IsDefined(PreemptionVulnerability))
             {
                 writer.WritePropertyName("preemptionVulnerability"u8);
-                writer.WriteStringValue(PreemptionVulnerability.Value.ToString());
+                writer.WriteStringValue(PreemptionVulnerability.Value.ToSerialString());
             }
             if (Optional.IsDefined(DefaultSessionType))
             {
                 writer.WritePropertyName("defaultSessionType"u8);
-                writer.WriteStringValue(DefaultSessionType.Value.ToString());
+                writer.WriteStringValue(DefaultSessionType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AdditionalAllowedSessionTypes))
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalAllowedSessionTypes)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

@@ -24,6 +24,9 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private const string ActiveValue = "Active";
         private const string PausedValue = "Paused";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataFeedStatus"/> values are the same. </summary>
         public static bool operator ==(DataFeedStatus left, DataFeedStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedStatus"/> values are not the same. </summary>

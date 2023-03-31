@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(ServiceLevel))
             {
                 writer.WritePropertyName("serviceLevel"u8);
-                writer.WriteStringValue(ServiceLevel.Value.ToString());
+                writer.WriteStringValue(ServiceLevel.Value.ToSerialString());
             }
             if (Optional.IsDefined(UsageThreshold))
             {

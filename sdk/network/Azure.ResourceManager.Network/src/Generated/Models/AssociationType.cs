@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static AssociationType Associated { get; } = new AssociationType(AssociatedValue);
         /// <summary> Contains. </summary>
         public static AssociationType Contains { get; } = new AssociationType(ContainsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AssociationType"/> values are the same. </summary>
         public static bool operator ==(AssociationType left, AssociationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssociationType"/> values are not the same. </summary>

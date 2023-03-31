@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewaySkuName StandardV2 { get; } = new ApplicationGatewaySkuName(StandardV2Value);
         /// <summary> WAF_v2. </summary>
         public static ApplicationGatewaySkuName WAFV2 { get; } = new ApplicationGatewaySkuName(WAFV2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySkuName"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewaySkuName left, ApplicationGatewaySkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewaySkuName"/> values are not the same. </summary>

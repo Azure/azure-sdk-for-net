@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("distributionType"u8);
-            writer.WriteStringValue(DistributionType.ToString());
+            writer.WriteStringValue(DistributionType.ToSerialString());
             writer.WriteEndObject();
         }
 

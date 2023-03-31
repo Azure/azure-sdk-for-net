@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static ExtensionDataSourceStream MicrosoftSyslog { get; } = new ExtensionDataSourceStream(MicrosoftSyslogValue);
         /// <summary> Microsoft-WindowsEvent. </summary>
         public static ExtensionDataSourceStream MicrosoftWindowsEvent { get; } = new ExtensionDataSourceStream(MicrosoftWindowsEventValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExtensionDataSourceStream"/> values are the same. </summary>
         public static bool operator ==(ExtensionDataSourceStream left, ExtensionDataSourceStream right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExtensionDataSourceStream"/> values are not the same. </summary>

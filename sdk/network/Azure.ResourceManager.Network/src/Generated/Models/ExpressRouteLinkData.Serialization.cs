@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AdminState))
             {
                 writer.WritePropertyName("adminState"u8);
-                writer.WriteStringValue(AdminState.Value.ToString());
+                writer.WriteStringValue(AdminState.Value.ToSerialString());
             }
             if (Optional.IsDefined(MacSecConfig))
             {

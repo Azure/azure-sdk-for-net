@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static AutoRebuildSetting Disabled { get; } = new AutoRebuildSetting(DisabledValue);
         /// <summary> OnBaseImageUpdate. </summary>
         public static AutoRebuildSetting OnBaseImageUpdate { get; } = new AutoRebuildSetting(OnBaseImageUpdateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutoRebuildSetting"/> values are the same. </summary>
         public static bool operator ==(AutoRebuildSetting left, AutoRebuildSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutoRebuildSetting"/> values are not the same. </summary>

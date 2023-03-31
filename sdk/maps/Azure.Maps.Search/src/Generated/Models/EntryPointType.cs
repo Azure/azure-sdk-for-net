@@ -29,6 +29,9 @@ namespace Azure.Maps.Search.Models
         public static EntryPointType Main { get; } = new EntryPointType(MainValue);
         /// <summary> minor. </summary>
         public static EntryPointType Minor { get; } = new EntryPointType(MinorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EntryPointType"/> values are the same. </summary>
         public static bool operator ==(EntryPointType left, EntryPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EntryPointType"/> values are not the same. </summary>

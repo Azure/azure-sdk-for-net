@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningOperatingSystemType Linux { get; } = new MachineLearningOperatingSystemType(LinuxValue);
         /// <summary> Windows. </summary>
         public static MachineLearningOperatingSystemType Windows { get; } = new MachineLearningOperatingSystemType(WindowsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningOperatingSystemType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningOperatingSystemType left, MachineLearningOperatingSystemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningOperatingSystemType"/> values are not the same. </summary>

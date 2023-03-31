@@ -50,6 +50,9 @@ namespace Azure.Maps.Routing.Models
         public static ResponseTravelMode Pedestrian { get; } = new ResponseTravelMode(PedestrianValue);
         /// <summary> The given mode of transport is not possible in this section. </summary>
         public static ResponseTravelMode Other { get; } = new ResponseTravelMode(OtherValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResponseTravelMode"/> values are the same. </summary>
         public static bool operator ==(ResponseTravelMode left, ResponseTravelMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResponseTravelMode"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static AccountEncryptionKeyType SystemKey { get; } = new AccountEncryptionKeyType(SystemKeyValue);
         /// <summary> The Account Key is encrypted with a Customer Key. </summary>
         public static AccountEncryptionKeyType CustomerKey { get; } = new AccountEncryptionKeyType(CustomerKeyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AccountEncryptionKeyType"/> values are the same. </summary>
         public static bool operator ==(AccountEncryptionKeyType left, AccountEncryptionKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AccountEncryptionKeyType"/> values are not the same. </summary>

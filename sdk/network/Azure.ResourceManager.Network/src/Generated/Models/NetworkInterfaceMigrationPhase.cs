@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkInterfaceMigrationPhase Abort { get; } = new NetworkInterfaceMigrationPhase(AbortValue);
         /// <summary> Committed. </summary>
         public static NetworkInterfaceMigrationPhase Committed { get; } = new NetworkInterfaceMigrationPhase(CommittedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkInterfaceMigrationPhase"/> values are the same. </summary>
         public static bool operator ==(NetworkInterfaceMigrationPhase left, NetworkInterfaceMigrationPhase right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkInterfaceMigrationPhase"/> values are not the same. </summary>

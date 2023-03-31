@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static IPAddressDeleteOption Delete { get; } = new IPAddressDeleteOption(DeleteValue);
         /// <summary> Detach. </summary>
         public static IPAddressDeleteOption Detach { get; } = new IPAddressDeleteOption(DetachValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IPAddressDeleteOption"/> values are the same. </summary>
         public static bool operator ==(IPAddressDeleteOption left, IPAddressDeleteOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IPAddressDeleteOption"/> values are not the same. </summary>

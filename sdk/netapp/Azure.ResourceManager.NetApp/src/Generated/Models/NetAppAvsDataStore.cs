@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppAvsDataStore Enabled { get; } = new NetAppAvsDataStore(EnabledValue);
         /// <summary> avsDataStore is disabled. </summary>
         public static NetAppAvsDataStore Disabled { get; } = new NetAppAvsDataStore(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppAvsDataStore"/> values are the same. </summary>
         public static bool operator ==(NetAppAvsDataStore left, NetAppAvsDataStore right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppAvsDataStore"/> values are not the same. </summary>

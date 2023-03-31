@@ -51,7 +51,7 @@ namespace Azure.Maps.Routing
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/route/matrix/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (waitForResults != null)
             {
@@ -59,11 +59,11 @@ namespace Azure.Maps.Routing
             }
             if (computeTravelTime != null)
             {
-                uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToString(), true);
+                uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToSerialString(), true);
             }
             if (filterSectionType != null)
             {
-                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+                uri.AppendQuery("sectionType", filterSectionType.Value.ToSerialString(), true);
             }
             if (arriveAt != null)
             {
@@ -99,21 +99,21 @@ namespace Azure.Maps.Routing
             }
             if (windingness != null)
             {
-                uri.AppendQuery("windingness", windingness.Value.ToString(), true);
+                uri.AppendQuery("windingness", windingness.Value.ToSerialString(), true);
             }
             if (inclineLevel != null)
             {
-                uri.AppendQuery("hilliness", inclineLevel.Value.ToString(), true);
+                uri.AppendQuery("hilliness", inclineLevel.Value.ToSerialString(), true);
             }
             if (travelMode != null)
             {
-                uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
+                uri.AppendQuery("travelMode", travelMode.Value.ToSerialString(), true);
             }
             if (avoid != null)
             {
                 foreach (var param in avoid)
                 {
-                    uri.AppendQuery("avoid", param.ToString(), true);
+                    uri.AppendQuery("avoid", param.ToSerialString(), true);
                 }
             }
             if (useTrafficData != null)
@@ -122,11 +122,11 @@ namespace Azure.Maps.Routing
             }
             if (routeType != null)
             {
-                uri.AppendQuery("routeType", routeType.Value.ToString(), true);
+                uri.AppendQuery("routeType", routeType.Value.ToSerialString(), true);
             }
             if (vehicleLoadType != null)
             {
-                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToString(), true);
+                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -518,7 +518,7 @@ namespace Azure.Maps.Routing
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/route/matrix/sync/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (waitForResults != null)
             {
@@ -526,11 +526,11 @@ namespace Azure.Maps.Routing
             }
             if (computeTravelTime != null)
             {
-                uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToString(), true);
+                uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToSerialString(), true);
             }
             if (filterSectionType != null)
             {
-                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+                uri.AppendQuery("sectionType", filterSectionType.Value.ToSerialString(), true);
             }
             if (arriveAt != null)
             {
@@ -566,21 +566,21 @@ namespace Azure.Maps.Routing
             }
             if (windingness != null)
             {
-                uri.AppendQuery("windingness", windingness.Value.ToString(), true);
+                uri.AppendQuery("windingness", windingness.Value.ToSerialString(), true);
             }
             if (inclineLevel != null)
             {
-                uri.AppendQuery("hilliness", inclineLevel.Value.ToString(), true);
+                uri.AppendQuery("hilliness", inclineLevel.Value.ToSerialString(), true);
             }
             if (travelMode != null)
             {
-                uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
+                uri.AppendQuery("travelMode", travelMode.Value.ToSerialString(), true);
             }
             if (avoid != null)
             {
                 foreach (var param in avoid)
                 {
-                    uri.AppendQuery("avoid", param.ToString(), true);
+                    uri.AppendQuery("avoid", param.ToSerialString(), true);
                 }
             }
             if (useTrafficData != null)
@@ -589,11 +589,11 @@ namespace Azure.Maps.Routing
             }
             if (routeType != null)
             {
-                uri.AppendQuery("routeType", routeType.Value.ToString(), true);
+                uri.AppendQuery("routeType", routeType.Value.ToSerialString(), true);
             }
             if (vehicleLoadType != null)
             {
-                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToString(), true);
+                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -872,7 +872,7 @@ namespace Azure.Maps.Routing
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/route/directions/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("query", routePoints, true);
             if (maxAlternatives != null)
@@ -881,7 +881,7 @@ namespace Azure.Maps.Routing
             }
             if (alternativeType != null)
             {
-                uri.AppendQuery("alternativeType", alternativeType.Value.ToString(), true);
+                uri.AppendQuery("alternativeType", alternativeType.Value.ToSerialString(), true);
             }
             if (minDeviationDistance != null)
             {
@@ -901,7 +901,7 @@ namespace Azure.Maps.Routing
             }
             if (instructionsType != null)
             {
-                uri.AppendQuery("instructionsType", instructionsType.Value.ToString(), true);
+                uri.AppendQuery("instructionsType", instructionsType.Value.ToSerialString(), true);
             }
             if (language != null)
             {
@@ -913,11 +913,11 @@ namespace Azure.Maps.Routing
             }
             if (routeRepresentationForBestOrder != null)
             {
-                uri.AppendQuery("routeRepresentation", routeRepresentationForBestOrder.Value.ToString(), true);
+                uri.AppendQuery("routeRepresentation", routeRepresentationForBestOrder.Value.ToSerialString(), true);
             }
             if (computeTravelTime != null)
             {
-                uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToString(), true);
+                uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToSerialString(), true);
             }
             if (vehicleHeading != null)
             {
@@ -925,11 +925,11 @@ namespace Azure.Maps.Routing
             }
             if (report != null)
             {
-                uri.AppendQuery("report", report.Value.ToString(), true);
+                uri.AppendQuery("report", report.Value.ToSerialString(), true);
             }
             if (filterSectionType != null)
             {
-                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+                uri.AppendQuery("sectionType", filterSectionType.Value.ToSerialString(), true);
             }
             if (vehicleAxleWeight != null)
             {
@@ -961,21 +961,21 @@ namespace Azure.Maps.Routing
             }
             if (windingness != null)
             {
-                uri.AppendQuery("windingness", windingness.Value.ToString(), true);
+                uri.AppendQuery("windingness", windingness.Value.ToSerialString(), true);
             }
             if (inclineLevel != null)
             {
-                uri.AppendQuery("hilliness", inclineLevel.Value.ToString(), true);
+                uri.AppendQuery("hilliness", inclineLevel.Value.ToSerialString(), true);
             }
             if (travelMode != null)
             {
-                uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
+                uri.AppendQuery("travelMode", travelMode.Value.ToSerialString(), true);
             }
             if (avoid != null)
             {
                 foreach (var param in avoid)
                 {
-                    uri.AppendQuery("avoid", param.ToString(), true);
+                    uri.AppendQuery("avoid", param.ToSerialString(), true);
                 }
             }
             if (useTrafficData != null)
@@ -984,15 +984,15 @@ namespace Azure.Maps.Routing
             }
             if (routeType != null)
             {
-                uri.AppendQuery("routeType", routeType.Value.ToString(), true);
+                uri.AppendQuery("routeType", routeType.Value.ToSerialString(), true);
             }
             if (vehicleLoadType != null)
             {
-                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToString(), true);
+                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToSerialString(), true);
             }
             if (vehicleEngineType != null)
             {
-                uri.AppendQuery("vehicleEngineType", vehicleEngineType.Value.ToString(), true);
+                uri.AppendQuery("vehicleEngineType", vehicleEngineType.Value.ToSerialString(), true);
             }
             if (constantSpeedConsumptionInLitersPerHundredKm != null)
             {
@@ -1527,7 +1527,7 @@ namespace Azure.Maps.Routing
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/route/directions/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("query", routePoints, true);
             if (maxAlternatives != null)
@@ -1536,7 +1536,7 @@ namespace Azure.Maps.Routing
             }
             if (alternativeType != null)
             {
-                uri.AppendQuery("alternativeType", alternativeType.Value.ToString(), true);
+                uri.AppendQuery("alternativeType", alternativeType.Value.ToSerialString(), true);
             }
             if (minDeviationDistance != null)
             {
@@ -1548,7 +1548,7 @@ namespace Azure.Maps.Routing
             }
             if (instructionsType != null)
             {
-                uri.AppendQuery("instructionsType", instructionsType.Value.ToString(), true);
+                uri.AppendQuery("instructionsType", instructionsType.Value.ToSerialString(), true);
             }
             if (language != null)
             {
@@ -1560,11 +1560,11 @@ namespace Azure.Maps.Routing
             }
             if (routeRepresentationForBestOrder != null)
             {
-                uri.AppendQuery("routeRepresentation", routeRepresentationForBestOrder.Value.ToString(), true);
+                uri.AppendQuery("routeRepresentation", routeRepresentationForBestOrder.Value.ToSerialString(), true);
             }
             if (computeTravelTime != null)
             {
-                uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToString(), true);
+                uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToSerialString(), true);
             }
             if (vehicleHeading != null)
             {
@@ -1572,11 +1572,11 @@ namespace Azure.Maps.Routing
             }
             if (report != null)
             {
-                uri.AppendQuery("report", report.Value.ToString(), true);
+                uri.AppendQuery("report", report.Value.ToSerialString(), true);
             }
             if (filterSectionType != null)
             {
-                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+                uri.AppendQuery("sectionType", filterSectionType.Value.ToSerialString(), true);
             }
             if (arriveAt != null)
             {
@@ -1616,21 +1616,21 @@ namespace Azure.Maps.Routing
             }
             if (windingness != null)
             {
-                uri.AppendQuery("windingness", windingness.Value.ToString(), true);
+                uri.AppendQuery("windingness", windingness.Value.ToSerialString(), true);
             }
             if (inclineLevel != null)
             {
-                uri.AppendQuery("hilliness", inclineLevel.Value.ToString(), true);
+                uri.AppendQuery("hilliness", inclineLevel.Value.ToSerialString(), true);
             }
             if (travelMode != null)
             {
-                uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
+                uri.AppendQuery("travelMode", travelMode.Value.ToSerialString(), true);
             }
             if (avoid != null)
             {
                 foreach (var param in avoid)
                 {
-                    uri.AppendQuery("avoid", param.ToString(), true);
+                    uri.AppendQuery("avoid", param.ToSerialString(), true);
                 }
             }
             if (useTrafficData != null)
@@ -1639,15 +1639,15 @@ namespace Azure.Maps.Routing
             }
             if (routeType != null)
             {
-                uri.AppendQuery("routeType", routeType.Value.ToString(), true);
+                uri.AppendQuery("routeType", routeType.Value.ToSerialString(), true);
             }
             if (vehicleLoadType != null)
             {
-                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToString(), true);
+                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToSerialString(), true);
             }
             if (vehicleEngineType != null)
             {
-                uri.AppendQuery("vehicleEngineType", vehicleEngineType.Value.ToString(), true);
+                uri.AppendQuery("vehicleEngineType", vehicleEngineType.Value.ToSerialString(), true);
             }
             if (constantSpeedConsumptionInLitersPerHundredKm != null)
             {
@@ -2208,7 +2208,7 @@ namespace Azure.Maps.Routing
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/route/range/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQueryDelimited("query", query, ",", true);
             if (fuelBudgetInLiters != null)
@@ -2233,7 +2233,7 @@ namespace Azure.Maps.Routing
             }
             if (routeType != null)
             {
-                uri.AppendQuery("routeType", routeType.Value.ToString(), true);
+                uri.AppendQuery("routeType", routeType.Value.ToSerialString(), true);
             }
             if (useTrafficData != null)
             {
@@ -2243,20 +2243,20 @@ namespace Azure.Maps.Routing
             {
                 foreach (var param in avoid)
                 {
-                    uri.AppendQuery("avoid", param.ToString(), true);
+                    uri.AppendQuery("avoid", param.ToSerialString(), true);
                 }
             }
             if (travelMode != null)
             {
-                uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
+                uri.AppendQuery("travelMode", travelMode.Value.ToSerialString(), true);
             }
             if (inclineLevel != null)
             {
-                uri.AppendQuery("hilliness", inclineLevel.Value.ToString(), true);
+                uri.AppendQuery("hilliness", inclineLevel.Value.ToSerialString(), true);
             }
             if (windingness != null)
             {
-                uri.AppendQuery("windingness", windingness.Value.ToString(), true);
+                uri.AppendQuery("windingness", windingness.Value.ToSerialString(), true);
             }
             if (vehicleAxleWeight != null)
             {
@@ -2288,11 +2288,11 @@ namespace Azure.Maps.Routing
             }
             if (vehicleLoadType != null)
             {
-                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToString(), true);
+                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToSerialString(), true);
             }
             if (vehicleEngineType != null)
             {
-                uri.AppendQuery("vehicleEngineType", vehicleEngineType.Value.ToString(), true);
+                uri.AppendQuery("vehicleEngineType", vehicleEngineType.Value.ToSerialString(), true);
             }
             if (constantSpeedConsumptionInLitersPerHundredKm != null)
             {
@@ -2767,7 +2767,7 @@ namespace Azure.Maps.Routing
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/route/directions/batch/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (_clientId != null)
@@ -3409,7 +3409,7 @@ namespace Azure.Maps.Routing
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/route/directions/batch/sync/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (_clientId != null)

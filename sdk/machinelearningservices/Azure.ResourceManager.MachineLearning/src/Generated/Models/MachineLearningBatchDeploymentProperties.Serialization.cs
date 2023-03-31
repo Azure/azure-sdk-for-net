@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(LoggingLevel))
             {
                 writer.WritePropertyName("loggingLevel"u8);
-                writer.WriteStringValue(LoggingLevel.Value.ToString());
+                writer.WriteStringValue(LoggingLevel.Value.ToSerialString());
             }
             if (Optional.IsDefined(MaxConcurrencyPerInstance))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(OutputAction))
             {
                 writer.WritePropertyName("outputAction"u8);
-                writer.WriteStringValue(OutputAction.Value.ToString());
+                writer.WriteStringValue(OutputAction.Value.ToSerialString());
             }
             if (Optional.IsDefined(OutputFileName))
             {

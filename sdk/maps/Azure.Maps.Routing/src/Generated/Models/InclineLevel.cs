@@ -32,6 +32,9 @@ namespace Azure.Maps.Routing
         public static InclineLevel Normal { get; } = new InclineLevel(NormalValue);
         /// <summary> high. </summary>
         public static InclineLevel High { get; } = new InclineLevel(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InclineLevel"/> values are the same. </summary>
         public static bool operator ==(InclineLevel left, InclineLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InclineLevel"/> values are not the same. </summary>

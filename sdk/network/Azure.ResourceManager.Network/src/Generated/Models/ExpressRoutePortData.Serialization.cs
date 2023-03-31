@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Encapsulation))
             {
                 writer.WritePropertyName("encapsulation"u8);
-                writer.WriteStringValue(Encapsulation.Value.ToString());
+                writer.WriteStringValue(Encapsulation.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Links))
             {

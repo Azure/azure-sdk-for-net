@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningBatchOutputAction SummaryOnly { get; } = new MachineLearningBatchOutputAction(SummaryOnlyValue);
         /// <summary> AppendRow. </summary>
         public static MachineLearningBatchOutputAction AppendRow { get; } = new MachineLearningBatchOutputAction(AppendRowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningBatchOutputAction"/> values are the same. </summary>
         public static bool operator ==(MachineLearningBatchOutputAction left, MachineLearningBatchOutputAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningBatchOutputAction"/> values are not the same. </summary>

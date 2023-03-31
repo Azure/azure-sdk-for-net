@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MySql.Models
         public static MySqlSkuTier GeneralPurpose { get; } = new MySqlSkuTier(GeneralPurposeValue);
         /// <summary> MemoryOptimized. </summary>
         public static MySqlSkuTier MemoryOptimized { get; } = new MySqlSkuTier(MemoryOptimizedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlSkuTier"/> values are the same. </summary>
         public static bool operator ==(MySqlSkuTier left, MySqlSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlSkuTier"/> values are not the same. </summary>

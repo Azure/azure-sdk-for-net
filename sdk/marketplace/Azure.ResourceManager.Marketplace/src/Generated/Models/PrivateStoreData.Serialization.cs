@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Marketplace
             if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
-                writer.WriteStringValue(Availability.Value.ToString());
+                writer.WriteStringValue(Availability.Value.ToSerialString());
             }
             if (Optional.IsDefined(ETag))
             {

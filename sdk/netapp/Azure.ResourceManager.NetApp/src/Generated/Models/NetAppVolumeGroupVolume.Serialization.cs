@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(ServiceLevel))
             {
                 writer.WritePropertyName("serviceLevel"u8);
-                writer.WriteStringValue(ServiceLevel.Value.ToString());
+                writer.WriteStringValue(ServiceLevel.Value.ToSerialString());
             }
             writer.WritePropertyName("usageThreshold"u8);
             writer.WriteNumberValue(UsageThreshold);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(NetworkFeatures))
             {
                 writer.WritePropertyName("networkFeatures"u8);
-                writer.WriteStringValue(NetworkFeatures.Value.ToString());
+                writer.WriteStringValue(NetworkFeatures.Value.ToSerialString());
             }
             if (Optional.IsDefined(VolumeType))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(SecurityStyle))
             {
                 writer.WritePropertyName("securityStyle"u8);
-                writer.WriteStringValue(SecurityStyle.Value.ToString());
+                writer.WriteStringValue(SecurityStyle.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsSmbEncryptionEnabled))
             {
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(SmbAccessBasedEnumeration))
             {
                 writer.WritePropertyName("smbAccessBasedEnumeration"u8);
-                writer.WriteStringValue(SmbAccessBasedEnumeration.Value.ToString());
+                writer.WriteStringValue(SmbAccessBasedEnumeration.Value.ToSerialString());
             }
             if (Optional.IsDefined(SmbNonBrowsable))
             {
                 writer.WritePropertyName("smbNonBrowsable"u8);
-                writer.WriteStringValue(SmbNonBrowsable.Value.ToString());
+                writer.WriteStringValue(SmbNonBrowsable.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsSmbContinuouslyAvailable))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(EncryptionKeySource))
             {
                 writer.WritePropertyName("encryptionKeySource"u8);
-                writer.WriteStringValue(EncryptionKeySource.Value.ToString());
+                writer.WriteStringValue(EncryptionKeySource.Value.ToSerialString());
             }
             if (Optional.IsDefined(KeyVaultPrivateEndpointResourceId))
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(AvsDataStore))
             {
                 writer.WritePropertyName("avsDataStore"u8);
-                writer.WriteStringValue(AvsDataStore.Value.ToString());
+                writer.WriteStringValue(AvsDataStore.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsDefaultQuotaEnabled))
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(EnableSubvolumes))
             {
                 writer.WritePropertyName("enableSubvolumes"u8);
-                writer.WriteStringValue(EnableSubvolumes.Value.ToString());
+                writer.WriteStringValue(EnableSubvolumes.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

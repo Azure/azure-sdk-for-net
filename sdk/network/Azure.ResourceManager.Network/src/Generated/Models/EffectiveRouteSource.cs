@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static EffectiveRouteSource VirtualNetworkGateway { get; } = new EffectiveRouteSource(VirtualNetworkGatewayValue);
         /// <summary> Default. </summary>
         public static EffectiveRouteSource Default { get; } = new EffectiveRouteSource(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EffectiveRouteSource"/> values are the same. </summary>
         public static bool operator ==(EffectiveRouteSource left, EffectiveRouteSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EffectiveRouteSource"/> values are not the same. </summary>

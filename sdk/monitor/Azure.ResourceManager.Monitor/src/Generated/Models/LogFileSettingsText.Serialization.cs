@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("recordStartTimestampFormat"u8);
-            writer.WriteStringValue(RecordStartTimestampFormat.ToString());
+            writer.WriteStringValue(RecordStartTimestampFormat.ToSerialString());
             writer.WriteEndObject();
         }
 

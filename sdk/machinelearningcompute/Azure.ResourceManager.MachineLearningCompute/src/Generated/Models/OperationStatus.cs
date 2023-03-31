@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static OperationStatus Failed { get; } = new OperationStatus(FailedValue);
         /// <summary> Canceled. </summary>
         public static OperationStatus Canceled { get; } = new OperationStatus(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationStatus"/> values are the same. </summary>
         public static bool operator ==(OperationStatus left, OperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationStatus"/> values are not the same. </summary>

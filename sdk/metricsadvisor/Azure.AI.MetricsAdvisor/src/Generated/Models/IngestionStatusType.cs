@@ -30,6 +30,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         private const string NoDataValue = "NoData";
         private const string ErrorValue = "Error";
         private const string PausedValue = "Paused";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IngestionStatusType"/> values are the same. </summary>
         public static bool operator ==(IngestionStatusType left, IngestionStatusType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IngestionStatusType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Orbital.Models
         public static OrbitalLinkDirection Uplink { get; } = new OrbitalLinkDirection(UplinkValue);
         /// <summary> downlink. </summary>
         public static OrbitalLinkDirection Downlink { get; } = new OrbitalLinkDirection(DownlinkValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OrbitalLinkDirection"/> values are the same. </summary>
         public static bool operator ==(OrbitalLinkDirection left, OrbitalLinkDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrbitalLinkDirection"/> values are not the same. </summary>

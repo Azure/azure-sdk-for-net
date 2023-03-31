@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static WindowsEventLogDataSourceStream MicrosoftWindowsEvent { get; } = new WindowsEventLogDataSourceStream(MicrosoftWindowsEventValue);
         /// <summary> Microsoft-Event. </summary>
         public static WindowsEventLogDataSourceStream MicrosoftEvent { get; } = new WindowsEventLogDataSourceStream(MicrosoftEventValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WindowsEventLogDataSourceStream"/> values are the same. </summary>
         public static bool operator ==(WindowsEventLogDataSourceStream left, WindowsEventLogDataSourceStream right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WindowsEventLogDataSourceStream"/> values are not the same. </summary>

@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Network.Models
         public static WebApplicationFirewallMatchVariable RequestBody { get; } = new WebApplicationFirewallMatchVariable(RequestBodyValue);
         /// <summary> RequestCookies. </summary>
         public static WebApplicationFirewallMatchVariable RequestCookies { get; } = new WebApplicationFirewallMatchVariable(RequestCookiesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallMatchVariable"/> values are the same. </summary>
         public static bool operator ==(WebApplicationFirewallMatchVariable left, WebApplicationFirewallMatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallMatchVariable"/> values are not the same. </summary>

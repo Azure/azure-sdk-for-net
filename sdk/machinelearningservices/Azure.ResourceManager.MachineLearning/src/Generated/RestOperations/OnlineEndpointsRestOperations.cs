@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
             if (computeType != null)
             {
-                uri.AppendQuery("computeType", computeType.Value.ToString(), true);
+                uri.AppendQuery("computeType", computeType.Value.ToSerialString(), true);
             }
             if (skip != null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
             if (orderBy != null)
             {
-                uri.AppendQuery("orderBy", orderBy.Value.ToString(), true);
+                uri.AppendQuery("orderBy", orderBy.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

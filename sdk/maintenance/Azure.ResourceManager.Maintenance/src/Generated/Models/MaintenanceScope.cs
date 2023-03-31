@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static MaintenanceScope SqlDB { get; } = new MaintenanceScope(SqlDBValue);
         /// <summary> This maintenance scope controls installation of SQL managed instance platform update. </summary>
         public static MaintenanceScope SqlManagedInstance { get; } = new MaintenanceScope(SqlManagedInstanceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MaintenanceScope"/> values are the same. </summary>
         public static bool operator ==(MaintenanceScope left, MaintenanceScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaintenanceScope"/> values are not the same. </summary>

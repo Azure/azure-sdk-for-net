@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Media.Models
         public static TrackAttributeFilter Bottom { get; } = new TrackAttributeFilter(BottomValue);
         /// <summary> Any tracks that have an attribute equal to the value given will be included. </summary>
         public static TrackAttributeFilter ValueEquals { get; } = new TrackAttributeFilter(ValueEqualsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrackAttributeFilter"/> values are the same. </summary>
         public static bool operator ==(TrackAttributeFilter left, TrackAttributeFilter right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrackAttributeFilter"/> values are not the same. </summary>

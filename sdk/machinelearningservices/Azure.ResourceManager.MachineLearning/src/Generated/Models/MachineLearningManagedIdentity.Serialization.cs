@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("identityType"u8);
-            writer.WriteStringValue(IdentityType.ToString());
+            writer.WriteStringValue(IdentityType.ToSerialString());
             writer.WriteEndObject();
         }
 

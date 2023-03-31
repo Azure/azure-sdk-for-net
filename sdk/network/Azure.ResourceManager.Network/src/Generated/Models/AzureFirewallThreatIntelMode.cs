@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static AzureFirewallThreatIntelMode Deny { get; } = new AzureFirewallThreatIntelMode(DenyValue);
         /// <summary> Off. </summary>
         public static AzureFirewallThreatIntelMode Off { get; } = new AzureFirewallThreatIntelMode(OffValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AzureFirewallThreatIntelMode"/> values are the same. </summary>
         public static bool operator ==(AzureFirewallThreatIntelMode left, AzureFirewallThreatIntelMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureFirewallThreatIntelMode"/> values are not the same. </summary>

@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ProtocolType Vxlan { get; } = new ProtocolType(VxlanValue);
         /// <summary> All. </summary>
         public static ProtocolType All { get; } = new ProtocolType(AllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProtocolType"/> values are the same. </summary>
         public static bool operator ==(ProtocolType left, ProtocolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProtocolType"/> values are not the same. </summary>

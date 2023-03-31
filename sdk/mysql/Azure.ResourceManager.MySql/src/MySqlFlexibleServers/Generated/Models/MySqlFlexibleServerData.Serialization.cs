@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version.Value.ToString());
+                writer.WriteStringValue(Version.Value.ToSerialString());
             }
             if (Optional.IsDefined(AvailabilityZone))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
+                writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(SourceServerResourceId))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(ReplicationRole))
             {
                 writer.WritePropertyName("replicationRole"u8);
-                writer.WriteStringValue(ReplicationRole.Value.ToString());
+                writer.WriteStringValue(ReplicationRole.Value.ToSerialString());
             }
             if (Optional.IsDefined(DataEncryption))
             {

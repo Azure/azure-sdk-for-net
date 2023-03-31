@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorPrivateEndpointServiceConnectionStatus Approved { get; } = new MonitorPrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static MonitorPrivateEndpointServiceConnectionStatus Rejected { get; } = new MonitorPrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MonitorPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(MonitorPrivateEndpointServiceConnectionStatus left, MonitorPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

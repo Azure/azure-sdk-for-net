@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MixedReality.Models
         public static MixedRealityNameUnavailableReason Invalid { get; } = new MixedRealityNameUnavailableReason(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static MixedRealityNameUnavailableReason AlreadyExists { get; } = new MixedRealityNameUnavailableReason(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MixedRealityNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(MixedRealityNameUnavailableReason left, MixedRealityNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MixedRealityNameUnavailableReason"/> values are not the same. </summary>

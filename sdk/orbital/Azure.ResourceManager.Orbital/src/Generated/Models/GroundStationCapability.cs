@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Orbital.Models
         public static GroundStationCapability EarthObservation { get; } = new GroundStationCapability(EarthObservationValue);
         /// <summary> Communication. </summary>
         public static GroundStationCapability Communication { get; } = new GroundStationCapability(CommunicationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GroundStationCapability"/> values are the same. </summary>
         public static bool operator ==(GroundStationCapability left, GroundStationCapability right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GroundStationCapability"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaJobRetry DoNotRetry { get; } = new MediaJobRetry(DoNotRetryValue);
         /// <summary> Issue may be resolved after waiting for a period of time and resubmitting the same Job. </summary>
         public static MediaJobRetry MayRetry { get; } = new MediaJobRetry(MayRetryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaJobRetry"/> values are the same. </summary>
         public static bool operator ==(MediaJobRetry left, MediaJobRetry right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaJobRetry"/> values are not the same. </summary>

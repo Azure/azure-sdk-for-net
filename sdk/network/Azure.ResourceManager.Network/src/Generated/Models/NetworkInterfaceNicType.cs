@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkInterfaceNicType Standard { get; } = new NetworkInterfaceNicType(StandardValue);
         /// <summary> Elastic. </summary>
         public static NetworkInterfaceNicType Elastic { get; } = new NetworkInterfaceNicType(ElasticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkInterfaceNicType"/> values are the same. </summary>
         public static bool operator ==(NetworkInterfaceNicType left, NetworkInterfaceNicType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkInterfaceNicType"/> values are not the same. </summary>

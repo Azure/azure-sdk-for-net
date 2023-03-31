@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static AzureFirewallSkuName AzfwVnet { get; } = new AzureFirewallSkuName(AzfwVnetValue);
         /// <summary> AZFW_Hub. </summary>
         public static AzureFirewallSkuName AzfwHub { get; } = new AzureFirewallSkuName(AzfwHubValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AzureFirewallSkuName"/> values are the same. </summary>
         public static bool operator ==(AzureFirewallSkuName left, AzureFirewallSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureFirewallSkuName"/> values are not the same. </summary>

@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
-                writer.WriteStringValue(Tier.Value.ToString());
+                writer.WriteStringValue(Tier.Value.ToSerialString());
             }
             if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
-                writer.WriteStringValue(Family.Value.ToString());
+                writer.WriteStringValue(Family.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

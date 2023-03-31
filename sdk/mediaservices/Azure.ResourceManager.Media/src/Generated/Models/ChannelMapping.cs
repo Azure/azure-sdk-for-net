@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Media.Models
         public static ChannelMapping StereoLeft { get; } = new ChannelMapping(StereoLeftValue);
         /// <summary> The Right Stereo channel.  Sometimes referred to as Down Mix Right. </summary>
         public static ChannelMapping StereoRight { get; } = new ChannelMapping(StereoRightValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ChannelMapping"/> values are the same. </summary>
         public static bool operator ==(ChannelMapping left, ChannelMapping right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChannelMapping"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static TrackPropertyCompareOperation Unknown { get; } = new TrackPropertyCompareOperation(UnknownValue);
         /// <summary> Equal operation. </summary>
         public static TrackPropertyCompareOperation Equal { get; } = new TrackPropertyCompareOperation(EqualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrackPropertyCompareOperation"/> values are the same. </summary>
         public static bool operator ==(TrackPropertyCompareOperation left, TrackPropertyCompareOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrackPropertyCompareOperation"/> values are not the same. </summary>

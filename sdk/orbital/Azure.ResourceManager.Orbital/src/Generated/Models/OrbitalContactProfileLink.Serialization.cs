@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("polarization"u8);
-            writer.WriteStringValue(Polarization.ToString());
+            writer.WriteStringValue(Polarization.ToSerialString());
             writer.WritePropertyName("direction"u8);
-            writer.WriteStringValue(Direction.ToString());
+            writer.WriteStringValue(Direction.ToSerialString());
             if (Optional.IsDefined(GainOverTemperature))
             {
                 writer.WritePropertyName("gainOverTemperature"u8);

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Media.Models
         public static ContentKeyPolicyPlayReadyContentType UltraVioletDownload { get; } = new ContentKeyPolicyPlayReadyContentType(UltraVioletDownloadValue);
         /// <summary> Ultraviolet streaming content type. </summary>
         public static ContentKeyPolicyPlayReadyContentType UltraVioletStreaming { get; } = new ContentKeyPolicyPlayReadyContentType(UltraVioletStreamingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContentKeyPolicyPlayReadyContentType"/> values are the same. </summary>
         public static bool operator ==(ContentKeyPolicyPlayReadyContentType left, ContentKeyPolicyPlayReadyContentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentKeyPolicyPlayReadyContentType"/> values are not the same. </summary>

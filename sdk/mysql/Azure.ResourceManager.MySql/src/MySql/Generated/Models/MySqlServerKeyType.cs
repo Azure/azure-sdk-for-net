@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.MySql.Models
 
         /// <summary> AzureKeyVault. </summary>
         public static MySqlServerKeyType AzureKeyVault { get; } = new MySqlServerKeyType(AzureKeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlServerKeyType"/> values are the same. </summary>
         public static bool operator ==(MySqlServerKeyType left, MySqlServerKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlServerKeyType"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.Maps.Rendering
         public static MapImageLayer Hybrid { get; } = new MapImageLayer(HybridValue);
         /// <summary> Returns an image of just the map&apos;s label information. </summary>
         public static MapImageLayer Labels { get; } = new MapImageLayer(LabelsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MapImageLayer"/> values are the same. </summary>
         public static bool operator ==(MapImageLayer left, MapImageLayer right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapImageLayer"/> values are not the same. </summary>

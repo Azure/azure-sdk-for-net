@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningComputeProvisioningStatus Provisioning { get; } = new MachineLearningComputeProvisioningStatus(ProvisioningValue);
         /// <summary> Failed. </summary>
         public static MachineLearningComputeProvisioningStatus Failed { get; } = new MachineLearningComputeProvisioningStatus(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningComputeProvisioningStatus"/> values are the same. </summary>
         public static bool operator ==(MachineLearningComputeProvisioningStatus left, MachineLearningComputeProvisioningStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningComputeProvisioningStatus"/> values are not the same. </summary>

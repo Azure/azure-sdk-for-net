@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Network.Models
         public static BgpPeerState Connecting { get; } = new BgpPeerState(ConnectingValue);
         /// <summary> Connected. </summary>
         public static BgpPeerState Connected { get; } = new BgpPeerState(ConnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BgpPeerState"/> values are the same. </summary>
         public static bool operator ==(BgpPeerState left, BgpPeerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BgpPeerState"/> values are not the same. </summary>

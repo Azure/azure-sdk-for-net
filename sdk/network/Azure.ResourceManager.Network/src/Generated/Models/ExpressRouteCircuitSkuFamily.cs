@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ExpressRouteCircuitSkuFamily UnlimitedData { get; } = new ExpressRouteCircuitSkuFamily(UnlimitedDataValue);
         /// <summary> MeteredData. </summary>
         public static ExpressRouteCircuitSkuFamily MeteredData { get; } = new ExpressRouteCircuitSkuFamily(MeteredDataValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExpressRouteCircuitSkuFamily"/> values are the same. </summary>
         public static bool operator ==(ExpressRouteCircuitSkuFamily left, ExpressRouteCircuitSkuFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteCircuitSkuFamily"/> values are not the same. </summary>

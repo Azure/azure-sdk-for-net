@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static JobType Sweep { get; } = new JobType(SweepValue);
         /// <summary> Pipeline. </summary>
         public static JobType Pipeline { get; } = new JobType(PipelineValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobType"/> values are the same. </summary>
         public static bool operator ==(JobType left, JobType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobType"/> values are not the same. </summary>

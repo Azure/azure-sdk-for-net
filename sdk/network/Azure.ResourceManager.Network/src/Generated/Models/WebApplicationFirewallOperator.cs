@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.Network.Models
         public static WebApplicationFirewallOperator Regex { get; } = new WebApplicationFirewallOperator(RegexValue);
         /// <summary> GeoMatch. </summary>
         public static WebApplicationFirewallOperator GeoMatch { get; } = new WebApplicationFirewallOperator(GeoMatchValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallOperator"/> values are the same. </summary>
         public static bool operator ==(WebApplicationFirewallOperator left, WebApplicationFirewallOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallOperator"/> values are not the same. </summary>

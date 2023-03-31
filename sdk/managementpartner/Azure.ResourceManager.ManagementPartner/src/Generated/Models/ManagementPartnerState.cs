@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ManagementPartner.Models
         public static ManagementPartnerState Active { get; } = new ManagementPartnerState(ActiveValue);
         /// <summary> Deleted. </summary>
         public static ManagementPartnerState Deleted { get; } = new ManagementPartnerState(DeletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagementPartnerState"/> values are the same. </summary>
         public static bool operator ==(ManagementPartnerState left, ManagementPartnerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagementPartnerState"/> values are not the same. </summary>

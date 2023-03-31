@@ -26,6 +26,9 @@ namespace Azure.Maps.Rendering
 
         /// <summary> An image in the png format. Supports zoom levels 0 through 18. </summary>
         public static RasterTileFormat Png { get; } = new RasterTileFormat(PngValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RasterTileFormat"/> values are the same. </summary>
         public static bool operator ==(RasterTileFormat left, RasterTileFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RasterTileFormat"/> values are not the same. </summary>

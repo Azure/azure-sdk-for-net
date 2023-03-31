@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ServiceProviderProvisioningState))
             {
                 writer.WritePropertyName("serviceProviderProvisioningState"u8);
-                writer.WriteStringValue(ServiceProviderProvisioningState.Value.ToString());
+                writer.WriteStringValue(ServiceProviderProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Authorizations))
             {

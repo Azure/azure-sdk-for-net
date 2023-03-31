@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static LiveEventInputProtocol FragmentedMp4 { get; } = new LiveEventInputProtocol(FragmentedMp4Value);
         /// <summary> RTMP input will be sent by the contribution encoder to the live event. </summary>
         public static LiveEventInputProtocol Rtmp { get; } = new LiveEventInputProtocol(RtmpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LiveEventInputProtocol"/> values are the same. </summary>
         public static bool operator ==(LiveEventInputProtocol left, LiveEventInputProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LiveEventInputProtocol"/> values are not the same. </summary>

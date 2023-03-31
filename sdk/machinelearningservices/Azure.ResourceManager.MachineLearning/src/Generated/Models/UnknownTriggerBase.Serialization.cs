@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(TimeZone);
             }
             writer.WritePropertyName("triggerType"u8);
-            writer.WriteStringValue(TriggerType.ToString());
+            writer.WriteStringValue(TriggerType.ToSerialString());
             writer.WriteEndObject();
         }
 

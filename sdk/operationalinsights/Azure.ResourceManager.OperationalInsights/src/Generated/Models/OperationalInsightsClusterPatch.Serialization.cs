@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(BillingType))
             {
                 writer.WritePropertyName("billingType"u8);
-                writer.WriteStringValue(BillingType.Value.ToString());
+                writer.WriteStringValue(BillingType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

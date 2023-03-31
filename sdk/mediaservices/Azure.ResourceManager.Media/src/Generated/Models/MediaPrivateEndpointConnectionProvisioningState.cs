@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaPrivateEndpointConnectionProvisioningState Deleting { get; } = new MediaPrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static MediaPrivateEndpointConnectionProvisioningState Failed { get; } = new MediaPrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MediaPrivateEndpointConnectionProvisioningState left, MediaPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

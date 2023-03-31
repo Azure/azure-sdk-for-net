@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         public static PrivateStoreOperation DeletePrivateStoreCollectionOffer { get; } = new PrivateStoreOperation(DeletePrivateStoreCollectionOfferValue);
         /// <summary> Ping. </summary>
         public static PrivateStoreOperation Ping { get; } = new PrivateStoreOperation(PingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PrivateStoreOperation"/> values are the same. </summary>
         public static bool operator ==(PrivateStoreOperation left, PrivateStoreOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateStoreOperation"/> values are not the same. </summary>

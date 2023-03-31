@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppVolumeSecurityStyle Ntfs { get; } = new NetAppVolumeSecurityStyle(NtfsValue);
         /// <summary> unix. </summary>
         public static NetAppVolumeSecurityStyle Unix { get; } = new NetAppVolumeSecurityStyle(UnixValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppVolumeSecurityStyle"/> values are the same. </summary>
         public static bool operator ==(NetAppVolumeSecurityStyle left, NetAppVolumeSecurityStyle right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppVolumeSecurityStyle"/> values are not the same. </summary>

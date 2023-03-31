@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningFeatureLag None { get; } = new MachineLearningFeatureLag(NoneValue);
         /// <summary> System auto-generates feature lags. </summary>
         public static MachineLearningFeatureLag Auto { get; } = new MachineLearningFeatureLag(AutoValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningFeatureLag"/> values are the same. </summary>
         public static bool operator ==(MachineLearningFeatureLag left, MachineLearningFeatureLag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningFeatureLag"/> values are not the same. </summary>

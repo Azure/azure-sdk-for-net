@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Media.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("attribute"u8);
-            writer.WriteStringValue(Attribute.ToString());
+            writer.WriteStringValue(Attribute.ToSerialString());
             writer.WritePropertyName("filter"u8);
-            writer.WriteStringValue(Filter.ToString());
+            writer.WriteStringValue(Filter.ToSerialString());
             if (Optional.IsDefined(FilterValue))
             {
                 writer.WritePropertyName("filterValue"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(ChannelMapping))
             {
                 writer.WritePropertyName("channelMapping"u8);
-                writer.WriteStringValue(ChannelMapping.Value.ToString());
+                writer.WriteStringValue(ChannelMapping.Value.ToSerialString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);

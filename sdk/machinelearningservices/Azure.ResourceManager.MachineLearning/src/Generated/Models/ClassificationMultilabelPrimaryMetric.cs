@@ -51,6 +51,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ClassificationMultilabelPrimaryMetric PrecisionScoreWeighted { get; } = new ClassificationMultilabelPrimaryMetric(PrecisionScoreWeightedValue);
         /// <summary> Intersection Over Union. Intersection of predictions divided by union of predictions. </summary>
         public static ClassificationMultilabelPrimaryMetric IOU { get; } = new ClassificationMultilabelPrimaryMetric(IOUValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClassificationMultilabelPrimaryMetric"/> values are the same. </summary>
         public static bool operator ==(ClassificationMultilabelPrimaryMetric left, ClassificationMultilabelPrimaryMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClassificationMultilabelPrimaryMetric"/> values are not the same. </summary>

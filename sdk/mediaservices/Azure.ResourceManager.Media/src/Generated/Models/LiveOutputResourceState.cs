@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static LiveOutputResourceState Running { get; } = new LiveOutputResourceState(RunningValue);
         /// <summary> Live output is being deleted. The live asset is being converted from live to on-demand asset. Any streaming URLs created on the live output asset continue to work. </summary>
         public static LiveOutputResourceState Deleting { get; } = new LiveOutputResourceState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LiveOutputResourceState"/> values are the same. </summary>
         public static bool operator ==(LiveOutputResourceState left, LiveOutputResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LiveOutputResourceState"/> values are not the same. </summary>

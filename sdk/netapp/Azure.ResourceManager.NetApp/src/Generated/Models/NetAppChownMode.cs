@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppChownMode Restricted { get; } = new NetAppChownMode(RestrictedValue);
         /// <summary> Unrestricted. </summary>
         public static NetAppChownMode Unrestricted { get; } = new NetAppChownMode(UnrestrictedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppChownMode"/> values are the same. </summary>
         public static bool operator ==(NetAppChownMode left, NetAppChownMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppChownMode"/> values are not the same. </summary>

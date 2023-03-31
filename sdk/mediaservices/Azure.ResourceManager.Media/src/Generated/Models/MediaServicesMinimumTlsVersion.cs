@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaServicesMinimumTlsVersion Tls12 { get; } = new MediaServicesMinimumTlsVersion(Tls12Value);
         /// <summary> Minimum TLS version is TLS 1.3. </summary>
         public static MediaServicesMinimumTlsVersion Tls13 { get; } = new MediaServicesMinimumTlsVersion(Tls13Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaServicesMinimumTlsVersion"/> values are the same. </summary>
         public static bool operator ==(MediaServicesMinimumTlsVersion left, MediaServicesMinimumTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaServicesMinimumTlsVersion"/> values are not the same. </summary>

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("secretsType"u8);
-            writer.WriteStringValue(SecretsType.ToString());
+            writer.WriteStringValue(SecretsType.ToSerialString());
             writer.WriteEndObject();
         }
 

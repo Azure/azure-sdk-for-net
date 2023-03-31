@@ -32,6 +32,9 @@ namespace Azure.Maps.Routing.Models
         public static JunctionType Roundabout { get; } = new JunctionType(RoundaboutValue);
         /// <summary> bifurcation. </summary>
         public static JunctionType Bifurcation { get; } = new JunctionType(BifurcationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JunctionType"/> values are the same. </summary>
         public static bool operator ==(JunctionType left, JunctionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JunctionType"/> values are not the same. </summary>

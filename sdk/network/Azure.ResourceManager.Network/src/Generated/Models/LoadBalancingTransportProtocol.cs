@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static LoadBalancingTransportProtocol Tcp { get; } = new LoadBalancingTransportProtocol(TcpValue);
         /// <summary> All. </summary>
         public static LoadBalancingTransportProtocol All { get; } = new LoadBalancingTransportProtocol(AllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LoadBalancingTransportProtocol"/> values are the same. </summary>
         public static bool operator ==(LoadBalancingTransportProtocol left, LoadBalancingTransportProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoadBalancingTransportProtocol"/> values are not the same. </summary>

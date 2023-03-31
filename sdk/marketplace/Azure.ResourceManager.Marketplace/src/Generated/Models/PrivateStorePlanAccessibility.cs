@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         public static PrivateStorePlanAccessibility PrivateTenantOnLevel { get; } = new PrivateStorePlanAccessibility(PrivateTenantOnLevelValue);
         /// <summary> PrivateSubscriptionOnLevel. </summary>
         public static PrivateStorePlanAccessibility PrivateSubscriptionOnLevel { get; } = new PrivateStorePlanAccessibility(PrivateSubscriptionOnLevelValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PrivateStorePlanAccessibility"/> values are the same. </summary>
         public static bool operator ==(PrivateStorePlanAccessibility left, PrivateStorePlanAccessibility right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateStorePlanAccessibility"/> values are not the same. </summary>

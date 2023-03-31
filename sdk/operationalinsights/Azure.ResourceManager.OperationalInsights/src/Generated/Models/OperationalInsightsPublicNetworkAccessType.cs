@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsPublicNetworkAccessType Enabled { get; } = new OperationalInsightsPublicNetworkAccessType(EnabledValue);
         /// <summary> Disables public connectivity to Log Analytics through public DNS. </summary>
         public static OperationalInsightsPublicNetworkAccessType Disabled { get; } = new OperationalInsightsPublicNetworkAccessType(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsPublicNetworkAccessType"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsPublicNetworkAccessType left, OperationalInsightsPublicNetworkAccessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsPublicNetworkAccessType"/> values are not the same. </summary>

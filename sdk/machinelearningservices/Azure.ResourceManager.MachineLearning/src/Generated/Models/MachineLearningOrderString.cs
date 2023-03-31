@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningOrderString UpdatedAtDesc { get; } = new MachineLearningOrderString(UpdatedAtDescValue);
         /// <summary> UpdatedAtAsc. </summary>
         public static MachineLearningOrderString UpdatedAtAsc { get; } = new MachineLearningOrderString(UpdatedAtAscValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningOrderString"/> values are the same. </summary>
         public static bool operator ==(MachineLearningOrderString left, MachineLearningOrderString right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningOrderString"/> values are not the same. </summary>

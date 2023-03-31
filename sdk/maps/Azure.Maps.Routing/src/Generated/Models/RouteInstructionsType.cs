@@ -41,6 +41,9 @@ namespace Azure.Maps.Routing
         /// ```
         /// </summary>
         public static RouteInstructionsType Tagged { get; } = new RouteInstructionsType(TaggedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RouteInstructionsType"/> values are the same. </summary>
         public static bool operator ==(RouteInstructionsType left, RouteInstructionsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouteInstructionsType"/> values are not the same. </summary>

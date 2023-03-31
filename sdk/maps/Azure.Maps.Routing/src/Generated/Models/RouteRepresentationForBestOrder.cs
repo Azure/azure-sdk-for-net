@@ -32,6 +32,9 @@ namespace Azure.Maps.Routing
         public static RouteRepresentationForBestOrder SummaryOnly { get; } = new RouteRepresentationForBestOrder(SummaryOnlyValue);
         /// <summary> Includes only the optimized waypoint indices but does not include the route geometry in the response. </summary>
         public static RouteRepresentationForBestOrder None { get; } = new RouteRepresentationForBestOrder(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RouteRepresentationForBestOrder"/> values are the same. </summary>
         public static bool operator ==(RouteRepresentationForBestOrder left, RouteRepresentationForBestOrder right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouteRepresentationForBestOrder"/> values are not the same. </summary>

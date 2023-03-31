@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                writer.WriteStringValue(Mode.Value.ToSerialString());
             }
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("jobInputType"u8);
-            writer.WriteStringValue(JobInputType.ToString());
+            writer.WriteStringValue(JobInputType.ToSerialString());
             writer.WriteEndObject();
         }
 

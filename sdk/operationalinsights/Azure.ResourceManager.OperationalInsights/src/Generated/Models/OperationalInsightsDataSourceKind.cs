@@ -122,6 +122,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsDataSourceKind ApplicationInsights { get; } = new OperationalInsightsDataSourceKind(ApplicationInsightsValue);
         /// <summary> SqlDataClassification. </summary>
         public static OperationalInsightsDataSourceKind SqlDataClassification { get; } = new OperationalInsightsDataSourceKind(SqlDataClassificationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsDataSourceKind"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsDataSourceKind left, OperationalInsightsDataSourceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsDataSourceKind"/> values are not the same. </summary>

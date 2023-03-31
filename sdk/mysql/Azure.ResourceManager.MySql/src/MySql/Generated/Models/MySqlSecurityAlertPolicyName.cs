@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.MySql.Models
 
         /// <summary> Default. </summary>
         public static MySqlSecurityAlertPolicyName Default { get; } = new MySqlSecurityAlertPolicyName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlSecurityAlertPolicyName"/> values are the same. </summary>
         public static bool operator ==(MySqlSecurityAlertPolicyName left, MySqlSecurityAlertPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlSecurityAlertPolicyName"/> values are not the same. </summary>

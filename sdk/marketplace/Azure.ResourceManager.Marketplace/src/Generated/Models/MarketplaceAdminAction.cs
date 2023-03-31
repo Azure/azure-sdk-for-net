@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         public static MarketplaceAdminAction Approved { get; } = new MarketplaceAdminAction(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static MarketplaceAdminAction Rejected { get; } = new MarketplaceAdminAction(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MarketplaceAdminAction"/> values are the same. </summary>
         public static bool operator ==(MarketplaceAdminAction left, MarketplaceAdminAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MarketplaceAdminAction"/> values are not the same. </summary>

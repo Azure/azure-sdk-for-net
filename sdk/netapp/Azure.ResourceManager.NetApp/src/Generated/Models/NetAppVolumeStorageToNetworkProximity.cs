@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppVolumeStorageToNetworkProximity T1 { get; } = new NetAppVolumeStorageToNetworkProximity(T1Value);
         /// <summary> Standard T2 storage to network connectivity. </summary>
         public static NetAppVolumeStorageToNetworkProximity T2 { get; } = new NetAppVolumeStorageToNetworkProximity(T2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppVolumeStorageToNetworkProximity"/> values are the same. </summary>
         public static bool operator ==(NetAppVolumeStorageToNetworkProximity left, NetAppVolumeStorageToNetworkProximity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppVolumeStorageToNetworkProximity"/> values are not the same. </summary>

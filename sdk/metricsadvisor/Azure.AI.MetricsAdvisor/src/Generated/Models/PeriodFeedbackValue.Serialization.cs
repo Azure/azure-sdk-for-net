@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("periodType"u8);
-            writer.WriteStringValue(PeriodType.ToString());
+            writer.WriteStringValue(PeriodType.ToSerialString());
             writer.WritePropertyName("periodValue"u8);
             writer.WriteNumberValue(PeriodValue);
             writer.WriteEndObject();

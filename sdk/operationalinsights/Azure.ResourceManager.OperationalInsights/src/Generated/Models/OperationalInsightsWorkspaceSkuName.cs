@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsWorkspaceSkuName CapacityReservation { get; } = new OperationalInsightsWorkspaceSkuName(CapacityReservationValue);
         /// <summary> LACluster. </summary>
         public static OperationalInsightsWorkspaceSkuName LACluster { get; } = new OperationalInsightsWorkspaceSkuName(LAClusterValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsWorkspaceSkuName"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsWorkspaceSkuName left, OperationalInsightsWorkspaceSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsWorkspaceSkuName"/> values are not the same. </summary>

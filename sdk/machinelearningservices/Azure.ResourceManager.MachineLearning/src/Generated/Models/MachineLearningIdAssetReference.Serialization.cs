@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("assetId"u8);
             writer.WriteStringValue(AssetId);
             writer.WritePropertyName("referenceType"u8);
-            writer.WriteStringValue(ReferenceType.ToString());
+            writer.WriteStringValue(ReferenceType.ToSerialString());
             writer.WriteEndObject();
         }
 

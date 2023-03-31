@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Network.Models
         public static PcStatus Error { get; } = new PcStatus(ErrorValue);
         /// <summary> Unknown. </summary>
         public static PcStatus Unknown { get; } = new PcStatus(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PcStatus"/> values are the same. </summary>
         public static bool operator ==(PcStatus left, PcStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PcStatus"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MySql.Models
         public static MySqlQueryPerformanceInsightResetDataResultState Succeeded { get; } = new MySqlQueryPerformanceInsightResetDataResultState(SucceededValue);
         /// <summary> Failed. </summary>
         public static MySqlQueryPerformanceInsightResetDataResultState Failed { get; } = new MySqlQueryPerformanceInsightResetDataResultState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlQueryPerformanceInsightResetDataResultState"/> values are the same. </summary>
         public static bool operator ==(MySqlQueryPerformanceInsightResetDataResultState left, MySqlQueryPerformanceInsightResetDataResultState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlQueryPerformanceInsightResetDataResultState"/> values are not the same. </summary>

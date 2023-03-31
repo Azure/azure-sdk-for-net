@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppNetworkFeature Basic { get; } = new NetAppNetworkFeature(BasicValue);
         /// <summary> Standard network feature. </summary>
         public static NetAppNetworkFeature Standard { get; } = new NetAppNetworkFeature(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppNetworkFeature"/> values are the same. </summary>
         public static bool operator ==(NetAppNetworkFeature left, NetAppNetworkFeature right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppNetworkFeature"/> values are not the same. </summary>

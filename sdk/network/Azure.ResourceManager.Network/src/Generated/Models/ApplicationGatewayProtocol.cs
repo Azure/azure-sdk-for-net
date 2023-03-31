@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayProtocol Http { get; } = new ApplicationGatewayProtocol(HttpValue);
         /// <summary> Https. </summary>
         public static ApplicationGatewayProtocol Https { get; } = new ApplicationGatewayProtocol(HttpsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationGatewayProtocol"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewayProtocol left, ApplicationGatewayProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayProtocol"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static LearningRateScheduler WarmupCosine { get; } = new LearningRateScheduler(WarmupCosineValue);
         /// <summary> Step learning rate scheduler. </summary>
         public static LearningRateScheduler Step { get; } = new LearningRateScheduler(StepValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LearningRateScheduler"/> values are the same. </summary>
         public static bool operator ==(LearningRateScheduler left, LearningRateScheduler right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LearningRateScheduler"/> values are not the same. </summary>

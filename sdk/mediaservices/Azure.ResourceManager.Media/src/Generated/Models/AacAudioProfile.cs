@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static AacAudioProfile HEAacV1 { get; } = new AacAudioProfile(HEAacV1Value);
         /// <summary> Specifies that the output audio is to be encoded into HE-AAC v2 profile. </summary>
         public static AacAudioProfile HEAacV2 { get; } = new AacAudioProfile(HEAacV2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AacAudioProfile"/> values are the same. </summary>
         public static bool operator ==(AacAudioProfile left, AacAudioProfile right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AacAudioProfile"/> values are not the same. </summary>

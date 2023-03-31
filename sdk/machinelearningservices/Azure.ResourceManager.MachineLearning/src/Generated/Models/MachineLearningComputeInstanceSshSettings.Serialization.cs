@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(SshPublicAccess))
             {
                 writer.WritePropertyName("sshPublicAccess"u8);
-                writer.WriteStringValue(SshPublicAccess.Value.ToString());
+                writer.WriteStringValue(SshPublicAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(AdminPublicKey))
             {

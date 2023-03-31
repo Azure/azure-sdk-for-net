@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> true. </summary>
         public static SyncRemoteAddressSpace True { get; } = new SyncRemoteAddressSpace(TrueValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SyncRemoteAddressSpace"/> values are the same. </summary>
         public static bool operator ==(SyncRemoteAddressSpace left, SyncRemoteAddressSpace right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyncRemoteAddressSpace"/> values are not the same. </summary>

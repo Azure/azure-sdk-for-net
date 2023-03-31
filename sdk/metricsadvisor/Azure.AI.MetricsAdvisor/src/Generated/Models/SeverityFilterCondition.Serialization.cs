@@ -16,9 +16,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("min"u8);
-            writer.WriteStringValue(Min.ToString());
+            writer.WriteStringValue(Min.ToSerialString());
             writer.WritePropertyName("max"u8);
-            writer.WriteStringValue(Max.ToString());
+            writer.WriteStringValue(Max.ToSerialString());
             writer.WriteEndObject();
         }
     }

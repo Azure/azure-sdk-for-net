@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static BillingSku G5 { get; } = new BillingSku(G5Value);
         /// <summary> 10 Gbps, 1000 active SIMs plan. </summary>
         public static BillingSku G10 { get; } = new BillingSku(G10Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BillingSku"/> values are the same. </summary>
         public static bool operator ==(BillingSku left, BillingSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingSku"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Disabled. </summary>
         public static ManagedRuleEnabledState Disabled { get; } = new ManagedRuleEnabledState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedRuleEnabledState"/> values are the same. </summary>
         public static bool operator ==(ManagedRuleEnabledState left, ManagedRuleEnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedRuleEnabledState"/> values are not the same. </summary>

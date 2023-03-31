@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerCreateMode Replica { get; } = new MySqlFlexibleServerCreateMode(ReplicaValue);
         /// <summary> GeoRestore. </summary>
         public static MySqlFlexibleServerCreateMode GeoRestore { get; } = new MySqlFlexibleServerCreateMode(GeoRestoreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerCreateMode"/> values are the same. </summary>
         public static bool operator ==(MySqlFlexibleServerCreateMode left, MySqlFlexibleServerCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerCreateMode"/> values are not the same. </summary>

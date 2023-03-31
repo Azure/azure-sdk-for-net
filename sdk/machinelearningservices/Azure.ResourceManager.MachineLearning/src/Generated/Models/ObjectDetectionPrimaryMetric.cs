@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// AP is calculated for each class and averaged to get the MAP.
         /// </summary>
         public static ObjectDetectionPrimaryMetric MeanAveragePrecision { get; } = new ObjectDetectionPrimaryMetric(MeanAveragePrecisionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ObjectDetectionPrimaryMetric"/> values are the same. </summary>
         public static bool operator ==(ObjectDetectionPrimaryMetric left, ObjectDetectionPrimaryMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ObjectDetectionPrimaryMetric"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Include. </summary>
         public static ConnectionMonitorEndpointFilterType Include { get; } = new ConnectionMonitorEndpointFilterType(IncludeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointFilterType"/> values are the same. </summary>
         public static bool operator ==(ConnectionMonitorEndpointFilterType left, ConnectionMonitorEndpointFilterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointFilterType"/> values are not the same. </summary>

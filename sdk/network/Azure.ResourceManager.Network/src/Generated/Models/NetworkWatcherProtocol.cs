@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkWatcherProtocol Https { get; } = new NetworkWatcherProtocol(HttpsValue);
         /// <summary> Icmp. </summary>
         public static NetworkWatcherProtocol Icmp { get; } = new NetworkWatcherProtocol(IcmpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkWatcherProtocol"/> values are the same. </summary>
         public static bool operator ==(NetworkWatcherProtocol left, NetworkWatcherProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkWatcherProtocol"/> values are not the same. </summary>

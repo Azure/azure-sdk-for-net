@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningServiceDataAccessAuthIdentity WorkspaceSystemAssignedIdentity { get; } = new MachineLearningServiceDataAccessAuthIdentity(WorkspaceSystemAssignedIdentityValue);
         /// <summary> Use the user assigned managed identity of the Workspace to authenticate service data access. </summary>
         public static MachineLearningServiceDataAccessAuthIdentity WorkspaceUserAssignedIdentity { get; } = new MachineLearningServiceDataAccessAuthIdentity(WorkspaceUserAssignedIdentityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningServiceDataAccessAuthIdentity"/> values are the same. </summary>
         public static bool operator ==(MachineLearningServiceDataAccessAuthIdentity left, MachineLearningServiceDataAccessAuthIdentity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningServiceDataAccessAuthIdentity"/> values are not the same. </summary>

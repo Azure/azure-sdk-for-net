@@ -47,6 +47,9 @@ namespace Azure.Maps.Routing
         public static TravelMode Bicycle { get; } = new TravelMode(BicycleValue);
         /// <summary> The returned routes are optimized for pedestrians, including the use of sidewalks. </summary>
         public static TravelMode Pedestrian { get; } = new TravelMode(PedestrianValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TravelMode"/> values are the same. </summary>
         public static bool operator ==(TravelMode left, TravelMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TravelMode"/> values are not the same. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ConnectivityType.ToString());
+            writer.WriteStringValue(ConnectivityType.ToSerialString());
             if (Optional.IsDefined(Hub))
             {
                 writer.WritePropertyName("hub"u8);

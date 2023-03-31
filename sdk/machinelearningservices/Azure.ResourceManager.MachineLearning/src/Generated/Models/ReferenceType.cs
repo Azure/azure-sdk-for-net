@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ReferenceType DataPath { get; } = new ReferenceType(DataPathValue);
         /// <summary> OutputPath. </summary>
         public static ReferenceType OutputPath { get; } = new ReferenceType(OutputPathValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReferenceType"/> values are the same. </summary>
         public static bool operator ==(ReferenceType left, ReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReferenceType"/> values are not the same. </summary>

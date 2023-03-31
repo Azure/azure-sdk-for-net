@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Media.Models
         public static VideoSyncMode Cfr { get; } = new VideoSyncMode(CfrValue);
         /// <summary> Similar to the Passthrough mode, but if the input has frames that have duplicate timestamps, then only one frame is passed through to the output, and others are dropped. Recommended when the number of output frames is expected to be equal to the number of input frames. For example, the output is used to calculate a quality metric like PSNR against the input. </summary>
         public static VideoSyncMode Vfr { get; } = new VideoSyncMode(VfrValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VideoSyncMode"/> values are the same. </summary>
         public static bool operator ==(VideoSyncMode left, VideoSyncMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VideoSyncMode"/> values are not the same. </summary>

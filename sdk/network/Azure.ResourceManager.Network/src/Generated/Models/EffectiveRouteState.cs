@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static EffectiveRouteState Active { get; } = new EffectiveRouteState(ActiveValue);
         /// <summary> Invalid. </summary>
         public static EffectiveRouteState Invalid { get; } = new EffectiveRouteState(InvalidValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EffectiveRouteState"/> values are the same. </summary>
         public static bool operator ==(EffectiveRouteState left, EffectiveRouteState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EffectiveRouteState"/> values are not the same. </summary>

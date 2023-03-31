@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static SecurityRuleDirection Inbound { get; } = new SecurityRuleDirection(InboundValue);
         /// <summary> Outbound. </summary>
         public static SecurityRuleDirection Outbound { get; } = new SecurityRuleDirection(OutboundValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityRuleDirection"/> values are the same. </summary>
         public static bool operator ==(SecurityRuleDirection left, SecurityRuleDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityRuleDirection"/> values are not the same. </summary>

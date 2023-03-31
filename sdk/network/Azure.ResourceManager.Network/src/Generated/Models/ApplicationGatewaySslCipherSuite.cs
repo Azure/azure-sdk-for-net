@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Network.Models
         private const string TlsDheDssWith3DesEdeCbcShaValue = "TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA";
         private const string TlsECDiffieHellmanRsaWithAes128GcmSha256Value = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256";
         private const string TlsECDiffieHellmanRsaWithAes256GcmSha384Value = "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySslCipherSuite"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewaySslCipherSuite left, ApplicationGatewaySslCipherSuite right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewaySslCipherSuite"/> values are not the same. </summary>

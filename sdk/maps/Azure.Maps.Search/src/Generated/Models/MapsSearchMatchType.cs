@@ -32,6 +32,9 @@ namespace Azure.Maps.Search.Models
         public static MapsSearchMatchType HouseNumberRange { get; } = new MapsSearchMatchType(HouseNumberRangeValue);
         /// <summary> Street. </summary>
         public static MapsSearchMatchType Street { get; } = new MapsSearchMatchType(StreetValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MapsSearchMatchType"/> values are the same. </summary>
         public static bool operator ==(MapsSearchMatchType left, MapsSearchMatchType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapsSearchMatchType"/> values are not the same. </summary>

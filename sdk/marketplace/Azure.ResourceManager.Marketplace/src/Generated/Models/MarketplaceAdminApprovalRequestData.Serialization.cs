@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Marketplace
             if (Optional.IsDefined(AdminAction))
             {
                 writer.WritePropertyName("adminAction"u8);
-                writer.WriteStringValue(AdminAction.Value.ToString());
+                writer.WriteStringValue(AdminAction.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ApprovedPlans))
             {

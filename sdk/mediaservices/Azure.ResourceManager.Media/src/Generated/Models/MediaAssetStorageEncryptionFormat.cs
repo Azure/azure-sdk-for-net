@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaAssetStorageEncryptionFormat None { get; } = new MediaAssetStorageEncryptionFormat(NoneValue);
         /// <summary> The Asset is encrypted with Media Services client-side encryption. </summary>
         public static MediaAssetStorageEncryptionFormat MediaStorageClientEncryption { get; } = new MediaAssetStorageEncryptionFormat(MediaStorageClientEncryptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaAssetStorageEncryptionFormat"/> values are the same. </summary>
         public static bool operator ==(MediaAssetStorageEncryptionFormat left, MediaAssetStorageEncryptionFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaAssetStorageEncryptionFormat"/> values are not the same. </summary>

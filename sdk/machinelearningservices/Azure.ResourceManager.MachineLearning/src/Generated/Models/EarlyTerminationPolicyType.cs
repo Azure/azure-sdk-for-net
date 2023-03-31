@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static EarlyTerminationPolicyType MedianStopping { get; } = new EarlyTerminationPolicyType(MedianStoppingValue);
         /// <summary> TruncationSelection. </summary>
         public static EarlyTerminationPolicyType TruncationSelection { get; } = new EarlyTerminationPolicyType(TruncationSelectionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EarlyTerminationPolicyType"/> values are the same. </summary>
         public static bool operator ==(EarlyTerminationPolicyType left, EarlyTerminationPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EarlyTerminationPolicyType"/> values are not the same. </summary>

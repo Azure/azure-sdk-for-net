@@ -24,6 +24,9 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private const string ValueValue = "Value";
         private const string MeanValue = "Mean";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BoundaryMeasureType"/> values are the same. </summary>
         public static bool operator ==(BoundaryMeasureType left, BoundaryMeasureType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BoundaryMeasureType"/> values are not the same. </summary>

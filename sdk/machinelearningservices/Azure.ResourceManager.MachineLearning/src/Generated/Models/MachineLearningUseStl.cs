@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningUseStl Season { get; } = new MachineLearningUseStl(SeasonValue);
         /// <summary> SeasonTrend. </summary>
         public static MachineLearningUseStl SeasonTrend { get; } = new MachineLearningUseStl(SeasonTrendValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningUseStl"/> values are the same. </summary>
         public static bool operator ==(MachineLearningUseStl left, MachineLearningUseStl right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningUseStl"/> values are not the same. </summary>

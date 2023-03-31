@@ -52,7 +52,7 @@ namespace Azure.Maps.Rendering
             uri.Reset(_endpoint);
             uri.AppendPath("/map/tile", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("tilesetId", tilesetId.ToString(), true);
+            uri.AppendQuery("tilesetId", tilesetId.ToSerialString(), true);
             uri.AppendQuery("zoom", tileIndex.Z, true);
             uri.AppendQuery("x", tileIndex.X, true);
             uri.AppendQuery("y", tileIndex.Y, true);
@@ -62,7 +62,7 @@ namespace Azure.Maps.Rendering
             }
             if (tileSize != null)
             {
-                uri.AppendQuery("tileSize", tileSize.Value.ToString(), true);
+                uri.AppendQuery("tileSize", tileSize.Value.ToSerialString(), true);
             }
             if (language != null)
             {
@@ -70,7 +70,7 @@ namespace Azure.Maps.Rendering
             }
             if (localizedMapView != null)
             {
-                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+                uri.AppendQuery("view", localizedMapView.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -186,7 +186,7 @@ namespace Azure.Maps.Rendering
             uri.Reset(_endpoint);
             uri.AppendPath("/map/tileset", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("tilesetId", tilesetId.ToString(), true);
+            uri.AppendQuery("tilesetId", tilesetId.ToSerialString(), true);
             request.Uri = uri;
             if (_clientId != null)
             {
@@ -255,7 +255,7 @@ namespace Azure.Maps.Rendering
             uri.Reset(_endpoint);
             uri.AppendPath("/map/attribution", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("tilesetId", tilesetId.ToString(), true);
+            uri.AppendQuery("tilesetId", tilesetId.ToSerialString(), true);
             uri.AppendQuery("zoom", zoom, true);
             uri.AppendQueryDelimited("bounds", bounds, ",", true);
             request.Uri = uri;
@@ -433,7 +433,7 @@ namespace Azure.Maps.Rendering
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/map/copyright/caption/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (_clientId != null)
@@ -516,15 +516,15 @@ namespace Azure.Maps.Rendering
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/map/static/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (layer != null)
             {
-                uri.AppendQuery("layer", layer.Value.ToString(), true);
+                uri.AppendQuery("layer", layer.Value.ToSerialString(), true);
             }
             if (style != null)
             {
-                uri.AppendQuery("style", style.Value.ToString(), true);
+                uri.AppendQuery("style", style.Value.ToSerialString(), true);
             }
             if (zoom != null)
             {
@@ -552,7 +552,7 @@ namespace Azure.Maps.Rendering
             }
             if (localizedMapView != null)
             {
-                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+                uri.AppendQuery("view", localizedMapView.Value.ToSerialString(), true);
             }
             if (pins != null)
             {
@@ -1163,13 +1163,13 @@ namespace Azure.Maps.Rendering
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/map/copyright/bounding/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQueryDelimited("mincoordinates", boundingBox.SouthWest, ",", true);
             uri.AppendQueryDelimited("maxcoordinates", boundingBox.NorthEast, ",", true);
             if (includeText != null)
             {
-                uri.AppendQuery("text", includeText.Value.ToString(), true);
+                uri.AppendQuery("text", includeText.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -1256,14 +1256,14 @@ namespace Azure.Maps.Rendering
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/map/copyright/tile/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("zoom", tileIndex.Z, true);
             uri.AppendQuery("x", tileIndex.X, true);
             uri.AppendQuery("y", tileIndex.Y, true);
             if (includeText != null)
             {
-                uri.AppendQuery("text", includeText.Value.ToString(), true);
+                uri.AppendQuery("text", includeText.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -1352,11 +1352,11 @@ namespace Azure.Maps.Rendering
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/map/copyright/world/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (includeText != null)
             {
-                uri.AppendQuery("text", includeText.Value.ToString(), true);
+                uri.AppendQuery("text", includeText.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)

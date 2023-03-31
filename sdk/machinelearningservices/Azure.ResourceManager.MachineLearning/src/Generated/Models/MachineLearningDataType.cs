@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningDataType UriFolder { get; } = new MachineLearningDataType(UriFolderValue);
         /// <summary> mltable. </summary>
         public static MachineLearningDataType Mltable { get; } = new MachineLearningDataType(MltableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningDataType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningDataType left, MachineLearningDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningDataType"/> values are not the same. </summary>

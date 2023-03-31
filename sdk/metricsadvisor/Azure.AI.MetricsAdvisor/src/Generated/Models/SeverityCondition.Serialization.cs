@@ -16,9 +16,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("minAlertSeverity"u8);
-            writer.WriteStringValue(MinimumAlertSeverity.ToString());
+            writer.WriteStringValue(MinimumAlertSeverity.ToSerialString());
             writer.WritePropertyName("maxAlertSeverity"u8);
-            writer.WriteStringValue(MaximumAlertSeverity.ToString());
+            writer.WriteStringValue(MaximumAlertSeverity.ToSerialString());
             writer.WriteEndObject();
         }
 

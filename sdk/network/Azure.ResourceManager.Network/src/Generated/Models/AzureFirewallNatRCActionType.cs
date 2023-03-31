@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static AzureFirewallNatRCActionType Snat { get; } = new AzureFirewallNatRCActionType(SnatValue);
         /// <summary> Dnat. </summary>
         public static AzureFirewallNatRCActionType Dnat { get; } = new AzureFirewallNatRCActionType(DnatValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AzureFirewallNatRCActionType"/> values are the same. </summary>
         public static bool operator ==(AzureFirewallNatRCActionType left, AzureFirewallNatRCActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureFirewallNatRCActionType"/> values are not the same. </summary>

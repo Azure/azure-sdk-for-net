@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public static CollectorProvisioningState Deleting { get; } = new CollectorProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static CollectorProvisioningState Failed { get; } = new CollectorProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CollectorProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CollectorProvisioningState left, CollectorProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CollectorProvisioningState"/> values are not the same. </summary>

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("queryAccessMode"u8);
-            writer.WriteStringValue(QueryAccessMode.ToString());
+            writer.WriteStringValue(QueryAccessMode.ToSerialString());
             writer.WritePropertyName("ingestionAccessMode"u8);
-            writer.WriteStringValue(IngestionAccessMode.ToString());
+            writer.WriteStringValue(IngestionAccessMode.ToSerialString());
             if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);

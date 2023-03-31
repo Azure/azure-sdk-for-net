@@ -49,7 +49,7 @@ namespace Azure.Maps.Geolocation
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/geolocation/ip/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("ip", ipAddress, true);
             request.Uri = uri;

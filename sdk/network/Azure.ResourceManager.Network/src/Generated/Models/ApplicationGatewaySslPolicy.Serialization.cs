@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in DisabledSslProtocols)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("policyType"u8);
-                writer.WriteStringValue(PolicyType.Value.ToString());
+                writer.WriteStringValue(PolicyType.Value.ToSerialString());
             }
             if (Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
-                writer.WriteStringValue(PolicyName.Value.ToString());
+                writer.WriteStringValue(PolicyName.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(CipherSuites))
             {
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in CipherSuites)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MinProtocolVersion))
             {
                 writer.WritePropertyName("minProtocolVersion"u8);
-                writer.WriteStringValue(MinProtocolVersion.Value.ToString());
+                writer.WriteStringValue(MinProtocolVersion.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

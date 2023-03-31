@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
             writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType.ToString());
+            writer.WriteStringValue(RuleType.ToSerialString());
             writer.WritePropertyName("matchConditions"u8);
             writer.WriteStartArray();
             foreach (var item in MatchConditions)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);
-            writer.WriteStringValue(Action.ToString());
+            writer.WriteStringValue(Action.ToSerialString());
             writer.WriteEndObject();
         }
 

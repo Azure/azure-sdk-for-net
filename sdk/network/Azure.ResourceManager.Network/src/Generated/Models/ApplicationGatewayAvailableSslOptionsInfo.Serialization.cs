@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(DefaultPolicy))
             {
                 writer.WritePropertyName("defaultPolicy"u8);
-                writer.WriteStringValue(DefaultPolicy.Value.ToString());
+                writer.WriteStringValue(DefaultPolicy.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AvailableCipherSuites))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in AvailableCipherSuites)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in AvailableProtocols)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

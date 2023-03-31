@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static RoutingState Provisioning { get; } = new RoutingState(ProvisioningValue);
         /// <summary> Failed. </summary>
         public static RoutingState Failed { get; } = new RoutingState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoutingState"/> values are the same. </summary>
         public static bool operator ==(RoutingState left, RoutingState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoutingState"/> values are not the same. </summary>

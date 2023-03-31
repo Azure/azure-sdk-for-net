@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaJobErrorCategory Content { get; } = new MediaJobErrorCategory(ContentValue);
         /// <summary> The error is related to account information. </summary>
         public static MediaJobErrorCategory Account { get; } = new MediaJobErrorCategory(AccountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaJobErrorCategory"/> values are the same. </summary>
         public static bool operator ==(MediaJobErrorCategory left, MediaJobErrorCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaJobErrorCategory"/> values are not the same. </summary>

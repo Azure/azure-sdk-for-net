@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppKeyVaultStatus Error { get; } = new NetAppKeyVaultStatus(ErrorValue);
         /// <summary> KeyVault connection Updating. </summary>
         public static NetAppKeyVaultStatus Updating { get; } = new NetAppKeyVaultStatus(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppKeyVaultStatus"/> values are the same. </summary>
         public static bool operator ==(NetAppKeyVaultStatus left, NetAppKeyVaultStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppKeyVaultStatus"/> values are not the same. </summary>

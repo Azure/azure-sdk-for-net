@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
             if (listViewType != null)
             {
-                uri.AppendQuery("listViewType", listViewType.Value.ToString(), true);
+                uri.AppendQuery("listViewType", listViewType.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

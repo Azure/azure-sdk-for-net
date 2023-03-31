@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualNetworkPeeringLevel LocalNotInSync { get; } = new VirtualNetworkPeeringLevel(LocalNotInSyncValue);
         /// <summary> LocalAndRemoteNotInSync. </summary>
         public static VirtualNetworkPeeringLevel LocalAndRemoteNotInSync { get; } = new VirtualNetworkPeeringLevel(LocalAndRemoteNotInSyncValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualNetworkPeeringLevel"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkPeeringLevel left, VirtualNetworkPeeringLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkPeeringLevel"/> values are not the same. </summary>

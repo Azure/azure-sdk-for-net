@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ProtocolType))
             {
                 writer.WritePropertyName("protocolType"u8);
-                writer.WriteStringValue(ProtocolType.Value.ToString());
+                writer.WriteStringValue(ProtocolType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Port))
             {

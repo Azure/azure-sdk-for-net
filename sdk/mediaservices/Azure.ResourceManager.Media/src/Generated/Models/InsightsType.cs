@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static InsightsType VideoInsightsOnly { get; } = new InsightsType(VideoInsightsOnlyValue);
         /// <summary> Generate both audio and video insights. Fails if either audio or video Insights fail. </summary>
         public static InsightsType AllInsights { get; } = new InsightsType(AllInsightsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InsightsType"/> values are the same. </summary>
         public static bool operator ==(InsightsType left, InsightsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InsightsType"/> values are not the same. </summary>

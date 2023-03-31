@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsLinkedServiceEntityStatus ProvisioningAccount { get; } = new OperationalInsightsLinkedServiceEntityStatus(ProvisioningAccountValue);
         /// <summary> Updating. </summary>
         public static OperationalInsightsLinkedServiceEntityStatus Updating { get; } = new OperationalInsightsLinkedServiceEntityStatus(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsLinkedServiceEntityStatus"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsLinkedServiceEntityStatus left, OperationalInsightsLinkedServiceEntityStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsLinkedServiceEntityStatus"/> values are not the same. </summary>

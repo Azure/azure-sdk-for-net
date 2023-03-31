@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         public static IPsecIntegrity GcmAes256 { get; } = new IPsecIntegrity(GcmAes256Value);
         /// <summary> GCMAES128. </summary>
         public static IPsecIntegrity GcmAes128 { get; } = new IPsecIntegrity(GcmAes128Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IPsecIntegrity"/> values are the same. </summary>
         public static bool operator ==(IPsecIntegrity left, IPsecIntegrity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IPsecIntegrity"/> values are not the same. </summary>

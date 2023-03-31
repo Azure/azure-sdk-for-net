@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("orchestratorType"u8);
-            writer.WriteStringValue(OrchestratorType.ToString());
+            writer.WriteStringValue(OrchestratorType.ToSerialString());
             if (Optional.IsDefined(OrchestratorProperties))
             {
                 writer.WritePropertyName("orchestratorProperties"u8);
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(AgentVmSize))
             {
                 writer.WritePropertyName("agentVmSize"u8);
-                writer.WriteStringValue(AgentVmSize.Value.ToString());
+                writer.WriteStringValue(AgentVmSize.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

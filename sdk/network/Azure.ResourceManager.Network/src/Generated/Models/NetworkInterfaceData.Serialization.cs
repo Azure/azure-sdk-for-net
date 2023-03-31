@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NicType))
             {
                 writer.WritePropertyName("nicType"u8);
-                writer.WriteStringValue(NicType.Value.ToString());
+                writer.WriteStringValue(NicType.Value.ToSerialString());
             }
             if (Optional.IsDefined(PrivateLinkService))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(MigrationPhase))
             {
                 writer.WritePropertyName("migrationPhase"u8);
-                writer.WriteStringValue(MigrationPhase.Value.ToString());
+                writer.WriteStringValue(MigrationPhase.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

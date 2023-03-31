@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static IssueSeverity Error { get; } = new IssueSeverity(ErrorValue);
         /// <summary> Warning. </summary>
         public static IssueSeverity Warning { get; } = new IssueSeverity(WarningValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IssueSeverity"/> values are the same. </summary>
         public static bool operator ==(IssueSeverity left, IssueSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IssueSeverity"/> values are not the same. </summary>

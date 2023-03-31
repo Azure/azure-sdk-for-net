@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
-                writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
+                writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToSerialString());
             }
             if (Optional.IsDefined(PrivateIPAddressVersion))
             {
                 writer.WritePropertyName("privateIPAddressVersion"u8);
-                writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
+                writer.WriteStringValue(PrivateIPAddressVersion.Value.ToSerialString());
             }
             if (Optional.IsDefined(Subnet))
             {

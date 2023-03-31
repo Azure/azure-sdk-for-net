@@ -24,6 +24,9 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private const string PrivateValue = "Private";
         private const string PublicValue = "Public";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataFeedAccessMode"/> values are the same. </summary>
         public static bool operator ==(DataFeedAccessMode left, DataFeedAccessMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedAccessMode"/> values are not the same. </summary>

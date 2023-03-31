@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorPublicNetworkAccess Enabled { get; } = new MonitorPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static MonitorPublicNetworkAccess Disabled { get; } = new MonitorPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MonitorPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(MonitorPublicNetworkAccess left, MonitorPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorPublicNetworkAccess"/> values are not the same. </summary>

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("jobInputType"u8);
-            writer.WriteStringValue(JobInputType.ToString());
+            writer.WriteStringValue(JobInputType.ToSerialString());
             writer.WriteEndObject();
         }
 

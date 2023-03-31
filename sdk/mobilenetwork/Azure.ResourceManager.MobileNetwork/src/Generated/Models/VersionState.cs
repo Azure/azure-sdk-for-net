@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static VersionState Active { get; } = new VersionState(ActiveValue);
         /// <summary> This version is deprecated and is no longer supported. </summary>
         public static VersionState Deprecated { get; } = new VersionState(DeprecatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VersionState"/> values are the same. </summary>
         public static bool operator ==(VersionState left, VersionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VersionState"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static MaintenanceUpdateStatus RetryNow { get; } = new MaintenanceUpdateStatus(RetryNowValue);
         /// <summary> Updates installation failed and should be retried later. </summary>
         public static MaintenanceUpdateStatus RetryLater { get; } = new MaintenanceUpdateStatus(RetryLaterValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MaintenanceUpdateStatus"/> values are the same. </summary>
         public static bool operator ==(MaintenanceUpdateStatus left, MaintenanceUpdateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MaintenanceUpdateStatus"/> values are not the same. </summary>

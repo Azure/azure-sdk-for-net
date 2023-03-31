@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(QosType))
             {
                 writer.WritePropertyName("qosType"u8);
-                writer.WriteStringValue(QosType.Value.ToString());
+                writer.WriteStringValue(QosType.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsCoolAccessEnabled))
             {

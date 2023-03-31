@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningAllocationState Steady { get; } = new MachineLearningAllocationState(SteadyValue);
         /// <summary> Resizing. </summary>
         public static MachineLearningAllocationState Resizing { get; } = new MachineLearningAllocationState(ResizingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningAllocationState"/> values are the same. </summary>
         public static bool operator ==(MachineLearningAllocationState left, MachineLearningAllocationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningAllocationState"/> values are not the same. </summary>

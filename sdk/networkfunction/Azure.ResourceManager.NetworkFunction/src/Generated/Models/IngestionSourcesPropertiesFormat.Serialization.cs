@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("sourceType"u8);
-                writer.WriteStringValue(SourceType.Value.ToString());
+                writer.WriteStringValue(SourceType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ResourceId))
             {

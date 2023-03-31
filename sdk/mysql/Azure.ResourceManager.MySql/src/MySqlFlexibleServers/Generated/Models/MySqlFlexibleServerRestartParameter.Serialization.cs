@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             if (Optional.IsDefined(RestartWithFailover))
             {
                 writer.WritePropertyName("restartWithFailover"u8);
-                writer.WriteStringValue(RestartWithFailover.Value.ToString());
+                writer.WriteStringValue(RestartWithFailover.Value.ToSerialString());
             }
             if (Optional.IsDefined(MaxFailoverSeconds))
             {

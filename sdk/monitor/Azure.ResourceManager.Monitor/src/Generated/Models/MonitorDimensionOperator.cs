@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorDimensionOperator Include { get; } = new MonitorDimensionOperator(IncludeValue);
         /// <summary> Exclude. </summary>
         public static MonitorDimensionOperator Exclude { get; } = new MonitorDimensionOperator(ExcludeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MonitorDimensionOperator"/> values are the same. </summary>
         public static bool operator ==(MonitorDimensionOperator left, MonitorDimensionOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorDimensionOperator"/> values are not the same. </summary>

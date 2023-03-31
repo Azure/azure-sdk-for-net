@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerEnableStatusEnum Enabled { get; } = new MySqlFlexibleServerEnableStatusEnum(EnabledValue);
         /// <summary> Disabled. </summary>
         public static MySqlFlexibleServerEnableStatusEnum Disabled { get; } = new MySqlFlexibleServerEnableStatusEnum(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerEnableStatusEnum"/> values are the same. </summary>
         public static bool operator ==(MySqlFlexibleServerEnableStatusEnum left, MySqlFlexibleServerEnableStatusEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerEnableStatusEnum"/> values are not the same. </summary>

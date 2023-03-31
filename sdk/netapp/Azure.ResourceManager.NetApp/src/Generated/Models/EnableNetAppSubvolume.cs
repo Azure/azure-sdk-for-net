@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static EnableNetAppSubvolume Enabled { get; } = new EnableNetAppSubvolume(EnabledValue);
         /// <summary> subvolumes are not enabled. </summary>
         public static EnableNetAppSubvolume Disabled { get; } = new EnableNetAppSubvolume(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EnableNetAppSubvolume"/> values are the same. </summary>
         public static bool operator ==(EnableNetAppSubvolume left, EnableNetAppSubvolume right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnableNetAppSubvolume"/> values are not the same. </summary>

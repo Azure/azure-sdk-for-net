@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ExpressRouteLinkMacSecCipher GcmAesXpn128 { get; } = new ExpressRouteLinkMacSecCipher(GcmAesXpn128Value);
         /// <summary> GcmAesXpn256. </summary>
         public static ExpressRouteLinkMacSecCipher GcmAesXpn256 { get; } = new ExpressRouteLinkMacSecCipher(GcmAesXpn256Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExpressRouteLinkMacSecCipher"/> values are the same. </summary>
         public static bool operator ==(ExpressRouteLinkMacSecCipher left, ExpressRouteLinkMacSecCipher right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteLinkMacSecCipher"/> values are not the same. </summary>

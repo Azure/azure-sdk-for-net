@@ -103,6 +103,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ForecastingModel LightGBM { get; } = new ForecastingModel(LightGBMValue);
         /// <summary> XGBoostRegressor: Extreme Gradient Boosting Regressor is a supervised machine learning model using ensemble of base learners. </summary>
         public static ForecastingModel XGBoostRegressor { get; } = new ForecastingModel(XGBoostRegressorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ForecastingModel"/> values are the same. </summary>
         public static bool operator ==(ForecastingModel left, ForecastingModel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ForecastingModel"/> values are not the same. </summary>

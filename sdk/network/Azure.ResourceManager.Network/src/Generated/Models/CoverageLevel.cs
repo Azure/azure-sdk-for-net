@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         public static CoverageLevel AboveAverage { get; } = new CoverageLevel(AboveAverageValue);
         /// <summary> Full. </summary>
         public static CoverageLevel Full { get; } = new CoverageLevel(FullValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CoverageLevel"/> values are the same. </summary>
         public static bool operator ==(CoverageLevel left, CoverageLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CoverageLevel"/> values are not the same. </summary>

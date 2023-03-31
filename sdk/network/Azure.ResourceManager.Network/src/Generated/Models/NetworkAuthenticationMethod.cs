@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkAuthenticationMethod Eaptls { get; } = new NetworkAuthenticationMethod(EaptlsValue);
         /// <summary> EAPMSCHAPv2. </summary>
         public static NetworkAuthenticationMethod EapmschaPv2 { get; } = new NetworkAuthenticationMethod(EapmschaPv2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkAuthenticationMethod"/> values are the same. </summary>
         public static bool operator ==(NetworkAuthenticationMethod left, NetworkAuthenticationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkAuthenticationMethod"/> values are not the same. </summary>

@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(ConditionOperator))
             {
                 writer.WritePropertyName("conditionOperator"u8);
-                writer.WriteStringValue(ConditionOperator.Value.ToString());
+                writer.WriteStringValue(ConditionOperator.Value.ToSerialString());
             }
             if (Optional.IsDefined(SmartDetectionCondition))
             {

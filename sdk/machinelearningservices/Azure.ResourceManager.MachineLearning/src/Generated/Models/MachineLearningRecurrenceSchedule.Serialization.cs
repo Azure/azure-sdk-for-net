@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in WeekDays)
                     {
-                        writer.WriteStringValue(item.ToString());
+                        writer.WriteStringValue(item.ToSerialString());
                     }
                     writer.WriteEndArray();
                 }

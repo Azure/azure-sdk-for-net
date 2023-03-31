@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteStringValue(Profile.Value.ToString());
+                writer.WriteStringValue(Profile.Value.ToSerialString());
             }
             if (Optional.IsDefined(Level))
             {

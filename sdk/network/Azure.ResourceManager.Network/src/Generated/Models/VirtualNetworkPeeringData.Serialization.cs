@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PeeringState))
             {
                 writer.WritePropertyName("peeringState"u8);
-                writer.WriteStringValue(PeeringState.Value.ToString());
+                writer.WriteStringValue(PeeringState.Value.ToSerialString());
             }
             if (Optional.IsDefined(PeeringSyncLevel))
             {
                 writer.WritePropertyName("peeringSyncLevel"u8);
-                writer.WriteStringValue(PeeringSyncLevel.Value.ToString());
+                writer.WriteStringValue(PeeringSyncLevel.Value.ToSerialString());
             }
             if (Optional.IsDefined(DoNotVerifyRemoteGateways))
             {

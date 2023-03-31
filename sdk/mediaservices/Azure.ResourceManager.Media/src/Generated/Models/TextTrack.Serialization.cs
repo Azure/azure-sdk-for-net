@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(PlayerVisibility))
             {
                 writer.WritePropertyName("playerVisibility"u8);
-                writer.WriteStringValue(PlayerVisibility.Value.ToString());
+                writer.WriteStringValue(PlayerVisibility.Value.ToSerialString());
             }
             if (Optional.IsDefined(HlsSettings))
             {

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningTriggerType Recurrence { get; } = new MachineLearningTriggerType(RecurrenceValue);
         /// <summary> Cron. </summary>
         public static MachineLearningTriggerType Cron { get; } = new MachineLearningTriggerType(CronValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningTriggerType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningTriggerType left, MachineLearningTriggerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningTriggerType"/> values are not the same. </summary>

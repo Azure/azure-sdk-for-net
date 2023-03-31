@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Media.Models
         public static FilterTrackPropertyType FourCC { get; } = new FilterTrackPropertyType(FourCCValue);
         /// <summary> The bitrate. </summary>
         public static FilterTrackPropertyType Bitrate { get; } = new FilterTrackPropertyType(BitrateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FilterTrackPropertyType"/> values are the same. </summary>
         public static bool operator ==(FilterTrackPropertyType left, FilterTrackPropertyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FilterTrackPropertyType"/> values are not the same. </summary>

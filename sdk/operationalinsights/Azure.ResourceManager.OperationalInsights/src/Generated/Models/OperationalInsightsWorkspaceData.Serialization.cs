@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(PublicNetworkAccessForIngestion))
             {
                 writer.WritePropertyName("publicNetworkAccessForIngestion"u8);
-                writer.WriteStringValue(PublicNetworkAccessForIngestion.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccessForIngestion.Value.ToSerialString());
             }
             if (Optional.IsDefined(PublicNetworkAccessForQuery))
             {
                 writer.WritePropertyName("publicNetworkAccessForQuery"u8);
-                writer.WriteStringValue(PublicNetworkAccessForQuery.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccessForQuery.Value.ToSerialString());
             }
             if (Optional.IsDefined(ForceCmkForQuery))
             {

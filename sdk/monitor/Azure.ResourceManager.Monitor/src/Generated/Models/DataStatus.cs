@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DataStatus Present { get; } = new DataStatus(PresentValue);
         /// <summary> notPresent. </summary>
         public static DataStatus NotPresent { get; } = new DataStatus(NotPresentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataStatus"/> values are the same. </summary>
         public static bool operator ==(DataStatus left, DataStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataStatus"/> values are not the same. </summary>

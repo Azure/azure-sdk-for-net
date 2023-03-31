@@ -44,6 +44,9 @@ namespace Azure.Maps.Routing
         public static RouteAvoidType AlreadyUsedRoads { get; } = new RouteAvoidType(AlreadyUsedRoadsValue);
         /// <summary> Avoids border crossings in route calculation. </summary>
         public static RouteAvoidType BorderCrossings { get; } = new RouteAvoidType(BorderCrossingsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RouteAvoidType"/> values are the same. </summary>
         public static bool operator ==(RouteAvoidType left, RouteAvoidType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouteAvoidType"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static AzureFirewallApplicationRuleProtocolType Https { get; } = new AzureFirewallApplicationRuleProtocolType(HttpsValue);
         /// <summary> Mssql. </summary>
         public static AzureFirewallApplicationRuleProtocolType Mssql { get; } = new AzureFirewallApplicationRuleProtocolType(MssqlValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AzureFirewallApplicationRuleProtocolType"/> values are the same. </summary>
         public static bool operator ==(AzureFirewallApplicationRuleProtocolType left, AzureFirewallApplicationRuleProtocolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureFirewallApplicationRuleProtocolType"/> values are not the same. </summary>

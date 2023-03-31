@@ -32,6 +32,9 @@ namespace Azure.Maps.Routing
         public static WindingnessLevel Normal { get; } = new WindingnessLevel(NormalValue);
         /// <summary> high. </summary>
         public static WindingnessLevel High { get; } = new WindingnessLevel(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WindingnessLevel"/> values are the same. </summary>
         public static bool operator ==(WindingnessLevel left, WindingnessLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WindingnessLevel"/> values are not the same. </summary>

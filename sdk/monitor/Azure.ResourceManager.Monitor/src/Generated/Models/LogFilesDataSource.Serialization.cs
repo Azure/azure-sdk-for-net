@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("format"u8);
-            writer.WriteStringValue(Format.ToString());
+            writer.WriteStringValue(Format.ToSerialString());
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static FirewallPolicyIntrusionDetectionStateType Alert { get; } = new FirewallPolicyIntrusionDetectionStateType(AlertValue);
         /// <summary> Deny. </summary>
         public static FirewallPolicyIntrusionDetectionStateType Deny { get; } = new FirewallPolicyIntrusionDetectionStateType(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FirewallPolicyIntrusionDetectionStateType"/> values are the same. </summary>
         public static bool operator ==(FirewallPolicyIntrusionDetectionStateType left, FirewallPolicyIntrusionDetectionStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirewallPolicyIntrusionDetectionStateType"/> values are not the same. </summary>

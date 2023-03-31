@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerConfigDynamicState True { get; } = new MySqlFlexibleServerConfigDynamicState(TrueValue);
         /// <summary> False. </summary>
         public static MySqlFlexibleServerConfigDynamicState False { get; } = new MySqlFlexibleServerConfigDynamicState(FalseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerConfigDynamicState"/> values are the same. </summary>
         public static bool operator ==(MySqlFlexibleServerConfigDynamicState left, MySqlFlexibleServerConfigDynamicState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerConfigDynamicState"/> values are not the same. </summary>

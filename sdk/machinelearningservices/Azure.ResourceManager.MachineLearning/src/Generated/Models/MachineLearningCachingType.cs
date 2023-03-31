@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningCachingType ReadOnly { get; } = new MachineLearningCachingType(ReadOnlyValue);
         /// <summary> ReadWrite. </summary>
         public static MachineLearningCachingType ReadWrite { get; } = new MachineLearningCachingType(ReadWriteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningCachingType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningCachingType left, MachineLearningCachingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningCachingType"/> values are not the same. </summary>

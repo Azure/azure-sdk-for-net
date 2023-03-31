@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static DdosCustomPolicyProtocol Udp { get; } = new DdosCustomPolicyProtocol(UdpValue);
         /// <summary> Syn. </summary>
         public static DdosCustomPolicyProtocol Syn { get; } = new DdosCustomPolicyProtocol(SynValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DdosCustomPolicyProtocol"/> values are the same. </summary>
         public static bool operator ==(DdosCustomPolicyProtocol left, DdosCustomPolicyProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DdosCustomPolicyProtocol"/> values are not the same. </summary>

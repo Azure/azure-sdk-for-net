@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static H264RateControlMode Cbr { get; } = new H264RateControlMode(CbrValue);
         /// <summary> Constant Rate Factor (CRF) mode that targets at constant subjective quality. </summary>
         public static H264RateControlMode Crf { get; } = new H264RateControlMode(CrfValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="H264RateControlMode"/> values are the same. </summary>
         public static bool operator ==(H264RateControlMode left, H264RateControlMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="H264RateControlMode"/> values are not the same. </summary>

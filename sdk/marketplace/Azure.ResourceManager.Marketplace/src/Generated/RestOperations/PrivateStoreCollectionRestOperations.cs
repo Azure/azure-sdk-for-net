@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteStringValue(payload.Value.ToString());
+                content.JsonWriter.WriteStringValue(payload.Value.ToSerialString());
                 request.Content = content;
             }
             _userAgent.Apply(message);

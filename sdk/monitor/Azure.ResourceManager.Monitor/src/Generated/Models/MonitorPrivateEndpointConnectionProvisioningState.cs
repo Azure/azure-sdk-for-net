@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorPrivateEndpointConnectionProvisioningState Deleting { get; } = new MonitorPrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static MonitorPrivateEndpointConnectionProvisioningState Failed { get; } = new MonitorPrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MonitorPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MonitorPrivateEndpointConnectionProvisioningState left, MonitorPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

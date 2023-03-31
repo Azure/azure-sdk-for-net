@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Media.Models
         public static MediaAssetContainerPermission ReadWrite { get; } = new MediaAssetContainerPermission(ReadWriteValue);
         /// <summary> The SAS URL will allow read, write and delete access to the container. </summary>
         public static MediaAssetContainerPermission ReadWriteDelete { get; } = new MediaAssetContainerPermission(ReadWriteDeleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaAssetContainerPermission"/> values are the same. </summary>
         public static bool operator ==(MediaAssetContainerPermission left, MediaAssetContainerPermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaAssetContainerPermission"/> values are not the same. </summary>

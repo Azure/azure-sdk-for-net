@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Complexity))
             {
                 writer.WritePropertyName("complexity"u8);
-                writer.WriteStringValue(Complexity.Value.ToString());
+                writer.WriteStringValue(Complexity.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Layers))
             {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(RateControlMode))
             {
                 writer.WritePropertyName("rateControlMode"u8);
-                writer.WriteStringValue(RateControlMode.Value.ToString());
+                writer.WriteStringValue(RateControlMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(UseSceneChangeDetection))
             {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(StretchMode))
             {
                 writer.WritePropertyName("stretchMode"u8);
-                writer.WriteStringValue(StretchMode.Value.ToString());
+                writer.WriteStringValue(StretchMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(SyncMode))
             {
                 writer.WritePropertyName("syncMode"u8);
-                writer.WriteStringValue(SyncMode.Value.ToString());
+                writer.WriteStringValue(SyncMode.Value.ToSerialString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);

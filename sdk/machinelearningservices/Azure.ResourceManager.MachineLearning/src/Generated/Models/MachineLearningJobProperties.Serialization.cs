@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteBooleanValue(IsArchived.Value);
             }
             writer.WritePropertyName("jobType"u8);
-            writer.WriteStringValue(JobType.ToString());
+            writer.WriteStringValue(JobType.ToSerialString());
             if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)

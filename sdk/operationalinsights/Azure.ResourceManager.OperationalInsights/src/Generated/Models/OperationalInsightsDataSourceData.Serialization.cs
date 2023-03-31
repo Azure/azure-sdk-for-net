@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);

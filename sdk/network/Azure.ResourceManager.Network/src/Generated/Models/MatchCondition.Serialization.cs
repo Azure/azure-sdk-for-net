@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("operator"u8);
-            writer.WriteStringValue(Operator.ToString());
+            writer.WriteStringValue(Operator.ToSerialString());
             if (Optional.IsDefined(NegationConditon))
             {
                 writer.WritePropertyName("negationConditon"u8);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Transforms)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

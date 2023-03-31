@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(TrafficControl))
             {
                 writer.WritePropertyName("trafficControl"u8);
-                writer.WriteStringValue(TrafficControl.Value.ToString());
+                writer.WriteStringValue(TrafficControl.Value.ToSerialString());
             }
             writer.WritePropertyName("serviceDataFlowTemplates"u8);
             writer.WriteStartArray();

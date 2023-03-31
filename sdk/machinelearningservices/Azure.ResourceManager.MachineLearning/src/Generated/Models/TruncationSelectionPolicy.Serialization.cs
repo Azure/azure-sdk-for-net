@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteNumberValue(EvaluationInterval.Value);
             }
             writer.WritePropertyName("policyType"u8);
-            writer.WriteStringValue(PolicyType.ToString());
+            writer.WriteStringValue(PolicyType.ToSerialString());
             writer.WriteEndObject();
         }
 

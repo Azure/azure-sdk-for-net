@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static RetentionInDaysAsDefaultState True { get; } = new RetentionInDaysAsDefaultState(TrueValue);
         /// <summary> Value is customer specific. </summary>
         public static RetentionInDaysAsDefaultState False { get; } = new RetentionInDaysAsDefaultState(FalseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RetentionInDaysAsDefaultState"/> values are the same. </summary>
         public static bool operator ==(RetentionInDaysAsDefaultState left, RetentionInDaysAsDefaultState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RetentionInDaysAsDefaultState"/> values are not the same. </summary>

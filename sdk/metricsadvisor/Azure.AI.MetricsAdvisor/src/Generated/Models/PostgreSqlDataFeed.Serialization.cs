@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("dataSourceParameter"u8);
             writer.WriteObjectValue(DataSourceParameter);
             writer.WritePropertyName("dataSourceType"u8);
-            writer.WriteStringValue(DataSourceType.ToString());
+            writer.WriteStringValue(DataSourceType.ToSerialString());
             writer.WritePropertyName("dataFeedName"u8);
             writer.WriteStringValue(DataFeedName);
             if (Optional.IsDefined(DataFeedDescription))
@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStringValue(DataFeedDescription);
             }
             writer.WritePropertyName("granularityName"u8);
-            writer.WriteStringValue(GranularityName.ToString());
+            writer.WriteStringValue(GranularityName.ToSerialString());
             if (Optional.IsDefined(GranularityAmount))
             {
                 if (GranularityAmount != null)
@@ -89,12 +89,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(NeedRollup))
             {
                 writer.WritePropertyName("needRollup"u8);
-                writer.WriteStringValue(NeedRollup.Value.ToString());
+                writer.WriteStringValue(NeedRollup.Value.ToSerialString());
             }
             if (Optional.IsDefined(RollUpMethod))
             {
                 writer.WritePropertyName("rollUpMethod"u8);
-                writer.WriteStringValue(RollUpMethod.Value.ToString());
+                writer.WriteStringValue(RollUpMethod.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(RollUpColumns))
             {
@@ -114,7 +114,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(FillMissingPointType))
             {
                 writer.WritePropertyName("fillMissingPointType"u8);
-                writer.WriteStringValue(FillMissingPointType.Value.ToString());
+                writer.WriteStringValue(FillMissingPointType.Value.ToSerialString());
             }
             if (Optional.IsDefined(FillMissingPointValue))
             {
@@ -124,7 +124,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(ViewMode))
             {
                 writer.WritePropertyName("viewMode"u8);
-                writer.WriteStringValue(ViewMode.Value.ToString());
+                writer.WriteStringValue(ViewMode.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Admins))
             {
@@ -154,7 +154,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
-                writer.WriteStringValue(AuthenticationType.Value.ToString());
+                writer.WriteStringValue(AuthenticationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(CredentialId))
             {

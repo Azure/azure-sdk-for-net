@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(ChannelMapping))
             {
                 writer.WritePropertyName("channelMapping"u8);
-                writer.WriteStringValue(ChannelMapping.Value.ToString());
+                writer.WriteStringValue(ChannelMapping.Value.ToSerialString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);

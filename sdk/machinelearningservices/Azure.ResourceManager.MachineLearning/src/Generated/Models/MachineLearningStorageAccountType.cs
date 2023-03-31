@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningStorageAccountType StandardLrs { get; } = new MachineLearningStorageAccountType(StandardLrsValue);
         /// <summary> Premium_LRS. </summary>
         public static MachineLearningStorageAccountType PremiumLrs { get; } = new MachineLearningStorageAccountType(PremiumLrsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningStorageAccountType left, MachineLearningStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningStorageAccountType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningPublicNetworkAccessType Enabled { get; } = new MachineLearningPublicNetworkAccessType(EnabledValue);
         /// <summary> Disabled. </summary>
         public static MachineLearningPublicNetworkAccessType Disabled { get; } = new MachineLearningPublicNetworkAccessType(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningPublicNetworkAccessType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningPublicNetworkAccessType left, MachineLearningPublicNetworkAccessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningPublicNetworkAccessType"/> values are not the same. </summary>

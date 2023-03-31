@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkHttpConfigurationMethod Get { get; } = new NetworkHttpConfigurationMethod(GetValue);
         /// <summary> Post. </summary>
         public static NetworkHttpConfigurationMethod Post { get; } = new NetworkHttpConfigurationMethod(PostValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkHttpConfigurationMethod"/> values are the same. </summary>
         public static bool operator ==(NetworkHttpConfigurationMethod left, NetworkHttpConfigurationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkHttpConfigurationMethod"/> values are not the same. </summary>

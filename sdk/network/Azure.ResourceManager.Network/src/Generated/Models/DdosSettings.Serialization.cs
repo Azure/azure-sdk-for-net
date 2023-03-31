@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ProtectionCoverage))
             {
                 writer.WritePropertyName("protectionCoverage"u8);
-                writer.WriteStringValue(ProtectionCoverage.Value.ToString());
+                writer.WriteStringValue(ProtectionCoverage.Value.ToSerialString());
             }
             if (Optional.IsDefined(ProtectedIP))
             {

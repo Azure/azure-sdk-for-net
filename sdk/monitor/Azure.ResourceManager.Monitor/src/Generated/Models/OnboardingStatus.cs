@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static OnboardingStatus NotOnboarded { get; } = new OnboardingStatus(NotOnboardedValue);
         /// <summary> unknown. </summary>
         public static OnboardingStatus Unknown { get; } = new OnboardingStatus(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OnboardingStatus"/> values are the same. </summary>
         public static bool operator ==(OnboardingStatus left, OnboardingStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OnboardingStatus"/> values are not the same. </summary>

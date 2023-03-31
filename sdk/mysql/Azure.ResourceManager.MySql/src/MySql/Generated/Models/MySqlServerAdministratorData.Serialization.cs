@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MySql
             if (Optional.IsDefined(AdministratorType))
             {
                 writer.WritePropertyName("administratorType"u8);
-                writer.WriteStringValue(AdministratorType.Value.ToString());
+                writer.WriteStringValue(AdministratorType.Value.ToSerialString());
             }
             if (Optional.IsDefined(LoginAccountName))
             {

@@ -90,6 +90,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ClassificationModel GradientBoosting { get; } = new ClassificationModel(GradientBoostingValue);
         /// <summary> XGBoost: Extreme Gradient Boosting Algorithm. This algorithm is used for structured data where target column values can be divided into distinct class values. </summary>
         public static ClassificationModel XGBoostClassifier { get; } = new ClassificationModel(XGBoostClassifierValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClassificationModel"/> values are the same. </summary>
         public static bool operator ==(ClassificationModel left, ClassificationModel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClassificationModel"/> values are not the same. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningLogVerbosity Error { get; } = new MachineLearningLogVerbosity(ErrorValue);
         /// <summary> Only critical statements logged. </summary>
         public static MachineLearningLogVerbosity Critical { get; } = new MachineLearningLogVerbosity(CriticalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningLogVerbosity"/> values are the same. </summary>
         public static bool operator ==(MachineLearningLogVerbosity left, MachineLearningLogVerbosity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningLogVerbosity"/> values are not the same. </summary>

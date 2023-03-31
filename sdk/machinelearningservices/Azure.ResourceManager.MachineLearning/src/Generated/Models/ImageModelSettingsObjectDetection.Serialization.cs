@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ModelSize))
             {
                 writer.WritePropertyName("modelSize"u8);
-                writer.WriteStringValue(ModelSize.Value.ToString());
+                writer.WriteStringValue(ModelSize.Value.ToSerialString());
             }
             if (Optional.IsDefined(MultiScale))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ValidationMetricType))
             {
                 writer.WritePropertyName("validationMetricType"u8);
-                writer.WriteStringValue(ValidationMetricType.Value.ToString());
+                writer.WriteStringValue(ValidationMetricType.Value.ToSerialString());
             }
             if (Optional.IsDefined(AdvancedSettings))
             {
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(LearningRateScheduler))
             {
                 writer.WritePropertyName("learningRateScheduler"u8);
-                writer.WriteStringValue(LearningRateScheduler.Value.ToString());
+                writer.WriteStringValue(LearningRateScheduler.Value.ToSerialString());
             }
             if (Optional.IsDefined(ModelName))
             {
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Optimizer))
             {
                 writer.WritePropertyName("optimizer"u8);
-                writer.WriteStringValue(Optimizer.Value.ToString());
+                writer.WriteStringValue(Optimizer.Value.ToSerialString());
             }
             if (Optional.IsDefined(RandomSeed))
             {

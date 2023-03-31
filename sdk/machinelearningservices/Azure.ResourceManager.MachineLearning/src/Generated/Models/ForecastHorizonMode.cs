@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ForecastHorizonMode Auto { get; } = new ForecastHorizonMode(AutoValue);
         /// <summary> Use the custom forecast horizon. </summary>
         public static ForecastHorizonMode Custom { get; } = new ForecastHorizonMode(CustomValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ForecastHorizonMode"/> values are the same. </summary>
         public static bool operator ==(ForecastHorizonMode left, ForecastHorizonMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ForecastHorizonMode"/> values are not the same. </summary>

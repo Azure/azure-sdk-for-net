@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
-                writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
+                writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToSerialString());
             }
             if (Optional.IsDefined(Subnet))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PrivateIPAddressVersion))
             {
                 writer.WritePropertyName("privateIPAddressVersion"u8);
-                writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
+                writer.WriteStringValue(PrivateIPAddressVersion.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

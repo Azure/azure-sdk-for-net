@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("variableName"u8);
-            writer.WriteStringValue(VariableName.ToString());
+            writer.WriteStringValue(VariableName.ToSerialString());
             if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);

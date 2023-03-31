@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PreferredRoutingGateway))
             {
                 writer.WritePropertyName("preferredRoutingGateway"u8);
-                writer.WriteStringValue(PreferredRoutingGateway.Value.ToString());
+                writer.WriteStringValue(PreferredRoutingGateway.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningVmPriority Dedicated { get; } = new MachineLearningVmPriority(DedicatedValue);
         /// <summary> LowPriority. </summary>
         public static MachineLearningVmPriority LowPriority { get; } = new MachineLearningVmPriority(LowPriorityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningVmPriority"/> values are the same. </summary>
         public static bool operator ==(MachineLearningVmPriority left, MachineLearningVmPriority right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningVmPriority"/> values are not the same. </summary>

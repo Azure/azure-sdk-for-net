@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         /// <summary> IPFIX. </summary>
         public static EmissionType Ipfix { get; } = new EmissionType(IpfixValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EmissionType"/> values are the same. </summary>
         public static bool operator ==(EmissionType left, EmissionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EmissionType"/> values are not the same. </summary>

@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Media.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("property"u8);
-            writer.WriteStringValue(Property.ToString());
+            writer.WriteStringValue(Property.ToSerialString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             writer.WritePropertyName("operation"u8);
-            writer.WriteStringValue(Operation.ToString());
+            writer.WriteStringValue(Operation.ToSerialString());
             writer.WriteEndObject();
         }
 

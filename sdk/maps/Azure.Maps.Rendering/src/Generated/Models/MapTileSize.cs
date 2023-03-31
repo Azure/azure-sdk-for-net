@@ -29,6 +29,9 @@ namespace Azure.Maps.Rendering
         public static MapTileSize Size256 { get; } = new MapTileSize(Size256Value);
         /// <summary> Return a 512 by 512 pixel tile. </summary>
         public static MapTileSize Size512 { get; } = new MapTileSize(Size512Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MapTileSize"/> values are the same. </summary>
         public static bool operator ==(MapTileSize left, MapTileSize right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapTileSize"/> values are not the same. </summary>

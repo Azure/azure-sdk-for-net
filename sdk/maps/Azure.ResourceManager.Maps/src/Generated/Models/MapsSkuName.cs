@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Maps.Models
         public static MapsSkuName S1 { get; } = new MapsSkuName(S1Value);
         /// <summary> G2. </summary>
         public static MapsSkuName G2 { get; } = new MapsSkuName(G2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MapsSkuName"/> values are the same. </summary>
         public static bool operator ==(MapsSkuName left, MapsSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapsSkuName"/> values are not the same. </summary>

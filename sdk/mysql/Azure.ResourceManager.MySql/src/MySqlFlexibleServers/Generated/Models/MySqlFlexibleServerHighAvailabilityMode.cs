@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerHighAvailabilityMode ZoneRedundant { get; } = new MySqlFlexibleServerHighAvailabilityMode(ZoneRedundantValue);
         /// <summary> SameZone. </summary>
         public static MySqlFlexibleServerHighAvailabilityMode SameZone { get; } = new MySqlFlexibleServerHighAvailabilityMode(SameZoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerHighAvailabilityMode"/> values are the same. </summary>
         public static bool operator ==(MySqlFlexibleServerHighAvailabilityMode left, MySqlFlexibleServerHighAvailabilityMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerHighAvailabilityMode"/> values are not the same. </summary>

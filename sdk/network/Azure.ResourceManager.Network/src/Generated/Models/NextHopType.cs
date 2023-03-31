@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NextHopType HyperNetGateway { get; } = new NextHopType(HyperNetGatewayValue);
         /// <summary> None. </summary>
         public static NextHopType None { get; } = new NextHopType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NextHopType"/> values are the same. </summary>
         public static bool operator ==(NextHopType left, NextHopType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NextHopType"/> values are not the same. </summary>

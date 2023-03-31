@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningConnectionCategory ContainerRegistry { get; } = new MachineLearningConnectionCategory(ContainerRegistryValue);
         /// <summary> Git. </summary>
         public static MachineLearningConnectionCategory Git { get; } = new MachineLearningConnectionCategory(GitValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningConnectionCategory"/> values are the same. </summary>
         public static bool operator ==(MachineLearningConnectionCategory left, MachineLearningConnectionCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningConnectionCategory"/> values are not the same. </summary>

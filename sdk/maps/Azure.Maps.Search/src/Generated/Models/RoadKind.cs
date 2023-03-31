@@ -41,6 +41,9 @@ namespace Azure.Maps.Search
         public static RoadKind Rotary { get; } = new RoadKind(RotaryValue);
         /// <summary> LocalStreet. </summary>
         public static RoadKind LocalStreet { get; } = new RoadKind(LocalStreetValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoadKind"/> values are the same. </summary>
         public static bool operator ==(RoadKind left, RoadKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoadKind"/> values are not the same. </summary>

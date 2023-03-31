@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Rule))
             {
                 writer.WritePropertyName("rule"u8);
-                writer.WriteStringValue(Rule.Value.ToString());
+                writer.WriteStringValue(Rule.Value.ToSerialString());
             }
             if (Optional.IsDefined(Seed))
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("samplingAlgorithmType"u8);
-            writer.WriteStringValue(SamplingAlgorithmType.ToString());
+            writer.WriteStringValue(SamplingAlgorithmType.ToSerialString());
             writer.WriteEndObject();
         }
 

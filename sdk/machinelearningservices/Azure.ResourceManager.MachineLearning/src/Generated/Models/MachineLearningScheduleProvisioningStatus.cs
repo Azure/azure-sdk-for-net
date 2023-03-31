@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningScheduleProvisioningStatus Failed { get; } = new MachineLearningScheduleProvisioningStatus(FailedValue);
         /// <summary> Canceled. </summary>
         public static MachineLearningScheduleProvisioningStatus Canceled { get; } = new MachineLearningScheduleProvisioningStatus(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningScheduleProvisioningStatus"/> values are the same. </summary>
         public static bool operator ==(MachineLearningScheduleProvisioningStatus left, MachineLearningScheduleProvisioningStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningScheduleProvisioningStatus"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningGoal Minimize { get; } = new MachineLearningGoal(MinimizeValue);
         /// <summary> Maximize. </summary>
         public static MachineLearningGoal Maximize { get; } = new MachineLearningGoal(MaximizeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningGoal"/> values are the same. </summary>
         public static bool operator ==(MachineLearningGoal left, MachineLearningGoal right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningGoal"/> values are not the same. </summary>

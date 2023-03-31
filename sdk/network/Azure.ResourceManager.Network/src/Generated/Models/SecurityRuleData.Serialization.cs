@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
-                writer.WriteStringValue(Protocol.Value.ToString());
+                writer.WriteStringValue(Protocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(SourcePortRange))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Access))
             {
                 writer.WritePropertyName("access"u8);
-                writer.WriteStringValue(Access.Value.ToString());
+                writer.WriteStringValue(Access.Value.ToSerialString());
             }
             if (Optional.IsDefined(Priority))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
-                writer.WriteStringValue(Direction.Value.ToString());
+                writer.WriteStringValue(Direction.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

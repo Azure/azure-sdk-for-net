@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ClusterPurpose))
             {
                 writer.WritePropertyName("clusterPurpose"u8);
-                writer.WriteStringValue(ClusterPurpose.Value.ToString());
+                writer.WriteStringValue(ClusterPurpose.Value.ToSerialString());
             }
             if (Optional.IsDefined(SslConfiguration))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(LoadBalancerType))
             {
                 writer.WritePropertyName("loadBalancerType"u8);
-                writer.WriteStringValue(LoadBalancerType.Value.ToString());
+                writer.WriteStringValue(LoadBalancerType.Value.ToSerialString());
             }
             if (Optional.IsDefined(LoadBalancerSubnet))
             {

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
 
         /// <summary> Connectivity. </summary>
         public static ManagedNetworkKind Connectivity { get; } = new ManagedNetworkKind(ConnectivityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedNetworkKind"/> values are the same. </summary>
         public static bool operator ==(ManagedNetworkKind left, ManagedNetworkKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedNetworkKind"/> values are not the same. </summary>

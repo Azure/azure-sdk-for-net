@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> JSON. </summary>
         public static FlowLogFormatType Json { get; } = new FlowLogFormatType(JsonValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FlowLogFormatType"/> values are the same. </summary>
         public static bool operator ==(FlowLogFormatType left, FlowLogFormatType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FlowLogFormatType"/> values are not the same. </summary>

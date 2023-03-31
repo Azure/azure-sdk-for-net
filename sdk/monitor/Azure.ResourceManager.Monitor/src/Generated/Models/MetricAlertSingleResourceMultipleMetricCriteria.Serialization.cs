@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("odata.type"u8);
-            writer.WriteStringValue(OdataType.ToString());
+            writer.WriteStringValue(OdataType.ToSerialString());
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteNumberValue(TestFrequencySec.Value);
             }
             writer.WritePropertyName("protocol"u8);
-            writer.WriteStringValue(Protocol.ToString());
+            writer.WriteStringValue(Protocol.ToSerialString());
             if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
-                writer.WriteStringValue(PreferredIPVersion.Value.ToString());
+                writer.WriteStringValue(PreferredIPVersion.Value.ToSerialString());
             }
             if (Optional.IsDefined(HttpConfiguration))
             {

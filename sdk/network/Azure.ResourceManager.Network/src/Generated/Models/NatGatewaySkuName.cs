@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Standard. </summary>
         public static NatGatewaySkuName Standard { get; } = new NatGatewaySkuName(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NatGatewaySkuName"/> values are the same. </summary>
         public static bool operator ==(NatGatewaySkuName left, NatGatewaySkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NatGatewaySkuName"/> values are not the same. </summary>

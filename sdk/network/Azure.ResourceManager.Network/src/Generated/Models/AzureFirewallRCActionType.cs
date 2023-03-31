@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static AzureFirewallRCActionType Allow { get; } = new AzureFirewallRCActionType(AllowValue);
         /// <summary> Deny. </summary>
         public static AzureFirewallRCActionType Deny { get; } = new AzureFirewallRCActionType(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AzureFirewallRCActionType"/> values are the same. </summary>
         public static bool operator ==(AzureFirewallRCActionType left, AzureFirewallRCActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureFirewallRCActionType"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Count. </summary>
         public static NetworkUsageUnit Count { get; } = new NetworkUsageUnit(CountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkUsageUnit"/> values are the same. </summary>
         public static bool operator ==(NetworkUsageUnit left, NetworkUsageUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkUsageUnit"/> values are not the same. </summary>

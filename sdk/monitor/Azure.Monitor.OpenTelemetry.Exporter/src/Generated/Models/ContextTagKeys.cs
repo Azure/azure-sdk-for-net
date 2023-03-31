@@ -107,6 +107,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public static ContextTagKeys AiInternalAgentVersion { get; } = new ContextTagKeys(AiInternalAgentVersionValue);
         /// <summary> ai.internal.nodeName. </summary>
         public static ContextTagKeys AiInternalNodeName { get; } = new ContextTagKeys(AiInternalNodeNameValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContextTagKeys"/> values are the same. </summary>
         public static bool operator ==(ContextTagKeys left, ContextTagKeys right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContextTagKeys"/> values are not the same. </summary>

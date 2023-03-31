@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static SecurityProviderName IBoss { get; } = new SecurityProviderName(IBossValue);
         /// <summary> Checkpoint. </summary>
         public static SecurityProviderName Checkpoint { get; } = new SecurityProviderName(CheckpointValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityProviderName"/> values are the same. </summary>
         public static bool operator ==(SecurityProviderName left, SecurityProviderName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityProviderName"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesValue);
         /// <summary> Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots. </summary>
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshots { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshotsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppQuotaAvailabilityResourceType"/> values are the same. </summary>
         public static bool operator ==(NetAppQuotaAvailabilityResourceType left, NetAppQuotaAvailabilityResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppQuotaAvailabilityResourceType"/> values are not the same. </summary>

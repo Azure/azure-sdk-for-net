@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static Status Enabled { get; } = new Status(EnabledValue);
         /// <summary> Disabled. </summary>
         public static Status Disabled { get; } = new Status(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Status"/> values are the same. </summary>
         public static bool operator ==(Status left, Status right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Status"/> values are not the same. </summary>

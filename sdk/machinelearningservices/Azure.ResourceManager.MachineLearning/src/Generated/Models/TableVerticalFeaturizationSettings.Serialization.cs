@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in BlockedTransformers)
                     {
-                        writer.WriteStringValue(item.ToString());
+                        writer.WriteStringValue(item.ToSerialString());
                     }
                     writer.WriteEndArray();
                 }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                writer.WriteStringValue(Mode.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(TransformerParams))
             {

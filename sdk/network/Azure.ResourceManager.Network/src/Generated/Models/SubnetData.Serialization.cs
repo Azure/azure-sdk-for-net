@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PrivateEndpointNetworkPolicy))
             {
                 writer.WritePropertyName("privateEndpointNetworkPolicies"u8);
-                writer.WriteStringValue(PrivateEndpointNetworkPolicy.Value.ToString());
+                writer.WriteStringValue(PrivateEndpointNetworkPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(PrivateLinkServiceNetworkPolicy))
             {
                 writer.WritePropertyName("privateLinkServiceNetworkPolicies"u8);
-                writer.WriteStringValue(PrivateLinkServiceNetworkPolicy.Value.ToString());
+                writer.WriteStringValue(PrivateLinkServiceNetworkPolicy.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ApplicationGatewayIPConfigurations))
             {

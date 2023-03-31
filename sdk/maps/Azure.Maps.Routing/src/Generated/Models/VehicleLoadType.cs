@@ -59,6 +59,9 @@ namespace Azure.Maps.Routing
         public static VehicleLoadType OtherHazmatGeneral { get; } = new VehicleLoadType(OtherHazmatGeneralValue);
         /// <summary> Harmful to water. </summary>
         public static VehicleLoadType OtherHazmatHarmfulToWater { get; } = new VehicleLoadType(OtherHazmatHarmfulToWaterValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VehicleLoadType"/> values are the same. </summary>
         public static bool operator ==(VehicleLoadType left, VehicleLoadType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VehicleLoadType"/> values are not the same. </summary>

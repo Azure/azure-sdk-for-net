@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningVmTier LowPriority { get; } = new MachineLearningVmTier(LowPriorityValue);
         /// <summary> Spot. </summary>
         public static MachineLearningVmTier Spot { get; } = new MachineLearningVmTier(SpotValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningVmTier"/> values are the same. </summary>
         public static bool operator ==(MachineLearningVmTier left, MachineLearningVmTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningVmTier"/> values are not the same. </summary>

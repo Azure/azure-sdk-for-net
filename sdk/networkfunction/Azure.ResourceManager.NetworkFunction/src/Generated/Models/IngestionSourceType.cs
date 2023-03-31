@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         /// <summary> Resource. </summary>
         public static IngestionSourceType Resource { get; } = new IngestionSourceType(ResourceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IngestionSourceType"/> values are the same. </summary>
         public static bool operator ==(IngestionSourceType left, IngestionSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IngestionSourceType"/> values are not the same. </summary>

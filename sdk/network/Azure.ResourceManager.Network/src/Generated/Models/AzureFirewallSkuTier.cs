@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static AzureFirewallSkuTier Standard { get; } = new AzureFirewallSkuTier(StandardValue);
         /// <summary> Premium. </summary>
         public static AzureFirewallSkuTier Premium { get; } = new AzureFirewallSkuTier(PremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AzureFirewallSkuTier"/> values are the same. </summary>
         public static bool operator ==(AzureFirewallSkuTier left, AzureFirewallSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureFirewallSkuTier"/> values are not the same. </summary>

@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ComputeType DataLakeAnalytics { get; } = new ComputeType(DataLakeAnalyticsValue);
         /// <summary> SynapseSpark. </summary>
         public static ComputeType SynapseSpark { get; } = new ComputeType(SynapseSparkValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ComputeType"/> values are the same. </summary>
         public static bool operator ==(ComputeType left, ComputeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeType"/> values are not the same. </summary>

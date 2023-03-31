@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteStringValue(Plan.Value.ToString());
+                writer.WriteStringValue(Plan.Value.ToSerialString());
             }
             if (Optional.IsDefined(Schema))
             {

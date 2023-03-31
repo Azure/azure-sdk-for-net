@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataType"u8);
-            writer.WriteStringValue(DataType.ToString());
+            writer.WriteStringValue(DataType.ToSerialString());
             if (Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("isArchived"u8);

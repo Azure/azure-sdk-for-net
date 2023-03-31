@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static OwaspCrsExclusionEntryMatchVariable RequestCookieNames { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestCookieNamesValue);
         /// <summary> RequestArgNames. </summary>
         public static OwaspCrsExclusionEntryMatchVariable RequestArgNames { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestArgNamesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OwaspCrsExclusionEntryMatchVariable"/> values are the same. </summary>
         public static bool operator ==(OwaspCrsExclusionEntryMatchVariable left, OwaspCrsExclusionEntryMatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OwaspCrsExclusionEntryMatchVariable"/> values are not the same. </summary>

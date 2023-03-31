@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static TargetAggregationFunction Min { get; } = new TargetAggregationFunction(MinValue);
         /// <summary> Mean. </summary>
         public static TargetAggregationFunction Mean { get; } = new TargetAggregationFunction(MeanValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TargetAggregationFunction"/> values are the same. </summary>
         public static bool operator ==(TargetAggregationFunction left, TargetAggregationFunction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TargetAggregationFunction"/> values are not the same. </summary>

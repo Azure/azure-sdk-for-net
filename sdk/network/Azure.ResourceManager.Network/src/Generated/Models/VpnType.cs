@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnType PolicyBased { get; } = new VpnType(PolicyBasedValue);
         /// <summary> RouteBased. </summary>
         public static VpnType RouteBased { get; } = new VpnType(RouteBasedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VpnType"/> values are the same. </summary>
         public static bool operator ==(VpnType left, VpnType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VpnType"/> values are not the same. </summary>

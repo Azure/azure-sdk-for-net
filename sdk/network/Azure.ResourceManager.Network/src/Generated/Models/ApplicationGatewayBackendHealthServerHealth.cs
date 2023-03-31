@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayBackendHealthServerHealth Partial { get; } = new ApplicationGatewayBackendHealthServerHealth(PartialValue);
         /// <summary> Draining. </summary>
         public static ApplicationGatewayBackendHealthServerHealth Draining { get; } = new ApplicationGatewayBackendHealthServerHealth(DrainingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationGatewayBackendHealthServerHealth"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewayBackendHealthServerHealth left, ApplicationGatewayBackendHealthServerHealth right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayBackendHealthServerHealth"/> values are not the same. </summary>

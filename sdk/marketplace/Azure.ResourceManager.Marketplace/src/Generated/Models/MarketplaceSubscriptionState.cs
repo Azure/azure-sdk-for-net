@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         public static MarketplaceSubscriptionState Disabled { get; } = new MarketplaceSubscriptionState(DisabledValue);
         /// <summary> Deleted. </summary>
         public static MarketplaceSubscriptionState Deleted { get; } = new MarketplaceSubscriptionState(DeletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionState"/> values are the same. </summary>
         public static bool operator ==(MarketplaceSubscriptionState left, MarketplaceSubscriptionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionState"/> values are not the same. </summary>

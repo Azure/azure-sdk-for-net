@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningUnderlyingResourceAction Delete { get; } = new MachineLearningUnderlyingResourceAction(DeleteValue);
         /// <summary> Detach. </summary>
         public static MachineLearningUnderlyingResourceAction Detach { get; } = new MachineLearningUnderlyingResourceAction(DetachValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningUnderlyingResourceAction"/> values are the same. </summary>
         public static bool operator ==(MachineLearningUnderlyingResourceAction left, MachineLearningUnderlyingResourceAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningUnderlyingResourceAction"/> values are not the same. </summary>

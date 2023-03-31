@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public static NotificationHubSkuName Basic { get; } = new NotificationHubSkuName(BasicValue);
         /// <summary> Standard. </summary>
         public static NotificationHubSkuName Standard { get; } = new NotificationHubSkuName(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NotificationHubSkuName"/> values are the same. </summary>
         public static bool operator ==(NotificationHubSkuName left, NotificationHubSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationHubSkuName"/> values are not the same. </summary>

@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Network.Models
         public static PfsGroup Pfs14 { get; } = new PfsGroup(Pfs14Value);
         /// <summary> PFSMM. </summary>
         public static PfsGroup Pfs { get; } = new PfsGroup(PfsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PfsGroup"/> values are the same. </summary>
         public static bool operator ==(PfsGroup left, PfsGroup right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PfsGroup"/> values are not the same. </summary>

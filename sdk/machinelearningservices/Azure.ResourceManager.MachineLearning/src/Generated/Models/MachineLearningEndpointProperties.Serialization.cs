@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("authMode"u8);
-            writer.WriteStringValue(AuthMode.ToString());
+            writer.WriteStringValue(AuthMode.ToSerialString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)

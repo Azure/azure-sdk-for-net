@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(CrossMetricsOperator))
             {
                 writer.WritePropertyName("crossMetricsOperator"u8);
-                writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
+                writer.WriteStringValue(CrossMetricsOperator.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(DimensionsToSplitAlert))
             {

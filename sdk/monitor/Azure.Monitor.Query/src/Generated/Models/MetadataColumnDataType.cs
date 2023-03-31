@@ -53,6 +53,9 @@ namespace Azure.Monitor.Query.Models
         public static MetadataColumnDataType Decimal { get; } = new MetadataColumnDataType(DecimalValue);
         /// <summary> timespan. </summary>
         public static MetadataColumnDataType Timespan { get; } = new MetadataColumnDataType(TimespanValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MetadataColumnDataType"/> values are the same. </summary>
         public static bool operator ==(MetadataColumnDataType left, MetadataColumnDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetadataColumnDataType"/> values are not the same. </summary>

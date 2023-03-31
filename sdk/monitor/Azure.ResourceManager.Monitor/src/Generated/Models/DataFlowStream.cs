@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DataFlowStream MicrosoftSyslog { get; } = new DataFlowStream(MicrosoftSyslogValue);
         /// <summary> Microsoft-WindowsEvent. </summary>
         public static DataFlowStream MicrosoftWindowsEvent { get; } = new DataFlowStream(MicrosoftWindowsEventValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataFlowStream"/> values are the same. </summary>
         public static bool operator ==(DataFlowStream left, DataFlowStream right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFlowStream"/> values are not the same. </summary>

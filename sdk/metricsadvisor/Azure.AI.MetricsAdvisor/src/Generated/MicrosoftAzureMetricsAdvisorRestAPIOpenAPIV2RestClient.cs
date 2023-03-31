@@ -1709,15 +1709,15 @@ namespace Azure.AI.MetricsAdvisor
             }
             if (dataSourceType != null)
             {
-                uri.AppendQuery("dataSourceType", dataSourceType.Value.ToString(), true);
+                uri.AppendQuery("dataSourceType", dataSourceType.Value.ToSerialString(), true);
             }
             if (granularityName != null)
             {
-                uri.AppendQuery("granularityName", granularityName.Value.ToString(), true);
+                uri.AppendQuery("granularityName", granularityName.Value.ToSerialString(), true);
             }
             if (status != null)
             {
-                uri.AppendQuery("status", status.Value.ToString(), true);
+                uri.AppendQuery("status", status.Value.ToSerialString(), true);
             }
             if (creator != null)
             {

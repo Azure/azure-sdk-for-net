@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Orbital.Models
         public static GroundStationReleaseMode Preview { get; } = new GroundStationReleaseMode(PreviewValue);
         /// <summary> GA. </summary>
         public static GroundStationReleaseMode GA { get; } = new GroundStationReleaseMode(GAValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GroundStationReleaseMode"/> values are the same. </summary>
         public static bool operator ==(GroundStationReleaseMode left, GroundStationReleaseMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GroundStationReleaseMode"/> values are not the same. </summary>

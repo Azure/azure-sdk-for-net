@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType.ToString());
+            writer.WriteStringValue(RuleType.ToSerialString());
             writer.WriteEndObject();
         }
 

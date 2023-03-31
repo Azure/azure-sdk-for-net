@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ValidationMetricType Voc { get; } = new ValidationMetricType(VocValue);
         /// <summary> CocoVoc metric. </summary>
         public static ValidationMetricType CocoVoc { get; } = new ValidationMetricType(CocoVocValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ValidationMetricType"/> values are the same. </summary>
         public static bool operator ==(ValidationMetricType left, ValidationMetricType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ValidationMetricType"/> values are not the same. </summary>

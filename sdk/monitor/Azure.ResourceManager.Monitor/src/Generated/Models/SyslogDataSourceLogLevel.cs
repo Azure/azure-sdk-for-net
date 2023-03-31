@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static SyslogDataSourceLogLevel Emergency { get; } = new SyslogDataSourceLogLevel(EmergencyValue);
         /// <summary> *. </summary>
         public static SyslogDataSourceLogLevel Asterisk { get; } = new SyslogDataSourceLogLevel(AsteriskValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SyslogDataSourceLogLevel"/> values are the same. </summary>
         public static bool operator ==(SyslogDataSourceLogLevel left, SyslogDataSourceLogLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyslogDataSourceLogLevel"/> values are not the same. </summary>

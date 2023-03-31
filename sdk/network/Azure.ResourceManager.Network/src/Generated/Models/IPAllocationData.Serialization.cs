@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(IPAllocationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(IPAllocationType.Value.ToString());
+                writer.WriteStringValue(IPAllocationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Prefix))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PrefixType))
             {
                 writer.WritePropertyName("prefixType"u8);
-                writer.WriteStringValue(PrefixType.Value.ToString());
+                writer.WriteStringValue(PrefixType.Value.ToSerialString());
             }
             if (Optional.IsDefined(IpamAllocationId))
             {

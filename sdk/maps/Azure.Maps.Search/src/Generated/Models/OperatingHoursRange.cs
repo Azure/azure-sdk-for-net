@@ -26,6 +26,9 @@ namespace Azure.Maps.Search
 
         /// <summary> Shows the hours of operation for the next week, starting with the current day in the local time of the POI. </summary>
         public static OperatingHoursRange NextSevenDays { get; } = new OperatingHoursRange(NextSevenDaysValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperatingHoursRange"/> values are the same. </summary>
         public static bool operator ==(OperatingHoursRange left, OperatingHoursRange right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperatingHoursRange"/> values are not the same. </summary>

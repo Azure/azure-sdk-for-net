@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyType"u8);
-            writer.WriteStringValue(KeyType.ToString());
+            writer.WriteStringValue(KeyType.ToSerialString());
             if (Optional.IsDefined(KeyValue))
             {
                 if (KeyValue != null)

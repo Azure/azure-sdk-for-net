@@ -62,6 +62,9 @@ namespace Azure.Monitor.Query.Models
         public static MetricUnit NanoCores { get; } = new MetricUnit(NanoCoresValue);
         /// <summary> BitsPerSecond. </summary>
         public static MetricUnit BitsPerSecond { get; } = new MetricUnit(BitsPerSecondValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MetricUnit"/> values are the same. </summary>
         public static bool operator ==(MetricUnit left, MetricUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricUnit"/> values are not the same. </summary>

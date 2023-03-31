@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(PrimaryMetric))
             {
                 writer.WritePropertyName("primaryMetric"u8);
-                writer.WriteStringValue(PrimaryMetric.Value.ToString());
+                writer.WriteStringValue(PrimaryMetric.Value.ToSerialString());
             }
             if (Optional.IsDefined(TrainingSettings))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
-                writer.WriteStringValue(LogVerbosity.Value.ToString());
+                writer.WriteStringValue(LogVerbosity.Value.ToSerialString());
             }
             if (Optional.IsDefined(TargetColumnName))
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("taskType"u8);
-            writer.WriteStringValue(TaskType.ToString());
+            writer.WriteStringValue(TaskType.ToSerialString());
             writer.WritePropertyName("trainingData"u8);
             writer.WriteObjectValue(TrainingData);
             writer.WriteEndObject();

@@ -51,7 +51,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/polygon/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQueryDelimited("geometries", geometryIds, ",", true);
             request.Uri = uri;
@@ -147,7 +147,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/fuzzy/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("query", query, true);
             if (isTypeAhead != null)
@@ -220,15 +220,15 @@ namespace Azure.Maps.Search
             }
             if (entityType != null)
             {
-                uri.AppendQuery("entityType", entityType.Value.ToString(), true);
+                uri.AppendQuery("entityType", entityType.Value.ToSerialString(), true);
             }
             if (localizedMapView != null)
             {
-                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+                uri.AppendQuery("view", localizedMapView.Value.ToSerialString(), true);
             }
             if (operatingHours != null)
             {
-                uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
+                uri.AppendQuery("openingHours", operatingHours.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -585,7 +585,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/poi/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("query", query, true);
             if (isTypeAhead != null)
@@ -646,11 +646,11 @@ namespace Azure.Maps.Search
             }
             if (localizedMapView != null)
             {
-                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+                uri.AppendQuery("view", localizedMapView.Value.ToSerialString(), true);
             }
             if (operatingHours != null)
             {
-                uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
+                uri.AppendQuery("openingHours", operatingHours.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -901,7 +901,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/nearby/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("lat", lat, true);
             uri.AppendQuery("lon", lon, true);
@@ -943,7 +943,7 @@ namespace Azure.Maps.Search
             }
             if (localizedMapView != null)
             {
-                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+                uri.AppendQuery("view", localizedMapView.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -1192,7 +1192,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/poi/category/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("query", query, true);
             if (isTypeAhead != null)
@@ -1253,11 +1253,11 @@ namespace Azure.Maps.Search
             }
             if (localizedMapView != null)
             {
-                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+                uri.AppendQuery("view", localizedMapView.Value.ToSerialString(), true);
             }
             if (operatingHours != null)
             {
-                uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
+                uri.AppendQuery("openingHours", operatingHours.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -1532,7 +1532,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/poi/category/tree/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (language != null)
             {
@@ -1623,7 +1623,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/address/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("query", query, true);
             if (isTypeAhead != null)
@@ -1672,11 +1672,11 @@ namespace Azure.Maps.Search
             }
             if (entityType != null)
             {
-                uri.AppendQuery("entityType", entityType.Value.ToString(), true);
+                uri.AppendQuery("entityType", entityType.Value.ToSerialString(), true);
             }
             if (localizedMapView != null)
             {
-                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+                uri.AppendQuery("view", localizedMapView.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -1885,7 +1885,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/address/reverse/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQueryDelimited("query", query, ",", true);
             if (language != null)
@@ -1926,11 +1926,11 @@ namespace Azure.Maps.Search
             }
             if (entityType != null)
             {
-                uri.AppendQuery("entityType", entityType.Value.ToString(), true);
+                uri.AppendQuery("entityType", entityType.Value.ToSerialString(), true);
             }
             if (localizedMapView != null)
             {
-                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+                uri.AppendQuery("view", localizedMapView.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -2085,7 +2085,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/address/reverse/crossStreet/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQueryDelimited("query", query, ",", true);
             if (top != null)
@@ -2106,7 +2106,7 @@ namespace Azure.Maps.Search
             }
             if (localizedMapView != null)
             {
-                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+                uri.AppendQuery("view", localizedMapView.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -2223,7 +2223,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/address/structured/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (language != null)
             {
@@ -2280,11 +2280,11 @@ namespace Azure.Maps.Search
             }
             if (entityType != null)
             {
-                uri.AppendQuery("entityType", entityType.Value.ToString(), true);
+                uri.AppendQuery("entityType", entityType.Value.ToSerialString(), true);
             }
             if (localizedMapView != null)
             {
-                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+                uri.AppendQuery("view", localizedMapView.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -2497,7 +2497,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/geometry/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("query", query, true);
             if (top != null)
@@ -2522,11 +2522,11 @@ namespace Azure.Maps.Search
             }
             if (localizedMapView != null)
             {
-                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+                uri.AppendQuery("view", localizedMapView.Value.ToSerialString(), true);
             }
             if (operatingHours != null)
             {
-                uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
+                uri.AppendQuery("openingHours", operatingHours.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -2733,7 +2733,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/alongRoute/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("query", query, true);
             uri.AppendQuery("maxDetourTime", maxDetourTime, true);
@@ -2755,11 +2755,11 @@ namespace Azure.Maps.Search
             }
             if (localizedMapView != null)
             {
-                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+                uri.AppendQuery("view", localizedMapView.Value.ToSerialString(), true);
             }
             if (operatingHours != null)
             {
-                uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
+                uri.AppendQuery("openingHours", operatingHours.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             if (_clientId != null)
@@ -2958,7 +2958,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/fuzzy/batch/sync/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (_clientId != null)
@@ -3337,7 +3337,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/fuzzy/batch/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (_clientId != null)
@@ -4075,7 +4075,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/address/batch/sync/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (_clientId != null)
@@ -4438,7 +4438,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/address/batch/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (_clientId != null)
@@ -5144,7 +5144,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/address/reverse/batch/sync/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (_clientId != null)
@@ -5511,7 +5511,7 @@ namespace Azure.Maps.Search
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/search/address/reverse/batch/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.Value.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (_clientId != null)

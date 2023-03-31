@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("thumbprint"u8);
             writer.WriteStringValue(Thumbprint);
             writer.WritePropertyName("credentialsType"u8);
-            writer.WriteStringValue(CredentialsType.ToString());
+            writer.WriteStringValue(CredentialsType.ToSerialString());
             writer.WriteEndObject();
         }
 

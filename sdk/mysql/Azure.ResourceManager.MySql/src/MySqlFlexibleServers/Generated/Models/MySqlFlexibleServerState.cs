@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerState Stopped { get; } = new MySqlFlexibleServerState(StoppedValue);
         /// <summary> Updating. </summary>
         public static MySqlFlexibleServerState Updating { get; } = new MySqlFlexibleServerState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerState"/> values are the same. </summary>
         public static bool operator ==(MySqlFlexibleServerState left, MySqlFlexibleServerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerState"/> values are not the same. </summary>

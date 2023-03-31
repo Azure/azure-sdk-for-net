@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Media.Models
         public static StreamingPathEncryptionScheme CommonEncryptionCenc { get; } = new StreamingPathEncryptionScheme(CommonEncryptionCencValue);
         /// <summary> CommonEncryptionCbcs scheme. </summary>
         public static StreamingPathEncryptionScheme CommonEncryptionCbcs { get; } = new StreamingPathEncryptionScheme(CommonEncryptionCbcsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamingPathEncryptionScheme"/> values are the same. </summary>
         public static bool operator ==(StreamingPathEncryptionScheme left, StreamingPathEncryptionScheme right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingPathEncryptionScheme"/> values are not the same. </summary>

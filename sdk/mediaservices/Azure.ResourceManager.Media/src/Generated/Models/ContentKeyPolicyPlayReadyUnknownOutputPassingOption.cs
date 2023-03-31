@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Media.Models
         public static ContentKeyPolicyPlayReadyUnknownOutputPassingOption Allowed { get; } = new ContentKeyPolicyPlayReadyUnknownOutputPassingOption(AllowedValue);
         /// <summary> Passing the video portion of protected content to an Unknown Output is allowed but with constrained resolution. </summary>
         public static ContentKeyPolicyPlayReadyUnknownOutputPassingOption AllowedWithVideoConstriction { get; } = new ContentKeyPolicyPlayReadyUnknownOutputPassingOption(AllowedWithVideoConstrictionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContentKeyPolicyPlayReadyUnknownOutputPassingOption"/> values are the same. </summary>
         public static bool operator ==(ContentKeyPolicyPlayReadyUnknownOutputPassingOption left, ContentKeyPolicyPlayReadyUnknownOutputPassingOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentKeyPolicyPlayReadyUnknownOutputPassingOption"/> values are not the same. </summary>

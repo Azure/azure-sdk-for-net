@@ -26,6 +26,9 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Position entity. </summary>
         public static MapsEntityType Position { get; } = new MapsEntityType(PositionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MapsEntityType"/> values are the same. </summary>
         public static bool operator ==(MapsEntityType left, MapsEntityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapsEntityType"/> values are not the same. </summary>

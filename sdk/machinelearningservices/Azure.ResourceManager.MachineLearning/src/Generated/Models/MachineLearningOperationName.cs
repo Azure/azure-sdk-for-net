@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningOperationName Reimage { get; } = new MachineLearningOperationName(ReimageValue);
         /// <summary> Delete. </summary>
         public static MachineLearningOperationName Delete { get; } = new MachineLearningOperationName(DeleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningOperationName"/> values are the same. </summary>
         public static bool operator ==(MachineLearningOperationName left, MachineLearningOperationName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningOperationName"/> values are not the same. </summary>

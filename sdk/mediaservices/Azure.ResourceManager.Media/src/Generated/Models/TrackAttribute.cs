@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static TrackAttribute Bitrate { get; } = new TrackAttribute(BitrateValue);
         /// <summary> The language of the track. </summary>
         public static TrackAttribute Language { get; } = new TrackAttribute(LanguageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrackAttribute"/> values are the same. </summary>
         public static bool operator ==(TrackAttribute left, TrackAttribute right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrackAttribute"/> values are not the same. </summary>

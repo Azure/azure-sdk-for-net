@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningConnectionAuthType None { get; } = new MachineLearningConnectionAuthType(NoneValue);
         /// <summary> SAS. </summary>
         public static MachineLearningConnectionAuthType Sas { get; } = new MachineLearningConnectionAuthType(SasValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningConnectionAuthType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningConnectionAuthType left, MachineLearningConnectionAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningConnectionAuthType"/> values are not the same. </summary>

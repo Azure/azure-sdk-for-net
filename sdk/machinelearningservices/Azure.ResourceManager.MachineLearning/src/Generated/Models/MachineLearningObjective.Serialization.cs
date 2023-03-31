@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("goal"u8);
-            writer.WriteStringValue(Goal.ToString());
+            writer.WriteStringValue(Goal.ToSerialString());
             writer.WritePropertyName("primaryMetric"u8);
             writer.WriteStringValue(PrimaryMetric);
             writer.WriteEndObject();

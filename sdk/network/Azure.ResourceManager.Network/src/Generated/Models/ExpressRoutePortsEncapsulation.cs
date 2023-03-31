@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ExpressRoutePortsEncapsulation Dot1Q { get; } = new ExpressRoutePortsEncapsulation(Dot1QValue);
         /// <summary> QinQ. </summary>
         public static ExpressRoutePortsEncapsulation QinQ { get; } = new ExpressRoutePortsEncapsulation(QinQValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExpressRoutePortsEncapsulation"/> values are the same. </summary>
         public static bool operator ==(ExpressRoutePortsEncapsulation left, ExpressRoutePortsEncapsulation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRoutePortsEncapsulation"/> values are not the same. </summary>

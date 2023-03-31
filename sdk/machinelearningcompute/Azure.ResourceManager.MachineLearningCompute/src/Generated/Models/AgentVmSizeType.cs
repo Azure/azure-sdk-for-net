@@ -164,6 +164,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static AgentVmSizeType StandardGS4 { get; } = new AgentVmSizeType(StandardGS4Value);
         /// <summary> Standard_GS5. </summary>
         public static AgentVmSizeType StandardGS5 { get; } = new AgentVmSizeType(StandardGS5Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AgentVmSizeType"/> values are the same. </summary>
         public static bool operator ==(AgentVmSizeType left, AgentVmSizeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentVmSizeType"/> values are not the same. </summary>

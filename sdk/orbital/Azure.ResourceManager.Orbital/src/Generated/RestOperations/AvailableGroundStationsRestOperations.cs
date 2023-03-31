@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Orbital
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Orbital/availableGroundStations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("capability", capability.ToString(), true);
+            uri.AppendQuery("capability", capability.ToSerialString(), true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

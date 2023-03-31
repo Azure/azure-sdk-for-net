@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             if (Optional.IsDefined(DataPointType))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(DataPointType.Value.ToString());
+                writer.WriteStringValue(DataPointType.Value.ToSerialString());
             }
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);

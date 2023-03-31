@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppNameUnavailableReason Invalid { get; } = new NetAppNameUnavailableReason(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static NetAppNameUnavailableReason AlreadyExists { get; } = new NetAppNameUnavailableReason(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetAppNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(NetAppNameUnavailableReason left, NetAppNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppNameUnavailableReason"/> values are not the same. </summary>

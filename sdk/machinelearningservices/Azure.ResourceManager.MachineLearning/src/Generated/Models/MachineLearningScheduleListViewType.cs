@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningScheduleListViewType DisabledOnly { get; } = new MachineLearningScheduleListViewType(DisabledOnlyValue);
         /// <summary> All. </summary>
         public static MachineLearningScheduleListViewType All { get; } = new MachineLearningScheduleListViewType(AllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningScheduleListViewType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningScheduleListViewType left, MachineLearningScheduleListViewType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningScheduleListViewType"/> values are not the same. </summary>

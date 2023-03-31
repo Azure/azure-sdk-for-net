@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualNetworkPeeringState Connected { get; } = new VirtualNetworkPeeringState(ConnectedValue);
         /// <summary> Disconnected. </summary>
         public static VirtualNetworkPeeringState Disconnected { get; } = new VirtualNetworkPeeringState(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualNetworkPeeringState"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkPeeringState left, VirtualNetworkPeeringState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkPeeringState"/> values are not the same. </summary>

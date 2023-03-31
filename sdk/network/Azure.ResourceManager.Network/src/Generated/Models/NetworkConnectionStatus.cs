@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkConnectionStatus Disconnected { get; } = new NetworkConnectionStatus(DisconnectedValue);
         /// <summary> Degraded. </summary>
         public static NetworkConnectionStatus Degraded { get; } = new NetworkConnectionStatus(DegradedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(NetworkConnectionStatus left, NetworkConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkConnectionStatus"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static DdosCustomPolicyTriggerSensitivityOverride Default { get; } = new DdosCustomPolicyTriggerSensitivityOverride(DefaultValue);
         /// <summary> High. </summary>
         public static DdosCustomPolicyTriggerSensitivityOverride High { get; } = new DdosCustomPolicyTriggerSensitivityOverride(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DdosCustomPolicyTriggerSensitivityOverride"/> values are the same. </summary>
         public static bool operator ==(DdosCustomPolicyTriggerSensitivityOverride left, DdosCustomPolicyTriggerSensitivityOverride right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DdosCustomPolicyTriggerSensitivityOverride"/> values are not the same. </summary>

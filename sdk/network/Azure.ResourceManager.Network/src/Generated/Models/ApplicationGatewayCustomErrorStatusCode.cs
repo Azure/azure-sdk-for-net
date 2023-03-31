@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayCustomErrorStatusCode HttpStatus403 { get; } = new ApplicationGatewayCustomErrorStatusCode(HttpStatus403Value);
         /// <summary> HttpStatus502. </summary>
         public static ApplicationGatewayCustomErrorStatusCode HttpStatus502 { get; } = new ApplicationGatewayCustomErrorStatusCode(HttpStatus502Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationGatewayCustomErrorStatusCode"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewayCustomErrorStatusCode left, ApplicationGatewayCustomErrorStatusCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayCustomErrorStatusCode"/> values are not the same. </summary>

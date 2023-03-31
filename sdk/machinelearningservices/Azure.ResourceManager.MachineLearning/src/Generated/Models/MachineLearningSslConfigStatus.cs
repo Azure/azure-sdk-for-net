@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningSslConfigStatus Enabled { get; } = new MachineLearningSslConfigStatus(EnabledValue);
         /// <summary> Auto. </summary>
         public static MachineLearningSslConfigStatus Auto { get; } = new MachineLearningSslConfigStatus(AutoValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningSslConfigStatus"/> values are the same. </summary>
         public static bool operator ==(MachineLearningSslConfigStatus left, MachineLearningSslConfigStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningSslConfigStatus"/> values are not the same. </summary>

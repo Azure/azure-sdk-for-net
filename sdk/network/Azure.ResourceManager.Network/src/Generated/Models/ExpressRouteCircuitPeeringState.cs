@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ExpressRouteCircuitPeeringState Disabled { get; } = new ExpressRouteCircuitPeeringState(DisabledValue);
         /// <summary> Enabled. </summary>
         public static ExpressRouteCircuitPeeringState Enabled { get; } = new ExpressRouteCircuitPeeringState(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExpressRouteCircuitPeeringState"/> values are the same. </summary>
         public static bool operator ==(ExpressRouteCircuitPeeringState left, ExpressRouteCircuitPeeringState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressRouteCircuitPeeringState"/> values are not the same. </summary>

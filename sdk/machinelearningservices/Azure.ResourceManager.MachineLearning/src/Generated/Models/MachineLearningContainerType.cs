@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningContainerType StorageInitializer { get; } = new MachineLearningContainerType(StorageInitializerValue);
         /// <summary> InferenceServer. </summary>
         public static MachineLearningContainerType InferenceServer { get; } = new MachineLearningContainerType(InferenceServerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningContainerType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningContainerType left, MachineLearningContainerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningContainerType"/> values are not the same. </summary>

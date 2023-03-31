@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
-                writer.WriteStringValue(Protocol.Value.ToString());
+                writer.WriteStringValue(Protocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(LoadDistribution))
             {
                 writer.WritePropertyName("loadDistribution"u8);
-                writer.WriteStringValue(LoadDistribution.Value.ToString());
+                writer.WriteStringValue(LoadDistribution.Value.ToSerialString());
             }
             if (Optional.IsDefined(FrontendPort))
             {

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static OperationalInsightsTableType RestoredLogs { get; } = new OperationalInsightsTableType(RestoredLogsValue);
         /// <summary> Data collected by a search job. </summary>
         public static OperationalInsightsTableType SearchResults { get; } = new OperationalInsightsTableType(SearchResultsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperationalInsightsTableType"/> values are the same. </summary>
         public static bool operator ==(OperationalInsightsTableType left, OperationalInsightsTableType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsTableType"/> values are not the same. </summary>

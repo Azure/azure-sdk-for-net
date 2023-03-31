@@ -26,6 +26,9 @@ namespace Azure.Maps.Routing.Models
 
         /// <summary> Reports the effective parameters or data used when calling the API. </summary>
         public static Report EffectiveSettings { get; } = new Report(EffectiveSettingsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Report"/> values are the same. </summary>
         public static bool operator ==(Report left, Report right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Report"/> values are not the same. </summary>

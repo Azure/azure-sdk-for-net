@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerSkuTier GeneralPurpose { get; } = new MySqlFlexibleServerSkuTier(GeneralPurposeValue);
         /// <summary> MemoryOptimized. </summary>
         public static MySqlFlexibleServerSkuTier MemoryOptimized { get; } = new MySqlFlexibleServerSkuTier(MemoryOptimizedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerSkuTier"/> values are the same. </summary>
         public static bool operator ==(MySqlFlexibleServerSkuTier left, MySqlFlexibleServerSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerSkuTier"/> values are not the same. </summary>

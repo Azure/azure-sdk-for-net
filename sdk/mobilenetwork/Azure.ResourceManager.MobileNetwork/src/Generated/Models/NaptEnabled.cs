@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static NaptEnabled Enabled { get; } = new NaptEnabled(EnabledValue);
         /// <summary> NAPT is disabled. </summary>
         public static NaptEnabled Disabled { get; } = new NaptEnabled(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NaptEnabled"/> values are the same. </summary>
         public static bool operator ==(NaptEnabled left, NaptEnabled right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NaptEnabled"/> values are not the same. </summary>

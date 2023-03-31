@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public static CriterionType StaticThresholdCriterion { get; } = new CriterionType(StaticThresholdCriterionValue);
         /// <summary> DynamicThresholdCriterion. </summary>
         public static CriterionType DynamicThresholdCriterion { get; } = new CriterionType(DynamicThresholdCriterionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CriterionType"/> values are the same. </summary>
         public static bool operator ==(CriterionType left, CriterionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CriterionType"/> values are not the same. </summary>

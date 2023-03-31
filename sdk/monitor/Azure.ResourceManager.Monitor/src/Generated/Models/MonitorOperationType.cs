@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Scale. </summary>
         public static MonitorOperationType Scale { get; } = new MonitorOperationType(ScaleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MonitorOperationType"/> values are the same. </summary>
         public static bool operator ==(MonitorOperationType left, MonitorOperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorOperationType"/> values are not the same. </summary>

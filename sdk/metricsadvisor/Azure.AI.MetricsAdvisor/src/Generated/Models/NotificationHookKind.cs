@@ -24,6 +24,9 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         private const string WebhookValue = "Webhook";
         private const string EmailValue = "Email";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NotificationHookKind"/> values are the same. </summary>
         public static bool operator ==(NotificationHookKind left, NotificationHookKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationHookKind"/> values are not the same. </summary>

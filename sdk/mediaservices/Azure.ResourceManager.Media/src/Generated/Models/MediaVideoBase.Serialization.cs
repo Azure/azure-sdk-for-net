@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(StretchMode))
             {
                 writer.WritePropertyName("stretchMode"u8);
-                writer.WriteStringValue(StretchMode.Value.ToString());
+                writer.WriteStringValue(StretchMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(SyncMode))
             {
                 writer.WritePropertyName("syncMode"u8);
-                writer.WriteStringValue(SyncMode.Value.ToString());
+                writer.WriteStringValue(SyncMode.Value.ToSerialString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);

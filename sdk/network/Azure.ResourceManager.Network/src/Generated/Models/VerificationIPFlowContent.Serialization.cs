@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
             writer.WritePropertyName("direction"u8);
-            writer.WriteStringValue(Direction.ToString());
+            writer.WriteStringValue(Direction.ToSerialString());
             writer.WritePropertyName("protocol"u8);
-            writer.WriteStringValue(Protocol.ToString());
+            writer.WriteStringValue(Protocol.ToSerialString());
             writer.WritePropertyName("localPort"u8);
             writer.WriteStringValue(LocalPort);
             writer.WritePropertyName("remotePort"u8);

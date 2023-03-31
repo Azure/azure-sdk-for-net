@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(ChownMode))
             {
                 writer.WritePropertyName("chownMode"u8);
-                writer.WriteStringValue(ChownMode.Value.ToString());
+                writer.WriteStringValue(ChownMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

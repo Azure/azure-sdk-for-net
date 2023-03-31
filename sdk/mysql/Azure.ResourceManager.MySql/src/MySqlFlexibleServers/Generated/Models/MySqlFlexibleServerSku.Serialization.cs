@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("tier"u8);
-            writer.WriteStringValue(Tier.ToString());
+            writer.WriteStringValue(Tier.ToSerialString());
             writer.WriteEndObject();
         }
 

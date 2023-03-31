@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("systemServiceType"u8);
-            writer.WriteStringValue(SystemServiceType.ToString());
+            writer.WriteStringValue(SystemServiceType.ToSerialString());
             writer.WriteEndObject();
         }
 

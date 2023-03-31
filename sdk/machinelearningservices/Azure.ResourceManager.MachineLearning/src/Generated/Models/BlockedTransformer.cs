@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static BlockedTransformer CountVectorizer { get; } = new BlockedTransformer(CountVectorizerValue);
         /// <summary> Hashing One Hot Encoder can turn categorical variables into a limited number of new features. This is often used for high-cardinality categorical features. </summary>
         public static BlockedTransformer HashOneHotEncoder { get; } = new BlockedTransformer(HashOneHotEncoderValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlockedTransformer"/> values are the same. </summary>
         public static bool operator ==(BlockedTransformer left, BlockedTransformer right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlockedTransformer"/> values are not the same. </summary>

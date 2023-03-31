@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayRedirectType SeeOther { get; } = new ApplicationGatewayRedirectType(SeeOtherValue);
         /// <summary> Temporary. </summary>
         public static ApplicationGatewayRedirectType Temporary { get; } = new ApplicationGatewayRedirectType(TemporaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationGatewayRedirectType"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewayRedirectType left, ApplicationGatewayRedirectType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayRedirectType"/> values are not the same. </summary>

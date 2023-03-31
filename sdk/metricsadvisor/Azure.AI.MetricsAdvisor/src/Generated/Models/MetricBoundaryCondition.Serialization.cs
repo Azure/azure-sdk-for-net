@@ -26,11 +26,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteNumberValue(UpperBound.Value);
             }
             writer.WritePropertyName("direction"u8);
-            writer.WriteStringValue(Direction.ToString());
+            writer.WriteStringValue(Direction.ToSerialString());
             if (Optional.IsDefined(MeasureType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(MeasureType.Value.ToString());
+                writer.WriteStringValue(MeasureType.Value.ToSerialString());
             }
             if (Optional.IsDefined(CompanionMetricId))
             {

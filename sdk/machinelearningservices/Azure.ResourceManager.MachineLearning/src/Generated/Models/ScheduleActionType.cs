@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ScheduleActionType CreateJob { get; } = new ScheduleActionType(CreateJobValue);
         /// <summary> InvokeBatchEndpoint. </summary>
         public static ScheduleActionType InvokeBatchEndpoint { get; } = new ScheduleActionType(InvokeBatchEndpointValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScheduleActionType"/> values are the same. </summary>
         public static bool operator ==(ScheduleActionType left, ScheduleActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduleActionType"/> values are not the same. </summary>

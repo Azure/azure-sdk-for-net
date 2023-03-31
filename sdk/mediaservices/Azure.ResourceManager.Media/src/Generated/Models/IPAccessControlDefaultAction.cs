@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Media.Models
         public static IPAccessControlDefaultAction Allow { get; } = new IPAccessControlDefaultAction(AllowValue);
         /// <summary> Public IP addresses are blocked. </summary>
         public static IPAccessControlDefaultAction Deny { get; } = new IPAccessControlDefaultAction(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IPAccessControlDefaultAction"/> values are the same. </summary>
         public static bool operator ==(IPAccessControlDefaultAction left, IPAccessControlDefaultAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IPAccessControlDefaultAction"/> values are not the same. </summary>

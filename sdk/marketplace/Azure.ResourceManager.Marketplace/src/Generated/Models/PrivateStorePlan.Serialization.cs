@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             if (Optional.IsDefined(Accessibility))
             {
                 writer.WritePropertyName("accessibility"u8);
-                writer.WriteStringValue(Accessibility.Value.ToString());
+                writer.WriteStringValue(Accessibility.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

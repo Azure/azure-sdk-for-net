@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> AgentAddress. </summary>
         public static ConnectionMonitorEndpointFilterItemType AgentAddress { get; } = new ConnectionMonitorEndpointFilterItemType(AgentAddressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointFilterItemType"/> values are the same. </summary>
         public static bool operator ==(ConnectionMonitorEndpointFilterItemType left, ConnectionMonitorEndpointFilterItemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointFilterItemType"/> values are not the same. </summary>

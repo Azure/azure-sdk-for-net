@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         /// <summary> IPFIX. </summary>
         public static IngestionType Ipfix { get; } = new IngestionType(IpfixValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IngestionType"/> values are the same. </summary>
         public static bool operator ==(IngestionType left, IngestionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IngestionType"/> values are not the same. </summary>

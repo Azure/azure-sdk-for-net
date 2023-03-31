@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteObjectValue(Credentials);
             }
             writer.WritePropertyName("authType"u8);
-            writer.WriteStringValue(AuthType.ToString());
+            writer.WriteStringValue(AuthType.ToSerialString());
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteStringValue(Category.Value.ToString());
+                writer.WriteStringValue(Category.Value.ToSerialString());
             }
             if (Optional.IsDefined(Target))
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ValueFormat))
             {
                 writer.WritePropertyName("valueFormat"u8);
-                writer.WriteStringValue(ValueFormat.Value.ToString());
+                writer.WriteStringValue(ValueFormat.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

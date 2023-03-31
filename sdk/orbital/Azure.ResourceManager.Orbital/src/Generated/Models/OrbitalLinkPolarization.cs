@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Orbital.Models
         public static OrbitalLinkPolarization LinearVertical { get; } = new OrbitalLinkPolarization(LinearVerticalValue);
         /// <summary> linearHorizontal. </summary>
         public static OrbitalLinkPolarization LinearHorizontal { get; } = new OrbitalLinkPolarization(LinearHorizontalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OrbitalLinkPolarization"/> values are the same. </summary>
         public static bool operator ==(OrbitalLinkPolarization left, OrbitalLinkPolarization right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrbitalLinkPolarization"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MySql.Models
         public static MySqlGeoRedundantBackup Enabled { get; } = new MySqlGeoRedundantBackup(EnabledValue);
         /// <summary> Disabled. </summary>
         public static MySqlGeoRedundantBackup Disabled { get; } = new MySqlGeoRedundantBackup(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlGeoRedundantBackup"/> values are the same. </summary>
         public static bool operator ==(MySqlGeoRedundantBackup left, MySqlGeoRedundantBackup right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlGeoRedundantBackup"/> values are not the same. </summary>

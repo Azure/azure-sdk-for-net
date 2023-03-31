@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningFeaturizationMode Custom { get; } = new MachineLearningFeaturizationMode(CustomValue);
         /// <summary> Featurization off. &apos;Forecasting&apos; task cannot use this value. </summary>
         public static MachineLearningFeaturizationMode Off { get; } = new MachineLearningFeaturizationMode(OffValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MachineLearningFeaturizationMode"/> values are the same. </summary>
         public static bool operator ==(MachineLearningFeaturizationMode left, MachineLearningFeaturizationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningFeaturizationMode"/> values are not the same. </summary>

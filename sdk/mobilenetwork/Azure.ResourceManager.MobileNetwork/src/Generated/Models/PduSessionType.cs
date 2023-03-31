@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static PduSessionType IPv4 { get; } = new PduSessionType(IPv4Value);
         /// <summary> IPv6. </summary>
         public static PduSessionType IPv6 { get; } = new PduSessionType(IPv6Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PduSessionType"/> values are the same. </summary>
         public static bool operator ==(PduSessionType left, PduSessionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PduSessionType"/> values are not the same. </summary>

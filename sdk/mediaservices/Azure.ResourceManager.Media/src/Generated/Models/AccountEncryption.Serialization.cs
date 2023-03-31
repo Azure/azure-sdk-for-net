@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(KeyType.ToString());
+            writer.WriteStringValue(KeyType.ToSerialString());
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);

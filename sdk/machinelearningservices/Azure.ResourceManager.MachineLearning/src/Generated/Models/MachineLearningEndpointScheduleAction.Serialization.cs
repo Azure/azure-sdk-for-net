@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JsonSerializer.Serialize(writer, JsonDocument.Parse(EndpointInvocationDefinition.ToString()).RootElement);
 #endif
             writer.WritePropertyName("actionType"u8);
-            writer.WriteStringValue(ActionType.ToString());
+            writer.WriteStringValue(ActionType.ToSerialString());
             writer.WriteEndObject();
         }
 
