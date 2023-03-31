@@ -459,29 +459,6 @@ namespace Azure.Core.Tests.Public
             Assert.That("foo", Is.EqualTo(value));
         }
 
-        // TODO: How do we write it to a stream now, what is the use case?
-        //[Test]
-        //public async Task CanWriteToStream()
-        //{
-        //    // Arrange
-        //    dynamic json = new BinaryData("{ \"Message\": \"Hi!\", \"Number\": 5 }").ToDynamic();
-
-        //    // Act
-        //    using var stream = new MemoryStream();
-
-        //    DynamicData.WriteTo(stream, json);
-
-        //    // Assert
-
-        //    // Deserialize to model type to validate value was correctly written to stream.
-        //    stream.Position = 0;
-
-        //    var model = (SampleModel)await JsonSerializer.DeserializeAsync(stream, typeof(SampleModel));
-
-        //    Assert.AreEqual("Hi!", model.Message);
-        //    Assert.AreEqual(5, model.Number);
-        //}
-
         [Test]
         public async Task CanWriteToStream_JsonSerializer()
         {
