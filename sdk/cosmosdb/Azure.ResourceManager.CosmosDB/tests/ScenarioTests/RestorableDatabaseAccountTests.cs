@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             CosmosDBAccountRestoreParameters restoreParameters = new CosmosDBAccountRestoreParameters()
             {
                 RestoreMode = "PointInTime",
-                RestoreTimestampInUtc = ts.AddSeconds(30),
+                RestoreTimestampInUtc = ts.AddSeconds(50),
                 RestoreSource = restorableAccount.Id.ToString(),
             };
 
