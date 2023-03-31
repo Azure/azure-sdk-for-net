@@ -124,13 +124,13 @@ namespace Azure.AI.AnomalyDetector
         internal UnivariateEntireDetectionResult(int period, IReadOnlyList<float> expectedValues, IReadOnlyList<float> upperMargins, IReadOnlyList<float> lowerMargins, IReadOnlyList<bool> isAnomaly, IReadOnlyList<bool> isNegativeAnomaly, IReadOnlyList<bool> isPositiveAnomaly, IReadOnlyList<float> severity)
         {
             Period = period;
-            ExpectedValues = expectedValues.ToList();
-            UpperMargins = upperMargins.ToList();
-            LowerMargins = lowerMargins.ToList();
-            IsAnomaly = isAnomaly.ToList();
-            IsNegativeAnomaly = isNegativeAnomaly.ToList();
-            IsPositiveAnomaly = isPositiveAnomaly.ToList();
-            Severity = severity.ToList();
+            ExpectedValues = expectedValues;
+            UpperMargins = upperMargins;
+            LowerMargins = lowerMargins;
+            IsAnomaly = isAnomaly;
+            IsNegativeAnomaly = isNegativeAnomaly;
+            IsPositiveAnomaly = isPositiveAnomaly;
+            Severity = severity;
         }
 
         /// <summary>
