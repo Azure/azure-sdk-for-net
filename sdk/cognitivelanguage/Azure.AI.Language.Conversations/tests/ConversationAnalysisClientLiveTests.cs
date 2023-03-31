@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -92,7 +92,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -149,7 +149,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -201,7 +201,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // deserialize
-            dynamic conversationalTaskResult = response.Content.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -256,7 +256,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
 
-            dynamic conversationalTaskResult = response.Content.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic conversationalTaskResult = response.Content.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
             Assert.That((string)conversationalTaskResult.Result.Prediction.TopIntent, Is.EqualTo("Send"));
         }
 
@@ -322,7 +322,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
             Assert.NotNull(jobResults);
 
             foreach (dynamic analyzeConversationSummarization in jobResults.Tasks.Items)
@@ -388,7 +388,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
             Assert.NotNull(jobResults);
 
             foreach (dynamic analyzeConversationPIIResult in jobResults.Tasks.Items)
@@ -552,7 +552,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-            dynamic jobResults = analyzeConversationOperation.Value.ToDynamic(DynamicJsonOptions.AzureDefault);
+            dynamic jobResults = analyzeConversationOperation.Value.ToDynamicFromJson(DynamicJsonOptions.AzureDefault);
             Assert.NotNull(jobResults);
 
             foreach (dynamic result in jobResults.Tasks.Items)
