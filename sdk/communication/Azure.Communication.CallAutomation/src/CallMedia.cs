@@ -363,17 +363,16 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Starts continuous Dtmf recognition.
         /// </summary>
-        /// <param name="continuousDtmfOptions">Configuration attributes to start continuous Dtmf Recognition.</param>
+        /// <param name="targetParticipant">Target participants for start continuous Dtmf Recognition.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>Returns an Http response 200 for success, or an http failure error code</returns>
-        public virtual Response StartContinuousDtmfRecognition(ContinuousDtmfRecognitionOptions continuousDtmfOptions,
-            CancellationToken cancellationToken = default)
+        /// <returns>Returns an Http response 200 for success, or an http failure error code.</returns>
+        public virtual Response StartContinuousDtmfRecognition(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartContinuousDtmfRecognition)}");
             scope.Start();
             try
             {
-                ContinuousDtmfRecognitionRequestInternal request = CreateContinuousDtmfRequest(continuousDtmfOptions);
+                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant));
 
                 return CallMediaRestClient.StartContinuousDtmfRecognition(CallConnectionId, request, cancellationToken);
             }
@@ -387,17 +386,16 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Stops continuous Dtmf recognition.
         /// </summary>
-        /// <param name="continuousDtmfOptions">Configuration attributes to stop continuous Dtmf Recognition.</param>
+        /// <param name="targetParticipant">Target participants for start continuous Dtmf Recognition.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>Returns an Http response 200 for success, or an http failure error code</returns>
-        public virtual Response StopContinuousDtmfRecognition(ContinuousDtmfRecognitionOptions continuousDtmfOptions,
-            CancellationToken cancellationToken = default)
+        /// <returns>Returns an Http response 200 for success, or an http failure error code.</returns>
+        public virtual Response StopContinuousDtmfRecognition(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopContinuousDtmfRecognition)}");
             scope.Start();
             try
             {
-                ContinuousDtmfRecognitionRequestInternal request = CreateContinuousDtmfRequest(continuousDtmfOptions);
+                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant));
 
                 return CallMediaRestClient.StopContinuousDtmfRecognition(CallConnectionId, request, cancellationToken);
             }
@@ -406,19 +404,6 @@ namespace Azure.Communication.CallAutomation
                 scope.Failed(ex);
                 throw;
             }
-        }
-
-        private static ContinuousDtmfRecognitionRequestInternal CreateContinuousDtmfRequest(ContinuousDtmfRecognitionOptions continuousDtmfOptions)
-        {
-            if (continuousDtmfOptions == null)
-            {
-                throw new ArgumentNullException(nameof(continuousDtmfOptions));
-            }
-
-            ContinuousDtmfRecognitionOptionsInternal optionsInternal = new ContinuousDtmfRecognitionOptionsInternal
-                (CommunicationIdentifierSerializer.Serialize(continuousDtmfOptions.TargetParticipant));
-
-            return new ContinuousDtmfRecognitionRequestInternal(optionsInternal);
         }
 
         /// <summary>

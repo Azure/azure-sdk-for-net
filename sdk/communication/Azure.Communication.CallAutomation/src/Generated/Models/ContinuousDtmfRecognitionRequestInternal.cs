@@ -6,26 +6,25 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The ContinuousDtmfRecognitionRequest. </summary>
+    /// <summary> The request payload to start Continuous Dtmf Recognition request. </summary>
     internal partial class ContinuousDtmfRecognitionRequestInternal
     {
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionRequestInternal. </summary>
-        /// <param name="continuousDtmfRecognitionOptions"> Defines options for recognition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="continuousDtmfRecognitionOptions"/> is null. </exception>
-        public ContinuousDtmfRecognitionRequestInternal(ContinuousDtmfRecognitionOptionsInternal continuousDtmfRecognitionOptions)
+        /// <param name="targetParticipant"> Target participant of continuous DTMF tone recognition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
+        public ContinuousDtmfRecognitionRequestInternal(CommunicationIdentifierModel targetParticipant)
         {
-            Argument.AssertNotNull(continuousDtmfRecognitionOptions, nameof(continuousDtmfRecognitionOptions));
+            Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
-            ContinuousDtmfRecognitionOptions = continuousDtmfRecognitionOptions;
+            TargetParticipant = targetParticipant;
         }
 
-        /// <summary> Defines options for recognition. </summary>
-        public ContinuousDtmfRecognitionOptionsInternal ContinuousDtmfRecognitionOptions { get; }
-        /// <summary> The value to identify context of the operation. </summary>
-        public string OperationContext { get; set; }
+        /// <summary> Target participant of continuous DTMF tone recognition. </summary>
+        public CommunicationIdentifierModel TargetParticipant { get; }
     }
 }

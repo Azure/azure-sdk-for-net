@@ -15,13 +15,8 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("continuousDtmfRecognitionOptions"u8);
-            writer.WriteObjectValue(ContinuousDtmfRecognitionOptions);
-            if (Optional.IsDefined(OperationContext))
-            {
-                writer.WritePropertyName("operationContext"u8);
-                writer.WriteStringValue(OperationContext);
-            }
+            writer.WritePropertyName("targetParticipant"u8);
+            writer.WriteObjectValue(TargetParticipant);
             writer.WriteEndObject();
         }
     }

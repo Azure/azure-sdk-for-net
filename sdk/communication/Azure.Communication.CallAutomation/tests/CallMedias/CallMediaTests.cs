@@ -68,8 +68,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
         private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);
 
-        private static readonly ContinuousDtmfRecognitionOptions _ContinuousDtmfRecognitionOptions = new(new CommunicationUserIdentifier("targetUserId"));
-
         private static readonly SendDtmfOptions _sendDmtfOptions = new(new CommunicationUserIdentifier("targetUserId"),
             new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound });
 
@@ -422,7 +420,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.StartContinuousDtmfRecognition(_ContinuousDtmfRecognitionOptions)
+                   callMedia => callMedia.StartContinuousDtmfRecognition(new CommunicationUserIdentifier("targetUserId"))
                 }
             };
         }
@@ -433,7 +431,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.StopContinuousDtmfRecognition(_ContinuousDtmfRecognitionOptions)
+                   callMedia => callMedia.StopContinuousDtmfRecognition(new CommunicationUserIdentifier("targetUserId"))
                 }
             };
         }
