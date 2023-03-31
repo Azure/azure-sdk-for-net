@@ -18,7 +18,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 To summarize one or more text documents using extractive summarization, call `StartExtractSummary` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns an `ExtractSummaryOperation`.
 
-```C# Snippet:Sample12_ExtractSummaryConvenienceAsync
+```C# Snippet:Sample11_ExtractSummaryConvenienceAsync
 string document =
     "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
     + " solutions to support employees suddenly forced to work from home, but “what really put the"
@@ -70,7 +70,7 @@ await operation.WaitForCompletionAsync();
 
 The `ExtractSummaryOperation` includes general information about the status of the long-running operation, and it can be queried at any time:
 
-```C# Snippet:Sample12_ExtractSummaryConvenienceAsync_ViewOperationStatus
+```C# Snippet:Sample11_ExtractSummaryConvenienceAsync_ViewOperationStatus
 // View the operation status.
 Console.WriteLine($"Created On   : {operation.CreatedOn}");
 Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
@@ -82,7 +82,7 @@ Console.WriteLine();
 
 Once the long-running operation has completed, you can view the results of the extractive summarization, including any errors that might have occurred:
 
-```C# Snippet:Sample12_ExtractSummaryConvenienceAsync_ViewResults
+```C# Snippet:Sample11_ExtractSummaryConvenienceAsync_ViewResults
 // View the operation results.
 await foreach (ExtractSummaryResultCollection documentsInPage in operation.Value)
 {

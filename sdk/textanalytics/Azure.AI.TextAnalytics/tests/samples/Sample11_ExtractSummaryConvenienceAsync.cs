@@ -11,13 +11,13 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        public async Task AbstractSummaryConvenienceAsync()
+        public async Task ExtractSummaryConvenienceAsync()
         {
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            #region Snippet:Sample13_AbstractSummaryConvenienceAsync
+            #region Snippet:Sample11_ExtractSummaryConvenienceAsync
             string document =
                 "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
                 + " solutions to support employees suddenly forced to work from home, but “what really put the"
@@ -63,14 +63,14 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             // Perform the text analysis operation.
-            AbstractSummaryOperation operation = client.StartAbstractSummary(batchedDocuments);
+            ExtractSummaryOperation operation = client.StartExtractSummary(batchedDocuments);
             await operation.WaitForCompletionAsync();
             #endregion
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
 
-            #region Snippet:Sample13_AbstractSummaryConvenienceAsync_ViewOperationStatus
+            #region Snippet:Sample11_ExtractSummaryConvenienceAsync_ViewOperationStatus
             // View the operation status.
             Console.WriteLine($"Created On   : {operation.CreatedOn}");
             Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
@@ -80,14 +80,14 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine();
             #endregion
 
-            #region Snippet:Sample13_AbstractSummaryConvenienceAsync_ViewResults
+            #region Snippet:Sample11_ExtractSummaryConvenienceAsync_ViewResults
             // View the operation results.
-            await foreach (AbstractSummaryResultCollection documentsInPage in operation.Value)
+            await foreach (ExtractSummaryResultCollection documentsInPage in operation.Value)
             {
-                Console.WriteLine($"Abstract Summary, model version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine($"Extract Summary, version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine();
 
-                foreach (AbstractSummaryResult documentResult in documentsInPage)
+                foreach (ExtractSummaryResult documentResult in documentsInPage)
                 {
                     if (documentResult.HasError)
                     {
@@ -97,20 +97,15 @@ namespace Azure.AI.TextAnalytics.Samples
                         continue;
                     }
 
-                    Console.WriteLine($"  Produced the following abstractive summaries:");
+                    Console.WriteLine($"  Extracted {documentResult.Sentences.Count} sentence(s):");
                     Console.WriteLine();
 
-                    foreach (AbstractiveSummary summary in documentResult.Summaries)
+                    foreach (SummarySentence sentence in documentResult.Sentences)
                     {
-                        Console.WriteLine($"  Text: {summary.Text.Replace("\n", " ")}");
-                        Console.WriteLine($"  Contexts:");
-
-                        foreach (SummaryContext context in summary.Contexts)
-                        {
-                            Console.WriteLine($"    Offset: {context.Offset}");
-                            Console.WriteLine($"    Length: {context.Length}");
-                        }
-
+                        Console.WriteLine($"  Sentence: {sentence.Text}");
+                        Console.WriteLine($"  Rank Score: {sentence.RankScore}");
+                        Console.WriteLine($"  Offset: {sentence.Offset}");
+                        Console.WriteLine($"  Length: {sentence.Length}");
                         Console.WriteLine();
                     }
                 }

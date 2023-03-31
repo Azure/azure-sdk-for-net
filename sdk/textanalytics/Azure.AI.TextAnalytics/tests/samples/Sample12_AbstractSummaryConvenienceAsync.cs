@@ -11,13 +11,13 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        public async Task ExtractSummaryConvenienceAsync()
+        public async Task AbstractSummaryConvenienceAsync()
         {
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            #region Snippet:Sample12_ExtractSummaryConvenienceAsync
+            #region Snippet:Sample12_AbstractSummaryConvenienceAsync
             string document =
                 "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
                 + " solutions to support employees suddenly forced to work from home, but “what really put the"
@@ -63,14 +63,14 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             // Perform the text analysis operation.
-            ExtractSummaryOperation operation = client.StartExtractSummary(batchedDocuments);
+            AbstractSummaryOperation operation = client.StartAbstractSummary(batchedDocuments);
             await operation.WaitForCompletionAsync();
             #endregion
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
 
-            #region Snippet:Sample12_ExtractSummaryConvenienceAsync_ViewOperationStatus
+            #region Snippet:Sample12_AbstractSummaryConvenienceAsync_ViewOperationStatus
             // View the operation status.
             Console.WriteLine($"Created On   : {operation.CreatedOn}");
             Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
@@ -80,14 +80,14 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine();
             #endregion
 
-            #region Snippet:Sample12_ExtractSummaryConvenienceAsync_ViewResults
+            #region Snippet:Sample12_AbstractSummaryConvenienceAsync_ViewResults
             // View the operation results.
-            await foreach (ExtractSummaryResultCollection documentsInPage in operation.Value)
+            await foreach (AbstractSummaryResultCollection documentsInPage in operation.Value)
             {
-                Console.WriteLine($"Extract Summary, version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine($"Abstract Summary, model version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine();
 
-                foreach (ExtractSummaryResult documentResult in documentsInPage)
+                foreach (AbstractSummaryResult documentResult in documentsInPage)
                 {
                     if (documentResult.HasError)
                     {
@@ -97,15 +97,20 @@ namespace Azure.AI.TextAnalytics.Samples
                         continue;
                     }
 
-                    Console.WriteLine($"  Extracted {documentResult.Sentences.Count} sentence(s):");
+                    Console.WriteLine($"  Produced the following abstractive summaries:");
                     Console.WriteLine();
 
-                    foreach (SummarySentence sentence in documentResult.Sentences)
+                    foreach (AbstractiveSummary summary in documentResult.Summaries)
                     {
-                        Console.WriteLine($"  Sentence: {sentence.Text}");
-                        Console.WriteLine($"  Rank Score: {sentence.RankScore}");
-                        Console.WriteLine($"  Offset: {sentence.Offset}");
-                        Console.WriteLine($"  Length: {sentence.Length}");
+                        Console.WriteLine($"  Text: {summary.Text.Replace("\n", " ")}");
+                        Console.WriteLine($"  Contexts:");
+
+                        foreach (SummaryContext context in summary.Contexts)
+                        {
+                            Console.WriteLine($"    Offset: {context.Offset}");
+                            Console.WriteLine($"    Length: {context.Length}");
+                        }
+
                         Console.WriteLine();
                     }
                 }
