@@ -29,6 +29,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static RtspTransport Http { get; } = new RtspTransport(HttpValue);
         /// <summary> TCP transport. RTSP is used directly over TCP and RTP packets are interleaved within the TCP channel. </summary>
         public static RtspTransport Tcp { get; } = new RtspTransport(TcpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RtspTransport"/> values are the same. </summary>
         public static bool operator ==(RtspTransport left, RtspTransport right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RtspTransport"/> values are not the same. </summary>

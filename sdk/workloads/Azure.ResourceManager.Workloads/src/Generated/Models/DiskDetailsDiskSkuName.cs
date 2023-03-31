@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static DiskDetailsDiskSkuName StandardSsdZrs { get; } = new DiskDetailsDiskSkuName(StandardSsdZrsValue);
         /// <summary> PremiumV2_LRS. </summary>
         public static DiskDetailsDiskSkuName PremiumV2Lrs { get; } = new DiskDetailsDiskSkuName(PremiumV2LrsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskDetailsDiskSkuName"/> values are the same. </summary>
         public static bool operator ==(DiskDetailsDiskSkuName left, DiskDetailsDiskSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskDetailsDiskSkuName"/> values are not the same. </summary>

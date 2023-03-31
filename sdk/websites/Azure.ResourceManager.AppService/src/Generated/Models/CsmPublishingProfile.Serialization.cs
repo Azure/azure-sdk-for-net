@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteStringValue(Format.Value.ToString());
+                writer.WriteStringValue(Format.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsIncludeDisasterRecoveryEndpoints))
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteObjectValue(SoftwareConfiguration);
             }
             writer.WritePropertyName("configurationType"u8);
-            writer.WriteStringValue(ConfigurationType.ToString());
+            writer.WriteStringValue(ConfigurationType.ToSerialString());
             writer.WriteEndObject();
         }
 

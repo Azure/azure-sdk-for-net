@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static CentralServerVirtualMachineType Ers { get; } = new CentralServerVirtualMachineType(ErsValue);
         /// <summary> Standby. </summary>
         public static CentralServerVirtualMachineType Standby { get; } = new CentralServerVirtualMachineType(StandbyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CentralServerVirtualMachineType"/> values are the same. </summary>
         public static bool operator ==(CentralServerVirtualMachineType left, CentralServerVirtualMachineType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CentralServerVirtualMachineType"/> values are not the same. </summary>

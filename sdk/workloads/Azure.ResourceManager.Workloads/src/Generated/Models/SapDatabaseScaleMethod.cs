@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> ScaleUp. </summary>
         public static SapDatabaseScaleMethod ScaleUp { get; } = new SapDatabaseScaleMethod(ScaleUpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapDatabaseScaleMethod"/> values are the same. </summary>
         public static bool operator ==(SapDatabaseScaleMethod left, SapDatabaseScaleMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapDatabaseScaleMethod"/> values are not the same. </summary>

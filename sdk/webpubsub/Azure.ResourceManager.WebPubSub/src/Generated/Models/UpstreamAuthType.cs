@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static UpstreamAuthType None { get; } = new UpstreamAuthType(NoneValue);
         /// <summary> ManagedIdentity. </summary>
         public static UpstreamAuthType ManagedIdentity { get; } = new UpstreamAuthType(ManagedIdentityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UpstreamAuthType"/> values are the same. </summary>
         public static bool operator ==(UpstreamAuthType left, UpstreamAuthType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpstreamAuthType"/> values are not the same. </summary>

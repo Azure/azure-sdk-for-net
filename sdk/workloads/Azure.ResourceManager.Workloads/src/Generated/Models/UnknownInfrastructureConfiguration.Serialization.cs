@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("deploymentType"u8);
-            writer.WriteStringValue(DeploymentType.ToString());
+            writer.WriteStringValue(DeploymentType.ToSerialString());
             writer.WritePropertyName("appResourceGroup"u8);
             writer.WriteStringValue(AppResourceGroup);
             writer.WriteEndObject();

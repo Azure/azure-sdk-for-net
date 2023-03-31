@@ -19,7 +19,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Sensitivity))
             {
                 writer.WritePropertyName("sensitivity"u8);
-                writer.WriteStringValue(Sensitivity.Value.ToString());
+                writer.WriteStringValue(Sensitivity.Value.ToSerialString());
             }
             if (Optional.IsDefined(OutputMotionRegion))
             {

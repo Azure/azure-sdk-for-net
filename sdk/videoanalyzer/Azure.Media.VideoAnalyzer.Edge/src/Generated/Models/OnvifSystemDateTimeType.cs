@@ -29,6 +29,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static OnvifSystemDateTimeType Ntp { get; } = new OnvifSystemDateTimeType(NtpValue);
         /// <summary> Manual. </summary>
         public static OnvifSystemDateTimeType Manual { get; } = new OnvifSystemDateTimeType(ManualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OnvifSystemDateTimeType"/> values are the same. </summary>
         public static bool operator ==(OnvifSystemDateTimeType left, OnvifSystemDateTimeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OnvifSystemDateTimeType"/> values are not the same. </summary>

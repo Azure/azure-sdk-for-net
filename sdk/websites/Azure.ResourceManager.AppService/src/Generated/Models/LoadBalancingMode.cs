@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static LoadBalancingMode Publishing { get; } = new LoadBalancingMode(PublishingValue);
         /// <summary> Web, Publishing. </summary>
         public static LoadBalancingMode WebPublishing { get; } = new LoadBalancingMode(WebPublishingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LoadBalancingMode"/> values are the same. </summary>
         public static bool operator ==(LoadBalancingMode left, LoadBalancingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoadBalancingMode"/> values are not the same. </summary>

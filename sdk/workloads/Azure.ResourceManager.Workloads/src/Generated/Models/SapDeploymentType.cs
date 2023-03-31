@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SapDeploymentType SingleServer { get; } = new SapDeploymentType(SingleServerValue);
         /// <summary> ThreeTier. </summary>
         public static SapDeploymentType ThreeTier { get; } = new SapDeploymentType(ThreeTierValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapDeploymentType"/> values are the same. </summary>
         public static bool operator ==(SapDeploymentType left, SapDeploymentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapDeploymentType"/> values are not the same. </summary>

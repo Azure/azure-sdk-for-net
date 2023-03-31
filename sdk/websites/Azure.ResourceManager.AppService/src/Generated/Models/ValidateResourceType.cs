@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static ValidateResourceType WebSite { get; } = new ValidateResourceType(WebSiteValue);
         /// <summary> Microsoft.Web/hostingEnvironments. </summary>
         public static ValidateResourceType MicrosoftWebHostingEnvironments { get; } = new ValidateResourceType(MicrosoftWebHostingEnvironmentsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ValidateResourceType"/> values are the same. </summary>
         public static bool operator ==(ValidateResourceType left, ValidateResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ValidateResourceType"/> values are not the same. </summary>

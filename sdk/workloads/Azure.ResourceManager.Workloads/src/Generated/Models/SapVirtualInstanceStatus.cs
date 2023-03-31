@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SapVirtualInstanceStatus Unavailable { get; } = new SapVirtualInstanceStatus(UnavailableValue);
         /// <summary> SoftShutdown. </summary>
         public static SapVirtualInstanceStatus SoftShutdown { get; } = new SapVirtualInstanceStatus(SoftShutdownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapVirtualInstanceStatus"/> values are the same. </summary>
         public static bool operator ==(SapVirtualInstanceStatus left, SapVirtualInstanceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapVirtualInstanceStatus"/> values are not the same. </summary>

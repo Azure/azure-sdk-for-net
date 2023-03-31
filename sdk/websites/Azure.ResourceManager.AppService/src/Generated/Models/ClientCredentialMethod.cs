@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> ClientSecretPost. </summary>
         public static ClientCredentialMethod ClientSecretPost { get; } = new ClientCredentialMethod(ClientSecretPostValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClientCredentialMethod"/> values are the same. </summary>
         public static bool operator ==(ClientCredentialMethod left, ClientCredentialMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClientCredentialMethod"/> values are not the same. </summary>

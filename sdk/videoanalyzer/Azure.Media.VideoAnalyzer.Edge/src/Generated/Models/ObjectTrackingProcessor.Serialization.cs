@@ -19,7 +19,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Accuracy))
             {
                 writer.WritePropertyName("accuracy"u8);
-                writer.WriteStringValue(Accuracy.Value.ToString());
+                writer.WriteStringValue(Accuracy.Value.ToSerialString());
             }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);

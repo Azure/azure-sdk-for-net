@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
         public static CommunicationsPlatform OperatorConnect { get; } = new CommunicationsPlatform(OperatorConnectValue);
         /// <summary> TeamsPhoneMobile. </summary>
         public static CommunicationsPlatform TeamsPhoneMobile { get; } = new CommunicationsPlatform(TeamsPhoneMobileValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CommunicationsPlatform"/> values are the same. </summary>
         public static bool operator ==(CommunicationsPlatform left, CommunicationsPlatform right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationsPlatform"/> values are not the same. </summary>

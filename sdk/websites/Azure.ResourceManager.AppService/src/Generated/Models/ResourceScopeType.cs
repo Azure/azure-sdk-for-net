@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static ResourceScopeType Subscription { get; } = new ResourceScopeType(SubscriptionValue);
         /// <summary> WebSite. </summary>
         public static ResourceScopeType WebSite { get; } = new ResourceScopeType(WebSiteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceScopeType"/> values are the same. </summary>
         public static bool operator ==(ResourceScopeType left, ResourceScopeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceScopeType"/> values are not the same. </summary>

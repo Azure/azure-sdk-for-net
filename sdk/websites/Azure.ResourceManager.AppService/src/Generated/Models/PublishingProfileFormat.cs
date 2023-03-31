@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static PublishingProfileFormat WebDeploy { get; } = new PublishingProfileFormat(WebDeployValue);
         /// <summary> Ftp. </summary>
         public static PublishingProfileFormat Ftp { get; } = new PublishingProfileFormat(FtpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PublishingProfileFormat"/> values are the same. </summary>
         public static bool operator ==(PublishingProfileFormat left, PublishingProfileFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PublishingProfileFormat"/> values are not the same. </summary>

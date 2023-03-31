@@ -29,6 +29,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static OutputSelectorOperator Is { get; } = new OutputSelectorOperator(IsValue);
         /// <summary> The property is not of the type defined by value. </summary>
         public static OutputSelectorOperator IsNot { get; } = new OutputSelectorOperator(IsNotValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OutputSelectorOperator"/> values are the same. </summary>
         public static bool operator ==(OutputSelectorOperator left, OutputSelectorOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OutputSelectorOperator"/> values are not the same. </summary>

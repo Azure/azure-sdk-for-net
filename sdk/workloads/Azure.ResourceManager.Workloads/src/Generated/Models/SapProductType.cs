@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SapProductType S4Hana { get; } = new SapProductType(S4HanaValue);
         /// <summary> Other. </summary>
         public static SapProductType Other { get; } = new SapProductType(OtherValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapProductType"/> values are the same. </summary>
         public static bool operator ==(SapProductType left, SapProductType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapProductType"/> values are not the same. </summary>

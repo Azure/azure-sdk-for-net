@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static WebPubSubProvisioningState Deleting { get; } = new WebPubSubProvisioningState(DeletingValue);
         /// <summary> Moving. </summary>
         public static WebPubSubProvisioningState Moving { get; } = new WebPubSubProvisioningState(MovingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebPubSubProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WebPubSubProvisioningState left, WebPubSubProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebPubSubProvisioningState"/> values are not the same. </summary>

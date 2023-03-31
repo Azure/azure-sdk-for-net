@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static WebPubSubSharedPrivateLinkStatus Disconnected { get; } = new WebPubSubSharedPrivateLinkStatus(DisconnectedValue);
         /// <summary> Timeout. </summary>
         public static WebPubSubSharedPrivateLinkStatus Timeout { get; } = new WebPubSubSharedPrivateLinkStatus(TimeoutValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebPubSubSharedPrivateLinkStatus"/> values are the same. </summary>
         public static bool operator ==(WebPubSubSharedPrivateLinkStatus left, WebPubSubSharedPrivateLinkStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebPubSubSharedPrivateLinkStatus"/> values are not the same. </summary>

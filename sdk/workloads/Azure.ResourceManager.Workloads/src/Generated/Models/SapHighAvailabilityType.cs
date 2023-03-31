@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SapHighAvailabilityType AvailabilitySet { get; } = new SapHighAvailabilityType(AvailabilitySetValue);
         /// <summary> AvailabilityZone. </summary>
         public static SapHighAvailabilityType AvailabilityZone { get; } = new SapHighAvailabilityType(AvailabilityZoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapHighAvailabilityType"/> values are the same. </summary>
         public static bool operator ==(SapHighAvailabilityType left, SapHighAvailabilityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapHighAvailabilityType"/> values are not the same. </summary>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(InternalLoadBalancingMode))
             {
                 writer.WritePropertyName("internalLoadBalancingMode"u8);
-                writer.WriteStringValue(InternalLoadBalancingMode.Value.ToString());
+                writer.WriteStringValue(InternalLoadBalancingMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(MultiSize))
             {

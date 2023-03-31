@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/availableStacks", false);
             if (osTypeSelected != null)
             {
-                uri.AppendQuery("osTypeSelected", osTypeSelected.Value.ToString(), true);
+                uri.AppendQuery("osTypeSelected", osTypeSelected.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/functionAppStacks", false);
             if (stackOSType != null)
             {
-                uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
+                uri.AppendQuery("stackOsType", stackOSType.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/functionAppStacks", false);
             if (stackOSType != null)
             {
-                uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
+                uri.AppendQuery("stackOsType", stackOSType.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/webAppStacks", false);
             if (stackOSType != null)
             {
-                uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
+                uri.AppendQuery("stackOsType", stackOSType.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/webAppStacks", false);
             if (stackOSType != null)
             {
-                uri.AppendQuery("stackOsType", stackOSType.Value.ToString(), true);
+                uri.AppendQuery("stackOsType", stackOSType.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/availableStacks", false);
             if (osTypeSelected != null)
             {
-                uri.AppendQuery("osTypeSelected", osTypeSelected.Value.ToString(), true);
+                uri.AppendQuery("osTypeSelected", osTypeSelected.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

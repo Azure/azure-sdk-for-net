@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("keyType"u8);
-                writer.WriteStringValue(KeyType.Value.ToString());
+                writer.WriteStringValue(KeyType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
         public static TeamsCodec Silk8 { get; } = new TeamsCodec(Silk8Value);
         /// <summary> SILK_16. </summary>
         public static TeamsCodec Silk16 { get; } = new TeamsCodec(Silk16Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TeamsCodec"/> values are the same. </summary>
         public static bool operator ==(TeamsCodec left, TeamsCodec right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TeamsCodec"/> values are not the same. </summary>

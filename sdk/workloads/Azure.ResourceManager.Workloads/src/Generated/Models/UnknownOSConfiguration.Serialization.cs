@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OSType.ToString());
+            writer.WriteStringValue(OSType.ToSerialString());
             writer.WriteEndObject();
         }
 

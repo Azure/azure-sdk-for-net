@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SapLandscapeMonitorProvisioningState Succeeded { get; } = new SapLandscapeMonitorProvisioningState(SucceededValue);
         /// <summary> Canceled. </summary>
         public static SapLandscapeMonitorProvisioningState Canceled { get; } = new SapLandscapeMonitorProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapLandscapeMonitorProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SapLandscapeMonitorProvisioningState left, SapLandscapeMonitorProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapLandscapeMonitorProvisioningState"/> values are not the same. </summary>

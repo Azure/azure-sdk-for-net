@@ -29,6 +29,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static SpatialAnalysisPersonCountEventTrigger Event { get; } = new SpatialAnalysisPersonCountEventTrigger(EventValue);
         /// <summary> Interval trigger. </summary>
         public static SpatialAnalysisPersonCountEventTrigger Interval { get; } = new SpatialAnalysisPersonCountEventTrigger(IntervalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SpatialAnalysisPersonCountEventTrigger"/> values are the same. </summary>
         public static bool operator ==(SpatialAnalysisPersonCountEventTrigger left, SpatialAnalysisPersonCountEventTrigger right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SpatialAnalysisPersonCountEventTrigger"/> values are not the same. </summary>

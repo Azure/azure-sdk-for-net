@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
 
         /// <summary> This deployment connects to the operator network using a Public IP address, e.g. when using MAPS. </summary>
         public static Connectivity PublicAddress { get; } = new Connectivity(PublicAddressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Connectivity"/> values are the same. </summary>
         public static bool operator ==(Connectivity left, Connectivity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Connectivity"/> values are not the same. </summary>

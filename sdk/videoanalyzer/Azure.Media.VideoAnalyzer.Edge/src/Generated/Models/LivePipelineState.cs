@@ -35,6 +35,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static LivePipelineState Active { get; } = new LivePipelineState(ActiveValue);
         /// <summary> The live pipeline is transitioning into the inactive state. </summary>
         public static LivePipelineState Deactivating { get; } = new LivePipelineState(DeactivatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LivePipelineState"/> values are the same. </summary>
         public static bool operator ==(LivePipelineState left, LivePipelineState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LivePipelineState"/> values are not the same. </summary>

@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
-                writer.WriteStringValue(Encoding.Value.ToString());
+                writer.WriteStringValue(Encoding.Value.ToSerialString());
             }
             if (Optional.IsDefined(Quality))
             {

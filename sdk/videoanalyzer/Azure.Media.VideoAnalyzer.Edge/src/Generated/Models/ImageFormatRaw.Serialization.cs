@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("pixelFormat"u8);
-            writer.WriteStringValue(PixelFormat.ToString());
+            writer.WriteStringValue(PixelFormat.ToSerialString());
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();

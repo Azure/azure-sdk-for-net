@@ -32,6 +32,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static SpatialAnalysisOperationFocus BottomCenter { get; } = new SpatialAnalysisOperationFocus(BottomCenterValue);
         /// <summary> The footprint. </summary>
         public static SpatialAnalysisOperationFocus Footprint { get; } = new SpatialAnalysisOperationFocus(FootprintValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SpatialAnalysisOperationFocus"/> values are the same. </summary>
         public static bool operator ==(SpatialAnalysisOperationFocus left, SpatialAnalysisOperationFocus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SpatialAnalysisOperationFocus"/> values are not the same. </summary>

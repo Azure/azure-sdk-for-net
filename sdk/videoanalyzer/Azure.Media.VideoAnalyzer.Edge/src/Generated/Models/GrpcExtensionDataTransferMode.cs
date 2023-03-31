@@ -29,6 +29,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static GrpcExtensionDataTransferMode Embedded { get; } = new GrpcExtensionDataTransferMode(EmbeddedValue);
         /// <summary> Media samples are made available through shared memory. This mode enables efficient data transfers but it requires that the extension plugin to be co-located on the same node and sharing the same shared memory space. </summary>
         public static GrpcExtensionDataTransferMode SharedMemory { get; } = new GrpcExtensionDataTransferMode(SharedMemoryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GrpcExtensionDataTransferMode"/> values are the same. </summary>
         public static bool operator ==(GrpcExtensionDataTransferMode left, GrpcExtensionDataTransferMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GrpcExtensionDataTransferMode"/> values are not the same. </summary>

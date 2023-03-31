@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static ManagedServiceIdentityType None { get; } = new ManagedServiceIdentityType(NoneValue);
         /// <summary> UserAssigned. </summary>
         public static ManagedServiceIdentityType UserAssigned { get; } = new ManagedServiceIdentityType(UserAssignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedServiceIdentityType"/> values are the same. </summary>
         public static bool operator ==(ManagedServiceIdentityType left, ManagedServiceIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedServiceIdentityType"/> values are not the same. </summary>

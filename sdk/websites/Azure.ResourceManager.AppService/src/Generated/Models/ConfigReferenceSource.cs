@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> KeyVault. </summary>
         public static ConfigReferenceSource KeyVault { get; } = new ConfigReferenceSource(KeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConfigReferenceSource"/> values are the same. </summary>
         public static bool operator ==(ConfigReferenceSource left, ConfigReferenceSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfigReferenceSource"/> values are not the same. </summary>

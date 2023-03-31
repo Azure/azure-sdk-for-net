@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteObjectValue(SharedStorage);
             }
             writer.WritePropertyName("namingPatternType"u8);
-            writer.WriteStringValue(NamingPatternType.ToString());
+            writer.WriteStringValue(NamingPatternType.ToSerialString());
             writer.WriteEndObject();
         }
 

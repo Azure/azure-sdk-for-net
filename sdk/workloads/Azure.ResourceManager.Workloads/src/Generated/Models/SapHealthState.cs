@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SapHealthState Unhealthy { get; } = new SapHealthState(UnhealthyValue);
         /// <summary> Degraded. </summary>
         public static SapHealthState Degraded { get; } = new SapHealthState(DegradedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapHealthState"/> values are the same. </summary>
         public static bool operator ==(SapHealthState left, SapHealthState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapHealthState"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static AppServiceDatabaseType LocalMySql { get; } = new AppServiceDatabaseType(LocalMySqlValue);
         /// <summary> PostgreSql. </summary>
         public static AppServiceDatabaseType PostgreSql { get; } = new AppServiceDatabaseType(PostgreSqlValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppServiceDatabaseType"/> values are the same. </summary>
         public static bool operator ==(AppServiceDatabaseType left, AppServiceDatabaseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServiceDatabaseType"/> values are not the same. </summary>

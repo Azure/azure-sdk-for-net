@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("appLocation"u8);
             writer.WriteStringValue(AppLocation);
             writer.WritePropertyName("sapProduct"u8);
-            writer.WriteStringValue(SapProduct.ToString());
+            writer.WriteStringValue(SapProduct.ToSerialString());
             writer.WritePropertyName("databaseType"u8);
-            writer.WriteStringValue(DatabaseType.ToString());
+            writer.WriteStringValue(DatabaseType.ToSerialString());
             writer.WriteEndObject();
         }
     }

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SapEnvironmentType NonProd { get; } = new SapEnvironmentType(NonProdValue);
         /// <summary> Prod. </summary>
         public static SapEnvironmentType Prod { get; } = new SapEnvironmentType(ProdValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapEnvironmentType"/> values are the same. </summary>
         public static bool operator ==(SapEnvironmentType left, SapEnvironmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapEnvironmentType"/> values are not the same. </summary>

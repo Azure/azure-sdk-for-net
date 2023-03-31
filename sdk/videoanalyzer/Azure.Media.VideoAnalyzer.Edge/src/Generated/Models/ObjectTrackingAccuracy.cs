@@ -32,6 +32,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static ObjectTrackingAccuracy Medium { get; } = new ObjectTrackingAccuracy(MediumValue);
         /// <summary> High accuracy. </summary>
         public static ObjectTrackingAccuracy High { get; } = new ObjectTrackingAccuracy(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ObjectTrackingAccuracy"/> values are the same. </summary>
         public static bool operator ==(ObjectTrackingAccuracy left, ObjectTrackingAccuracy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ObjectTrackingAccuracy"/> values are not the same. </summary>

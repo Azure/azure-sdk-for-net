@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static CustomDomainStatus Failed { get; } = new CustomDomainStatus(FailedValue);
         /// <summary> Deleting. </summary>
         public static CustomDomainStatus Deleting { get; } = new CustomDomainStatus(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CustomDomainStatus"/> values are the same. </summary>
         public static bool operator ==(CustomDomainStatus left, CustomDomainStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomDomainStatus"/> values are not the same. </summary>

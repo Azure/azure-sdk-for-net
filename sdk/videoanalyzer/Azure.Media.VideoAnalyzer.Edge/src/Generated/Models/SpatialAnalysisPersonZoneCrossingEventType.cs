@@ -29,6 +29,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static SpatialAnalysisPersonZoneCrossingEventType ZoneCrossing { get; } = new SpatialAnalysisPersonZoneCrossingEventType(ZoneCrossingValue);
         /// <summary> Zone dwell time event type. </summary>
         public static SpatialAnalysisPersonZoneCrossingEventType ZoneDwellTime { get; } = new SpatialAnalysisPersonZoneCrossingEventType(ZoneDwellTimeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SpatialAnalysisPersonZoneCrossingEventType"/> values are the same. </summary>
         public static bool operator ==(SpatialAnalysisPersonZoneCrossingEventType left, SpatialAnalysisPersonZoneCrossingEventType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SpatialAnalysisPersonZoneCrossingEventType"/> values are not the same. </summary>

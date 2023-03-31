@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static AppServiceIPFilterTag XffProxy { get; } = new AppServiceIPFilterTag(XffProxyValue);
         /// <summary> ServiceTag. </summary>
         public static AppServiceIPFilterTag ServiceTag { get; } = new AppServiceIPFilterTag(ServiceTagValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppServiceIPFilterTag"/> values are the same. </summary>
         public static bool operator ==(AppServiceIPFilterTag left, AppServiceIPFilterTag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServiceIPFilterTag"/> values are not the same. </summary>

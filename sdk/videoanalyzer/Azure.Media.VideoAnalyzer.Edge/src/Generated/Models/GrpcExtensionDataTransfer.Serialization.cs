@@ -21,7 +21,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStringValue(SharedMemorySizeMiB);
             }
             writer.WritePropertyName("mode"u8);
-            writer.WriteStringValue(Mode.ToString());
+            writer.WriteStringValue(Mode.ToSerialString());
             writer.WriteEndObject();
         }
 

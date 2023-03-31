@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static DomainNotRenewableReason ExpirationNotInRenewalTimeRange { get; } = new DomainNotRenewableReason(ExpirationNotInRenewalTimeRangeValue);
         /// <summary> SubscriptionNotActive. </summary>
         public static DomainNotRenewableReason SubscriptionNotActive { get; } = new DomainNotRenewableReason(SubscriptionNotActiveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DomainNotRenewableReason"/> values are the same. </summary>
         public static bool operator ==(DomainNotRenewableReason left, DomainNotRenewableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainNotRenewableReason"/> values are not the same. </summary>

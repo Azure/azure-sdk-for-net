@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static WebPubSubKeyType Secondary { get; } = new WebPubSubKeyType(SecondaryValue);
         /// <summary> Salt. </summary>
         public static WebPubSubKeyType Salt { get; } = new WebPubSubKeyType(SaltValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebPubSubKeyType"/> values are the same. </summary>
         public static bool operator ==(WebPubSubKeyType left, WebPubSubKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebPubSubKeyType"/> values are not the same. </summary>

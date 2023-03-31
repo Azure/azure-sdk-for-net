@@ -62,6 +62,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static AppServiceSkuName ElasticPremium { get; } = new AppServiceSkuName(ElasticPremiumValue);
         /// <summary> ElasticIsolated. </summary>
         public static AppServiceSkuName ElasticIsolated { get; } = new AppServiceSkuName(ElasticIsolatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppServiceSkuName"/> values are the same. </summary>
         public static bool operator ==(AppServiceSkuName left, AppServiceSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServiceSkuName"/> values are not the same. </summary>

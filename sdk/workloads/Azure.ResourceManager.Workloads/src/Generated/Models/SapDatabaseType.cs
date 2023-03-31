@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SapDatabaseType Hana { get; } = new SapDatabaseType(HanaValue);
         /// <summary> DB2. </summary>
         public static SapDatabaseType DB2 { get; } = new SapDatabaseType(DB2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapDatabaseType"/> values are the same. </summary>
         public static bool operator ==(SapDatabaseType left, SapDatabaseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapDatabaseType"/> values are not the same. </summary>

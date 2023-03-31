@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(RoutingPreference))
             {
                 writer.WritePropertyName("routingPreference"u8);
-                writer.WriteStringValue(RoutingPreference.Value.ToString());
+                writer.WriteStringValue(RoutingPreference.Value.ToSerialString());
             }
             if (Optional.IsDefined(ZoneRedundancyPreference))
             {

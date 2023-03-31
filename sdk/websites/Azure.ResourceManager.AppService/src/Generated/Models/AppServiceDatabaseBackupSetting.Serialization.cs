@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("databaseType"u8);
-            writer.WriteStringValue(DatabaseType.ToString());
+            writer.WriteStringValue(DatabaseType.ToSerialString());
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);

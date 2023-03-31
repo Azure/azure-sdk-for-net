@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ResourceScope))
             {
                 writer.WritePropertyName("resourceScope"u8);
-                writer.WriteStringValue(ResourceScope.Value.ToString());
+                writer.WriteStringValue(ResourceScope.Value.ToSerialString());
             }
             if (Optional.IsDefined(RuleName))
             {

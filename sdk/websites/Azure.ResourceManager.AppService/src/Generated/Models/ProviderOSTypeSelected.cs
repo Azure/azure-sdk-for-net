@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static ProviderOSTypeSelected LinuxFunctions { get; } = new ProviderOSTypeSelected(LinuxFunctionsValue);
         /// <summary> All. </summary>
         public static ProviderOSTypeSelected All { get; } = new ProviderOSTypeSelected(AllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProviderOSTypeSelected"/> values are the same. </summary>
         public static bool operator ==(ProviderOSTypeSelected left, ProviderOSTypeSelected right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProviderOSTypeSelected"/> values are not the same. </summary>

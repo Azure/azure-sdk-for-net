@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
-                writer.WriteStringValue(Method.Value.ToString());
+                writer.WriteStringValue(Method.Value.ToSerialString());
             }
             if (Optional.IsDefined(ClientSecretSettingName))
             {

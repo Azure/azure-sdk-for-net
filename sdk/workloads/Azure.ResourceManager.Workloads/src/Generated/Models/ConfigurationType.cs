@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static ConfigurationType CreateAndMount { get; } = new ConfigurationType(CreateAndMountValue);
         /// <summary> Mount. </summary>
         public static ConfigurationType Mount { get; } = new ConfigurationType(MountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConfigurationType"/> values are the same. </summary>
         public static bool operator ==(ConfigurationType left, ConfigurationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfigurationType"/> values are not the same. </summary>

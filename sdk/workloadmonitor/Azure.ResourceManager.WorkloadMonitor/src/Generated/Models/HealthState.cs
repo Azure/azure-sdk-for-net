@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
         public static HealthState Disabled { get; } = new HealthState(DisabledValue);
         /// <summary> None. </summary>
         public static HealthState None { get; } = new HealthState(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HealthState"/> values are the same. </summary>
         public static bool operator ==(HealthState left, HealthState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthState"/> values are not the same. </summary>

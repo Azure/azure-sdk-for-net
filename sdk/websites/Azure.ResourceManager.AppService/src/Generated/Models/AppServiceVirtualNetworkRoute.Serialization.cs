@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(RouteType))
             {
                 writer.WritePropertyName("routeType"u8);
-                writer.WriteStringValue(RouteType.Value.ToString());
+                writer.WriteStringValue(RouteType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

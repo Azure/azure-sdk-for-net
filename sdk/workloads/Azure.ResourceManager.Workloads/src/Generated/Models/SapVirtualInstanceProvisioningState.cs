@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SapVirtualInstanceProvisioningState Failed { get; } = new SapVirtualInstanceProvisioningState(FailedValue);
         /// <summary> Deleting. </summary>
         public static SapVirtualInstanceProvisioningState Deleting { get; } = new SapVirtualInstanceProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SapVirtualInstanceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SapVirtualInstanceProvisioningState left, SapVirtualInstanceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapVirtualInstanceProvisioningState"/> values are not the same. </summary>

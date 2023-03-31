@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration);
             }
             writer.WritePropertyName("softwareInstallationType"u8);
-            writer.WriteStringValue(SoftwareInstallationType.ToString());
+            writer.WriteStringValue(SoftwareInstallationType.ToSerialString());
             writer.WriteEndObject();
         }
 

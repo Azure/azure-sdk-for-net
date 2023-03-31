@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/providers/Microsoft.Web/geoRegions", false);
             if (sku != null)
             {
-                uri.AppendQuery("sku", sku.Value.ToString(), true);
+                uri.AppendQuery("sku", sku.Value.ToSerialString(), true);
             }
             if (linuxWorkersEnabled != null)
             {

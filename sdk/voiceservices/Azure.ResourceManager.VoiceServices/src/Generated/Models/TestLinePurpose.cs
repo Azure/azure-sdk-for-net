@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
         public static TestLinePurpose Manual { get; } = new TestLinePurpose(ManualValue);
         /// <summary> Automated. </summary>
         public static TestLinePurpose Automated { get; } = new TestLinePurpose(AutomatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TestLinePurpose"/> values are the same. </summary>
         public static bool operator ==(TestLinePurpose left, TestLinePurpose right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TestLinePurpose"/> values are not the same. </summary>
