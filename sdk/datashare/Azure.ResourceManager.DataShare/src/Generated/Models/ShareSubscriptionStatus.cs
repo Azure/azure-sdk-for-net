@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public static ShareSubscriptionStatus SourceDeleted { get; } = new ShareSubscriptionStatus(SourceDeletedValue);
         /// <summary> Revoking. </summary>
         public static ShareSubscriptionStatus Revoking { get; } = new ShareSubscriptionStatus(RevokingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ShareSubscriptionStatus"/> values are the same. </summary>
         public static bool operator ==(ShareSubscriptionStatus left, ShareSubscriptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareSubscriptionStatus"/> values are not the same. </summary>

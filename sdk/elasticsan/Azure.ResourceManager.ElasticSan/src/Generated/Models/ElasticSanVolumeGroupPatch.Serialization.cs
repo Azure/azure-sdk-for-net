@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             if (Optional.IsDefined(ProtocolType))
             {
                 writer.WritePropertyName("protocolType"u8);
-                writer.WriteStringValue(ProtocolType.Value.ToString());
+                writer.WriteStringValue(ProtocolType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteStringValue(Encryption.Value.ToString());
+                writer.WriteStringValue(Encryption.Value.ToSerialString());
             }
             if (Optional.IsDefined(NetworkAcls))
             {

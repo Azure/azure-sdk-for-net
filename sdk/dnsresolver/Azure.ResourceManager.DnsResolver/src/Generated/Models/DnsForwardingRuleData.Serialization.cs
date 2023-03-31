@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DnsResolver
             if (Optional.IsDefined(DnsForwardingRuleState))
             {
                 writer.WritePropertyName("forwardingRuleState"u8);
-                writer.WriteStringValue(DnsForwardingRuleState.Value.ToString());
+                writer.WriteStringValue(DnsForwardingRuleState.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

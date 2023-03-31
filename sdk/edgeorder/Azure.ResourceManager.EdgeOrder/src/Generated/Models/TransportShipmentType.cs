@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static TransportShipmentType CustomerManaged { get; } = new TransportShipmentType(CustomerManagedValue);
         /// <summary> Shipment Logistics is handled by Microsoft. </summary>
         public static TransportShipmentType MicrosoftManaged { get; } = new TransportShipmentType(MicrosoftManagedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TransportShipmentType"/> values are the same. </summary>
         public static bool operator ==(TransportShipmentType left, TransportShipmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TransportShipmentType"/> values are not the same. </summary>

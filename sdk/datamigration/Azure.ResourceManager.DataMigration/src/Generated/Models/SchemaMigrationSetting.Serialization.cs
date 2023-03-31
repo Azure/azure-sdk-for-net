@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SchemaOption))
             {
                 writer.WritePropertyName("schemaOption"u8);
-                writer.WriteStringValue(SchemaOption.Value.ToString());
+                writer.WriteStringValue(SchemaOption.Value.ToSerialString());
             }
             if (Optional.IsDefined(FileId))
             {

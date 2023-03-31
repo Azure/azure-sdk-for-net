@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(RemoteApplicationType))
             {
                 writer.WritePropertyName("remoteApplicationType"u8);
-                writer.WriteStringValue(RemoteApplicationType.Value.ToString());
+                writer.WriteStringValue(RemoteApplicationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(AccessLevel))
             {
                 writer.WritePropertyName("accessLevel"u8);
-                writer.WriteStringValue(AccessLevel.Value.ToString());
+                writer.WriteStringValue(AccessLevel.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExpireOn))
             {

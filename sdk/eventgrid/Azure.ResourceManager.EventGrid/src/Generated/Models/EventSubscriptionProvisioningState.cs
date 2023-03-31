@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static EventSubscriptionProvisioningState Failed { get; } = new EventSubscriptionProvisioningState(FailedValue);
         /// <summary> AwaitingManualAction. </summary>
         public static EventSubscriptionProvisioningState AwaitingManualAction { get; } = new EventSubscriptionProvisioningState(AwaitingManualActionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventSubscriptionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(EventSubscriptionProvisioningState left, EventSubscriptionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventSubscriptionProvisioningState"/> values are not the same. </summary>

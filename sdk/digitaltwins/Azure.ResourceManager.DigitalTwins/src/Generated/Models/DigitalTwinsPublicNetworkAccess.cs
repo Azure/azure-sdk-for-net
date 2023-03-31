@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static DigitalTwinsPublicNetworkAccess Enabled { get; } = new DigitalTwinsPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static DigitalTwinsPublicNetworkAccess Disabled { get; } = new DigitalTwinsPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DigitalTwinsPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(DigitalTwinsPublicNetworkAccess left, DigitalTwinsPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DigitalTwinsPublicNetworkAccess"/> values are not the same. </summary>

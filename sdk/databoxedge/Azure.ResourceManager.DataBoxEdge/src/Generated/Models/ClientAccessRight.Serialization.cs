@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WritePropertyName("client"u8);
             writer.WriteStringValue(Client);
             writer.WritePropertyName("accessPermission"u8);
-            writer.WriteStringValue(AccessPermission.ToString());
+            writer.WriteStringValue(AccessPermission.ToSerialString());
             writer.WriteEndObject();
         }
 

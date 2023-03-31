@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static PolybaseSettingsRejectType Value { get; } = new PolybaseSettingsRejectType(ValueValue);
         /// <summary> percentage. </summary>
         public static PolybaseSettingsRejectType Percentage { get; } = new PolybaseSettingsRejectType(PercentageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolybaseSettingsRejectType"/> values are the same. </summary>
         public static bool operator ==(PolybaseSettingsRejectType left, PolybaseSettingsRejectType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolybaseSettingsRejectType"/> values are not the same. </summary>

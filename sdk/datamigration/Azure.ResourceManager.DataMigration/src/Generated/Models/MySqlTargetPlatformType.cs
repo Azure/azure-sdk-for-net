@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static MySqlTargetPlatformType SqlServer { get; } = new MySqlTargetPlatformType(SqlServerValue);
         /// <summary> AzureDbForMySQL. </summary>
         public static MySqlTargetPlatformType AzureDBForMySql { get; } = new MySqlTargetPlatformType(AzureDBForMySqlValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MySqlTargetPlatformType"/> values are the same. </summary>
         public static bool operator ==(MySqlTargetPlatformType left, MySqlTargetPlatformType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlTargetPlatformType"/> values are not the same. </summary>

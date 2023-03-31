@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// Serialized Name: SubscriptionState.Warned
         /// </summary>
         public static DataLakeAnalyticsSubscriptionState Warned { get; } = new DataLakeAnalyticsSubscriptionState(WarnedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataLakeAnalyticsSubscriptionState"/> values are the same. </summary>
         public static bool operator ==(DataLakeAnalyticsSubscriptionState left, DataLakeAnalyticsSubscriptionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataLakeAnalyticsSubscriptionState"/> values are not the same. </summary>

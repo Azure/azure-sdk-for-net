@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Elastic.Models
         public static TagAction Include { get; } = new TagAction(IncludeValue);
         /// <summary> Exclude. </summary>
         public static TagAction Exclude { get; } = new TagAction(ExcludeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TagAction"/> values are the same. </summary>
         public static bool operator ==(TagAction left, TagAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TagAction"/> values are not the same. </summary>

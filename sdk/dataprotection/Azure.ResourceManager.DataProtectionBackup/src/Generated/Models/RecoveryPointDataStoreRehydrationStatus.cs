@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static RecoveryPointDataStoreRehydrationStatus Deleted { get; } = new RecoveryPointDataStoreRehydrationStatus(DeletedValue);
         /// <summary> FAILED. </summary>
         public static RecoveryPointDataStoreRehydrationStatus Failed { get; } = new RecoveryPointDataStoreRehydrationStatus(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecoveryPointDataStoreRehydrationStatus"/> values are the same. </summary>
         public static bool operator ==(RecoveryPointDataStoreRehydrationStatus left, RecoveryPointDataStoreRehydrationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryPointDataStoreRehydrationStatus"/> values are not the same. </summary>

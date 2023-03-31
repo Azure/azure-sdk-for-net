@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationType"u8);
-            writer.WriteStringValue(AuthenticationType.ToString());
+            writer.WriteStringValue(AuthenticationType.ToSerialString());
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);

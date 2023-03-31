@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static DigitalTwinsManagedIdentityType SystemAssigned { get; } = new DigitalTwinsManagedIdentityType(SystemAssignedValue);
         /// <summary> UserAssigned. </summary>
         public static DigitalTwinsManagedIdentityType UserAssigned { get; } = new DigitalTwinsManagedIdentityType(UserAssignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DigitalTwinsManagedIdentityType"/> values are the same. </summary>
         public static bool operator ==(DigitalTwinsManagedIdentityType left, DigitalTwinsManagedIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DigitalTwinsManagedIdentityType"/> values are not the same. </summary>

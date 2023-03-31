@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static SchemaMigrationStage CompletedWithWarnings { get; } = new SchemaMigrationStage(CompletedWithWarningsValue);
         /// <summary> Failed. </summary>
         public static SchemaMigrationStage Failed { get; } = new SchemaMigrationStage(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SchemaMigrationStage"/> values are the same. </summary>
         public static bool operator ==(SchemaMigrationStage left, SchemaMigrationStage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SchemaMigrationStage"/> values are not the same. </summary>

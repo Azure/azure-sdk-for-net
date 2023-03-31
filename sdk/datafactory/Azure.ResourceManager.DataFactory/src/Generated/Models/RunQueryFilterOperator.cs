@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static RunQueryFilterOperator In { get; } = new RunQueryFilterOperator(InValue);
         /// <summary> NotIn. </summary>
         public static RunQueryFilterOperator NotIn { get; } = new RunQueryFilterOperator(NotInValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RunQueryFilterOperator"/> values are the same. </summary>
         public static bool operator ==(RunQueryFilterOperator left, RunQueryFilterOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunQueryFilterOperator"/> values are not the same. </summary>

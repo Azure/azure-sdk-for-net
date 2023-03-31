@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static PartnerTopicProvisioningState Failed { get; } = new PartnerTopicProvisioningState(FailedValue);
         /// <summary> IdleDueToMirroredChannelResourceDeletion. </summary>
         public static PartnerTopicProvisioningState IdleDueToMirroredChannelResourceDeletion { get; } = new PartnerTopicProvisioningState(IdleDueToMirroredChannelResourceDeletionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PartnerTopicProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PartnerTopicProvisioningState left, PartnerTopicProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PartnerTopicProvisioningState"/> values are not the same. </summary>

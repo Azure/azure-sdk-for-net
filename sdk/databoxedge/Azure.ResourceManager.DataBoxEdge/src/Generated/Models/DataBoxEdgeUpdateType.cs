@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeUpdateType Kubernetes { get; } = new DataBoxEdgeUpdateType(KubernetesValue);
         /// <summary> Firmware. </summary>
         public static DataBoxEdgeUpdateType Firmware { get; } = new DataBoxEdgeUpdateType(FirmwareValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeUpdateType"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeUpdateType left, DataBoxEdgeUpdateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeUpdateType"/> values are not the same. </summary>

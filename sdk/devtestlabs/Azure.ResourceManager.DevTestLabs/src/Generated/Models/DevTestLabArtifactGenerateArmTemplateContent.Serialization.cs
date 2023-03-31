@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(FileUploadOptions))
             {
                 writer.WritePropertyName("fileUploadOptions"u8);
-                writer.WriteStringValue(FileUploadOptions.Value.ToString());
+                writer.WriteStringValue(FileUploadOptions.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

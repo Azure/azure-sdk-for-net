@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public static DataShareInvitationStatus Rejected { get; } = new DataShareInvitationStatus(RejectedValue);
         /// <summary> Withdrawn. </summary>
         public static DataShareInvitationStatus Withdrawn { get; } = new DataShareInvitationStatus(WithdrawnValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataShareInvitationStatus"/> values are the same. </summary>
         public static bool operator ==(DataShareInvitationStatus left, DataShareInvitationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataShareInvitationStatus"/> values are not the same. </summary>

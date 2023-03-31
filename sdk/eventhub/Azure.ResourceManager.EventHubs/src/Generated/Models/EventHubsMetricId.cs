@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsMetricId IncomingMessages { get; } = new EventHubsMetricId(IncomingMessagesValue);
         /// <summary> OutgoingMessages. </summary>
         public static EventHubsMetricId OutgoingMessages { get; } = new EventHubsMetricId(OutgoingMessagesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsMetricId"/> values are the same. </summary>
         public static bool operator ==(EventHubsMetricId left, EventHubsMetricId right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsMetricId"/> values are not the same. </summary>

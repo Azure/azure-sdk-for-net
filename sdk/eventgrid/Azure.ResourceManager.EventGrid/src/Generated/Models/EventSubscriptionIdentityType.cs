@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static EventSubscriptionIdentityType SystemAssigned { get; } = new EventSubscriptionIdentityType(SystemAssignedValue);
         /// <summary> UserAssigned. </summary>
         public static EventSubscriptionIdentityType UserAssigned { get; } = new EventSubscriptionIdentityType(UserAssignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventSubscriptionIdentityType"/> values are the same. </summary>
         public static bool operator ==(EventSubscriptionIdentityType left, EventSubscriptionIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventSubscriptionIdentityType"/> values are not the same. </summary>

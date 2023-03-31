@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static EdgeOrderProductChargingType PerOrder { get; } = new EdgeOrderProductChargingType(PerOrderValue);
         /// <summary> Per device charging type. </summary>
         public static EdgeOrderProductChargingType PerDevice { get; } = new EdgeOrderProductChargingType(PerDeviceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeOrderProductChargingType"/> values are the same. </summary>
         public static bool operator ==(EdgeOrderProductChargingType left, EdgeOrderProductChargingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeOrderProductChargingType"/> values are not the same. </summary>

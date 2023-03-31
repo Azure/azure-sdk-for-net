@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static FactoryTriggerRunStatus Failed { get; } = new FactoryTriggerRunStatus(FailedValue);
         /// <summary> Inprogress. </summary>
         public static FactoryTriggerRunStatus Inprogress { get; } = new FactoryTriggerRunStatus(InprogressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FactoryTriggerRunStatus"/> values are the same. </summary>
         public static bool operator ==(FactoryTriggerRunStatus left, FactoryTriggerRunStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FactoryTriggerRunStatus"/> values are not the same. </summary>

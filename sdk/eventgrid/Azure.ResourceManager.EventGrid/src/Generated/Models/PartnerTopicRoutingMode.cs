@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static PartnerTopicRoutingMode SourceEventAttribute { get; } = new PartnerTopicRoutingMode(SourceEventAttributeValue);
         /// <summary> ChannelNameHeader. </summary>
         public static PartnerTopicRoutingMode ChannelNameHeader { get; } = new PartnerTopicRoutingMode(ChannelNameHeaderValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PartnerTopicRoutingMode"/> values are the same. </summary>
         public static bool operator ==(PartnerTopicRoutingMode left, PartnerTopicRoutingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PartnerTopicRoutingMode"/> values are not the same. </summary>

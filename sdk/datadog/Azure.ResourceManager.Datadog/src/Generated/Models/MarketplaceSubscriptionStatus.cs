@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Datadog.Models
         public static MarketplaceSubscriptionStatus Suspended { get; } = new MarketplaceSubscriptionStatus(SuspendedValue);
         /// <summary> Unsubscribed. </summary>
         public static MarketplaceSubscriptionStatus Unsubscribed { get; } = new MarketplaceSubscriptionStatus(UnsubscribedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionStatus"/> values are the same. </summary>
         public static bool operator ==(MarketplaceSubscriptionStatus left, MarketplaceSubscriptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MarketplaceSubscriptionStatus"/> values are not the same. </summary>

@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsNetworkSecurityPerimeterConfigurationProvisioningState Deleted { get; } = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(DeletedValue);
         /// <summary> Canceled. </summary>
         public static EventHubsNetworkSecurityPerimeterConfigurationProvisioningState Canceled { get; } = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsNetworkSecurityPerimeterConfigurationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(EventHubsNetworkSecurityPerimeterConfigurationProvisioningState left, EventHubsNetworkSecurityPerimeterConfigurationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsNetworkSecurityPerimeterConfigurationProvisioningState"/> values are not the same. </summary>

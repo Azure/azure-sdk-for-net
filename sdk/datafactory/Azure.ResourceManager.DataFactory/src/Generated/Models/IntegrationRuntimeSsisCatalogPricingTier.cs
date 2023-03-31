@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static IntegrationRuntimeSsisCatalogPricingTier Premium { get; } = new IntegrationRuntimeSsisCatalogPricingTier(PremiumValue);
         /// <summary> PremiumRS. </summary>
         public static IntegrationRuntimeSsisCatalogPricingTier PremiumRS { get; } = new IntegrationRuntimeSsisCatalogPricingTier(PremiumRSValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeSsisCatalogPricingTier"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeSsisCatalogPricingTier left, IntegrationRuntimeSsisCatalogPricingTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeSsisCatalogPricingTier"/> values are not the same. </summary>

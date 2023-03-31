@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static BackupFileStatus Restored { get; } = new BackupFileStatus(RestoredValue);
         /// <summary> Cancelled. </summary>
         public static BackupFileStatus Cancelled { get; } = new BackupFileStatus(CancelledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupFileStatus"/> values are the same. </summary>
         public static bool operator ==(BackupFileStatus left, BackupFileStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupFileStatus"/> values are not the same. </summary>

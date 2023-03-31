@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static TriggerEventType FileEvent { get; } = new TriggerEventType(FileEventValue);
         /// <summary> PeriodicTimerEvent. </summary>
         public static TriggerEventType PeriodicTimerEvent { get; } = new TriggerEventType(PeriodicTimerEventValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TriggerEventType"/> values are the same. </summary>
         public static bool operator ==(TriggerEventType left, TriggerEventType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TriggerEventType"/> values are not the same. </summary>

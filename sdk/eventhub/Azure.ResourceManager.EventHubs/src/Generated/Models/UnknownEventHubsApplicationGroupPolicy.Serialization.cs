@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ApplicationGroupPolicyType.ToString());
+            writer.WriteStringValue(ApplicationGroupPolicyType.ToSerialString());
             writer.WriteEndObject();
         }
 

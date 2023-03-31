@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             writer.WritePropertyName("hostPoolArmPath"u8);
             writer.WriteStringValue(HostPoolId);
             writer.WritePropertyName("applicationGroupType"u8);
-            writer.WriteStringValue(ApplicationGroupType.ToString());
+            writer.WriteStringValue(ApplicationGroupType.ToSerialString());
             if (Optional.IsDefined(MigrationRequest))
             {
                 writer.WritePropertyName("migrationRequest"u8);

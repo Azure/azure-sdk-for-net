@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeNetworkAdapterStatus Inactive { get; } = new DataBoxEdgeNetworkAdapterStatus(InactiveValue);
         /// <summary> Active. </summary>
         public static DataBoxEdgeNetworkAdapterStatus Active { get; } = new DataBoxEdgeNetworkAdapterStatus(ActiveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkAdapterStatus"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeNetworkAdapterStatus left, DataBoxEdgeNetworkAdapterStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkAdapterStatus"/> values are not the same. </summary>

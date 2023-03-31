@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("inputSchemaMappingType"u8);
-            writer.WriteStringValue(InputSchemaMappingType.ToString());
+            writer.WriteStringValue(InputSchemaMappingType.ToSerialString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))

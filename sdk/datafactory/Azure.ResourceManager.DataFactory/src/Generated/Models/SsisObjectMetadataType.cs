@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static SsisObjectMetadataType Package { get; } = new SsisObjectMetadataType(PackageValue);
         /// <summary> Environment. </summary>
         public static SsisObjectMetadataType Environment { get; } = new SsisObjectMetadataType(EnvironmentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SsisObjectMetadataType"/> values are the same. </summary>
         public static bool operator ==(SsisObjectMetadataType left, SsisObjectMetadataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SsisObjectMetadataType"/> values are not the same. </summary>

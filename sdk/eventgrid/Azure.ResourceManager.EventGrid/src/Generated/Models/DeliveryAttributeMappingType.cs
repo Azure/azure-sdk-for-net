@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static DeliveryAttributeMappingType Static { get; } = new DeliveryAttributeMappingType(StaticValue);
         /// <summary> Dynamic. </summary>
         public static DeliveryAttributeMappingType Dynamic { get; } = new DeliveryAttributeMappingType(DynamicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeliveryAttributeMappingType"/> values are the same. </summary>
         public static bool operator ==(DeliveryAttributeMappingType left, DeliveryAttributeMappingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeliveryAttributeMappingType"/> values are not the same. </summary>

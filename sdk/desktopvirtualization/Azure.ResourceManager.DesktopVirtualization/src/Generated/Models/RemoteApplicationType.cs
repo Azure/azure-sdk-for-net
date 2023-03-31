@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static RemoteApplicationType InBuilt { get; } = new RemoteApplicationType(InBuiltValue);
         /// <summary> MsixApplication. </summary>
         public static RemoteApplicationType MsixApplication { get; } = new RemoteApplicationType(MsixApplicationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RemoteApplicationType"/> values are the same. </summary>
         public static bool operator ==(RemoteApplicationType left, RemoteApplicationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RemoteApplicationType"/> values are not the same. </summary>

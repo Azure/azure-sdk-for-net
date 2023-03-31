@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeStorageAccountType GeneralPurposeStorage { get; } = new DataBoxEdgeStorageAccountType(GeneralPurposeStorageValue);
         /// <summary> BlobStorage. </summary>
         public static DataBoxEdgeStorageAccountType BlobStorage { get; } = new DataBoxEdgeStorageAccountType(BlobStorageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeStorageAccountType left, DataBoxEdgeStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeStorageAccountType"/> values are not the same. </summary>

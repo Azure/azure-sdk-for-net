@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public static DataShareProvisioningState Moving { get; } = new DataShareProvisioningState(MovingValue);
         /// <summary> Failed. </summary>
         public static DataShareProvisioningState Failed { get; } = new DataShareProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataShareProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DataShareProvisioningState left, DataShareProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataShareProvisioningState"/> values are not the same. </summary>

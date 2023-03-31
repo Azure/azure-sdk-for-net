@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static OrderItemType Purchase { get; } = new OrderItemType(PurchaseValue);
         /// <summary> Rental OrderItem. </summary>
         public static OrderItemType Rental { get; } = new OrderItemType(RentalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OrderItemType"/> values are the same. </summary>
         public static bool operator ==(OrderItemType left, OrderItemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrderItemType"/> values are not the same. </summary>

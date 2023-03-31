@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> SsisCatalog. </summary>
         public static SsisStoreType SsisCatalog { get; } = new SsisStoreType(SsisCatalogValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SsisStoreType"/> values are the same. </summary>
         public static bool operator ==(SsisStoreType left, SsisStoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SsisStoreType"/> values are not the same. </summary>

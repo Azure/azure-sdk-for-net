@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeShipmentType ShippedToCustomer { get; } = new DataBoxEdgeShipmentType(ShippedToCustomerValue);
         /// <summary> SelfPickup. </summary>
         public static DataBoxEdgeShipmentType SelfPickup { get; } = new DataBoxEdgeShipmentType(SelfPickupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeShipmentType"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeShipmentType left, DataBoxEdgeShipmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeShipmentType"/> values are not the same. </summary>

@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static MigrationStatus Completed { get; } = new MigrationStatus(CompletedValue);
         /// <summary> CompletedWithWarnings. </summary>
         public static MigrationStatus CompletedWithWarnings { get; } = new MigrationStatus(CompletedWithWarningsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MigrationStatus"/> values are the same. </summary>
         public static bool operator ==(MigrationStatus left, MigrationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MigrationStatus"/> values are not the same. </summary>

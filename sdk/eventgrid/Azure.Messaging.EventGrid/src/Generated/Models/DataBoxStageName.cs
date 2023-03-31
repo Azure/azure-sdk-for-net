@@ -32,6 +32,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static DataBoxStageName CopyCompleted { get; } = new DataBoxStageName(CopyCompletedValue);
         /// <summary> Order has been completed. </summary>
         public static DataBoxStageName OrderCompleted { get; } = new DataBoxStageName(OrderCompletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxStageName"/> values are the same. </summary>
         public static bool operator ==(DataBoxStageName left, DataBoxStageName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxStageName"/> values are not the same. </summary>

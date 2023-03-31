@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static DataProtectionBackupDayOfWeek Tuesday { get; } = new DataProtectionBackupDayOfWeek(TuesdayValue);
         /// <summary> Wednesday. </summary>
         public static DataProtectionBackupDayOfWeek Wednesday { get; } = new DataProtectionBackupDayOfWeek(WednesdayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataProtectionBackupDayOfWeek"/> values are the same. </summary>
         public static bool operator ==(DataProtectionBackupDayOfWeek left, DataProtectionBackupDayOfWeek right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataProtectionBackupDayOfWeek"/> values are not the same. </summary>

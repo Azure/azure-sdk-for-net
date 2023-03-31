@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static DeviceProvisioningServicesNameUnavailableReason Invalid { get; } = new DeviceProvisioningServicesNameUnavailableReason(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static DeviceProvisioningServicesNameUnavailableReason AlreadyExists { get; } = new DeviceProvisioningServicesNameUnavailableReason(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(DeviceProvisioningServicesNameUnavailableReason left, DeviceProvisioningServicesNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesNameUnavailableReason"/> values are not the same. </summary>

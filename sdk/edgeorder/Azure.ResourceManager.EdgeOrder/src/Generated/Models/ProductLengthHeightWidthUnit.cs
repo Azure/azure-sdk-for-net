@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static ProductLengthHeightWidthUnit IN { get; } = new ProductLengthHeightWidthUnit(INValue);
         /// <summary> Centimeter. </summary>
         public static ProductLengthHeightWidthUnit CM { get; } = new ProductLengthHeightWidthUnit(CMValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProductLengthHeightWidthUnit"/> values are the same. </summary>
         public static bool operator ==(ProductLengthHeightWidthUnit left, ProductLengthHeightWidthUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProductLengthHeightWidthUnit"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static IntegrationRuntimeAutoUpdate On { get; } = new IntegrationRuntimeAutoUpdate(OnValue);
         /// <summary> Off. </summary>
         public static IntegrationRuntimeAutoUpdate Off { get; } = new IntegrationRuntimeAutoUpdate(OffValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeAutoUpdate"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeAutoUpdate left, IntegrationRuntimeAutoUpdate right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeAutoUpdate"/> values are not the same. </summary>

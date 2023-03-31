@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static SchemaMigrationOption ExtractFromSource { get; } = new SchemaMigrationOption(ExtractFromSourceValue);
         /// <summary> UseStorageFile. </summary>
         public static SchemaMigrationOption UseStorageFile { get; } = new SchemaMigrationOption(UseStorageFileValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SchemaMigrationOption"/> values are the same. </summary>
         public static bool operator ==(SchemaMigrationOption left, SchemaMigrationOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SchemaMigrationOption"/> values are not the same. </summary>

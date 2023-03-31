@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static GoogleBigQueryAuthenticationType ServiceAuthentication { get; } = new GoogleBigQueryAuthenticationType(ServiceAuthenticationValue);
         /// <summary> UserAuthentication. </summary>
         public static GoogleBigQueryAuthenticationType UserAuthentication { get; } = new GoogleBigQueryAuthenticationType(UserAuthenticationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GoogleBigQueryAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(GoogleBigQueryAuthenticationType left, GoogleBigQueryAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GoogleBigQueryAuthenticationType"/> values are not the same. </summary>

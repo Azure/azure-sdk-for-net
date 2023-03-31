@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static DeviceUpdatePrivateEndpointServiceConnectionStatus Approved { get; } = new DeviceUpdatePrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static DeviceUpdatePrivateEndpointServiceConnectionStatus Rejected { get; } = new DeviceUpdatePrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceUpdatePrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(DeviceUpdatePrivateEndpointServiceConnectionStatus left, DeviceUpdatePrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceUpdatePrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

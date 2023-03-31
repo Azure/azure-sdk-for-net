@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static MongoDBMigrationState Canceled { get; } = new MongoDBMigrationState(CanceledValue);
         /// <summary> Failed. </summary>
         public static MongoDBMigrationState Failed { get; } = new MongoDBMigrationState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MongoDBMigrationState"/> values are the same. </summary>
         public static bool operator ==(MongoDBMigrationState left, MongoDBMigrationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoDBMigrationState"/> values are not the same. </summary>

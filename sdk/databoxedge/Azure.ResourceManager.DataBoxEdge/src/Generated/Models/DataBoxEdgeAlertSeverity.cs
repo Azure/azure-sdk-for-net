@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeAlertSeverity Warning { get; } = new DataBoxEdgeAlertSeverity(WarningValue);
         /// <summary> Critical. </summary>
         public static DataBoxEdgeAlertSeverity Critical { get; } = new DataBoxEdgeAlertSeverity(CriticalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeAlertSeverity"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeAlertSeverity left, DataBoxEdgeAlertSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeAlertSeverity"/> values are not the same. </summary>

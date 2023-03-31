@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(UseInVmCreationPermission))
             {
                 writer.WritePropertyName("useInVmCreationPermission"u8);
-                writer.WriteStringValue(UseInVmCreationPermission.Value.ToString());
+                writer.WriteStringValue(UseInVmCreationPermission.Value.ToSerialString());
             }
             if (Optional.IsDefined(UsePublicIPAddressPermission))
             {
                 writer.WritePropertyName("usePublicIpAddressPermission"u8);
-                writer.WriteStringValue(UsePublicIPAddressPermission.Value.ToString());
+                writer.WriteStringValue(UsePublicIPAddressPermission.Value.ToSerialString());
             }
             if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> StorageBlob. </summary>
         public static DeadLetterEndPointType StorageBlob { get; } = new DeadLetterEndPointType(StorageBlobValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeadLetterEndPointType"/> values are the same. </summary>
         public static bool operator ==(DeadLetterEndPointType left, DeadLetterEndPointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeadLetterEndPointType"/> values are not the same. </summary>

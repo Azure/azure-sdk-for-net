@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
-                writer.WriteStringValue(AuthenticationType.Value.ToString());
+                writer.WriteStringValue(AuthenticationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(UserName))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AadServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("aadServicePrincipalCredentialType"u8);
-                writer.WriteStringValue(AadServicePrincipalCredentialType.Value.ToString());
+                writer.WriteStringValue(AadServicePrincipalCredentialType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ServicePrincipalKey))
             {

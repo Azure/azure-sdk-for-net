@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public static DataShareKind CopyBased { get; } = new DataShareKind(CopyBasedValue);
         /// <summary> InPlace. </summary>
         public static DataShareKind InPlace { get; } = new DataShareKind(InPlaceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataShareKind"/> values are the same. </summary>
         public static bool operator ==(DataShareKind left, DataShareKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataShareKind"/> values are not the same. </summary>

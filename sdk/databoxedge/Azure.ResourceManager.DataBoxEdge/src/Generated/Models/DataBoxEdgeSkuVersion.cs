@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeSkuVersion Stable { get; } = new DataBoxEdgeSkuVersion(StableValue);
         /// <summary> Preview. </summary>
         public static DataBoxEdgeSkuVersion Preview { get; } = new DataBoxEdgeSkuVersion(PreviewValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuVersion"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeSkuVersion left, DataBoxEdgeSkuVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuVersion"/> values are not the same. </summary>

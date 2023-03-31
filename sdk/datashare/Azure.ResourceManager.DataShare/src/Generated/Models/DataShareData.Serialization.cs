@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataShare
             if (Optional.IsDefined(ShareKind))
             {
                 writer.WritePropertyName("shareKind"u8);
-                writer.WriteStringValue(ShareKind.Value.ToString());
+                writer.WriteStringValue(ShareKind.Value.ToSerialString());
             }
             if (Optional.IsDefined(Terms))
             {

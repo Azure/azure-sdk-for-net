@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CatalogPricingTier))
             {
                 writer.WritePropertyName("catalogPricingTier"u8);
-                writer.WriteStringValue(CatalogPricingTier.Value.ToString());
+                writer.WriteStringValue(CatalogPricingTier.Value.ToSerialString());
             }
             if (Optional.IsDefined(DualStandbyPairName))
             {

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static ProactiveDiagnosticsConsent Enabled { get; } = new ProactiveDiagnosticsConsent(EnabledValue);
         /// <summary> Disabled. </summary>
         public static ProactiveDiagnosticsConsent Disabled { get; } = new ProactiveDiagnosticsConsent(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProactiveDiagnosticsConsent"/> values are the same. </summary>
         public static bool operator ==(ProactiveDiagnosticsConsent left, ProactiveDiagnosticsConsent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProactiveDiagnosticsConsent"/> values are not the same. </summary>

@@ -65,6 +65,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public static DataSetKind SqlDWTable { get; } = new DataSetKind(SqlDWTableValue);
         /// <summary> SynapseWorkspaceSqlPoolTable. </summary>
         public static DataSetKind SynapseWorkspaceSqlPoolTable { get; } = new DataSetKind(SynapseWorkspaceSqlPoolTableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataSetKind"/> values are the same. </summary>
         public static bool operator ==(DataSetKind left, DataSetKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataSetKind"/> values are not the same. </summary>

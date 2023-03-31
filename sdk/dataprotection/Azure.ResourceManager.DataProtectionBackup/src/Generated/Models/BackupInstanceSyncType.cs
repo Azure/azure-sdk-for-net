@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static BackupInstanceSyncType Default { get; } = new BackupInstanceSyncType(DefaultValue);
         /// <summary> ForceResync. </summary>
         public static BackupInstanceSyncType ForceResync { get; } = new BackupInstanceSyncType(ForceResyncValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupInstanceSyncType"/> values are the same. </summary>
         public static bool operator ==(BackupInstanceSyncType left, BackupInstanceSyncType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupInstanceSyncType"/> values are not the same. </summary>

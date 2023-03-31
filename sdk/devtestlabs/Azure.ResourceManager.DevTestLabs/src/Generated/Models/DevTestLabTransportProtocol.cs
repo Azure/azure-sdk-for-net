@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabTransportProtocol Tcp { get; } = new DevTestLabTransportProtocol(TcpValue);
         /// <summary> Udp. </summary>
         public static DevTestLabTransportProtocol Udp { get; } = new DevTestLabTransportProtocol(UdpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabTransportProtocol"/> values are the same. </summary>
         public static bool operator ==(DevTestLabTransportProtocol left, DevTestLabTransportProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabTransportProtocol"/> values are not the same. </summary>

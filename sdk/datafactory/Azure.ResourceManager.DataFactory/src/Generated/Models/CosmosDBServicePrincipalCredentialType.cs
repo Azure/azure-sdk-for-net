@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static CosmosDBServicePrincipalCredentialType ServicePrincipalKey { get; } = new CosmosDBServicePrincipalCredentialType(ServicePrincipalKeyValue);
         /// <summary> ServicePrincipalCert. </summary>
         public static CosmosDBServicePrincipalCredentialType ServicePrincipalCert { get; } = new CosmosDBServicePrincipalCredentialType(ServicePrincipalCertValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBServicePrincipalCredentialType"/> values are the same. </summary>
         public static bool operator ==(CosmosDBServicePrincipalCredentialType left, CosmosDBServicePrincipalCredentialType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBServicePrincipalCredentialType"/> values are not the same. </summary>

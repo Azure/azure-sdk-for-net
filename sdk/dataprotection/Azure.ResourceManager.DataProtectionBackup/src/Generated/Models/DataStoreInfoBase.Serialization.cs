@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataStoreType"u8);
-            writer.WriteStringValue(DataStoreType.ToString());
+            writer.WriteStringValue(DataStoreType.ToSerialString());
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static ReplicateMigrationState ActionRequired { get; } = new ReplicateMigrationState(ActionRequiredValue);
         /// <summary> FAILED. </summary>
         public static ReplicateMigrationState Failed { get; } = new ReplicateMigrationState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReplicateMigrationState"/> values are the same. </summary>
         public static bool operator ==(ReplicateMigrationState left, ReplicateMigrationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReplicateMigrationState"/> values are not the same. </summary>

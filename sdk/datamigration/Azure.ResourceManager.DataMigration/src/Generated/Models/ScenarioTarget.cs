@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static ScenarioTarget AzureDBForPostgresSql { get; } = new ScenarioTarget(AzureDBForPostgresSqlValue);
         /// <summary> MongoDB. </summary>
         public static ScenarioTarget MongoDB { get; } = new ScenarioTarget(MongoDBValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScenarioTarget"/> values are the same. </summary>
         public static bool operator ==(ScenarioTarget left, ScenarioTarget right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScenarioTarget"/> values are not the same. </summary>

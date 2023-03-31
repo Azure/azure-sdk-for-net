@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DevSpaces.Models
 
         /// <summary> S1. </summary>
         public static DevSpacesSkuName S1 { get; } = new DevSpacesSkuName(S1Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevSpacesSkuName"/> values are the same. </summary>
         public static bool operator ==(DevSpacesSkuName left, DevSpacesSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevSpacesSkuName"/> values are not the same. </summary>

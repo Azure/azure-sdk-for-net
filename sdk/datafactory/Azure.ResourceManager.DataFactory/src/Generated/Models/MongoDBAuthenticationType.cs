@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static MongoDBAuthenticationType Basic { get; } = new MongoDBAuthenticationType(BasicValue);
         /// <summary> Anonymous. </summary>
         public static MongoDBAuthenticationType Anonymous { get; } = new MongoDBAuthenticationType(AnonymousValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MongoDBAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(MongoDBAuthenticationType left, MongoDBAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoDBAuthenticationType"/> values are not the same. </summary>

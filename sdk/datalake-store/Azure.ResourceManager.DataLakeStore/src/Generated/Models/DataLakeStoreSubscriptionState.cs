@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public static DataLakeStoreSubscriptionState Unregistered { get; } = new DataLakeStoreSubscriptionState(UnregisteredValue);
         /// <summary> Warned. </summary>
         public static DataLakeStoreSubscriptionState Warned { get; } = new DataLakeStoreSubscriptionState(WarnedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataLakeStoreSubscriptionState"/> values are the same. </summary>
         public static bool operator ==(DataLakeStoreSubscriptionState left, DataLakeStoreSubscriptionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataLakeStoreSubscriptionState"/> values are not the same. </summary>

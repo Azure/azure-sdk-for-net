@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static IntegrationRuntimeState Offline { get; } = new IntegrationRuntimeState(OfflineValue);
         /// <summary> AccessDenied. </summary>
         public static IntegrationRuntimeState AccessDenied { get; } = new IntegrationRuntimeState(AccessDeniedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeState"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeState left, IntegrationRuntimeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeState"/> values are not the same. </summary>

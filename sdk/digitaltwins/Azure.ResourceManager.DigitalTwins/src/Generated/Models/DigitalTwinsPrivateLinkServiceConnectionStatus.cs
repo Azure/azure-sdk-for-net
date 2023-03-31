@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static DigitalTwinsPrivateLinkServiceConnectionStatus Rejected { get; } = new DigitalTwinsPrivateLinkServiceConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static DigitalTwinsPrivateLinkServiceConnectionStatus Disconnected { get; } = new DigitalTwinsPrivateLinkServiceConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DigitalTwinsPrivateLinkServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(DigitalTwinsPrivateLinkServiceConnectionStatus left, DigitalTwinsPrivateLinkServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DigitalTwinsPrivateLinkServiceConnectionStatus"/> values are not the same. </summary>

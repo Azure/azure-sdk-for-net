@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static InboundEndpointIPAllocationMethod Static { get; } = new InboundEndpointIPAllocationMethod(StaticValue);
         /// <summary> Dynamic. </summary>
         public static InboundEndpointIPAllocationMethod Dynamic { get; } = new InboundEndpointIPAllocationMethod(DynamicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InboundEndpointIPAllocationMethod"/> values are the same. </summary>
         public static bool operator ==(InboundEndpointIPAllocationMethod left, InboundEndpointIPAllocationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InboundEndpointIPAllocationMethod"/> values are not the same. </summary>

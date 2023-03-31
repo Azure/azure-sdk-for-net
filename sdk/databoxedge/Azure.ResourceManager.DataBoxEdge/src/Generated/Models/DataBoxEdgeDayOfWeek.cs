@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeDayOfWeek Friday { get; } = new DataBoxEdgeDayOfWeek(FridayValue);
         /// <summary> Saturday. </summary>
         public static DataBoxEdgeDayOfWeek Saturday { get; } = new DataBoxEdgeDayOfWeek(SaturdayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeDayOfWeek"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeDayOfWeek left, DataBoxEdgeDayOfWeek right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeDayOfWeek"/> values are not the same. </summary>

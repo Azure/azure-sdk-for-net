@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(AddressType))
             {
                 writer.WritePropertyName("addressType"u8);
-                writer.WriteStringValue(AddressType.Value.ToString());
+                writer.WriteStringValue(AddressType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

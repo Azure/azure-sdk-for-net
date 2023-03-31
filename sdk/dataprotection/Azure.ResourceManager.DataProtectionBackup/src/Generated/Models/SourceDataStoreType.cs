@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static SourceDataStoreType OperationalStore { get; } = new SourceDataStoreType(OperationalStoreValue);
         /// <summary> VaultStore. </summary>
         public static SourceDataStoreType VaultStore { get; } = new SourceDataStoreType(VaultStoreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SourceDataStoreType"/> values are the same. </summary>
         public static bool operator ==(SourceDataStoreType left, SourceDataStoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceDataStoreType"/> values are not the same. </summary>

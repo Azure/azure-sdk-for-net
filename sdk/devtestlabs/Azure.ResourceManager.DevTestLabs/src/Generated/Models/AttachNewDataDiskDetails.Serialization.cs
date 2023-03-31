@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
-                writer.WriteStringValue(DiskType.Value.ToString());
+                writer.WriteStringValue(DiskType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

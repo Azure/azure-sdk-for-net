@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static SyncTableMigrationState Error { get; } = new SyncTableMigrationState(ErrorValue);
         /// <summary> FAILED. </summary>
         public static SyncTableMigrationState Failed { get; } = new SyncTableMigrationState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SyncTableMigrationState"/> values are the same. </summary>
         public static bool operator ==(SyncTableMigrationState left, SyncTableMigrationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyncTableMigrationState"/> values are not the same. </summary>

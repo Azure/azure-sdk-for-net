@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("connectionType"u8);
-            writer.WriteStringValue(ConnectionType.ToString());
+            writer.WriteStringValue(ConnectionType.ToSerialString());
             if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)

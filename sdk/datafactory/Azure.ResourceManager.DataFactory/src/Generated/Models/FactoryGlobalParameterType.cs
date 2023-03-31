@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static FactoryGlobalParameterType Bool { get; } = new FactoryGlobalParameterType(BoolValue);
         /// <summary> Array. </summary>
         public static FactoryGlobalParameterType Array { get; } = new FactoryGlobalParameterType(ArrayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FactoryGlobalParameterType"/> values are the same. </summary>
         public static bool operator ==(FactoryGlobalParameterType left, FactoryGlobalParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FactoryGlobalParameterType"/> values are not the same. </summary>

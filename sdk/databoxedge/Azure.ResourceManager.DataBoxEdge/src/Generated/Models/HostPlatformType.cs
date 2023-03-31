@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static HostPlatformType KubernetesCluster { get; } = new HostPlatformType(KubernetesClusterValue);
         /// <summary> LinuxVM. </summary>
         public static HostPlatformType LinuxVm { get; } = new HostPlatformType(LinuxVmValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HostPlatformType"/> values are the same. </summary>
         public static bool operator ==(HostPlatformType left, HostPlatformType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HostPlatformType"/> values are not the same. </summary>

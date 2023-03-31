@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(SchemaCompatibility))
             {
                 writer.WritePropertyName("schemaCompatibility"u8);
-                writer.WriteStringValue(SchemaCompatibility.Value.ToString());
+                writer.WriteStringValue(SchemaCompatibility.Value.ToSerialString());
             }
             if (Optional.IsDefined(SchemaType))
             {
                 writer.WritePropertyName("schemaType"u8);
-                writer.WriteStringValue(SchemaType.Value.ToString());
+                writer.WriteStringValue(SchemaType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

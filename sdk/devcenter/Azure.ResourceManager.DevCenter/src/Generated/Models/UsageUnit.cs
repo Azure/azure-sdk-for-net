@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Count. </summary>
         public static UsageUnit Count { get; } = new UsageUnit(CountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UsageUnit"/> values are the same. </summary>
         public static bool operator ==(UsageUnit left, UsageUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UsageUnit"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static NameCheckFailureReason AlreadyExists { get; } = new NameCheckFailureReason(AlreadyExistsValue);
         /// <summary> Invalid. </summary>
         public static NameCheckFailureReason Invalid { get; } = new NameCheckFailureReason(InvalidValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NameCheckFailureReason"/> values are the same. </summary>
         public static bool operator ==(NameCheckFailureReason left, NameCheckFailureReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NameCheckFailureReason"/> values are not the same. </summary>

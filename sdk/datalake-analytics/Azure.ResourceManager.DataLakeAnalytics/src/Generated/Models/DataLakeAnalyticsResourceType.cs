@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// Serialized Name: CheckNameAvailabilityParametersType.Microsoft.DataLakeAnalytics/accounts
         /// </summary>
         public static DataLakeAnalyticsResourceType MicrosoftDataLakeAnalyticsAccounts { get; } = new DataLakeAnalyticsResourceType(MicrosoftDataLakeAnalyticsAccountsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataLakeAnalyticsResourceType"/> values are the same. </summary>
         public static bool operator ==(DataLakeAnalyticsResourceType left, DataLakeAnalyticsResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataLakeAnalyticsResourceType"/> values are not the same. </summary>

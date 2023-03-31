@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static GroupIdProvisioningState Failed { get; } = new GroupIdProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static GroupIdProvisioningState Canceled { get; } = new GroupIdProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GroupIdProvisioningState"/> values are the same. </summary>
         public static bool operator ==(GroupIdProvisioningState left, GroupIdProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GroupIdProvisioningState"/> values are not the same. </summary>

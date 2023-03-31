@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
 
         /// <summary> Kubernetes. </summary>
         public static CustomLocationHostType Kubernetes { get; } = new CustomLocationHostType(KubernetesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CustomLocationHostType"/> values are the same. </summary>
         public static bool operator ==(CustomLocationHostType left, CustomLocationHostType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomLocationHostType"/> values are not the same. </summary>

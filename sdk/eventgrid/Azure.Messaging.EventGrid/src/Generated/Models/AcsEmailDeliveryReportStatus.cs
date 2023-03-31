@@ -35,6 +35,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static AcsEmailDeliveryReportStatus FilteredSpam { get; } = new AcsEmailDeliveryReportStatus(FilteredSpamValue);
         /// <summary> Quarantined. </summary>
         public static AcsEmailDeliveryReportStatus Quarantined { get; } = new AcsEmailDeliveryReportStatus(QuarantinedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AcsEmailDeliveryReportStatus"/> values are the same. </summary>
         public static bool operator ==(AcsEmailDeliveryReportStatus left, AcsEmailDeliveryReportStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcsEmailDeliveryReportStatus"/> values are not the same. </summary>

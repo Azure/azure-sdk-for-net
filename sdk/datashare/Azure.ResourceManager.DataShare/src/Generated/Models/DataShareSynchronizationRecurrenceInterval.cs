@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public static DataShareSynchronizationRecurrenceInterval Hour { get; } = new DataShareSynchronizationRecurrenceInterval(HourValue);
         /// <summary> Day. </summary>
         public static DataShareSynchronizationRecurrenceInterval Day { get; } = new DataShareSynchronizationRecurrenceInterval(DayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataShareSynchronizationRecurrenceInterval"/> values are the same. </summary>
         public static bool operator ==(DataShareSynchronizationRecurrenceInterval left, DataShareSynchronizationRecurrenceInterval right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataShareSynchronizationRecurrenceInterval"/> values are not the same. </summary>

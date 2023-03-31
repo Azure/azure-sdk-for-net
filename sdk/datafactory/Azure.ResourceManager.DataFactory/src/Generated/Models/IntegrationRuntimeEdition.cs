@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static IntegrationRuntimeEdition Standard { get; } = new IntegrationRuntimeEdition(StandardValue);
         /// <summary> Enterprise. </summary>
         public static IntegrationRuntimeEdition Enterprise { get; } = new IntegrationRuntimeEdition(EnterpriseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeEdition"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeEdition left, IntegrationRuntimeEdition right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeEdition"/> values are not the same. </summary>

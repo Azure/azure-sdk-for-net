@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static ServiceProvisioningState Succeeded { get; } = new ServiceProvisioningState(SucceededValue);
         /// <summary> Failed. </summary>
         public static ServiceProvisioningState Failed { get; } = new ServiceProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ServiceProvisioningState left, ServiceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceProvisioningState"/> values are not the same. </summary>

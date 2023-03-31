@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeDataPolicy Cloud { get; } = new DataBoxEdgeDataPolicy(CloudValue);
         /// <summary> Local. </summary>
         public static DataBoxEdgeDataPolicy Local { get; } = new DataBoxEdgeDataPolicy(LocalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeDataPolicy"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeDataPolicy left, DataBoxEdgeDataPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeDataPolicy"/> values are not the same. </summary>

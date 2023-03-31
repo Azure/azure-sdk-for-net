@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("orderBy"u8);
-            writer.WriteStringValue(OrderBy.ToString());
+            writer.WriteStringValue(OrderBy.ToSerialString());
             writer.WritePropertyName("order"u8);
-            writer.WriteStringValue(Order.ToString());
+            writer.WriteStringValue(Order.ToSerialString());
             writer.WriteEndObject();
         }
     }

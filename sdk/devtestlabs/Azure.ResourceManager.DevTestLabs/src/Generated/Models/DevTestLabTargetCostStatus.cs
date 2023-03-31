@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabTargetCostStatus Enabled { get; } = new DevTestLabTargetCostStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static DevTestLabTargetCostStatus Disabled { get; } = new DevTestLabTargetCostStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabTargetCostStatus"/> values are the same. </summary>
         public static bool operator ==(DevTestLabTargetCostStatus left, DevTestLabTargetCostStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabTargetCostStatus"/> values are not the same. </summary>

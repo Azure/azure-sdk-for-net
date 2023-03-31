@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static DataProtectionBackupProvisioningState Unknown { get; } = new DataProtectionBackupProvisioningState(UnknownValue);
         /// <summary> Updating. </summary>
         public static DataProtectionBackupProvisioningState Updating { get; } = new DataProtectionBackupProvisioningState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataProtectionBackupProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DataProtectionBackupProvisioningState left, DataProtectionBackupProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataProtectionBackupProvisioningState"/> values are not the same. </summary>

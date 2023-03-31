@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static HostPoolRegistrationTokenOperation None { get; } = new HostPoolRegistrationTokenOperation(NoneValue);
         /// <summary> Update. </summary>
         public static HostPoolRegistrationTokenOperation Update { get; } = new HostPoolRegistrationTokenOperation(UpdateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HostPoolRegistrationTokenOperation"/> values are the same. </summary>
         public static bool operator ==(HostPoolRegistrationTokenOperation left, HostPoolRegistrationTokenOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HostPoolRegistrationTokenOperation"/> values are not the same. </summary>

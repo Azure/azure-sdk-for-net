@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(MonitoringStatus))
             {
                 writer.WritePropertyName("monitoringStatus"u8);
-                writer.WriteStringValue(MonitoringStatus.Value.ToString());
+                writer.WriteStringValue(MonitoringStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(MarketplaceSubscriptionStatus))
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
-                writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
+                writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(DynatraceEnvironmentProperties))
             {

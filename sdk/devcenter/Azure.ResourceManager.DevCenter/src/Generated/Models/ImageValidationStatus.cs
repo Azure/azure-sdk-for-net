@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static ImageValidationStatus Failed { get; } = new ImageValidationStatus(FailedValue);
         /// <summary> TimedOut. </summary>
         public static ImageValidationStatus TimedOut { get; } = new ImageValidationStatus(TimedOutValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImageValidationStatus"/> values are the same. </summary>
         public static bool operator ==(ImageValidationStatus left, ImageValidationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageValidationStatus"/> values are not the same. </summary>

@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static CurrentProtectionState SoftDeleted { get; } = new CurrentProtectionState(SoftDeletedValue);
         /// <summary> UpdatingProtection. </summary>
         public static CurrentProtectionState UpdatingProtection { get; } = new CurrentProtectionState(UpdatingProtectionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CurrentProtectionState"/> values are the same. </summary>
         public static bool operator ==(CurrentProtectionState left, CurrentProtectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CurrentProtectionState"/> values are not the same. </summary>

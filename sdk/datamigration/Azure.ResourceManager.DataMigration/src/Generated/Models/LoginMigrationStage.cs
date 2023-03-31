@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static LoginMigrationStage EstablishObjectPermissions { get; } = new LoginMigrationStage(EstablishObjectPermissionsValue);
         /// <summary> Completed. </summary>
         public static LoginMigrationStage Completed { get; } = new LoginMigrationStage(CompletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LoginMigrationStage"/> values are the same. </summary>
         public static bool operator ==(LoginMigrationStage left, LoginMigrationStage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoginMigrationStage"/> values are not the same. </summary>

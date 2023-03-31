@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static SftpAuthenticationType SshPublicKey { get; } = new SftpAuthenticationType(SshPublicKeyValue);
         /// <summary> MultiFactor. </summary>
         public static SftpAuthenticationType MultiFactor { get; } = new SftpAuthenticationType(MultiFactorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SftpAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(SftpAuthenticationType left, SftpAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SftpAuthenticationType"/> values are not the same. </summary>

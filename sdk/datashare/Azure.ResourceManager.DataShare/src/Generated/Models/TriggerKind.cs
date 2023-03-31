@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataShare.Models
 
         /// <summary> ScheduleBased. </summary>
         public static TriggerKind ScheduleBased { get; } = new TriggerKind(ScheduleBasedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TriggerKind"/> values are the same. </summary>
         public static bool operator ==(TriggerKind left, TriggerKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TriggerKind"/> values are not the same. </summary>

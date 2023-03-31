@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static InstallationImpact DeviceRebooted { get; } = new InstallationImpact(DeviceRebootedValue);
         /// <summary> KubernetesWorkloadsDown. </summary>
         public static InstallationImpact KubernetesWorkloadsDown { get; } = new InstallationImpact(KubernetesWorkloadsDownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InstallationImpact"/> values are the same. </summary>
         public static bool operator ==(InstallationImpact left, InstallationImpact right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstallationImpact"/> values are not the same. </summary>

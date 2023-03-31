@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static CassandraSourceReadConsistencyLevel Serial { get; } = new CassandraSourceReadConsistencyLevel(SerialValue);
         /// <summary> LOCAL_SERIAL. </summary>
         public static CassandraSourceReadConsistencyLevel LocalSerial { get; } = new CassandraSourceReadConsistencyLevel(LocalSerialValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CassandraSourceReadConsistencyLevel"/> values are the same. </summary>
         public static bool operator ==(CassandraSourceReadConsistencyLevel left, CassandraSourceReadConsistencyLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CassandraSourceReadConsistencyLevel"/> values are not the same. </summary>

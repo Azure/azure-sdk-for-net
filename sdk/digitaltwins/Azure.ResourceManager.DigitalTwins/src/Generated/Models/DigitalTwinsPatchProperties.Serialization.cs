@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 if (PublicNetworkAccess != null)
                 {
                     writer.WritePropertyName("publicNetworkAccess"u8);
-                    writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                    writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
                 }
                 else
                 {

@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static ScriptActivityParameterType String { get; } = new ScriptActivityParameterType(StringValue);
         /// <summary> Timespan. </summary>
         public static ScriptActivityParameterType TimeSpan { get; } = new ScriptActivityParameterType(TimeSpanValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScriptActivityParameterType"/> values are the same. </summary>
         public static bool operator ==(ScriptActivityParameterType left, ScriptActivityParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptActivityParameterType"/> values are not the same. </summary>

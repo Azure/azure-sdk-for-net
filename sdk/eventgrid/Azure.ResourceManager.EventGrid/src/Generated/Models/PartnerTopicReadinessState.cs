@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static PartnerTopicReadinessState NeverActivated { get; } = new PartnerTopicReadinessState(NeverActivatedValue);
         /// <summary> Activated. </summary>
         public static PartnerTopicReadinessState Activated { get; } = new PartnerTopicReadinessState(ActivatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PartnerTopicReadinessState"/> values are the same. </summary>
         public static bool operator ==(PartnerTopicReadinessState left, PartnerTopicReadinessState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PartnerTopicReadinessState"/> values are not the same. </summary>

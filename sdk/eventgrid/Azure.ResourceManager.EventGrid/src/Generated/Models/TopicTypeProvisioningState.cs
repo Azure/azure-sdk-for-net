@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static TopicTypeProvisioningState Canceled { get; } = new TopicTypeProvisioningState(CanceledValue);
         /// <summary> Failed. </summary>
         public static TopicTypeProvisioningState Failed { get; } = new TopicTypeProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TopicTypeProvisioningState"/> values are the same. </summary>
         public static bool operator ==(TopicTypeProvisioningState left, TopicTypeProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TopicTypeProvisioningState"/> values are not the same. </summary>

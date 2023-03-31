@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeDeviceStatus PartiallyDisconnected { get; } = new DataBoxEdgeDeviceStatus(PartiallyDisconnectedValue);
         /// <summary> Maintenance. </summary>
         public static DataBoxEdgeDeviceStatus Maintenance { get; } = new DataBoxEdgeDeviceStatus(MaintenanceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeDeviceStatus"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeDeviceStatus left, DataBoxEdgeDeviceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeDeviceStatus"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <summary> Daily. </summary>
         public static ScheduledFrequency Daily { get; } = new ScheduledFrequency(DailyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScheduledFrequency"/> values are the same. </summary>
         public static bool operator ==(ScheduledFrequency left, ScheduledFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduledFrequency"/> values are not the same. </summary>

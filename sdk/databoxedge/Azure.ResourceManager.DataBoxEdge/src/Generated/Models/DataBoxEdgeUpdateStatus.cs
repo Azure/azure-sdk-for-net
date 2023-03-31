@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeUpdateStatus InstallStarted { get; } = new DataBoxEdgeUpdateStatus(InstallStartedValue);
         /// <summary> InstallCompleted. </summary>
         public static DataBoxEdgeUpdateStatus InstallCompleted { get; } = new DataBoxEdgeUpdateStatus(InstallCompletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeUpdateStatus"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeUpdateStatus left, DataBoxEdgeUpdateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeUpdateStatus"/> values are not the same. </summary>

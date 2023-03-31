@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SsisStoreType))
             {
                 writer.WritePropertyName("ssisStoreType"u8);
-                writer.WriteStringValue(SsisStoreType.Value.ToString());
+                writer.WriteStringValue(SsisStoreType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ProjectOverwriteOption))
             {
                 writer.WritePropertyName("projectOverwriteOption"u8);
-                writer.WriteStringValue(ProjectOverwriteOption.Value.ToString());
+                writer.WriteStringValue(ProjectOverwriteOption.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnvironmentOverwriteOption))
             {
                 writer.WritePropertyName("environmentOverwriteOption"u8);
-                writer.WriteStringValue(EnvironmentOverwriteOption.Value.ToString());
+                writer.WriteStringValue(EnvironmentOverwriteOption.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

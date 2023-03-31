@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RegistrationTokenOperation))
             {
                 writer.WritePropertyName("registrationTokenOperation"u8);
-                writer.WriteStringValue(RegistrationTokenOperation.Value.ToString());
+                writer.WriteStringValue(RegistrationTokenOperation.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

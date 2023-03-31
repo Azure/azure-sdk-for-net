@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Microsoft.KeyVault. </summary>
         public static EventHubsKeySource MicrosoftKeyVault { get; } = new EventHubsKeySource(MicrosoftKeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsKeySource"/> values are the same. </summary>
         public static bool operator ==(EventHubsKeySource left, EventHubsKeySource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsKeySource"/> values are not the same. </summary>

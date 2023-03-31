@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static ServiceScalability Manual { get; } = new ServiceScalability(ManualValue);
         /// <summary> automatic. </summary>
         public static ServiceScalability Automatic { get; } = new ServiceScalability(AutomaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceScalability"/> values are the same. </summary>
         public static bool operator ==(ServiceScalability left, ServiceScalability right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceScalability"/> values are not the same. </summary>

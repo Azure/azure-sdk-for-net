@@ -74,6 +74,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static UpdateOperationStage RescanComplete { get; } = new UpdateOperationStage(RescanCompleteValue);
         /// <summary> RescanFailed. </summary>
         public static UpdateOperationStage RescanFailed { get; } = new UpdateOperationStage(RescanFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UpdateOperationStage"/> values are the same. </summary>
         public static bool operator ==(UpdateOperationStage left, UpdateOperationStage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpdateOperationStage"/> values are not the same. </summary>

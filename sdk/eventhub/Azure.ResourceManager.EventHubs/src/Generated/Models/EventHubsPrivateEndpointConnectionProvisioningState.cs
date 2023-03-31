@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsPrivateEndpointConnectionProvisioningState Canceled { get; } = new EventHubsPrivateEndpointConnectionProvisioningState(CanceledValue);
         /// <summary> Failed. </summary>
         public static EventHubsPrivateEndpointConnectionProvisioningState Failed { get; } = new EventHubsPrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(EventHubsPrivateEndpointConnectionProvisioningState left, EventHubsPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
-                writer.WriteStringValue(WriteBehavior.Value.ToString());
+                writer.WriteStringValue(WriteBehavior.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExternalIdFieldName))
             {

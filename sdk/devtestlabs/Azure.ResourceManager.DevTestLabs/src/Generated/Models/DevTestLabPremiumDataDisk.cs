@@ -33,6 +33,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabPremiumDataDisk Disabled { get; } = new DevTestLabPremiumDataDisk(DisabledValue);
         /// <summary> Enabled. </summary>
         public static DevTestLabPremiumDataDisk Enabled { get; } = new DevTestLabPremiumDataDisk(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabPremiumDataDisk"/> values are the same. </summary>
         public static bool operator ==(DevTestLabPremiumDataDisk left, DevTestLabPremiumDataDisk right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabPremiumDataDisk"/> values are not the same. </summary>

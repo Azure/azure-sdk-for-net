@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static EventGridTopicProvisioningState Canceled { get; } = new EventGridTopicProvisioningState(CanceledValue);
         /// <summary> Failed. </summary>
         public static EventGridTopicProvisioningState Failed { get; } = new EventGridTopicProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventGridTopicProvisioningState"/> values are the same. </summary>
         public static bool operator ==(EventGridTopicProvisioningState left, EventGridTopicProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventGridTopicProvisioningState"/> values are not the same. </summary>

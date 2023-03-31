@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.DataShare.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("recurrenceInterval"u8);
-            writer.WriteStringValue(RecurrenceInterval.ToString());
+            writer.WriteStringValue(RecurrenceInterval.ToSerialString());
             writer.WritePropertyName("synchronizationTime"u8);
             writer.WriteStringValue(SynchronizeOn, "O");
             writer.WriteEndObject();

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Dedicated. </summary>
         public static EventHubsClusterSkuName Dedicated { get; } = new EventHubsClusterSkuName(DedicatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsClusterSkuName"/> values are the same. </summary>
         public static bool operator ==(EventHubsClusterSkuName left, EventHubsClusterSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsClusterSkuName"/> values are not the same. </summary>

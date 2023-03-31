@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
         /// <summary> Creating. </summary>
         public static ProvisioningState Creating { get; } = new ProvisioningState(CreatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>

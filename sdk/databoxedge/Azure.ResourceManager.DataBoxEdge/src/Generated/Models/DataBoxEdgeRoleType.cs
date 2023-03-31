@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeRoleType CloudEdgeManagement { get; } = new DataBoxEdgeRoleType(CloudEdgeManagementValue);
         /// <summary> Kubernetes. </summary>
         public static DataBoxEdgeRoleType Kubernetes { get; } = new DataBoxEdgeRoleType(KubernetesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeRoleType"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeRoleType left, DataBoxEdgeRoleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeRoleType"/> values are not the same. </summary>

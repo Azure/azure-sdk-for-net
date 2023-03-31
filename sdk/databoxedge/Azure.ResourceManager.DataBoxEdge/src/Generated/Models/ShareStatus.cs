@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static ShareStatus Updating { get; } = new ShareStatus(UpdatingValue);
         /// <summary> NeedsAttention. </summary>
         public static ShareStatus NeedsAttention { get; } = new ShareStatus(NeedsAttentionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ShareStatus"/> values are the same. </summary>
         public static bool operator ==(ShareStatus left, ShareStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareStatus"/> values are not the same. </summary>

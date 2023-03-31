@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabPolicyEvaluatorType AllowedValuesPolicy { get; } = new DevTestLabPolicyEvaluatorType(AllowedValuesPolicyValue);
         /// <summary> MaxValuePolicy. </summary>
         public static DevTestLabPolicyEvaluatorType MaxValuePolicy { get; } = new DevTestLabPolicyEvaluatorType(MaxValuePolicyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabPolicyEvaluatorType"/> values are the same. </summary>
         public static bool operator ==(DevTestLabPolicyEvaluatorType left, DevTestLabPolicyEvaluatorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabPolicyEvaluatorType"/> values are not the same. </summary>

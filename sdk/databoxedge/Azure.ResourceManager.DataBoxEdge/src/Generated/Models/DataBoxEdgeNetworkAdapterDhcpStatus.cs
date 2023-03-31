@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeNetworkAdapterDhcpStatus Disabled { get; } = new DataBoxEdgeNetworkAdapterDhcpStatus(DisabledValue);
         /// <summary> Enabled. </summary>
         public static DataBoxEdgeNetworkAdapterDhcpStatus Enabled { get; } = new DataBoxEdgeNetworkAdapterDhcpStatus(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkAdapterDhcpStatus"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeNetworkAdapterDhcpStatus left, DataBoxEdgeNetworkAdapterDhcpStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkAdapterDhcpStatus"/> values are not the same. </summary>

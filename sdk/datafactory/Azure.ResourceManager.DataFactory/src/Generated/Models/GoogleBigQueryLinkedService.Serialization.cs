@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
             }
             writer.WritePropertyName("authenticationType"u8);
-            writer.WriteStringValue(AuthenticationType.ToString());
+            writer.WriteStringValue(AuthenticationType.ToSerialString());
             if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);

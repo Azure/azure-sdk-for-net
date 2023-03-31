@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static EdgeOrderActionStatus Allowed { get; } = new EdgeOrderActionStatus(AllowedValue);
         /// <summary> Not Allowed flag. </summary>
         public static EdgeOrderActionStatus NotAllowed { get; } = new EdgeOrderActionStatus(NotAllowedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeOrderActionStatus"/> values are the same. </summary>
         public static bool operator ==(EdgeOrderActionStatus left, EdgeOrderActionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeOrderActionStatus"/> values are not the same. </summary>

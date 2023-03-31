@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsResourceAssociationAccessMode AuditMode { get; } = new EventHubsResourceAssociationAccessMode(AuditModeValue);
         /// <summary> UnspecifiedMode. </summary>
         public static EventHubsResourceAssociationAccessMode UnspecifiedMode { get; } = new EventHubsResourceAssociationAccessMode(UnspecifiedModeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsResourceAssociationAccessMode"/> values are the same. </summary>
         public static bool operator ==(EventHubsResourceAssociationAccessMode left, EventHubsResourceAssociationAccessMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsResourceAssociationAccessMode"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static EventGridResourceRegionType RegionalResource { get; } = new EventGridResourceRegionType(RegionalResourceValue);
         /// <summary> GlobalResource. </summary>
         public static EventGridResourceRegionType GlobalResource { get; } = new EventGridResourceRegionType(GlobalResourceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventGridResourceRegionType"/> values are the same. </summary>
         public static bool operator ==(EventGridResourceRegionType left, EventGridResourceRegionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventGridResourceRegionType"/> values are not the same. </summary>

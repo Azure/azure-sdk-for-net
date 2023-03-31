@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static DynatraceOneAgentMonitoringType CloudInfrastructure { get; } = new DynatraceOneAgentMonitoringType(CloudInfrastructureValue);
         /// <summary> FULL_STACK. </summary>
         public static DynatraceOneAgentMonitoringType FullStack { get; } = new DynatraceOneAgentMonitoringType(FullStackValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynatraceOneAgentMonitoringType"/> values are the same. </summary>
         public static bool operator ==(DynatraceOneAgentMonitoringType left, DynatraceOneAgentMonitoringType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceOneAgentMonitoringType"/> values are not the same. </summary>

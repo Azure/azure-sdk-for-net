@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static ElasticSanProvisioningState Updating { get; } = new ElasticSanProvisioningState(UpdatingValue);
         /// <summary> Deleting. </summary>
         public static ElasticSanProvisioningState Deleting { get; } = new ElasticSanProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ElasticSanProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ElasticSanProvisioningState left, ElasticSanProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticSanProvisioningState"/> values are not the same. </summary>

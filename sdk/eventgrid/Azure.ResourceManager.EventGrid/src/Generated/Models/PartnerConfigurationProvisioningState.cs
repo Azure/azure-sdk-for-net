@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static PartnerConfigurationProvisioningState Canceled { get; } = new PartnerConfigurationProvisioningState(CanceledValue);
         /// <summary> Failed. </summary>
         public static PartnerConfigurationProvisioningState Failed { get; } = new PartnerConfigurationProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PartnerConfigurationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PartnerConfigurationProvisioningState left, PartnerConfigurationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PartnerConfigurationProvisioningState"/> values are not the same. </summary>

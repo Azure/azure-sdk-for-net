@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static DeviceUpdatePrivateEndpointConnectionProvisioningState Deleting { get; } = new DeviceUpdatePrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static DeviceUpdatePrivateEndpointConnectionProvisioningState Failed { get; } = new DeviceUpdatePrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceUpdatePrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DeviceUpdatePrivateEndpointConnectionProvisioningState left, DeviceUpdatePrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceUpdatePrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static SessionHostUpdateState Succeeded { get; } = new SessionHostUpdateState(SucceededValue);
         /// <summary> Failed. </summary>
         public static SessionHostUpdateState Failed { get; } = new SessionHostUpdateState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SessionHostUpdateState"/> values are the same. </summary>
         public static bool operator ==(SessionHostUpdateState left, SessionHostUpdateState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SessionHostUpdateState"/> values are not the same. </summary>

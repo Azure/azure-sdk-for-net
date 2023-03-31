@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static PipelineVariableType Bool { get; } = new PipelineVariableType(BoolValue);
         /// <summary> Array. </summary>
         public static PipelineVariableType Array { get; } = new PipelineVariableType(ArrayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PipelineVariableType"/> values are the same. </summary>
         public static bool operator ==(PipelineVariableType left, PipelineVariableType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PipelineVariableType"/> values are not the same. </summary>

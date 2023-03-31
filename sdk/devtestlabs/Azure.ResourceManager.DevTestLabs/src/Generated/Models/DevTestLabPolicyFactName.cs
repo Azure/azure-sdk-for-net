@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabPolicyFactName EnvironmentTemplate { get; } = new DevTestLabPolicyFactName(EnvironmentTemplateValue);
         /// <summary> ScheduleEditPermission. </summary>
         public static DevTestLabPolicyFactName ScheduleEditPermission { get; } = new DevTestLabPolicyFactName(ScheduleEditPermissionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabPolicyFactName"/> values are the same. </summary>
         public static bool operator ==(DevTestLabPolicyFactName left, DevTestLabPolicyFactName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabPolicyFactName"/> values are not the same. </summary>

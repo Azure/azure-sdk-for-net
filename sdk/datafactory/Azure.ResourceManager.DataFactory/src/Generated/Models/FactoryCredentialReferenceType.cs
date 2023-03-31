@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> CredentialReference. </summary>
         public static FactoryCredentialReferenceType CredentialReference { get; } = new FactoryCredentialReferenceType(CredentialReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FactoryCredentialReferenceType"/> values are the same. </summary>
         public static bool operator ==(FactoryCredentialReferenceType left, FactoryCredentialReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FactoryCredentialReferenceType"/> values are not the same. </summary>

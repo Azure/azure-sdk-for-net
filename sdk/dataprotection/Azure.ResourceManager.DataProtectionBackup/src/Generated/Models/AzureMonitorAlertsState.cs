@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static AzureMonitorAlertsState Enabled { get; } = new AzureMonitorAlertsState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static AzureMonitorAlertsState Disabled { get; } = new AzureMonitorAlertsState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AzureMonitorAlertsState"/> values are the same. </summary>
         public static bool operator ==(AzureMonitorAlertsState left, AzureMonitorAlertsState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureMonitorAlertsState"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static SessionHostHealthCheckResult HealthCheckFailed { get; } = new SessionHostHealthCheckResult(HealthCheckFailedValue);
         /// <summary> We received a Shutdown notification. </summary>
         public static SessionHostHealthCheckResult SessionHostShutdown { get; } = new SessionHostHealthCheckResult(SessionHostShutdownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SessionHostHealthCheckResult"/> values are the same. </summary>
         public static bool operator ==(SessionHostHealthCheckResult left, SessionHostHealthCheckResult right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SessionHostHealthCheckResult"/> values are not the same. </summary>

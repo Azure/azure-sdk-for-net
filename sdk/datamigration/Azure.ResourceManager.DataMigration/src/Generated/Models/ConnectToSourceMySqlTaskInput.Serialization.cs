@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(TargetPlatform))
             {
                 writer.WritePropertyName("targetPlatform"u8);
-                writer.WriteStringValue(TargetPlatform.Value.ToString());
+                writer.WriteStringValue(TargetPlatform.Value.ToSerialString());
             }
             if (Optional.IsDefined(CheckPermissionsGroup))
             {

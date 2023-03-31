@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsAccessRight Send { get; } = new EventHubsAccessRight(SendValue);
         /// <summary> Listen. </summary>
         public static EventHubsAccessRight Listen { get; } = new EventHubsAccessRight(ListenValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsAccessRight"/> values are the same. </summary>
         public static bool operator ==(EventHubsAccessRight left, EventHubsAccessRight right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsAccessRight"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static AsyncStatus Completed { get; } = new AsyncStatus(CompletedValue);
         /// <summary> Async operation failed to complete. </summary>
         public static AsyncStatus Failed { get; } = new AsyncStatus(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AsyncStatus"/> values are the same. </summary>
         public static bool operator ==(AsyncStatus left, AsyncStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AsyncStatus"/> values are not the same. </summary>

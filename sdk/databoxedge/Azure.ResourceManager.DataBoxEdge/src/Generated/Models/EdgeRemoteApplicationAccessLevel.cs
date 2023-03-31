@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static EdgeRemoteApplicationAccessLevel ReadWrite { get; } = new EdgeRemoteApplicationAccessLevel(ReadWriteValue);
         /// <summary> FullAccess. </summary>
         public static EdgeRemoteApplicationAccessLevel FullAccess { get; } = new EdgeRemoteApplicationAccessLevel(FullAccessValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeRemoteApplicationAccessLevel"/> values are the same. </summary>
         public static bool operator ==(EdgeRemoteApplicationAccessLevel left, EdgeRemoteApplicationAccessLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeRemoteApplicationAccessLevel"/> values are not the same. </summary>

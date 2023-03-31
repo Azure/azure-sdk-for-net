@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public static DataShareOperationStatus Failed { get; } = new DataShareOperationStatus(FailedValue);
         /// <summary> Canceled. </summary>
         public static DataShareOperationStatus Canceled { get; } = new DataShareOperationStatus(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataShareOperationStatus"/> values are the same. </summary>
         public static bool operator ==(DataShareOperationStatus left, DataShareOperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataShareOperationStatus"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static BackupSupportedFeatureType Invalid { get; } = new BackupSupportedFeatureType(InvalidValue);
         /// <summary> DataSourceType. </summary>
         public static BackupSupportedFeatureType DataSourceType { get; } = new BackupSupportedFeatureType(DataSourceTypeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupSupportedFeatureType"/> values are the same. </summary>
         public static bool operator ==(BackupSupportedFeatureType left, BackupSupportedFeatureType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupSupportedFeatureType"/> values are not the same. </summary>

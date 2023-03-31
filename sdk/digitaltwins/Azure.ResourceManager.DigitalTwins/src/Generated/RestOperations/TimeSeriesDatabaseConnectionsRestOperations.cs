@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DigitalTwins
             uri.AppendQuery("api-version", _apiVersion, true);
             if (cleanupConnectionArtifacts != null)
             {
-                uri.AppendQuery("cleanupConnectionArtifacts", cleanupConnectionArtifacts.Value.ToString(), true);
+                uri.AppendQuery("cleanupConnectionArtifacts", cleanupConnectionArtifacts.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

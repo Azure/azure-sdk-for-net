@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsAccessKeyType PrimaryKey { get; } = new EventHubsAccessKeyType(PrimaryKeyValue);
         /// <summary> SecondaryKey. </summary>
         public static EventHubsAccessKeyType SecondaryKey { get; } = new EventHubsAccessKeyType(SecondaryKeyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsAccessKeyType"/> values are the same. </summary>
         public static bool operator ==(EventHubsAccessKeyType left, EventHubsAccessKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsAccessKeyType"/> values are not the same. </summary>

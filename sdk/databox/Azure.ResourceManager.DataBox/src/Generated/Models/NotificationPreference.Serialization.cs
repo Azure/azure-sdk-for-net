@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("stageName"u8);
-            writer.WriteStringValue(StageName.ToString());
+            writer.WriteStringValue(StageName.ToSerialString());
             writer.WritePropertyName("sendNotification"u8);
             writer.WriteBooleanValue(SendNotification);
             writer.WriteEndObject();

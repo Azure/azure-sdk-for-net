@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
-                writer.WriteStringValue(ObjectType.Value.ToString());
+                writer.WriteStringValue(ObjectType.Value.ToSerialString());
             }
             if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
             {

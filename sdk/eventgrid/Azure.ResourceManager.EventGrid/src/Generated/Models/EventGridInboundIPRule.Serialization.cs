@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteStringValue(Action.Value.ToString());
+                writer.WriteStringValue(Action.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

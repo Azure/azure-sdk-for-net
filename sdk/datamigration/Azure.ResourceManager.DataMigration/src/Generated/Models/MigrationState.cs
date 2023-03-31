@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static MigrationState Skipped { get; } = new MigrationState(SkippedValue);
         /// <summary> Stopped. </summary>
         public static MigrationState Stopped { get; } = new MigrationState(StoppedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MigrationState"/> values are the same. </summary>
         public static bool operator ==(MigrationState left, MigrationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MigrationState"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabCostType Reported { get; } = new DevTestLabCostType(ReportedValue);
         /// <summary> Projected. </summary>
         public static DevTestLabCostType Projected { get; } = new DevTestLabCostType(ProjectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabCostType"/> values are the same. </summary>
         public static bool operator ==(DevTestLabCostType left, DevTestLabCostType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabCostType"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static HostPoolType Pooled { get; } = new HostPoolType(PooledValue);
         /// <summary> Users assign their own machines, load balancing logic remains the same as Personal. PersonalDesktopAssignmentType must be Direct. </summary>
         public static HostPoolType BringYourOwnDesktop { get; } = new HostPoolType(BringYourOwnDesktopValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HostPoolType"/> values are the same. </summary>
         public static bool operator ==(HostPoolType left, HostPoolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HostPoolType"/> values are not the same. </summary>

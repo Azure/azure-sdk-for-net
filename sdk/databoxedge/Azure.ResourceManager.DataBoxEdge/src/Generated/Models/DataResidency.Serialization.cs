@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ResidencyType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResidencyType.Value.ToString());
+                writer.WriteStringValue(ResidencyType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

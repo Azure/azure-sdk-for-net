@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeDeviceKind AzureStackHub { get; } = new DataBoxEdgeDeviceKind(AzureStackHubValue);
         /// <summary> AzureModularDataCentre. </summary>
         public static DataBoxEdgeDeviceKind AzureModularDataCentre { get; } = new DataBoxEdgeDeviceKind(AzureModularDataCentreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeDeviceKind"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeDeviceKind left, DataBoxEdgeDeviceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeDeviceKind"/> values are not the same. </summary>

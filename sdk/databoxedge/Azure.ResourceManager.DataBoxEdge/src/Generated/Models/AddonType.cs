@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static AddonType IotEdge { get; } = new AddonType(IotEdgeValue);
         /// <summary> ArcForKubernetes. </summary>
         public static AddonType ArcForKubernetes { get; } = new AddonType(ArcForKubernetesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AddonType"/> values are the same. </summary>
         public static bool operator ==(AddonType left, AddonType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AddonType"/> values are not the same. </summary>

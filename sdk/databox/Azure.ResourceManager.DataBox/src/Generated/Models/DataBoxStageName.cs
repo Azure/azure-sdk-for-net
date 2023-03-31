@@ -86,6 +86,9 @@ namespace Azure.ResourceManager.DataBox.Models
         public static DataBoxStageName PreparingToShipFromAzureDataCenter { get; } = new DataBoxStageName(PreparingToShipFromAzureDataCenterValue);
         /// <summary> Shipped the device to customer. </summary>
         public static DataBoxStageName ShippedToCustomer { get; } = new DataBoxStageName(ShippedToCustomerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxStageName"/> values are the same. </summary>
         public static bool operator ==(DataBoxStageName left, DataBoxStageName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxStageName"/> values are not the same. </summary>

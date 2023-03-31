@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(EventDeliverySchema))
             {
                 writer.WritePropertyName("eventDeliverySchema"u8);
-                writer.WriteStringValue(EventDeliverySchema.Value.ToString());
+                writer.WriteStringValue(EventDeliverySchema.Value.ToSerialString());
             }
             if (Optional.IsDefined(RetryPolicy))
             {

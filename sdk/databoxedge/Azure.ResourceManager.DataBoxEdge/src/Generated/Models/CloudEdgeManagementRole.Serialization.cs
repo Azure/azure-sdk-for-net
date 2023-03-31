@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RoleStatus))
             {
                 writer.WritePropertyName("roleStatus"u8);
-                writer.WriteStringValue(RoleStatus.Value.ToString());
+                writer.WriteStringValue(RoleStatus.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

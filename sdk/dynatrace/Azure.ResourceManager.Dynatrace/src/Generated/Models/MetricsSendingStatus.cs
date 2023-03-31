@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static MetricsSendingStatus Enabled { get; } = new MetricsSendingStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static MetricsSendingStatus Disabled { get; } = new MetricsSendingStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MetricsSendingStatus"/> values are the same. </summary>
         public static bool operator ==(MetricsSendingStatus left, MetricsSendingStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricsSendingStatus"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static SalesforceSinkWriteBehavior Insert { get; } = new SalesforceSinkWriteBehavior(InsertValue);
         /// <summary> Upsert. </summary>
         public static SalesforceSinkWriteBehavior Upsert { get; } = new SalesforceSinkWriteBehavior(UpsertValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SalesforceSinkWriteBehavior"/> values are the same. </summary>
         public static bool operator ==(SalesforceSinkWriteBehavior left, SalesforceSinkWriteBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SalesforceSinkWriteBehavior"/> values are not the same. </summary>

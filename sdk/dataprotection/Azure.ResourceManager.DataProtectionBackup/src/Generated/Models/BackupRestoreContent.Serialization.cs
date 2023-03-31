@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("restoreTargetInfo"u8);
             writer.WriteObjectValue(RestoreTargetInfo);
             writer.WritePropertyName("sourceDataStoreType"u8);
-            writer.WriteStringValue(SourceDataStoreType.ToString());
+            writer.WriteStringValue(SourceDataStoreType.ToSerialString());
             if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConsistencyLevel))
             {
                 writer.WritePropertyName("consistencyLevel"u8);
-                writer.WriteStringValue(ConsistencyLevel.Value.ToString());
+                writer.WriteStringValue(ConsistencyLevel.Value.ToSerialString());
             }
             if (Optional.IsDefined(QueryTimeout))
             {

@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static BackupVaultResourceMoveState PartialSuccess { get; } = new BackupVaultResourceMoveState(PartialSuccessValue);
         /// <summary> MoveSucceeded. </summary>
         public static BackupVaultResourceMoveState MoveSucceeded { get; } = new BackupVaultResourceMoveState(MoveSucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupVaultResourceMoveState"/> values are the same. </summary>
         public static bool operator ==(BackupVaultResourceMoveState left, BackupVaultResourceMoveState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupVaultResourceMoveState"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static DeviceProvisioningServicesAllocationPolicy GeoLatency { get; } = new DeviceProvisioningServicesAllocationPolicy(GeoLatencyValue);
         /// <summary> Static. </summary>
         public static DeviceProvisioningServicesAllocationPolicy Static { get; } = new DeviceProvisioningServicesAllocationPolicy(StaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesAllocationPolicy"/> values are the same. </summary>
         public static bool operator ==(DeviceProvisioningServicesAllocationPolicy left, DeviceProvisioningServicesAllocationPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesAllocationPolicy"/> values are not the same. </summary>

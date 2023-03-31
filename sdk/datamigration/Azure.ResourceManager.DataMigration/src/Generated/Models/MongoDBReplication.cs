@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static MongoDBReplication OneTime { get; } = new MongoDBReplication(OneTimeValue);
         /// <summary> Continuous. </summary>
         public static MongoDBReplication Continuous { get; } = new MongoDBReplication(ContinuousValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MongoDBReplication"/> values are the same. </summary>
         public static bool operator ==(MongoDBReplication left, MongoDBReplication right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoDBReplication"/> values are not the same. </summary>

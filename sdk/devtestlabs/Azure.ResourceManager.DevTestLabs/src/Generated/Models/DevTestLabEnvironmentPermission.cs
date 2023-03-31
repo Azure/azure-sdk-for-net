@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabEnvironmentPermission Reader { get; } = new DevTestLabEnvironmentPermission(ReaderValue);
         /// <summary> Contributor. </summary>
         public static DevTestLabEnvironmentPermission Contributor { get; } = new DevTestLabEnvironmentPermission(ContributorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabEnvironmentPermission"/> values are the same. </summary>
         public static bool operator ==(DevTestLabEnvironmentPermission left, DevTestLabEnvironmentPermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabEnvironmentPermission"/> values are not the same. </summary>

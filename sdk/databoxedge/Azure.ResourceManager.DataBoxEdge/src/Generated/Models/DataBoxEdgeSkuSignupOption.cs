@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeSkuSignupOption None { get; } = new DataBoxEdgeSkuSignupOption(NoneValue);
         /// <summary> Available. </summary>
         public static DataBoxEdgeSkuSignupOption Available { get; } = new DataBoxEdgeSkuSignupOption(AvailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuSignupOption"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeSkuSignupOption left, DataBoxEdgeSkuSignupOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuSignupOption"/> values are not the same. </summary>

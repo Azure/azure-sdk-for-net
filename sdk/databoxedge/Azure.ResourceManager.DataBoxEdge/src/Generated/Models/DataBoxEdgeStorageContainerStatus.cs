@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeStorageContainerStatus Updating { get; } = new DataBoxEdgeStorageContainerStatus(UpdatingValue);
         /// <summary> NeedsAttention. </summary>
         public static DataBoxEdgeStorageContainerStatus NeedsAttention { get; } = new DataBoxEdgeStorageContainerStatus(NeedsAttentionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeStorageContainerStatus"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeStorageContainerStatus left, DataBoxEdgeStorageContainerStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeStorageContainerStatus"/> values are not the same. </summary>

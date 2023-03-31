@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static EdgeOrderAddressValidationStatus Invalid { get; } = new EdgeOrderAddressValidationStatus(InvalidValue);
         /// <summary> Address provided is ambiguous, please choose one of the alternate addresses returned. </summary>
         public static EdgeOrderAddressValidationStatus Ambiguous { get; } = new EdgeOrderAddressValidationStatus(AmbiguousValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeOrderAddressValidationStatus"/> values are the same. </summary>
         public static bool operator ==(EdgeOrderAddressValidationStatus left, EdgeOrderAddressValidationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeOrderAddressValidationStatus"/> values are not the same. </summary>

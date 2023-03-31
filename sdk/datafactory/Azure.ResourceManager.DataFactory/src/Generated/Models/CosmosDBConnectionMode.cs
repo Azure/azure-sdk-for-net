@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static CosmosDBConnectionMode Gateway { get; } = new CosmosDBConnectionMode(GatewayValue);
         /// <summary> Direct. </summary>
         public static CosmosDBConnectionMode Direct { get; } = new CosmosDBConnectionMode(DirectValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBConnectionMode"/> values are the same. </summary>
         public static bool operator ==(CosmosDBConnectionMode left, CosmosDBConnectionMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBConnectionMode"/> values are not the same. </summary>

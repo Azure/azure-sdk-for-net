@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static SecretStoreType Invalid { get; } = new SecretStoreType(InvalidValue);
         /// <summary> AzureKeyVault. </summary>
         public static SecretStoreType AzureKeyVault { get; } = new SecretStoreType(AzureKeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecretStoreType"/> values are the same. </summary>
         public static bool operator ==(SecretStoreType left, SecretStoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecretStoreType"/> values are not the same. </summary>

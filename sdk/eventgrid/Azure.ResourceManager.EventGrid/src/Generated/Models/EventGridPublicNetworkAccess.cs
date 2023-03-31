@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static EventGridPublicNetworkAccess Enabled { get; } = new EventGridPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static EventGridPublicNetworkAccess Disabled { get; } = new EventGridPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventGridPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(EventGridPublicNetworkAccess left, EventGridPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventGridPublicNetworkAccess"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static OrderItemCancellationStatus CancellableWithFee { get; } = new OrderItemCancellationStatus(CancellableWithFeeValue);
         /// <summary> Order item not cancellable. </summary>
         public static OrderItemCancellationStatus NotCancellable { get; } = new OrderItemCancellationStatus(NotCancellableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OrderItemCancellationStatus"/> values are the same. </summary>
         public static bool operator ==(OrderItemCancellationStatus left, OrderItemCancellationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrderItemCancellationStatus"/> values are not the same. </summary>

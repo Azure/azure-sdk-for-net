@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsNetworkRuleSetDefaultAction Allow { get; } = new EventHubsNetworkRuleSetDefaultAction(AllowValue);
         /// <summary> Deny. </summary>
         public static EventHubsNetworkRuleSetDefaultAction Deny { get; } = new EventHubsNetworkRuleSetDefaultAction(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsNetworkRuleSetDefaultAction"/> values are the same. </summary>
         public static bool operator ==(EventHubsNetworkRuleSetDefaultAction left, EventHubsNetworkRuleSetDefaultAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsNetworkRuleSetDefaultAction"/> values are not the same. </summary>

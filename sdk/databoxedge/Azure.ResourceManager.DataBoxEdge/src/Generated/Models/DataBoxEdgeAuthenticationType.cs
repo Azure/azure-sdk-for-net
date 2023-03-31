@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeAuthenticationType Invalid { get; } = new DataBoxEdgeAuthenticationType(InvalidValue);
         /// <summary> AzureActiveDirectory. </summary>
         public static DataBoxEdgeAuthenticationType AzureActiveDirectory { get; } = new DataBoxEdgeAuthenticationType(AzureActiveDirectoryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeAuthenticationType left, DataBoxEdgeAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeAuthenticationType"/> values are not the same. </summary>

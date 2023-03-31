@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 if (RecordPropertyAndItemRemovals != null)
                 {
                     writer.WritePropertyName("recordPropertyAndItemRemovals"u8);
-                    writer.WriteStringValue(RecordPropertyAndItemRemovals.Value.ToString());
+                    writer.WriteStringValue(RecordPropertyAndItemRemovals.Value.ToSerialString());
                 }
                 else
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             writer.WritePropertyName("connectionType"u8);
-            writer.WriteStringValue(ConnectionType.ToString());
+            writer.WriteStringValue(ConnectionType.ToSerialString());
             if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)

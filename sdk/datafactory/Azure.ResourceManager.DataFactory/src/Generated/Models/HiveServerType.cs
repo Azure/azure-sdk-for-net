@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static HiveServerType HiveServer2 { get; } = new HiveServerType(HiveServer2Value);
         /// <summary> HiveThriftServer. </summary>
         public static HiveServerType HiveThriftServer { get; } = new HiveServerType(HiveThriftServerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HiveServerType"/> values are the same. </summary>
         public static bool operator ==(HiveServerType left, HiveServerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HiveServerType"/> values are not the same. </summary>

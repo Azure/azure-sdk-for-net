@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static ShareAccessProtocol Smb { get; } = new ShareAccessProtocol(SmbValue);
         /// <summary> NFS. </summary>
         public static ShareAccessProtocol Nfs { get; } = new ShareAccessProtocol(NfsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ShareAccessProtocol"/> values are the same. </summary>
         public static bool operator ==(ShareAccessProtocol left, ShareAccessProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareAccessProtocol"/> values are not the same. </summary>

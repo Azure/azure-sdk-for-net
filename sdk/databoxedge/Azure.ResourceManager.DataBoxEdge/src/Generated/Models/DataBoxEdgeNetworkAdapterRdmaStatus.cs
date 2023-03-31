@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeNetworkAdapterRdmaStatus Incapable { get; } = new DataBoxEdgeNetworkAdapterRdmaStatus(IncapableValue);
         /// <summary> Capable. </summary>
         public static DataBoxEdgeNetworkAdapterRdmaStatus Capable { get; } = new DataBoxEdgeNetworkAdapterRdmaStatus(CapableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkAdapterRdmaStatus"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeNetworkAdapterRdmaStatus left, DataBoxEdgeNetworkAdapterRdmaStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkAdapterRdmaStatus"/> values are not the same. </summary>

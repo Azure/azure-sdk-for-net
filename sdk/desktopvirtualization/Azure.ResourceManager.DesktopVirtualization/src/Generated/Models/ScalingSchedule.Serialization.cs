@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in DaysOfWeek)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
             {
                 writer.WritePropertyName("rampUpLoadBalancingAlgorithm"u8);
-                writer.WriteStringValue(RampUpLoadBalancingAlgorithm.Value.ToString());
+                writer.WriteStringValue(RampUpLoadBalancingAlgorithm.Value.ToSerialString());
             }
             if (Optional.IsDefined(RampUpMinimumHostsPct))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
             {
                 writer.WritePropertyName("peakLoadBalancingAlgorithm"u8);
-                writer.WriteStringValue(PeakLoadBalancingAlgorithm.Value.ToString());
+                writer.WriteStringValue(PeakLoadBalancingAlgorithm.Value.ToSerialString());
             }
             if (Optional.IsDefined(RampDownStartOn))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
             {
                 writer.WritePropertyName("rampDownLoadBalancingAlgorithm"u8);
-                writer.WriteStringValue(RampDownLoadBalancingAlgorithm.Value.ToString());
+                writer.WriteStringValue(RampDownLoadBalancingAlgorithm.Value.ToSerialString());
             }
             if (Optional.IsDefined(RampDownMinimumHostsPct))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampDownStopHostsWhen))
             {
                 writer.WritePropertyName("rampDownStopHostsWhen"u8);
-                writer.WriteStringValue(RampDownStopHostsWhen.Value.ToString());
+                writer.WriteStringValue(RampDownStopHostsWhen.Value.ToSerialString());
             }
             if (Optional.IsDefined(RampDownWaitTimeMinutes))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
             {
                 writer.WritePropertyName("offPeakLoadBalancingAlgorithm"u8);
-                writer.WriteStringValue(OffPeakLoadBalancingAlgorithm.Value.ToString());
+                writer.WriteStringValue(OffPeakLoadBalancingAlgorithm.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

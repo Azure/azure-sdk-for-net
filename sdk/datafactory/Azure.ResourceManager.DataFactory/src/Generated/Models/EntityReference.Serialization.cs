@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IntegrationRuntimeEntityReferenceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(IntegrationRuntimeEntityReferenceType.Value.ToString());
+                writer.WriteStringValue(IntegrationRuntimeEntityReferenceType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReferenceName))
             {

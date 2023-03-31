@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(OSVersion))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(UpdateState))
             {
                 writer.WritePropertyName("updateState"u8);
-                writer.WriteStringValue(UpdateState.Value.ToString());
+                writer.WriteStringValue(UpdateState.Value.ToSerialString());
             }
             if (Optional.IsDefined(UpdateErrorMessage))
             {

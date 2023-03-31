@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static DatabaseState Copying { get; } = new DatabaseState(CopyingValue);
         /// <summary> OfflineSecondary. </summary>
         public static DatabaseState OfflineSecondary { get; } = new DatabaseState(OfflineSecondaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DatabaseState"/> values are the same. </summary>
         public static bool operator ==(DatabaseState left, DatabaseState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatabaseState"/> values are not the same. </summary>

@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static DatabaseMigrationState Cancelled { get; } = new DatabaseMigrationState(CancelledValue);
         /// <summary> FAILED. </summary>
         public static DatabaseMigrationState Failed { get; } = new DatabaseMigrationState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DatabaseMigrationState"/> values are the same. </summary>
         public static bool operator ==(DatabaseMigrationState left, DatabaseMigrationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatabaseMigrationState"/> values are not the same. </summary>

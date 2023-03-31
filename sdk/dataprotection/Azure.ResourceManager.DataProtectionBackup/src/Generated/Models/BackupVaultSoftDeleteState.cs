@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static BackupVaultSoftDeleteState On { get; } = new BackupVaultSoftDeleteState(OnValue);
         /// <summary> Soft Delete is permanently enabled for the BackupVault and the setting cannot be changed. </summary>
         public static BackupVaultSoftDeleteState AlwaysOn { get; } = new BackupVaultSoftDeleteState(AlwaysOnValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupVaultSoftDeleteState"/> values are the same. </summary>
         public static bool operator ==(BackupVaultSoftDeleteState left, BackupVaultSoftDeleteState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupVaultSoftDeleteState"/> values are not the same. </summary>

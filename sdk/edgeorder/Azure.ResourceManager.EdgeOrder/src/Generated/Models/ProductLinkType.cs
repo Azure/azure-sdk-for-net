@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static ProductLinkType KnowMore { get; } = new ProductLinkType(KnowMoreValue);
         /// <summary> Link to sign up for products. </summary>
         public static ProductLinkType SignUp { get; } = new ProductLinkType(SignUpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProductLinkType"/> values are the same. </summary>
         public static bool operator ==(ProductLinkType left, ProductLinkType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProductLinkType"/> values are not the same. </summary>

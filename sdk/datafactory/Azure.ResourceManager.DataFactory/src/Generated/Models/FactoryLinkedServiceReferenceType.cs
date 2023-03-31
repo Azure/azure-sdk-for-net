@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> LinkedServiceReference. </summary>
         public static FactoryLinkedServiceReferenceType LinkedServiceReference { get; } = new FactoryLinkedServiceReferenceType(LinkedServiceReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FactoryLinkedServiceReferenceType"/> values are the same. </summary>
         public static bool operator ==(FactoryLinkedServiceReferenceType left, FactoryLinkedServiceReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FactoryLinkedServiceReferenceType"/> values are not the same. </summary>

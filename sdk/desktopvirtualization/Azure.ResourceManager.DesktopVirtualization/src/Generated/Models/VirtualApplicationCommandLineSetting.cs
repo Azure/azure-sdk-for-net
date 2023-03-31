@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static VirtualApplicationCommandLineSetting Allow { get; } = new VirtualApplicationCommandLineSetting(AllowValue);
         /// <summary> Require. </summary>
         public static VirtualApplicationCommandLineSetting Require { get; } = new VirtualApplicationCommandLineSetting(RequireValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualApplicationCommandLineSetting"/> values are the same. </summary>
         public static bool operator ==(VirtualApplicationCommandLineSetting left, VirtualApplicationCommandLineSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualApplicationCommandLineSetting"/> values are not the same. </summary>

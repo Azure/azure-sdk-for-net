@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("applicationType"u8);
-                writer.WriteStringValue(ApplicationType.Value.ToString());
+                writer.WriteStringValue(ApplicationType.Value.ToSerialString());
             }
             writer.WritePropertyName("commandLineSetting"u8);
-            writer.WriteStringValue(CommandLineSetting.ToString());
+            writer.WriteStringValue(CommandLineSetting.ToSerialString());
             if (Optional.IsDefined(CommandLineArguments))
             {
                 writer.WritePropertyName("commandLineArguments"u8);

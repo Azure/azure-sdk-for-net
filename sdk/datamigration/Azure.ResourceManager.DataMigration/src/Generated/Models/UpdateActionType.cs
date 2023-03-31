@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static UpdateActionType ChangedOnTarget { get; } = new UpdateActionType(ChangedOnTargetValue);
         /// <summary> AddedOnTarget. </summary>
         public static UpdateActionType AddedOnTarget { get; } = new UpdateActionType(AddedOnTargetValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UpdateActionType"/> values are the same. </summary>
         public static bool operator ==(UpdateActionType left, UpdateActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpdateActionType"/> values are not the same. </summary>

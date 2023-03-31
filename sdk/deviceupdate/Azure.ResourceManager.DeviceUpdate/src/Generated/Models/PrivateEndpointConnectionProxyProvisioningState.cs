@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static PrivateEndpointConnectionProxyProvisioningState Deleting { get; } = new PrivateEndpointConnectionProxyProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static PrivateEndpointConnectionProxyProvisioningState Failed { get; } = new PrivateEndpointConnectionProxyProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PrivateEndpointConnectionProxyProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PrivateEndpointConnectionProxyProvisioningState left, PrivateEndpointConnectionProxyProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateEndpointConnectionProxyProvisioningState"/> values are not the same. </summary>

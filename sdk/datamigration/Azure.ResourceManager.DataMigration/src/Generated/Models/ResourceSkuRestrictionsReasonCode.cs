@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static ResourceSkuRestrictionsReasonCode QuotaId { get; } = new ResourceSkuRestrictionsReasonCode(QuotaIdValue);
         /// <summary> NotAvailableForSubscription. </summary>
         public static ResourceSkuRestrictionsReasonCode NotAvailableForSubscription { get; } = new ResourceSkuRestrictionsReasonCode(NotAvailableForSubscriptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceSkuRestrictionsReasonCode"/> values are the same. </summary>
         public static bool operator ==(ResourceSkuRestrictionsReasonCode left, ResourceSkuRestrictionsReasonCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceSkuRestrictionsReasonCode"/> values are not the same. </summary>

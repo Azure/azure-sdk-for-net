@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> SqlOnPrem. </summary>
         public static SqlSourcePlatform SqlOnPrem { get; } = new SqlSourcePlatform(SqlOnPremValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlSourcePlatform"/> values are the same. </summary>
         public static bool operator ==(SqlSourcePlatform left, SqlSourcePlatform right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlSourcePlatform"/> values are not the same. </summary>

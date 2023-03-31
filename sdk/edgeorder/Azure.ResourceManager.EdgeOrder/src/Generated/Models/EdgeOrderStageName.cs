@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static EdgeOrderStageName ReturnCompleted { get; } = new EdgeOrderStageName(ReturnCompletedValue);
         /// <summary> Order has been cancelled. </summary>
         public static EdgeOrderStageName Cancelled { get; } = new EdgeOrderStageName(CancelledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeOrderStageName"/> values are the same. </summary>
         public static bool operator ==(EdgeOrderStageName left, EdgeOrderStageName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeOrderStageName"/> values are not the same. </summary>

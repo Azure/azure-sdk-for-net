@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Elastic.Models
         public static ElasticDeploymentStatus Healthy { get; } = new ElasticDeploymentStatus(HealthyValue);
         /// <summary> Unhealthy. </summary>
         public static ElasticDeploymentStatus Unhealthy { get; } = new ElasticDeploymentStatus(UnhealthyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ElasticDeploymentStatus"/> values are the same. </summary>
         public static bool operator ==(ElasticDeploymentStatus left, ElasticDeploymentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticDeploymentStatus"/> values are not the same. </summary>

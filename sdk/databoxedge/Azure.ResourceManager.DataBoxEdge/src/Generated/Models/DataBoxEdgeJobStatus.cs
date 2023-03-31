@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeJobStatus Paused { get; } = new DataBoxEdgeJobStatus(PausedValue);
         /// <summary> Scheduled. </summary>
         public static DataBoxEdgeJobStatus Scheduled { get; } = new DataBoxEdgeJobStatus(ScheduledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeJobStatus"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeJobStatus left, DataBoxEdgeJobStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeJobStatus"/> values are not the same. </summary>

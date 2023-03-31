@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static DeviceUpdateAccountLocationRole Primary { get; } = new DeviceUpdateAccountLocationRole(PrimaryValue);
         /// <summary> Failover. </summary>
         public static DeviceUpdateAccountLocationRole Failover { get; } = new DeviceUpdateAccountLocationRole(FailoverValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceUpdateAccountLocationRole"/> values are the same. </summary>
         public static bool operator ==(DeviceUpdateAccountLocationRole left, DeviceUpdateAccountLocationRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceUpdateAccountLocationRole"/> values are not the same. </summary>

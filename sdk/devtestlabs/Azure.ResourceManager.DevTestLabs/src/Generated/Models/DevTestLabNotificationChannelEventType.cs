@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabNotificationChannelEventType AutoShutdown { get; } = new DevTestLabNotificationChannelEventType(AutoShutdownValue);
         /// <summary> Cost. </summary>
         public static DevTestLabNotificationChannelEventType Cost { get; } = new DevTestLabNotificationChannelEventType(CostValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabNotificationChannelEventType"/> values are the same. </summary>
         public static bool operator ==(DevTestLabNotificationChannelEventType left, DevTestLabNotificationChannelEventType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabNotificationChannelEventType"/> values are not the same. </summary>

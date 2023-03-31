@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static ParentType Domains { get; } = new ParentType(DomainsValue);
         /// <summary> partnerNamespaces. </summary>
         public static ParentType PartnerNamespaces { get; } = new ParentType(PartnerNamespacesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ParentType"/> values are the same. </summary>
         public static bool operator ==(ParentType left, ParentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParentType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static IntegrationRuntimeAuthKeyName AuthKey1 { get; } = new IntegrationRuntimeAuthKeyName(AuthKey1Value);
         /// <summary> authKey2. </summary>
         public static IntegrationRuntimeAuthKeyName AuthKey2 { get; } = new IntegrationRuntimeAuthKeyName(AuthKey2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeAuthKeyName"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeAuthKeyName left, IntegrationRuntimeAuthKeyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeAuthKeyName"/> values are not the same. </summary>

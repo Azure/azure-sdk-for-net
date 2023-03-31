@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("logDestination"u8);
-            writer.WriteStringValue(LogDestination.ToString());
+            writer.WriteStringValue(LogDestination.ToSerialString());
             if (Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);

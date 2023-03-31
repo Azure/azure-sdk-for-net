@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static DatabaseFileType NotSupported { get; } = new DatabaseFileType(NotSupportedValue);
         /// <summary> Fulltext. </summary>
         public static DatabaseFileType Fulltext { get; } = new DatabaseFileType(FulltextValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DatabaseFileType"/> values are the same. </summary>
         public static bool operator ==(DatabaseFileType left, DatabaseFileType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatabaseFileType"/> values are not the same. </summary>

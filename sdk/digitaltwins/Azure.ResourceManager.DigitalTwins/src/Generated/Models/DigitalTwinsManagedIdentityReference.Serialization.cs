@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(IdentityType.Value.ToString());
+                writer.WriteStringValue(IdentityType.Value.ToSerialString());
             }
             if (Optional.IsDefined(UserAssignedIdentity))
             {

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(SourcePlatform))
             {
                 writer.WritePropertyName("sourcePlatform"u8);
-                writer.WriteStringValue(SourcePlatform.Value.ToString());
+                writer.WriteStringValue(SourcePlatform.Value.ToSerialString());
             }
             if (Optional.IsDefined(AzureAuthenticationInfo))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(TargetPlatform))
             {
                 writer.WritePropertyName("targetPlatform"u8);
-                writer.WriteStringValue(TargetPlatform.Value.ToString());
+                writer.WriteStringValue(TargetPlatform.Value.ToSerialString());
             }
             if (Optional.IsDefined(SourceConnectionInfo))
             {

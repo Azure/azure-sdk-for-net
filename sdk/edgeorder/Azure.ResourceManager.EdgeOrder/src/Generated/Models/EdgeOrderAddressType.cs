@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static EdgeOrderAddressType Residential { get; } = new EdgeOrderAddressType(ResidentialValue);
         /// <summary> Commercial Address. </summary>
         public static EdgeOrderAddressType Commercial { get; } = new EdgeOrderAddressType(CommercialValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeOrderAddressType"/> values are the same. </summary>
         public static bool operator ==(EdgeOrderAddressType left, EdgeOrderAddressType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeOrderAddressType"/> values are not the same. </summary>

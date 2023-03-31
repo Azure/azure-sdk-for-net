@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ParameterType.Value.ToString());
+                writer.WriteStringValue(ParameterType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

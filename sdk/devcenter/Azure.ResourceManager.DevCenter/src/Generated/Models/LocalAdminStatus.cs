@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static LocalAdminStatus Disabled { get; } = new LocalAdminStatus(DisabledValue);
         /// <summary> Enabled. </summary>
         public static LocalAdminStatus Enabled { get; } = new LocalAdminStatus(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LocalAdminStatus"/> values are the same. </summary>
         public static bool operator ==(LocalAdminStatus left, LocalAdminStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LocalAdminStatus"/> values are not the same. </summary>

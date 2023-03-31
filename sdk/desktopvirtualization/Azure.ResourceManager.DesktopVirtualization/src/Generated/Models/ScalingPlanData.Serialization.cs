@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(HostPoolType))
             {
                 writer.WritePropertyName("hostPoolType"u8);
-                writer.WriteStringValue(HostPoolType.Value.ToString());
+                writer.WriteStringValue(HostPoolType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExclusionTag))
             {

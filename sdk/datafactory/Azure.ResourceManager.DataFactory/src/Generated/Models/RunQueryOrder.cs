@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static RunQueryOrder Asc { get; } = new RunQueryOrder(AscValue);
         /// <summary> DESC. </summary>
         public static RunQueryOrder Desc { get; } = new RunQueryOrder(DescValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RunQueryOrder"/> values are the same. </summary>
         public static bool operator ==(RunQueryOrder left, RunQueryOrder right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunQueryOrder"/> values are not the same. </summary>

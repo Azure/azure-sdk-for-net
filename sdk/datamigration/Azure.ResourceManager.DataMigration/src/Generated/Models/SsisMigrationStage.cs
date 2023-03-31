@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static SsisMigrationStage InProgress { get; } = new SsisMigrationStage(InProgressValue);
         /// <summary> Completed. </summary>
         public static SsisMigrationStage Completed { get; } = new SsisMigrationStage(CompletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SsisMigrationStage"/> values are the same. </summary>
         public static bool operator ==(SsisMigrationStage left, SsisMigrationStage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SsisMigrationStage"/> values are not the same. </summary>

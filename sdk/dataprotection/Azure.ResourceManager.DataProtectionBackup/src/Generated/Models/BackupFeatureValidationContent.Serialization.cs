@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(FeatureType))
             {
                 writer.WritePropertyName("featureType"u8);
-                writer.WriteStringValue(FeatureType.Value.ToString());
+                writer.WriteStringValue(FeatureType.Value.ToSerialString());
             }
             if (Optional.IsDefined(FeatureName))
             {

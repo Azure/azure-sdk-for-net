@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Standard. </summary>
         public static DataBoxEdgeSkuTier Standard { get; } = new DataBoxEdgeSkuTier(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuTier"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeSkuTier left, DataBoxEdgeSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuTier"/> values are not the same. </summary>

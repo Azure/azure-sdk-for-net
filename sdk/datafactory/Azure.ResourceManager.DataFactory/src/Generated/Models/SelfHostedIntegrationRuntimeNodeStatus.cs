@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static SelfHostedIntegrationRuntimeNodeStatus Initializing { get; } = new SelfHostedIntegrationRuntimeNodeStatus(InitializingValue);
         /// <summary> InitializeFailed. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus InitializeFailed { get; } = new SelfHostedIntegrationRuntimeNodeStatus(InitializeFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SelfHostedIntegrationRuntimeNodeStatus"/> values are the same. </summary>
         public static bool operator ==(SelfHostedIntegrationRuntimeNodeStatus left, SelfHostedIntegrationRuntimeNodeStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SelfHostedIntegrationRuntimeNodeStatus"/> values are not the same. </summary>

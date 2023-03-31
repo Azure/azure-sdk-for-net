@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static CheckNameAvailabilityReason Invalid { get; } = new CheckNameAvailabilityReason(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static CheckNameAvailabilityReason AlreadyExists { get; } = new CheckNameAvailabilityReason(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CheckNameAvailabilityReason"/> values are the same. </summary>
         public static bool operator ==(CheckNameAvailabilityReason left, CheckNameAvailabilityReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CheckNameAvailabilityReason"/> values are not the same. </summary>

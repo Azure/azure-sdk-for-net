@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(Input);
             }
             writer.WritePropertyName("taskType"u8);
-            writer.WriteStringValue(TaskType.ToString());
+            writer.WriteStringValue(TaskType.ToSerialString());
             if (Optional.IsCollectionDefined(ClientData))
             {
                 writer.WritePropertyName("clientData"u8);

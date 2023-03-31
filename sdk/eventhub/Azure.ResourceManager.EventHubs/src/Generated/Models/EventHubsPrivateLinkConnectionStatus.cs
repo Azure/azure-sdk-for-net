@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsPrivateLinkConnectionStatus Rejected { get; } = new EventHubsPrivateLinkConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static EventHubsPrivateLinkConnectionStatus Disconnected { get; } = new EventHubsPrivateLinkConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventHubsPrivateLinkConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(EventHubsPrivateLinkConnectionStatus left, EventHubsPrivateLinkConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsPrivateLinkConnectionStatus"/> values are not the same. </summary>

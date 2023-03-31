@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static EventSubscriptionStatus Disabled { get; } = new EventSubscriptionStatus(DisabledValue);
         /// <summary> Unknown. </summary>
         public static EventSubscriptionStatus Unknown { get; } = new EventSubscriptionStatus(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventSubscriptionStatus"/> values are the same. </summary>
         public static bool operator ==(EventSubscriptionStatus left, EventSubscriptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventSubscriptionStatus"/> values are not the same. </summary>

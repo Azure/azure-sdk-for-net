@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static SessionHostStatus FSLogixNotHealthy { get; } = new SessionHostStatus(FSLogixNotHealthyValue);
         /// <summary> New status to inform admins that the health on their endpoint needs to be fixed. The connections might not fail, as these issues are not fatal. </summary>
         public static SessionHostStatus NeedsAssistance { get; } = new SessionHostStatus(NeedsAssistanceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SessionHostStatus"/> values are the same. </summary>
         public static bool operator ==(SessionHostStatus left, SessionHostStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SessionHostStatus"/> values are not the same. </summary>

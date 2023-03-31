@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static ResourceOperationalStatus Stopped { get; } = new ResourceOperationalStatus(StoppedValue);
         /// <summary> Stopped (deallocated). </summary>
         public static ResourceOperationalStatus StoppedDeallocated { get; } = new ResourceOperationalStatus(StoppedDeallocatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceOperationalStatus"/> values are the same. </summary>
         public static bool operator ==(ResourceOperationalStatus left, ResourceOperationalStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceOperationalStatus"/> values are not the same. </summary>

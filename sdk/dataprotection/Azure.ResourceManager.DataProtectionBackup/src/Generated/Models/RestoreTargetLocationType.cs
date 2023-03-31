@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static RestoreTargetLocationType AzureBlobs { get; } = new RestoreTargetLocationType(AzureBlobsValue);
         /// <summary> AzureFiles. </summary>
         public static RestoreTargetLocationType AzureFiles { get; } = new RestoreTargetLocationType(AzureFilesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RestoreTargetLocationType"/> values are the same. </summary>
         public static bool operator ==(RestoreTargetLocationType left, RestoreTargetLocationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RestoreTargetLocationType"/> values are not the same. </summary>

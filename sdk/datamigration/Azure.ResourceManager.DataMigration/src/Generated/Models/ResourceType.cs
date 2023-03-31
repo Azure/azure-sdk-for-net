@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static ResourceType SqlVm { get; } = new ResourceType(SqlVmValue);
         /// <summary> SqlDb. </summary>
         public static ResourceType SqlDB { get; } = new ResourceType(SqlDBValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceType"/> values are the same. </summary>
         public static bool operator ==(ResourceType left, ResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceType"/> values are not the same. </summary>

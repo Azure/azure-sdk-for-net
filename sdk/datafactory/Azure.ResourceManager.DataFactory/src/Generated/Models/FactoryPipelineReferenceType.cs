@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> PipelineReference. </summary>
         public static FactoryPipelineReferenceType PipelineReference { get; } = new FactoryPipelineReferenceType(PipelineReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FactoryPipelineReferenceType"/> values are the same. </summary>
         public static bool operator ==(FactoryPipelineReferenceType left, FactoryPipelineReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FactoryPipelineReferenceType"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static MongoDBProgressResultType Database { get; } = new MongoDBProgressResultType(DatabaseValue);
         /// <summary> Collection. </summary>
         public static MongoDBProgressResultType Collection { get; } = new MongoDBProgressResultType(CollectionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MongoDBProgressResultType"/> values are the same. </summary>
         public static bool operator ==(MongoDBProgressResultType left, MongoDBProgressResultType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoDBProgressResultType"/> values are not the same. </summary>

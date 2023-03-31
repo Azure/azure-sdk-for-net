@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static DatabaseCompatLevel CompatLevel130 { get; } = new DatabaseCompatLevel(CompatLevel130Value);
         /// <summary> CompatLevel140. </summary>
         public static DatabaseCompatLevel CompatLevel140 { get; } = new DatabaseCompatLevel(CompatLevel140Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DatabaseCompatLevel"/> values are the same. </summary>
         public static bool operator ==(DatabaseCompatLevel left, DatabaseCompatLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatabaseCompatLevel"/> values are not the same. </summary>

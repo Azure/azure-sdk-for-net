@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> None. </summary>
         public static ElasticSanVolumeCreateOption None { get; } = new ElasticSanVolumeCreateOption(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ElasticSanVolumeCreateOption"/> values are the same. </summary>
         public static bool operator ==(ElasticSanVolumeCreateOption left, ElasticSanVolumeCreateOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticSanVolumeCreateOption"/> values are not the same. </summary>

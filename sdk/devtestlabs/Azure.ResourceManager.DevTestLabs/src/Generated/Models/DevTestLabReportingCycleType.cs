@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabReportingCycleType CalendarMonth { get; } = new DevTestLabReportingCycleType(CalendarMonthValue);
         /// <summary> Custom. </summary>
         public static DevTestLabReportingCycleType Custom { get; } = new DevTestLabReportingCycleType(CustomValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DevTestLabReportingCycleType"/> values are the same. </summary>
         public static bool operator ==(DevTestLabReportingCycleType left, DevTestLabReportingCycleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabReportingCycleType"/> values are not the same. </summary>

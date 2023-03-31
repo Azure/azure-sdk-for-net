@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ReferenceType.ToString());
+            writer.WriteStringValue(ReferenceType.ToSerialString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
             foreach (var item in AdditionalProperties)

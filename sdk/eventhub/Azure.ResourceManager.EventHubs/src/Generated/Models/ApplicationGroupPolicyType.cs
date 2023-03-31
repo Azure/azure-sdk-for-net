@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> ThrottlingPolicy. </summary>
         public static ApplicationGroupPolicyType ThrottlingPolicy { get; } = new ApplicationGroupPolicyType(ThrottlingPolicyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationGroupPolicyType"/> values are the same. </summary>
         public static bool operator ==(ApplicationGroupPolicyType left, ApplicationGroupPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGroupPolicyType"/> values are not the same. </summary>

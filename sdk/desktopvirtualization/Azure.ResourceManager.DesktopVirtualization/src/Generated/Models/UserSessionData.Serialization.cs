@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("applicationType"u8);
-                writer.WriteStringValue(ApplicationType.Value.ToString());
+                writer.WriteStringValue(ApplicationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SessionState))
             {
                 writer.WritePropertyName("sessionState"u8);
-                writer.WriteStringValue(SessionState.Value.ToString());
+                writer.WriteStringValue(SessionState.Value.ToSerialString());
             }
             if (Optional.IsDefined(ActiveDirectoryUserName))
             {

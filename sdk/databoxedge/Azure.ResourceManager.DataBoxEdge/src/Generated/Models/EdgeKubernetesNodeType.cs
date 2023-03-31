@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static EdgeKubernetesNodeType Master { get; } = new EdgeKubernetesNodeType(MasterValue);
         /// <summary> Worker. </summary>
         public static EdgeKubernetesNodeType Worker { get; } = new EdgeKubernetesNodeType(WorkerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EdgeKubernetesNodeType"/> values are the same. </summary>
         public static bool operator ==(EdgeKubernetesNodeType left, EdgeKubernetesNodeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeKubernetesNodeType"/> values are not the same. </summary>

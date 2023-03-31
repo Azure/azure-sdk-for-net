@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static PreferredAppGroupType Desktop { get; } = new PreferredAppGroupType(DesktopValue);
         /// <summary> RailApplications. </summary>
         public static PreferredAppGroupType RailApplications { get; } = new PreferredAppGroupType(RailApplicationsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PreferredAppGroupType"/> values are the same. </summary>
         public static bool operator ==(PreferredAppGroupType left, PreferredAppGroupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PreferredAppGroupType"/> values are not the same. </summary>

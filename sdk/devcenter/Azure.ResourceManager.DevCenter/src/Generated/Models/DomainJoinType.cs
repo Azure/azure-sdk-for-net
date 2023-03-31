@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static DomainJoinType HybridAzureADJoin { get; } = new DomainJoinType(HybridAzureADJoinValue);
         /// <summary> AzureADJoin. </summary>
         public static DomainJoinType AzureADJoin { get; } = new DomainJoinType(AzureADJoinValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DomainJoinType"/> values are the same. </summary>
         public static bool operator ==(DomainJoinType left, DomainJoinType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainJoinType"/> values are not the same. </summary>

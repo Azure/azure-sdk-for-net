@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeSubscriptionState Deleted { get; } = new DataBoxEdgeSubscriptionState(DeletedValue);
         /// <summary> Unregistered. </summary>
         public static DataBoxEdgeSubscriptionState Unregistered { get; } = new DataBoxEdgeSubscriptionState(UnregisteredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataBoxEdgeSubscriptionState"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeSubscriptionState left, DataBoxEdgeSubscriptionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeSubscriptionState"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static SsisPackageLocationType InlinePackage { get; } = new SsisPackageLocationType(InlinePackageValue);
         /// <summary> PackageStore. </summary>
         public static SsisPackageLocationType PackageStore { get; } = new SsisPackageLocationType(PackageStoreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SsisPackageLocationType"/> values are the same. </summary>
         public static bool operator ==(SsisPackageLocationType left, SsisPackageLocationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SsisPackageLocationType"/> values are not the same. </summary>

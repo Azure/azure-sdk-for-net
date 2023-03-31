@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("preferredShipmentType"u8);
-            writer.WriteStringValue(PreferredShipmentType.ToString());
+            writer.WriteStringValue(PreferredShipmentType.ToSerialString());
             writer.WriteEndObject();
         }
 

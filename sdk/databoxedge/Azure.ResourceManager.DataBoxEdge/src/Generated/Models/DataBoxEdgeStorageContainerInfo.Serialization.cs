@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
             writer.WritePropertyName("dataFormat"u8);
-            writer.WriteStringValue(DataFormat.ToString());
+            writer.WriteStringValue(DataFormat.ToSerialString());
             writer.WriteEndObject();
         }
 

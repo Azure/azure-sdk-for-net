@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            writer.WriteStringValue(Status.ToSerialString());
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             if (Optional.IsDefined(ActionsRequired))

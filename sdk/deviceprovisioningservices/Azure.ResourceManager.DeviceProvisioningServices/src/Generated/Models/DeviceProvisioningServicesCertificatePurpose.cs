@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static DeviceProvisioningServicesCertificatePurpose ClientAuthentication { get; } = new DeviceProvisioningServicesCertificatePurpose(ClientAuthenticationValue);
         /// <summary> serverAuthentication. </summary>
         public static DeviceProvisioningServicesCertificatePurpose ServerAuthentication { get; } = new DeviceProvisioningServicesCertificatePurpose(ServerAuthenticationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesCertificatePurpose"/> values are the same. </summary>
         public static bool operator ==(DeviceProvisioningServicesCertificatePurpose left, DeviceProvisioningServicesCertificatePurpose right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesCertificatePurpose"/> values are not the same. </summary>
