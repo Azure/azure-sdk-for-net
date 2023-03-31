@@ -680,8 +680,8 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryResourceAsync("/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourcegroups/rg-query8/providers/microsoft.operationalinsights/workspaces/query8-logs",
-                "TableA1_75_CL",
+            var results = await client.QueryResourceAsync("/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-query8/providers/Microsoft.Storage/storageAccounts/nibhatitest",
+                "StorageBlobLogs | summarize count() by OperationName | top 10 by count_ desc",
                 _logsTestData.DataTimeRange);
 
             var resultTable = results.Value.Table;
