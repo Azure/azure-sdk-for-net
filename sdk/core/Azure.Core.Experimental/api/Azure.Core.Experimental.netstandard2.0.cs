@@ -110,9 +110,9 @@ namespace Azure.Core.Dynamic
 {
     public static partial class BinaryDataExtensions
     {
-        public static dynamic ToDynamic(this System.BinaryData data) { throw null; }
-        public static dynamic ToDynamic(this System.BinaryData data, Azure.Core.Dynamic.DynamicDataNameMapping propertyNameCasing) { throw null; }
-        public static dynamic ToDynamic(this System.BinaryData data, Azure.Core.Dynamic.DynamicDataOptions options) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData data) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData data, Azure.Core.Dynamic.DynamicDataNameMapping propertyNameCasing) { throw null; }
+        public static dynamic ToDynamicFromJson(this System.BinaryData data, Azure.Core.Dynamic.DynamicJsonOptions options) { throw null; }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
@@ -170,20 +170,20 @@ namespace Azure.Core.Dynamic
         PascalCaseGettersCamelCaseSetters = 2,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct DynamicDataOptions
-    {
-        private int _dummyPrimitive;
-        public static readonly Azure.Core.Dynamic.DynamicDataOptions AzureDefault;
-        public DynamicDataOptions() { throw null; }
-        public Azure.Core.Dynamic.DynamicDataNameMapping PropertyNameCasing { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DynamicDataProperty
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public string Name { get { throw null; } }
         public Azure.Core.Dynamic.DynamicData Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct DynamicJsonOptions
+    {
+        private int _dummyPrimitive;
+        public static readonly Azure.Core.Dynamic.DynamicJsonOptions AzureDefault;
+        public DynamicJsonOptions() { throw null; }
+        public Azure.Core.Dynamic.DynamicDataNameMapping PropertyNameCasing { get { throw null; } set { } }
     }
 }
 namespace Azure.Core.Json

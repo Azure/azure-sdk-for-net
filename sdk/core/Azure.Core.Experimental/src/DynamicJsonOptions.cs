@@ -4,14 +4,14 @@
 namespace Azure.Core.Dynamic
 {
     /// <summary>
-    /// Provides the ability for the user to define custom behavior when accessing data, such as JSON, through a dynamic layer.
+    /// Provides the ability for the user to define custom behavior when accessing JSON through a dynamic layer.
     /// </summary>
-    public struct DynamicDataOptions
+    public struct DynamicJsonOptions
     {
         /// <summary>
-        /// Gets the default <see cref="DynamicDataOptions"/> for Azure services.
+        /// Gets the default <see cref="DynamicJsonOptions"/> for Azure services.
         /// </summary>
-        public static readonly DynamicDataOptions AzureDefault = new()
+        public static readonly DynamicJsonOptions AzureDefault = new()
         {
             PropertyNameCasing = DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters
         };
@@ -19,7 +19,7 @@ namespace Azure.Core.Dynamic
         /// <summary>
         /// Creates a new instance of DynamicDataOptions.
         /// </summary>
-        public DynamicDataOptions() { }
+        public DynamicJsonOptions() { }
 
         /// <summary>
         /// Specifies how properties on <see cref="DynamicData"/> will be accessed in the underlying data buffer.
