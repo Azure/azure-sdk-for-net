@@ -246,5 +246,14 @@ namespace Azure.Communication.JobRouter.Models
         {
             return new RouterWorkerItem(routerWorker, etag);
         }
+
+        /// <summary> Initializes a new instance of ExpressionRule. </summary>
+        /// <param name="language"> The expression language to compile to and execute. </param>
+        /// <param name="expression"> The string containing the expression to evaluate. Should contain return statement with calculated values. </param>
+        /// <returns> A new <see cref="JobRouter.ExpressionRule"/> instance for mocking. </returns>
+        public static ExpressionRule ExpressionRule(string language = null, string expression = null)
+        {
+            return new ExpressionRule("expression-rule", language, expression);
+        }
     }
 }
