@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("method"u8);
-            writer.WriteStringValue(Method.ToString());
+            writer.WriteStringValue(Method.ToSerialString());
             writer.WritePropertyName("url"u8);
             writer.WriteObjectValue(Url);
             if (Optional.IsDefined(Timeout))

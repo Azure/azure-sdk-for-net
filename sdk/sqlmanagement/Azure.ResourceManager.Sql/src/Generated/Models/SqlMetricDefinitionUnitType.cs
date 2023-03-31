@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlMetricDefinitionUnitType CountPerSecond { get; } = new SqlMetricDefinitionUnitType(CountPerSecondValue);
         /// <summary> BytesPerSecond. </summary>
         public static SqlMetricDefinitionUnitType BytesPerSecond { get; } = new SqlMetricDefinitionUnitType(BytesPerSecondValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlMetricDefinitionUnitType"/> values are the same. </summary>
         public static bool operator ==(SqlMetricDefinitionUnitType left, SqlMetricDefinitionUnitType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlMetricDefinitionUnitType"/> values are not the same. </summary>

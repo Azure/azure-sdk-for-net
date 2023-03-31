@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Simulate alerts according to bundles. </summary>
         public static SecurityCenterKind Bundles { get; } = new SecurityCenterKind(BundlesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityCenterKind"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterKind left, SecurityCenterKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityCenterKind"/> values are not the same. </summary>

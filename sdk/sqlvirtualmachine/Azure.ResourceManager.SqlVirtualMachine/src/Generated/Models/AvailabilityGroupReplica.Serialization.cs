@@ -23,22 +23,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
-                writer.WriteStringValue(Role.Value.ToString());
+                writer.WriteStringValue(Role.Value.ToSerialString());
             }
             if (Optional.IsDefined(Commit))
             {
                 writer.WritePropertyName("commit"u8);
-                writer.WriteStringValue(Commit.Value.ToString());
+                writer.WriteStringValue(Commit.Value.ToSerialString());
             }
             if (Optional.IsDefined(Failover))
             {
                 writer.WritePropertyName("failover"u8);
-                writer.WriteStringValue(Failover.Value.ToString());
+                writer.WriteStringValue(Failover.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReadableSecondary))
             {
                 writer.WritePropertyName("readableSecondary"u8);
-                writer.WriteStringValue(ReadableSecondary.Value.ToString());
+                writer.WriteStringValue(ReadableSecondary.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

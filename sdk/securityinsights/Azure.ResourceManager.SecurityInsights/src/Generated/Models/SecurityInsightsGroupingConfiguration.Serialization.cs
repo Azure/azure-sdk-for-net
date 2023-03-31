@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WritePropertyName("lookbackDuration"u8);
             writer.WriteStringValue(LookbackDuration, "P");
             writer.WritePropertyName("matchingMethod"u8);
-            writer.WriteStringValue(MatchingMethod.ToString());
+            writer.WriteStringValue(MatchingMethod.ToSerialString());
             if (Optional.IsCollectionDefined(GroupByEntities))
             {
                 writer.WritePropertyName("groupByEntities"u8);
                 writer.WriteStartArray();
                 foreach (var item in GroupByEntities)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in GroupByAlertDetails)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

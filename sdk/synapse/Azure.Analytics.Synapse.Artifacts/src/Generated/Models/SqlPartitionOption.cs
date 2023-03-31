@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static SqlPartitionOption PhysicalPartitionsOfTable { get; } = new SqlPartitionOption(PhysicalPartitionsOfTableValue);
         /// <summary> DynamicRange. </summary>
         public static SqlPartitionOption DynamicRange { get; } = new SqlPartitionOption(DynamicRangeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlPartitionOption"/> values are the same. </summary>
         public static bool operator ==(SqlPartitionOption left, SqlPartitionOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPartitionOption"/> values are not the same. </summary>

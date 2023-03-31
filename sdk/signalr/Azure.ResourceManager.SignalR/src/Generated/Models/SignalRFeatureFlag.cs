@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.SignalR.Models
         public static SignalRFeatureFlag EnableMessagingLogs { get; } = new SignalRFeatureFlag(EnableMessagingLogsValue);
         /// <summary> EnableLiveTrace. </summary>
         public static SignalRFeatureFlag EnableLiveTrace { get; } = new SignalRFeatureFlag(EnableLiveTraceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SignalRFeatureFlag"/> values are the same. </summary>
         public static bool operator ==(SignalRFeatureFlag left, SignalRFeatureFlag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SignalRFeatureFlag"/> values are not the same. </summary>

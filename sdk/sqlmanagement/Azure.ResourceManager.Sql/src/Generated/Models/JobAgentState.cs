@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static JobAgentState Deleting { get; } = new JobAgentState(DeletingValue);
         /// <summary> Disabled. </summary>
         public static JobAgentState Disabled { get; } = new JobAgentState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobAgentState"/> values are the same. </summary>
         public static bool operator ==(JobAgentState left, JobAgentState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobAgentState"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <summary> Standard. </summary>
         public static StreamAnalyticsSkuName Standard { get; } = new StreamAnalyticsSkuName(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamAnalyticsSkuName"/> values are the same. </summary>
         public static bool operator ==(StreamAnalyticsSkuName left, StreamAnalyticsSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamAnalyticsSkuName"/> values are not the same. </summary>

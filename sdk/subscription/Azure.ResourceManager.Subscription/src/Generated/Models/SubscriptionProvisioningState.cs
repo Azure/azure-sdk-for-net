@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Subscription.Models
         public static SubscriptionProvisioningState Succeeded { get; } = new SubscriptionProvisioningState(SucceededValue);
         /// <summary> Failed. </summary>
         public static SubscriptionProvisioningState Failed { get; } = new SubscriptionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SubscriptionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SubscriptionProvisioningState left, SubscriptionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SubscriptionProvisioningState"/> values are not the same. </summary>

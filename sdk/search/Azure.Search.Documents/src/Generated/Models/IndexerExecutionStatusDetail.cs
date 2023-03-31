@@ -26,6 +26,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Indicates that the reset that occurred was for a call to ResetDocs. </summary>
         public static IndexerExecutionStatusDetail ResetDocs { get; } = new IndexerExecutionStatusDetail(ResetDocsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IndexerExecutionStatusDetail"/> values are the same. </summary>
         public static bool operator ==(IndexerExecutionStatusDetail left, IndexerExecutionStatusDetail right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IndexerExecutionStatusDetail"/> values are not the same. </summary>

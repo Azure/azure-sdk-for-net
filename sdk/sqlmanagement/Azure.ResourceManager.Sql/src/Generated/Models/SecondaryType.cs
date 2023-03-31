@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SecondaryType Named { get; } = new SecondaryType(NamedValue);
         /// <summary> Standby. </summary>
         public static SecondaryType Standby { get; } = new SecondaryType(StandbyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecondaryType"/> values are the same. </summary>
         public static bool operator ==(SecondaryType left, SecondaryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecondaryType"/> values are not the same. </summary>

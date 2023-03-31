@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Lifecycle. </summary>
         public static ManagementPolicyRuleType Lifecycle { get; } = new ManagementPolicyRuleType(LifecycleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagementPolicyRuleType"/> values are the same. </summary>
         public static bool operator ==(ManagementPolicyRuleType left, ManagementPolicyRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagementPolicyRuleType"/> values are not the same. </summary>

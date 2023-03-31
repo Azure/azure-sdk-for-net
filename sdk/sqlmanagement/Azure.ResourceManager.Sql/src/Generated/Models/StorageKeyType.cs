@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static StorageKeyType SharedAccessKey { get; } = new StorageKeyType(SharedAccessKeyValue);
         /// <summary> StorageAccessKey. </summary>
         public static StorageKeyType StorageAccessKey { get; } = new StorageKeyType(StorageAccessKeyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageKeyType"/> values are the same. </summary>
         public static bool operator ==(StorageKeyType left, StorageKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageKeyType"/> values are not the same. </summary>

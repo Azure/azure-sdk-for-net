@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static StreamingJobType Cloud { get; } = new StreamingJobType(CloudValue);
         /// <summary> Edge. </summary>
         public static StreamingJobType Edge { get; } = new StreamingJobType(EdgeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamingJobType"/> values are the same. </summary>
         public static bool operator ==(StreamingJobType left, StreamingJobType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingJobType"/> values are not the same. </summary>

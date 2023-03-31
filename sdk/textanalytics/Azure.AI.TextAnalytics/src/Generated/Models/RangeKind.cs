@@ -53,6 +53,9 @@ namespace Azure.AI.TextAnalytics
         public static RangeKind Temperature { get; } = new RangeKind(TemperatureValue);
         /// <summary> Currency. </summary>
         public static RangeKind Currency { get; } = new RangeKind(CurrencyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RangeKind"/> values are the same. </summary>
         public static bool operator ==(RangeKind left, RangeKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RangeKind"/> values are not the same. </summary>

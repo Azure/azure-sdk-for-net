@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> PolybaseImport. </summary>
         public static DatabaseExtensionOperationMode PolybaseImport { get; } = new DatabaseExtensionOperationMode(PolybaseImportValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DatabaseExtensionOperationMode"/> values are the same. </summary>
         public static bool operator ==(DatabaseExtensionOperationMode left, DatabaseExtensionOperationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatabaseExtensionOperationMode"/> values are not the same. </summary>

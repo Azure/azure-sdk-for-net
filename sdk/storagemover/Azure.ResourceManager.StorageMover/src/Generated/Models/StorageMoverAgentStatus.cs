@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static StorageMoverAgentStatus RequiresAttention { get; } = new StorageMoverAgentStatus(RequiresAttentionValue);
         /// <summary> Unregistering. </summary>
         public static StorageMoverAgentStatus Unregistering { get; } = new StorageMoverAgentStatus(UnregisteringValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageMoverAgentStatus"/> values are the same. </summary>
         public static bool operator ==(StorageMoverAgentStatus left, StorageMoverAgentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageMoverAgentStatus"/> values are not the same. </summary>

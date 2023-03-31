@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(BodyFingerprintBin1))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(AntispamDirection))
             {
                 writer.WritePropertyName("antispamDirection"u8);
-                writer.WriteStringValue(AntispamDirection.Value.ToString());
+                writer.WriteStringValue(AntispamDirection.Value.ToSerialString());
             }
             if (Optional.IsDefined(DeliveryAction))
             {

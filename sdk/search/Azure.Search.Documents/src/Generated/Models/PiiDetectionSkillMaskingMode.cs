@@ -29,6 +29,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static PiiDetectionSkillMaskingMode None { get; } = new PiiDetectionSkillMaskingMode(NoneValue);
         /// <summary> Replaces the detected entities with the character given in the maskingCharacter parameter. The character will be repeated to the length of the detected entity so that the offsets will correctly correspond to both the input text as well as the output maskedText. </summary>
         public static PiiDetectionSkillMaskingMode Replace { get; } = new PiiDetectionSkillMaskingMode(ReplaceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PiiDetectionSkillMaskingMode"/> values are the same. </summary>
         public static bool operator ==(PiiDetectionSkillMaskingMode left, PiiDetectionSkillMaskingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PiiDetectionSkillMaskingMode"/> values are not the same. </summary>

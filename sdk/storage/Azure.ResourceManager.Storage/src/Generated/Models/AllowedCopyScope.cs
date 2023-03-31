@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static AllowedCopyScope PrivateLink { get; } = new AllowedCopyScope(PrivateLinkValue);
         /// <summary> AAD. </summary>
         public static AllowedCopyScope Aad { get; } = new AllowedCopyScope(AadValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AllowedCopyScope"/> values are the same. </summary>
         public static bool operator ==(AllowedCopyScope left, AllowedCopyScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AllowedCopyScope"/> values are not the same. </summary>

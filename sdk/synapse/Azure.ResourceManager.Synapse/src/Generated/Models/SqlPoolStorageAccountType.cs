@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SqlPoolStorageAccountType Grs { get; } = new SqlPoolStorageAccountType(GrsValue);
         /// <summary> LRS. </summary>
         public static SqlPoolStorageAccountType Lrs { get; } = new SqlPoolStorageAccountType(LrsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlPoolStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(SqlPoolStorageAccountType left, SqlPoolStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPoolStorageAccountType"/> values are not the same. </summary>

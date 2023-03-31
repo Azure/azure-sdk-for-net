@@ -41,6 +41,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static LivyStatementStates Cancelling { get; } = new LivyStatementStates(CancellingValue);
         /// <summary> cancelled. </summary>
         public static LivyStatementStates Cancelled { get; } = new LivyStatementStates(CancelledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LivyStatementStates"/> values are the same. </summary>
         public static bool operator ==(LivyStatementStates left, LivyStatementStates right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LivyStatementStates"/> values are not the same. </summary>

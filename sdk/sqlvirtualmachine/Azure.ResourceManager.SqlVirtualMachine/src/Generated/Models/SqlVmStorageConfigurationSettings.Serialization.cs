@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(DiskConfigurationType))
             {
                 writer.WritePropertyName("diskConfigurationType"u8);
-                writer.WriteStringValue(DiskConfigurationType.Value.ToString());
+                writer.WriteStringValue(DiskConfigurationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(StorageWorkloadType))
             {
                 writer.WritePropertyName("storageWorkloadType"u8);
-                writer.WriteStringValue(StorageWorkloadType.Value.ToString());
+                writer.WriteStringValue(StorageWorkloadType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

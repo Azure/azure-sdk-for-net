@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ServiceFabric
             uri.AppendPath("/providers/Microsoft.ServiceFabric/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/environments/", false);
-            uri.AppendPath(environment.ToString(), true);
+            uri.AppendPath(environment.ToSerialString(), true);
             uri.AppendPath("/clusterVersions/", false);
             uri.AppendPath(clusterVersion, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ServiceFabric
             uri.AppendPath("/providers/Microsoft.ServiceFabric/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/environments/", false);
-            uri.AppendPath(environment.ToString(), true);
+            uri.AppendPath(environment.ToSerialString(), true);
             uri.AppendPath("/clusterVersions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

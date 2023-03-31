@@ -221,6 +221,9 @@ namespace Azure.Storage.Files.Shares.Models
         public static ShareErrorCode AuthorizationResourceTypeMismatch { get; } = new ShareErrorCode(AuthorizationResourceTypeMismatchValue);
         /// <summary> FeatureVersionMismatch. </summary>
         public static ShareErrorCode FeatureVersionMismatch { get; } = new ShareErrorCode(FeatureVersionMismatchValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ShareErrorCode"/> values are the same. </summary>
         public static bool operator ==(ShareErrorCode left, ShareErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareErrorCode"/> values are not the same. </summary>

@@ -40,6 +40,9 @@ namespace Azure.AI.Translation.Document
         public static DocumentTranslationStatus Failed { get; } = new DocumentTranslationStatus(FailedValue);
         /// <summary> ValidationFailed. </summary>
         public static DocumentTranslationStatus ValidationFailed { get; } = new DocumentTranslationStatus(ValidationFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DocumentTranslationStatus"/> values are the same. </summary>
         public static bool operator ==(DocumentTranslationStatus left, DocumentTranslationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentTranslationStatus"/> values are not the same. </summary>

@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlDayOfWeek Friday { get; } = new SqlDayOfWeek(FridayValue);
         /// <summary> Saturday. </summary>
         public static SqlDayOfWeek Saturday { get; } = new SqlDayOfWeek(SaturdayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlDayOfWeek"/> values are the same. </summary>
         public static bool operator ==(SqlDayOfWeek left, SqlDayOfWeek right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlDayOfWeek"/> values are not the same. </summary>

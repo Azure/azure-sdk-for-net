@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("writeBehavior"u8);
-            writer.WriteStringValue(WriteBehavior.ToString());
+            writer.WriteStringValue(WriteBehavior.ToSerialString());
             if (Optional.IsDefined(IgnoreNullValues))
             {
                 writer.WritePropertyName("ignoreNullValues"u8);

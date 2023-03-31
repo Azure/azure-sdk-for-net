@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ExternalGovernanceStatus Enabled { get; } = new ExternalGovernanceStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static ExternalGovernanceStatus Disabled { get; } = new ExternalGovernanceStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExternalGovernanceStatus"/> values are the same. </summary>
         public static bool operator ==(ExternalGovernanceStatus left, ExternalGovernanceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExternalGovernanceStatus"/> values are not the same. </summary>

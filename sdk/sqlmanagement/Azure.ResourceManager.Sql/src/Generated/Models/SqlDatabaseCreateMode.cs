@@ -71,6 +71,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlDatabaseCreateMode RestoreLongTermRetentionBackup { get; } = new SqlDatabaseCreateMode(RestoreLongTermRetentionBackupValue);
         /// <summary> OnlineSecondary. </summary>
         public static SqlDatabaseCreateMode OnlineSecondary { get; } = new SqlDatabaseCreateMode(OnlineSecondaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlDatabaseCreateMode"/> values are the same. </summary>
         public static bool operator ==(SqlDatabaseCreateMode left, SqlDatabaseCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlDatabaseCreateMode"/> values are not the same. </summary>

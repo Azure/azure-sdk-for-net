@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsGroupingMatchingMethod AnyAlert { get; } = new SecurityInsightsGroupingMatchingMethod(AnyAlertValue);
         /// <summary> Grouping alerts into a single incident if the selected entities, custom details and alert details match. </summary>
         public static SecurityInsightsGroupingMatchingMethod Selected { get; } = new SecurityInsightsGroupingMatchingMethod(SelectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsGroupingMatchingMethod"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsGroupingMatchingMethod left, SecurityInsightsGroupingMatchingMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsGroupingMatchingMethod"/> values are not the same. </summary>

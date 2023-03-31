@@ -19,11 +19,11 @@ namespace Azure.AI.TextAnalytics
             writer.WritePropertyName("offset"u8);
             writer.WriteStringValue(Offset);
             writer.WritePropertyName("relativeTo"u8);
-            writer.WriteStringValue(RelativeTo.ToString());
+            writer.WriteStringValue(RelativeTo.ToSerialString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             writer.WritePropertyName("resolutionKind"u8);
-            writer.WriteStringValue(ResolutionKind.ToString());
+            writer.WriteStringValue(ResolutionKind.ToSerialString());
             writer.WriteEndObject();
         }
 

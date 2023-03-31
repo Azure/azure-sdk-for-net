@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ClusterCertificateStoreName TrustedPeople { get; } = new ClusterCertificateStoreName(TrustedPeopleValue);
         /// <summary> TrustedPublisher. </summary>
         public static ClusterCertificateStoreName TrustedPublisher { get; } = new ClusterCertificateStoreName(TrustedPublisherValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClusterCertificateStoreName"/> values are the same. </summary>
         public static bool operator ==(ClusterCertificateStoreName left, ClusterCertificateStoreName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterCertificateStoreName"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ElasticPoolLicenseType LicenseIncluded { get; } = new ElasticPoolLicenseType(LicenseIncludedValue);
         /// <summary> BasePrice. </summary>
         public static ElasticPoolLicenseType BasePrice { get; } = new ElasticPoolLicenseType(BasePriceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ElasticPoolLicenseType"/> values are the same. </summary>
         public static bool operator ==(ElasticPoolLicenseType left, ElasticPoolLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticPoolLicenseType"/> values are not the same. </summary>

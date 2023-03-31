@@ -44,6 +44,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static VisualFeature Objects { get; } = new VisualFeature(ObjectsValue);
         /// <summary> Tags. </summary>
         public static VisualFeature Tags { get; } = new VisualFeature(TagsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VisualFeature"/> values are the same. </summary>
         public static bool operator ==(VisualFeature left, VisualFeature right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VisualFeature"/> values are not the same. </summary>

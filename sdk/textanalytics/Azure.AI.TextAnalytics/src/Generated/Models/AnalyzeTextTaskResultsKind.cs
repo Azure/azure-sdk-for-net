@@ -44,6 +44,9 @@ namespace Azure.AI.TextAnalytics.Models
         public static AnalyzeTextTaskResultsKind EntityLinkingResults { get; } = new AnalyzeTextTaskResultsKind(EntityLinkingResultsValue);
         /// <summary> DynamicClassificationResults. </summary>
         public static AnalyzeTextTaskResultsKind DynamicClassificationResults { get; } = new AnalyzeTextTaskResultsKind(DynamicClassificationResultsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AnalyzeTextTaskResultsKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeTextTaskResultsKind left, AnalyzeTextTaskResultsKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeTextTaskResultsKind"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static ServiceNowAuthenticationType Basic { get; } = new ServiceNowAuthenticationType(BasicValue);
         /// <summary> OAuth2. </summary>
         public static ServiceNowAuthenticationType OAuth2 { get; } = new ServiceNowAuthenticationType(OAuth2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceNowAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(ServiceNowAuthenticationType left, ServiceNowAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceNowAuthenticationType"/> values are not the same. </summary>

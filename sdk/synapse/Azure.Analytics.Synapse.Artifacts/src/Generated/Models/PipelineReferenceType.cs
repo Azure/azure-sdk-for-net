@@ -26,6 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> PipelineReference. </summary>
         public static PipelineReferenceType PipelineReference { get; } = new PipelineReferenceType(PipelineReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PipelineReferenceType"/> values are the same. </summary>
         public static bool operator ==(PipelineReferenceType left, PipelineReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PipelineReferenceType"/> values are not the same. </summary>

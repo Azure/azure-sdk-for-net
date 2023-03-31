@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ServiceFabricManagedNetworkTrafficAccess Allow { get; } = new ServiceFabricManagedNetworkTrafficAccess(AllowValue);
         /// <summary> deny. </summary>
         public static ServiceFabricManagedNetworkTrafficAccess Deny { get; } = new ServiceFabricManagedNetworkTrafficAccess(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedNetworkTrafficAccess"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedNetworkTrafficAccess left, ServiceFabricManagedNetworkTrafficAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedNetworkTrafficAccess"/> values are not the same. </summary>

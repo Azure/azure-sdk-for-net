@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SignalR.Models
         public static SignalRServiceKind SignalR { get; } = new SignalRServiceKind(SignalRValue);
         /// <summary> RawWebSockets. </summary>
         public static SignalRServiceKind RawWebSockets { get; } = new SignalRServiceKind(RawWebSocketsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SignalRServiceKind"/> values are the same. </summary>
         public static bool operator ==(SignalRServiceKind left, SignalRServiceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SignalRServiceKind"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseSkuName ComputeOptimized { get; } = new SynapseSkuName(ComputeOptimizedValue);
         /// <summary> Storage optimized. </summary>
         public static SynapseSkuName StorageOptimized { get; } = new SynapseSkuName(StorageOptimizedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseSkuName"/> values are the same. </summary>
         public static bool operator ==(SynapseSkuName left, SynapseSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseSkuName"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static SparkJobType SparkBatch { get; } = new SparkJobType(SparkBatchValue);
         /// <summary> SparkSession. </summary>
         public static SparkJobType SparkSession { get; } = new SparkJobType(SparkSessionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SparkJobType"/> values are the same. </summary>
         public static bool operator ==(SparkJobType left, SparkJobType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkJobType"/> values are not the same. </summary>

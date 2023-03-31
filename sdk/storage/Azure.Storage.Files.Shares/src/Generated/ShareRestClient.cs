@@ -66,7 +66,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (accessTier != null)
             {
-                request.Headers.Add("x-ms-access-tier", accessTier.Value.ToString());
+                request.Headers.Add("x-ms-access-tier", accessTier.Value.ToSerialString());
             }
             request.Headers.Add("x-ms-version", _version);
             if (enabledProtocols != null)
@@ -710,7 +710,7 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("x-ms-version", _version);
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/json");
@@ -786,7 +786,7 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("x-ms-version", _version);
             if (_fileRequestIntent != null)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -871,7 +871,7 @@ namespace Azure.Storage.Files.Shares
             }
             if (accessTier != null)
             {
-                request.Headers.Add("x-ms-access-tier", accessTier.Value.ToString());
+                request.Headers.Add("x-ms-access-tier", accessTier.Value.ToSerialString());
             }
             if (leaseAccessConditions?.LeaseId != null)
             {

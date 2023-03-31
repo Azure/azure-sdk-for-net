@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static JobExecutionLifecycle Canceled { get; } = new JobExecutionLifecycle(CanceledValue);
         /// <summary> Skipped. </summary>
         public static JobExecutionLifecycle Skipped { get; } = new JobExecutionLifecycle(SkippedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobExecutionLifecycle"/> values are the same. </summary>
         public static bool operator ==(JobExecutionLifecycle left, JobExecutionLifecycle right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobExecutionLifecycle"/> values are not the same. </summary>

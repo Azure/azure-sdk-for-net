@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityValueType IPCidr { get; } = new SecurityValueType(IPCidrValue);
         /// <summary> Any string value. </summary>
         public static SecurityValueType String { get; } = new SecurityValueType(StringValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityValueType"/> values are the same. </summary>
         public static bool operator ==(SecurityValueType left, SecurityValueType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityValueType"/> values are not the same. </summary>

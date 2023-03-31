@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resolutionKind"u8);
-            writer.WriteStringValue(ResolutionKind.ToString());
+            writer.WriteStringValue(ResolutionKind.ToSerialString());
             writer.WriteEndObject();
         }
 

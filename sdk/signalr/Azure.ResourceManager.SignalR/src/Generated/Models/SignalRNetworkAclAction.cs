@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SignalR.Models
         public static SignalRNetworkAclAction Allow { get; } = new SignalRNetworkAclAction(AllowValue);
         /// <summary> Deny. </summary>
         public static SignalRNetworkAclAction Deny { get; } = new SignalRNetworkAclAction(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SignalRNetworkAclAction"/> values are the same. </summary>
         public static bool operator ==(SignalRNetworkAclAction left, SignalRNetworkAclAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SignalRNetworkAclAction"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseDataSourceScaleType Manual { get; } = new SynapseDataSourceScaleType(ManualValue);
         /// <summary> none. </summary>
         public static SynapseDataSourceScaleType None { get; } = new SynapseDataSourceScaleType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseDataSourceScaleType"/> values are the same. </summary>
         public static bool operator ==(SynapseDataSourceScaleType left, SynapseDataSourceScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseDataSourceScaleType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static ActionType ModifyProperties { get; } = new ActionType(ModifyPropertiesValue);
         /// <summary> Run a playbook on an object. </summary>
         public static ActionType RunPlaybook { get; } = new ActionType(RunPlaybookValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ActionType"/> values are the same. </summary>
         public static bool operator ==(ActionType left, ActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActionType"/> values are not the same. </summary>

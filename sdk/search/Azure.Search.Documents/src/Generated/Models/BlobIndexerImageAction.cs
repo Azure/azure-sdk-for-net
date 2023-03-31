@@ -32,6 +32,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static BlobIndexerImageAction GenerateNormalizedImages { get; } = new BlobIndexerImageAction(GenerateNormalizedImagesValue);
         /// <summary> Extracts text from images (for example, the word &quot;STOP&quot; from a traffic stop sign), and embeds it into the content field, but treats PDF files differently in that each page will be rendered as an image and normalized accordingly, instead of extracting embedded images.  Non-PDF file types will be treated the same as if &quot;generateNormalizedImages&quot; was set. </summary>
         public static BlobIndexerImageAction GenerateNormalizedImagePerPage { get; } = new BlobIndexerImageAction(GenerateNormalizedImagePerPageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobIndexerImageAction"/> values are the same. </summary>
         public static bool operator ==(BlobIndexerImageAction left, BlobIndexerImageAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobIndexerImageAction"/> values are not the same. </summary>

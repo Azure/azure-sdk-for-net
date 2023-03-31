@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(SqlServerLicenseType))
             {
                 writer.WritePropertyName("sqlServerLicenseType"u8);
-                writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
+                writer.WriteStringValue(SqlServerLicenseType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SqlManagement))
             {
                 writer.WritePropertyName("sqlManagement"u8);
-                writer.WriteStringValue(SqlManagement.Value.ToString());
+                writer.WriteStringValue(SqlManagement.Value.ToSerialString());
             }
             if (Optional.IsDefined(SqlImageSku))
             {
                 writer.WritePropertyName("sqlImageSku"u8);
-                writer.WriteStringValue(SqlImageSku.Value.ToString());
+                writer.WriteStringValue(SqlImageSku.Value.ToSerialString());
             }
             if (Optional.IsDefined(SqlVmGroupResourceId))
             {

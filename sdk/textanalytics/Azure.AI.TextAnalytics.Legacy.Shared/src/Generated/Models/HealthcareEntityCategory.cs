@@ -101,6 +101,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
         public static HealthcareEntityCategory FamilyRelation { get; } = new HealthcareEntityCategory(FamilyRelationValue);
         /// <summary> TreatmentName. </summary>
         public static HealthcareEntityCategory TreatmentName { get; } = new HealthcareEntityCategory(TreatmentNameValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HealthcareEntityCategory"/> values are the same. </summary>
         public static bool operator ==(HealthcareEntityCategory left, HealthcareEntityCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthcareEntityCategory"/> values are not the same. </summary>

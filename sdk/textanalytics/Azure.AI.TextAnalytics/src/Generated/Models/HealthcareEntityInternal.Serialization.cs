@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             writer.WritePropertyName("category"u8);
-            writer.WriteStringValue(Category.ToString());
+            writer.WriteStringValue(Category.ToSerialString());
             if (Optional.IsDefined(Subcategory))
             {
                 writer.WritePropertyName("subcategory"u8);

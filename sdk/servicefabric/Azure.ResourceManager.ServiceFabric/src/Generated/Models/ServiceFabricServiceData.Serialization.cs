@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.ServiceFabric
             if (Optional.IsDefined(DefaultMoveCost))
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
-                writer.WriteStringValue(DefaultMoveCost.Value.ToString());
+                writer.WriteStringValue(DefaultMoveCost.Value.ToSerialString());
             }
             if (Optional.IsDefined(ServiceKind))
             {
                 writer.WritePropertyName("serviceKind"u8);
-                writer.WriteStringValue(ServiceKind.Value.ToString());
+                writer.WriteStringValue(ServiceKind.Value.ToSerialString());
             }
             if (Optional.IsDefined(ServiceTypeName))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabric
             if (Optional.IsDefined(ServicePackageActivationMode))
             {
                 writer.WritePropertyName("servicePackageActivationMode"u8);
-                writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
+                writer.WriteStringValue(ServicePackageActivationMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(ServiceDnsName))
             {

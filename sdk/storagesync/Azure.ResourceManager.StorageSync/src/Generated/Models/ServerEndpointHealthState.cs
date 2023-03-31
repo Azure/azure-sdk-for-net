@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static ServerEndpointHealthState Healthy { get; } = new ServerEndpointHealthState(HealthyValue);
         /// <summary> Error. </summary>
         public static ServerEndpointHealthState Error { get; } = new ServerEndpointHealthState(ErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServerEndpointHealthState"/> values are the same. </summary>
         public static bool operator ==(ServerEndpointHealthState left, ServerEndpointHealthState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerEndpointHealthState"/> values are not the same. </summary>

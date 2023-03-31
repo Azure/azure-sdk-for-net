@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> default. </summary>
         public static SynapseBlobAuditingPolicyName Default { get; } = new SynapseBlobAuditingPolicyName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseBlobAuditingPolicyName"/> values are the same. </summary>
         public static bool operator ==(SynapseBlobAuditingPolicyName left, SynapseBlobAuditingPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseBlobAuditingPolicyName"/> values are not the same. </summary>

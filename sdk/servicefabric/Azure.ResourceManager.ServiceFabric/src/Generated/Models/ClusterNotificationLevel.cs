@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ClusterNotificationLevel Critical { get; } = new ClusterNotificationLevel(CriticalValue);
         /// <summary> Receive all notifications. </summary>
         public static ClusterNotificationLevel All { get; } = new ClusterNotificationLevel(AllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClusterNotificationLevel"/> values are the same. </summary>
         public static bool operator ==(ClusterNotificationLevel left, ClusterNotificationLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterNotificationLevel"/> values are not the same. </summary>

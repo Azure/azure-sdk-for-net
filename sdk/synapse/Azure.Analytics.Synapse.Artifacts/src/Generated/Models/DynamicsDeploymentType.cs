@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static DynamicsDeploymentType Online { get; } = new DynamicsDeploymentType(OnlineValue);
         /// <summary> OnPremisesWithIfd. </summary>
         public static DynamicsDeploymentType OnPremisesWithIfd { get; } = new DynamicsDeploymentType(OnPremisesWithIfdValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynamicsDeploymentType"/> values are the same. </summary>
         public static bool operator ==(DynamicsDeploymentType left, DynamicsDeploymentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicsDeploymentType"/> values are not the same. </summary>

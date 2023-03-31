@@ -65,6 +65,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static RecommendedActionCurrentState Success { get; } = new RecommendedActionCurrentState(SuccessValue);
         /// <summary> Error. </summary>
         public static RecommendedActionCurrentState Error { get; } = new RecommendedActionCurrentState(ErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecommendedActionCurrentState"/> values are the same. </summary>
         public static bool operator ==(RecommendedActionCurrentState left, RecommendedActionCurrentState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecommendedActionCurrentState"/> values are not the same. </summary>

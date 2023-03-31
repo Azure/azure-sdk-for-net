@@ -32,6 +32,9 @@ namespace Azure.AI.TextAnalytics.Models
         public static StringIndexType UnicodeCodePoint { get; } = new StringIndexType(UnicodeCodePointValue);
         /// <summary> Returned offset and length values will correspond to UTF-16 code units. Use this option if your application is written in a language that support Unicode, for example Java, JavaScript. </summary>
         public static StringIndexType Utf16CodeUnit { get; } = new StringIndexType(Utf16CodeUnitValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StringIndexType"/> values are the same. </summary>
         public static bool operator ==(StringIndexType left, StringIndexType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StringIndexType"/> values are not the same. </summary>

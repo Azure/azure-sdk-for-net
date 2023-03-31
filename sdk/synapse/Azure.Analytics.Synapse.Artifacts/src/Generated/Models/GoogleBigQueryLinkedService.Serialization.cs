@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(RequestGoogleDriveScope);
             }
             writer.WritePropertyName("authenticationType"u8);
-            writer.WriteStringValue(AuthenticationType.ToString());
+            writer.WriteStringValue(AuthenticationType.ToSerialString());
             if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);

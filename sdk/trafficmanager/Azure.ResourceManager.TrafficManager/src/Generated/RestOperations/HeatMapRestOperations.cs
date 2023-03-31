@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath("/providers/Microsoft.Network/trafficmanagerprofiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/heatMaps/", false);
-            uri.AppendPath(heatMapType.ToString(), true);
+            uri.AppendPath(heatMapType.ToSerialString(), true);
             if (topLeft != null)
             {
                 uri.AppendQueryDelimited("topLeft", topLeft, ",", true);

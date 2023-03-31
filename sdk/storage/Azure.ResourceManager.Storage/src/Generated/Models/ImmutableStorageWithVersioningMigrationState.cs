@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static ImmutableStorageWithVersioningMigrationState InProgress { get; } = new ImmutableStorageWithVersioningMigrationState(InProgressValue);
         /// <summary> Completed. </summary>
         public static ImmutableStorageWithVersioningMigrationState Completed { get; } = new ImmutableStorageWithVersioningMigrationState(CompletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImmutableStorageWithVersioningMigrationState"/> values are the same. </summary>
         public static bool operator ==(ImmutableStorageWithVersioningMigrationState left, ImmutableStorageWithVersioningMigrationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImmutableStorageWithVersioningMigrationState"/> values are not the same. </summary>

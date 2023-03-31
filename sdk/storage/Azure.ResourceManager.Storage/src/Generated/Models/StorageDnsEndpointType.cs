@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageDnsEndpointType Standard { get; } = new StorageDnsEndpointType(StandardValue);
         /// <summary> AzureDnsZone. </summary>
         public static StorageDnsEndpointType AzureDnsZone { get; } = new StorageDnsEndpointType(AzureDnsZoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageDnsEndpointType"/> values are the same. </summary>
         public static bool operator ==(StorageDnsEndpointType left, StorageDnsEndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageDnsEndpointType"/> values are not the same. </summary>

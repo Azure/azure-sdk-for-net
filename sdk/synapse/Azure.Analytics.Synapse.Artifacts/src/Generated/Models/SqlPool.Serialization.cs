@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
+                writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(CreationDate))
             {

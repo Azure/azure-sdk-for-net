@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AutomationRulePropertyChangedConditionSupportedPropertyType IncidentStatus { get; } = new AutomationRulePropertyChangedConditionSupportedPropertyType(IncidentStatusValue);
         /// <summary> Evaluate the condition on the incident owner. </summary>
         public static AutomationRulePropertyChangedConditionSupportedPropertyType IncidentOwner { get; } = new AutomationRulePropertyChangedConditionSupportedPropertyType(IncidentOwnerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationRulePropertyChangedConditionSupportedPropertyType"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyChangedConditionSupportedPropertyType left, AutomationRulePropertyChangedConditionSupportedPropertyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationRulePropertyChangedConditionSupportedPropertyType"/> values are not the same. </summary>

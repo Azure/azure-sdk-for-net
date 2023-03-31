@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityCenterConfigurationStatus Failed { get; } = new SecurityCenterConfigurationStatus(FailedValue);
         /// <summary> NoStatus. </summary>
         public static SecurityCenterConfigurationStatus NoStatus { get; } = new SecurityCenterConfigurationStatus(NoStatusValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityCenterConfigurationStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterConfigurationStatus left, SecurityCenterConfigurationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityCenterConfigurationStatus"/> values are not the same. </summary>

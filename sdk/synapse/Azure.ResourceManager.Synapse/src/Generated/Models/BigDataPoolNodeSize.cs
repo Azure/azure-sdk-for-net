@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static BigDataPoolNodeSize XXLarge { get; } = new BigDataPoolNodeSize(XXLargeValue);
         /// <summary> XXXLarge. </summary>
         public static BigDataPoolNodeSize XXXLarge { get; } = new BigDataPoolNodeSize(XXXLargeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BigDataPoolNodeSize"/> values are the same. </summary>
         public static bool operator ==(BigDataPoolNodeSize left, BigDataPoolNodeSize right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BigDataPoolNodeSize"/> values are not the same. </summary>

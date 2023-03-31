@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> current. </summary>
         public static EncryptionProtectorName Current { get; } = new EncryptionProtectorName(CurrentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EncryptionProtectorName"/> values are the same. </summary>
         public static bool operator ==(EncryptionProtectorName left, EncryptionProtectorName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EncryptionProtectorName"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static ImplementationEffort Moderate { get; } = new ImplementationEffort(ModerateValue);
         /// <summary> High. </summary>
         public static ImplementationEffort High { get; } = new ImplementationEffort(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImplementationEffort"/> values are the same. </summary>
         public static bool operator ==(ImplementationEffort left, ImplementationEffort right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImplementationEffort"/> values are not the same. </summary>

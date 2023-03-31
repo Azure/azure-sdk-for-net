@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ApplicationRollingUpgradeMode UnmonitoredManual { get; } = new ApplicationRollingUpgradeMode(UnmonitoredManualValue);
         /// <summary> The upgrade will stop after completing each upgrade domain and automatically monitor health before proceeding. The value is 3. </summary>
         public static ApplicationRollingUpgradeMode Monitored { get; } = new ApplicationRollingUpgradeMode(MonitoredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationRollingUpgradeMode"/> values are the same. </summary>
         public static bool operator ==(ApplicationRollingUpgradeMode left, ApplicationRollingUpgradeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationRollingUpgradeMode"/> values are not the same. </summary>

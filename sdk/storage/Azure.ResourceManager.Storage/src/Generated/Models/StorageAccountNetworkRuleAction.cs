@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Allow. </summary>
         public static StorageAccountNetworkRuleAction Allow { get; } = new StorageAccountNetworkRuleAction(AllowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageAccountNetworkRuleAction"/> values are the same. </summary>
         public static bool operator ==(StorageAccountNetworkRuleAction left, StorageAccountNetworkRuleAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountNetworkRuleAction"/> values are not the same. </summary>

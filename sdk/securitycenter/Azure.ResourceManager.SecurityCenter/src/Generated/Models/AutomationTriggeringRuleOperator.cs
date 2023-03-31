@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static AutomationTriggeringRuleOperator StartsWith { get; } = new AutomationTriggeringRuleOperator(StartsWithValue);
         /// <summary> Applies only for non-decimal operands. </summary>
         public static AutomationTriggeringRuleOperator EndsWith { get; } = new AutomationTriggeringRuleOperator(EndsWithValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationTriggeringRuleOperator"/> values are the same. </summary>
         public static bool operator ==(AutomationTriggeringRuleOperator left, AutomationTriggeringRuleOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationTriggeringRuleOperator"/> values are not the same. </summary>

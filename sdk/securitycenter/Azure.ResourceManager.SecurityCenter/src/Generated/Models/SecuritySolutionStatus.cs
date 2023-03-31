@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecuritySolutionStatus Enabled { get; } = new SecuritySolutionStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static SecuritySolutionStatus Disabled { get; } = new SecuritySolutionStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecuritySolutionStatus"/> values are the same. </summary>
         public static bool operator ==(SecuritySolutionStatus left, SecuritySolutionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecuritySolutionStatus"/> values are not the same. </summary>

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/inventoryPolicies/", false);
-            uri.AppendPath(blobInventoryPolicyName.ToString(), true);
+            uri.AppendPath(blobInventoryPolicyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/inventoryPolicies/", false);
-            uri.AppendPath(blobInventoryPolicyName.ToString(), true);
+            uri.AppendPath(blobInventoryPolicyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/inventoryPolicies/", false);
-            uri.AppendPath(blobInventoryPolicyName.ToString(), true);
+            uri.AppendPath(blobInventoryPolicyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(LargeFileSharesState))
             {
                 writer.WritePropertyName("largeFileSharesState"u8);
-                writer.WriteStringValue(LargeFileSharesState.Value.ToString());
+                writer.WriteStringValue(LargeFileSharesState.Value.ToSerialString());
             }
             if (Optional.IsDefined(RoutingPreference))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
-                writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
+                writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
             if (Optional.IsDefined(AllowSharedKeyAccess))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(ImmutableStorageWithVersioning))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(AllowedCopyScope))
             {
                 writer.WritePropertyName("allowedCopyScope"u8);
-                writer.WriteStringValue(AllowedCopyScope.Value.ToString());
+                writer.WriteStringValue(AllowedCopyScope.Value.ToSerialString());
             }
             if (Optional.IsDefined(StorageAccountSkuConversionStatus))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(DnsEndpointType))
             {
                 writer.WritePropertyName("dnsEndpointType"u8);
-                writer.WriteStringValue(DnsEndpointType.Value.ToString());
+                writer.WriteStringValue(DnsEndpointType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

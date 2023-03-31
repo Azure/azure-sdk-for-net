@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static SqlWorkloadType Oltp { get; } = new SqlWorkloadType(OltpValue);
         /// <summary> DW. </summary>
         public static SqlWorkloadType DW { get; } = new SqlWorkloadType(DWValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlWorkloadType"/> values are the same. </summary>
         public static bool operator ==(SqlWorkloadType left, SqlWorkloadType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlWorkloadType"/> values are not the same. </summary>

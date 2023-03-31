@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             if (Optional.IsDefined(ClientType))
             {
                 writer.WritePropertyName("clientType"u8);
-                writer.WriteStringValue(ClientType.Value.ToString());
+                writer.WriteStringValue(ClientType.Value.ToSerialString());
             }
             if (Optional.IsDefined(VnetSolution))
             {

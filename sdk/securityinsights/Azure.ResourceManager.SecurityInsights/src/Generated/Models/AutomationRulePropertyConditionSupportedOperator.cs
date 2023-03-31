@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AutomationRulePropertyConditionSupportedOperator EndsWith { get; } = new AutomationRulePropertyConditionSupportedOperator(EndsWithValue);
         /// <summary> Evaluates if the property does not end with any of the condition values. </summary>
         public static AutomationRulePropertyConditionSupportedOperator NotEndsWith { get; } = new AutomationRulePropertyConditionSupportedOperator(NotEndsWithValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationRulePropertyConditionSupportedOperator"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyConditionSupportedOperator left, AutomationRulePropertyConditionSupportedOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationRulePropertyConditionSupportedOperator"/> values are not the same. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("code"u8);
-            writer.WriteStringValue(Code.ToString());
+            writer.WriteStringValue(Code.ToSerialString());
             if (Optional.IsDefined(Cause))
             {
                 writer.WritePropertyName("cause"u8);

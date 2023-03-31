@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(EventSerializationType.ToString());
+            writer.WriteStringValue(EventSerializationType.ToSerialString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(FieldDelimiter))
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
-                writer.WriteStringValue(Encoding.Value.ToString());
+                writer.WriteStringValue(Encoding.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

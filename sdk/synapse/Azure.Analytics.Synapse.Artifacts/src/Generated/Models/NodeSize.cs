@@ -44,6 +44,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static NodeSize XXLarge { get; } = new NodeSize(XXLargeValue);
         /// <summary> XXXLarge. </summary>
         public static NodeSize XXXLarge { get; } = new NodeSize(XXXLargeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NodeSize"/> values are the same. </summary>
         public static bool operator ==(NodeSize left, NodeSize right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeSize"/> values are not the same. </summary>

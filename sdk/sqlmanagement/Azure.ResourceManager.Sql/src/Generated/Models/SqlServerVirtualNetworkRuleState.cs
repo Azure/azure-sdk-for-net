@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlServerVirtualNetworkRuleState Deleting { get; } = new SqlServerVirtualNetworkRuleState(DeletingValue);
         /// <summary> Unknown. </summary>
         public static SqlServerVirtualNetworkRuleState Unknown { get; } = new SqlServerVirtualNetworkRuleState(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlServerVirtualNetworkRuleState"/> values are the same. </summary>
         public static bool operator ==(SqlServerVirtualNetworkRuleState left, SqlServerVirtualNetworkRuleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlServerVirtualNetworkRuleState"/> values are not the same. </summary>

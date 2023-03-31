@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ServerNetworkAccessFlag Disabled { get; } = new ServerNetworkAccessFlag(DisabledValue);
         /// <summary> SecuredByPerimeter. </summary>
         public static ServerNetworkAccessFlag SecuredByPerimeter { get; } = new ServerNetworkAccessFlag(SecuredByPerimeterValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServerNetworkAccessFlag"/> values are the same. </summary>
         public static bool operator ==(ServerNetworkAccessFlag left, ServerNetworkAccessFlag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerNetworkAccessFlag"/> values are not the same. </summary>

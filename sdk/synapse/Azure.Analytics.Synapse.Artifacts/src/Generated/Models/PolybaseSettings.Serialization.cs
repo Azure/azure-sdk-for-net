@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(RejectType))
             {
                 writer.WritePropertyName("rejectType"u8);
-                writer.WriteStringValue(RejectType.Value.ToString());
+                writer.WriteStringValue(RejectType.Value.ToSerialString());
             }
             if (Optional.IsDefined(RejectValue))
             {

@@ -47,6 +47,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static RegexFlag UnicodeCase { get; } = new RegexFlag(UnicodeCaseValue);
         /// <summary> Enables Unix lines mode. </summary>
         public static RegexFlag UnixLines { get; } = new RegexFlag(UnixLinesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RegexFlag"/> values are the same. </summary>
         public static bool operator ==(RegexFlag left, RegexFlag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RegexFlag"/> values are not the same. </summary>

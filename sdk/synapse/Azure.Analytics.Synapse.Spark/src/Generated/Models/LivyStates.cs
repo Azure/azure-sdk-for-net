@@ -56,6 +56,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
         public static LivyStates Running { get; } = new LivyStates(RunningValue);
         /// <summary> recovering. </summary>
         public static LivyStates Recovering { get; } = new LivyStates(RecoveringValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LivyStates"/> values are the same. </summary>
         public static bool operator ==(LivyStates left, LivyStates right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LivyStates"/> values are not the same. </summary>

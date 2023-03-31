@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static AvailabilityGroupReplicaCommitMode SynchronousCommit { get; } = new AvailabilityGroupReplicaCommitMode(SynchronousCommitValue);
         /// <summary> ASYNCHRONOUS_COMMIT. </summary>
         public static AvailabilityGroupReplicaCommitMode AsynchronousCommit { get; } = new AvailabilityGroupReplicaCommitMode(AsynchronousCommitValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvailabilityGroupReplicaCommitMode"/> values are the same. </summary>
         public static bool operator ==(AvailabilityGroupReplicaCommitMode left, AvailabilityGroupReplicaCommitMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvailabilityGroupReplicaCommitMode"/> values are not the same. </summary>

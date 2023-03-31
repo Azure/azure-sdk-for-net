@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("recommendationType"u8);
-            writer.WriteStringValue(RecommendationType.ToString());
+            writer.WriteStringValue(RecommendationType.ToSerialString());
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            writer.WriteStringValue(Status.ToSerialString());
             writer.WriteEndObject();
         }
 

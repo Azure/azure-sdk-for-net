@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("signedResource"u8);
-                writer.WriteStringValue(Resource.Value.ToString());
+                writer.WriteStringValue(Resource.Value.ToSerialString());
             }
             if (Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("signedPermission"u8);
-                writer.WriteStringValue(Permissions.Value.ToString());
+                writer.WriteStringValue(Permissions.Value.ToSerialString());
             }
             if (Optional.IsDefined(IPAddressOrRange))
             {

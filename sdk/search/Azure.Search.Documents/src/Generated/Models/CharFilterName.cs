@@ -26,6 +26,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> A character filter that attempts to strip out HTML constructs. See https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/charfilter/HTMLStripCharFilter.html. </summary>
         public static CharFilterName HtmlStrip { get; } = new CharFilterName(HtmlStripValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CharFilterName"/> values are the same. </summary>
         public static bool operator ==(CharFilterName left, CharFilterName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CharFilterName"/> values are not the same. </summary>

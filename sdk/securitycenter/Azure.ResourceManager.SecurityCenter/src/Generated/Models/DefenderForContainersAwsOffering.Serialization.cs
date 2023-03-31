@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStringValue(ScubaExternalId);
             }
             writer.WritePropertyName("offeringType"u8);
-            writer.WriteStringValue(OfferingType.ToString());
+            writer.WriteStringValue(OfferingType.ToSerialString());
             writer.WriteEndObject();
         }
 

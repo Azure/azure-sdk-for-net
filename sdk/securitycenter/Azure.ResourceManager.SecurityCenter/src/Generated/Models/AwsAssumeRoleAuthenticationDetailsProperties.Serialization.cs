@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WritePropertyName("awsExternalId"u8);
             writer.WriteStringValue(AwsExternalId);
             writer.WritePropertyName("authenticationType"u8);
-            writer.WriteStringValue(AuthenticationType.ToString());
+            writer.WriteStringValue(AuthenticationType.ToSerialString());
             writer.WriteEndObject();
         }
 

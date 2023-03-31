@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(DiskConfigurationType))
             {
                 writer.WritePropertyName("diskConfigurationType"u8);
-                writer.WriteStringValue(DiskConfigurationType.Value.ToString());
+                writer.WriteStringValue(DiskConfigurationType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

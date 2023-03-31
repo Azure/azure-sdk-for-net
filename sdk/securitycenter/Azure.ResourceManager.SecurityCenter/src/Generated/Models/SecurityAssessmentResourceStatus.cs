@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAssessmentResourceStatus OffByPolicy { get; } = new SecurityAssessmentResourceStatus(OffByPolicyValue);
         /// <summary> This assessment on the resource is not healthy. </summary>
         public static SecurityAssessmentResourceStatus NotHealthy { get; } = new SecurityAssessmentResourceStatus(NotHealthyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityAssessmentResourceStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentResourceStatus left, SecurityAssessmentResourceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAssessmentResourceStatus"/> values are not the same. </summary>

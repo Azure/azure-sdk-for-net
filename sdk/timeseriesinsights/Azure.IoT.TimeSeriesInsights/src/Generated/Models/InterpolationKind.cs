@@ -29,6 +29,9 @@ namespace Azure.IoT.TimeSeriesInsights
         public static InterpolationKind Linear { get; } = new InterpolationKind(LinearValue);
         /// <summary> Step. </summary>
         public static InterpolationKind Step { get; } = new InterpolationKind(StepValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InterpolationKind"/> values are the same. </summary>
         public static bool operator ==(InterpolationKind left, InterpolationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InterpolationKind"/> values are not the same. </summary>

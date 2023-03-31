@@ -59,6 +59,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static ScriptActivityParameterType String { get; } = new ScriptActivityParameterType(StringValue);
         /// <summary> Timespan. </summary>
         public static ScriptActivityParameterType Timespan { get; } = new ScriptActivityParameterType(TimespanValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScriptActivityParameterType"/> values are the same. </summary>
         public static bool operator ==(ScriptActivityParameterType left, ScriptActivityParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptActivityParameterType"/> values are not the same. </summary>

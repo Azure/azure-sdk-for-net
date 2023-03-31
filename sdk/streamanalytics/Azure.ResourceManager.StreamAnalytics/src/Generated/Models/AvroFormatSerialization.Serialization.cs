@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 #endif
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(EventSerializationType.ToString());
+            writer.WriteStringValue(EventSerializationType.ToSerialString());
             writer.WriteEndObject();
         }
 

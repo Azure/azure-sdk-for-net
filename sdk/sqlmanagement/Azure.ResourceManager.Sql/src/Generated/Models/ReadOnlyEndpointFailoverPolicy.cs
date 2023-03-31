@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ReadOnlyEndpointFailoverPolicy Disabled { get; } = new ReadOnlyEndpointFailoverPolicy(DisabledValue);
         /// <summary> Enabled. </summary>
         public static ReadOnlyEndpointFailoverPolicy Enabled { get; } = new ReadOnlyEndpointFailoverPolicy(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReadOnlyEndpointFailoverPolicy"/> values are the same. </summary>
         public static bool operator ==(ReadOnlyEndpointFailoverPolicy left, ReadOnlyEndpointFailoverPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReadOnlyEndpointFailoverPolicy"/> values are not the same. </summary>

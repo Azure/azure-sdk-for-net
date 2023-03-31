@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Search.Models
         public static SearchServiceNameUnavailableReason Invalid { get; } = new SearchServiceNameUnavailableReason(InvalidValue);
         /// <summary> The search service name is already assigned to a different search service. </summary>
         public static SearchServiceNameUnavailableReason AlreadyExists { get; } = new SearchServiceNameUnavailableReason(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SearchServiceNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(SearchServiceNameUnavailableReason left, SearchServiceNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchServiceNameUnavailableReason"/> values are not the same. </summary>

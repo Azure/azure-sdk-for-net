@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Support.Models
         public static SupportTicketCommunicationType Web { get; } = new SupportTicketCommunicationType(WebValue);
         /// <summary> phone. </summary>
         public static SupportTicketCommunicationType Phone { get; } = new SupportTicketCommunicationType(PhoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SupportTicketCommunicationType"/> values are the same. </summary>
         public static bool operator ==(SupportTicketCommunicationType left, SupportTicketCommunicationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SupportTicketCommunicationType"/> values are not the same. </summary>

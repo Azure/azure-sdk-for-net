@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteObjectValue(SubPlan);
             }
             writer.WritePropertyName("offeringType"u8);
-            writer.WriteStringValue(OfferingType.ToString());
+            writer.WriteStringValue(OfferingType.ToSerialString());
             writer.WriteEndObject();
         }
 

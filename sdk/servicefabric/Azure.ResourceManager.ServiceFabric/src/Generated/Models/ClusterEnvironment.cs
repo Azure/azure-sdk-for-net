@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ClusterEnvironment Windows { get; } = new ClusterEnvironment(WindowsValue);
         /// <summary> Linux. </summary>
         public static ClusterEnvironment Linux { get; } = new ClusterEnvironment(LinuxValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClusterEnvironment"/> values are the same. </summary>
         public static bool operator ==(ClusterEnvironment left, ClusterEnvironment right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterEnvironment"/> values are not the same. </summary>

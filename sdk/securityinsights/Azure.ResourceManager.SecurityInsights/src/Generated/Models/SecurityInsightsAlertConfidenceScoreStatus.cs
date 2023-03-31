@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsAlertConfidenceScoreStatus NotFinal { get; } = new SecurityInsightsAlertConfidenceScoreStatus(NotFinalValue);
         /// <summary> Final score was calculated and available. </summary>
         public static SecurityInsightsAlertConfidenceScoreStatus Final { get; } = new SecurityInsightsAlertConfidenceScoreStatus(FinalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertConfidenceScoreStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAlertConfidenceScoreStatus left, SecurityInsightsAlertConfidenceScoreStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertConfidenceScoreStatus"/> values are not the same. </summary>

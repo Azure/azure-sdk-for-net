@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <summary> UTF8. </summary>
         public static StreamAnalyticsDataSerializationEncoding Utf8 { get; } = new StreamAnalyticsDataSerializationEncoding(Utf8Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamAnalyticsDataSerializationEncoding"/> values are the same. </summary>
         public static bool operator ==(StreamAnalyticsDataSerializationEncoding left, StreamAnalyticsDataSerializationEncoding right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamAnalyticsDataSerializationEncoding"/> values are not the same. </summary>

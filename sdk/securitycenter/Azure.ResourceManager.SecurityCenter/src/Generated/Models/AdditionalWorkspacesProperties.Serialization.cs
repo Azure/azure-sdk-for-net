@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(WorkspaceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(WorkspaceType.Value.ToString());
+                writer.WriteStringValue(WorkspaceType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(DataTypes))
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in DataTypes)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

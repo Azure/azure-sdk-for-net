@@ -29,6 +29,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
         public static PiiTaskParametersDomain Phi { get; } = new PiiTaskParametersDomain(PhiValue);
         /// <summary> none. </summary>
         public static PiiTaskParametersDomain None { get; } = new PiiTaskParametersDomain(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PiiTaskParametersDomain"/> values are the same. </summary>
         public static bool operator ==(PiiTaskParametersDomain left, PiiTaskParametersDomain right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PiiTaskParametersDomain"/> values are not the same. </summary>

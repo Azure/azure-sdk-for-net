@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStringValue(ServicePlacementTimeLimit.Value, "c");
             }
             writer.WritePropertyName("serviceKind"u8);
-            writer.WriteStringValue(ServiceKind.ToString());
+            writer.WriteStringValue(ServiceKind.ToSerialString());
             writer.WritePropertyName("serviceTypeName"u8);
             writer.WriteStringValue(ServiceTypeName);
             writer.WritePropertyName("partitionDescription"u8);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(ServicePackageActivationMode))
             {
                 writer.WritePropertyName("servicePackageActivationMode"u8);
-                writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
+                writer.WriteStringValue(ServicePackageActivationMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(PlacementConstraints))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(DefaultMoveCost))
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
-                writer.WriteStringValue(DefaultMoveCost.Value.ToString());
+                writer.WriteStringValue(DefaultMoveCost.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ScalingPolicies))
             {

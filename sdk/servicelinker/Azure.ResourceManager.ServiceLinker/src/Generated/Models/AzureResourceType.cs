@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> KeyVault. </summary>
         public static AzureResourceType KeyVault { get; } = new AzureResourceType(KeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AzureResourceType"/> values are the same. </summary>
         public static bool operator ==(AzureResourceType left, AzureResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureResourceType"/> values are not the same. </summary>

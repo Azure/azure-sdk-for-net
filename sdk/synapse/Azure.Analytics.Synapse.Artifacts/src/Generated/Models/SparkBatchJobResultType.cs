@@ -35,6 +35,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static SparkBatchJobResultType Failed { get; } = new SparkBatchJobResultType(FailedValue);
         /// <summary> Cancelled. </summary>
         public static SparkBatchJobResultType Cancelled { get; } = new SparkBatchJobResultType(CancelledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SparkBatchJobResultType"/> values are the same. </summary>
         public static bool operator ==(SparkBatchJobResultType left, SparkBatchJobResultType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkBatchJobResultType"/> values are not the same. </summary>

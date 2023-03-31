@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static StorageTargetOperationalStateType Suspended { get; } = new StorageTargetOperationalStateType(SuspendedValue);
         /// <summary> Flushing. </summary>
         public static StorageTargetOperationalStateType Flushing { get; } = new StorageTargetOperationalStateType(FlushingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageTargetOperationalStateType"/> values are the same. </summary>
         public static bool operator ==(StorageTargetOperationalStateType left, StorageTargetOperationalStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageTargetOperationalStateType"/> values are not the same. </summary>

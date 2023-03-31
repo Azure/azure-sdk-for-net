@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static PrimingJobState Paused { get; } = new PrimingJobState(PausedValue);
         /// <summary> Complete. </summary>
         public static PrimingJobState Complete { get; } = new PrimingJobState(CompleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PrimingJobState"/> values are the same. </summary>
         public static bool operator ==(PrimingJobState left, PrimingJobState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrimingJobState"/> values are not the same. </summary>

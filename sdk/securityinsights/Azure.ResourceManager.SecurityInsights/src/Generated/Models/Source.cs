@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Source LocalFile { get; } = new Source(LocalFileValue);
         /// <summary> Remote storage. </summary>
         public static Source RemoteStorage { get; } = new Source(RemoteStorageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Source"/> values are the same. </summary>
         public static bool operator ==(Source left, Source right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Source"/> values are not the same. </summary>

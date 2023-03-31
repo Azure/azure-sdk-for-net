@@ -65,6 +65,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAssessmentTactic Exfiltration { get; } = new SecurityAssessmentTactic(ExfiltrationValue);
         /// <summary> Impact. </summary>
         public static SecurityAssessmentTactic Impact { get; } = new SecurityAssessmentTactic(ImpactValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityAssessmentTactic"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentTactic left, SecurityAssessmentTactic right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAssessmentTactic"/> values are not the same. </summary>

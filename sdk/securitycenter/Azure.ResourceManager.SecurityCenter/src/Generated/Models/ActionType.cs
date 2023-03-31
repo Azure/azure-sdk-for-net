@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static ActionType EventHub { get; } = new ActionType(EventHubValue);
         /// <summary> Workspace. </summary>
         public static ActionType Workspace { get; } = new ActionType(WorkspaceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ActionType"/> values are the same. </summary>
         public static bool operator ==(ActionType left, ActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActionType"/> values are not the same. </summary>

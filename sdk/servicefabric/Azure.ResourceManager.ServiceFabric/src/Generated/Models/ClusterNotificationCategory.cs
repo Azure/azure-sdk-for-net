@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Notification will be regarding wave progress. </summary>
         public static ClusterNotificationCategory WaveProgress { get; } = new ClusterNotificationCategory(WaveProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClusterNotificationCategory"/> values are the same. </summary>
         public static bool operator ==(ClusterNotificationCategory left, ClusterNotificationCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterNotificationCategory"/> values are not the same. </summary>

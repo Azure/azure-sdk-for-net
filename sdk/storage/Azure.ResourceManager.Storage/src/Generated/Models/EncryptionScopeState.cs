@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static EncryptionScopeState Enabled { get; } = new EncryptionScopeState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static EncryptionScopeState Disabled { get; } = new EncryptionScopeState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EncryptionScopeState"/> values are the same. </summary>
         public static bool operator ==(EncryptionScopeState left, EncryptionScopeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EncryptionScopeState"/> values are not the same. </summary>

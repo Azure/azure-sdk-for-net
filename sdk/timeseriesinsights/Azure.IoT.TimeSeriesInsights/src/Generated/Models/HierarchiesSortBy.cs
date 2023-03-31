@@ -29,6 +29,9 @@ namespace Azure.IoT.TimeSeriesInsights
         public static HierarchiesSortBy CumulativeInstanceCount { get; } = new HierarchiesSortBy(CumulativeInstanceCountValue);
         /// <summary> Name. </summary>
         public static HierarchiesSortBy Name { get; } = new HierarchiesSortBy(NameValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HierarchiesSortBy"/> values are the same. </summary>
         public static bool operator ==(HierarchiesSortBy left, HierarchiesSortBy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HierarchiesSortBy"/> values are not the same. </summary>

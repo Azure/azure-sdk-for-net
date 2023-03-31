@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static TrafficManagerEndpointAlwaysServeStatus Enabled { get; } = new TrafficManagerEndpointAlwaysServeStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static TrafficManagerEndpointAlwaysServeStatus Disabled { get; } = new TrafficManagerEndpointAlwaysServeStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrafficManagerEndpointAlwaysServeStatus"/> values are the same. </summary>
         public static bool operator ==(TrafficManagerEndpointAlwaysServeStatus left, TrafficManagerEndpointAlwaysServeStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficManagerEndpointAlwaysServeStatus"/> values are not the same. </summary>

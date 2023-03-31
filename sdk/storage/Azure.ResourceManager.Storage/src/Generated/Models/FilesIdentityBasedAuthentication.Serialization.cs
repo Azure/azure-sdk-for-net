@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("directoryServiceOptions"u8);
-            writer.WriteStringValue(DirectoryServiceOptions.ToString());
+            writer.WriteStringValue(DirectoryServiceOptions.ToSerialString());
             if (Optional.IsDefined(ActiveDirectoryProperties))
             {
                 writer.WritePropertyName("activeDirectoryProperties"u8);
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(DefaultSharePermission))
             {
                 writer.WritePropertyName("defaultSharePermission"u8);
-                writer.WriteStringValue(DefaultSharePermission.Value.ToString());
+                writer.WriteStringValue(DefaultSharePermission.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

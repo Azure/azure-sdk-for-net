@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> $default. </summary>
         public static MigrationConfigurationName Default { get; } = new MigrationConfigurationName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MigrationConfigurationName"/> values are the same. </summary>
         public static bool operator ==(MigrationConfigurationName left, MigrationConfigurationName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MigrationConfigurationName"/> values are not the same. </summary>

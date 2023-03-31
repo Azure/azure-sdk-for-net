@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseIntegrationRuntimeAutoUpdate On { get; } = new SynapseIntegrationRuntimeAutoUpdate(OnValue);
         /// <summary> Off. </summary>
         public static SynapseIntegrationRuntimeAutoUpdate Off { get; } = new SynapseIntegrationRuntimeAutoUpdate(OffValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeAutoUpdate"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeAutoUpdate left, SynapseIntegrationRuntimeAutoUpdate right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeAutoUpdate"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagedDatabaseMoveOperationMode Move { get; } = new ManagedDatabaseMoveOperationMode(MoveValue);
         /// <summary> Copy. </summary>
         public static ManagedDatabaseMoveOperationMode Copy { get; } = new ManagedDatabaseMoveOperationMode(CopyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedDatabaseMoveOperationMode"/> values are the same. </summary>
         public static bool operator ==(ManagedDatabaseMoveOperationMode left, ManagedDatabaseMoveOperationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedDatabaseMoveOperationMode"/> values are not the same. </summary>

@@ -19,6 +19,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
         private const string UserErrorValue = "User";
         private const string UnknownErrorValue = "Unknown";
         private const string DependencyErrorValue = "Dependency";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SparkErrorSource"/> values are the same. </summary>
         public static bool operator ==(SparkErrorSource left, SparkErrorSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkErrorSource"/> values are not the same. </summary>

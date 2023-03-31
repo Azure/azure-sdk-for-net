@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static PathRecommendationFileType Executable { get; } = new PathRecommendationFileType(ExecutableValue);
         /// <summary> Unknown. </summary>
         public static PathRecommendationFileType Unknown { get; } = new PathRecommendationFileType(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PathRecommendationFileType"/> values are the same. </summary>
         public static bool operator ==(PathRecommendationFileType left, PathRecommendationFileType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PathRecommendationFileType"/> values are not the same. </summary>

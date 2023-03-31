@@ -26,6 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> File. </summary>
         public static SsisLogLocationType File { get; } = new SsisLogLocationType(FileValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SsisLogLocationType"/> values are the same. </summary>
         public static bool operator ==(SsisLogLocationType left, SsisLogLocationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SsisLogLocationType"/> values are not the same. </summary>

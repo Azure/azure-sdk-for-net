@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static SqlVmFullBackupFrequency Daily { get; } = new SqlVmFullBackupFrequency(DailyValue);
         /// <summary> Weekly. </summary>
         public static SqlVmFullBackupFrequency Weekly { get; } = new SqlVmFullBackupFrequency(WeeklyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlVmFullBackupFrequency"/> values are the same. </summary>
         public static bool operator ==(SqlVmFullBackupFrequency left, SqlVmFullBackupFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlVmFullBackupFrequency"/> values are not the same. </summary>

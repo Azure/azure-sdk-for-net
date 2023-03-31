@@ -28,7 +28,7 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(PropertyValueType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(PropertyValueType.Value.ToString());
+                writer.WriteStringValue(PropertyValueType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

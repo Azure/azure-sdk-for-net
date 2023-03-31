@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("text"u8);
             writer.WriteObjectValue(Text);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type.ToSerialString());
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);

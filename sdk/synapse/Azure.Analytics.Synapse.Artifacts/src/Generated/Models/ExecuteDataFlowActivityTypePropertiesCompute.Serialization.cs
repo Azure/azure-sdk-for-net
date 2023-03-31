@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
-                writer.WriteStringValue(ComputeType.Value.ToString());
+                writer.WriteStringValue(ComputeType.Value.ToSerialString());
             }
             if (Optional.IsDefined(CoreCount))
             {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);

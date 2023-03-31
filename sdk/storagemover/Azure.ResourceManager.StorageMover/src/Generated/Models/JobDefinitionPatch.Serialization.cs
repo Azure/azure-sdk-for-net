@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             if (Optional.IsDefined(CopyMode))
             {
                 writer.WritePropertyName("copyMode"u8);
-                writer.WriteStringValue(CopyMode.Value.ToString());
+                writer.WriteStringValue(CopyMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(AgentName))
             {

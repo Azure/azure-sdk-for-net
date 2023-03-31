@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static ResourceIdentifierType AzureResource { get; } = new ResourceIdentifierType(AzureResourceValue);
         /// <summary> LogAnalytics. </summary>
         public static ResourceIdentifierType LogAnalytics { get; } = new ResourceIdentifierType(LogAnalyticsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResourceIdentifierType"/> values are the same. </summary>
         public static bool operator ==(ResourceIdentifierType left, ResourceIdentifierType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceIdentifierType"/> values are not the same. </summary>

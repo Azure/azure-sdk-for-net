@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ServiceCorrelationScheme AlignedAffinity { get; } = new ServiceCorrelationScheme(AlignedAffinityValue);
         /// <summary> Non-Aligned affinity guarantees that all replicas of each service will be placed on the same nodes. Unlike Aligned Affinity, this does not guarantee that replicas of particular role will be collocated. The value is 3. </summary>
         public static ServiceCorrelationScheme NonAlignedAffinity { get; } = new ServiceCorrelationScheme(NonAlignedAffinityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceCorrelationScheme"/> values are the same. </summary>
         public static bool operator ==(ServiceCorrelationScheme left, ServiceCorrelationScheme right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceCorrelationScheme"/> values are not the same. </summary>

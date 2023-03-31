@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static RollingUpgradeMode Monitored { get; } = new RollingUpgradeMode(MonitoredValue);
         /// <summary> The upgrade will proceed automatically without performing any health monitoring. The value is 1. </summary>
         public static RollingUpgradeMode UnmonitoredAuto { get; } = new RollingUpgradeMode(UnmonitoredAutoValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RollingUpgradeMode"/> values are the same. </summary>
         public static bool operator ==(RollingUpgradeMode left, RollingUpgradeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RollingUpgradeMode"/> values are not the same. </summary>

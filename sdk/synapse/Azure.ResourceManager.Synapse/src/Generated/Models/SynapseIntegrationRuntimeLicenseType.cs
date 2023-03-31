@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseIntegrationRuntimeLicenseType BasePrice { get; } = new SynapseIntegrationRuntimeLicenseType(BasePriceValue);
         /// <summary> LicenseIncluded. </summary>
         public static SynapseIntegrationRuntimeLicenseType LicenseIncluded { get; } = new SynapseIntegrationRuntimeLicenseType(LicenseIncludedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeLicenseType"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeLicenseType left, SynapseIntegrationRuntimeLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeLicenseType"/> values are not the same. </summary>

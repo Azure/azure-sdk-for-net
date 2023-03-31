@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageAccountNetworkRuleState Failed { get; } = new StorageAccountNetworkRuleState(FailedValue);
         /// <summary> NetworkSourceDeleted. </summary>
         public static StorageAccountNetworkRuleState NetworkSourceDeleted { get; } = new StorageAccountNetworkRuleState(NetworkSourceDeletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageAccountNetworkRuleState"/> values are the same. </summary>
         public static bool operator ==(StorageAccountNetworkRuleState left, StorageAccountNetworkRuleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountNetworkRuleState"/> values are not the same. </summary>

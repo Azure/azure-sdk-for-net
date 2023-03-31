@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static HdiNodeTypes Workernode { get; } = new HdiNodeTypes(WorkernodeValue);
         /// <summary> Zookeeper. </summary>
         public static HdiNodeTypes Zookeeper { get; } = new HdiNodeTypes(ZookeeperValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HdiNodeTypes"/> values are the same. </summary>
         public static bool operator ==(HdiNodeTypes left, HdiNodeTypes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HdiNodeTypes"/> values are not the same. </summary>

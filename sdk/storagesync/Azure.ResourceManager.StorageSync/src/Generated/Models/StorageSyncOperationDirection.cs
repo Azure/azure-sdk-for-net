@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static StorageSyncOperationDirection Undo { get; } = new StorageSyncOperationDirection(UndoValue);
         /// <summary> cancel. </summary>
         public static StorageSyncOperationDirection Cancel { get; } = new StorageSyncOperationDirection(CancelValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageSyncOperationDirection"/> values are the same. </summary>
         public static bool operator ==(StorageSyncOperationDirection left, StorageSyncOperationDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageSyncOperationDirection"/> values are not the same. </summary>

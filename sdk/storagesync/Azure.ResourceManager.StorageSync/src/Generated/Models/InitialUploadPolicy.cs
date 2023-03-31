@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static InitialUploadPolicy ServerAuthoritative { get; } = new InitialUploadPolicy(ServerAuthoritativeValue);
         /// <summary> Merge. </summary>
         public static InitialUploadPolicy Merge { get; } = new InitialUploadPolicy(MergeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InitialUploadPolicy"/> values are the same. </summary>
         public static bool operator ==(InitialUploadPolicy left, InitialUploadPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InitialUploadPolicy"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static NfsAccessRuleAccess ReadOnly { get; } = new NfsAccessRuleAccess(ReadOnlyValue);
         /// <summary> rw. </summary>
         public static NfsAccessRuleAccess ReadWrite { get; } = new NfsAccessRuleAccess(ReadWriteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NfsAccessRuleAccess"/> values are the same. </summary>
         public static bool operator ==(NfsAccessRuleAccess left, NfsAccessRuleAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NfsAccessRuleAccess"/> values are not the same. </summary>

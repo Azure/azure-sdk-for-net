@@ -125,6 +125,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static TokenFilterName Uppercase { get; } = new TokenFilterName(UppercaseValue);
         /// <summary> Splits words into subwords and performs optional transformations on subword groups. </summary>
         public static TokenFilterName WordDelimiter { get; } = new TokenFilterName(WordDelimiterValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TokenFilterName"/> values are the same. </summary>
         public static bool operator ==(TokenFilterName left, TokenFilterName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TokenFilterName"/> values are not the same. </summary>

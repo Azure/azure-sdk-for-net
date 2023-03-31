@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(DefaultPrincipalsModificationKind))
             {
                 writer.WritePropertyName("defaultPrincipalsModificationKind"u8);
-                writer.WriteStringValue(DefaultPrincipalsModificationKind.Value.ToString());
+                writer.WriteStringValue(DefaultPrincipalsModificationKind.Value.ToSerialString());
             }
             if (Optional.IsDefined(TableLevelSharingProperties))
             {

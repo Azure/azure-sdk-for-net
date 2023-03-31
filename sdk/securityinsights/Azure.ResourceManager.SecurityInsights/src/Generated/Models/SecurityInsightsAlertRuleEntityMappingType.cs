@@ -77,6 +77,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsAlertRuleEntityMappingType MailMessage { get; } = new SecurityInsightsAlertRuleEntityMappingType(MailMessageValue);
         /// <summary> Submission mail entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType SubmissionMail { get; } = new SecurityInsightsAlertRuleEntityMappingType(SubmissionMailValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertRuleEntityMappingType"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAlertRuleEntityMappingType left, SecurityInsightsAlertRuleEntityMappingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertRuleEntityMappingType"/> values are not the same. </summary>

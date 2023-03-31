@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAssessmentType CustomerManaged { get; } = new SecurityAssessmentType(CustomerManagedValue);
         /// <summary> An assessment that was created by a verified 3rd party if the user connected it to ASC. </summary>
         public static SecurityAssessmentType VerifiedPartner { get; } = new SecurityAssessmentType(VerifiedPartnerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityAssessmentType"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentType left, SecurityAssessmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAssessmentType"/> values are not the same. </summary>

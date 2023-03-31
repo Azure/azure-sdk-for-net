@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseSelfHostedIntegrationRuntimeNodeStatus Initializing { get; } = new SynapseSelfHostedIntegrationRuntimeNodeStatus(InitializingValue);
         /// <summary> InitializeFailed. </summary>
         public static SynapseSelfHostedIntegrationRuntimeNodeStatus InitializeFailed { get; } = new SynapseSelfHostedIntegrationRuntimeNodeStatus(InitializeFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseSelfHostedIntegrationRuntimeNodeStatus"/> values are the same. </summary>
         public static bool operator ==(SynapseSelfHostedIntegrationRuntimeNodeStatus left, SynapseSelfHostedIntegrationRuntimeNodeStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseSelfHostedIntegrationRuntimeNodeStatus"/> values are not the same. </summary>

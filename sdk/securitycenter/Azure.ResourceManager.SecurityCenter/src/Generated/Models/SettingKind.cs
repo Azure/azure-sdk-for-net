@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SettingKind AlertSuppressionSetting { get; } = new SettingKind(AlertSuppressionSettingValue);
         /// <summary> AlertSyncSettings. </summary>
         public static SettingKind AlertSyncSettings { get; } = new SettingKind(AlertSyncSettingsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SettingKind"/> values are the same. </summary>
         public static bool operator ==(SettingKind left, SettingKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SettingKind"/> values are not the same. </summary>

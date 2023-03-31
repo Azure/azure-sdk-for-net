@@ -41,6 +41,9 @@ namespace Azure.IoT.TimeSeriesInsights
         public static TimeSeriesPropertyType TimeSpan { get; } = new TimeSeriesPropertyType(TimeSpanValue);
         /// <summary> Long. </summary>
         public static TimeSeriesPropertyType Long { get; } = new TimeSeriesPropertyType(LongValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TimeSeriesPropertyType"/> values are the same. </summary>
         public static bool operator ==(TimeSeriesPropertyType left, TimeSeriesPropertyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TimeSeriesPropertyType"/> values are not the same. </summary>

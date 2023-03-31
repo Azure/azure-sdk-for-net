@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Devices twin data. </summary>
         public static IotSecuritySolutionDataSource TwinData { get; } = new IotSecuritySolutionDataSource(TwinDataValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotSecuritySolutionDataSource"/> values are the same. </summary>
         public static bool operator ==(IotSecuritySolutionDataSource left, IotSecuritySolutionDataSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotSecuritySolutionDataSource"/> values are not the same. </summary>

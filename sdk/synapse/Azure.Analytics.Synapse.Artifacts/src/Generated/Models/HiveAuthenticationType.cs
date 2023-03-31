@@ -35,6 +35,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static HiveAuthenticationType UsernameAndPassword { get; } = new HiveAuthenticationType(UsernameAndPasswordValue);
         /// <summary> WindowsAzureHDInsightService. </summary>
         public static HiveAuthenticationType WindowsAzureHDInsightService { get; } = new HiveAuthenticationType(WindowsAzureHDInsightServiceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HiveAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(HiveAuthenticationType left, HiveAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HiveAuthenticationType"/> values are not the same. </summary>

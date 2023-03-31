@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static StorageCapabilityStorageAccountType Lrs { get; } = new StorageCapabilityStorageAccountType(LrsValue);
         /// <summary> ZRS. </summary>
         public static StorageCapabilityStorageAccountType Zrs { get; } = new StorageCapabilityStorageAccountType(ZrsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageCapabilityStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(StorageCapabilityStorageAccountType left, StorageCapabilityStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageCapabilityStorageAccountType"/> values are not the same. </summary>

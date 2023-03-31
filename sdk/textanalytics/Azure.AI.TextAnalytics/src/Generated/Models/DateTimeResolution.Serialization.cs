@@ -19,16 +19,16 @@ namespace Azure.AI.TextAnalytics
             writer.WritePropertyName("timex"u8);
             writer.WriteStringValue(Timex);
             writer.WritePropertyName("dateTimeSubKind"u8);
-            writer.WriteStringValue(DateTimeSubKind.ToString());
+            writer.WriteStringValue(DateTimeSubKind.ToSerialString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             if (Optional.IsDefined(Modifier))
             {
                 writer.WritePropertyName("modifier"u8);
-                writer.WriteStringValue(Modifier.Value.ToString());
+                writer.WriteStringValue(Modifier.Value.ToSerialString());
             }
             writer.WritePropertyName("resolutionKind"u8);
-            writer.WriteStringValue(ResolutionKind.ToString());
+            writer.WriteStringValue(ResolutionKind.ToSerialString());
             writer.WriteEndObject();
         }
 

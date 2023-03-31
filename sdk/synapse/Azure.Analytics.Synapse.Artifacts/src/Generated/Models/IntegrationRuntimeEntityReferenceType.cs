@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static IntegrationRuntimeEntityReferenceType IntegrationRuntimeReference { get; } = new IntegrationRuntimeEntityReferenceType(IntegrationRuntimeReferenceValue);
         /// <summary> LinkedServiceReference. </summary>
         public static IntegrationRuntimeEntityReferenceType LinkedServiceReference { get; } = new IntegrationRuntimeEntityReferenceType(LinkedServiceReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeEntityReferenceType"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeEntityReferenceType left, IntegrationRuntimeEntityReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeEntityReferenceType"/> values are not the same. </summary>

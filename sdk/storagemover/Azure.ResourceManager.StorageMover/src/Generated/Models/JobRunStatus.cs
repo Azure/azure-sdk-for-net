@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static JobRunStatus Failed { get; } = new JobRunStatus(FailedValue);
         /// <summary> Succeeded. </summary>
         public static JobRunStatus Succeeded { get; } = new JobRunStatus(SucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobRunStatus"/> values are the same. </summary>
         public static bool operator ==(JobRunStatus left, JobRunStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobRunStatus"/> values are not the same. </summary>

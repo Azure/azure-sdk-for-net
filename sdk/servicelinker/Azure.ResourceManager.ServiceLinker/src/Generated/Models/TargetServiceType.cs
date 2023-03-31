@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static TargetServiceType ConfluentBootstrapServer { get; } = new TargetServiceType(ConfluentBootstrapServerValue);
         /// <summary> ConfluentSchemaRegistry. </summary>
         public static TargetServiceType ConfluentSchemaRegistry { get; } = new TargetServiceType(ConfluentSchemaRegistryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TargetServiceType"/> values are the same. </summary>
         public static bool operator ==(TargetServiceType left, TargetServiceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TargetServiceType"/> values are not the same. </summary>

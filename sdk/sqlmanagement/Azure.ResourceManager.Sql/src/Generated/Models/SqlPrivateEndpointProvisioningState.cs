@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlPrivateEndpointProvisioningState Failed { get; } = new SqlPrivateEndpointProvisioningState(FailedValue);
         /// <summary> Rejecting. </summary>
         public static SqlPrivateEndpointProvisioningState Rejecting { get; } = new SqlPrivateEndpointProvisioningState(RejectingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlPrivateEndpointProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SqlPrivateEndpointProvisioningState left, SqlPrivateEndpointProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPrivateEndpointProvisioningState"/> values are not the same. </summary>

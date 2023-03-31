@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Exe))
             {
                 writer.WritePropertyName("exe"u8);
-                writer.WriteStringValue(Exe.Value.ToString());
+                writer.WriteStringValue(Exe.Value.ToSerialString());
             }
             if (Optional.IsDefined(Msi))
             {
                 writer.WritePropertyName("msi"u8);
-                writer.WriteStringValue(Msi.Value.ToString());
+                writer.WriteStringValue(Msi.Value.ToSerialString());
             }
             if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
-                writer.WriteStringValue(Script.Value.ToString());
+                writer.WriteStringValue(Script.Value.ToSerialString());
             }
             if (Optional.IsDefined(Executable))
             {
                 writer.WritePropertyName("executable"u8);
-                writer.WriteStringValue(Executable.Value.ToString());
+                writer.WriteStringValue(Executable.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

@@ -59,6 +59,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagedDatabaseStatus DBMoving { get; } = new ManagedDatabaseStatus(DBMovingValue);
         /// <summary> DbCopying. </summary>
         public static ManagedDatabaseStatus DBCopying { get; } = new ManagedDatabaseStatus(DBCopyingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedDatabaseStatus"/> values are the same. </summary>
         public static bool operator ==(ManagedDatabaseStatus left, ManagedDatabaseStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedDatabaseStatus"/> values are not the same. </summary>

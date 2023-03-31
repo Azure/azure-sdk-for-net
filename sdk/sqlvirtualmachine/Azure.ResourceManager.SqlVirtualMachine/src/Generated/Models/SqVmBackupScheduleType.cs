@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static SqVmBackupScheduleType Manual { get; } = new SqVmBackupScheduleType(ManualValue);
         /// <summary> Automated. </summary>
         public static SqVmBackupScheduleType Automated { get; } = new SqVmBackupScheduleType(AutomatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqVmBackupScheduleType"/> values are the same. </summary>
         public static bool operator ==(SqVmBackupScheduleType left, SqVmBackupScheduleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqVmBackupScheduleType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Support.Models
         public static SupportTicketCommunicationDirection Inbound { get; } = new SupportTicketCommunicationDirection(InboundValue);
         /// <summary> outbound. </summary>
         public static SupportTicketCommunicationDirection Outbound { get; } = new SupportTicketCommunicationDirection(OutboundValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SupportTicketCommunicationDirection"/> values are the same. </summary>
         public static bool operator ==(SupportTicketCommunicationDirection left, SupportTicketCommunicationDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SupportTicketCommunicationDirection"/> values are not the same. </summary>

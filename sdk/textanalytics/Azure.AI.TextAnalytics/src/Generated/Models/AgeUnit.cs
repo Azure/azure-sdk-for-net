@@ -38,6 +38,9 @@ namespace Azure.AI.TextAnalytics
         public static AgeUnit Week { get; } = new AgeUnit(WeekValue);
         /// <summary> Day. </summary>
         public static AgeUnit Day { get; } = new AgeUnit(DayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AgeUnit"/> values are the same. </summary>
         public static bool operator ==(AgeUnit left, AgeUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgeUnit"/> values are not the same. </summary>

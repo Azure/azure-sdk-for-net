@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> current. </summary>
         public static DataWarehouseUserActivityName Current { get; } = new DataWarehouseUserActivityName(CurrentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataWarehouseUserActivityName"/> values are the same. </summary>
         public static bool operator ==(DataWarehouseUserActivityName left, DataWarehouseUserActivityName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataWarehouseUserActivityName"/> values are not the same. </summary>

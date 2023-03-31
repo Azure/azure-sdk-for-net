@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in AddOnFeatures)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ServiceFabric
             if (Optional.IsDefined(ReliabilityLevel))
             {
                 writer.WritePropertyName("reliabilityLevel"u8);
-                writer.WriteStringValue(ReliabilityLevel.Value.ToString());
+                writer.WriteStringValue(ReliabilityLevel.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReverseProxyCertificate))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabric
             if (Optional.IsDefined(UpgradeMode))
             {
                 writer.WritePropertyName("upgradeMode"u8);
-                writer.WriteStringValue(UpgradeMode.Value.ToString());
+                writer.WriteStringValue(UpgradeMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
             {
@@ -158,12 +158,12 @@ namespace Azure.ResourceManager.ServiceFabric
             if (Optional.IsDefined(ServiceFabricZonalUpgradeMode))
             {
                 writer.WritePropertyName("sfZonalUpgradeMode"u8);
-                writer.WriteStringValue(ServiceFabricZonalUpgradeMode.Value.ToString());
+                writer.WriteStringValue(ServiceFabricZonalUpgradeMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(VmssZonalUpgradeMode))
             {
                 writer.WritePropertyName("vmssZonalUpgradeMode"u8);
-                writer.WriteStringValue(VmssZonalUpgradeMode.Value.ToString());
+                writer.WriteStringValue(VmssZonalUpgradeMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsInfrastructureServiceManagerEnabled))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ServiceFabric
             if (Optional.IsDefined(UpgradeWave))
             {
                 writer.WritePropertyName("upgradeWave"u8);
-                writer.WriteStringValue(UpgradeWave.Value.ToString());
+                writer.WriteStringValue(UpgradeWave.Value.ToSerialString());
             }
             if (Optional.IsDefined(UpgradePauseStartOn))
             {

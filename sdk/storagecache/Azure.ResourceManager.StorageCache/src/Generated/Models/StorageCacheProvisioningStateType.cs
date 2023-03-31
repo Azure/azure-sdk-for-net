@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static StorageCacheProvisioningStateType Deleting { get; } = new StorageCacheProvisioningStateType(DeletingValue);
         /// <summary> Updating. </summary>
         public static StorageCacheProvisioningStateType Updating { get; } = new StorageCacheProvisioningStateType(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageCacheProvisioningStateType"/> values are the same. </summary>
         public static bool operator ==(StorageCacheProvisioningStateType left, StorageCacheProvisioningStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageCacheProvisioningStateType"/> values are not the same. </summary>

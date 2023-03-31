@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SampleSchemaName WideWorldImportersStd { get; } = new SampleSchemaName(WideWorldImportersStdValue);
         /// <summary> WideWorldImportersFull. </summary>
         public static SampleSchemaName WideWorldImportersFull { get; } = new SampleSchemaName(WideWorldImportersFullValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SampleSchemaName"/> values are the same. </summary>
         public static bool operator ==(SampleSchemaName left, SampleSchemaName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SampleSchemaName"/> values are not the same. </summary>

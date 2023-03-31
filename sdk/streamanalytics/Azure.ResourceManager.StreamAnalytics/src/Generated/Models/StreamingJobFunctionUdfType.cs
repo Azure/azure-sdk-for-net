@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <summary> Scalar. </summary>
         public static StreamingJobFunctionUdfType Scalar { get; } = new StreamingJobFunctionUdfType(ScalarValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamingJobFunctionUdfType"/> values are the same. </summary>
         public static bool operator ==(StreamingJobFunctionUdfType left, StreamingJobFunctionUdfType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingJobFunctionUdfType"/> values are not the same. </summary>

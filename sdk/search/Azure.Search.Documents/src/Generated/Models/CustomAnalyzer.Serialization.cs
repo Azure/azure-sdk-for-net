@@ -17,14 +17,14 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tokenizer"u8);
-            writer.WriteStringValue(TokenizerName.ToString());
+            writer.WriteStringValue(TokenizerName.ToSerialString());
             if (Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters"u8);
                 writer.WriteStartArray();
                 foreach (var item in TokenFilters)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

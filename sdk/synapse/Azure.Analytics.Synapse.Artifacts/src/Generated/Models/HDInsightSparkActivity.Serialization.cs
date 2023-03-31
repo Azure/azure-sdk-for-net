@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(GetDebugInfo))
             {
                 writer.WritePropertyName("getDebugInfo"u8);
-                writer.WriteStringValue(GetDebugInfo.Value.ToString());
+                writer.WriteStringValue(GetDebugInfo.Value.ToSerialString());
             }
             if (Optional.IsDefined(SparkJobLinkedService))
             {

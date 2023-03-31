@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WritePropertyName("triggersOn"u8);
-            writer.WriteStringValue(TriggersOn.ToString());
+            writer.WriteStringValue(TriggersOn.ToSerialString());
             writer.WritePropertyName("triggersWhen"u8);
-            writer.WriteStringValue(TriggersWhen.ToString());
+            writer.WriteStringValue(TriggersWhen.ToSerialString());
             if (Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);

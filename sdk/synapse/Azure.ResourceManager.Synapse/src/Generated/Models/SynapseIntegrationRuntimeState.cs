@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseIntegrationRuntimeState Offline { get; } = new SynapseIntegrationRuntimeState(OfflineValue);
         /// <summary> AccessDenied. </summary>
         public static SynapseIntegrationRuntimeState AccessDenied { get; } = new SynapseIntegrationRuntimeState(AccessDeniedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeState"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeState left, SynapseIntegrationRuntimeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeState"/> values are not the same. </summary>

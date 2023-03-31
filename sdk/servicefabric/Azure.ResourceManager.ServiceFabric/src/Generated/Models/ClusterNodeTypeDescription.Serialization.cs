@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(DurabilityLevel))
             {
                 writer.WritePropertyName("durabilityLevel"u8);
-                writer.WriteStringValue(DurabilityLevel.Value.ToString());
+                writer.WriteStringValue(DurabilityLevel.Value.ToSerialString());
             }
             if (Optional.IsDefined(ApplicationPorts))
             {

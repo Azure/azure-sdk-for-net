@@ -51,7 +51,7 @@ namespace Azure.Data.Tables
             uri.AppendPath("/Tables", false);
             if (queryOptions?.Format != null)
             {
-                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToSerialString(), true);
             }
             if (queryOptions?.Top != null)
             {
@@ -132,14 +132,14 @@ namespace Azure.Data.Tables
             uri.AppendPath("/Tables", false);
             if (queryOptions?.Format != null)
             {
-                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("DataServiceVersion", "3.0");
             if (responsePreference != null)
             {
-                request.Headers.Add("Prefer", responsePreference.Value.ToString());
+                request.Headers.Add("Prefer", responsePreference.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
@@ -434,7 +434,7 @@ namespace Azure.Data.Tables
             }
             if (queryOptions?.Format != null)
             {
-                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToSerialString(), true);
             }
             if (queryOptions?.Top != null)
             {
@@ -547,7 +547,7 @@ namespace Azure.Data.Tables
             }
             if (queryOptions?.Format != null)
             {
-                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToSerialString(), true);
             }
             if (queryOptions?.Select != null)
             {
@@ -725,7 +725,7 @@ namespace Azure.Data.Tables
             }
             if (queryOptions?.Format != null)
             {
-                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
@@ -850,7 +850,7 @@ namespace Azure.Data.Tables
             }
             if (queryOptions?.Format != null)
             {
-                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
@@ -975,7 +975,7 @@ namespace Azure.Data.Tables
             }
             if (queryOptions?.Format != null)
             {
-                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
@@ -1080,14 +1080,14 @@ namespace Azure.Data.Tables
             }
             if (queryOptions?.Format != null)
             {
-                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("DataServiceVersion", "3.0");
             if (responsePreference != null)
             {
-                request.Headers.Add("Prefer", responsePreference.Value.ToString());
+                request.Headers.Add("Prefer", responsePreference.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             if (tableEntityProperties != null)

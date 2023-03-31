@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public static ActionableRemediationRuleCategory InfrastructureAsCode { get; } = new ActionableRemediationRuleCategory(InfrastructureAsCodeValue);
         /// <summary> Containers. </summary>
         public static ActionableRemediationRuleCategory Containers { get; } = new ActionableRemediationRuleCategory(ContainersValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ActionableRemediationRuleCategory"/> values are the same. </summary>
         public static bool operator ==(ActionableRemediationRuleCategory left, ActionableRemediationRuleCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActionableRemediationRuleCategory"/> values are not the same. </summary>

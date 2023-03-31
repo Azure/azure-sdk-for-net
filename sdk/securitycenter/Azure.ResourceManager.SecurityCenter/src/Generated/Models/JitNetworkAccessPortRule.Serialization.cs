@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WritePropertyName("number"u8);
             writer.WriteNumberValue(Number);
             writer.WritePropertyName("protocol"u8);
-            writer.WriteStringValue(Protocol.ToString());
+            writer.WriteStringValue(Protocol.ToSerialString());
             if (Optional.IsDefined(AllowedSourceAddressPrefix))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefix"u8);

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ArmServicePackageActivationMode SharedProcess { get; } = new ArmServicePackageActivationMode(SharedProcessValue);
         /// <summary> Indicates the application package activation mode will use exclusive process. </summary>
         public static ArmServicePackageActivationMode ExclusiveProcess { get; } = new ArmServicePackageActivationMode(ExclusiveProcessValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ArmServicePackageActivationMode"/> values are the same. </summary>
         public static bool operator ==(ArmServicePackageActivationMode left, ArmServicePackageActivationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArmServicePackageActivationMode"/> values are not the same. </summary>

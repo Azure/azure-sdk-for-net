@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(PropertyType))
             {
                 writer.WritePropertyName("propertyType"u8);
-                writer.WriteStringValue(PropertyType.Value.ToString());
+                writer.WriteStringValue(PropertyType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExpectedValue))
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
-                writer.WriteStringValue(Operator.Value.ToString());
+                writer.WriteStringValue(Operator.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

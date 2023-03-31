@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.StorageMover
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("copyMode"u8);
-            writer.WriteStringValue(CopyMode.ToString());
+            writer.WriteStringValue(CopyMode.ToSerialString());
             writer.WritePropertyName("sourceName"u8);
             writer.WriteStringValue(SourceName);
             if (Optional.IsDefined(SourceSubpath))

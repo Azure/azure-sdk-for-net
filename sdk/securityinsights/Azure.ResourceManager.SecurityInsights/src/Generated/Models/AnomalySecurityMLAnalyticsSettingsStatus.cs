@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AnomalySecurityMLAnalyticsSettingsStatus Production { get; } = new AnomalySecurityMLAnalyticsSettingsStatus(ProductionValue);
         /// <summary> Anomaly settings status in Flighting mode. </summary>
         public static AnomalySecurityMLAnalyticsSettingsStatus Flighting { get; } = new AnomalySecurityMLAnalyticsSettingsStatus(FlightingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AnomalySecurityMLAnalyticsSettingsStatus"/> values are the same. </summary>
         public static bool operator ==(AnomalySecurityMLAnalyticsSettingsStatus left, AnomalySecurityMLAnalyticsSettingsStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnomalySecurityMLAnalyticsSettingsStatus"/> values are not the same. </summary>

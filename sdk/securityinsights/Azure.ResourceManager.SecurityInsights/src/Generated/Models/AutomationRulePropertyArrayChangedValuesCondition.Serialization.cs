@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(ArrayType))
             {
                 writer.WritePropertyName("arrayType"u8);
-                writer.WriteStringValue(ArrayType.Value.ToString());
+                writer.WriteStringValue(ArrayType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ChangeType))
             {
                 writer.WritePropertyName("changeType"u8);
-                writer.WriteStringValue(ChangeType.Value.ToString());
+                writer.WriteStringValue(ChangeType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

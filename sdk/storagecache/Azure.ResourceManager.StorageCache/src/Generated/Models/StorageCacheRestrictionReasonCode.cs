@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static StorageCacheRestrictionReasonCode QuotaId { get; } = new StorageCacheRestrictionReasonCode(QuotaIdValue);
         /// <summary> NotAvailableForSubscription. </summary>
         public static StorageCacheRestrictionReasonCode NotAvailableForSubscription { get; } = new StorageCacheRestrictionReasonCode(NotAvailableForSubscriptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageCacheRestrictionReasonCode"/> values are the same. </summary>
         public static bool operator ==(StorageCacheRestrictionReasonCode left, StorageCacheRestrictionReasonCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageCacheRestrictionReasonCode"/> values are not the same. </summary>

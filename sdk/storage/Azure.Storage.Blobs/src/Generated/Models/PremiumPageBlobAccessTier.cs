@@ -56,6 +56,9 @@ namespace Azure.Storage.Blobs.Models
         public static PremiumPageBlobAccessTier P70 { get; } = new PremiumPageBlobAccessTier(P70Value);
         /// <summary> P80. </summary>
         public static PremiumPageBlobAccessTier P80 { get; } = new PremiumPageBlobAccessTier(P80Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PremiumPageBlobAccessTier"/> values are the same. </summary>
         public static bool operator ==(PremiumPageBlobAccessTier left, PremiumPageBlobAccessTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PremiumPageBlobAccessTier"/> values are not the same. </summary>

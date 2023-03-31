@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static AuthenticationProvisioningState Expired { get; } = new AuthenticationProvisioningState(ExpiredValue);
         /// <summary> Incorrect policy of the connector. </summary>
         public static AuthenticationProvisioningState IncorrectPolicy { get; } = new AuthenticationProvisioningState(IncorrectPolicyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AuthenticationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AuthenticationProvisioningState left, AuthenticationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthenticationProvisioningState"/> values are not the same. </summary>

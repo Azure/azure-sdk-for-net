@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static JsonOutputSerializationFormat LineSeparated { get; } = new JsonOutputSerializationFormat(LineSeparatedValue);
         /// <summary> Array. </summary>
         public static JsonOutputSerializationFormat Array { get; } = new JsonOutputSerializationFormat(ArrayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JsonOutputSerializationFormat"/> values are the same. </summary>
         public static bool operator ==(JsonOutputSerializationFormat left, JsonOutputSerializationFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JsonOutputSerializationFormat"/> values are not the same. </summary>

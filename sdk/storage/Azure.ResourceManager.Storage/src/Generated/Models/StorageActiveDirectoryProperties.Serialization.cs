@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(AccountType))
             {
                 writer.WritePropertyName("accountType"u8);
-                writer.WriteStringValue(AccountType.Value.ToString());
+                writer.WriteStringValue(AccountType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

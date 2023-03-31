@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static DynamicsAuthenticationType Ifd { get; } = new DynamicsAuthenticationType(IfdValue);
         /// <summary> AADServicePrincipal. </summary>
         public static DynamicsAuthenticationType AADServicePrincipal { get; } = new DynamicsAuthenticationType(AADServicePrincipalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynamicsAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(DynamicsAuthenticationType left, DynamicsAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicsAuthenticationType"/> values are not the same. </summary>

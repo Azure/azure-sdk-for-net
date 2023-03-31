@@ -35,6 +35,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static WebActivityMethod PUT { get; } = new WebActivityMethod(PUTValue);
         /// <summary> DELETE. </summary>
         public static WebActivityMethod Delete { get; } = new WebActivityMethod(DeleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebActivityMethod"/> values are the same. </summary>
         public static bool operator ==(WebActivityMethod left, WebActivityMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebActivityMethod"/> values are not the same. </summary>

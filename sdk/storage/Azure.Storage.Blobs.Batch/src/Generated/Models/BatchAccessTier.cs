@@ -65,6 +65,9 @@ namespace Azure.Storage.Blobs.Batch.Models
         public static BatchAccessTier Cool { get; } = new BatchAccessTier(CoolValue);
         /// <summary> Archive. </summary>
         public static BatchAccessTier Archive { get; } = new BatchAccessTier(ArchiveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BatchAccessTier"/> values are the same. </summary>
         public static bool operator ==(BatchAccessTier left, BatchAccessTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchAccessTier"/> values are not the same. </summary>

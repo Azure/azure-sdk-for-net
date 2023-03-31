@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static SqlServerLicenseType Ahub { get; } = new SqlServerLicenseType(AhubValue);
         /// <summary> DR. </summary>
         public static SqlServerLicenseType DR { get; } = new SqlServerLicenseType(DRValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlServerLicenseType"/> values are the same. </summary>
         public static bool operator ==(SqlServerLicenseType left, SqlServerLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlServerLicenseType"/> values are not the same. </summary>

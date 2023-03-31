@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Subscription.Models
         public static AcceptOwnershipState Completed { get; } = new AcceptOwnershipState(CompletedValue);
         /// <summary> Expired. </summary>
         public static AcceptOwnershipState Expired { get; } = new AcceptOwnershipState(ExpiredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AcceptOwnershipState"/> values are the same. </summary>
         public static bool operator ==(AcceptOwnershipState left, AcceptOwnershipState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcceptOwnershipState"/> values are not the same. </summary>

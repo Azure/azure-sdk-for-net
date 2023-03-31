@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ConnectivityState))
             {
                 writer.WritePropertyName("connectivityState"u8);
-                writer.WriteStringValue(ConnectivityState.Value.ToString());
+                writer.WriteStringValue(ConnectivityState.Value.ToSerialString());
             }
             if (Optional.IsDefined(DeviceVendor))
             {

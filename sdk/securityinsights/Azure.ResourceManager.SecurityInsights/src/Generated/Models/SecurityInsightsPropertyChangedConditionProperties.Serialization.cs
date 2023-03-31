@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteObjectValue(ConditionProperties);
             }
             writer.WritePropertyName("conditionType"u8);
-            writer.WriteStringValue(ConditionType.ToString());
+            writer.WriteStringValue(ConditionType.ToSerialString());
             writer.WriteEndObject();
         }
 

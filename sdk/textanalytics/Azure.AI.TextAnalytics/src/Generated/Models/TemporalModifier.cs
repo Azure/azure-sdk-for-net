@@ -77,6 +77,9 @@ namespace Azure.AI.TextAnalytics
         public static TemporalModifier Mid { get; } = new TemporalModifier(MidValue);
         /// <summary> More. </summary>
         public static TemporalModifier More { get; } = new TemporalModifier(MoreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TemporalModifier"/> values are the same. </summary>
         public static bool operator ==(TemporalModifier left, TemporalModifier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TemporalModifier"/> values are not the same. </summary>

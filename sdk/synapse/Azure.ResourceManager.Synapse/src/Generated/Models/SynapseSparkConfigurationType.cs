@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseSparkConfigurationType File { get; } = new SynapseSparkConfigurationType(FileValue);
         /// <summary> Artifact. </summary>
         public static SynapseSparkConfigurationType Artifact { get; } = new SynapseSparkConfigurationType(ArtifactValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseSparkConfigurationType"/> values are the same. </summary>
         public static bool operator ==(SynapseSparkConfigurationType left, SynapseSparkConfigurationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseSparkConfigurationType"/> values are not the same. </summary>

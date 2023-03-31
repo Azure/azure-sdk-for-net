@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseSsisObjectMetadataType Package { get; } = new SynapseSsisObjectMetadataType(PackageValue);
         /// <summary> Environment. </summary>
         public static SynapseSsisObjectMetadataType Environment { get; } = new SynapseSsisObjectMetadataType(EnvironmentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseSsisObjectMetadataType"/> values are the same. </summary>
         public static bool operator ==(SynapseSsisObjectMetadataType left, SynapseSsisObjectMetadataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseSsisObjectMetadataType"/> values are not the same. </summary>

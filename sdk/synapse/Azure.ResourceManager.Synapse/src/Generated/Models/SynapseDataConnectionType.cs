@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections. </summary>
         public static SynapseDataConnectionType MicrosoftSynapseWorkspacesKustoPoolsDatabasesDataConnections { get; } = new SynapseDataConnectionType(MicrosoftSynapseWorkspacesKustoPoolsDatabasesDataConnectionsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseDataConnectionType"/> values are the same. </summary>
         public static bool operator ==(SynapseDataConnectionType left, SynapseDataConnectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseDataConnectionType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ServerTrustGroupPropertiesTrustScopesItem GlobalTransactions { get; } = new ServerTrustGroupPropertiesTrustScopesItem(GlobalTransactionsValue);
         /// <summary> ServiceBroker. </summary>
         public static ServerTrustGroupPropertiesTrustScopesItem ServiceBroker { get; } = new ServerTrustGroupPropertiesTrustScopesItem(ServiceBrokerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServerTrustGroupPropertiesTrustScopesItem"/> values are the same. </summary>
         public static bool operator ==(ServerTrustGroupPropertiesTrustScopesItem left, ServerTrustGroupPropertiesTrustScopesItem right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerTrustGroupPropertiesTrustScopesItem"/> values are not the same. </summary>

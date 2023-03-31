@@ -239,6 +239,9 @@ namespace Azure.Search.Documents.Models
         public static QueryLanguage TeIn { get; } = new QueryLanguage(TeInValue);
         /// <summary> Query language value for Urdu (Pakistan). </summary>
         public static QueryLanguage UrPk { get; } = new QueryLanguage(UrPkValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="QueryLanguage"/> values are the same. </summary>
         public static bool operator ==(QueryLanguage left, QueryLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryLanguage"/> values are not the same. </summary>

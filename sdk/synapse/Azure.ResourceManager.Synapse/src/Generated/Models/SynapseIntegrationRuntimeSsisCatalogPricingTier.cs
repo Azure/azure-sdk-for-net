@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseIntegrationRuntimeSsisCatalogPricingTier Premium { get; } = new SynapseIntegrationRuntimeSsisCatalogPricingTier(PremiumValue);
         /// <summary> PremiumRS. </summary>
         public static SynapseIntegrationRuntimeSsisCatalogPricingTier PremiumRS { get; } = new SynapseIntegrationRuntimeSsisCatalogPricingTier(PremiumRSValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeSsisCatalogPricingTier"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeSsisCatalogPricingTier left, SynapseIntegrationRuntimeSsisCatalogPricingTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeSsisCatalogPricingTier"/> values are not the same. </summary>

@@ -53,6 +53,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static CompressionCodec Tar { get; } = new CompressionCodec(TarValue);
         /// <summary> tarGZip. </summary>
         public static CompressionCodec TarGZip { get; } = new CompressionCodec(TarGZipValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CompressionCodec"/> values are the same. </summary>
         public static bool operator ==(CompressionCodec left, CompressionCodec right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CompressionCodec"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static ServiceSasSignedResourceType File { get; } = new ServiceSasSignedResourceType(FileValue);
         /// <summary> s. </summary>
         public static ServiceSasSignedResourceType Share { get; } = new ServiceSasSignedResourceType(ShareValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceSasSignedResourceType"/> values are the same. </summary>
         public static bool operator ==(ServiceSasSignedResourceType left, ServiceSasSignedResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceSasSignedResourceType"/> values are not the same. </summary>

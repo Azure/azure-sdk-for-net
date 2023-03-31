@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlServerKeyType ServiceManaged { get; } = new SqlServerKeyType(ServiceManagedValue);
         /// <summary> AzureKeyVault. </summary>
         public static SqlServerKeyType AzureKeyVault { get; } = new SqlServerKeyType(AzureKeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlServerKeyType"/> values are the same. </summary>
         public static bool operator ==(SqlServerKeyType left, SqlServerKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlServerKeyType"/> values are not the same. </summary>

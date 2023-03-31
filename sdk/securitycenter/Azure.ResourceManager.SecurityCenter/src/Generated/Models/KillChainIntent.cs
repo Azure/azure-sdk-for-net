@@ -71,6 +71,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static KillChainIntent Probing { get; } = new KillChainIntent(ProbingValue);
         /// <summary> Exploitation is the stage where an attacker manages to get a foothold on the attacked resource. This stage is relevant for compute hosts and resources such as user accounts, certificates etc. </summary>
         public static KillChainIntent Exploitation { get; } = new KillChainIntent(ExploitationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KillChainIntent"/> values are the same. </summary>
         public static bool operator ==(KillChainIntent left, KillChainIntent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KillChainIntent"/> values are not the same. </summary>

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(SortOrder))
             {
                 writer.WritePropertyName("sortOrder"u8);
-                writer.WriteStringValue(SortOrder.Value.ToString());
+                writer.WriteStringValue(SortOrder.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

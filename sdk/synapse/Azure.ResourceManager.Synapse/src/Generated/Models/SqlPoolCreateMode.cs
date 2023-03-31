@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SqlPoolCreateMode Recovery { get; } = new SqlPoolCreateMode(RecoveryValue);
         /// <summary> Restore. </summary>
         public static SqlPoolCreateMode Restore { get; } = new SqlPoolCreateMode(RestoreValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlPoolCreateMode"/> values are the same. </summary>
         public static bool operator ==(SqlPoolCreateMode left, SqlPoolCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPoolCreateMode"/> values are not the same. </summary>

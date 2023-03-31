@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
             }
             if (interval != null)
             {
-                uri.AppendQuery("interval", interval.Value.ToString(), true);
+                uri.AppendQuery("interval", interval.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

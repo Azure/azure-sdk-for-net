@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Agent raw events. </summary>
         public static IotSecuritySolutionExportOption RawEvents { get; } = new IotSecuritySolutionExportOption(RawEventsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotSecuritySolutionExportOption"/> values are the same. </summary>
         public static bool operator ==(IotSecuritySolutionExportOption left, IotSecuritySolutionExportOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotSecuritySolutionExportOption"/> values are not the same. </summary>

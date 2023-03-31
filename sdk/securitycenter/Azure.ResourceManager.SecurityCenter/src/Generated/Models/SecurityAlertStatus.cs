@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAlertStatus Resolved { get; } = new SecurityAlertStatus(ResolvedValue);
         /// <summary> Alert dismissed as false positive. </summary>
         public static SecurityAlertStatus Dismissed { get; } = new SecurityAlertStatus(DismissedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityAlertStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertStatus left, SecurityAlertStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAlertStatus"/> values are not the same. </summary>

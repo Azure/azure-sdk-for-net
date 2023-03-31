@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static HBaseAuthenticationType Anonymous { get; } = new HBaseAuthenticationType(AnonymousValue);
         /// <summary> Basic. </summary>
         public static HBaseAuthenticationType Basic { get; } = new HBaseAuthenticationType(BasicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HBaseAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(HBaseAuthenticationType left, HBaseAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HBaseAuthenticationType"/> values are not the same. </summary>

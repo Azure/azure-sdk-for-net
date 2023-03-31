@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static StreamingJobOutputStartMode CustomTime { get; } = new StreamingJobOutputStartMode(CustomTimeValue);
         /// <summary> LastOutputEventTime. </summary>
         public static StreamingJobOutputStartMode LastOutputEventTime { get; } = new StreamingJobOutputStartMode(LastOutputEventTimeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamingJobOutputStartMode"/> values are the same. </summary>
         public static bool operator ==(StreamingJobOutputStartMode left, StreamingJobOutputStartMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingJobOutputStartMode"/> values are not the same. </summary>

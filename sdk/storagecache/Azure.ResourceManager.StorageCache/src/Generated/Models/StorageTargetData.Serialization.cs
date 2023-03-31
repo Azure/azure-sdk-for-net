@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(TargetType))
             {
                 writer.WritePropertyName("targetType"u8);
-                writer.WriteStringValue(TargetType.Value.ToString());
+                writer.WriteStringValue(TargetType.Value.ToSerialString());
             }
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsDefined(Nfs3))
             {

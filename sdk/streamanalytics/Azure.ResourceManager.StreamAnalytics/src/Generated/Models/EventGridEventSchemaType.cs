@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static EventGridEventSchemaType EventGridEventSchema { get; } = new EventGridEventSchemaType(EventGridEventSchemaValue);
         /// <summary> CloudEventSchema. </summary>
         public static EventGridEventSchemaType CloudEventSchema { get; } = new EventGridEventSchemaType(CloudEventSchemaValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EventGridEventSchemaType"/> values are the same. </summary>
         public static bool operator ==(EventGridEventSchemaType left, EventGridEventSchemaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventGridEventSchemaType"/> values are not the same. </summary>

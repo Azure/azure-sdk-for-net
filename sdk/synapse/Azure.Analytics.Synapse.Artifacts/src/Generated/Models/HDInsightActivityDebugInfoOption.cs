@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static HDInsightActivityDebugInfoOption Always { get; } = new HDInsightActivityDebugInfoOption(AlwaysValue);
         /// <summary> Failure. </summary>
         public static HDInsightActivityDebugInfoOption Failure { get; } = new HDInsightActivityDebugInfoOption(FailureValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightActivityDebugInfoOption"/> values are the same. </summary>
         public static bool operator ==(HDInsightActivityDebugInfoOption left, HDInsightActivityDebugInfoOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightActivityDebugInfoOption"/> values are not the same. </summary>

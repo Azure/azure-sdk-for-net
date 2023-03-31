@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AlertRuleKind MicrosoftSecurityIncidentCreation { get; } = new AlertRuleKind(MicrosoftSecurityIncidentCreationValue);
         /// <summary> Fusion. </summary>
         public static AlertRuleKind Fusion { get; } = new AlertRuleKind(FusionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AlertRuleKind"/> values are the same. </summary>
         public static bool operator ==(AlertRuleKind left, AlertRuleKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertRuleKind"/> values are not the same. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(PolicyType.ToString());
+            writer.WriteStringValue(PolicyType.ToSerialString());
             writer.WriteEndObject();
         }
 

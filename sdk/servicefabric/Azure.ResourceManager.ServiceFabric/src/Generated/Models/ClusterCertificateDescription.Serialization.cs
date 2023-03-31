@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(X509StoreName))
             {
                 writer.WritePropertyName("x509StoreName"u8);
-                writer.WriteStringValue(X509StoreName.Value.ToString());
+                writer.WriteStringValue(X509StoreName.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

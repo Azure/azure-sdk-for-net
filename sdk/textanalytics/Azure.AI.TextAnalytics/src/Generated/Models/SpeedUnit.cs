@@ -65,6 +65,9 @@ namespace Azure.AI.TextAnalytics
         public static SpeedUnit CentimeterPerMillisecond { get; } = new SpeedUnit(CentimeterPerMillisecondValue);
         /// <summary> KilometerPerMillisecond. </summary>
         public static SpeedUnit KilometerPerMillisecond { get; } = new SpeedUnit(KilometerPerMillisecondValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SpeedUnit"/> values are the same. </summary>
         public static bool operator ==(SpeedUnit left, SpeedUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SpeedUnit"/> values are not the same. </summary>

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (Optional.IsDefined(IncomingTrafficPolicy))
             {
                 writer.WritePropertyName("incomingTrafficPolicy"u8);
-                writer.WriteStringValue(IncomingTrafficPolicy.Value.ToString());
+                writer.WriteStringValue(IncomingTrafficPolicy.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

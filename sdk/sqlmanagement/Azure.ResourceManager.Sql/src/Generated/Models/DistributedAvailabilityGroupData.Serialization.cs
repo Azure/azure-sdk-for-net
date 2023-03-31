@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(ReplicationMode))
             {
                 writer.WritePropertyName("replicationMode"u8);
-                writer.WriteStringValue(ReplicationMode.Value.ToString());
+                writer.WriteStringValue(ReplicationMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

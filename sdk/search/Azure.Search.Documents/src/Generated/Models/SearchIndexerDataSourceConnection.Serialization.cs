@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type.ToSerialString());
             writer.WritePropertyName("credentials"u8);
             writer.WriteObjectValue(CredentialsInternal);
             writer.WritePropertyName("container"u8);

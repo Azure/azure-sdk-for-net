@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(NodeSize))
             {
                 writer.WritePropertyName("nodeSize"u8);
-                writer.WriteStringValue(NodeSize.Value.ToString());
+                writer.WriteStringValue(NodeSize.Value.ToSerialString());
             }
             if (Optional.IsDefined(NodeSizeFamily))
             {
                 writer.WritePropertyName("nodeSizeFamily"u8);
-                writer.WriteStringValue(NodeSizeFamily.Value.ToString());
+                writer.WriteStringValue(NodeSizeFamily.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

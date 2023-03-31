@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(FailureAction))
             {
                 writer.WritePropertyName("failureAction"u8);
-                writer.WriteStringValue(FailureAction.Value.ToString());
+                writer.WriteStringValue(FailureAction.Value.ToSerialString());
             }
             if (Optional.IsDefined(HealthCheckWaitDuration))
             {

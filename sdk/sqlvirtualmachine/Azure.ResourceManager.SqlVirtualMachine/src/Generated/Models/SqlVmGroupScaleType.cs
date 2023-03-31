@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> HA. </summary>
         public static SqlVmGroupScaleType HA { get; } = new SqlVmGroupScaleType(HAValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlVmGroupScaleType"/> values are the same. </summary>
         public static bool operator ==(SqlVmGroupScaleType left, SqlVmGroupScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlVmGroupScaleType"/> values are not the same. </summary>

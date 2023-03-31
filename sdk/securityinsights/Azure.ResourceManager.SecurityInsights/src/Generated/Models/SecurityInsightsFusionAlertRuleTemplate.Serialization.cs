@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AlertRulesCreatedByTemplateCount))
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity.Value.ToString());
+                writer.WriteStringValue(Severity.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Tactics))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Tactics)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

@@ -38,6 +38,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static ODataAuthenticationType AadServicePrincipal { get; } = new ODataAuthenticationType(AadServicePrincipalValue);
         /// <summary> ManagedServiceIdentity. </summary>
         public static ODataAuthenticationType ManagedServiceIdentity { get; } = new ODataAuthenticationType(ManagedServiceIdentityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ODataAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(ODataAuthenticationType left, ODataAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ODataAuthenticationType"/> values are not the same. </summary>

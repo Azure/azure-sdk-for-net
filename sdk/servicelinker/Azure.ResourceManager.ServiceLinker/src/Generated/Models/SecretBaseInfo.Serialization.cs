@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("secretType"u8);
-            writer.WriteStringValue(SecretType.ToString());
+            writer.WriteStringValue(SecretType.ToSerialString());
             writer.WriteEndObject();
         }
 

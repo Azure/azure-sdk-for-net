@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Windows. </summary>
         public static ManagedClusterVersionEnvironment Windows { get; } = new ManagedClusterVersionEnvironment(WindowsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterVersionEnvironment"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterVersionEnvironment left, ManagedClusterVersionEnvironment right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterVersionEnvironment"/> values are not the same. </summary>

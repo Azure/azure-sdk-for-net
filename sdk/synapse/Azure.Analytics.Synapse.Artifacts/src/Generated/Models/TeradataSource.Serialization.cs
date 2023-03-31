@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-                writer.WriteStringValue(PartitionOption.Value.ToString());
+                writer.WriteStringValue(PartitionOption.Value.ToSerialString());
             }
             if (Optional.IsDefined(PartitionSettings))
             {

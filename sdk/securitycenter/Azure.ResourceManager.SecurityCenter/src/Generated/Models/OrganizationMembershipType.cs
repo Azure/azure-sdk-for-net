@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static OrganizationMembershipType Member { get; } = new OrganizationMembershipType(MemberValue);
         /// <summary> Organization. </summary>
         public static OrganizationMembershipType Organization { get; } = new OrganizationMembershipType(OrganizationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OrganizationMembershipType"/> values are the same. </summary>
         public static bool operator ==(OrganizationMembershipType left, OrganizationMembershipType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OrganizationMembershipType"/> values are not the same. </summary>

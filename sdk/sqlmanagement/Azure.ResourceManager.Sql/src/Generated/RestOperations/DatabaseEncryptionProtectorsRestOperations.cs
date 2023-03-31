@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/encryptionProtector/", false);
-            uri.AppendPath(encryptionProtectorName.ToString(), true);
+            uri.AppendPath(encryptionProtectorName.ToSerialString(), true);
             uri.AppendPath("/revalidate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/encryptionProtector/", false);
-            uri.AppendPath(encryptionProtectorName.ToString(), true);
+            uri.AppendPath(encryptionProtectorName.ToSerialString(), true);
             uri.AppendPath("/revert", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

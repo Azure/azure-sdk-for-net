@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("flag"u8);
-            writer.WriteStringValue(Flag.ToString());
+            writer.WriteStringValue(Flag.ToSerialString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             if (Optional.IsCollectionDefined(Properties))

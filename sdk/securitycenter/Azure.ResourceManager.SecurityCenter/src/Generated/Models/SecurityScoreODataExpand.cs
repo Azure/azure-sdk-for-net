@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Add definition object for each control. </summary>
         public static SecurityScoreODataExpand Definition { get; } = new SecurityScoreODataExpand(DefinitionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityScoreODataExpand"/> values are the same. </summary>
         public static bool operator ==(SecurityScoreODataExpand left, SecurityScoreODataExpand right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityScoreODataExpand"/> values are not the same. </summary>

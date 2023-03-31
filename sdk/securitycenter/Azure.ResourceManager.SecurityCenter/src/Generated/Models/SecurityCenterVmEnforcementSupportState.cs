@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityCenterVmEnforcementSupportState NotSupported { get; } = new SecurityCenterVmEnforcementSupportState(NotSupportedValue);
         /// <summary> Unknown. </summary>
         public static SecurityCenterVmEnforcementSupportState Unknown { get; } = new SecurityCenterVmEnforcementSupportState(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityCenterVmEnforcementSupportState"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterVmEnforcementSupportState left, SecurityCenterVmEnforcementSupportState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityCenterVmEnforcementSupportState"/> values are not the same. </summary>

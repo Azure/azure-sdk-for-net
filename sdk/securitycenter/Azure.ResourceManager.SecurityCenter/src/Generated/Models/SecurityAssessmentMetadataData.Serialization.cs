@@ -41,24 +41,24 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity.Value.ToString());
+                writer.WriteStringValue(Severity.Value.ToSerialString());
             }
             if (Optional.IsDefined(UserImpact))
             {
                 writer.WritePropertyName("userImpact"u8);
-                writer.WriteStringValue(UserImpact.Value.ToString());
+                writer.WriteStringValue(UserImpact.Value.ToSerialString());
             }
             if (Optional.IsDefined(ImplementationEffort))
             {
                 writer.WritePropertyName("implementationEffort"u8);
-                writer.WriteStringValue(ImplementationEffort.Value.ToString());
+                writer.WriteStringValue(ImplementationEffort.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Threats))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Threats)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(AssessmentType))
             {
                 writer.WritePropertyName("assessmentType"u8);
-                writer.WriteStringValue(AssessmentType.Value.ToString());
+                writer.WriteStringValue(AssessmentType.Value.ToSerialString());
             }
             if (Optional.IsDefined(PartnerData))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Tactics)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Techniques)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

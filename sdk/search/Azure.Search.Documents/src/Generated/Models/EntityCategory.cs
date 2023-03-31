@@ -44,6 +44,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static EntityCategory Url { get; } = new EntityCategory(UrlValue);
         /// <summary> Entities describing an email address. </summary>
         public static EntityCategory Email { get; } = new EntityCategory(EmailValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EntityCategory"/> values are the same. </summary>
         public static bool operator ==(EntityCategory left, EntityCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EntityCategory"/> values are not the same. </summary>

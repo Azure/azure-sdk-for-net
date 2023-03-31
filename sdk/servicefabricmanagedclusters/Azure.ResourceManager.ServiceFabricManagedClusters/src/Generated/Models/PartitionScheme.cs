@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static PartitionScheme UniformInt64Range { get; } = new PartitionScheme(UniformInt64RangeValue);
         /// <summary> Indicates that the partition is based on string names, and is a NamedPartitionScheme object. The value is 2. </summary>
         public static PartitionScheme Named { get; } = new PartitionScheme(NamedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PartitionScheme"/> values are the same. </summary>
         public static bool operator ==(PartitionScheme left, PartitionScheme right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PartitionScheme"/> values are not the same. </summary>

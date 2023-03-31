@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Inline. </summary>
         public static JobStepActionSource Inline { get; } = new JobStepActionSource(InlineValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobStepActionSource"/> values are the same. </summary>
         public static bool operator ==(JobStepActionSource left, JobStepActionSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobStepActionSource"/> values are not the same. </summary>

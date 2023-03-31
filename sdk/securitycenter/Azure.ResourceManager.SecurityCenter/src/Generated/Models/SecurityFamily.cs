@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityFamily SaasWaf { get; } = new SecurityFamily(SaasWafValue);
         /// <summary> Va. </summary>
         public static SecurityFamily VulnerabilityAssessment { get; } = new SecurityFamily(VulnerabilityAssessmentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityFamily"/> values are the same. </summary>
         public static bool operator ==(SecurityFamily left, SecurityFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityFamily"/> values are not the same. </summary>

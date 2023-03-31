@@ -44,6 +44,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static RecurrenceFrequency Month { get; } = new RecurrenceFrequency(MonthValue);
         /// <summary> Year. </summary>
         public static RecurrenceFrequency Year { get; } = new RecurrenceFrequency(YearValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecurrenceFrequency"/> values are the same. </summary>
         public static bool operator ==(RecurrenceFrequency left, RecurrenceFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecurrenceFrequency"/> values are not the same. </summary>

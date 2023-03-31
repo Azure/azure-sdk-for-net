@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Evaluate the condition on items added to the array. </summary>
         public static AutomationRulePropertyArrayChangedConditionSupportedChangeType Added { get; } = new AutomationRulePropertyArrayChangedConditionSupportedChangeType(AddedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationRulePropertyArrayChangedConditionSupportedChangeType"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyArrayChangedConditionSupportedChangeType left, AutomationRulePropertyArrayChangedConditionSupportedChangeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationRulePropertyArrayChangedConditionSupportedChangeType"/> values are not the same. </summary>

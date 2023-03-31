@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static StreamingJobFunctionUpdateMode Static { get; } = new StreamingJobFunctionUpdateMode(StaticValue);
         /// <summary> Refreshable. </summary>
         public static StreamingJobFunctionUpdateMode Refreshable { get; } = new StreamingJobFunctionUpdateMode(RefreshableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamingJobFunctionUpdateMode"/> values are the same. </summary>
         public static bool operator ==(StreamingJobFunctionUpdateMode left, StreamingJobFunctionUpdateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingJobFunctionUpdateMode"/> values are not the same. </summary>

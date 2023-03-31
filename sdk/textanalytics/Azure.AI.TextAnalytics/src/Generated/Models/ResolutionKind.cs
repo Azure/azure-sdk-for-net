@@ -65,6 +65,9 @@ namespace Azure.AI.TextAnalytics.Models
         public static ResolutionKind NumericRangeResolution { get; } = new ResolutionKind(NumericRangeResolutionValue);
         /// <summary> TemporalSpanResolution. </summary>
         public static ResolutionKind TemporalSpanResolution { get; } = new ResolutionKind(TemporalSpanResolutionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ResolutionKind"/> values are the same. </summary>
         public static bool operator ==(ResolutionKind left, ResolutionKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResolutionKind"/> values are not the same. </summary>

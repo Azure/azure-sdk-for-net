@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static StreamingJobState Restarting { get; } = new StreamingJobState(RestartingValue);
         /// <summary> The job is currently in the Scaling state. </summary>
         public static StreamingJobState Scaling { get; } = new StreamingJobState(ScalingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamingJobState"/> values are the same. </summary>
         public static bool operator ==(StreamingJobState left, StreamingJobState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamingJobState"/> values are not the same. </summary>

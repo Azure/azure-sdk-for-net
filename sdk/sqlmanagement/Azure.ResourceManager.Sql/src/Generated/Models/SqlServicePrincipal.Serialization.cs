@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(PrincipalType.Value.ToString());
+                writer.WriteStringValue(PrincipalType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

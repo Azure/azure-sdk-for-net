@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseIntegrationRuntimeInternalChannelEncryptionMode SslEncrypted { get; } = new SynapseIntegrationRuntimeInternalChannelEncryptionMode(SslEncryptedValue);
         /// <summary> NotEncrypted. </summary>
         public static SynapseIntegrationRuntimeInternalChannelEncryptionMode NotEncrypted { get; } = new SynapseIntegrationRuntimeInternalChannelEncryptionMode(NotEncryptedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeInternalChannelEncryptionMode"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeInternalChannelEncryptionMode left, SynapseIntegrationRuntimeInternalChannelEncryptionMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeInternalChannelEncryptionMode"/> values are not the same. </summary>

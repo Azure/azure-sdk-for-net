@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static DefaultSharePermission Contributor { get; } = new DefaultSharePermission(ContributorValue);
         /// <summary> StorageFileDataSmbShareElevatedContributor. </summary>
         public static DefaultSharePermission ElevatedContributor { get; } = new DefaultSharePermission(ElevatedContributorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DefaultSharePermission"/> values are the same. </summary>
         public static bool operator ==(DefaultSharePermission left, DefaultSharePermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DefaultSharePermission"/> values are not the same. </summary>

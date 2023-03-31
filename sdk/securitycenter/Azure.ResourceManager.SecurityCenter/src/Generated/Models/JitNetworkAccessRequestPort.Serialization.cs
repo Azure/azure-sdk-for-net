@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WritePropertyName("endTimeUtc"u8);
             writer.WriteStringValue(EndOn, "O");
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            writer.WriteStringValue(Status.ToSerialString());
             writer.WritePropertyName("statusReason"u8);
-            writer.WriteStringValue(StatusReason.ToString());
+            writer.WriteStringValue(StatusReason.ToSerialString());
             if (Optional.IsDefined(MappedPort))
             {
                 writer.WritePropertyName("mappedPort"u8);

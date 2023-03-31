@@ -71,6 +71,9 @@ namespace Azure.AI.TextAnalytics
         public static WeightUnit Stone { get; } = new WeightUnit(StoneValue);
         /// <summary> Dram. </summary>
         public static WeightUnit Dram { get; } = new WeightUnit(DramValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WeightUnit"/> values are the same. </summary>
         public static bool operator ==(WeightUnit left, WeightUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WeightUnit"/> values are not the same. </summary>

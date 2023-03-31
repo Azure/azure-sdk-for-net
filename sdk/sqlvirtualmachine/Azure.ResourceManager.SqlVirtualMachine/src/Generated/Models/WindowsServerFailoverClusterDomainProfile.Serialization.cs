@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(ClusterSubnetType))
             {
                 writer.WritePropertyName("clusterSubnetType"u8);
-                writer.WriteStringValue(ClusterSubnetType.Value.ToString());
+                writer.WriteStringValue(ClusterSubnetType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

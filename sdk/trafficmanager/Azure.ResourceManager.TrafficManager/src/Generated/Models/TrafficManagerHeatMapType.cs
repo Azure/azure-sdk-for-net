@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         /// <summary> default. </summary>
         public static TrafficManagerHeatMapType Default { get; } = new TrafficManagerHeatMapType(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrafficManagerHeatMapType"/> values are the same. </summary>
         public static bool operator ==(TrafficManagerHeatMapType left, TrafficManagerHeatMapType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficManagerHeatMapType"/> values are not the same. </summary>

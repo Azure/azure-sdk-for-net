@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CatalogPricingTier))
             {
                 writer.WritePropertyName("catalogPricingTier"u8);
-                writer.WriteStringValue(CatalogPricingTier.Value.ToString());
+                writer.WriteStringValue(CatalogPricingTier.Value.ToSerialString());
             }
             foreach (var item in AdditionalProperties)
             {

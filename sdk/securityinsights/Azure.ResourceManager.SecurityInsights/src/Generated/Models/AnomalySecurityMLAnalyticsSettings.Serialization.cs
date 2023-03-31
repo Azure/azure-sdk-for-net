@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Tactics)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(SettingsStatus))
             {
                 writer.WritePropertyName("settingsStatus"u8);
-                writer.WriteStringValue(SettingsStatus.Value.ToString());
+                writer.WriteStringValue(SettingsStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsDefaultSettings))
             {

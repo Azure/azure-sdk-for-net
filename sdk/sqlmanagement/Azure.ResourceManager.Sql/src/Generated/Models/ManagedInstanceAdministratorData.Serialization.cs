@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(AdministratorType))
             {
                 writer.WritePropertyName("administratorType"u8);
-                writer.WriteStringValue(AdministratorType.Value.ToString());
+                writer.WriteStringValue(AdministratorType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Login))
             {

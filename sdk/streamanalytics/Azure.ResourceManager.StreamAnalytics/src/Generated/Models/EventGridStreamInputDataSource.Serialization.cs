@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteStringValue(Schema.Value.ToString());
+                writer.WriteStringValue(Schema.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(StorageAccounts))
             {

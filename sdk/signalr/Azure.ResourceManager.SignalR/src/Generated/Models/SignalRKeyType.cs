@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SignalR.Models
         public static SignalRKeyType Secondary { get; } = new SignalRKeyType(SecondaryValue);
         /// <summary> Salt. </summary>
         public static SignalRKeyType Salt { get; } = new SignalRKeyType(SaltValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SignalRKeyType"/> values are the same. </summary>
         public static bool operator ==(SignalRKeyType left, SignalRKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SignalRKeyType"/> values are not the same. </summary>

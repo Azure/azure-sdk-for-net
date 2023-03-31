@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> AccessTimeTracking. </summary>
         public static LastAccessTimeTrackingPolicyName AccessTimeTracking { get; } = new LastAccessTimeTrackingPolicyName(AccessTimeTrackingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LastAccessTimeTrackingPolicyName"/> values are the same. </summary>
         public static bool operator ==(LastAccessTimeTrackingPolicyName left, LastAccessTimeTrackingPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LastAccessTimeTrackingPolicyName"/> values are not the same. </summary>

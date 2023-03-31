@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(UpgradeMode))
             {
                 writer.WritePropertyName("upgradeMode"u8);
-                writer.WriteStringValue(UpgradeMode.Value.ToString());
+                writer.WriteStringValue(UpgradeMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(RecreateApplication))
             {

@@ -38,6 +38,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static HttpAuthenticationType Windows { get; } = new HttpAuthenticationType(WindowsValue);
         /// <summary> ClientCertificate. </summary>
         public static HttpAuthenticationType ClientCertificate { get; } = new HttpAuthenticationType(ClientCertificateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HttpAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(HttpAuthenticationType left, HttpAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HttpAuthenticationType"/> values are not the same. </summary>

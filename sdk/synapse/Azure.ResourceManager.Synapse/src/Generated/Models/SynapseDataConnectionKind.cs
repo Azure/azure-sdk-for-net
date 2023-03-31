@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseDataConnectionKind EventGrid { get; } = new SynapseDataConnectionKind(EventGridValue);
         /// <summary> IotHub. </summary>
         public static SynapseDataConnectionKind IotHub { get; } = new SynapseDataConnectionKind(IotHubValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseDataConnectionKind"/> values are the same. </summary>
         public static bool operator ==(SynapseDataConnectionKind left, SynapseDataConnectionKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseDataConnectionKind"/> values are not the same. </summary>

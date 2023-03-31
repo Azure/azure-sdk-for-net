@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ServerConnectionType Redirect { get; } = new ServerConnectionType(RedirectValue);
         /// <summary> Proxy. </summary>
         public static ServerConnectionType Proxy { get; } = new ServerConnectionType(ProxyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServerConnectionType"/> values are the same. </summary>
         public static bool operator ==(ServerConnectionType left, ServerConnectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerConnectionType"/> values are not the same. </summary>

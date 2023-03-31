@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static SqlVmDiskConfigurationType Extend { get; } = new SqlVmDiskConfigurationType(ExtendValue);
         /// <summary> ADD. </summary>
         public static SqlVmDiskConfigurationType Add { get; } = new SqlVmDiskConfigurationType(AddValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlVmDiskConfigurationType"/> values are the same. </summary>
         public static bool operator ==(SqlVmDiskConfigurationType left, SqlVmDiskConfigurationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlVmDiskConfigurationType"/> values are not the same. </summary>

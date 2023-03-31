@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(CatalogCollation))
             {
                 writer.WritePropertyName("catalogCollation"u8);
-                writer.WriteStringValue(CatalogCollation.Value.ToString());
+                writer.WriteStringValue(CatalogCollation.Value.ToSerialString());
             }
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
+                writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(StorageContainerUri))
             {

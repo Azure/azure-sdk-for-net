@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity.Value.ToString());
+                writer.WriteStringValue(Severity.Value.ToSerialString());
             }
             if (Optional.IsDefined(Title))
             {

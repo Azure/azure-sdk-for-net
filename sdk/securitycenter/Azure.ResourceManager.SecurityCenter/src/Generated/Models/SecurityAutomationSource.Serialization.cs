@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(EventSource))
             {
                 writer.WritePropertyName("eventSource"u8);
-                writer.WriteStringValue(EventSource.Value.ToString());
+                writer.WriteStringValue(EventSource.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(RuleSets))
             {

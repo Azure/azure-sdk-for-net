@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseIntegrationRuntimeUpdateResult Succeed { get; } = new SynapseIntegrationRuntimeUpdateResult(SucceedValue);
         /// <summary> Fail. </summary>
         public static SynapseIntegrationRuntimeUpdateResult Fail { get; } = new SynapseIntegrationRuntimeUpdateResult(FailValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeUpdateResult"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeUpdateResult left, SynapseIntegrationRuntimeUpdateResult right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeUpdateResult"/> values are not the same. </summary>

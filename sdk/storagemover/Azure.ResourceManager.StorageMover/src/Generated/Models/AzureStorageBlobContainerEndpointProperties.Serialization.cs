@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WritePropertyName("blobContainerName"u8);
             writer.WriteStringValue(BlobContainerName);
             writer.WritePropertyName("endpointType"u8);
-            writer.WriteStringValue(EndpointType.ToString());
+            writer.WriteStringValue(EndpointType.ToSerialString());
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);

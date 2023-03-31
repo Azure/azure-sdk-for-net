@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static PolicyViolationCompensationAction Rollback { get; } = new PolicyViolationCompensationAction(RollbackValue);
         /// <summary> Indicates that a manual repair will need to be performed by the administrator if the upgrade fails. Service Fabric will not proceed to the next upgrade domain automatically. </summary>
         public static PolicyViolationCompensationAction Manual { get; } = new PolicyViolationCompensationAction(ManualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyViolationCompensationAction"/> values are the same. </summary>
         public static bool operator ==(PolicyViolationCompensationAction left, PolicyViolationCompensationAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyViolationCompensationAction"/> values are not the same. </summary>

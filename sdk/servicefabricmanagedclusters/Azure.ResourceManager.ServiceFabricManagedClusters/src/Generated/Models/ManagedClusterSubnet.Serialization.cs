@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(PrivateEndpointNetworkPolicies))
             {
                 writer.WritePropertyName("privateEndpointNetworkPolicies"u8);
-                writer.WriteStringValue(PrivateEndpointNetworkPolicies.Value.ToString());
+                writer.WriteStringValue(PrivateEndpointNetworkPolicies.Value.ToSerialString());
             }
             if (Optional.IsDefined(PrivateLinkServiceNetworkPolicies))
             {
                 writer.WritePropertyName("privateLinkServiceNetworkPolicies"u8);
-                writer.WriteStringValue(PrivateLinkServiceNetworkPolicies.Value.ToString());
+                writer.WriteStringValue(PrivateLinkServiceNetworkPolicies.Value.ToSerialString());
             }
             if (Optional.IsDefined(NetworkSecurityGroupId))
             {

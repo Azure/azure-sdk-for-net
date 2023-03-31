@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ApplicationServiceKind Stateless { get; } = new ApplicationServiceKind(StatelessValue);
         /// <summary> Uses Service Fabric to make its state or part of its state highly available and reliable. The value is 2. </summary>
         public static ApplicationServiceKind Stateful { get; } = new ApplicationServiceKind(StatefulValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationServiceKind"/> values are the same. </summary>
         public static bool operator ==(ApplicationServiceKind left, ApplicationServiceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationServiceKind"/> values are not the same. </summary>

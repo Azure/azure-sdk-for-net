@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (ParsingMode != null)
                 {
                     writer.WritePropertyName("parsingMode"u8);
-                    writer.WriteStringValue(ParsingMode.Value.ToString());
+                    writer.WriteStringValue(ParsingMode.Value.ToSerialString());
                 }
                 else
                 {
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (DataToExtract != null)
                 {
                     writer.WritePropertyName("dataToExtract"u8);
-                    writer.WriteStringValue(DataToExtract.Value.ToString());
+                    writer.WriteStringValue(DataToExtract.Value.ToSerialString());
                 }
                 else
                 {

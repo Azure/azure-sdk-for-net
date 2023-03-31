@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static GeoReplicationStatus Bootstrap { get; } = new GeoReplicationStatus(BootstrapValue);
         /// <summary> Unavailable. </summary>
         public static GeoReplicationStatus Unavailable { get; } = new GeoReplicationStatus(UnavailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GeoReplicationStatus"/> values are the same. </summary>
         public static bool operator ==(GeoReplicationStatus left, GeoReplicationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GeoReplicationStatus"/> values are not the same. </summary>

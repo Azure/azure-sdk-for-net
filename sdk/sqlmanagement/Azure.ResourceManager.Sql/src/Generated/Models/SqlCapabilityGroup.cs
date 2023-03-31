@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlCapabilityGroup SupportedInstancePoolEditions { get; } = new SqlCapabilityGroup(SupportedInstancePoolEditionsValue);
         /// <summary> supportedManagedInstanceEditions. </summary>
         public static SqlCapabilityGroup SupportedManagedInstanceEditions { get; } = new SqlCapabilityGroup(SupportedManagedInstanceEditionsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlCapabilityGroup"/> values are the same. </summary>
         public static bool operator ==(SqlCapabilityGroup left, SqlCapabilityGroup right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlCapabilityGroup"/> values are not the same. </summary>

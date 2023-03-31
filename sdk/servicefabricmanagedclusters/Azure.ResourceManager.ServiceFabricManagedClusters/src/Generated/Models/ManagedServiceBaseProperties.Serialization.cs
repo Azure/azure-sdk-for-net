@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(DefaultMoveCost))
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
-                writer.WriteStringValue(DefaultMoveCost.Value.ToString());
+                writer.WriteStringValue(DefaultMoveCost.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ScalingPolicies))
             {

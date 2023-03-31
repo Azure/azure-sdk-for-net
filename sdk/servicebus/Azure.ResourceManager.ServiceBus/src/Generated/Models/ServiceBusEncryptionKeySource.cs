@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Microsoft.KeyVault. </summary>
         public static ServiceBusEncryptionKeySource MicrosoftKeyVault { get; } = new ServiceBusEncryptionKeySource(MicrosoftKeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceBusEncryptionKeySource"/> values are the same. </summary>
         public static bool operator ==(ServiceBusEncryptionKeySource left, ServiceBusEncryptionKeySource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusEncryptionKeySource"/> values are not the same. </summary>

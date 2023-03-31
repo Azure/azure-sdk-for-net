@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static MongoDbAuthenticationType Basic { get; } = new MongoDbAuthenticationType(BasicValue);
         /// <summary> Anonymous. </summary>
         public static MongoDbAuthenticationType Anonymous { get; } = new MongoDbAuthenticationType(AnonymousValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MongoDbAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(MongoDbAuthenticationType left, MongoDbAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoDbAuthenticationType"/> values are not the same. </summary>

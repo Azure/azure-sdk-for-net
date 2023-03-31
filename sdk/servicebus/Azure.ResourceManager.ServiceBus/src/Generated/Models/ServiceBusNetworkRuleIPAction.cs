@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Allow. </summary>
         public static ServiceBusNetworkRuleIPAction Allow { get; } = new ServiceBusNetworkRuleIPAction(AllowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceBusNetworkRuleIPAction"/> values are the same. </summary>
         public static bool operator ==(ServiceBusNetworkRuleIPAction left, ServiceBusNetworkRuleIPAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusNetworkRuleIPAction"/> values are not the same. </summary>

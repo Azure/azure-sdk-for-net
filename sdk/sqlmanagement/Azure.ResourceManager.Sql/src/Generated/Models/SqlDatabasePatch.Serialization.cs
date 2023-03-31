@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
+                writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(Collation))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(SampleName))
             {
                 writer.WritePropertyName("sampleName"u8);
-                writer.WriteStringValue(SampleName.Value.ToString());
+                writer.WriteStringValue(SampleName.Value.ToSerialString());
             }
             if (Optional.IsDefined(ElasticPoolId))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(CatalogCollation))
             {
                 writer.WritePropertyName("catalogCollation"u8);
-                writer.WriteStringValue(CatalogCollation.Value.ToString());
+                writer.WriteStringValue(CatalogCollation.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
-                writer.WriteStringValue(LicenseType.Value.ToString());
+                writer.WriteStringValue(LicenseType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReadScale))
             {
                 writer.WritePropertyName("readScale"u8);
-                writer.WriteStringValue(ReadScale.Value.ToString());
+                writer.WriteStringValue(ReadScale.Value.ToSerialString());
             }
             if (Optional.IsDefined(HighAvailabilityReplicaCount))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(SecondaryType))
             {
                 writer.WritePropertyName("secondaryType"u8);
-                writer.WriteStringValue(SecondaryType.Value.ToString());
+                writer.WriteStringValue(SecondaryType.Value.ToSerialString());
             }
             if (Optional.IsDefined(AutoPauseDelay))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
-                writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
+                writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToSerialString());
             }
             if (Optional.IsDefined(MinCapacity))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(PreferredEnclaveType))
             {
                 writer.WritePropertyName("preferredEnclaveType"u8);
-                writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
+                writer.WriteStringValue(PreferredEnclaveType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ManualCutover))
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(SqlWorkloadType))
             {
                 writer.WritePropertyName("sqlWorkloadType"u8);
-                writer.WriteStringValue(SqlWorkloadType.Value.ToString());
+                writer.WriteStringValue(SqlWorkloadType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

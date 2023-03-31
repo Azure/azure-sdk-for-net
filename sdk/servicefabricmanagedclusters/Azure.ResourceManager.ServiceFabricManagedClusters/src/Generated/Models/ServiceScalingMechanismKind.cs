@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ServiceScalingMechanismKind ScalePartitionInstanceCount { get; } = new ServiceScalingMechanismKind(ScalePartitionInstanceCountValue);
         /// <summary> Represents a scaling mechanism for adding or removing named partitions of a stateless service. The value is 1. </summary>
         public static ServiceScalingMechanismKind AddRemoveIncrementalNamedPartition { get; } = new ServiceScalingMechanismKind(AddRemoveIncrementalNamedPartitionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceScalingMechanismKind"/> values are the same. </summary>
         public static bool operator ==(ServiceScalingMechanismKind left, ServiceScalingMechanismKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceScalingMechanismKind"/> values are not the same. </summary>

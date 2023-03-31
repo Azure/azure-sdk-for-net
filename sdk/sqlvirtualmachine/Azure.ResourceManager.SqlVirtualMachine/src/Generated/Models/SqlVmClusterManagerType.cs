@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> WSFC. </summary>
         public static SqlVmClusterManagerType WindowsServerFailoverCluster { get; } = new SqlVmClusterManagerType(WindowsServerFailoverClusterValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlVmClusterManagerType"/> values are the same. </summary>
         public static bool operator ==(SqlVmClusterManagerType left, SqlVmClusterManagerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlVmClusterManagerType"/> values are not the same. </summary>

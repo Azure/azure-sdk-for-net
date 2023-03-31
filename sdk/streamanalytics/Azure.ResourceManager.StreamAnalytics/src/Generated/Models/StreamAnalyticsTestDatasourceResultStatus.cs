@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static StreamAnalyticsTestDatasourceResultStatus TestSucceeded { get; } = new StreamAnalyticsTestDatasourceResultStatus(TestSucceededValue);
         /// <summary> The test datasource operation failed. </summary>
         public static StreamAnalyticsTestDatasourceResultStatus TestFailed { get; } = new StreamAnalyticsTestDatasourceResultStatus(TestFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamAnalyticsTestDatasourceResultStatus"/> values are the same. </summary>
         public static bool operator ==(StreamAnalyticsTestDatasourceResultStatus left, StreamAnalyticsTestDatasourceResultStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamAnalyticsTestDatasourceResultStatus"/> values are not the same. </summary>

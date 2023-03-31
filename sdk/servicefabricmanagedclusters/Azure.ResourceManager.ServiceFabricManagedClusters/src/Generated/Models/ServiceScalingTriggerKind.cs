@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ServiceScalingTriggerKind AveragePartitionLoadTrigger { get; } = new ServiceScalingTriggerKind(AveragePartitionLoadTriggerValue);
         /// <summary> Represents a scaling policy related to an average load of a metric/resource of a service. The value is 1. </summary>
         public static ServiceScalingTriggerKind AverageServiceLoadTrigger { get; } = new ServiceScalingTriggerKind(AverageServiceLoadTriggerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceScalingTriggerKind"/> values are the same. </summary>
         public static bool operator ==(ServiceScalingTriggerKind left, ServiceScalingTriggerKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceScalingTriggerKind"/> values are not the same. </summary>

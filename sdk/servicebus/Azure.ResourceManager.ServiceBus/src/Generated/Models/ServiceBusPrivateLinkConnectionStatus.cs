@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static ServiceBusPrivateLinkConnectionStatus Rejected { get; } = new ServiceBusPrivateLinkConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static ServiceBusPrivateLinkConnectionStatus Disconnected { get; } = new ServiceBusPrivateLinkConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceBusPrivateLinkConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(ServiceBusPrivateLinkConnectionStatus left, ServiceBusPrivateLinkConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusPrivateLinkConnectionStatus"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static SqlConnectionType SqlOnDemand { get; } = new SqlConnectionType(SqlOnDemandValue);
         /// <summary> SqlPool. </summary>
         public static SqlConnectionType SqlPool { get; } = new SqlConnectionType(SqlPoolValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlConnectionType"/> values are the same. </summary>
         public static bool operator ==(SqlConnectionType left, SqlConnectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlConnectionType"/> values are not the same. </summary>

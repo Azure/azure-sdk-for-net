@@ -29,6 +29,9 @@ namespace Azure.IoT.TimeSeriesInsights
         public static HierarchiesExpandKind UntilChildren { get; } = new HierarchiesExpandKind(UntilChildrenValue);
         /// <summary> OneLevel. </summary>
         public static HierarchiesExpandKind OneLevel { get; } = new HierarchiesExpandKind(OneLevelValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HierarchiesExpandKind"/> values are the same. </summary>
         public static bool operator ==(HierarchiesExpandKind left, HierarchiesExpandKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HierarchiesExpandKind"/> values are not the same. </summary>

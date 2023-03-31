@@ -32,6 +32,9 @@ namespace Azure.AI.TextAnalytics
         public static RelativeTo End { get; } = new RelativeTo(EndValue);
         /// <summary> Start. </summary>
         public static RelativeTo Start { get; } = new RelativeTo(StartValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RelativeTo"/> values are the same. </summary>
         public static bool operator ==(RelativeTo left, RelativeTo right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelativeTo"/> values are not the same. </summary>

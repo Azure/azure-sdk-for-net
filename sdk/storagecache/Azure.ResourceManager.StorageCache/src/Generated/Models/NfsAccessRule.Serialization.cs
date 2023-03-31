@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.StorageCache.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("scope"u8);
-            writer.WriteStringValue(Scope.ToString());
+            writer.WriteStringValue(Scope.ToSerialString());
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
             writer.WritePropertyName("access"u8);
-            writer.WriteStringValue(Access.ToString());
+            writer.WriteStringValue(Access.ToSerialString());
             if (Optional.IsDefined(AllowSuid))
             {
                 writer.WritePropertyName("suid"u8);

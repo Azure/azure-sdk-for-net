@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static FileShareEnabledProtocol Smb { get; } = new FileShareEnabledProtocol(SmbValue);
         /// <summary> NFS. </summary>
         public static FileShareEnabledProtocol Nfs { get; } = new FileShareEnabledProtocol(NfsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FileShareEnabledProtocol"/> values are the same. </summary>
         public static bool operator ==(FileShareEnabledProtocol left, FileShareEnabledProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FileShareEnabledProtocol"/> values are not the same. </summary>

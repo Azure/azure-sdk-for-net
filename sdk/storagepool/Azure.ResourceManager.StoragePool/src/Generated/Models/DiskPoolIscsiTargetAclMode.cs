@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StoragePool.Models
         public static DiskPoolIscsiTargetAclMode Dynamic { get; } = new DiskPoolIscsiTargetAclMode(DynamicValue);
         /// <summary> Static. </summary>
         public static DiskPoolIscsiTargetAclMode Static { get; } = new DiskPoolIscsiTargetAclMode(StaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskPoolIscsiTargetAclMode"/> values are the same. </summary>
         public static bool operator ==(DiskPoolIscsiTargetAclMode left, DiskPoolIscsiTargetAclMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskPoolIscsiTargetAclMode"/> values are not the same. </summary>

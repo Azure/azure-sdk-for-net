@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(AutoProvision))
             {
                 writer.WritePropertyName("autoProvision"u8);
-                writer.WriteStringValue(AutoProvision.Value.ToString());
+                writer.WriteStringValue(AutoProvision.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

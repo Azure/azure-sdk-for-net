@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ClusterDurabilityLevel Silver { get; } = new ClusterDurabilityLevel(SilverValue);
         /// <summary> Gold. </summary>
         public static ClusterDurabilityLevel Gold { get; } = new ClusterDurabilityLevel(GoldValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClusterDurabilityLevel"/> values are the same. </summary>
         public static bool operator ==(ClusterDurabilityLevel left, ClusterDurabilityLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterDurabilityLevel"/> values are not the same. </summary>

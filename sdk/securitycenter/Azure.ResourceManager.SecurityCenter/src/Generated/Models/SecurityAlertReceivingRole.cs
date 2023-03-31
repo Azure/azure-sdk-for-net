@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAlertReceivingRole Owner { get; } = new SecurityAlertReceivingRole(OwnerValue);
         /// <summary> If enabled, send notification on new alerts to the subscription contributors. </summary>
         public static SecurityAlertReceivingRole Contributor { get; } = new SecurityAlertReceivingRole(ContributorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityAlertReceivingRole"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertReceivingRole left, SecurityAlertReceivingRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAlertReceivingRole"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static ImmutabilityPolicyState Locked { get; } = new ImmutabilityPolicyState(LockedValue);
         /// <summary> Unlocked. </summary>
         public static ImmutabilityPolicyState Unlocked { get; } = new ImmutabilityPolicyState(UnlockedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImmutabilityPolicyState"/> values are the same. </summary>
         public static bool operator ==(ImmutabilityPolicyState left, ImmutabilityPolicyState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImmutabilityPolicyState"/> values are not the same. </summary>

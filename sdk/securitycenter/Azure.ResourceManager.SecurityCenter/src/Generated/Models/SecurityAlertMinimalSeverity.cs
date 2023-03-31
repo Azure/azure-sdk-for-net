@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAlertMinimalSeverity Medium { get; } = new SecurityAlertMinimalSeverity(MediumValue);
         /// <summary> Don&apos;t get notifications on new alerts with low, medium or high severity. </summary>
         public static SecurityAlertMinimalSeverity Low { get; } = new SecurityAlertMinimalSeverity(LowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityAlertMinimalSeverity"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertMinimalSeverity left, SecurityAlertMinimalSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAlertMinimalSeverity"/> values are not the same. </summary>

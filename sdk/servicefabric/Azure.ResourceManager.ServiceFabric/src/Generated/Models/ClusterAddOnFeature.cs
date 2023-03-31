@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ClusterAddOnFeature BackupRestoreService { get; } = new ClusterAddOnFeature(BackupRestoreServiceValue);
         /// <summary> ResourceMonitorService. </summary>
         public static ClusterAddOnFeature ResourceMonitorService { get; } = new ClusterAddOnFeature(ResourceMonitorServiceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClusterAddOnFeature"/> values are the same. </summary>
         public static bool operator ==(ClusterAddOnFeature left, ClusterAddOnFeature right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterAddOnFeature"/> values are not the same. </summary>

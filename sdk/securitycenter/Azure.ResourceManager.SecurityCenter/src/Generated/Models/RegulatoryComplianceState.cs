@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static RegulatoryComplianceState Skipped { get; } = new RegulatoryComplianceState(SkippedValue);
         /// <summary> No supported regulatory compliance data for the given standard. </summary>
         public static RegulatoryComplianceState Unsupported { get; } = new RegulatoryComplianceState(UnsupportedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RegulatoryComplianceState"/> values are the same. </summary>
         public static bool operator ==(RegulatoryComplianceState left, RegulatoryComplianceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RegulatoryComplianceState"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SyncAgentState Offline { get; } = new SyncAgentState(OfflineValue);
         /// <summary> NeverConnected. </summary>
         public static SyncAgentState NeverConnected { get; } = new SyncAgentState(NeverConnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SyncAgentState"/> values are the same. </summary>
         public static bool operator ==(SyncAgentState left, SyncAgentState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyncAgentState"/> values are not the same. </summary>

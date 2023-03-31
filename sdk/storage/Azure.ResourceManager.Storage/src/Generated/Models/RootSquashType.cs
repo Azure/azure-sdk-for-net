@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static RootSquashType RootSquash { get; } = new RootSquashType(RootSquashValue);
         /// <summary> AllSquash. </summary>
         public static RootSquashType AllSquash { get; } = new RootSquashType(AllSquashValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RootSquashType"/> values are the same. </summary>
         public static bool operator ==(RootSquashType left, RootSquashType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RootSquashType"/> values are not the same. </summary>

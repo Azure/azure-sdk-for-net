@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static WorkspacePublicNetworkAccess Enabled { get; } = new WorkspacePublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static WorkspacePublicNetworkAccess Disabled { get; } = new WorkspacePublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkspacePublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(WorkspacePublicNetworkAccess left, WorkspacePublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkspacePublicNetworkAccess"/> values are not the same. </summary>

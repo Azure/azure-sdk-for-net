@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
-                writer.WriteStringValue(DayOfWeek.Value.ToString());
+                writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
             if (Optional.IsDefined(StartOn))
             {

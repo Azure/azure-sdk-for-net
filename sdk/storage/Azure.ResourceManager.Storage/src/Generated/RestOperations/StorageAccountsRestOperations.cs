@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
-                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+                uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", _apiVersion, true);
             if (failoverType != null)
             {
-                uri.AppendQuery("failoverType", failoverType.Value.ToString(), true);
+                uri.AppendQuery("failoverType", failoverType.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             _userAgent.Apply(message);

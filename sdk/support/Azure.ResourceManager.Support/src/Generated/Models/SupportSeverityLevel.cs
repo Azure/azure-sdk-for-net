@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Support.Models
         public static SupportSeverityLevel Critical { get; } = new SupportSeverityLevel(CriticalValue);
         /// <summary> highestcriticalimpact. </summary>
         public static SupportSeverityLevel Highestcriticalimpact { get; } = new SupportSeverityLevel(HighestcriticalimpactValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SupportSeverityLevel"/> values are the same. </summary>
         public static bool operator ==(SupportSeverityLevel left, SupportSeverityLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SupportSeverityLevel"/> values are not the same. </summary>

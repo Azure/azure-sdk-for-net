@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static StreamAnalyticsClusterProvisioningState Canceled { get; } = new StreamAnalyticsClusterProvisioningState(CanceledValue);
         /// <summary> The cluster provisioning was inprogress. </summary>
         public static StreamAnalyticsClusterProvisioningState InProgress { get; } = new StreamAnalyticsClusterProvisioningState(InProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StreamAnalyticsClusterProvisioningState"/> values are the same. </summary>
         public static bool operator ==(StreamAnalyticsClusterProvisioningState left, StreamAnalyticsClusterProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StreamAnalyticsClusterProvisioningState"/> values are not the same. </summary>

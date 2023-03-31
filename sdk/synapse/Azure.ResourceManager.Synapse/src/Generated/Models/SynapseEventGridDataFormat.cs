@@ -71,6 +71,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseEventGridDataFormat ApacheAvro { get; } = new SynapseEventGridDataFormat(ApacheAvroValue);
         /// <summary> W3CLOGFILE. </summary>
         public static SynapseEventGridDataFormat W3CLogfile { get; } = new SynapseEventGridDataFormat(W3CLogfileValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseEventGridDataFormat"/> values are the same. </summary>
         public static bool operator ==(SynapseEventGridDataFormat left, SynapseEventGridDataFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseEventGridDataFormat"/> values are not the same. </summary>

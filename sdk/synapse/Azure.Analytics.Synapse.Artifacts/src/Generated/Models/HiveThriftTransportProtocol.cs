@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static HiveThriftTransportProtocol Sasl { get; } = new HiveThriftTransportProtocol(SaslValue);
         /// <summary> HTTP. </summary>
         public static HiveThriftTransportProtocol Http { get; } = new HiveThriftTransportProtocol(HttpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HiveThriftTransportProtocol"/> values are the same. </summary>
         public static bool operator ==(HiveThriftTransportProtocol left, HiveThriftTransportProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HiveThriftTransportProtocol"/> values are not the same. </summary>

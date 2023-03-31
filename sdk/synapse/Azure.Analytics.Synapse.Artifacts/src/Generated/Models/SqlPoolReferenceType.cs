@@ -26,6 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> SqlPoolReference. </summary>
         public static SqlPoolReferenceType SqlPoolReference { get; } = new SqlPoolReferenceType(SqlPoolReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlPoolReferenceType"/> values are the same. </summary>
         public static bool operator ==(SqlPoolReferenceType left, SqlPoolReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlPoolReferenceType"/> values are not the same. </summary>

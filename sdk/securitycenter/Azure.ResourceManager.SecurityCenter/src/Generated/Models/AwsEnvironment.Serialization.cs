@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteObjectValue(OrganizationalData);
             }
             writer.WritePropertyName("environmentType"u8);
-            writer.WriteStringValue(EnvironmentType.ToString());
+            writer.WriteStringValue(EnvironmentType.ToSerialString());
             writer.WriteEndObject();
         }
 

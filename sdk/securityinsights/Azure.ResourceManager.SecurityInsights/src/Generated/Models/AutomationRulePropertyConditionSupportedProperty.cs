@@ -191,6 +191,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AutomationRulePropertyConditionSupportedProperty RegistryValueData { get; } = new AutomationRulePropertyConditionSupportedProperty(RegistryValueDataValue);
         /// <summary> The url. </summary>
         public static AutomationRulePropertyConditionSupportedProperty Uri { get; } = new AutomationRulePropertyConditionSupportedProperty(UriValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationRulePropertyConditionSupportedProperty"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyConditionSupportedProperty left, AutomationRulePropertyConditionSupportedProperty right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationRulePropertyConditionSupportedProperty"/> values are not the same. </summary>

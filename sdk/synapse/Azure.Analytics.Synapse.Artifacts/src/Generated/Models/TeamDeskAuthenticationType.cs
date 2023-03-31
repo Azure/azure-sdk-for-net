@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static TeamDeskAuthenticationType Basic { get; } = new TeamDeskAuthenticationType(BasicValue);
         /// <summary> Token. </summary>
         public static TeamDeskAuthenticationType Token { get; } = new TeamDeskAuthenticationType(TokenValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TeamDeskAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(TeamDeskAuthenticationType left, TeamDeskAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TeamDeskAuthenticationType"/> values are not the same. </summary>

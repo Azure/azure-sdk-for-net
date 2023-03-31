@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("notificationChannel"u8);
-            writer.WriteStringValue(NotificationChannel.ToString());
+            writer.WriteStringValue(NotificationChannel.ToSerialString());
             writer.WritePropertyName("receivers"u8);
             writer.WriteStartArray();
             foreach (var item in Receivers)

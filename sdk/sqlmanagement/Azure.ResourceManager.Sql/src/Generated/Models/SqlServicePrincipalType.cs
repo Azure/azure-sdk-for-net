@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlServicePrincipalType None { get; } = new SqlServicePrincipalType(NoneValue);
         /// <summary> SystemAssigned. </summary>
         public static SqlServicePrincipalType SystemAssigned { get; } = new SqlServicePrincipalType(SystemAssignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlServicePrincipalType"/> values are the same. </summary>
         public static bool operator ==(SqlServicePrincipalType left, SqlServicePrincipalType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlServicePrincipalType"/> values are not the same. </summary>

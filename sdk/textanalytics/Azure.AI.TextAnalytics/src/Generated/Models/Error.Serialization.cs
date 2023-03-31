@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("code"u8);
-            writer.WriteStringValue(Code.ToString());
+            writer.WriteStringValue(Code.ToSerialString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
             if (Optional.IsDefined(Target))

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static ServiceBusPublicNetworkAccess Disabled { get; } = new ServiceBusPublicNetworkAccess(DisabledValue);
         /// <summary> SecuredByPerimeter. </summary>
         public static ServiceBusPublicNetworkAccess SecuredByPerimeter { get; } = new ServiceBusPublicNetworkAccess(SecuredByPerimeterValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceBusPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(ServiceBusPublicNetworkAccess left, ServiceBusPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusPublicNetworkAccess"/> values are not the same. </summary>

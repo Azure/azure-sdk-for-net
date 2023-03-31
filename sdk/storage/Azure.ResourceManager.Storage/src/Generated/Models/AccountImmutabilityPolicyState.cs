@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static AccountImmutabilityPolicyState Locked { get; } = new AccountImmutabilityPolicyState(LockedValue);
         /// <summary> Disabled. </summary>
         public static AccountImmutabilityPolicyState Disabled { get; } = new AccountImmutabilityPolicyState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AccountImmutabilityPolicyState"/> values are the same. </summary>
         public static bool operator ==(AccountImmutabilityPolicyState left, AccountImmutabilityPolicyState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AccountImmutabilityPolicyState"/> values are not the same. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(OutputStartMode))
             {
                 writer.WritePropertyName("outputStartMode"u8);
-                writer.WriteStringValue(OutputStartMode.Value.ToString());
+                writer.WriteStringValue(OutputStartMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(OutputStartOn))
             {

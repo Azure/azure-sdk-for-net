@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAlertNotificationByRoleState On { get; } = new SecurityAlertNotificationByRoleState(OnValue);
         /// <summary> Don&apos;t send notification on new alerts to the subscription&apos;s admins. </summary>
         public static SecurityAlertNotificationByRoleState Off { get; } = new SecurityAlertNotificationByRoleState(OffValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityAlertNotificationByRoleState"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertNotificationByRoleState left, SecurityAlertNotificationByRoleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAlertNotificationByRoleState"/> values are not the same. </summary>

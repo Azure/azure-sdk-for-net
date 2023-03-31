@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseManagedIntegrationRuntimeNodeStatus Recycling { get; } = new SynapseManagedIntegrationRuntimeNodeStatus(RecyclingValue);
         /// <summary> Unavailable. </summary>
         public static SynapseManagedIntegrationRuntimeNodeStatus Unavailable { get; } = new SynapseManagedIntegrationRuntimeNodeStatus(UnavailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseManagedIntegrationRuntimeNodeStatus"/> values are the same. </summary>
         public static bool operator ==(SynapseManagedIntegrationRuntimeNodeStatus left, SynapseManagedIntegrationRuntimeNodeStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseManagedIntegrationRuntimeNodeStatus"/> values are not the same. </summary>

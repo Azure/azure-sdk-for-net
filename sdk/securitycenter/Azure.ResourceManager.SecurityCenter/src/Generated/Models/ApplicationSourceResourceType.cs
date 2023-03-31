@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> The source of the application is assessments. </summary>
         public static ApplicationSourceResourceType Assessments { get; } = new ApplicationSourceResourceType(AssessmentsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationSourceResourceType"/> values are the same. </summary>
         public static bool operator ==(ApplicationSourceResourceType left, ApplicationSourceResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationSourceResourceType"/> values are not the same. </summary>

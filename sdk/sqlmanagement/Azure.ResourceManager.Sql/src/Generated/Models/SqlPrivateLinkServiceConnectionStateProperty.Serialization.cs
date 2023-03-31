@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            writer.WriteStringValue(Status.ToSerialString());
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WriteEndObject();

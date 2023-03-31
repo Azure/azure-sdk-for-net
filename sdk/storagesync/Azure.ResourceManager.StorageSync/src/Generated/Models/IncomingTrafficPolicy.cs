@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static IncomingTrafficPolicy AllowAllTraffic { get; } = new IncomingTrafficPolicy(AllowAllTrafficValue);
         /// <summary> AllowVirtualNetworksOnly. </summary>
         public static IncomingTrafficPolicy AllowVirtualNetworksOnly { get; } = new IncomingTrafficPolicy(AllowVirtualNetworksOnlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IncomingTrafficPolicy"/> values are the same. </summary>
         public static bool operator ==(IncomingTrafficPolicy left, IncomingTrafficPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IncomingTrafficPolicy"/> values are not the same. </summary>

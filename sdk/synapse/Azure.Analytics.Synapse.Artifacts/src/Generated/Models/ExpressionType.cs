@@ -26,6 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Expression. </summary>
         public static ExpressionType Expression { get; } = new ExpressionType(ExpressionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExpressionType"/> values are the same. </summary>
         public static bool operator ==(ExpressionType left, ExpressionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressionType"/> values are not the same. </summary>

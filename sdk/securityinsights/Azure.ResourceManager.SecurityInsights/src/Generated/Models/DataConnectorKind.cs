@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static DataConnectorKind AzureAdvancedThreatProtection { get; } = new DataConnectorKind(AzureAdvancedThreatProtectionValue);
         /// <summary> MicrosoftDefenderAdvancedThreatProtection. </summary>
         public static DataConnectorKind MicrosoftDefenderAdvancedThreatProtection { get; } = new DataConnectorKind(MicrosoftDefenderAdvancedThreatProtectionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataConnectorKind"/> values are the same. </summary>
         public static bool operator ==(DataConnectorKind left, DataConnectorKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataConnectorKind"/> values are not the same. </summary>

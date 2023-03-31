@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("aclMode"u8);
-            writer.WriteStringValue(AclMode.ToString());
+            writer.WriteStringValue(AclMode.ToSerialString());
             if (Optional.IsDefined(TargetIqn))
             {
                 writer.WritePropertyName("targetIqn"u8);

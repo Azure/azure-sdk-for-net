@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ReplicationLinkState CatchUp { get; } = new ReplicationLinkState(CatchUpValue);
         /// <summary> SUSPENDED. </summary>
         public static ReplicationLinkState Suspended { get; } = new ReplicationLinkState(SuspendedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReplicationLinkState"/> values are the same. </summary>
         public static bool operator ==(ReplicationLinkState left, ReplicationLinkState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReplicationLinkState"/> values are not the same. </summary>

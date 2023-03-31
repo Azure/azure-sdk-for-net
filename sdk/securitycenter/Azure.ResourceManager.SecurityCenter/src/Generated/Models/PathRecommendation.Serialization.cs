@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteStringValue(Action.Value.ToString());
+                writer.WriteStringValue(Action.Value.ToSerialString());
             }
             if (Optional.IsDefined(IotSecurityRecommendationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(IotSecurityRecommendationType.Value.ToString());
+                writer.WriteStringValue(IotSecurityRecommendationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(PublisherInfo))
             {
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(FileType))
             {
                 writer.WritePropertyName("fileType"u8);
-                writer.WriteStringValue(FileType.Value.ToString());
+                writer.WriteStringValue(FileType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ConfigurationStatus))
             {
                 writer.WritePropertyName("configurationStatus"u8);
-                writer.WriteStringValue(ConfigurationStatus.Value.ToString());
+                writer.WriteStringValue(ConfigurationStatus.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

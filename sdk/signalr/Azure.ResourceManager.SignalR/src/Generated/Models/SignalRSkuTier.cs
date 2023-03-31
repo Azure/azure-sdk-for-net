@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.SignalR.Models
         public static SignalRSkuTier Standard { get; } = new SignalRSkuTier(StandardValue);
         /// <summary> Premium. </summary>
         public static SignalRSkuTier Premium { get; } = new SignalRSkuTier(PremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SignalRSkuTier"/> values are the same. </summary>
         public static bool operator ==(SignalRSkuTier left, SignalRSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SignalRSkuTier"/> values are not the same. </summary>

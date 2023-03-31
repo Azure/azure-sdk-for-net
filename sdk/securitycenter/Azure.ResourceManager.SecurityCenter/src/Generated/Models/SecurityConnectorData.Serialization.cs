@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(EnvironmentName))
             {
                 writer.WritePropertyName("environmentName"u8);
-                writer.WriteStringValue(EnvironmentName.Value.ToString());
+                writer.WriteStringValue(EnvironmentName.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Offerings))
             {

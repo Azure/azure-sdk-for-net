@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> default. </summary>
         public static ManagementPolicyName Default { get; } = new ManagementPolicyName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagementPolicyName"/> values are the same. </summary>
         public static bool operator ==(ManagementPolicyName left, ManagementPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagementPolicyName"/> values are not the same. </summary>

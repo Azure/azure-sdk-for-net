@@ -26,6 +26,9 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary> Latin. </summary>
         public static ScriptKind Latin { get; } = new ScriptKind(LatinValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScriptKind"/> values are the same. </summary>
         public static bool operator ==(ScriptKind left, ScriptKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptKind"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityTrafficDirection Inbound { get; } = new SecurityTrafficDirection(InboundValue);
         /// <summary> Outbound. </summary>
         public static SecurityTrafficDirection Outbound { get; } = new SecurityTrafficDirection(OutboundValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityTrafficDirection"/> values are the same. </summary>
         public static bool operator ==(SecurityTrafficDirection left, SecurityTrafficDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityTrafficDirection"/> values are not the same. </summary>

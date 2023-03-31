@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static HybridComputeProvisioningState Invalid { get; } = new HybridComputeProvisioningState(InvalidValue);
         /// <summary> the service principal details are expired. </summary>
         public static HybridComputeProvisioningState Expired { get; } = new HybridComputeProvisioningState(ExpiredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HybridComputeProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HybridComputeProvisioningState left, HybridComputeProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridComputeProvisioningState"/> values are not the same. </summary>

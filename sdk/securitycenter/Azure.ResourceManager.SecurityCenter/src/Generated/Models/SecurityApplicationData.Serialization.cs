@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(SourceResourceType))
             {
                 writer.WritePropertyName("sourceResourceType"u8);
-                writer.WriteStringValue(SourceResourceType.Value.ToString());
+                writer.WriteStringValue(SourceResourceType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ConditionSets))
             {

@@ -71,6 +71,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseIotHubDataFormat ApacheAvro { get; } = new SynapseIotHubDataFormat(ApacheAvroValue);
         /// <summary> W3CLOGFILE. </summary>
         public static SynapseIotHubDataFormat W3CLogfile { get; } = new SynapseIotHubDataFormat(W3CLogfileValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseIotHubDataFormat"/> values are the same. </summary>
         public static bool operator ==(SynapseIotHubDataFormat left, SynapseIotHubDataFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIotHubDataFormat"/> values are not the same. </summary>

@@ -179,6 +179,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static ImageAnalysisSkillLanguage ZhHans { get; } = new ImageAnalysisSkillLanguage(ZhHansValue);
         /// <summary> Chinese Traditional. </summary>
         public static ImageAnalysisSkillLanguage ZhHant { get; } = new ImageAnalysisSkillLanguage(ZhHantValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImageAnalysisSkillLanguage"/> values are the same. </summary>
         public static bool operator ==(ImageAnalysisSkillLanguage left, ImageAnalysisSkillLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageAnalysisSkillLanguage"/> values are not the same. </summary>

@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.StorageMover.Models
             if (Optional.IsDefined(NfsVersion))
             {
                 writer.WritePropertyName("nfsVersion"u8);
-                writer.WriteStringValue(NfsVersion.Value.ToString());
+                writer.WriteStringValue(NfsVersion.Value.ToSerialString());
             }
             writer.WritePropertyName("export"u8);
             writer.WriteStringValue(Export);
             writer.WritePropertyName("endpointType"u8);
-            writer.WriteStringValue(EndpointType.ToString());
+            writer.WriteStringValue(EndpointType.ToSerialString());
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);

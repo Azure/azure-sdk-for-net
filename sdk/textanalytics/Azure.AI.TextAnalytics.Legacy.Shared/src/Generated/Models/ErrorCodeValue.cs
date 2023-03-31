@@ -38,6 +38,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
         public static ErrorCodeValue ServiceUnavailable { get; } = new ErrorCodeValue(ServiceUnavailableValue);
         /// <summary> NotFound. </summary>
         public static ErrorCodeValue NotFound { get; } = new ErrorCodeValue(NotFoundValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ErrorCodeValue"/> values are the same. </summary>
         public static bool operator ==(ErrorCodeValue left, ErrorCodeValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ErrorCodeValue"/> values are not the same. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
-                writer.WriteStringValue(EntityType.Value.ToString());
+                writer.WriteStringValue(EntityType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(FieldMappings))
             {

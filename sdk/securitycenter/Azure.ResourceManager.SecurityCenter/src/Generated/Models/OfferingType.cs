@@ -68,6 +68,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static OfferingType DefenderForDevOpsGithub { get; } = new OfferingType(DefenderForDevOpsGithubValue);
         /// <summary> DefenderForDevOpsAzureDevOps. </summary>
         public static OfferingType DefenderForDevOpsAzureDevOps { get; } = new OfferingType(DefenderForDevOpsAzureDevOpsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OfferingType"/> values are the same. </summary>
         public static bool operator ==(OfferingType left, OfferingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OfferingType"/> values are not the same. </summary>

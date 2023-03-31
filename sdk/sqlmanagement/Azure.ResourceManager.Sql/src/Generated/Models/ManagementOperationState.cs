@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagementOperationState CancelInProgress { get; } = new ManagementOperationState(CancelInProgressValue);
         /// <summary> Cancelled. </summary>
         public static ManagementOperationState Cancelled { get; } = new ManagementOperationState(CancelledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagementOperationState"/> values are the same. </summary>
         public static bool operator ==(ManagementOperationState left, ManagementOperationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagementOperationState"/> values are not the same. </summary>

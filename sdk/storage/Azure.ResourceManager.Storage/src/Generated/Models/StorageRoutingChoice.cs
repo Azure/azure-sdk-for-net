@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageRoutingChoice MicrosoftRouting { get; } = new StorageRoutingChoice(MicrosoftRoutingValue);
         /// <summary> InternetRouting. </summary>
         public static StorageRoutingChoice InternetRouting { get; } = new StorageRoutingChoice(InternetRoutingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageRoutingChoice"/> values are the same. </summary>
         public static bool operator ==(StorageRoutingChoice left, StorageRoutingChoice right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageRoutingChoice"/> values are not the same. </summary>

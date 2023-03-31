@@ -334,7 +334,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             if (stringIndexType != null)
             {
-                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToSerialString(), true);
             }
             if (loggingOptOut != null)
             {
@@ -427,7 +427,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             if (stringIndexType != null)
             {
-                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -530,7 +530,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             if (stringIndexType != null)
             {
-                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToSerialString(), true);
             }
             if (piiCategories != null)
             {
@@ -643,7 +643,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             if (stringIndexType != null)
             {
-                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -932,7 +932,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             if (stringIndexType != null)
             {
-                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");

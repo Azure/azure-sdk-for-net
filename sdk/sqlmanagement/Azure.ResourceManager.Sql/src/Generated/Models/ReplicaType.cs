@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ReplicaType Primary { get; } = new ReplicaType(PrimaryValue);
         /// <summary> ReadableSecondary. </summary>
         public static ReplicaType ReadableSecondary { get; } = new ReplicaType(ReadableSecondaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReplicaType"/> values are the same. </summary>
         public static bool operator ==(ReplicaType left, ReplicaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReplicaType"/> values are not the same. </summary>

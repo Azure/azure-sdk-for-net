@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static InstanceFailoverGroupReplicationRole Primary { get; } = new InstanceFailoverGroupReplicationRole(PrimaryValue);
         /// <summary> Secondary. </summary>
         public static InstanceFailoverGroupReplicationRole Secondary { get; } = new InstanceFailoverGroupReplicationRole(SecondaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InstanceFailoverGroupReplicationRole"/> values are the same. </summary>
         public static bool operator ==(InstanceFailoverGroupReplicationRole left, InstanceFailoverGroupReplicationRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstanceFailoverGroupReplicationRole"/> values are not the same. </summary>

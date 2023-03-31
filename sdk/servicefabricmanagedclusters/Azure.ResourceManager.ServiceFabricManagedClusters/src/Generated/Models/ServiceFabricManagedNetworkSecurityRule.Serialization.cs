@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("protocol"u8);
-            writer.WriteStringValue(Protocol.ToString());
+            writer.WriteStringValue(Protocol.ToSerialString());
             if (Optional.IsCollectionDefined(SourceAddressPrefixes))
             {
                 writer.WritePropertyName("sourceAddressPrefixes"u8);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStringValue(DestinationPortRange);
             }
             writer.WritePropertyName("access"u8);
-            writer.WriteStringValue(Access.ToString());
+            writer.WriteStringValue(Access.ToSerialString());
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
             writer.WritePropertyName("direction"u8);
-            writer.WriteStringValue(Direction.ToString());
+            writer.WriteStringValue(Direction.ToSerialString());
             writer.WriteEndObject();
         }
 

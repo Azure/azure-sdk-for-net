@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("results"u8);
             writer.WriteObjectValue(Results);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             if (Optional.IsDefined(TaskName))
             {
                 writer.WritePropertyName("taskName"u8);
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("lastUpdateDateTime"u8);
             writer.WriteStringValue(LastUpdateDateTime, "O");
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            writer.WriteStringValue(Status.ToSerialString());
             writer.WriteEndObject();
         }
 

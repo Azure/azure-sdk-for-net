@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static DatabaseLicenseType LicenseIncluded { get; } = new DatabaseLicenseType(LicenseIncludedValue);
         /// <summary> BasePrice. </summary>
         public static DatabaseLicenseType BasePrice { get; } = new DatabaseLicenseType(BasePriceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DatabaseLicenseType"/> values are the same. </summary>
         public static bool operator ==(DatabaseLicenseType left, DatabaseLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatabaseLicenseType"/> values are not the same. </summary>

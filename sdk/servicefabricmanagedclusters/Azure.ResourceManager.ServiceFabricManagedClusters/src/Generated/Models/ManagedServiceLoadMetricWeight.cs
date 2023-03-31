@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ManagedServiceLoadMetricWeight Medium { get; } = new ManagedServiceLoadMetricWeight(MediumValue);
         /// <summary> Specifies the metric weight of the service load as High. The value is 3. </summary>
         public static ManagedServiceLoadMetricWeight High { get; } = new ManagedServiceLoadMetricWeight(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedServiceLoadMetricWeight"/> values are the same. </summary>
         public static bool operator ==(ManagedServiceLoadMetricWeight left, ManagedServiceLoadMetricWeight right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedServiceLoadMetricWeight"/> values are not the same. </summary>

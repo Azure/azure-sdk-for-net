@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageKeyType"u8);
-            writer.WriteStringValue(StorageKeyType.ToString());
+            writer.WriteStringValue(StorageKeyType.ToSerialString());
             writer.WritePropertyName("storageKey"u8);
             writer.WriteStringValue(StorageKey);
             writer.WritePropertyName("storageUri"u8);

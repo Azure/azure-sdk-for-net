@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static EnvironmentType GithubScope { get; } = new EnvironmentType(GithubScopeValue);
         /// <summary> AzureDevOpsScope. </summary>
         public static EnvironmentType AzureDevOpsScope { get; } = new EnvironmentType(AzureDevOpsScopeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EnvironmentType"/> values are the same. </summary>
         public static bool operator ==(EnvironmentType left, EnvironmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnvironmentType"/> values are not the same. </summary>

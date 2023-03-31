@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAssessmentStatusCode Unhealthy { get; } = new SecurityAssessmentStatusCode(UnhealthyValue);
         /// <summary> Assessment for this resource did not happen. </summary>
         public static SecurityAssessmentStatusCode NotApplicable { get; } = new SecurityAssessmentStatusCode(NotApplicableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityAssessmentStatusCode"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentStatusCode left, SecurityAssessmentStatusCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAssessmentStatusCode"/> values are not the same. </summary>

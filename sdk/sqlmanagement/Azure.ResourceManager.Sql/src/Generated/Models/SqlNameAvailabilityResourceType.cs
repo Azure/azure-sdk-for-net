@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Microsoft.Sql/servers. </summary>
         public static SqlNameAvailabilityResourceType MicrosoftSqlServers { get; } = new SqlNameAvailabilityResourceType(MicrosoftSqlServersValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlNameAvailabilityResourceType"/> values are the same. </summary>
         public static bool operator ==(SqlNameAvailabilityResourceType left, SqlNameAvailabilityResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlNameAvailabilityResourceType"/> values are not the same. </summary>

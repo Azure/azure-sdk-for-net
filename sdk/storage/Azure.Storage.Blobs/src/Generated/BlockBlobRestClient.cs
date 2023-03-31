@@ -103,7 +103,7 @@ namespace Azure.Storage.Blobs
             }
             if (tier != null)
             {
-                request.Headers.Add("x-ms-access-tier", tier.Value.ToString());
+                request.Headers.Add("x-ms-access-tier", tier.Value.ToSerialString());
             }
             if (ifModifiedSince != null)
             {
@@ -318,7 +318,7 @@ namespace Azure.Storage.Blobs
             }
             if (tier != null)
             {
-                request.Headers.Add("x-ms-access-tier", tier.Value.ToString());
+                request.Headers.Add("x-ms-access-tier", tier.Value.ToSerialString());
             }
             if (ifModifiedSince != null)
             {
@@ -843,7 +843,7 @@ namespace Azure.Storage.Blobs
             }
             if (tier != null)
             {
-                request.Headers.Add("x-ms-access-tier", tier.Value.ToString());
+                request.Headers.Add("x-ms-access-tier", tier.Value.ToSerialString());
             }
             if (ifModifiedSince != null)
             {

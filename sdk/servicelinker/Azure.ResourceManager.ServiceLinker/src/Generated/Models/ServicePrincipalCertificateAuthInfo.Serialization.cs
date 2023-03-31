@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WritePropertyName("certificate"u8);
             writer.WriteStringValue(Certificate);
             writer.WritePropertyName("authType"u8);
-            writer.WriteStringValue(AuthType.ToString());
+            writer.WriteStringValue(AuthType.ToSerialString());
             writer.WriteEndObject();
         }
 

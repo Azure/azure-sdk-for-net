@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static ScriptType Query { get; } = new ScriptType(QueryValue);
         /// <summary> NonQuery. </summary>
         public static ScriptType NonQuery { get; } = new ScriptType(NonQueryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScriptType"/> values are the same. </summary>
         public static bool operator ==(ScriptType left, ScriptType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptType"/> values are not the same. </summary>

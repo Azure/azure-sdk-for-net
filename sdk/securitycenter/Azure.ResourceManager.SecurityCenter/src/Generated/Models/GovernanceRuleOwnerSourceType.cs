@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static GovernanceRuleOwnerSourceType ByTag { get; } = new GovernanceRuleOwnerSourceType(ByTagValue);
         /// <summary> The rule source type defined manually. </summary>
         public static GovernanceRuleOwnerSourceType Manually { get; } = new GovernanceRuleOwnerSourceType(ManuallyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GovernanceRuleOwnerSourceType"/> values are the same. </summary>
         public static bool operator ==(GovernanceRuleOwnerSourceType left, GovernanceRuleOwnerSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GovernanceRuleOwnerSourceType"/> values are not the same. </summary>

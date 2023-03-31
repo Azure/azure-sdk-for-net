@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsIncidentOwnerType User { get; } = new SecurityInsightsIncidentOwnerType(UserValue);
         /// <summary> The incident owner type is an AAD group. </summary>
         public static SecurityInsightsIncidentOwnerType Group { get; } = new SecurityInsightsIncidentOwnerType(GroupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentOwnerType"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsIncidentOwnerType left, SecurityInsightsIncidentOwnerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentOwnerType"/> values are not the same. </summary>

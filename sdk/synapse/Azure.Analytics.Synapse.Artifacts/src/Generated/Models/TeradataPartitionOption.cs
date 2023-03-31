@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static TeradataPartitionOption Hash { get; } = new TeradataPartitionOption(HashValue);
         /// <summary> DynamicRange. </summary>
         public static TeradataPartitionOption DynamicRange { get; } = new TeradataPartitionOption(DynamicRangeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TeradataPartitionOption"/> values are the same. </summary>
         public static bool operator ==(TeradataPartitionOption left, TeradataPartitionOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TeradataPartitionOption"/> values are not the same. </summary>

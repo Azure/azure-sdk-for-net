@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static KustoPoolSkuSize Medium { get; } = new KustoPoolSkuSize(MediumValue);
         /// <summary> Large. </summary>
         public static KustoPoolSkuSize Large { get; } = new KustoPoolSkuSize(LargeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoPoolSkuSize"/> values are the same. </summary>
         public static bool operator ==(KustoPoolSkuSize left, KustoPoolSkuSize right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoPoolSkuSize"/> values are not the same. </summary>

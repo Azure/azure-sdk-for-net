@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> default. </summary>
         public static ManagedInstanceStartStopScheduleName Default { get; } = new ManagedInstanceStartStopScheduleName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedInstanceStartStopScheduleName"/> values are the same. </summary>
         public static bool operator ==(ManagedInstanceStartStopScheduleName left, ManagedInstanceStartStopScheduleName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedInstanceStartStopScheduleName"/> values are not the same. </summary>

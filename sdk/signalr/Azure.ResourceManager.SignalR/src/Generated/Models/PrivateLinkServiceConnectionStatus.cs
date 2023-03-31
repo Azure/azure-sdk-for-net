@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SignalR.Models
         public static PrivateLinkServiceConnectionStatus Rejected { get; } = new PrivateLinkServiceConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static PrivateLinkServiceConnectionStatus Disconnected { get; } = new PrivateLinkServiceConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PrivateLinkServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(PrivateLinkServiceConnectionStatus left, PrivateLinkServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateLinkServiceConnectionStatus"/> values are not the same. </summary>

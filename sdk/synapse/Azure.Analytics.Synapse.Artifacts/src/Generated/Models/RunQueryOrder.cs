@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static RunQueryOrder ASC { get; } = new RunQueryOrder(ASCValue);
         /// <summary> DESC. </summary>
         public static RunQueryOrder Desc { get; } = new RunQueryOrder(DescValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RunQueryOrder"/> values are the same. </summary>
         public static bool operator ==(RunQueryOrder left, RunQueryOrder right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunQueryOrder"/> values are not the same. </summary>

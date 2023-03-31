@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static ServiceBusPublicNetworkAccessFlag Enabled { get; } = new ServiceBusPublicNetworkAccessFlag(EnabledValue);
         /// <summary> Disabled. </summary>
         public static ServiceBusPublicNetworkAccessFlag Disabled { get; } = new ServiceBusPublicNetworkAccessFlag(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceBusPublicNetworkAccessFlag"/> values are the same. </summary>
         public static bool operator ==(ServiceBusPublicNetworkAccessFlag left, ServiceBusPublicNetworkAccessFlag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusPublicNetworkAccessFlag"/> values are not the same. </summary>

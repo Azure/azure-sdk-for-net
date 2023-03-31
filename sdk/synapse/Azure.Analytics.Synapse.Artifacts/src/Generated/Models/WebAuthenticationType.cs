@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static WebAuthenticationType Anonymous { get; } = new WebAuthenticationType(AnonymousValue);
         /// <summary> ClientCertificate. </summary>
         public static WebAuthenticationType ClientCertificate { get; } = new WebAuthenticationType(ClientCertificateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(WebAuthenticationType left, WebAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebAuthenticationType"/> values are not the same. </summary>

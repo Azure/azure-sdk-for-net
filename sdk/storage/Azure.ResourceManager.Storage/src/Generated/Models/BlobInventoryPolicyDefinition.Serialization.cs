@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteObjectValue(Filters);
             }
             writer.WritePropertyName("format"u8);
-            writer.WriteStringValue(Format.ToString());
+            writer.WriteStringValue(Format.ToSerialString());
             writer.WritePropertyName("schedule"u8);
-            writer.WriteStringValue(Schedule.ToString());
+            writer.WriteStringValue(Schedule.ToSerialString());
             writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType.ToString());
+            writer.WriteStringValue(ObjectType.ToSerialString());
             writer.WritePropertyName("schemaFields"u8);
             writer.WriteStartArray();
             foreach (var item in SchemaFields)

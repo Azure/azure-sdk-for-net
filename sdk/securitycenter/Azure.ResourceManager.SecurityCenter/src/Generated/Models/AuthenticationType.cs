@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static AuthenticationType AwsAssumeRole { get; } = new AuthenticationType(AwsAssumeRoleValue);
         /// <summary> GCP account connector service to service authentication. </summary>
         public static AuthenticationType GcpCredentials { get; } = new AuthenticationType(GcpCredentialsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AuthenticationType"/> values are the same. </summary>
         public static bool operator ==(AuthenticationType left, AuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthenticationType"/> values are not the same. </summary>

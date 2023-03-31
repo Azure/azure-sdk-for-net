@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlAvailabilityZoneType Two { get; } = new SqlAvailabilityZoneType(TwoValue);
         /// <summary> 3. </summary>
         public static SqlAvailabilityZoneType Three { get; } = new SqlAvailabilityZoneType(ThreeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlAvailabilityZoneType"/> values are the same. </summary>
         public static bool operator ==(SqlAvailabilityZoneType left, SqlAvailabilityZoneType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlAvailabilityZoneType"/> values are not the same. </summary>

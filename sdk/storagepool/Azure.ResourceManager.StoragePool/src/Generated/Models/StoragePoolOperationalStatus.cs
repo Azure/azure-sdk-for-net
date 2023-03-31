@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.StoragePool.Models
         public static StoragePoolOperationalStatus Stopped { get; } = new StoragePoolOperationalStatus(StoppedValue);
         /// <summary> Stopped (deallocated). </summary>
         public static StoragePoolOperationalStatus StoppedDeallocated { get; } = new StoragePoolOperationalStatus(StoppedDeallocatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StoragePoolOperationalStatus"/> values are the same. </summary>
         public static bool operator ==(StoragePoolOperationalStatus left, StoragePoolOperationalStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StoragePoolOperationalStatus"/> values are not the same. </summary>

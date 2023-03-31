@@ -86,6 +86,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsEntityKind Mailbox { get; } = new SecurityInsightsEntityKind(MailboxValue);
         /// <summary> Entity represents submission mail in the system. </summary>
         public static SecurityInsightsEntityKind SubmissionMail { get; } = new SecurityInsightsEntityKind(SubmissionMailValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsEntityKind"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsEntityKind left, SecurityInsightsEntityKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsEntityKind"/> values are not the same. </summary>

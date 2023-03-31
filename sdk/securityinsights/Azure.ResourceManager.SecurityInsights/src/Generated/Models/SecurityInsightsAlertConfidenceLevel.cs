@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsAlertConfidenceLevel Low { get; } = new SecurityInsightsAlertConfidenceLevel(LowValue);
         /// <summary> High confidence that the alert is true positive malicious. </summary>
         public static SecurityInsightsAlertConfidenceLevel High { get; } = new SecurityInsightsAlertConfidenceLevel(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertConfidenceLevel"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAlertConfidenceLevel left, SecurityInsightsAlertConfidenceLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertConfidenceLevel"/> values are not the same. </summary>

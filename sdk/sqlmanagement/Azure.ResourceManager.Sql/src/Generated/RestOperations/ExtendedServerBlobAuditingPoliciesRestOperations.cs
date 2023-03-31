@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/extendedAuditingSettings/", false);
-            uri.AppendPath(blobAuditingPolicyName.ToString(), true);
+            uri.AppendPath(blobAuditingPolicyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
             uri.AppendPath(serverName, true);
             uri.AppendPath("/extendedAuditingSettings/", false);
-            uri.AppendPath(blobAuditingPolicyName.ToString(), true);
+            uri.AppendPath(blobAuditingPolicyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceBus
             uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/migrationConfigurations/", false);
-            uri.AppendPath(configName.ToString(), true);
+            uri.AppendPath(configName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ServiceBus
             uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/migrationConfigurations/", false);
-            uri.AppendPath(configName.ToString(), true);
+            uri.AppendPath(configName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ServiceBus
             uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/migrationConfigurations/", false);
-            uri.AppendPath(configName.ToString(), true);
+            uri.AppendPath(configName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.ServiceBus
             uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/migrationConfigurations/", false);
-            uri.AppendPath(configName.ToString(), true);
+            uri.AppendPath(configName.ToSerialString(), true);
             uri.AppendPath("/upgrade", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ServiceBus
             uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/migrationConfigurations/", false);
-            uri.AppendPath(configName.ToString(), true);
+            uri.AppendPath(configName.ToSerialString(), true);
             uri.AppendPath("/revert", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

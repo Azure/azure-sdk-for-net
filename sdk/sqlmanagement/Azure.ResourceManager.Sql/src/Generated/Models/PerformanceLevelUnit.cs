@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static PerformanceLevelUnit Dtu { get; } = new PerformanceLevelUnit(DtuValue);
         /// <summary> VCores. </summary>
         public static PerformanceLevelUnit VCores { get; } = new PerformanceLevelUnit(VCoresValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PerformanceLevelUnit"/> values are the same. </summary>
         public static bool operator ==(PerformanceLevelUnit left, PerformanceLevelUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PerformanceLevelUnit"/> values are not the same. </summary>

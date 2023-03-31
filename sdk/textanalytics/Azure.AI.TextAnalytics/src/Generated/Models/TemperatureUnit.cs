@@ -38,6 +38,9 @@ namespace Azure.AI.TextAnalytics
         public static TemperatureUnit Rankine { get; } = new TemperatureUnit(RankineValue);
         /// <summary> Celsius. </summary>
         public static TemperatureUnit Celsius { get; } = new TemperatureUnit(CelsiusValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TemperatureUnit"/> values are the same. </summary>
         public static bool operator ==(TemperatureUnit left, TemperatureUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TemperatureUnit"/> values are not the same. </summary>

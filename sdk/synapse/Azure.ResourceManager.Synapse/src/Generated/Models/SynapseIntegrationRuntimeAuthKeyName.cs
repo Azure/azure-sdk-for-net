@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseIntegrationRuntimeAuthKeyName AuthKey1 { get; } = new SynapseIntegrationRuntimeAuthKeyName(AuthKey1Value);
         /// <summary> authKey2. </summary>
         public static SynapseIntegrationRuntimeAuthKeyName AuthKey2 { get; } = new SynapseIntegrationRuntimeAuthKeyName(AuthKey2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeAuthKeyName"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeAuthKeyName left, SynapseIntegrationRuntimeAuthKeyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeAuthKeyName"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static SecurityInsightsIncidentClassification BenignPositive { get; } = new SecurityInsightsIncidentClassification(BenignPositiveValue);
         /// <summary> Incident was false positive. </summary>
         public static SecurityInsightsIncidentClassification FalsePositive { get; } = new SecurityInsightsIncidentClassification(FalsePositiveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentClassification"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsIncidentClassification left, SecurityInsightsIncidentClassification right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentClassification"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> DataFlowReference. </summary>
         public static DataFlowReferenceType DataFlowReference { get; } = new DataFlowReferenceType(DataFlowReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataFlowReferenceType"/> values are the same. </summary>
         public static bool operator ==(DataFlowReferenceType left, DataFlowReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFlowReferenceType"/> values are not the same. </summary>

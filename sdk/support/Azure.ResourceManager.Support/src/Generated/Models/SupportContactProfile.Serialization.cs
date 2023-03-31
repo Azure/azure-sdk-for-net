@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Support.Models
             writer.WritePropertyName("lastName"u8);
             writer.WriteStringValue(LastName);
             writer.WritePropertyName("preferredContactMethod"u8);
-            writer.WriteStringValue(PreferredContactMethod.ToString());
+            writer.WriteStringValue(PreferredContactMethod.ToSerialString());
             writer.WritePropertyName("primaryEmailAddress"u8);
             writer.WriteStringValue(PrimaryEmailAddress);
             if (Optional.IsCollectionDefined(AdditionalEmailAddresses))

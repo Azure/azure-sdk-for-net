@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         private const string Tls1_0Value = "1.0";
         private const string Tls1_1Value = "1.1";
         private const string Tls1_2Value = "1.2";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceBusMinimumTlsVersion"/> values are the same. </summary>
         public static bool operator ==(ServiceBusMinimumTlsVersion left, ServiceBusMinimumTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusMinimumTlsVersion"/> values are not the same. </summary>

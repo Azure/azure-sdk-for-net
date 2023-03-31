@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> current. </summary>
         public static LedgerDigestUploadsName Current { get; } = new LedgerDigestUploadsName(CurrentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LedgerDigestUploadsName"/> values are the same. </summary>
         public static bool operator ==(LedgerDigestUploadsName left, LedgerDigestUploadsName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LedgerDigestUploadsName"/> values are not the same. </summary>

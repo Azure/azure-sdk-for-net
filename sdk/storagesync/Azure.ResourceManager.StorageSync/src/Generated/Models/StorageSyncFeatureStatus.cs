@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static StorageSyncFeatureStatus On { get; } = new StorageSyncFeatureStatus(OnValue);
         /// <summary> off. </summary>
         public static StorageSyncFeatureStatus Off { get; } = new StorageSyncFeatureStatus(OffValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageSyncFeatureStatus"/> values are the same. </summary>
         public static bool operator ==(StorageSyncFeatureStatus left, StorageSyncFeatureStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageSyncFeatureStatus"/> values are not the same. </summary>

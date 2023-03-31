@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(AggregationKind))
             {
                 writer.WritePropertyName("aggregationKind"u8);
-                writer.WriteStringValue(AggregationKind.Value.ToString());
+                writer.WriteStringValue(AggregationKind.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

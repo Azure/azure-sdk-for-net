@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ApplicationMoveCost Medium { get; } = new ApplicationMoveCost(MediumValue);
         /// <summary> Specifies the move cost of the service as High. The value is 3. </summary>
         public static ApplicationMoveCost High { get; } = new ApplicationMoveCost(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApplicationMoveCost"/> values are the same. </summary>
         public static bool operator ==(ApplicationMoveCost left, ApplicationMoveCost right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationMoveCost"/> values are not the same. </summary>

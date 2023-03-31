@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ManagedClusterUpgradeMode Automatic { get; } = new ManagedClusterUpgradeMode(AutomaticValue);
         /// <summary> The cluster will not be automatically upgraded to the latest Service Fabric runtime version. The cluster is upgraded by setting the **clusterCodeVersion** property in the cluster resource. </summary>
         public static ManagedClusterUpgradeMode Manual { get; } = new ManagedClusterUpgradeMode(ManualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterUpgradeMode"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterUpgradeMode left, ManagedClusterUpgradeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterUpgradeMode"/> values are not the same. </summary>

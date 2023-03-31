@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(SourceType.Value.ToString());
+                writer.WriteStringValue(SourceType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Value))
             {

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public static ActionableRemediationState Disabled { get; } = new ActionableRemediationState(DisabledValue);
         /// <summary> Enabled. </summary>
         public static ActionableRemediationState Enabled { get; } = new ActionableRemediationState(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ActionableRemediationState"/> values are the same. </summary>
         public static bool operator ==(ActionableRemediationState left, ActionableRemediationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActionableRemediationState"/> values are not the same. </summary>

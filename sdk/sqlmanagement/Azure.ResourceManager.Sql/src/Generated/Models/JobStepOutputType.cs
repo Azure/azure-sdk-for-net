@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> SqlDatabase. </summary>
         public static JobStepOutputType SqlDatabase { get; } = new JobStepOutputType(SqlDatabaseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobStepOutputType"/> values are the same. </summary>
         public static bool operator ==(JobStepOutputType left, JobStepOutputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobStepOutputType"/> values are not the same. </summary>

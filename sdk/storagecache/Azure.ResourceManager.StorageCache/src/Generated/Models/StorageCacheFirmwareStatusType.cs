@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static StorageCacheFirmwareStatusType Available { get; } = new StorageCacheFirmwareStatusType(AvailableValue);
         /// <summary> unavailable. </summary>
         public static StorageCacheFirmwareStatusType Unavailable { get; } = new StorageCacheFirmwareStatusType(UnavailableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageCacheFirmwareStatusType"/> values are the same. </summary>
         public static bool operator ==(StorageCacheFirmwareStatusType left, StorageCacheFirmwareStatusType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageCacheFirmwareStatusType"/> values are not the same. </summary>

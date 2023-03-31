@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static ActiveDirectoryAccountType User { get; } = new ActiveDirectoryAccountType(UserValue);
         /// <summary> Computer. </summary>
         public static ActiveDirectoryAccountType Computer { get; } = new ActiveDirectoryAccountType(ComputerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ActiveDirectoryAccountType"/> values are the same. </summary>
         public static bool operator ==(ActiveDirectoryAccountType left, ActiveDirectoryAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActiveDirectoryAccountType"/> values are not the same. </summary>

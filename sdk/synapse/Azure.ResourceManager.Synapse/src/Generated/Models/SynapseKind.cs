@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseKind ReadWrite { get; } = new SynapseKind(ReadWriteValue);
         /// <summary> ReadOnlyFollowing. </summary>
         public static SynapseKind ReadOnlyFollowing { get; } = new SynapseKind(ReadOnlyFollowingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseKind"/> values are the same. </summary>
         public static bool operator ==(SynapseKind left, SynapseKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseKind"/> values are not the same. </summary>

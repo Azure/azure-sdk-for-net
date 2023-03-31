@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static StorageCacheUsernameSourceType File { get; } = new StorageCacheUsernameSourceType(FileValue);
         /// <summary> None. </summary>
         public static StorageCacheUsernameSourceType None { get; } = new StorageCacheUsernameSourceType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageCacheUsernameSourceType"/> values are the same. </summary>
         public static bool operator ==(StorageCacheUsernameSourceType left, StorageCacheUsernameSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageCacheUsernameSourceType"/> values are not the same. </summary>

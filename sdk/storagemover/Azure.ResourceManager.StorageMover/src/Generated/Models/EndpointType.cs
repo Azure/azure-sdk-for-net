@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static EndpointType AzureStorageBlobContainer { get; } = new EndpointType(AzureStorageBlobContainerValue);
         /// <summary> NfsMount. </summary>
         public static EndpointType NfsMount { get; } = new EndpointType(NfsMountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EndpointType"/> values are the same. </summary>
         public static bool operator ==(EndpointType left, EndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EndpointType"/> values are not the same. </summary>

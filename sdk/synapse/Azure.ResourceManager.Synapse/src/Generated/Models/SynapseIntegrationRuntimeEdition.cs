@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseIntegrationRuntimeEdition Standard { get; } = new SynapseIntegrationRuntimeEdition(StandardValue);
         /// <summary> Enterprise. </summary>
         public static SynapseIntegrationRuntimeEdition Enterprise { get; } = new SynapseIntegrationRuntimeEdition(EnterpriseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeEdition"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeEdition left, SynapseIntegrationRuntimeEdition right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeEdition"/> values are not the same. </summary>

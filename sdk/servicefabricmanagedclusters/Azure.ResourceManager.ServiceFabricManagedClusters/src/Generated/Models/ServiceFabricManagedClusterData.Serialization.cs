@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(ClusterUpgradeMode))
             {
                 writer.WritePropertyName("clusterUpgradeMode"u8);
-                writer.WriteStringValue(ClusterUpgradeMode.Value.ToString());
+                writer.WriteStringValue(ClusterUpgradeMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(ClusterUpgradeCadence))
             {
                 writer.WritePropertyName("clusterUpgradeCadence"u8);
-                writer.WriteStringValue(ClusterUpgradeCadence.Value.ToString());
+                writer.WriteStringValue(ClusterUpgradeCadence.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AddOnFeatures))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in AddOnFeatures)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(HotCachePeriod))

@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static SparkThriftTransportProtocol Sasl { get; } = new SparkThriftTransportProtocol(SaslValue);
         /// <summary> HTTP. </summary>
         public static SparkThriftTransportProtocol Http { get; } = new SparkThriftTransportProtocol(HttpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SparkThriftTransportProtocol"/> values are the same. </summary>
         public static bool operator ==(SparkThriftTransportProtocol left, SparkThriftTransportProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkThriftTransportProtocol"/> values are not the same. </summary>

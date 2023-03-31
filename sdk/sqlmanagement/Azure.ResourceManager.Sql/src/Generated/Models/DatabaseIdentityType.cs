@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static DatabaseIdentityType None { get; } = new DatabaseIdentityType(NoneValue);
         /// <summary> UserAssigned. </summary>
         public static DatabaseIdentityType UserAssigned { get; } = new DatabaseIdentityType(UserAssignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DatabaseIdentityType"/> values are the same. </summary>
         public static bool operator ==(DatabaseIdentityType left, DatabaseIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatabaseIdentityType"/> values are not the same. </summary>

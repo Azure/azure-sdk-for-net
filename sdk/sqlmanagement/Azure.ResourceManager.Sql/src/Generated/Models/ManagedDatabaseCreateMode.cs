@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagedDatabaseCreateMode Recovery { get; } = new ManagedDatabaseCreateMode(RecoveryValue);
         /// <summary> RestoreLongTermRetentionBackup. </summary>
         public static ManagedDatabaseCreateMode RestoreLongTermRetentionBackup { get; } = new ManagedDatabaseCreateMode(RestoreLongTermRetentionBackupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedDatabaseCreateMode"/> values are the same. </summary>
         public static bool operator ==(ManagedDatabaseCreateMode left, ManagedDatabaseCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedDatabaseCreateMode"/> values are not the same. </summary>

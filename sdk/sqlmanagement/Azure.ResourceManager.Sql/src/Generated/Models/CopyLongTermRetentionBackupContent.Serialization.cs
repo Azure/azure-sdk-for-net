@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(TargetBackupStorageRedundancy))
             {
                 writer.WritePropertyName("targetBackupStorageRedundancy"u8);
-                writer.WriteStringValue(TargetBackupStorageRedundancy.Value.ToString());
+                writer.WriteStringValue(TargetBackupStorageRedundancy.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

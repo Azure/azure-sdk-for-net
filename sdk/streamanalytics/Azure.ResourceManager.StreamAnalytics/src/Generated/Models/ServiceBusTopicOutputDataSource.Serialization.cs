@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
-                writer.WriteStringValue(AuthenticationMode.Value.ToString());
+                writer.WriteStringValue(AuthenticationMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(TopicName))
             {

@@ -71,6 +71,9 @@ namespace Azure.Storage.Blobs.Models
         public static AccessTier Premium { get; } = new AccessTier(PremiumValue);
         /// <summary> Cold. </summary>
         public static AccessTier Cold { get; } = new AccessTier(ColdValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AccessTier"/> values are the same. </summary>
         public static bool operator ==(AccessTier left, AccessTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AccessTier"/> values are not the same. </summary>

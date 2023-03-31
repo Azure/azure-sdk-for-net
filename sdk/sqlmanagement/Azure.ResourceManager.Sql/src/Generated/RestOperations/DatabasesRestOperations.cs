@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/failover", false);
             if (replicaType != null)
             {
-                uri.AppendQuery("replicaType", replicaType.Value.ToString(), true);
+                uri.AppendQuery("replicaType", replicaType.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

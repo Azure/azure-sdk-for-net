@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ServiceFabricManagedServiceMoveCost Medium { get; } = new ServiceFabricManagedServiceMoveCost(MediumValue);
         /// <summary> Specifies the move cost of the service as High. The value is 3. </summary>
         public static ServiceFabricManagedServiceMoveCost High { get; } = new ServiceFabricManagedServiceMoveCost(HighValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedServiceMoveCost"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedServiceMoveCost left, ServiceFabricManagedServiceMoveCost right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedServiceMoveCost"/> values are not the same. </summary>

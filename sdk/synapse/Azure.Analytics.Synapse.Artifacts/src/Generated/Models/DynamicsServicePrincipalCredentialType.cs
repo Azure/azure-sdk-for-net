@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static DynamicsServicePrincipalCredentialType ServicePrincipalKey { get; } = new DynamicsServicePrincipalCredentialType(ServicePrincipalKeyValue);
         /// <summary> ServicePrincipalCert. </summary>
         public static DynamicsServicePrincipalCredentialType ServicePrincipalCert { get; } = new DynamicsServicePrincipalCredentialType(ServicePrincipalCertValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DynamicsServicePrincipalCredentialType"/> values are the same. </summary>
         public static bool operator ==(DynamicsServicePrincipalCredentialType left, DynamicsServicePrincipalCredentialType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynamicsServicePrincipalCredentialType"/> values are not the same. </summary>

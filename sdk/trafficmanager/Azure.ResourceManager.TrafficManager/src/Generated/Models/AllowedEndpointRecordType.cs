@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static AllowedEndpointRecordType IPv6Address { get; } = new AllowedEndpointRecordType(IPv6AddressValue);
         /// <summary> Any. </summary>
         public static AllowedEndpointRecordType Any { get; } = new AllowedEndpointRecordType(AnyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AllowedEndpointRecordType"/> values are the same. </summary>
         public static bool operator ==(AllowedEndpointRecordType left, AllowedEndpointRecordType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AllowedEndpointRecordType"/> values are not the same. </summary>

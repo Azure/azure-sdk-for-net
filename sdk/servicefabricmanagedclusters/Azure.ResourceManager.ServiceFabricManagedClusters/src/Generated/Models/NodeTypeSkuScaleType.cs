@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static NodeTypeSkuScaleType Manual { get; } = new NodeTypeSkuScaleType(ManualValue);
         /// <summary> Automatic scale is allowed. </summary>
         public static NodeTypeSkuScaleType Automatic { get; } = new NodeTypeSkuScaleType(AutomaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NodeTypeSkuScaleType"/> values are the same. </summary>
         public static bool operator ==(NodeTypeSkuScaleType left, NodeTypeSkuScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeTypeSkuScaleType"/> values are not the same. </summary>

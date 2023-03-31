@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static TrafficManagerEndpointStatus Enabled { get; } = new TrafficManagerEndpointStatus(EnabledValue);
         /// <summary> Disabled. </summary>
         public static TrafficManagerEndpointStatus Disabled { get; } = new TrafficManagerEndpointStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TrafficManagerEndpointStatus"/> values are the same. </summary>
         public static bool operator ==(TrafficManagerEndpointStatus left, TrafficManagerEndpointStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TrafficManagerEndpointStatus"/> values are not the same. </summary>

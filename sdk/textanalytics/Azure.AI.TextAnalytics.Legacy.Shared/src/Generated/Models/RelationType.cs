@@ -86,6 +86,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
         public static RelationType ValueOfCondition { get; } = new RelationType(ValueOfConditionValue);
         /// <summary> ValueOfExamination. </summary>
         public static RelationType ValueOfExamination { get; } = new RelationType(ValueOfExaminationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RelationType"/> values are the same. </summary>
         public static bool operator ==(RelationType left, RelationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelationType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlAgentConfigurationPropertiesState Enabled { get; } = new SqlAgentConfigurationPropertiesState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static SqlAgentConfigurationPropertiesState Disabled { get; } = new SqlAgentConfigurationPropertiesState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlAgentConfigurationPropertiesState"/> values are the same. </summary>
         public static bool operator ==(SqlAgentConfigurationPropertiesState left, SqlAgentConfigurationPropertiesState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlAgentConfigurationPropertiesState"/> values are not the same. </summary>

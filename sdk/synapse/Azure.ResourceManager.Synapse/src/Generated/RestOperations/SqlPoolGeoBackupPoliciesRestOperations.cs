@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Synapse
             uri.AppendPath("/sqlPools/", false);
             uri.AppendPath(sqlPoolName, true);
             uri.AppendPath("/geoBackupPolicies/", false);
-            uri.AppendPath(geoBackupPolicyName.ToString(), true);
+            uri.AppendPath(geoBackupPolicyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Synapse
             uri.AppendPath("/sqlPools/", false);
             uri.AppendPath(sqlPoolName, true);
             uri.AppendPath("/geoBackupPolicies/", false);
-            uri.AppendPath(geoBackupPolicyName.ToString(), true);
+            uri.AppendPath(geoBackupPolicyName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

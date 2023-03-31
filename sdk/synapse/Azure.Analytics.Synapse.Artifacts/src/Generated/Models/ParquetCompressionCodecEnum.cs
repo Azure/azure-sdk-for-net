@@ -35,6 +35,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static ParquetCompressionCodecEnum Snappy { get; } = new ParquetCompressionCodecEnum(SnappyValue);
         /// <summary> lzo. </summary>
         public static ParquetCompressionCodecEnum Lzo { get; } = new ParquetCompressionCodecEnum(LzoValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ParquetCompressionCodecEnum"/> values are the same. </summary>
         public static bool operator ==(ParquetCompressionCodecEnum left, ParquetCompressionCodecEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParquetCompressionCodecEnum"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> searchServices. </summary>
         public static SearchServiceResourceType SearchServices { get; } = new SearchServiceResourceType(SearchServicesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SearchServiceResourceType"/> values are the same. </summary>
         public static bool operator ==(SearchServiceResourceType left, SearchServiceResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchServiceResourceType"/> values are not the same. </summary>

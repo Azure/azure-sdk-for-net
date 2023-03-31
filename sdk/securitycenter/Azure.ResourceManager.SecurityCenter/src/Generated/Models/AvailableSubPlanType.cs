@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static AvailableSubPlanType P1 { get; } = new AvailableSubPlanType(P1Value);
         /// <summary> P2. </summary>
         public static AvailableSubPlanType P2 { get; } = new AvailableSubPlanType(P2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvailableSubPlanType"/> values are the same. </summary>
         public static bool operator ==(AvailableSubPlanType left, AvailableSubPlanType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvailableSubPlanType"/> values are not the same. </summary>

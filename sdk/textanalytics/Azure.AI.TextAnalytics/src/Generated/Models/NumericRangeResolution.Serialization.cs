@@ -17,13 +17,13 @@ namespace Azure.AI.TextAnalytics
         {
             writer.WriteStartObject();
             writer.WritePropertyName("rangeKind"u8);
-            writer.WriteStringValue(RangeKind.ToString());
+            writer.WriteStringValue(RangeKind.ToSerialString());
             writer.WritePropertyName("minimum"u8);
             writer.WriteNumberValue(Minimum);
             writer.WritePropertyName("maximum"u8);
             writer.WriteNumberValue(Maximum);
             writer.WritePropertyName("resolutionKind"u8);
-            writer.WriteStringValue(ResolutionKind.ToString());
+            writer.WriteStringValue(ResolutionKind.ToSerialString());
             writer.WriteEndObject();
         }
 

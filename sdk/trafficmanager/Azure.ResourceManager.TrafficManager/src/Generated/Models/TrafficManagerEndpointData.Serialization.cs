@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.TrafficManager
             if (Optional.IsDefined(EndpointStatus))
             {
                 writer.WritePropertyName("endpointStatus"u8);
-                writer.WriteStringValue(EndpointStatus.Value.ToString());
+                writer.WriteStringValue(EndpointStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(Weight))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.TrafficManager
             if (Optional.IsDefined(EndpointMonitorStatus))
             {
                 writer.WritePropertyName("endpointMonitorStatus"u8);
-                writer.WriteStringValue(EndpointMonitorStatus.Value.ToString());
+                writer.WriteStringValue(EndpointMonitorStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(MinChildEndpoints))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.TrafficManager
             if (Optional.IsDefined(AlwaysServe))
             {
                 writer.WritePropertyName("alwaysServe"u8);
-                writer.WriteStringValue(AlwaysServe.Value.ToString());
+                writer.WriteStringValue(AlwaysServe.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

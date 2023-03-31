@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(TemporalType))
             {
                 writer.WritePropertyName("temporalType"u8);
-                writer.WriteStringValue(TemporalType.Value.ToString());
+                writer.WriteStringValue(TemporalType.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsMemoryOptimized))
             {

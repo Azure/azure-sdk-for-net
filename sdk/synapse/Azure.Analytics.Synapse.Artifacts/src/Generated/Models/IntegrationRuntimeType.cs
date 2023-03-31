@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static IntegrationRuntimeType Managed { get; } = new IntegrationRuntimeType(ManagedValue);
         /// <summary> SelfHosted. </summary>
         public static IntegrationRuntimeType SelfHosted { get; } = new IntegrationRuntimeType(SelfHostedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeType"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeType left, IntegrationRuntimeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeType"/> values are not the same. </summary>

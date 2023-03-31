@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(UpdateMode))
             {
                 writer.WritePropertyName("updateMode"u8);
-                writer.WriteStringValue(UpdateMode.Value.ToString());
+                writer.WriteStringValue(UpdateMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CompressionType.ToString());
+            writer.WriteStringValue(CompressionType.ToSerialString());
             writer.WriteEndObject();
         }
 

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static ServiceFabricProvisioningState Failed { get; } = new ServiceFabricProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static ServiceFabricProvisioningState Canceled { get; } = new ServiceFabricProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceFabricProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricProvisioningState left, ServiceFabricProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricProvisioningState"/> values are not the same. </summary>

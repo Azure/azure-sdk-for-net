@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static IntegrationRuntimeLicenseType BasePrice { get; } = new IntegrationRuntimeLicenseType(BasePriceValue);
         /// <summary> LicenseIncluded. </summary>
         public static IntegrationRuntimeLicenseType LicenseIncluded { get; } = new IntegrationRuntimeLicenseType(LicenseIncludedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeLicenseType"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeLicenseType left, IntegrationRuntimeLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeLicenseType"/> values are not the same. </summary>

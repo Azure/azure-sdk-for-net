@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Support.Models
             if (Optional.IsDefined(PreferredContactMethod))
             {
                 writer.WritePropertyName("preferredContactMethod"u8);
-                writer.WriteStringValue(PreferredContactMethod.Value.ToString());
+                writer.WriteStringValue(PreferredContactMethod.Value.ToSerialString());
             }
             if (Optional.IsDefined(PrimaryEmailAddress))
             {

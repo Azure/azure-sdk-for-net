@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static RequestStatus Completed { get; } = new RequestStatus(CompletedValue);
         /// <summary> Failed. </summary>
         public static RequestStatus Failed { get; } = new RequestStatus(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RequestStatus"/> values are the same. </summary>
         public static bool operator ==(RequestStatus left, RequestStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestStatus"/> values are not the same. </summary>

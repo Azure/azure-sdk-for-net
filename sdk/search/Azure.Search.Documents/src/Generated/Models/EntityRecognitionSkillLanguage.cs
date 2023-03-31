@@ -92,6 +92,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static EntityRecognitionSkillLanguage Sv { get; } = new EntityRecognitionSkillLanguage(SvValue);
         /// <summary> Turkish. </summary>
         public static EntityRecognitionSkillLanguage Tr { get; } = new EntityRecognitionSkillLanguage(TrValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EntityRecognitionSkillLanguage"/> values are the same. </summary>
         public static bool operator ==(EntityRecognitionSkillLanguage left, EntityRecognitionSkillLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EntityRecognitionSkillLanguage"/> values are not the same. </summary>

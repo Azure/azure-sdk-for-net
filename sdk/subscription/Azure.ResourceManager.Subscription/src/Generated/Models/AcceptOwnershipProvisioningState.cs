@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Subscription.Models
         public static AcceptOwnershipProvisioningState Accepted { get; } = new AcceptOwnershipProvisioningState(AcceptedValue);
         /// <summary> Succeeded. </summary>
         public static AcceptOwnershipProvisioningState Succeeded { get; } = new AcceptOwnershipProvisioningState(SucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AcceptOwnershipProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AcceptOwnershipProvisioningState left, AcceptOwnershipProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcceptOwnershipProvisioningState"/> values are not the same. </summary>

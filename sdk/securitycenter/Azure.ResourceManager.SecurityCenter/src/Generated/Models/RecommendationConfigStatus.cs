@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static RecommendationConfigStatus Disabled { get; } = new RecommendationConfigStatus(DisabledValue);
         /// <summary> Enabled. </summary>
         public static RecommendationConfigStatus Enabled { get; } = new RecommendationConfigStatus(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecommendationConfigStatus"/> values are the same. </summary>
         public static bool operator ==(RecommendationConfigStatus left, RecommendationConfigStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecommendationConfigStatus"/> values are not the same. </summary>

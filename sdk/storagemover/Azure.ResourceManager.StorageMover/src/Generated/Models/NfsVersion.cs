@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static NfsVersion NFSv3 { get; } = new NfsVersion(NFSv3Value);
         /// <summary> NFSv4. </summary>
         public static NfsVersion NFSv4 { get; } = new NfsVersion(NFSv4Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NfsVersion"/> values are the same. </summary>
         public static bool operator ==(NfsVersion left, NfsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NfsVersion"/> values are not the same. </summary>

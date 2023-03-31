@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static StoragePrivateEndpointConnectionProvisioningState Deleting { get; } = new StoragePrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static StoragePrivateEndpointConnectionProvisioningState Failed { get; } = new StoragePrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StoragePrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(StoragePrivateEndpointConnectionProvisioningState left, StoragePrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StoragePrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

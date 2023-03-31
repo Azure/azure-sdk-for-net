@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WritePropertyName("diskSizeGB"u8);
             writer.WriteNumberValue(DiskSizeInGB);
             writer.WritePropertyName("diskType"u8);
-            writer.WriteStringValue(DiskType.ToString());
+            writer.WriteStringValue(DiskType.ToSerialString());
             writer.WritePropertyName("diskLetter"u8);
             writer.WriteStringValue(DiskLetter);
             writer.WriteEndObject();

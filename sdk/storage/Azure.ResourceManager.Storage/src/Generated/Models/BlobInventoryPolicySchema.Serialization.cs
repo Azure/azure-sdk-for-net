@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(RuleType.ToString());
+            writer.WriteStringValue(RuleType.ToSerialString());
             writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
             foreach (var item in Rules)

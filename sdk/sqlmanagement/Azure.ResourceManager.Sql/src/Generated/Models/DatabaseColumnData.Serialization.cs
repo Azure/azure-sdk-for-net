@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("columnType"u8);
-                writer.WriteStringValue(ColumnType.Value.ToString());
+                writer.WriteStringValue(ColumnType.Value.ToSerialString());
             }
             if (Optional.IsDefined(TemporalType))
             {
                 writer.WritePropertyName("temporalType"u8);
-                writer.WriteStringValue(TemporalType.Value.ToString());
+                writer.WriteStringValue(TemporalType.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsMemoryOptimized))
             {

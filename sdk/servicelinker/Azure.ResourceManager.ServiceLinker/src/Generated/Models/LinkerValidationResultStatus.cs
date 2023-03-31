@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static LinkerValidationResultStatus Failure { get; } = new LinkerValidationResultStatus(FailureValue);
         /// <summary> warning. </summary>
         public static LinkerValidationResultStatus Warning { get; } = new LinkerValidationResultStatus(WarningValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LinkerValidationResultStatus"/> values are the same. </summary>
         public static bool operator ==(LinkerValidationResultStatus left, LinkerValidationResultStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkerValidationResultStatus"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Planned. </summary>
         public static StorageAccountFailoverType Planned { get; } = new StorageAccountFailoverType(PlannedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageAccountFailoverType"/> values are the same. </summary>
         public static bool operator ==(StorageAccountFailoverType left, StorageAccountFailoverType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountFailoverType"/> values are not the same. </summary>

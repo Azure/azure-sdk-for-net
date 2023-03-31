@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("securityFamily"u8);
-            writer.WriteStringValue(SecurityFamily.ToString());
+            writer.WriteStringValue(SecurityFamily.ToSerialString());
             writer.WritePropertyName("alertVendorName"u8);
             writer.WriteStringValue(AlertVendorName);
             writer.WritePropertyName("packageInfoUrl"u8);

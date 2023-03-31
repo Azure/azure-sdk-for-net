@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static ChangeDetectionMode Default { get; } = new ChangeDetectionMode(DefaultValue);
         /// <summary> Recursive. </summary>
         public static ChangeDetectionMode Recursive { get; } = new ChangeDetectionMode(RecursiveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ChangeDetectionMode"/> values are the same. </summary>
         public static bool operator ==(ChangeDetectionMode left, ChangeDetectionMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChangeDetectionMode"/> values are not the same. </summary>

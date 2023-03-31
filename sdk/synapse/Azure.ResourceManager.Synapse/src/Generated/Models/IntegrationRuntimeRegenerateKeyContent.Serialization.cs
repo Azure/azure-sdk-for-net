@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
-                writer.WriteStringValue(KeyName.Value.ToString());
+                writer.WriteStringValue(KeyName.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

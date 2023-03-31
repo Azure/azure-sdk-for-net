@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static ReadWriteEndpointFailoverPolicy Manual { get; } = new ReadWriteEndpointFailoverPolicy(ManualValue);
         /// <summary> Automatic. </summary>
         public static ReadWriteEndpointFailoverPolicy Automatic { get; } = new ReadWriteEndpointFailoverPolicy(AutomaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReadWriteEndpointFailoverPolicy"/> values are the same. </summary>
         public static bool operator ==(ReadWriteEndpointFailoverPolicy left, ReadWriteEndpointFailoverPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReadWriteEndpointFailoverPolicy"/> values are not the same. </summary>

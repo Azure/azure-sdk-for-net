@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static ConfigurationType Customized { get; } = new ConfigurationType(CustomizedValue);
         /// <summary> Artifact. </summary>
         public static ConfigurationType Artifact { get; } = new ConfigurationType(ArtifactValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConfigurationType"/> values are the same. </summary>
         public static bool operator ==(ConfigurationType left, ConfigurationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfigurationType"/> values are not the same. </summary>

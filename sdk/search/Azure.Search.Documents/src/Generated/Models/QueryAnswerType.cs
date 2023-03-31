@@ -29,6 +29,9 @@ namespace Azure.Search.Documents.Models
         public static QueryAnswerType None { get; } = new QueryAnswerType(NoneValue);
         /// <summary> Extracts answer candidates from the contents of the documents returned in response to a query expressed as a question in natural language. </summary>
         public static QueryAnswerType Extractive { get; } = new QueryAnswerType(ExtractiveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="QueryAnswerType"/> values are the same. </summary>
         public static bool operator ==(QueryAnswerType left, QueryAnswerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryAnswerType"/> values are not the same. </summary>

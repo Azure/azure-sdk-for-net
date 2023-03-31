@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseIntegrationRuntimeEntityReferenceType IntegrationRuntimeReference { get; } = new SynapseIntegrationRuntimeEntityReferenceType(IntegrationRuntimeReferenceValue);
         /// <summary> LinkedServiceReference. </summary>
         public static SynapseIntegrationRuntimeEntityReferenceType LinkedServiceReference { get; } = new SynapseIntegrationRuntimeEntityReferenceType(LinkedServiceReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeEntityReferenceType"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeEntityReferenceType left, SynapseIntegrationRuntimeEntityReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeEntityReferenceType"/> values are not the same. </summary>

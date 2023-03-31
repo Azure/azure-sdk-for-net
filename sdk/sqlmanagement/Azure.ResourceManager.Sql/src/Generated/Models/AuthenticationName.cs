@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Default. </summary>
         public static AuthenticationName Default { get; } = new AuthenticationName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AuthenticationName"/> values are the same. </summary>
         public static bool operator ==(AuthenticationName left, AuthenticationName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthenticationName"/> values are not the same. </summary>

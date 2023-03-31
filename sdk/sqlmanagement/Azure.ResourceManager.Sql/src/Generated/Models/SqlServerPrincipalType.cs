@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlServerPrincipalType Group { get; } = new SqlServerPrincipalType(GroupValue);
         /// <summary> Application. </summary>
         public static SqlServerPrincipalType Application { get; } = new SqlServerPrincipalType(ApplicationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlServerPrincipalType"/> values are the same. </summary>
         public static bool operator ==(SqlServerPrincipalType left, SqlServerPrincipalType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlServerPrincipalType"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Default. </summary>
         public static SqlSecurityAlertPolicyName Default { get; } = new SqlSecurityAlertPolicyName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlSecurityAlertPolicyName"/> values are the same. </summary>
         public static bool operator ==(SqlSecurityAlertPolicyName left, SqlSecurityAlertPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlSecurityAlertPolicyName"/> values are not the same. </summary>

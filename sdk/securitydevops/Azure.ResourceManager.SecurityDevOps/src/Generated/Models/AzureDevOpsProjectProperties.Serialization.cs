@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(ProjectId))
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             if (Optional.IsDefined(AutoDiscovery))
             {
                 writer.WritePropertyName("autoDiscovery"u8);
-                writer.WriteStringValue(AutoDiscovery.Value.ToString());
+                writer.WriteStringValue(AutoDiscovery.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Sql.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("startDay"u8);
-            writer.WriteStringValue(StartDay.ToString());
+            writer.WriteStringValue(StartDay.ToSerialString());
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime);
             writer.WritePropertyName("stopDay"u8);
-            writer.WriteStringValue(StopDay.ToString());
+            writer.WriteStringValue(StopDay.ToSerialString());
             writer.WritePropertyName("stopTime"u8);
             writer.WriteStringValue(StopTime);
             writer.WriteEndObject();

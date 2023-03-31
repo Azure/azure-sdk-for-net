@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         public static AutoDiscovery Disabled { get; } = new AutoDiscovery(DisabledValue);
         /// <summary> Enabled. </summary>
         public static AutoDiscovery Enabled { get; } = new AutoDiscovery(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutoDiscovery"/> values are the same. </summary>
         public static bool operator ==(AutoDiscovery left, AutoDiscovery right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutoDiscovery"/> values are not the same. </summary>

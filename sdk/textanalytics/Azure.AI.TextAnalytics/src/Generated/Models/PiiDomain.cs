@@ -29,6 +29,9 @@ namespace Azure.AI.TextAnalytics.Models
         public static PiiDomain Phi { get; } = new PiiDomain(PhiValue);
         /// <summary> Indicates that no domain is specified. </summary>
         public static PiiDomain None { get; } = new PiiDomain(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PiiDomain"/> values are the same. </summary>
         public static bool operator ==(PiiDomain left, PiiDomain right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PiiDomain"/> values are not the same. </summary>

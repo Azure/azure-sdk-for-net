@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ServiceKind Stateless { get; } = new ServiceKind(StatelessValue);
         /// <summary> Uses Service Fabric to make its state or part of its state highly available and reliable. The value is 1. </summary>
         public static ServiceKind Stateful { get; } = new ServiceKind(StatefulValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceKind"/> values are the same. </summary>
         public static bool operator ==(ServiceKind left, ServiceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceKind"/> values are not the same. </summary>

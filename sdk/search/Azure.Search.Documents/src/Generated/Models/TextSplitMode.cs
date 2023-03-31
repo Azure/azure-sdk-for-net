@@ -29,6 +29,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static TextSplitMode Pages { get; } = new TextSplitMode(PagesValue);
         /// <summary> Split the text into individual sentences. </summary>
         public static TextSplitMode Sentences { get; } = new TextSplitMode(SentencesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TextSplitMode"/> values are the same. </summary>
         public static bool operator ==(TextSplitMode left, TextSplitMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TextSplitMode"/> values are not the same. </summary>

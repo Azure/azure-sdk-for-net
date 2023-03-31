@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> Default. </summary>
         public static SynapseGeoBackupPolicyName Default { get; } = new SynapseGeoBackupPolicyName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseGeoBackupPolicyName"/> values are the same. </summary>
         public static bool operator ==(SynapseGeoBackupPolicyName left, SynapseGeoBackupPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseGeoBackupPolicyName"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> current. </summary>
         public static TransparentDataEncryptionName Current { get; } = new TransparentDataEncryptionName(CurrentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TransparentDataEncryptionName"/> values are the same. </summary>
         public static bool operator ==(TransparentDataEncryptionName left, TransparentDataEncryptionName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TransparentDataEncryptionName"/> values are not the same. </summary>

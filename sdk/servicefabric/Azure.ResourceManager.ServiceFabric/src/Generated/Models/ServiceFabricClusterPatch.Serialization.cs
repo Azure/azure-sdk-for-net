@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in AddOnFeatures)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(ReliabilityLevel))
             {
                 writer.WritePropertyName("reliabilityLevel"u8);
-                writer.WriteStringValue(ReliabilityLevel.Value.ToString());
+                writer.WriteStringValue(ReliabilityLevel.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReverseProxyCertificate))
             {
@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(UpgradeMode))
             {
                 writer.WritePropertyName("upgradeMode"u8);
-                writer.WriteStringValue(UpgradeMode.Value.ToString());
+                writer.WriteStringValue(UpgradeMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(SfZonalUpgradeMode))
             {
                 writer.WritePropertyName("sfZonalUpgradeMode"u8);
-                writer.WriteStringValue(SfZonalUpgradeMode.Value.ToString());
+                writer.WriteStringValue(SfZonalUpgradeMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(VmssZonalUpgradeMode))
             {
                 writer.WritePropertyName("vmssZonalUpgradeMode"u8);
-                writer.WriteStringValue(VmssZonalUpgradeMode.Value.ToString());
+                writer.WriteStringValue(VmssZonalUpgradeMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsInfrastructureServiceManagerEnabled))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(UpgradeWave))
             {
                 writer.WritePropertyName("upgradeWave"u8);
-                writer.WriteStringValue(UpgradeWave.Value.ToString());
+                writer.WriteStringValue(UpgradeWave.Value.ToSerialString());
             }
             if (Optional.IsDefined(UpgradePauseStartOn))
             {

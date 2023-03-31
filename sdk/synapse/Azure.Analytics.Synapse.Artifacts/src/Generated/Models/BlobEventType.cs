@@ -29,6 +29,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static BlobEventType MicrosoftStorageBlobCreated { get; } = new BlobEventType(MicrosoftStorageBlobCreatedValue);
         /// <summary> Microsoft.Storage.BlobDeleted. </summary>
         public static BlobEventType MicrosoftStorageBlobDeleted { get; } = new BlobEventType(MicrosoftStorageBlobDeletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobEventType"/> values are the same. </summary>
         public static bool operator ==(BlobEventType left, BlobEventType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobEventType"/> values are not the same. </summary>

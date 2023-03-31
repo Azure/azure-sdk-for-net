@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("notificationCategory"u8);
-            writer.WriteStringValue(NotificationCategory.ToString());
+            writer.WriteStringValue(NotificationCategory.ToSerialString());
             writer.WritePropertyName("notificationLevel"u8);
-            writer.WriteStringValue(NotificationLevel.ToString());
+            writer.WriteStringValue(NotificationLevel.ToSerialString());
             writer.WritePropertyName("notificationTargets"u8);
             writer.WriteStartArray();
             foreach (var item in NotificationTargets)

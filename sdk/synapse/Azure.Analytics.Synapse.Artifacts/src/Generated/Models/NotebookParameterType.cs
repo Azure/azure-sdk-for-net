@@ -35,6 +35,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static NotebookParameterType Float { get; } = new NotebookParameterType(FloatValue);
         /// <summary> bool. </summary>
         public static NotebookParameterType Bool { get; } = new NotebookParameterType(BoolValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NotebookParameterType"/> values are the same. </summary>
         public static bool operator ==(NotebookParameterType left, NotebookParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotebookParameterType"/> values are not the same. </summary>

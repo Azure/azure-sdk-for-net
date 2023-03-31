@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapsePrincipalsModificationKind Replace { get; } = new SynapsePrincipalsModificationKind(ReplaceValue);
         /// <summary> None. </summary>
         public static SynapsePrincipalsModificationKind None { get; } = new SynapsePrincipalsModificationKind(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapsePrincipalsModificationKind"/> values are the same. </summary>
         public static bool operator ==(SynapsePrincipalsModificationKind left, SynapsePrincipalsModificationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapsePrincipalsModificationKind"/> values are not the same. </summary>

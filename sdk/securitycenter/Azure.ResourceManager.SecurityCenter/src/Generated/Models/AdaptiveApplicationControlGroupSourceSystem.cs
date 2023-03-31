@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static AdaptiveApplicationControlGroupSourceSystem NonAzureAuditD { get; } = new AdaptiveApplicationControlGroupSourceSystem(NonAzureAuditDValue);
         /// <summary> None. </summary>
         public static AdaptiveApplicationControlGroupSourceSystem None { get; } = new AdaptiveApplicationControlGroupSourceSystem(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AdaptiveApplicationControlGroupSourceSystem"/> values are the same. </summary>
         public static bool operator ==(AdaptiveApplicationControlGroupSourceSystem left, AdaptiveApplicationControlGroupSourceSystem right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdaptiveApplicationControlGroupSourceSystem"/> values are not the same. </summary>

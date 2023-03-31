@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ManagedServicePackageActivationMode SharedProcess { get; } = new ManagedServicePackageActivationMode(SharedProcessValue);
         /// <summary> Indicates the application package activation mode will use exclusive process. </summary>
         public static ManagedServicePackageActivationMode ExclusiveProcess { get; } = new ManagedServicePackageActivationMode(ExclusiveProcessValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedServicePackageActivationMode"/> values are the same. </summary>
         public static bool operator ==(ManagedServicePackageActivationMode left, ManagedServicePackageActivationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedServicePackageActivationMode"/> values are not the same. </summary>

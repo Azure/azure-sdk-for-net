@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static SqlServerConnectivityType Private { get; } = new SqlServerConnectivityType(PrivateValue);
         /// <summary> PUBLIC. </summary>
         public static SqlServerConnectivityType Public { get; } = new SqlServerConnectivityType(PublicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SqlServerConnectivityType"/> values are the same. </summary>
         public static bool operator ==(SqlServerConnectivityType left, SqlServerConnectivityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlServerConnectivityType"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> SparkConfigurationReference. </summary>
         public static SparkConfigurationReferenceType SparkConfigurationReference { get; } = new SparkConfigurationReferenceType(SparkConfigurationReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SparkConfigurationReferenceType"/> values are the same. </summary>
         public static bool operator ==(SparkConfigurationReferenceType left, SparkConfigurationReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkConfigurationReferenceType"/> values are not the same. </summary>

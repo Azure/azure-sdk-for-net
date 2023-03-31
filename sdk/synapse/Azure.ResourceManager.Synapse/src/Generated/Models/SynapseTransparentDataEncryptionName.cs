@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> current. </summary>
         public static SynapseTransparentDataEncryptionName Current { get; } = new SynapseTransparentDataEncryptionName(CurrentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SynapseTransparentDataEncryptionName"/> values are the same. </summary>
         public static bool operator ==(SynapseTransparentDataEncryptionName left, SynapseTransparentDataEncryptionName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseTransparentDataEncryptionName"/> values are not the same. </summary>

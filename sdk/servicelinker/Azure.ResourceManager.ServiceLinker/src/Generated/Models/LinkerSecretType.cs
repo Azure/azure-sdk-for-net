@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static LinkerSecretType KeyVaultSecretUri { get; } = new LinkerSecretType(KeyVaultSecretUriValue);
         /// <summary> keyVaultSecretReference. </summary>
         public static LinkerSecretType KeyVaultSecretReference { get; } = new LinkerSecretType(KeyVaultSecretReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LinkerSecretType"/> values are the same. </summary>
         public static bool operator ==(LinkerSecretType left, LinkerSecretType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkerSecretType"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static AmazonRdsForOraclePartitionOption PhysicalPartitionsOfTable { get; } = new AmazonRdsForOraclePartitionOption(PhysicalPartitionsOfTableValue);
         /// <summary> DynamicRange. </summary>
         public static AmazonRdsForOraclePartitionOption DynamicRange { get; } = new AmazonRdsForOraclePartitionOption(DynamicRangeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AmazonRdsForOraclePartitionOption"/> values are the same. </summary>
         public static bool operator ==(AmazonRdsForOraclePartitionOption left, AmazonRdsForOraclePartitionOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AmazonRdsForOraclePartitionOption"/> values are not the same. </summary>

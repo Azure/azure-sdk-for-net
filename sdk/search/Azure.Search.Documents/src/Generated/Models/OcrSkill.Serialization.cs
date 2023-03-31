@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (DefaultLanguageCode != null)
                 {
                     writer.WritePropertyName("defaultLanguageCode"u8);
-                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                    writer.WriteStringValue(DefaultLanguageCode.Value.ToSerialString());
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(LineEnding))
             {
                 writer.WritePropertyName("lineEnding"u8);
-                writer.WriteStringValue(LineEnding.Value.ToString());
+                writer.WriteStringValue(LineEnding.Value.ToSerialString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);

@@ -26,6 +26,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> DatasetReference. </summary>
         public static DatasetReferenceType DatasetReference { get; } = new DatasetReferenceType(DatasetReferenceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DatasetReferenceType"/> values are the same. </summary>
         public static bool operator ==(DatasetReferenceType left, DatasetReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatasetReferenceType"/> values are not the same. </summary>

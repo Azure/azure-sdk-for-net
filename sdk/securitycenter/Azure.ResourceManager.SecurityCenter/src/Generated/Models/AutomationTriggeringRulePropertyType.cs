@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static AutomationTriggeringRulePropertyType Number { get; } = new AutomationTriggeringRulePropertyType(NumberValue);
         /// <summary> Boolean. </summary>
         public static AutomationTriggeringRulePropertyType Boolean { get; } = new AutomationTriggeringRulePropertyType(BooleanValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationTriggeringRulePropertyType"/> values are the same. </summary>
         public static bool operator ==(AutomationTriggeringRulePropertyType left, AutomationTriggeringRulePropertyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationTriggeringRulePropertyType"/> values are not the same. </summary>

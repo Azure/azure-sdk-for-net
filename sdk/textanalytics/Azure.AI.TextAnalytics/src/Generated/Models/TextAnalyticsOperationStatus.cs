@@ -44,6 +44,9 @@ namespace Azure.AI.TextAnalytics
         public static TextAnalyticsOperationStatus Cancelling { get; } = new TextAnalyticsOperationStatus(CancellingValue);
         /// <summary> partiallyCompleted. </summary>
         public static TextAnalyticsOperationStatus PartiallyCompleted { get; } = new TextAnalyticsOperationStatus(PartiallyCompletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TextAnalyticsOperationStatus"/> values are the same. </summary>
         public static bool operator ==(TextAnalyticsOperationStatus left, TextAnalyticsOperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TextAnalyticsOperationStatus"/> values are not the same. </summary>

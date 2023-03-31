@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Storage.Models
         public static BlobInventoryPolicySchedule Daily { get; } = new BlobInventoryPolicySchedule(DailyValue);
         /// <summary> Weekly. </summary>
         public static BlobInventoryPolicySchedule Weekly { get; } = new BlobInventoryPolicySchedule(WeeklyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobInventoryPolicySchedule"/> values are the same. </summary>
         public static bool operator ==(BlobInventoryPolicySchedule left, BlobInventoryPolicySchedule right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobInventoryPolicySchedule"/> values are not the same. </summary>
