@@ -13,7 +13,9 @@ using Azure.Core.Json;
 namespace Azure.Core.Dynamic
 {
     /// <summary>
-    /// Dynamic layer over MutableJsonDocument.
+    /// A dynamic abstraction over content data, such as JSON.
+    ///
+    /// This and related types are not intended to be mocked.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [JsonConverter(typeof(JsonConverter))]
