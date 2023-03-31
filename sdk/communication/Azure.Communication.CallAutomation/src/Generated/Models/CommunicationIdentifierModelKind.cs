@@ -35,6 +35,9 @@ namespace Azure.Communication
         public static CommunicationIdentifierModelKind PhoneNumber { get; } = new CommunicationIdentifierModelKind(PhoneNumberValue);
         /// <summary> microsoftTeamsUser. </summary>
         public static CommunicationIdentifierModelKind MicrosoftTeamsUser { get; } = new CommunicationIdentifierModelKind(MicrosoftTeamsUserValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CommunicationIdentifierModelKind"/> values are the same. </summary>
         public static bool operator ==(CommunicationIdentifierModelKind left, CommunicationIdentifierModelKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationIdentifierModelKind"/> values are not the same. </summary>

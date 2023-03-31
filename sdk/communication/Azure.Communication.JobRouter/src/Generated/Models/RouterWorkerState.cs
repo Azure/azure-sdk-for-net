@@ -32,6 +32,9 @@ namespace Azure.Communication.JobRouter.Models
         public static RouterWorkerState Draining { get; } = new RouterWorkerState(DrainingValue);
         /// <summary> inactive. </summary>
         public static RouterWorkerState Inactive { get; } = new RouterWorkerState(InactiveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RouterWorkerState"/> values are the same. </summary>
         public static bool operator ==(RouterWorkerState left, RouterWorkerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouterWorkerState"/> values are not the same. </summary>

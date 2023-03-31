@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(TargetType))
             {
                 writer.WritePropertyName("targetType"u8);
-                writer.WriteStringValue(TargetType.Value.ToString());
+                writer.WriteStringValue(TargetType.Value.ToSerialString());
             }
             if (Optional.IsDefined(StartOn))
             {

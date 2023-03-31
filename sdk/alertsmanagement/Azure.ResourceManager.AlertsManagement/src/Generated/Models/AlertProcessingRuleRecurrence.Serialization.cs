@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("recurrenceType"u8);
-            writer.WriteStringValue(RecurrenceType.ToString());
+            writer.WriteStringValue(RecurrenceType.ToSerialString());
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);

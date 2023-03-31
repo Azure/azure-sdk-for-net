@@ -18,7 +18,7 @@ namespace Azure.Communication.MediaComposition
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             writer.WriteEndObject();
         }
 

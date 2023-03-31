@@ -74,6 +74,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static NodeExtensionState Accepted { get; } = new NodeExtensionState(AcceptedValue);
         /// <summary> Provisioning. </summary>
         public static NodeExtensionState Provisioning { get; } = new NodeExtensionState(ProvisioningValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NodeExtensionState"/> values are the same. </summary>
         public static bool operator ==(NodeExtensionState left, NodeExtensionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NodeExtensionState"/> values are not the same. </summary>

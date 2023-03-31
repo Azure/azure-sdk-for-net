@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/identityProviders/", false);
-            uri.AppendPath(identityProviderName.ToString(), true);
+            uri.AppendPath(identityProviderName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/identityProviders/", false);
-            uri.AppendPath(identityProviderName.ToString(), true);
+            uri.AppendPath(identityProviderName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/identityProviders/", false);
-            uri.AppendPath(identityProviderName.ToString(), true);
+            uri.AppendPath(identityProviderName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (ifMatch != null)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/identityProviders/", false);
-            uri.AppendPath(identityProviderName.ToString(), true);
+            uri.AppendPath(identityProviderName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("If-Match", ifMatch);
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/identityProviders/", false);
-            uri.AppendPath(identityProviderName.ToString(), true);
+            uri.AppendPath(identityProviderName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("If-Match", ifMatch);
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/identityProviders/", false);
-            uri.AppendPath(identityProviderName.ToString(), true);
+            uri.AppendPath(identityProviderName.ToSerialString(), true);
             uri.AppendPath("/listSecrets", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

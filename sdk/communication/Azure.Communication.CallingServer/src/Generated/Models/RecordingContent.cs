@@ -29,6 +29,9 @@ namespace Azure.Communication.CallingServer
         public static RecordingContent Audio { get; } = new RecordingContent(AudioValue);
         /// <summary> audioVideo. </summary>
         public static RecordingContent AudioVideo { get; } = new RecordingContent(AudioVideoValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecordingContent"/> values are the same. </summary>
         public static bool operator ==(RecordingContent left, RecordingContent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecordingContent"/> values are not the same. </summary>

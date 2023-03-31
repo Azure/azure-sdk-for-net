@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("formatType"u8);
-            writer.WriteStringValue(FormatType.ToString());
+            writer.WriteStringValue(FormatType.ToSerialString());
             if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);

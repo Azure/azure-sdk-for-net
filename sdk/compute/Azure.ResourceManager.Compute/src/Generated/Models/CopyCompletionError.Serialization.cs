@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("errorCode"u8);
-            writer.WriteStringValue(ErrorCode.ToString());
+            writer.WriteStringValue(ErrorCode.ToSerialString());
             writer.WritePropertyName("errorMessage"u8);
             writer.WriteStringValue(ErrorMessage);
             writer.WriteEndObject();

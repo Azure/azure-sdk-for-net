@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(galleryImageVersionName, true);
             if (expand != null)
             {
-                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+                uri.AppendQuery("$expand", expand.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

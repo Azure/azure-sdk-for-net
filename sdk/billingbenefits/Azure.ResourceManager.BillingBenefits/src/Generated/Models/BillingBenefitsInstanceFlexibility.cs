@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static BillingBenefitsInstanceFlexibility On { get; } = new BillingBenefitsInstanceFlexibility(OnValue);
         /// <summary> Off. </summary>
         public static BillingBenefitsInstanceFlexibility Off { get; } = new BillingBenefitsInstanceFlexibility(OffValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BillingBenefitsInstanceFlexibility"/> values are the same. </summary>
         public static bool operator ==(BillingBenefitsInstanceFlexibility left, BillingBenefitsInstanceFlexibility right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingBenefitsInstanceFlexibility"/> values are not the same. </summary>

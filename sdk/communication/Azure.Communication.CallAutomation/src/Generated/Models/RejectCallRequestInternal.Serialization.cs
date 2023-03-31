@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(CallRejectReason))
             {
                 writer.WritePropertyName("callRejectReason"u8);
-                writer.WriteStringValue(CallRejectReason.Value.ToString());
+                writer.WriteStringValue(CallRejectReason.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

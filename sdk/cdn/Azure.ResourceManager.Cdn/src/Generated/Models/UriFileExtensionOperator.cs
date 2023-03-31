@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static UriFileExtensionOperator GreaterThanOrEqual { get; } = new UriFileExtensionOperator(GreaterThanOrEqualValue);
         /// <summary> RegEx. </summary>
         public static UriFileExtensionOperator RegEx { get; } = new UriFileExtensionOperator(RegExValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UriFileExtensionOperator"/> values are the same. </summary>
         public static bool operator ==(UriFileExtensionOperator left, UriFileExtensionOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriFileExtensionOperator"/> values are not the same. </summary>

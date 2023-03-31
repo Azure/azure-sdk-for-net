@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> OobeSystem. </summary>
         public static PassName OobeSystem { get; } = new PassName(OobeSystemValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PassName"/> values are the same. </summary>
         public static bool operator ==(PassName left, PassName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PassName"/> values are not the same. </summary>

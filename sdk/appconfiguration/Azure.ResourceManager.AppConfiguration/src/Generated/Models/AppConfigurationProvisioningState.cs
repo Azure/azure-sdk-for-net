@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static AppConfigurationProvisioningState Failed { get; } = new AppConfigurationProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static AppConfigurationProvisioningState Canceled { get; } = new AppConfigurationProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppConfigurationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AppConfigurationProvisioningState left, AppConfigurationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppConfigurationProvisioningState"/> values are not the same. </summary>

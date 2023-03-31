@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static PostArgsOperator GreaterThanOrEqual { get; } = new PostArgsOperator(GreaterThanOrEqualValue);
         /// <summary> RegEx. </summary>
         public static PostArgsOperator RegEx { get; } = new PostArgsOperator(RegExValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostArgsOperator"/> values are the same. </summary>
         public static bool operator ==(PostArgsOperator left, PostArgsOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostArgsOperator"/> values are not the same. </summary>

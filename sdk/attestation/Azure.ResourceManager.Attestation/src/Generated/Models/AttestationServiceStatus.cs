@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Attestation.Models
         public static AttestationServiceStatus NotReady { get; } = new AttestationServiceStatus(NotReadyValue);
         /// <summary> Error. </summary>
         public static AttestationServiceStatus Error { get; } = new AttestationServiceStatus(ErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AttestationServiceStatus"/> values are the same. </summary>
         public static bool operator ==(AttestationServiceStatus left, AttestationServiceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AttestationServiceStatus"/> values are not the same. </summary>

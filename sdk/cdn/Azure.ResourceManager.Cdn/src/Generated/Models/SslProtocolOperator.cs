@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Equal. </summary>
         public static SslProtocolOperator Equal { get; } = new SslProtocolOperator(EqualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SslProtocolOperator"/> values are the same. </summary>
         public static bool operator ==(SslProtocolOperator left, SslProtocolOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SslProtocolOperator"/> values are not the same. </summary>

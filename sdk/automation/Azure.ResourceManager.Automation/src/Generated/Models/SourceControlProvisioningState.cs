@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static SourceControlProvisioningState Failed { get; } = new SourceControlProvisioningState(FailedValue);
         /// <summary> Running. </summary>
         public static SourceControlProvisioningState Running { get; } = new SourceControlProvisioningState(RunningValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SourceControlProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SourceControlProvisioningState left, SourceControlProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceControlProvisioningState"/> values are not the same. </summary>

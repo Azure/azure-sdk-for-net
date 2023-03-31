@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryZoneRedundancy Enabled { get; } = new ContainerRegistryZoneRedundancy(EnabledValue);
         /// <summary> Disabled. </summary>
         public static ContainerRegistryZoneRedundancy Disabled { get; } = new ContainerRegistryZoneRedundancy(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryZoneRedundancy"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryZoneRedundancy left, ContainerRegistryZoneRedundancy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryZoneRedundancy"/> values are not the same. </summary>

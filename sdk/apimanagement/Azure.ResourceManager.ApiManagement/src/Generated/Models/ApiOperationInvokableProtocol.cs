@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiOperationInvokableProtocol Ws { get; } = new ApiOperationInvokableProtocol(WsValue);
         /// <summary> wss. </summary>
         public static ApiOperationInvokableProtocol Wss { get; } = new ApiOperationInvokableProtocol(WssValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApiOperationInvokableProtocol"/> values are the same. </summary>
         public static bool operator ==(ApiOperationInvokableProtocol left, ApiOperationInvokableProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiOperationInvokableProtocol"/> values are not the same. </summary>

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
-                writer.WriteStringValue(HyperVGeneration.Value.ToString());
+                writer.WriteStringValue(HyperVGeneration.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

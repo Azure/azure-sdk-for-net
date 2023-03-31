@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static EnabledState Enabled { get; } = new EnabledState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static EnabledState Disabled { get; } = new EnabledState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EnabledState"/> values are the same. </summary>
         public static bool operator ==(EnabledState left, EnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnabledState"/> values are not the same. </summary>

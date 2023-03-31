@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryRunStatus Error { get; } = new ContainerRegistryRunStatus(ErrorValue);
         /// <summary> Timeout. </summary>
         public static ContainerRegistryRunStatus Timeout { get; } = new ContainerRegistryRunStatus(TimeoutValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryRunStatus"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryRunStatus left, ContainerRegistryRunStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryRunStatus"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static ProgramSignUpType Sms { get; } = new ProgramSignUpType(SmsValue);
         /// <summary> interactiveVoiceResponse. </summary>
         public static ProgramSignUpType InteractiveVoiceResponse { get; } = new ProgramSignUpType(InteractiveVoiceResponseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProgramSignUpType"/> values are the same. </summary>
         public static bool operator ==(ProgramSignUpType left, ProgramSignUpType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProgramSignUpType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static ConfidentialLedgerNameUnavailableReason Invalid { get; } = new ConfidentialLedgerNameUnavailableReason(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static ConfidentialLedgerNameUnavailableReason AlreadyExists { get; } = new ConfidentialLedgerNameUnavailableReason(AlreadyExistsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConfidentialLedgerNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(ConfidentialLedgerNameUnavailableReason left, ConfidentialLedgerNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfidentialLedgerNameUnavailableReason"/> values are not the same. </summary>

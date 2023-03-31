@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Blueprint
             uri.AppendQuery("api-version", _apiVersion, true);
             if (deleteBehavior != null)
             {
-                uri.AppendQuery("deleteBehavior", deleteBehavior.Value.ToString(), true);
+                uri.AppendQuery("deleteBehavior", deleteBehavior.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

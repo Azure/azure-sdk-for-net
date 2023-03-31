@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static IdentityProviderType Aad { get; } = new IdentityProviderType(AadValue);
         /// <summary> Azure Active Directory B2C as Identity provider. </summary>
         public static IdentityProviderType AadB2C { get; } = new IdentityProviderType(AadB2CValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IdentityProviderType"/> values are the same. </summary>
         public static bool operator ==(IdentityProviderType left, IdentityProviderType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IdentityProviderType"/> values are not the same. </summary>

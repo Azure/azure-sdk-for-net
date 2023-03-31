@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleManagementPolicyNotificationLevel Critical { get; } = new RoleManagementPolicyNotificationLevel(CriticalValue);
         /// <summary> All. </summary>
         public static RoleManagementPolicyNotificationLevel All { get; } = new RoleManagementPolicyNotificationLevel(AllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleManagementPolicyNotificationLevel"/> values are the same. </summary>
         public static bool operator ==(RoleManagementPolicyNotificationLevel left, RoleManagementPolicyNotificationLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementPolicyNotificationLevel"/> values are not the same. </summary>

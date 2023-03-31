@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public static InventoryType VirtualMachineTemplate { get; } = new InventoryType(VirtualMachineTemplateValue);
         /// <summary> VirtualMachine. </summary>
         public static InventoryType VirtualMachine { get; } = new InventoryType(VirtualMachineValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InventoryType"/> values are the same. </summary>
         public static bool operator ==(InventoryType left, InventoryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InventoryType"/> values are not the same. </summary>

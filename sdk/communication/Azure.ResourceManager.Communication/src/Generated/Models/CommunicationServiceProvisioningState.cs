@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Communication.Models
         public static CommunicationServiceProvisioningState Deleting { get; } = new CommunicationServiceProvisioningState(DeletingValue);
         /// <summary> Moving. </summary>
         public static CommunicationServiceProvisioningState Moving { get; } = new CommunicationServiceProvisioningState(MovingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CommunicationServiceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CommunicationServiceProvisioningState left, CommunicationServiceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationServiceProvisioningState"/> values are not the same. </summary>

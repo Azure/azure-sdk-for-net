@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static LogMetricsGroupBy CountryOrRegion { get; } = new LogMetricsGroupBy(CountryOrRegionValue);
         /// <summary> customDomain. </summary>
         public static LogMetricsGroupBy CustomDomain { get; } = new LogMetricsGroupBy(CustomDomainValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogMetricsGroupBy"/> values are the same. </summary>
         public static bool operator ==(LogMetricsGroupBy left, LogMetricsGroupBy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogMetricsGroupBy"/> values are not the same. </summary>

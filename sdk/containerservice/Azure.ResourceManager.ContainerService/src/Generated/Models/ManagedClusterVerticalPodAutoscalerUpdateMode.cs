@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ManagedClusterVerticalPodAutoscalerUpdateMode Recreate { get; } = new ManagedClusterVerticalPodAutoscalerUpdateMode(RecreateValue);
         /// <summary> Autoscaler chooses the update mode. Autoscaler currently does the same as Recreate. In the future, it may take advantage of restart-free mechanisms once they are available. </summary>
         public static ManagedClusterVerticalPodAutoscalerUpdateMode Auto { get; } = new ManagedClusterVerticalPodAutoscalerUpdateMode(AutoValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterVerticalPodAutoscalerUpdateMode"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterVerticalPodAutoscalerUpdateMode left, ManagedClusterVerticalPodAutoscalerUpdateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterVerticalPodAutoscalerUpdateMode"/> values are not the same. </summary>

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteObjectValue(DiffDiskSettings);
             }
             writer.WritePropertyName("createOption"u8);
-            writer.WriteStringValue(CreateOption.ToString());
+            writer.WriteStringValue(CreateOption.ToSerialString());
             if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
-                writer.WriteStringValue(DeleteOption.Value.ToString());
+                writer.WriteStringValue(DeleteOption.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

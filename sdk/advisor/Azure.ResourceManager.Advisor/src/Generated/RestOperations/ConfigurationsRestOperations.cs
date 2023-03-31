@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Advisor
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Advisor/configurations/", false);
-            uri.AppendPath(configurationName.ToString(), true);
+            uri.AppendPath(configurationName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Advisor
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroup, true);
             uri.AppendPath("/providers/Microsoft.Advisor/configurations/", false);
-            uri.AppendPath(configurationName.ToString(), true);
+            uri.AppendPath(configurationName.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

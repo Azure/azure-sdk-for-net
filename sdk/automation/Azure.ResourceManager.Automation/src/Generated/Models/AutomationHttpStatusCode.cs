@@ -164,6 +164,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationHttpStatusCode GatewayTimeout { get; } = new AutomationHttpStatusCode(GatewayTimeoutValue);
         /// <summary> HttpVersionNotSupported. </summary>
         public static AutomationHttpStatusCode HttpVersionNotSupported { get; } = new AutomationHttpStatusCode(HttpVersionNotSupportedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationHttpStatusCode"/> values are the same. </summary>
         public static bool operator ==(AutomationHttpStatusCode left, AutomationHttpStatusCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationHttpStatusCode"/> values are not the same. </summary>

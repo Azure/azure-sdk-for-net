@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiManagementPrivateEndpointServiceConnectionStatus Approved { get; } = new ApiManagementPrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static ApiManagementPrivateEndpointServiceConnectionStatus Rejected { get; } = new ApiManagementPrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApiManagementPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(ApiManagementPrivateEndpointServiceConnectionStatus left, ApiManagementPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiManagementPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

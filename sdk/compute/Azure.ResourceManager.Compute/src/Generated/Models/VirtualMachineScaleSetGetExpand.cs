@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> userData. </summary>
         public static VirtualMachineScaleSetGetExpand UserData { get; } = new VirtualMachineScaleSetGetExpand(UserDataValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualMachineScaleSetGetExpand"/> values are the same. </summary>
         public static bool operator ==(VirtualMachineScaleSetGetExpand left, VirtualMachineScaleSetGetExpand right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachineScaleSetGetExpand"/> values are not the same. </summary>

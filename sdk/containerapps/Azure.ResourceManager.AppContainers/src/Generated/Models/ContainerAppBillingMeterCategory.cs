@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppBillingMeterCategory PremiumSkuMemoryOptimized { get; } = new ContainerAppBillingMeterCategory(PremiumSkuMemoryOptimizedValue);
         /// <summary> PremiumSkuComputeOptimized. </summary>
         public static ContainerAppBillingMeterCategory PremiumSkuComputeOptimized { get; } = new ContainerAppBillingMeterCategory(PremiumSkuComputeOptimizedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppBillingMeterCategory"/> values are the same. </summary>
         public static bool operator ==(ContainerAppBillingMeterCategory left, ContainerAppBillingMeterCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppBillingMeterCategory"/> values are not the same. </summary>

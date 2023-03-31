@@ -35,6 +35,9 @@ namespace Azure.Communication.PhoneNumbers
         public static PhoneNumberOperationType Search { get; } = new PhoneNumberOperationType(SearchValue);
         /// <summary> updatePhoneNumberCapabilities. </summary>
         public static PhoneNumberOperationType UpdatePhoneNumberCapabilities { get; } = new PhoneNumberOperationType(UpdatePhoneNumberCapabilitiesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PhoneNumberOperationType"/> values are the same. </summary>
         public static bool operator ==(PhoneNumberOperationType left, PhoneNumberOperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoneNumberOperationType"/> values are not the same. </summary>

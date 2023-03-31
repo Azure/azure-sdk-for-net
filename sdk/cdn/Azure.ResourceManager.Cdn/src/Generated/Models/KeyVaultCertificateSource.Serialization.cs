@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
-            writer.WriteStringValue(SourceType.ToString());
+            writer.WriteStringValue(SourceType.ToSerialString());
             writer.WritePropertyName("subscriptionId"u8);
             writer.WriteStringValue(SubscriptionId);
             writer.WritePropertyName("resourceGroupName"u8);
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStringValue(SecretVersion);
             }
             writer.WritePropertyName("updateRule"u8);
-            writer.WriteStringValue(UpdateRule.ToString());
+            writer.WriteStringValue(UpdateRule.ToSerialString());
             writer.WritePropertyName("deleteRule"u8);
-            writer.WriteStringValue(DeleteRule.ToString());
+            writer.WriteStringValue(DeleteRule.ToSerialString());
             writer.WriteEndObject();
         }
 

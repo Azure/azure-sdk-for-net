@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBIndexKind Range { get; } = new CosmosDBIndexKind(RangeValue);
         /// <summary> Spatial. </summary>
         public static CosmosDBIndexKind Spatial { get; } = new CosmosDBIndexKind(SpatialValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBIndexKind"/> values are the same. </summary>
         public static bool operator ==(CosmosDBIndexKind left, CosmosDBIndexKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBIndexKind"/> values are not the same. </summary>

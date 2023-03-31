@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServicePublicNetworkAccess Disabled { get; } = new ContainerServicePublicNetworkAccess(DisabledValue);
         /// <summary> Inbound/Outbound traffic is managed by Microsoft.Network/NetworkSecurityPerimeters. </summary>
         public static ContainerServicePublicNetworkAccess SecuredByPerimeter { get; } = new ContainerServicePublicNetworkAccess(SecuredByPerimeterValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServicePublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(ContainerServicePublicNetworkAccess left, ContainerServicePublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServicePublicNetworkAccess"/> values are not the same. </summary>

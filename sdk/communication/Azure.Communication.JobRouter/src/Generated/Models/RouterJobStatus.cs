@@ -47,6 +47,9 @@ namespace Azure.Communication.JobRouter.Models
         public static RouterJobStatus ClassificationFailed { get; } = new RouterJobStatus(ClassificationFailedValue);
         /// <summary> created. </summary>
         public static RouterJobStatus Created { get; } = new RouterJobStatus(CreatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RouterJobStatus"/> values are the same. </summary>
         public static bool operator ==(RouterJobStatus left, RouterJobStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouterJobStatus"/> values are not the same. </summary>

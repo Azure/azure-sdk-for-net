@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationSkuName Free { get; } = new AutomationSkuName(FreeValue);
         /// <summary> Basic. </summary>
         public static AutomationSkuName Basic { get; } = new AutomationSkuName(BasicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationSkuName"/> values are the same. </summary>
         public static bool operator ==(AutomationSkuName left, AutomationSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationSkuName"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Permissions. </summary>
         public static SelectPermission Permissions { get; } = new SelectPermission(PermissionsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SelectPermission"/> values are the same. </summary>
         public static bool operator ==(SelectPermission left, SelectPermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SelectPermission"/> values are not the same. </summary>

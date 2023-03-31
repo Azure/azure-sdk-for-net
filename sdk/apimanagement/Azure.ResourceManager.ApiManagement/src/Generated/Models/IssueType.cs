@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static IssueType PortThrottled { get; } = new IssueType(PortThrottledValue);
         /// <summary> Platform. </summary>
         public static IssueType Platform { get; } = new IssueType(PlatformValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IssueType"/> values are the same. </summary>
         public static bool operator ==(IssueType left, IssueType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IssueType"/> values are not the same. </summary>

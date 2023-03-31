@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static SourceControlTokenType PersonalAccessToken { get; } = new SourceControlTokenType(PersonalAccessTokenValue);
         /// <summary> Oauth. </summary>
         public static SourceControlTokenType OAuth { get; } = new SourceControlTokenType(OAuthValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SourceControlTokenType"/> values are the same. </summary>
         public static bool operator ==(SourceControlTokenType left, SourceControlTokenType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceControlTokenType"/> values are not the same. </summary>

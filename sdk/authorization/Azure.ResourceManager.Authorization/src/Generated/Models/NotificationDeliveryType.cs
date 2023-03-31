@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Email. </summary>
         public static NotificationDeliveryType Email { get; } = new NotificationDeliveryType(EmailValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NotificationDeliveryType"/> values are the same. </summary>
         public static bool operator ==(NotificationDeliveryType left, NotificationDeliveryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationDeliveryType"/> values are not the same. </summary>

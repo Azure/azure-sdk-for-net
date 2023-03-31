@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static DownloadType ComplianceDetailedPdfReport { get; } = new DownloadType(ComplianceDetailedPdfReportValue);
         /// <summary> ResourceList. </summary>
         public static DownloadType ResourceList { get; } = new DownloadType(ResourceListValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DownloadType"/> values are the same. </summary>
         public static bool operator ==(DownloadType left, DownloadType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DownloadType"/> values are not the same. </summary>

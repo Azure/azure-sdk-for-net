@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ImageState))
             {
                 writer.WritePropertyName("imageState"u8);
-                writer.WriteStringValue(ImageState.Value.ToString());
+                writer.WriteStringValue(ImageState.Value.ToSerialString());
             }
             if (Optional.IsDefined(ScheduledDeprecationOn))
             {

@@ -74,6 +74,9 @@ namespace Azure.Communication.PhoneNumbers
         public static PhoneNumberSearchResultError ProvisioningFailed { get; } = new PhoneNumberSearchResultError(ProvisioningFailedValue);
         /// <summary> UnknownSearchError. </summary>
         public static PhoneNumberSearchResultError UnknownSearchError { get; } = new PhoneNumberSearchResultError(UnknownSearchErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PhoneNumberSearchResultError"/> values are the same. </summary>
         public static bool operator ==(PhoneNumberSearchResultError left, PhoneNumberSearchResultError right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoneNumberSearchResultError"/> values are not the same. </summary>

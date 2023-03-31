@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(LastUpdatedOn))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(RunType))
             {
                 writer.WritePropertyName("runType"u8);
-                writer.WriteStringValue(RunType.Value.ToString());
+                writer.WriteStringValue(RunType.Value.ToSerialString());
             }
             if (Optional.IsDefined(AgentPoolName))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsArchiveEnabled))
             {

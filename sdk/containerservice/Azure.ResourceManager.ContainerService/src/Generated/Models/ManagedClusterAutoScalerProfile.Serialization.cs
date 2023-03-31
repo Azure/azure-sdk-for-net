@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Expander))
             {
                 writer.WritePropertyName("expander"u8);
-                writer.WriteStringValue(Expander.Value.ToString());
+                writer.WriteStringValue(Expander.Value.ToSerialString());
             }
             if (Optional.IsDefined(MaxEmptyBulkDelete))
             {

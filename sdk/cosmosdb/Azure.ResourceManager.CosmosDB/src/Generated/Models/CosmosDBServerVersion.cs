@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string V3_6Value = "3.6";
         private const string V4_0Value = "4.0";
         private const string V4_2Value = "4.2";
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBServerVersion"/> values are the same. </summary>
         public static bool operator ==(CosmosDBServerVersion left, CosmosDBServerVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBServerVersion"/> values are not the same. </summary>

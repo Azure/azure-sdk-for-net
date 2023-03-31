@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static ImdsAttestationState Disabled { get; } = new ImdsAttestationState(DisabledValue);
         /// <summary> Enabled. </summary>
         public static ImdsAttestationState Enabled { get; } = new ImdsAttestationState(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImdsAttestationState"/> values are the same. </summary>
         public static bool operator ==(ImdsAttestationState left, ImdsAttestationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImdsAttestationState"/> values are not the same. </summary>

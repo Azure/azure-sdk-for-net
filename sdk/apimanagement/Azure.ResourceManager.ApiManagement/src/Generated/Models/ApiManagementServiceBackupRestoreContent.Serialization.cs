@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(AccessType))
             {
                 writer.WritePropertyName("accessType"u8);
-                writer.WriteStringValue(AccessType.Value.ToString());
+                writer.WriteStringValue(AccessType.Value.ToSerialString());
             }
             if (Optional.IsDefined(AccessKey))
             {

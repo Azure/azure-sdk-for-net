@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static MetricsResponseGranularity PT1H { get; } = new MetricsResponseGranularity(PT1HValue);
         /// <summary> P1D. </summary>
         public static MetricsResponseGranularity P1D { get; } = new MetricsResponseGranularity(P1DValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MetricsResponseGranularity"/> values are the same. </summary>
         public static bool operator ==(MetricsResponseGranularity left, MetricsResponseGranularity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricsResponseGranularity"/> values are not the same. </summary>

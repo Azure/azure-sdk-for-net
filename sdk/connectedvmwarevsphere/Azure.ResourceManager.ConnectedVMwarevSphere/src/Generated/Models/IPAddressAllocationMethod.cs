@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static IPAddressAllocationMethod Random { get; } = new IPAddressAllocationMethod(RandomValue);
         /// <summary> other. </summary>
         public static IPAddressAllocationMethod Other { get; } = new IPAddressAllocationMethod(OtherValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IPAddressAllocationMethod"/> values are the same. </summary>
         public static bool operator ==(IPAddressAllocationMethod left, IPAddressAllocationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IPAddressAllocationMethod"/> values are not the same. </summary>

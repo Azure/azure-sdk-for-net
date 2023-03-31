@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformServiceTrafficDirection Inbound { get; } = new AppPlatformServiceTrafficDirection(InboundValue);
         /// <summary> Outbound. </summary>
         public static AppPlatformServiceTrafficDirection Outbound { get; } = new AppPlatformServiceTrafficDirection(OutboundValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformServiceTrafficDirection"/> values are the same. </summary>
         public static bool operator ==(AppPlatformServiceTrafficDirection left, AppPlatformServiceTrafficDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformServiceTrafficDirection"/> values are not the same. </summary>

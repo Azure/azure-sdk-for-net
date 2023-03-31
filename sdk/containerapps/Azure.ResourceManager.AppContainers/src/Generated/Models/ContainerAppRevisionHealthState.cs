@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppRevisionHealthState Unhealthy { get; } = new ContainerAppRevisionHealthState(UnhealthyValue);
         /// <summary> None. </summary>
         public static ContainerAppRevisionHealthState None { get; } = new ContainerAppRevisionHealthState(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppRevisionHealthState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppRevisionHealthState left, ContainerAppRevisionHealthState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppRevisionHealthState"/> values are not the same. </summary>

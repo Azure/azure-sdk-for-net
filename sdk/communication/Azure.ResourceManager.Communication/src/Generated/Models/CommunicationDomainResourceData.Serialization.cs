@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Communication
             if (Optional.IsDefined(DomainManagement))
             {
                 writer.WritePropertyName("domainManagement"u8);
-                writer.WriteStringValue(DomainManagement.Value.ToString());
+                writer.WriteStringValue(DomainManagement.Value.ToSerialString());
             }
             if (Optional.IsDefined(UserEngagementTracking))
             {
                 writer.WritePropertyName("userEngagementTracking"u8);
-                writer.WriteStringValue(UserEngagementTracking.Value.ToString());
+                writer.WriteStringValue(UserEngagementTracking.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

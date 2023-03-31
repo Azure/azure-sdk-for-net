@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
-                writer.WriteStringValue(Tier.Value.ToString());
+                writer.WriteStringValue(Tier.Value.ToSerialString());
             }
             if (Optional.IsDefined(Capacity))
             {

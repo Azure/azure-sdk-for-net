@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> ForceDetach. </summary>
         public static DiskDetachOptionType ForceDetach { get; } = new DiskDetachOptionType(ForceDetachValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskDetachOptionType"/> values are the same. </summary>
         public static bool operator ==(DiskDetachOptionType left, DiskDetachOptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskDetachOptionType"/> values are not the same. </summary>

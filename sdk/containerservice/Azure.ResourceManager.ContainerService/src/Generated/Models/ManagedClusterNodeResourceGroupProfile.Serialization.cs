@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(RestrictionLevel))
             {
                 writer.WritePropertyName("restrictionLevel"u8);
-                writer.WriteStringValue(RestrictionLevel.Value.ToString());
+                writer.WriteStringValue(RestrictionLevel.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

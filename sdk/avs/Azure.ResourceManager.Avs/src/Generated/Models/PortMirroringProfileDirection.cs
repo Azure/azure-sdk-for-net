@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static PortMirroringProfileDirection Egress { get; } = new PortMirroringProfileDirection(EgressValue);
         /// <summary> BIDIRECTIONAL. </summary>
         public static PortMirroringProfileDirection Bidirectional { get; } = new PortMirroringProfileDirection(BidirectionalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PortMirroringProfileDirection"/> values are the same. </summary>
         public static bool operator ==(PortMirroringProfileDirection left, PortMirroringProfileDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PortMirroringProfileDirection"/> values are not the same. </summary>

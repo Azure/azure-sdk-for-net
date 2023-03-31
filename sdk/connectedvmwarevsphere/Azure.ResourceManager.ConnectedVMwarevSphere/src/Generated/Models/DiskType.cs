@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static DiskType Sesparse { get; } = new DiskType(SesparseValue);
         /// <summary> unknown. </summary>
         public static DiskType Unknown { get; } = new DiskType(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskType"/> values are the same. </summary>
         public static bool operator ==(DiskType left, DiskType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskType"/> values are not the same. </summary>

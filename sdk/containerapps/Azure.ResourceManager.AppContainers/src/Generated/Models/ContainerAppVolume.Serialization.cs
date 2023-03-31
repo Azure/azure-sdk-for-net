@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
-                writer.WriteStringValue(StorageType.Value.ToString());
+                writer.WriteStringValue(StorageType.Value.ToSerialString());
             }
             if (Optional.IsDefined(StorageName))
             {

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.BotService
                 if (Kind != null)
                 {
                     writer.WritePropertyName("kind"u8);
-                    writer.WriteStringValue(Kind.Value.ToString());
+                    writer.WriteStringValue(Kind.Value.ToSerialString());
                 }
                 else
                 {

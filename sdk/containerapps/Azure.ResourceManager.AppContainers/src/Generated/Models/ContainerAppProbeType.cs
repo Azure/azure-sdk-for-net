@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppProbeType Readiness { get; } = new ContainerAppProbeType(ReadinessValue);
         /// <summary> Startup. </summary>
         public static ContainerAppProbeType Startup { get; } = new ContainerAppProbeType(StartupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppProbeType"/> values are the same. </summary>
         public static bool operator ==(ContainerAppProbeType left, ContainerAppProbeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppProbeType"/> values are not the same. </summary>

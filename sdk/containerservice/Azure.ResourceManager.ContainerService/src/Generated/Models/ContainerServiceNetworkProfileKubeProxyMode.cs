@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceNetworkProfileKubeProxyMode IPTables { get; } = new ContainerServiceNetworkProfileKubeProxyMode(IPTablesValue);
         /// <summary> IPVS proxy mode. Must be using Kubernetes version &gt;= 1.22. </summary>
         public static ContainerServiceNetworkProfileKubeProxyMode IPVS { get; } = new ContainerServiceNetworkProfileKubeProxyMode(IPVSValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceNetworkProfileKubeProxyMode"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceNetworkProfileKubeProxyMode left, ContainerServiceNetworkProfileKubeProxyMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkProfileKubeProxyMode"/> values are not the same. </summary>

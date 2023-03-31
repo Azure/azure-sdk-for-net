@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Scheduler))
             {
                 writer.WritePropertyName("scheduler"u8);
-                writer.WriteStringValue(Scheduler.Value.ToString());
+                writer.WriteStringValue(Scheduler.Value.ToSerialString());
             }
             if (Optional.IsDefined(TcpTimeoutSeconds))
             {

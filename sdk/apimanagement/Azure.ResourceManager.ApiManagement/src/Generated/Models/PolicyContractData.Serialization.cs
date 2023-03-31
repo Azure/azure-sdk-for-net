@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteStringValue(Format.Value.ToString());
+                writer.WriteStringValue(Format.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Communication.Models
             if (Optional.IsDefined(UserEngagementTracking))
             {
                 writer.WritePropertyName("userEngagementTracking"u8);
-                writer.WriteStringValue(UserEngagementTracking.Value.ToString());
+                writer.WriteStringValue(UserEngagementTracking.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

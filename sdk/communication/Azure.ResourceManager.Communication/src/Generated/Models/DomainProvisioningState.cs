@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Communication.Models
         public static DomainProvisioningState Deleting { get; } = new DomainProvisioningState(DeletingValue);
         /// <summary> Moving. </summary>
         public static DomainProvisioningState Moving { get; } = new DomainProvisioningState(MovingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DomainProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DomainProvisioningState left, DomainProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainProvisioningState"/> values are not the same. </summary>

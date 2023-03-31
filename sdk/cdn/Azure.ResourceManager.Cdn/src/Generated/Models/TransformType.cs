@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static TransformType UriEncode { get; } = new TransformType(UriEncodeValue);
         /// <summary> RemoveNulls. </summary>
         public static TransformType RemoveNulls { get; } = new TransformType(RemoveNullsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TransformType"/> values are the same. </summary>
         public static bool operator ==(TransformType left, TransformType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TransformType"/> values are not the same. </summary>

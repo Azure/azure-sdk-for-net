@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static RegionalReplicationState Completed { get; } = new RegionalReplicationState(CompletedValue);
         /// <summary> Failed. </summary>
         public static RegionalReplicationState Failed { get; } = new RegionalReplicationState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RegionalReplicationState"/> values are the same. </summary>
         public static bool operator ==(RegionalReplicationState left, RegionalReplicationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RegionalReplicationState"/> values are not the same. </summary>

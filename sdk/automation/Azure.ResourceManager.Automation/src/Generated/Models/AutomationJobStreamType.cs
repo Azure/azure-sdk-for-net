@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationJobStreamType Verbose { get; } = new AutomationJobStreamType(VerboseValue);
         /// <summary> Any. </summary>
         public static AutomationJobStreamType Any { get; } = new AutomationJobStreamType(AnyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationJobStreamType"/> values are the same. </summary>
         public static bool operator ==(AutomationJobStreamType left, AutomationJobStreamType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationJobStreamType"/> values are not the same. </summary>

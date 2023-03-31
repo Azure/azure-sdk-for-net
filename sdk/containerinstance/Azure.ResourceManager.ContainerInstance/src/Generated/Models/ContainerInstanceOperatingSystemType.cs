@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static ContainerInstanceOperatingSystemType Windows { get; } = new ContainerInstanceOperatingSystemType(WindowsValue);
         /// <summary> Linux. </summary>
         public static ContainerInstanceOperatingSystemType Linux { get; } = new ContainerInstanceOperatingSystemType(LinuxValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerInstanceOperatingSystemType"/> values are the same. </summary>
         public static bool operator ==(ContainerInstanceOperatingSystemType left, ContainerInstanceOperatingSystemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerInstanceOperatingSystemType"/> values are not the same. </summary>

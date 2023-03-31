@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleManagementUserType User { get; } = new RoleManagementUserType(UserValue);
         /// <summary> Group. </summary>
         public static RoleManagementUserType Group { get; } = new RoleManagementUserType(GroupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleManagementUserType"/> values are the same. </summary>
         public static bool operator ==(RoleManagementUserType left, RoleManagementUserType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementUserType"/> values are not the same. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(InstanceSize))
             {
                 writer.WritePropertyName("instanceSize"u8);
-                writer.WriteStringValue(InstanceSize.Value.ToString());
+                writer.WriteStringValue(InstanceSize.Value.ToSerialString());
             }
             if (Optional.IsDefined(InstanceCount))
             {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ServiceType))
             {
                 writer.WritePropertyName("serviceType"u8);
-                writer.WriteStringValue(ServiceType.Value.ToString());
+                writer.WriteStringValue(ServiceType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

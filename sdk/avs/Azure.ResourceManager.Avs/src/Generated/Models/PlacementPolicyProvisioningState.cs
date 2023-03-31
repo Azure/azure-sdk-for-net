@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static PlacementPolicyProvisioningState Updating { get; } = new PlacementPolicyProvisioningState(UpdatingValue);
         /// <summary> Canceled. </summary>
         public static PlacementPolicyProvisioningState Canceled { get; } = new PlacementPolicyProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PlacementPolicyProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PlacementPolicyProvisioningState left, PlacementPolicyProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlacementPolicyProvisioningState"/> values are not the same. </summary>

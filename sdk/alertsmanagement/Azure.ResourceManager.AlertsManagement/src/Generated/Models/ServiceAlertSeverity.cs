@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static ServiceAlertSeverity Sev3 { get; } = new ServiceAlertSeverity(Sev3Value);
         /// <summary> Sev4. </summary>
         public static ServiceAlertSeverity Sev4 { get; } = new ServiceAlertSeverity(Sev4Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceAlertSeverity"/> values are the same. </summary>
         public static bool operator ==(ServiceAlertSeverity left, ServiceAlertSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAlertSeverity"/> values are not the same. </summary>

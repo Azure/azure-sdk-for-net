@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static PolicyMode Prevention { get; } = new PolicyMode(PreventionValue);
         /// <summary> Detection. </summary>
         public static PolicyMode Detection { get; } = new PolicyMode(DetectionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyMode"/> values are the same. </summary>
         public static bool operator ==(PolicyMode left, PolicyMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyMode"/> values are not the same. </summary>

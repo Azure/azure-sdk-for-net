@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static LinuxVmGuestPatchMode ImageDefault { get; } = new LinuxVmGuestPatchMode(ImageDefaultValue);
         /// <summary> AutomaticByPlatform. </summary>
         public static LinuxVmGuestPatchMode AutomaticByPlatform { get; } = new LinuxVmGuestPatchMode(AutomaticByPlatformValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LinuxVmGuestPatchMode"/> values are the same. </summary>
         public static bool operator ==(LinuxVmGuestPatchMode left, LinuxVmGuestPatchMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinuxVmGuestPatchMode"/> values are not the same. </summary>

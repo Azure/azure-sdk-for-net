@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static VirtualMachinePriorityType Low { get; } = new VirtualMachinePriorityType(LowValue);
         /// <summary> Spot. </summary>
         public static VirtualMachinePriorityType Spot { get; } = new VirtualMachinePriorityType(SpotValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualMachinePriorityType"/> values are the same. </summary>
         public static bool operator ==(VirtualMachinePriorityType left, VirtualMachinePriorityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachinePriorityType"/> values are not the same. </summary>

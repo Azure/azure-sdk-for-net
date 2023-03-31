@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("createOption"u8);
-            writer.WriteStringValue(CreateOption.ToString());
+            writer.WriteStringValue(CreateOption.ToSerialString());
             if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);

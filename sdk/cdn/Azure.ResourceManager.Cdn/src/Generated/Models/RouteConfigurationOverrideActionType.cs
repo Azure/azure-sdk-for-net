@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleRouteConfigurationOverrideActionParameters. </summary>
         public static RouteConfigurationOverrideActionType RouteConfigurationOverrideAction { get; } = new RouteConfigurationOverrideActionType(RouteConfigurationOverrideActionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RouteConfigurationOverrideActionType"/> values are the same. </summary>
         public static bool operator ==(RouteConfigurationOverrideActionType left, RouteConfigurationOverrideActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouteConfigurationOverrideActionType"/> values are not the same. </summary>

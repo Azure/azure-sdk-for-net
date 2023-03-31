@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleCacheExpirationActionParameters. </summary>
         public static CacheExpirationActionType CacheExpirationAction { get; } = new CacheExpirationActionType(CacheExpirationActionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CacheExpirationActionType"/> values are the same. </summary>
         public static bool operator ==(CacheExpirationActionType left, CacheExpirationActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CacheExpirationActionType"/> values are not the same. </summary>

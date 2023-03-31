@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageType"u8);
-            writer.WriteStringValue(StorageType.ToString());
+            writer.WriteStringValue(StorageType.ToSerialString());
             writer.WriteEndObject();
         }
 

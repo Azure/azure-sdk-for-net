@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsEncryptionKeyStatus Connected { get; } = new AvsEncryptionKeyStatus(ConnectedValue);
         /// <summary> AccessDenied. </summary>
         public static AvsEncryptionKeyStatus AccessDenied { get; } = new AvsEncryptionKeyStatus(AccessDeniedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvsEncryptionKeyStatus"/> values are the same. </summary>
         public static bool operator ==(AvsEncryptionKeyStatus left, AvsEncryptionKeyStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsEncryptionKeyStatus"/> values are not the same. </summary>

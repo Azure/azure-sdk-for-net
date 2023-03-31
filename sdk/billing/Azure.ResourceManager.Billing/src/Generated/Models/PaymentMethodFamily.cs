@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Billing.Models
         public static PaymentMethodFamily CreditCard { get; } = new PaymentMethodFamily(CreditCardValue);
         /// <summary> CheckWire. </summary>
         public static PaymentMethodFamily CheckWire { get; } = new PaymentMethodFamily(CheckWireValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PaymentMethodFamily"/> values are the same. </summary>
         public static bool operator ==(PaymentMethodFamily left, PaymentMethodFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PaymentMethodFamily"/> values are not the same. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Billing.Models
         public static SubscriptionEnrollmentAccountStatus TransferredOut { get; } = new SubscriptionEnrollmentAccountStatus(TransferredOutValue);
         /// <summary> Transferring. </summary>
         public static SubscriptionEnrollmentAccountStatus Transferring { get; } = new SubscriptionEnrollmentAccountStatus(TransferringValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SubscriptionEnrollmentAccountStatus"/> values are the same. </summary>
         public static bool operator ==(SubscriptionEnrollmentAccountStatus left, SubscriptionEnrollmentAccountStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SubscriptionEnrollmentAccountStatus"/> values are not the same. </summary>

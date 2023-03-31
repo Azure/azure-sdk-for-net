@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(VirtualNetworkType))
             {
                 writer.WritePropertyName("virtualNetworkType"u8);
-                writer.WriteStringValue(VirtualNetworkType.Value.ToString());
+                writer.WriteStringValue(VirtualNetworkType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ApiVersionConstraint))
             {

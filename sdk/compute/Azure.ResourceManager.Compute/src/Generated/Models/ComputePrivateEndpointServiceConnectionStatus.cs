@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static ComputePrivateEndpointServiceConnectionStatus Approved { get; } = new ComputePrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static ComputePrivateEndpointServiceConnectionStatus Rejected { get; } = new ComputePrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ComputePrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(ComputePrivateEndpointServiceConnectionStatus left, ComputePrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputePrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

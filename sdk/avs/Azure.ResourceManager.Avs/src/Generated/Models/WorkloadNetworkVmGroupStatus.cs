@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static WorkloadNetworkVmGroupStatus Success { get; } = new WorkloadNetworkVmGroupStatus(SuccessValue);
         /// <summary> FAILURE. </summary>
         public static WorkloadNetworkVmGroupStatus Failure { get; } = new WorkloadNetworkVmGroupStatus(FailureValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkloadNetworkVmGroupStatus"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkVmGroupStatus left, WorkloadNetworkVmGroupStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkVmGroupStatus"/> values are not the same. </summary>

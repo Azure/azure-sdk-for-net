@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryWebhookAction ChartPush { get; } = new ContainerRegistryWebhookAction(ChartPushValue);
         /// <summary> chart_delete. </summary>
         public static ContainerRegistryWebhookAction ChartDelete { get; } = new ContainerRegistryWebhookAction(ChartDeleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryWebhookAction"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryWebhookAction left, ContainerRegistryWebhookAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryWebhookAction"/> values are not the same. </summary>

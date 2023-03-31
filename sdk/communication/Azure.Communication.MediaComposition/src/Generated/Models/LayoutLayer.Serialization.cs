@@ -21,7 +21,7 @@ namespace Azure.Communication.MediaComposition.Models
             if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
-                writer.WriteStringValue(Visibility.Value.ToString());
+                writer.WriteStringValue(Visibility.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

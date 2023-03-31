@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(Internet))
             {
                 writer.WritePropertyName("internet"u8);
-                writer.WriteStringValue(Internet.Value.ToString());
+                writer.WriteStringValue(Internet.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(IdentitySources))
             {

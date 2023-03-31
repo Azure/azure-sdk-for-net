@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PatchMode))
             {
                 writer.WritePropertyName("patchMode"u8);
-                writer.WriteStringValue(PatchMode.Value.ToString());
+                writer.WriteStringValue(PatchMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnableHotpatching))
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AssessmentMode))
             {
                 writer.WritePropertyName("assessmentMode"u8);
-                writer.WriteStringValue(AssessmentMode.Value.ToString());
+                writer.WriteStringValue(AssessmentMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(AutomaticByPlatformSettings))
             {

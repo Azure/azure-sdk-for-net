@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(BaseImageTriggerType))
             {
                 writer.WritePropertyName("baseImageTriggerType"u8);
-                writer.WriteStringValue(BaseImageTriggerType.Value.ToString());
+                writer.WriteStringValue(BaseImageTriggerType.Value.ToSerialString());
             }
             if (Optional.IsDefined(UpdateTriggerEndpoint))
             {
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(UpdateTriggerPayloadType))
             {
                 writer.WritePropertyName("updateTriggerPayloadType"u8);
-                writer.WriteStringValue(UpdateTriggerPayloadType.Value.ToString());
+                writer.WriteStringValue(UpdateTriggerPayloadType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);

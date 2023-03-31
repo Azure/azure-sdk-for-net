@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static SnapshotStorageAccountType PremiumLrs { get; } = new SnapshotStorageAccountType(PremiumLrsValue);
         /// <summary> Standard zone redundant storage. </summary>
         public static SnapshotStorageAccountType StandardZrs { get; } = new SnapshotStorageAccountType(StandardZrsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SnapshotStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(SnapshotStorageAccountType left, SnapshotStorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SnapshotStorageAccountType"/> values are not the same. </summary>

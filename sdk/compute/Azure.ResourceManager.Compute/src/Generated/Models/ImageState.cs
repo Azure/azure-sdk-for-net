@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static ImageState ScheduledForDeprecation { get; } = new ImageState(ScheduledForDeprecationValue);
         /// <summary> Deprecated. </summary>
         public static ImageState Deprecated { get; } = new ImageState(DeprecatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImageState"/> values are the same. </summary>
         public static bool operator ==(ImageState left, ImageState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageState"/> values are not the same. </summary>

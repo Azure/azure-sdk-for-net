@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static TimeRangeFilter SevenDays { get; } = new TimeRangeFilter(SevenDaysValue);
         /// <summary> 30d. </summary>
         public static TimeRangeFilter ThirtyDays { get; } = new TimeRangeFilter(ThirtyDaysValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TimeRangeFilter"/> values are the same. </summary>
         public static bool operator ==(TimeRangeFilter left, TimeRangeFilter right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TimeRangeFilter"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Attestation.Models
         public static AttestationPrivateEndpointServiceConnectionStatus Approved { get; } = new AttestationPrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static AttestationPrivateEndpointServiceConnectionStatus Rejected { get; } = new AttestationPrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AttestationPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(AttestationPrivateEndpointServiceConnectionStatus left, AttestationPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AttestationPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

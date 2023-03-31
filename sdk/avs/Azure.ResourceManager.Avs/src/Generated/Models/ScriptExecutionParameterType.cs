@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static ScriptExecutionParameterType SecureValue { get; } = new ScriptExecutionParameterType(SecureValueValue);
         /// <summary> Credential. </summary>
         public static ScriptExecutionParameterType Credential { get; } = new ScriptExecutionParameterType(CredentialValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScriptExecutionParameterType"/> values are the same. </summary>
         public static bool operator ==(ScriptExecutionParameterType left, ScriptExecutionParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptExecutionParameterType"/> values are not the same. </summary>

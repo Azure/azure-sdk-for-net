@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            writer.WriteStringValue(Status.ToSerialString());
             writer.WriteEndObject();
         }
 

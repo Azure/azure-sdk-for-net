@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedProtocols)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -82,22 +82,22 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(ForwardingProtocol))
             {
                 writer.WritePropertyName("forwardingProtocol"u8);
-                writer.WriteStringValue(ForwardingProtocol.Value.ToString());
+                writer.WriteStringValue(ForwardingProtocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(LinkToDefaultDomain))
             {
                 writer.WritePropertyName("linkToDefaultDomain"u8);
-                writer.WriteStringValue(LinkToDefaultDomain.Value.ToString());
+                writer.WriteStringValue(LinkToDefaultDomain.Value.ToSerialString());
             }
             if (Optional.IsDefined(HttpsRedirect))
             {
                 writer.WritePropertyName("httpsRedirect"u8);
-                writer.WriteStringValue(HttpsRedirect.Value.ToString());
+                writer.WriteStringValue(HttpsRedirect.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
-                writer.WriteStringValue(EnabledState.Value.ToString());
+                writer.WriteStringValue(EnabledState.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

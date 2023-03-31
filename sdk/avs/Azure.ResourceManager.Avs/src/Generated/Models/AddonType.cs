@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static AddonType HCX { get; } = new AddonType(HCXValue);
         /// <summary> Arc. </summary>
         public static AddonType Arc { get; } = new AddonType(ArcValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AddonType"/> values are the same. </summary>
         public static bool operator ==(AddonType left, AddonType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AddonType"/> values are not the same. </summary>

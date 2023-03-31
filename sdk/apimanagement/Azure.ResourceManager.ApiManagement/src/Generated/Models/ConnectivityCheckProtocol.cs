@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ConnectivityCheckProtocol Http { get; } = new ConnectivityCheckProtocol(HttpValue);
         /// <summary> HTTPS. </summary>
         public static ConnectivityCheckProtocol Https { get; } = new ConnectivityCheckProtocol(HttpsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConnectivityCheckProtocol"/> values are the same. </summary>
         public static bool operator ==(ConnectivityCheckProtocol left, ConnectivityCheckProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectivityCheckProtocol"/> values are not the same. </summary>

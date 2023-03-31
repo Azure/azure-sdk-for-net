@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(QueryStringCachingBehavior))
             {
                 writer.WritePropertyName("queryStringCachingBehavior"u8);
-                writer.WriteStringValue(QueryStringCachingBehavior.Value.ToString());
+                writer.WriteStringValue(QueryStringCachingBehavior.Value.ToSerialString());
             }
             if (Optional.IsDefined(QueryParameters))
             {

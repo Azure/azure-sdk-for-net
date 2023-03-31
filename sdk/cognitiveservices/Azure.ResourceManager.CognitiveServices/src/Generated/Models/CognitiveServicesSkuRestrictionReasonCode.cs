@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static CognitiveServicesSkuRestrictionReasonCode QuotaId { get; } = new CognitiveServicesSkuRestrictionReasonCode(QuotaIdValue);
         /// <summary> NotAvailableForSubscription. </summary>
         public static CognitiveServicesSkuRestrictionReasonCode NotAvailableForSubscription { get; } = new CognitiveServicesSkuRestrictionReasonCode(NotAvailableForSubscriptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CognitiveServicesSkuRestrictionReasonCode"/> values are the same. </summary>
         public static bool operator ==(CognitiveServicesSkuRestrictionReasonCode left, CognitiveServicesSkuRestrictionReasonCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CognitiveServicesSkuRestrictionReasonCode"/> values are not the same. </summary>

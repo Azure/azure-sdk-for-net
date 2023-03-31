@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Analysis.Models
         public static AnalysisSkuTier Basic { get; } = new AnalysisSkuTier(BasicValue);
         /// <summary> Standard. </summary>
         public static AnalysisSkuTier Standard { get; } = new AnalysisSkuTier(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AnalysisSkuTier"/> values are the same. </summary>
         public static bool operator ==(AnalysisSkuTier left, AnalysisSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalysisSkuTier"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static CognitiveServicesAccountDeploymentScaleType Standard { get; } = new CognitiveServicesAccountDeploymentScaleType(StandardValue);
         /// <summary> Manual. </summary>
         public static CognitiveServicesAccountDeploymentScaleType Manual { get; } = new CognitiveServicesAccountDeploymentScaleType(ManualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CognitiveServicesAccountDeploymentScaleType"/> values are the same. </summary>
         public static bool operator ==(CognitiveServicesAccountDeploymentScaleType left, CognitiveServicesAccountDeploymentScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CognitiveServicesAccountDeploymentScaleType"/> values are not the same. </summary>

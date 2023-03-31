@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(SchemaType))
             {
                 writer.WritePropertyName("schemaType"u8);
-                writer.WriteStringValue(SchemaType.Value.ToString());
+                writer.WriteStringValue(SchemaType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Description))
             {

@@ -29,6 +29,9 @@ namespace Azure.Communication.JobRouter.Models
         public static WorkerSelectorState Active { get; } = new WorkerSelectorState(ActiveValue);
         /// <summary> expired. </summary>
         public static WorkerSelectorState Expired { get; } = new WorkerSelectorState(ExpiredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkerSelectorState"/> values are the same. </summary>
         public static bool operator ==(WorkerSelectorState left, WorkerSelectorState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkerSelectorState"/> values are not the same. </summary>

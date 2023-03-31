@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("operator"u8);
-            writer.WriteStringValue(Operator.ToString());
+            writer.WriteStringValue(Operator.ToSerialString());
             writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
             writer.WritePropertyName("contactEmails"u8);
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Consumption.Models
             if (Optional.IsDefined(ThresholdType))
             {
                 writer.WritePropertyName("thresholdType"u8);
-                writer.WriteStringValue(ThresholdType.Value.ToString());
+                writer.WriteStringValue(ThresholdType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Locale))
             {
                 writer.WritePropertyName("locale"u8);
-                writer.WriteStringValue(Locale.Value.ToString());
+                writer.WriteStringValue(Locale.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

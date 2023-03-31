@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(RebootSetting))
             {
                 writer.WritePropertyName("rebootSetting"u8);
-                writer.WriteStringValue(RebootSetting.Value.ToString());
+                writer.WriteStringValue(RebootSetting.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

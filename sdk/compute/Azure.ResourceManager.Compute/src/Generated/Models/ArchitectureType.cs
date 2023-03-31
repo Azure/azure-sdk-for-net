@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static ArchitectureType X64 { get; } = new ArchitectureType(X64Value);
         /// <summary> Arm64. </summary>
         public static ArchitectureType Arm64 { get; } = new ArchitectureType(Arm64Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ArchitectureType"/> values are the same. </summary>
         public static bool operator ==(ArchitectureType left, ArchitectureType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArchitectureType"/> values are not the same. </summary>

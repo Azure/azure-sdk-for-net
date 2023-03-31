@@ -29,6 +29,9 @@ namespace Azure.Communication.PhoneNumbers
         public static PhoneNumberAssignmentType Person { get; } = new PhoneNumberAssignmentType(PersonValue);
         /// <summary> application. </summary>
         public static PhoneNumberAssignmentType Application { get; } = new PhoneNumberAssignmentType(ApplicationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PhoneNumberAssignmentType"/> values are the same. </summary>
         public static bool operator ==(PhoneNumberAssignmentType left, PhoneNumberAssignmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoneNumberAssignmentType"/> values are not the same. </summary>

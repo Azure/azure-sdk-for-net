@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static VmGuestPatchRebootStatus Failed { get; } = new VmGuestPatchRebootStatus(FailedValue);
         /// <summary> Completed. </summary>
         public static VmGuestPatchRebootStatus Completed { get; } = new VmGuestPatchRebootStatus(CompletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VmGuestPatchRebootStatus"/> values are the same. </summary>
         public static bool operator ==(VmGuestPatchRebootStatus left, VmGuestPatchRebootStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmGuestPatchRebootStatus"/> values are not the same. </summary>

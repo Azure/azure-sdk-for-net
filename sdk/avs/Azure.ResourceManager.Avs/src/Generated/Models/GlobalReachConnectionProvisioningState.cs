@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static GlobalReachConnectionProvisioningState Updating { get; } = new GlobalReachConnectionProvisioningState(UpdatingValue);
         /// <summary> Canceled. </summary>
         public static GlobalReachConnectionProvisioningState Canceled { get; } = new GlobalReachConnectionProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GlobalReachConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(GlobalReachConnectionProvisioningState left, GlobalReachConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GlobalReachConnectionProvisioningState"/> values are not the same. </summary>

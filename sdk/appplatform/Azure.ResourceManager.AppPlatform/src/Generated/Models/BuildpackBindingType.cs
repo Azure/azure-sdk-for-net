@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static BuildpackBindingType NewRelic { get; } = new BuildpackBindingType(NewRelicValue);
         /// <summary> ElasticAPM. </summary>
         public static BuildpackBindingType ElasticApm { get; } = new BuildpackBindingType(ElasticApmValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BuildpackBindingType"/> values are the same. </summary>
         public static bool operator ==(BuildpackBindingType left, BuildpackBindingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BuildpackBindingType"/> values are not the same. </summary>

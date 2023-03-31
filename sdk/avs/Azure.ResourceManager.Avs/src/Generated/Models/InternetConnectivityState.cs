@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static InternetConnectivityState Enabled { get; } = new InternetConnectivityState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static InternetConnectivityState Disabled { get; } = new InternetConnectivityState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InternetConnectivityState"/> values are the same. </summary>
         public static bool operator ==(InternetConnectivityState left, InternetConnectivityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InternetConnectivityState"/> values are not the same. </summary>

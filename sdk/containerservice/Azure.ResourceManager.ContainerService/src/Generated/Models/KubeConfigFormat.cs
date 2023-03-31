@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static KubeConfigFormat Azure { get; } = new KubeConfigFormat(AzureValue);
         /// <summary> Return exec format kubeconfig. This format requires kubelogin binary in the path. </summary>
         public static KubeConfigFormat Exec { get; } = new KubeConfigFormat(ExecValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KubeConfigFormat"/> values are the same. </summary>
         public static bool operator ==(KubeConfigFormat left, KubeConfigFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubeConfigFormat"/> values are not the same. </summary>

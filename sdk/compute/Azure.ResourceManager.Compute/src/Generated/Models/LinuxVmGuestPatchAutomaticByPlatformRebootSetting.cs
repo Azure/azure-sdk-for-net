@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static LinuxVmGuestPatchAutomaticByPlatformRebootSetting Never { get; } = new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(NeverValue);
         /// <summary> Always. </summary>
         public static LinuxVmGuestPatchAutomaticByPlatformRebootSetting Always { get; } = new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(AlwaysValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/> values are the same. </summary>
         public static bool operator ==(LinuxVmGuestPatchAutomaticByPlatformRebootSetting left, LinuxVmGuestPatchAutomaticByPlatformRebootSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/> values are not the same. </summary>

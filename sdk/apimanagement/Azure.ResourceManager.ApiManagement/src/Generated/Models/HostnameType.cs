@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static HostnameType Scm { get; } = new HostnameType(ScmValue);
         /// <summary> DeveloperPortal. </summary>
         public static HostnameType DeveloperPortal { get; } = new HostnameType(DeveloperPortalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HostnameType"/> values are the same. </summary>
         public static bool operator ==(HostnameType left, HostnameType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HostnameType"/> values are not the same. </summary>

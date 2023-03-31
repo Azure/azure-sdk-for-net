@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static ServerPortOperator GreaterThanOrEqual { get; } = new ServerPortOperator(GreaterThanOrEqualValue);
         /// <summary> RegEx. </summary>
         public static ServerPortOperator RegEx { get; } = new ServerPortOperator(RegExValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServerPortOperator"/> values are the same. </summary>
         public static bool operator ==(ServerPortOperator left, ServerPortOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerPortOperator"/> values are not the same. </summary>

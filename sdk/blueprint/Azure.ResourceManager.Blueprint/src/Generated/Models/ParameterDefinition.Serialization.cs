@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(TemplateParameterType.ToString());
+            writer.WriteStringValue(TemplateParameterType.ToSerialString());
             if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);

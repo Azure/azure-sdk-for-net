@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static VirtualMachineDiskType None { get; } = new VirtualMachineDiskType(NoneValue);
         /// <summary> Unmanaged. </summary>
         public static VirtualMachineDiskType Unmanaged { get; } = new VirtualMachineDiskType(UnmanagedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualMachineDiskType"/> values are the same. </summary>
         public static bool operator ==(VirtualMachineDiskType left, VirtualMachineDiskType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachineDiskType"/> values are not the same. </summary>

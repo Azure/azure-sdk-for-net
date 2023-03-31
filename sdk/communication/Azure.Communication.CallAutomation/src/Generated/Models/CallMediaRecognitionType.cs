@@ -32,6 +32,9 @@ namespace Azure.Communication.CallAutomation
         public static CallMediaRecognitionType Dtmf { get; } = new CallMediaRecognitionType(DtmfValue);
         /// <summary> choices. </summary>
         public static CallMediaRecognitionType Choices { get; } = new CallMediaRecognitionType(ChoicesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CallMediaRecognitionType"/> values are the same. </summary>
         public static bool operator ==(CallMediaRecognitionType left, CallMediaRecognitionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CallMediaRecognitionType"/> values are not the same. </summary>

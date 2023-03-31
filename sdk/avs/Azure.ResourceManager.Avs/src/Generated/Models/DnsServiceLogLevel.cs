@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static DnsServiceLogLevel Error { get; } = new DnsServiceLogLevel(ErrorValue);
         /// <summary> FATAL. </summary>
         public static DnsServiceLogLevel Fatal { get; } = new DnsServiceLogLevel(FatalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DnsServiceLogLevel"/> values are the same. </summary>
         public static bool operator ==(DnsServiceLogLevel left, DnsServiceLogLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsServiceLogLevel"/> values are not the same. </summary>

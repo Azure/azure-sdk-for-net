@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(RunbookType))
             {
                 writer.WritePropertyName("runbookType"u8);
-                writer.WriteStringValue(RunbookType.Value.ToString());
+                writer.WriteStringValue(RunbookType.Value.ToSerialString());
             }
             if (Optional.IsDefined(PublishContentLink))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsLogVerboseEnabled))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(LastModifiedBy))
             {

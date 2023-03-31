@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryProvisioningState Failed { get; } = new ContainerRegistryProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static ContainerRegistryProvisioningState Canceled { get; } = new ContainerRegistryProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryProvisioningState left, ContainerRegistryProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryProvisioningState"/> values are not the same. </summary>

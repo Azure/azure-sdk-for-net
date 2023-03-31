@@ -20,7 +20,7 @@ namespace Azure.Communication.Rooms
             if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
-                writer.WriteStringValue(Role.Value.ToString());
+                writer.WriteStringValue(Role.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

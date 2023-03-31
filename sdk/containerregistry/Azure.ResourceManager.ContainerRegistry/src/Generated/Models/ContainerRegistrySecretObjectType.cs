@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistrySecretObjectType Opaque { get; } = new ContainerRegistrySecretObjectType(OpaqueValue);
         /// <summary> Vaultsecret. </summary>
         public static ContainerRegistrySecretObjectType VaultSecret { get; } = new ContainerRegistrySecretObjectType(VaultSecretValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistrySecretObjectType"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistrySecretObjectType left, ContainerRegistrySecretObjectType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistrySecretObjectType"/> values are not the same. </summary>

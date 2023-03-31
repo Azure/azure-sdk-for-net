@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationCountType Status { get; } = new AutomationCountType(StatusValue);
         /// <summary> nodeconfiguration. </summary>
         public static AutomationCountType NodeConfiguration { get; } = new AutomationCountType(NodeConfigurationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationCountType"/> values are the same. </summary>
         public static bool operator ==(AutomationCountType left, AutomationCountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationCountType"/> values are not the same. </summary>

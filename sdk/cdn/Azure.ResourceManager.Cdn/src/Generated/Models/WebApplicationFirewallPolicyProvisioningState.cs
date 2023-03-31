@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static WebApplicationFirewallPolicyProvisioningState Succeeded { get; } = new WebApplicationFirewallPolicyProvisioningState(SucceededValue);
         /// <summary> Failed. </summary>
         public static WebApplicationFirewallPolicyProvisioningState Failed { get; } = new WebApplicationFirewallPolicyProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallPolicyProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WebApplicationFirewallPolicyProvisioningState left, WebApplicationFirewallPolicyProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationFirewallPolicyProvisioningState"/> values are not the same. </summary>

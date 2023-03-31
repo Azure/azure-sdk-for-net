@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleHttpVersionConditionParameters. </summary>
         public static HttpVersionMatchConditionType HttpVersionCondition { get; } = new HttpVersionMatchConditionType(HttpVersionConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HttpVersionMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(HttpVersionMatchConditionType left, HttpVersionMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HttpVersionMatchConditionType"/> values are not the same. </summary>

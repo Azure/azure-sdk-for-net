@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformServicePowerState Running { get; } = new AppPlatformServicePowerState(RunningValue);
         /// <summary> Stopped. </summary>
         public static AppPlatformServicePowerState Stopped { get; } = new AppPlatformServicePowerState(StoppedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformServicePowerState"/> values are the same. </summary>
         public static bool operator ==(AppPlatformServicePowerState left, AppPlatformServicePowerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformServicePowerState"/> values are not the same. </summary>

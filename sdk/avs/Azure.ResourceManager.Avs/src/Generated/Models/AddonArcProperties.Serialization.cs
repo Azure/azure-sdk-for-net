@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStringValue(VCenter);
             }
             writer.WritePropertyName("addonType"u8);
-            writer.WriteStringValue(AddonType.ToString());
+            writer.WriteStringValue(AddonType.ToSerialString());
             writer.WriteEndObject();
         }
 

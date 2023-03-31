@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static VmGuestPatchRebootSetting Never { get; } = new VmGuestPatchRebootSetting(NeverValue);
         /// <summary> Always. </summary>
         public static VmGuestPatchRebootSetting Always { get; } = new VmGuestPatchRebootSetting(AlwaysValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VmGuestPatchRebootSetting"/> values are the same. </summary>
         public static bool operator ==(VmGuestPatchRebootSetting left, VmGuestPatchRebootSetting right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmGuestPatchRebootSetting"/> values are not the same. </summary>

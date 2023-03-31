@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppCertificateProvisioningState DeleteFailed { get; } = new ContainerAppCertificateProvisioningState(DeleteFailedValue);
         /// <summary> Pending. </summary>
         public static ContainerAppCertificateProvisioningState Pending { get; } = new ContainerAppCertificateProvisioningState(PendingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppCertificateProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppCertificateProvisioningState left, ContainerAppCertificateProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppCertificateProvisioningState"/> values are not the same. </summary>

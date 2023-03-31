@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(RestartPolicy))
             {
                 writer.WritePropertyName("restartPolicy"u8);
-                writer.WriteStringValue(RestartPolicy.Value.ToString());
+                writer.WriteStringValue(RestartPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(IPAddress))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteObjectValue(IPAddress);
             }
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OSType.ToString());
+            writer.WriteStringValue(OSType.ToSerialString());
             if (Optional.IsCollectionDefined(Volumes))
             {
                 writer.WritePropertyName("volumes"u8);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteStringValue(Sku.Value.ToString());
+                writer.WriteStringValue(Sku.Value.ToSerialString());
             }
             if (Optional.IsDefined(EncryptionProperties))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerInstance
             if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
-                writer.WriteStringValue(Priority.Value.ToString());
+                writer.WriteStringValue(Priority.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

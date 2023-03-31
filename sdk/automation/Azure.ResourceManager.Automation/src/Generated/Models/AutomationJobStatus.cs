@@ -62,6 +62,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationJobStatus Resuming { get; } = new AutomationJobStatus(ResumingValue);
         /// <summary> Removing. </summary>
         public static AutomationJobStatus Removing { get; } = new AutomationJobStatus(RemovingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationJobStatus"/> values are the same. </summary>
         public static bool operator ==(AutomationJobStatus left, AutomationJobStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationJobStatus"/> values are not the same. </summary>

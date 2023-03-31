@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static UriFileNameOperator GreaterThanOrEqual { get; } = new UriFileNameOperator(GreaterThanOrEqualValue);
         /// <summary> RegEx. </summary>
         public static UriFileNameOperator RegEx { get; } = new UriFileNameOperator(RegExValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UriFileNameOperator"/> values are the same. </summary>
         public static bool operator ==(UriFileNameOperator left, UriFileNameOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriFileNameOperator"/> values are not the same. </summary>

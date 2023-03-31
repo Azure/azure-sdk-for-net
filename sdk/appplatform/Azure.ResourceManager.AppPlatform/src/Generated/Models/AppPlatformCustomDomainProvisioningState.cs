@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformCustomDomainProvisioningState Failed { get; } = new AppPlatformCustomDomainProvisioningState(FailedValue);
         /// <summary> Deleting. </summary>
         public static AppPlatformCustomDomainProvisioningState Deleting { get; } = new AppPlatformCustomDomainProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformCustomDomainProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AppPlatformCustomDomainProvisioningState left, AppPlatformCustomDomainProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformCustomDomainProvisioningState"/> values are not the same. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name.ToString());
+            writer.WriteStringValue(Name.ToSerialString());
             writer.WritePropertyName("capacity"u8);
             writer.WriteNumberValue(Capacity);
             writer.WriteEndObject();

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static ComputeEncryptionType EncryptionAtRestWithCustomerKey { get; } = new ComputeEncryptionType(EncryptionAtRestWithCustomerKeyValue);
         /// <summary> Disk is encrypted at rest with 2 layers of encryption. One of the keys is Customer managed and the other key is Platform managed. </summary>
         public static ComputeEncryptionType EncryptionAtRestWithPlatformAndCustomerKeys { get; } = new ComputeEncryptionType(EncryptionAtRestWithPlatformAndCustomerKeysValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ComputeEncryptionType"/> values are the same. </summary>
         public static bool operator ==(ComputeEncryptionType left, ComputeEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeEncryptionType"/> values are not the same. </summary>

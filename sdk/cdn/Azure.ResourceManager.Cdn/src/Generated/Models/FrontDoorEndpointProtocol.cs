@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static FrontDoorEndpointProtocol Http { get; } = new FrontDoorEndpointProtocol(HttpValue);
         /// <summary> Https. </summary>
         public static FrontDoorEndpointProtocol Https { get; } = new FrontDoorEndpointProtocol(HttpsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorEndpointProtocol"/> values are the same. </summary>
         public static bool operator ==(FrontDoorEndpointProtocol left, FrontDoorEndpointProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorEndpointProtocol"/> values are not the same. </summary>

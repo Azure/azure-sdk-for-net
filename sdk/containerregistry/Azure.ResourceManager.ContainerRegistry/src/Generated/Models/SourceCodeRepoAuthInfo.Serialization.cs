@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tokenType"u8);
-            writer.WriteStringValue(TokenType.ToString());
+            writer.WriteStringValue(TokenType.ToSerialString());
             writer.WritePropertyName("token"u8);
             writer.WriteStringValue(Token);
             if (Optional.IsDefined(RefreshToken))

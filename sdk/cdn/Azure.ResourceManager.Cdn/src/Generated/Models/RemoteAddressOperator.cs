@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static RemoteAddressOperator IPMatch { get; } = new RemoteAddressOperator(IPMatchValue);
         /// <summary> GeoMatch. </summary>
         public static RemoteAddressOperator GeoMatch { get; } = new RemoteAddressOperator(GeoMatchValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RemoteAddressOperator"/> values are the same. </summary>
         public static bool operator ==(RemoteAddressOperator left, RemoteAddressOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RemoteAddressOperator"/> values are not the same. </summary>

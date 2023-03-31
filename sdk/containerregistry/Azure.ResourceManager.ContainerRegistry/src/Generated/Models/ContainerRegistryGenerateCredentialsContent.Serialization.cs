@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name.Value.ToString());
+                writer.WriteStringValue(Name.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

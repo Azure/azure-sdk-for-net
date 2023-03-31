@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Notary. </summary>
         public static ContainerRegistryTrustPolicyType Notary { get; } = new ContainerRegistryTrustPolicyType(NotaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryTrustPolicyType"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryTrustPolicyType left, ContainerRegistryTrustPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryTrustPolicyType"/> values are not the same. </summary>

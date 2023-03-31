@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleManagementScopeType ManagementGroup { get; } = new RoleManagementScopeType(ManagementGroupValue);
         /// <summary> resourcegroup. </summary>
         public static RoleManagementScopeType ResourceGroup { get; } = new RoleManagementScopeType(ResourceGroupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleManagementScopeType"/> values are the same. </summary>
         public static bool operator ==(RoleManagementScopeType left, RoleManagementScopeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementScopeType"/> values are not the same. </summary>

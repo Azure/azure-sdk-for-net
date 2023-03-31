@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServicePrivateLinkServiceConnectionStatus Rejected { get; } = new ContainerServicePrivateLinkServiceConnectionStatus(RejectedValue);
         /// <summary> Disconnected. </summary>
         public static ContainerServicePrivateLinkServiceConnectionStatus Disconnected { get; } = new ContainerServicePrivateLinkServiceConnectionStatus(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServicePrivateLinkServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(ContainerServicePrivateLinkServiceConnectionStatus left, ContainerServicePrivateLinkServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServicePrivateLinkServiceConnectionStatus"/> values are not the same. </summary>

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
-                writer.WriteStringValue(EnabledState.Value.ToString());
+                writer.WriteStringValue(EnabledState.Value.ToSerialString());
             }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                writer.WriteStringValue(Mode.Value.ToSerialString());
             }
             if (Optional.IsDefined(DefaultRedirectUri))
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DefaultCustomBlockResponseStatusCode != null)
                 {
                     writer.WritePropertyName("defaultCustomBlockResponseStatusCode"u8);
-                    writer.WriteStringValue(DefaultCustomBlockResponseStatusCode.Value.ToString());
+                    writer.WriteNumberValue(DefaultCustomBlockResponseStatusCode.Value.ToSerialInt32());
                 }
                 else
                 {

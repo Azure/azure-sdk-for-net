@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static SourceControlSyncType PartialSync { get; } = new SourceControlSyncType(PartialSyncValue);
         /// <summary> FullSync. </summary>
         public static SourceControlSyncType FullSync { get; } = new SourceControlSyncType(FullSyncValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SourceControlSyncType"/> values are the same. </summary>
         public static bool operator ==(SourceControlSyncType left, SourceControlSyncType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceControlSyncType"/> values are not the same. </summary>

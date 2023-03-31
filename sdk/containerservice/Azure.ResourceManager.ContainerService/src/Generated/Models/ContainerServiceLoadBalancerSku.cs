@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceLoadBalancerSku Standard { get; } = new ContainerServiceLoadBalancerSku(StandardValue);
         /// <summary> Use a basic Load Balancer with limited functionality. </summary>
         public static ContainerServiceLoadBalancerSku Basic { get; } = new ContainerServiceLoadBalancerSku(BasicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceLoadBalancerSku"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceLoadBalancerSku left, ContainerServiceLoadBalancerSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceLoadBalancerSku"/> values are not the same. </summary>

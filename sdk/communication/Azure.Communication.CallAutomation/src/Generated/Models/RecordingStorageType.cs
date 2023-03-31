@@ -29,6 +29,9 @@ namespace Azure.Communication.CallAutomation
         public static RecordingStorageType Acs { get; } = new RecordingStorageType(AcsValue);
         /// <summary> blobStorage. </summary>
         public static RecordingStorageType BlobStorage { get; } = new RecordingStorageType(BlobStorageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecordingStorageType"/> values are the same. </summary>
         public static bool operator ==(RecordingStorageType left, RecordingStorageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecordingStorageType"/> values are not the same. </summary>

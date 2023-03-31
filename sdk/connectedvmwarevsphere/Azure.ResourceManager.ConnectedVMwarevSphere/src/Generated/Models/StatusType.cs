@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static StatusType Disconnected { get; } = new StatusType(DisconnectedValue);
         /// <summary> Error. </summary>
         public static StatusType Error { get; } = new StatusType(ErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StatusType"/> values are the same. </summary>
         public static bool operator ==(StatusType left, StatusType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StatusType"/> values are not the same. </summary>

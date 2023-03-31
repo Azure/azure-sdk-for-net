@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static BlueprintTargetScope Subscription { get; } = new BlueprintTargetScope(SubscriptionValue);
         /// <summary> The blueprint targets a management group during blueprint assignment. This is reserved for future use. </summary>
         public static BlueprintTargetScope ManagementGroup { get; } = new BlueprintTargetScope(ManagementGroupValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlueprintTargetScope"/> values are the same. </summary>
         public static bool operator ==(BlueprintTargetScope left, BlueprintTargetScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlueprintTargetScope"/> values are not the same. </summary>

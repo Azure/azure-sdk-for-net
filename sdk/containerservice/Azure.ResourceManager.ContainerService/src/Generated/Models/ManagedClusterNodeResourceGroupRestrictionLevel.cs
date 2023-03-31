@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ManagedClusterNodeResourceGroupRestrictionLevel Unrestricted { get; } = new ManagedClusterNodeResourceGroupRestrictionLevel(UnrestrictedValue);
         /// <summary> Only */read RBAC permissions allowed on the managed node resource group. </summary>
         public static ManagedClusterNodeResourceGroupRestrictionLevel ReadOnly { get; } = new ManagedClusterNodeResourceGroupRestrictionLevel(ReadOnlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterNodeResourceGroupRestrictionLevel"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterNodeResourceGroupRestrictionLevel left, ManagedClusterNodeResourceGroupRestrictionLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterNodeResourceGroupRestrictionLevel"/> values are not the same. </summary>

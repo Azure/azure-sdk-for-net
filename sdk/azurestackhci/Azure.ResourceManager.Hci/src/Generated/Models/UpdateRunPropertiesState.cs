@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static UpdateRunPropertiesState InProgress { get; } = new UpdateRunPropertiesState(InProgressValue);
         /// <summary> Failed. </summary>
         public static UpdateRunPropertiesState Failed { get; } = new UpdateRunPropertiesState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UpdateRunPropertiesState"/> values are the same. </summary>
         public static bool operator ==(UpdateRunPropertiesState left, UpdateRunPropertiesState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpdateRunPropertiesState"/> values are not the same. </summary>

@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppConnectedEnvironmentProvisioningState InfrastructureSetupComplete { get; } = new ContainerAppConnectedEnvironmentProvisioningState(InfrastructureSetupCompleteValue);
         /// <summary> ScheduledForDelete. </summary>
         public static ContainerAppConnectedEnvironmentProvisioningState ScheduledForDelete { get; } = new ContainerAppConnectedEnvironmentProvisioningState(ScheduledForDeleteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppConnectedEnvironmentProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppConnectedEnvironmentProvisioningState left, ContainerAppConnectedEnvironmentProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppConnectedEnvironmentProvisioningState"/> values are not the same. </summary>

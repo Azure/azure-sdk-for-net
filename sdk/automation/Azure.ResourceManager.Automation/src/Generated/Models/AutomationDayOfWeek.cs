@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationDayOfWeek Saturday { get; } = new AutomationDayOfWeek(SaturdayValue);
         /// <summary> Sunday. </summary>
         public static AutomationDayOfWeek Sunday { get; } = new AutomationDayOfWeek(SundayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationDayOfWeek"/> values are the same. </summary>
         public static bool operator ==(AutomationDayOfWeek left, AutomationDayOfWeek right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationDayOfWeek"/> values are not the same. </summary>

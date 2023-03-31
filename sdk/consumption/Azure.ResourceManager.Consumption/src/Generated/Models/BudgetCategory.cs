@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Cost. </summary>
         public static BudgetCategory Cost { get; } = new BudgetCategory(CostValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BudgetCategory"/> values are the same. </summary>
         public static bool operator ==(BudgetCategory left, BudgetCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BudgetCategory"/> values are not the same. </summary>

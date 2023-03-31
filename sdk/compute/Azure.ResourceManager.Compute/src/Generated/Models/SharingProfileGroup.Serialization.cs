@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(GroupType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(GroupType.Value.ToString());
+                writer.WriteStringValue(GroupType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Ids))
             {

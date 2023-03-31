@@ -29,6 +29,9 @@ namespace Azure.AI.Language.QuestionAnswering
         public static RankerKind QuestionOnly { get; } = new RankerKind(QuestionOnlyValue);
         /// <summary> Default ranker. </summary>
         public static RankerKind Default { get; } = new RankerKind(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RankerKind"/> values are the same. </summary>
         public static bool operator ==(RankerKind left, RankerKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RankerKind"/> values are not the same. </summary>

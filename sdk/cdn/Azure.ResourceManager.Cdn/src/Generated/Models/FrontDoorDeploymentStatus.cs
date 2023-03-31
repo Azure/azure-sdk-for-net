@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static FrontDoorDeploymentStatus Succeeded { get; } = new FrontDoorDeploymentStatus(SucceededValue);
         /// <summary> Failed. </summary>
         public static FrontDoorDeploymentStatus Failed { get; } = new FrontDoorDeploymentStatus(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorDeploymentStatus"/> values are the same. </summary>
         public static bool operator ==(FrontDoorDeploymentStatus left, FrontDoorDeploymentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorDeploymentStatus"/> values are not the same. </summary>

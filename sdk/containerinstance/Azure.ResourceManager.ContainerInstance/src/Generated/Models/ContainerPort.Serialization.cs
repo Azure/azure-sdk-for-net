@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
-                writer.WriteStringValue(Protocol.Value.ToString());
+                writer.WriteStringValue(Protocol.Value.ToSerialString());
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);

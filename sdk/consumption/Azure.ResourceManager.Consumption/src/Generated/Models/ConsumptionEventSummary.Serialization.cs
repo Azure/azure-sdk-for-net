@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
-                writer.WriteStringValue(EventType.Value.ToString());
+                writer.WriteStringValue(EventType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

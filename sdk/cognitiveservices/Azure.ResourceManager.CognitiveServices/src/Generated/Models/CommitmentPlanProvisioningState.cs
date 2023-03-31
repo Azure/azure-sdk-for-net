@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static CommitmentPlanProvisioningState Succeeded { get; } = new CommitmentPlanProvisioningState(SucceededValue);
         /// <summary> Canceled. </summary>
         public static CommitmentPlanProvisioningState Canceled { get; } = new CommitmentPlanProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CommitmentPlanProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CommitmentPlanProvisioningState left, CommitmentPlanProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommitmentPlanProvisioningState"/> values are not the same. </summary>

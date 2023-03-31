@@ -32,6 +32,9 @@ namespace Azure.Communication.CallAutomation
         public static PlaySourceTypeInternal Text { get; } = new PlaySourceTypeInternal(TextValue);
         /// <summary> ssml. </summary>
         public static PlaySourceTypeInternal Ssml { get; } = new PlaySourceTypeInternal(SsmlValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PlaySourceTypeInternal"/> values are the same. </summary>
         public static bool operator ==(PlaySourceTypeInternal left, PlaySourceTypeInternal right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlaySourceTypeInternal"/> values are not the same. </summary>

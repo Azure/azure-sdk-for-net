@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformCertificateProvisioningState Failed { get; } = new AppPlatformCertificateProvisioningState(FailedValue);
         /// <summary> Deleting. </summary>
         public static AppPlatformCertificateProvisioningState Deleting { get; } = new AppPlatformCertificateProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformCertificateProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AppPlatformCertificateProvisioningState left, AppPlatformCertificateProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformCertificateProvisioningState"/> values are not the same. </summary>

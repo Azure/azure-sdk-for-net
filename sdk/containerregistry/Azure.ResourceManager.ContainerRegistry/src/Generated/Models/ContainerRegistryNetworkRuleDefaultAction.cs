@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryNetworkRuleDefaultAction Allow { get; } = new ContainerRegistryNetworkRuleDefaultAction(AllowValue);
         /// <summary> Deny. </summary>
         public static ContainerRegistryNetworkRuleDefaultAction Deny { get; } = new ContainerRegistryNetworkRuleDefaultAction(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryNetworkRuleDefaultAction"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryNetworkRuleDefaultAction left, ContainerRegistryNetworkRuleDefaultAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryNetworkRuleDefaultAction"/> values are not the same. </summary>

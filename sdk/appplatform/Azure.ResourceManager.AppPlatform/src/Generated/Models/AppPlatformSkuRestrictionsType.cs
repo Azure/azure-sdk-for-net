@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformSkuRestrictionsType Location { get; } = new AppPlatformSkuRestrictionsType(LocationValue);
         /// <summary> Zone. </summary>
         public static AppPlatformSkuRestrictionsType Zone { get; } = new AppPlatformSkuRestrictionsType(ZoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformSkuRestrictionsType"/> values are the same. </summary>
         public static bool operator ==(AppPlatformSkuRestrictionsType left, AppPlatformSkuRestrictionsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformSkuRestrictionsType"/> values are not the same. </summary>

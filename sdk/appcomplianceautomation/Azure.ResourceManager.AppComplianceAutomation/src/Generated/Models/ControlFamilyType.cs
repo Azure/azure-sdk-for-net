@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static ControlFamilyType PartiallyAutomated { get; } = new ControlFamilyType(PartiallyAutomatedValue);
         /// <summary> Manual. </summary>
         public static ControlFamilyType Manual { get; } = new ControlFamilyType(ManualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ControlFamilyType"/> values are the same. </summary>
         public static bool operator ==(ControlFamilyType left, ControlFamilyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ControlFamilyType"/> values are not the same. </summary>

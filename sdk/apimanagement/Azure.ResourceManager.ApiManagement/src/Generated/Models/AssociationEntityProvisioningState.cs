@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> created. </summary>
         public static AssociationEntityProvisioningState Created { get; } = new AssociationEntityProvisioningState(CreatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AssociationEntityProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AssociationEntityProvisioningState left, AssociationEntityProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssociationEntityProvisioningState"/> values are not the same. </summary>

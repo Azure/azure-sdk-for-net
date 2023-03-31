@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static DatastoreStatus LostCommunication { get; } = new DatastoreStatus(LostCommunicationValue);
         /// <summary> DeadOrError. </summary>
         public static DatastoreStatus DeadOrError { get; } = new DatastoreStatus(DeadOrErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DatastoreStatus"/> values are the same. </summary>
         public static bool operator ==(DatastoreStatus left, DatastoreStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DatastoreStatus"/> values are not the same. </summary>

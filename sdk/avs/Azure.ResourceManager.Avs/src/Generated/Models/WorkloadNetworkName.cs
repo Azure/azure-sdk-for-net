@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> default. </summary>
         public static WorkloadNetworkName Default { get; } = new WorkloadNetworkName(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkloadNetworkName"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkName left, WorkloadNetworkName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkName"/> values are not the same. </summary>

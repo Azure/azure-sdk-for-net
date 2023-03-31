@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
             uri.AppendPath(automationAccountName, true);
             uri.AppendPath("/nodecounts/", false);
-            uri.AppendPath(countType.ToString(), true);
+            uri.AppendPath(countType.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

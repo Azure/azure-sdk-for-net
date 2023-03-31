@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Advisor.Models
         public static DigestConfigState Active { get; } = new DigestConfigState(ActiveValue);
         /// <summary> Disabled. </summary>
         public static DigestConfigState Disabled { get; } = new DigestConfigState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DigestConfigState"/> values are the same. </summary>
         public static bool operator ==(DigestConfigState left, DigestConfigState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DigestConfigState"/> values are not the same. </summary>

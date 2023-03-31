@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static ControlStatus Failed { get; } = new ControlStatus(FailedValue);
         /// <summary> NotApplicable. </summary>
         public static ControlStatus NotApplicable { get; } = new ControlStatus(NotApplicableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ControlStatus"/> values are the same. </summary>
         public static bool operator ==(ControlStatus left, ControlStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ControlStatus"/> values are not the same. </summary>

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(ZoneRedundancy))
             {
                 writer.WritePropertyName("zoneRedundancy"u8);
-                writer.WriteStringValue(ZoneRedundancy.Value.ToString());
+                writer.WriteStringValue(ZoneRedundancy.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

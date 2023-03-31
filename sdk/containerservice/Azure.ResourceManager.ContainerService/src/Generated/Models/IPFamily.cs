@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static IPFamily IPv4 { get; } = new IPFamily(IPv4Value);
         /// <summary> IPv6. </summary>
         public static IPFamily IPv6 { get; } = new IPFamily(IPv6Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IPFamily"/> values are the same. </summary>
         public static bool operator ==(IPFamily left, IPFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IPFamily"/> values are not the same. </summary>

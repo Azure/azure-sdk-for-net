@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static WorkloadNetworkPortMirroringProfileProvisioningState Updating { get; } = new WorkloadNetworkPortMirroringProfileProvisioningState(UpdatingValue);
         /// <summary> Canceled. </summary>
         public static WorkloadNetworkPortMirroringProfileProvisioningState Canceled { get; } = new WorkloadNetworkPortMirroringProfileProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkloadNetworkPortMirroringProfileProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkPortMirroringProfileProvisioningState left, WorkloadNetworkPortMirroringProfileProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkPortMirroringProfileProvisioningState"/> values are not the same. </summary>

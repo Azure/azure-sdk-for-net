@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ManagedClusterPodIdentityProvisioningState Succeeded { get; } = new ManagedClusterPodIdentityProvisioningState(SucceededValue);
         /// <summary> Updating. </summary>
         public static ManagedClusterPodIdentityProvisioningState Updating { get; } = new ManagedClusterPodIdentityProvisioningState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterPodIdentityProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterPodIdentityProvisioningState left, ManagedClusterPodIdentityProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterPodIdentityProvisioningState"/> values are not the same. </summary>

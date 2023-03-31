@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static WindowsVmGuestPatchMode AutomaticByOS { get; } = new WindowsVmGuestPatchMode(AutomaticByOSValue);
         /// <summary> AutomaticByPlatform. </summary>
         public static WindowsVmGuestPatchMode AutomaticByPlatform { get; } = new WindowsVmGuestPatchMode(AutomaticByPlatformValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WindowsVmGuestPatchMode"/> values are the same. </summary>
         public static bool operator ==(WindowsVmGuestPatchMode left, WindowsVmGuestPatchMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WindowsVmGuestPatchMode"/> values are not the same. </summary>

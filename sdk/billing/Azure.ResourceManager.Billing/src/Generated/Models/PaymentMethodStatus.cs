@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Billing.Models
         public static PaymentMethodStatus Active { get; } = new PaymentMethodStatus(ActiveValue);
         /// <summary> inactive. </summary>
         public static PaymentMethodStatus Inactive { get; } = new PaymentMethodStatus(InactiveValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PaymentMethodStatus"/> values are the same. </summary>
         public static bool operator ==(PaymentMethodStatus left, PaymentMethodStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PaymentMethodStatus"/> values are not the same. </summary>

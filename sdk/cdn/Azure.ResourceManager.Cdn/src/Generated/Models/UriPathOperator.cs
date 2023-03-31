@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static UriPathOperator Wildcard { get; } = new UriPathOperator(WildcardValue);
         /// <summary> RegEx. </summary>
         public static UriPathOperator RegEx { get; } = new UriPathOperator(RegExValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UriPathOperator"/> values are the same. </summary>
         public static bool operator ==(UriPathOperator left, UriPathOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriPathOperator"/> values are not the same. </summary>

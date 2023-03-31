@@ -33,6 +33,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static SourceRegistryLoginMode None { get; } = new SourceRegistryLoginMode(NoneValue);
         /// <summary> Default. </summary>
         public static SourceRegistryLoginMode Default { get; } = new SourceRegistryLoginMode(DefaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SourceRegistryLoginMode"/> values are the same. </summary>
         public static bool operator ==(SourceRegistryLoginMode left, SourceRegistryLoginMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceRegistryLoginMode"/> values are not the same. </summary>

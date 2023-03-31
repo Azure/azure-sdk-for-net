@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
-            writer.WriteStringValue(ActionType.ToString());
+            writer.WriteStringValue(ActionType.ToSerialString());
             writer.WritePropertyName("redirectType"u8);
-            writer.WriteStringValue(RedirectType.ToString());
+            writer.WriteStringValue(RedirectType.ToSerialString());
             if (Optional.IsDefined(DestinationProtocol))
             {
                 writer.WritePropertyName("destinationProtocol"u8);
-                writer.WriteStringValue(DestinationProtocol.Value.ToString());
+                writer.WriteStringValue(DestinationProtocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(CustomPath))
             {

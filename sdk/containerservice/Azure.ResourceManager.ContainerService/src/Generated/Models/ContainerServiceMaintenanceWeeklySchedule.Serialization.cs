@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WritePropertyName("intervalWeeks"u8);
             writer.WriteNumberValue(IntervalWeeks);
             writer.WritePropertyName("dayOfWeek"u8);
-            writer.WriteStringValue(DayOfWeek.ToString());
+            writer.WriteStringValue(DayOfWeek.ToSerialString());
             writer.WriteEndObject();
         }
 

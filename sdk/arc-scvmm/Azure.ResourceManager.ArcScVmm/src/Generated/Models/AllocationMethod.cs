@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public static AllocationMethod Dynamic { get; } = new AllocationMethod(DynamicValue);
         /// <summary> Static. </summary>
         public static AllocationMethod Static { get; } = new AllocationMethod(StaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AllocationMethod"/> values are the same. </summary>
         public static bool operator ==(AllocationMethod left, AllocationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AllocationMethod"/> values are not the same. </summary>

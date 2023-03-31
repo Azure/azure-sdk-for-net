@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static CognitiveServicesPrivateEndpointConnectionProvisioningState Deleting { get; } = new CognitiveServicesPrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static CognitiveServicesPrivateEndpointConnectionProvisioningState Failed { get; } = new CognitiveServicesPrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CognitiveServicesPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CognitiveServicesPrivateEndpointConnectionProvisioningState left, CognitiveServicesPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CognitiveServicesPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

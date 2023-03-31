@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(SessionAffinityState))
             {
                 writer.WritePropertyName("sessionAffinityState"u8);
-                writer.WriteStringValue(SessionAffinityState.Value.ToString());
+                writer.WriteStringValue(SessionAffinityState.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

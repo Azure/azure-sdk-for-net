@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Indicates that the source snapshot was deleted while the background copy of the resource created via CopyStart operation was in progress. </summary>
         public static CopyCompletionErrorReason CopySourceNotFound { get; } = new CopyCompletionErrorReason(CopySourceNotFoundValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CopyCompletionErrorReason"/> values are the same. </summary>
         public static bool operator ==(CopyCompletionErrorReason left, CopyCompletionErrorReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CopyCompletionErrorReason"/> values are not the same. </summary>

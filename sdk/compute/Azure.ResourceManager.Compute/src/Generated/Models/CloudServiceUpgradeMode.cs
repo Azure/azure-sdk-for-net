@@ -36,6 +36,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static CloudServiceUpgradeMode Manual { get; } = new CloudServiceUpgradeMode(ManualValue);
         /// <summary> Simultaneous. </summary>
         public static CloudServiceUpgradeMode Simultaneous { get; } = new CloudServiceUpgradeMode(SimultaneousValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CloudServiceUpgradeMode"/> values are the same. </summary>
         public static bool operator ==(CloudServiceUpgradeMode left, CloudServiceUpgradeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CloudServiceUpgradeMode"/> values are not the same. </summary>

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(LifecycleStatus))
             {
                 writer.WritePropertyName("lifecycleStatus"u8);
-                writer.WriteStringValue(LifecycleStatus.Value.ToString());
+                writer.WriteStringValue(LifecycleStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(Format))
             {

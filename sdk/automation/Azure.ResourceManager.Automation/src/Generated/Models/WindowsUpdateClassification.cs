@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static WindowsUpdateClassification Tools { get; } = new WindowsUpdateClassification(ToolsValue);
         /// <summary> Updates. </summary>
         public static WindowsUpdateClassification Updates { get; } = new WindowsUpdateClassification(UpdatesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WindowsUpdateClassification"/> values are the same. </summary>
         public static bool operator ==(WindowsUpdateClassification left, WindowsUpdateClassification right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WindowsUpdateClassification"/> values are not the same. </summary>

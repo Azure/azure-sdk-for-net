@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static ContainerGroupLogAnalyticsLogType ContainerInsights { get; } = new ContainerGroupLogAnalyticsLogType(ContainerInsightsValue);
         /// <summary> ContainerInstanceLogs. </summary>
         public static ContainerGroupLogAnalyticsLogType ContainerInstanceLogs { get; } = new ContainerGroupLogAnalyticsLogType(ContainerInstanceLogsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerGroupLogAnalyticsLogType"/> values are the same. </summary>
         public static bool operator ==(ContainerGroupLogAnalyticsLogType left, ContainerGroupLogAnalyticsLogType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerGroupLogAnalyticsLogType"/> values are not the same. </summary>

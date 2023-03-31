@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRulePostArgsConditionParameters. </summary>
         public static PostArgsMatchConditionType PostArgsCondition { get; } = new PostArgsMatchConditionType(PostArgsConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PostArgsMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(PostArgsMatchConditionType left, PostArgsMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostArgsMatchConditionType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static ServiceAccountEncryptionKeySource MicrosoftCognitiveServices { get; } = new ServiceAccountEncryptionKeySource(MicrosoftCognitiveServicesValue);
         /// <summary> Microsoft.KeyVault. </summary>
         public static ServiceAccountEncryptionKeySource MicrosoftKeyVault { get; } = new ServiceAccountEncryptionKeySource(MicrosoftKeyVaultValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceAccountEncryptionKeySource"/> values are the same. </summary>
         public static bool operator ==(ServiceAccountEncryptionKeySource left, ServiceAccountEncryptionKeySource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAccountEncryptionKeySource"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static ProbeActionType TCPSocketAction { get; } = new ProbeActionType(TCPSocketActionValue);
         /// <summary> ExecAction. </summary>
         public static ProbeActionType ExecAction { get; } = new ProbeActionType(ExecActionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ProbeActionType"/> values are the same. </summary>
         public static bool operator ==(ProbeActionType left, ProbeActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProbeActionType"/> values are not the same. </summary>

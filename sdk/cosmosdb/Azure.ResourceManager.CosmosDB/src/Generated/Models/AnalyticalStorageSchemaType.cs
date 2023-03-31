@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static AnalyticalStorageSchemaType WellDefined { get; } = new AnalyticalStorageSchemaType(WellDefinedValue);
         /// <summary> FullFidelity. </summary>
         public static AnalyticalStorageSchemaType FullFidelity { get; } = new AnalyticalStorageSchemaType(FullFidelityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AnalyticalStorageSchemaType"/> values are the same. </summary>
         public static bool operator ==(AnalyticalStorageSchemaType left, AnalyticalStorageSchemaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyticalStorageSchemaType"/> values are not the same. </summary>

@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ContainerService
             }
             if (format != null)
             {
-                uri.AppendQuery("format", format.Value.ToString(), true);
+                uri.AppendQuery("format", format.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

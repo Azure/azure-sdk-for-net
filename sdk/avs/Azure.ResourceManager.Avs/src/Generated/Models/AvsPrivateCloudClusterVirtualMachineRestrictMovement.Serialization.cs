@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(RestrictMovement))
             {
                 writer.WritePropertyName("restrictMovement"u8);
-                writer.WriteStringValue(RestrictMovement.Value.ToString());
+                writer.WriteStringValue(RestrictMovement.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

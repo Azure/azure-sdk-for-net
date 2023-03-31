@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CdnResourceType Endpoints { get; } = new CdnResourceType(EndpointsValue);
         /// <summary> Microsoft.Cdn/Profiles/AfdEndpoints. </summary>
         public static CdnResourceType FrontDoorEndpoints { get; } = new CdnResourceType(FrontDoorEndpointsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CdnResourceType"/> values are the same. </summary>
         public static bool operator ==(CdnResourceType left, CdnResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CdnResourceType"/> values are not the same. </summary>

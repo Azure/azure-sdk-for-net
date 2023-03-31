@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> MonitorServiceList. </summary>
         public static RetrievedInformationIdentifier MonitorServiceList { get; } = new RetrievedInformationIdentifier(MonitorServiceListValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RetrievedInformationIdentifier"/> values are the same. </summary>
         public static bool operator ==(RetrievedInformationIdentifier left, RetrievedInformationIdentifier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RetrievedInformationIdentifier"/> values are not the same. </summary>

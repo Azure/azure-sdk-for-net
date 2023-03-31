@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformSkuScaleType Manual { get; } = new AppPlatformSkuScaleType(ManualValue);
         /// <summary> Automatic. </summary>
         public static AppPlatformSkuScaleType Automatic { get; } = new AppPlatformSkuScaleType(AutomaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformSkuScaleType"/> values are the same. </summary>
         public static bool operator ==(AppPlatformSkuScaleType left, AppPlatformSkuScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformSkuScaleType"/> values are not the same. </summary>

@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Advisor
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteStringValue(Category.Value.ToString());
+                writer.WriteStringValue(Category.Value.ToSerialString());
             }
             if (Optional.IsDefined(Impact))
             {
                 writer.WritePropertyName("impact"u8);
-                writer.WriteStringValue(Impact.Value.ToString());
+                writer.WriteStringValue(Impact.Value.ToSerialString());
             }
             if (Optional.IsDefined(ImpactedField))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Advisor
             if (Optional.IsDefined(Risk))
             {
                 writer.WritePropertyName("risk"u8);
-                writer.WriteStringValue(Risk.Value.ToString());
+                writer.WriteStringValue(Risk.Value.ToSerialString());
             }
             if (Optional.IsDefined(ShortDescription))
             {

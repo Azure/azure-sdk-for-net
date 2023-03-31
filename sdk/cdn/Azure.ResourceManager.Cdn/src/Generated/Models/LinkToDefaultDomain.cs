@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static LinkToDefaultDomain Enabled { get; } = new LinkToDefaultDomain(EnabledValue);
         /// <summary> Disabled. </summary>
         public static LinkToDefaultDomain Disabled { get; } = new LinkToDefaultDomain(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LinkToDefaultDomain"/> values are the same. </summary>
         public static bool operator ==(LinkToDefaultDomain left, LinkToDefaultDomain right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinkToDefaultDomain"/> values are not the same. </summary>

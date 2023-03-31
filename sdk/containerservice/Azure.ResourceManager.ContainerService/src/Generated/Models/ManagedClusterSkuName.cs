@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Basic. </summary>
         public static ManagedClusterSkuName Basic { get; } = new ManagedClusterSkuName(BasicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterSkuName"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterSkuName left, ManagedClusterSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterSkuName"/> values are not the same. </summary>

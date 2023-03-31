@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static DestinationProtocol Http { get; } = new DestinationProtocol(HttpValue);
         /// <summary> Https. </summary>
         public static DestinationProtocol Https { get; } = new DestinationProtocol(HttpsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DestinationProtocol"/> values are the same. </summary>
         public static bool operator ==(DestinationProtocol left, DestinationProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DestinationProtocol"/> values are not the same. </summary>

@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("recognizeInputType"u8);
-            writer.WriteStringValue(RecognizeInputType.ToString());
+            writer.WriteStringValue(RecognizeInputType.ToSerialString());
             if (Optional.IsDefined(PlayPrompt))
             {
                 writer.WritePropertyName("playPrompt"u8);

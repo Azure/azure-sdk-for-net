@@ -80,6 +80,9 @@ namespace Azure.ResourceManager.BotService.Models
         public static BotChannelName SearchAssistant { get; } = new BotChannelName(SearchAssistantValue);
         /// <summary> M365Extensions. </summary>
         public static BotChannelName M365Extensions { get; } = new BotChannelName(M365ExtensionsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BotChannelName"/> values are the same. </summary>
         public static bool operator ==(BotChannelName left, BotChannelName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BotChannelName"/> values are not the same. </summary>

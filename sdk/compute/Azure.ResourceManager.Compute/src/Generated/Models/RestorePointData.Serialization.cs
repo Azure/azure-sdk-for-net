@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ConsistencyMode))
             {
                 writer.WritePropertyName("consistencyMode"u8);
-                writer.WriteStringValue(ConsistencyMode.Value.ToString());
+                writer.WriteStringValue(ConsistencyMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(TimeCreated))
             {

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryRunType AutoBuild { get; } = new ContainerRegistryRunType(AutoBuildValue);
         /// <summary> AutoRun. </summary>
         public static ContainerRegistryRunType AutoRun { get; } = new ContainerRegistryRunType(AutoRunValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryRunType"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryRunType left, ContainerRegistryRunType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryRunType"/> values are not the same. </summary>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStringValue(CertificatePassword);
             }
             writer.WritePropertyName("storeName"u8);
-            writer.WriteStringValue(StoreName.ToString());
+            writer.WriteStringValue(StoreName.ToSerialString());
             if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);

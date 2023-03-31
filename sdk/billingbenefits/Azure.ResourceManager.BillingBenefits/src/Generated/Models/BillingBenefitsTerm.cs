@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static BillingBenefitsTerm P3Y { get; } = new BillingBenefitsTerm(P3YValue);
         /// <summary> P5Y. </summary>
         public static BillingBenefitsTerm P5Y { get; } = new BillingBenefitsTerm(P5YValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BillingBenefitsTerm"/> values are the same. </summary>
         public static bool operator ==(BillingBenefitsTerm left, BillingBenefitsTerm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingBenefitsTerm"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Pods are given IPs from the PodCIDR address space but use Azure Routing Domains rather than Kubenet reference plugins host-local and bridge. </summary>
         public static ContainerServiceNetworkPluginMode Overlay { get; } = new ContainerServiceNetworkPluginMode(OverlayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPluginMode"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceNetworkPluginMode left, ContainerServiceNetworkPluginMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPluginMode"/> values are not the same. </summary>

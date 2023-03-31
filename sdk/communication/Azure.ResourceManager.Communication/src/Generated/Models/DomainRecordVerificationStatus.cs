@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Communication.Models
         public static DomainRecordVerificationStatus Verified { get; } = new DomainRecordVerificationStatus(VerifiedValue);
         /// <summary> CancellationRequested. </summary>
         public static DomainRecordVerificationStatus CancellationRequested { get; } = new DomainRecordVerificationStatus(CancellationRequestedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DomainRecordVerificationStatus"/> values are the same. </summary>
         public static bool operator ==(DomainRecordVerificationStatus left, DomainRecordVerificationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainRecordVerificationStatus"/> values are not the same. </summary>

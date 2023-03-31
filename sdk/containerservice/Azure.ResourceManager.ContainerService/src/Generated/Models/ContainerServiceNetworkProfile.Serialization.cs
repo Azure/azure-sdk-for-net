@@ -19,27 +19,27 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(NetworkPlugin))
             {
                 writer.WritePropertyName("networkPlugin"u8);
-                writer.WriteStringValue(NetworkPlugin.Value.ToString());
+                writer.WriteStringValue(NetworkPlugin.Value.ToSerialString());
             }
             if (Optional.IsDefined(NetworkPluginMode))
             {
                 writer.WritePropertyName("networkPluginMode"u8);
-                writer.WriteStringValue(NetworkPluginMode.Value.ToString());
+                writer.WriteStringValue(NetworkPluginMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(NetworkPolicy))
             {
                 writer.WritePropertyName("networkPolicy"u8);
-                writer.WriteStringValue(NetworkPolicy.Value.ToString());
+                writer.WriteStringValue(NetworkPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(NetworkMode))
             {
                 writer.WritePropertyName("networkMode"u8);
-                writer.WriteStringValue(NetworkMode.Value.ToString());
+                writer.WriteStringValue(NetworkMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(EbpfDataplane))
             {
                 writer.WritePropertyName("ebpfDataplane"u8);
-                writer.WriteStringValue(EbpfDataplane.Value.ToString());
+                writer.WriteStringValue(EbpfDataplane.Value.ToSerialString());
             }
             if (Optional.IsDefined(PodCidr))
             {
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(OutboundType))
             {
                 writer.WritePropertyName("outboundType"u8);
-                writer.WriteStringValue(OutboundType.Value.ToString());
+                writer.WriteStringValue(OutboundType.Value.ToSerialString());
             }
             if (Optional.IsDefined(LoadBalancerSku))
             {
                 writer.WritePropertyName("loadBalancerSku"u8);
-                writer.WriteStringValue(LoadBalancerSku.Value.ToString());
+                writer.WriteStringValue(LoadBalancerSku.Value.ToSerialString());
             }
             if (Optional.IsDefined(LoadBalancerProfile))
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in IPFamilies)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

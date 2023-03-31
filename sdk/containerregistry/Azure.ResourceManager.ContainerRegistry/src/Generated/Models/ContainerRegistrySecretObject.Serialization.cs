@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ObjectType.Value.ToString());
+                writer.WriteStringValue(ObjectType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

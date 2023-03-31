@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> instanceView. </summary>
         public static CapacityReservationGroupInstanceViewType InstanceView { get; } = new CapacityReservationGroupInstanceViewType(InstanceViewValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CapacityReservationGroupInstanceViewType"/> values are the same. </summary>
         public static bool operator ==(CapacityReservationGroupInstanceViewType left, CapacityReservationGroupInstanceViewType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CapacityReservationGroupInstanceViewType"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <summary> MonitorServiceList. </summary>
         public static ServiceAlertMetadataIdentifier MonitorServiceList { get; } = new ServiceAlertMetadataIdentifier(MonitorServiceListValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceAlertMetadataIdentifier"/> values are the same. </summary>
         public static bool operator ==(ServiceAlertMetadataIdentifier left, ServiceAlertMetadataIdentifier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAlertMetadataIdentifier"/> values are not the same. </summary>

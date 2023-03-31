@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static WorkloadNetworkDnsServiceProvisioningState Updating { get; } = new WorkloadNetworkDnsServiceProvisioningState(UpdatingValue);
         /// <summary> Canceled. </summary>
         public static WorkloadNetworkDnsServiceProvisioningState Canceled { get; } = new WorkloadNetworkDnsServiceProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkloadNetworkDnsServiceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkDnsServiceProvisioningState left, WorkloadNetworkDnsServiceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkDnsServiceProvisioningState"/> values are not the same. </summary>

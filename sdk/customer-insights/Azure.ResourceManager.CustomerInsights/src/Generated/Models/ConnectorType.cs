@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public static ConnectorType ExchangeOnline { get; } = new ConnectorType(ExchangeOnlineValue);
         /// <summary> Outbound. </summary>
         public static ConnectorType Outbound { get; } = new ConnectorType(OutboundValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConnectorType"/> values are the same. </summary>
         public static bool operator ==(ConnectorType left, ConnectorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectorType"/> values are not the same. </summary>

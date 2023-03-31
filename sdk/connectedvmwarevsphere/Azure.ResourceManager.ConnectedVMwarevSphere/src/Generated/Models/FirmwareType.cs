@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static FirmwareType Bios { get; } = new FirmwareType(BiosValue);
         /// <summary> efi. </summary>
         public static FirmwareType Efi { get; } = new FirmwareType(EfiValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FirmwareType"/> values are the same. </summary>
         public static bool operator ==(FirmwareType left, FirmwareType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirmwareType"/> values are not the same. </summary>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStringValue(ReportCreatorTenantId);
             }
             writer.WritePropertyName("downloadType"u8);
-            writer.WriteStringValue(DownloadType.ToString());
+            writer.WriteStringValue(DownloadType.ToSerialString());
             if (Optional.IsDefined(OfferGuid))
             {
                 writer.WritePropertyName("offerGuid"u8);

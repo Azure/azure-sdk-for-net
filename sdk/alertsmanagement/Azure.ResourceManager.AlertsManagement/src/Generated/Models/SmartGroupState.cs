@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static SmartGroupState Acknowledged { get; } = new SmartGroupState(AcknowledgedValue);
         /// <summary> Closed. </summary>
         public static SmartGroupState Closed { get; } = new SmartGroupState(ClosedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SmartGroupState"/> values are the same. </summary>
         public static bool operator ==(SmartGroupState left, SmartGroupState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SmartGroupState"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleCookiesConditionParameters. </summary>
         public static CookiesMatchConditionType CookiesCondition { get; } = new CookiesMatchConditionType(CookiesConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CookiesMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(CookiesMatchConditionType left, CookiesMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CookiesMatchConditionType"/> values are not the same. </summary>

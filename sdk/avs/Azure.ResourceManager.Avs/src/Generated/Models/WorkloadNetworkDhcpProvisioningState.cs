@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static WorkloadNetworkDhcpProvisioningState Updating { get; } = new WorkloadNetworkDhcpProvisioningState(UpdatingValue);
         /// <summary> Canceled. </summary>
         public static WorkloadNetworkDhcpProvisioningState Canceled { get; } = new WorkloadNetworkDhcpProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkloadNetworkDhcpProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkDhcpProvisioningState left, WorkloadNetworkDhcpProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkDhcpProvisioningState"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static RecurrenceType Weekly { get; } = new RecurrenceType(WeeklyValue);
         /// <summary> Monthly. </summary>
         public static RecurrenceType Monthly { get; } = new RecurrenceType(MonthlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecurrenceType"/> values are the same. </summary>
         public static bool operator ==(RecurrenceType left, RecurrenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecurrenceType"/> values are not the same. </summary>

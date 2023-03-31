@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ConnectivityStatusType Success { get; } = new ConnectivityStatusType(SuccessValue);
         /// <summary> failure. </summary>
         public static ConnectivityStatusType Failure { get; } = new ConnectivityStatusType(FailureValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConnectivityStatusType"/> values are the same. </summary>
         public static bool operator ==(ConnectivityStatusType left, ConnectivityStatusType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectivityStatusType"/> values are not the same. </summary>

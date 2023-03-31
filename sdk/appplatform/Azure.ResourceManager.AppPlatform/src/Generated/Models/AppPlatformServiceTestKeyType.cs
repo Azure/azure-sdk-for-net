@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformServiceTestKeyType Primary { get; } = new AppPlatformServiceTestKeyType(PrimaryValue);
         /// <summary> Secondary. </summary>
         public static AppPlatformServiceTestKeyType Secondary { get; } = new AppPlatformServiceTestKeyType(SecondaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformServiceTestKeyType"/> values are the same. </summary>
         public static bool operator ==(AppPlatformServiceTestKeyType left, AppPlatformServiceTestKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformServiceTestKeyType"/> values are not the same. </summary>

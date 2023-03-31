@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public static NotificationThresholdType Actual { get; } = new NotificationThresholdType(ActualValue);
         /// <summary> Forecasted costs budget alerts provide advanced notification that your spending trends are likely to exceed your allocated budget, as it relies on forecasted cost predictions. </summary>
         public static NotificationThresholdType Forecasted { get; } = new NotificationThresholdType(ForecastedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NotificationThresholdType"/> values are the same. </summary>
         public static bool operator ==(NotificationThresholdType left, NotificationThresholdType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationThresholdType"/> values are not the same. </summary>

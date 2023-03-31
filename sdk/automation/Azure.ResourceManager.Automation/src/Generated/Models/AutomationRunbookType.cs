@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationRunbookType Python2 { get; } = new AutomationRunbookType(Python2Value);
         /// <summary> Python3. </summary>
         public static AutomationRunbookType Python3 { get; } = new AutomationRunbookType(Python3Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationRunbookType"/> values are the same. </summary>
         public static bool operator ==(AutomationRunbookType left, AutomationRunbookType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationRunbookType"/> values are not the same. </summary>

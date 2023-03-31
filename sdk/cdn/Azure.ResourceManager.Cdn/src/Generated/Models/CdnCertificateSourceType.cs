@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> CdnCertificateSourceParameters. </summary>
         public static CdnCertificateSourceType CdnCertificateSource { get; } = new CdnCertificateSourceType(CdnCertificateSourceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CdnCertificateSourceType"/> values are the same. </summary>
         public static bool operator ==(CdnCertificateSourceType left, CdnCertificateSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CdnCertificateSourceType"/> values are not the same. </summary>

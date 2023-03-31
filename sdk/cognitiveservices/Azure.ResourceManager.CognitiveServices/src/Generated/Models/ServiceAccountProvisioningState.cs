@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static ServiceAccountProvisioningState Succeeded { get; } = new ServiceAccountProvisioningState(SucceededValue);
         /// <summary> ResolvingDNS. </summary>
         public static ServiceAccountProvisioningState ResolvingDns { get; } = new ServiceAccountProvisioningState(ResolvingDnsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceAccountProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ServiceAccountProvisioningState left, ServiceAccountProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAccountProvisioningState"/> values are not the same. </summary>

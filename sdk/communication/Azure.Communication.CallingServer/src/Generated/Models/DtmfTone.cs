@@ -71,6 +71,9 @@ namespace Azure.Communication.CallingServer
         public static DtmfTone Pound { get; } = new DtmfTone(PoundValue);
         /// <summary> asterisk. </summary>
         public static DtmfTone Asterisk { get; } = new DtmfTone(AsteriskValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DtmfTone"/> values are the same. </summary>
         public static bool operator ==(DtmfTone left, DtmfTone right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DtmfTone"/> values are not the same. </summary>

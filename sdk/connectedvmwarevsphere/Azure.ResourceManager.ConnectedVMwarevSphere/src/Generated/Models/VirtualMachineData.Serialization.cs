@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(FirmwareType))
             {
                 writer.WritePropertyName("firmwareType"u8);
-                writer.WriteStringValue(FirmwareType.Value.ToString());
+                writer.WriteStringValue(FirmwareType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

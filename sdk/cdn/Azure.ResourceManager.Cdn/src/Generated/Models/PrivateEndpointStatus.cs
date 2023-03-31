@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static PrivateEndpointStatus Disconnected { get; } = new PrivateEndpointStatus(DisconnectedValue);
         /// <summary> Timeout. </summary>
         public static PrivateEndpointStatus Timeout { get; } = new PrivateEndpointStatus(TimeoutValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PrivateEndpointStatus"/> values are the same. </summary>
         public static bool operator ==(PrivateEndpointStatus left, PrivateEndpointStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateEndpointStatus"/> values are not the same. </summary>

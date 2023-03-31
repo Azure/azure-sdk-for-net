@@ -19,7 +19,7 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);

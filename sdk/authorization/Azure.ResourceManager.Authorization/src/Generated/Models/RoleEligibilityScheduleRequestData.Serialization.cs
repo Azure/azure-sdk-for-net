@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(RequestType))
             {
                 writer.WritePropertyName("requestType"u8);
-                writer.WriteStringValue(RequestType.Value.ToString());
+                writer.WriteStringValue(RequestType.Value.ToSerialString());
             }
             if (Optional.IsDefined(TargetRoleEligibilityScheduleId))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(ExpirationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ExpirationType.Value.ToString());
+                writer.WriteStringValue(ExpirationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(EndOn))
             {

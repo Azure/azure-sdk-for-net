@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleRequestSchemeConditionParameters. </summary>
         public static RequestSchemeMatchConditionType RequestSchemeCondition { get; } = new RequestSchemeMatchConditionType(RequestSchemeConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RequestSchemeMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(RequestSchemeMatchConditionType left, RequestSchemeMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestSchemeMatchConditionType"/> values are not the same. </summary>

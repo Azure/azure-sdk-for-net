@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceOutboundType ManagedNatGateway { get; } = new ContainerServiceOutboundType(ManagedNatGatewayValue);
         /// <summary> The user-assigned NAT gateway associated to the cluster subnet is used for egress. This is an advanced scenario and requires proper network configuration. </summary>
         public static ContainerServiceOutboundType UserAssignedNatGateway { get; } = new ContainerServiceOutboundType(UserAssignedNatGatewayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceOutboundType"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceOutboundType left, ContainerServiceOutboundType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceOutboundType"/> values are not the same. </summary>

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             if (Optional.IsDefined(LimitCpuForMigration))
             {
                 writer.WritePropertyName("limitCpuForMigration"u8);
-                writer.WriteStringValue(LimitCpuForMigration.Value.ToString());
+                writer.WriteStringValue(LimitCpuForMigration.Value.ToSerialString());
             }
             if (Optional.IsDefined(DynamicMemoryEnabled))
             {
                 writer.WritePropertyName("dynamicMemoryEnabled"u8);
-                writer.WriteStringValue(DynamicMemoryEnabled.Value.ToString());
+                writer.WriteStringValue(DynamicMemoryEnabled.Value.ToSerialString());
             }
             if (Optional.IsDefined(DynamicMemoryMaxMB))
             {

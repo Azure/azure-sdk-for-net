@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static SoftwareAssuranceIntent Enable { get; } = new SoftwareAssuranceIntent(EnableValue);
         /// <summary> Disable. </summary>
         public static SoftwareAssuranceIntent Disable { get; } = new SoftwareAssuranceIntent(DisableValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SoftwareAssuranceIntent"/> values are the same. </summary>
         public static bool operator ==(SoftwareAssuranceIntent left, SoftwareAssuranceIntent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SoftwareAssuranceIntent"/> values are not the same. </summary>

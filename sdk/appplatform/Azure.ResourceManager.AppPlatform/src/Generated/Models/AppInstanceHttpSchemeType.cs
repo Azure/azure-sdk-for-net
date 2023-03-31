@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppInstanceHttpSchemeType Http { get; } = new AppInstanceHttpSchemeType(HttpValue);
         /// <summary> HTTPS. </summary>
         public static AppInstanceHttpSchemeType Https { get; } = new AppInstanceHttpSchemeType(HttpsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppInstanceHttpSchemeType"/> values are the same. </summary>
         public static bool operator ==(AppInstanceHttpSchemeType left, AppInstanceHttpSchemeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppInstanceHttpSchemeType"/> values are not the same. </summary>

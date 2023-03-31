@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Attestation.Models
         public static PublicNetworkAccessType Enabled { get; } = new PublicNetworkAccessType(EnabledValue);
         /// <summary> Disables public network connectivity to the Attestation Provider REST APIs. </summary>
         public static PublicNetworkAccessType Disabled { get; } = new PublicNetworkAccessType(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PublicNetworkAccessType"/> values are the same. </summary>
         public static bool operator ==(PublicNetworkAccessType left, PublicNetworkAccessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PublicNetworkAccessType"/> values are not the same. </summary>

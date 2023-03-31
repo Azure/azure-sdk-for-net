@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static AppConfigurationPublicNetworkAccess Enabled { get; } = new AppConfigurationPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static AppConfigurationPublicNetworkAccess Disabled { get; } = new AppConfigurationPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppConfigurationPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(AppConfigurationPublicNetworkAccess left, AppConfigurationPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppConfigurationPublicNetworkAccess"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static JobProvisioningState Suspended { get; } = new JobProvisioningState(SuspendedValue);
         /// <summary> Processing. </summary>
         public static JobProvisioningState Processing { get; } = new JobProvisioningState(ProcessingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobProvisioningState"/> values are the same. </summary>
         public static bool operator ==(JobProvisioningState left, JobProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobProvisioningState"/> values are not the same. </summary>

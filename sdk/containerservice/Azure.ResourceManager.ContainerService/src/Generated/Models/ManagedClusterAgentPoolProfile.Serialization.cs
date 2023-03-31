@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(OSDiskType))
             {
                 writer.WritePropertyName("osDiskType"u8);
-                writer.WriteStringValue(OSDiskType.Value.ToString());
+                writer.WriteStringValue(OSDiskType.Value.ToSerialString());
             }
             if (Optional.IsDefined(KubeletDiskType))
             {
                 writer.WritePropertyName("kubeletDiskType"u8);
-                writer.WriteStringValue(KubeletDiskType.Value.ToString());
+                writer.WriteStringValue(KubeletDiskType.Value.ToSerialString());
             }
             if (Optional.IsDefined(WorkloadRuntime))
             {
                 writer.WritePropertyName("workloadRuntime"u8);
-                writer.WriteStringValue(WorkloadRuntime.Value.ToString());
+                writer.WriteStringValue(WorkloadRuntime.Value.ToSerialString());
             }
             if (Optional.IsDefined(MessageOfTheDay))
             {
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             if (Optional.IsDefined(OSSku))
             {
                 writer.WritePropertyName("osSKU"u8);
-                writer.WriteStringValue(OSSku.Value.ToString());
+                writer.WriteStringValue(OSSku.Value.ToSerialString());
             }
             if (Optional.IsDefined(MaxCount))
             {
@@ -96,17 +96,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(ScaleDownMode))
             {
                 writer.WritePropertyName("scaleDownMode"u8);
-                writer.WriteStringValue(ScaleDownMode.Value.ToString());
+                writer.WriteStringValue(ScaleDownMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(AgentPoolType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(AgentPoolType.Value.ToString());
+                writer.WriteStringValue(AgentPoolType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                writer.WriteStringValue(Mode.Value.ToSerialString());
             }
             if (Optional.IsDefined(OrchestratorVersion))
             {
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(ScaleSetPriority))
             {
                 writer.WritePropertyName("scaleSetPriority"u8);
-                writer.WriteStringValue(ScaleSetPriority.Value.ToString());
+                writer.WriteStringValue(ScaleSetPriority.Value.ToSerialString());
             }
             if (Optional.IsDefined(ScaleSetEvictionPolicy))
             {
                 writer.WritePropertyName("scaleSetEvictionPolicy"u8);
-                writer.WriteStringValue(ScaleSetEvictionPolicy.Value.ToString());
+                writer.WriteStringValue(ScaleSetEvictionPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(SpotMaxPrice))
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(GpuInstanceProfile))
             {
                 writer.WritePropertyName("gpuInstanceProfile"u8);
-                writer.WriteStringValue(GpuInstanceProfile.Value.ToString());
+                writer.WriteStringValue(GpuInstanceProfile.Value.ToSerialString());
             }
             if (Optional.IsDefined(CreationData))
             {

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static DiskMode IndependentPersistent { get; } = new DiskMode(IndependentPersistentValue);
         /// <summary> independent_nonpersistent. </summary>
         public static DiskMode IndependentNonpersistent { get; } = new DiskMode(IndependentNonpersistentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskMode"/> values are the same. </summary>
         public static bool operator ==(DiskMode left, DiskMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskMode"/> values are not the same. </summary>

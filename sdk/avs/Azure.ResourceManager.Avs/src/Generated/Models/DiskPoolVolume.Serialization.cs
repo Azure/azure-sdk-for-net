@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(MountOption))
             {
                 writer.WritePropertyName("mountOption"u8);
-                writer.WriteStringValue(MountOption.Value.ToString());
+                writer.WriteStringValue(MountOption.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

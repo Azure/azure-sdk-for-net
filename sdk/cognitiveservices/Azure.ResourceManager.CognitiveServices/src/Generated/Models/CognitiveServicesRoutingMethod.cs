@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static CognitiveServicesRoutingMethod Weighted { get; } = new CognitiveServicesRoutingMethod(WeightedValue);
         /// <summary> Performance. </summary>
         public static CognitiveServicesRoutingMethod Performance { get; } = new CognitiveServicesRoutingMethod(PerformanceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CognitiveServicesRoutingMethod"/> values are the same. </summary>
         public static bool operator ==(CognitiveServicesRoutingMethod left, CognitiveServicesRoutingMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CognitiveServicesRoutingMethod"/> values are not the same. </summary>

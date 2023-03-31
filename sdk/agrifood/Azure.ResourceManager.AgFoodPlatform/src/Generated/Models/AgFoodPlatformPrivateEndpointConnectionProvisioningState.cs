@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public static AgFoodPlatformPrivateEndpointConnectionProvisioningState Deleting { get; } = new AgFoodPlatformPrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static AgFoodPlatformPrivateEndpointConnectionProvisioningState Failed { get; } = new AgFoodPlatformPrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AgFoodPlatformPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AgFoodPlatformPrivateEndpointConnectionProvisioningState left, AgFoodPlatformPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgFoodPlatformPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ManagedClusterWorkloadAutoScalerControlledValue RequestsAndLimits { get; } = new ManagedClusterWorkloadAutoScalerControlledValue(RequestsAndLimitsValue);
         /// <summary> Autoscaler will control resource requests only. </summary>
         public static ManagedClusterWorkloadAutoScalerControlledValue RequestsOnly { get; } = new ManagedClusterWorkloadAutoScalerControlledValue(RequestsOnlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterWorkloadAutoScalerControlledValue"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterWorkloadAutoScalerControlledValue left, ManagedClusterWorkloadAutoScalerControlledValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterWorkloadAutoScalerControlledValue"/> values are not the same. </summary>

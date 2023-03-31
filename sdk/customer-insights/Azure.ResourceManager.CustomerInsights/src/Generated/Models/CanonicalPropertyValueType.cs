@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         public static CanonicalPropertyValueType DerivedCategorical { get; } = new CanonicalPropertyValueType(DerivedCategoricalValue);
         /// <summary> DerivedNumeric. </summary>
         public static CanonicalPropertyValueType DerivedNumeric { get; } = new CanonicalPropertyValueType(DerivedNumericValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CanonicalPropertyValueType"/> values are the same. </summary>
         public static bool operator ==(CanonicalPropertyValueType left, CanonicalPropertyValueType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CanonicalPropertyValueType"/> values are not the same. </summary>

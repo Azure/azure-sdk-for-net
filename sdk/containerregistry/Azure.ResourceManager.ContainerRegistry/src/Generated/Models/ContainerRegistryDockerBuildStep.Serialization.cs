@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ContainerRegistryTaskStepType.ToString());
+            writer.WriteStringValue(ContainerRegistryTaskStepType.ToSerialString());
             if (Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);

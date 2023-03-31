@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
-                writer.WriteStringValue(Priority.Value.ToString());
+                writer.WriteStringValue(Priority.Value.ToSerialString());
             }
             if (Optional.IsDefined(EvictionPolicy))
             {
                 writer.WritePropertyName("evictionPolicy"u8);
-                writer.WriteStringValue(EvictionPolicy.Value.ToString());
+                writer.WriteStringValue(EvictionPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(BillingProfile))
             {

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static SharingUpdateOperationType Reset { get; } = new SharingUpdateOperationType(ResetValue);
         /// <summary> EnableCommunity. </summary>
         public static SharingUpdateOperationType EnableCommunity { get; } = new SharingUpdateOperationType(EnableCommunityValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SharingUpdateOperationType"/> values are the same. </summary>
         public static bool operator ==(SharingUpdateOperationType left, SharingUpdateOperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SharingUpdateOperationType"/> values are not the same. </summary>

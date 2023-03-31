@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("operationType"u8);
-            writer.WriteStringValue(OperationType.ToString());
+            writer.WriteStringValue(OperationType.ToSerialString());
             if (Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);

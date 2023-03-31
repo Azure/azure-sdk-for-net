@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static ParameterVisibilityStatus Visible { get; } = new ParameterVisibilityStatus(VisibleValue);
         /// <summary> Hidden. </summary>
         public static ParameterVisibilityStatus Hidden { get; } = new ParameterVisibilityStatus(HiddenValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ParameterVisibilityStatus"/> values are the same. </summary>
         public static bool operator ==(ParameterVisibilityStatus left, ParameterVisibilityStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParameterVisibilityStatus"/> values are not the same. </summary>

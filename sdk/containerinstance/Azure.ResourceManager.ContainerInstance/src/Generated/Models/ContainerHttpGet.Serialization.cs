@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(Scheme))
             {
                 writer.WritePropertyName("scheme"u8);
-                writer.WriteStringValue(Scheme.Value.ToString());
+                writer.WriteStringValue(Scheme.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(HttpHeaders))
             {

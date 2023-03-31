@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryTokenStatus Enabled { get; } = new ContainerRegistryTokenStatus(EnabledValue);
         /// <summary> disabled. </summary>
         public static ContainerRegistryTokenStatus Disabled { get; } = new ContainerRegistryTokenStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryTokenStatus"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryTokenStatus left, ContainerRegistryTokenStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryTokenStatus"/> values are not the same. </summary>

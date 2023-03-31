@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static DnsServiceStatus Success { get; } = new DnsServiceStatus(SuccessValue);
         /// <summary> FAILURE. </summary>
         public static DnsServiceStatus Failure { get; } = new DnsServiceStatus(FailureValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DnsServiceStatus"/> values are the same. </summary>
         public static bool operator ==(DnsServiceStatus left, DnsServiceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsServiceStatus"/> values are not the same. </summary>

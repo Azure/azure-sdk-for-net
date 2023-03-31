@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppEnvironmentProvisioningState UpgradeRequested { get; } = new ContainerAppEnvironmentProvisioningState(UpgradeRequestedValue);
         /// <summary> UpgradeFailed. </summary>
         public static ContainerAppEnvironmentProvisioningState UpgradeFailed { get; } = new ContainerAppEnvironmentProvisioningState(UpgradeFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppEnvironmentProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppEnvironmentProvisioningState left, ContainerAppEnvironmentProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppEnvironmentProvisioningState"/> values are not the same. </summary>

@@ -44,6 +44,9 @@ namespace Azure.Communication.CallAutomation
         public static CallConnectionState Disconnecting { get; } = new CallConnectionState(DisconnectingValue);
         /// <summary> disconnected. </summary>
         public static CallConnectionState Disconnected { get; } = new CallConnectionState(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CallConnectionState"/> values are the same. </summary>
         public static bool operator ==(CallConnectionState left, CallConnectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CallConnectionState"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static AgentPoolNetworkPortProtocol Tcp { get; } = new AgentPoolNetworkPortProtocol(TcpValue);
         /// <summary> UDP protocol. </summary>
         public static AgentPoolNetworkPortProtocol Udp { get; } = new AgentPoolNetworkPortProtocol(UdpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AgentPoolNetworkPortProtocol"/> values are the same. </summary>
         public static bool operator ==(AgentPoolNetworkPortProtocol left, AgentPoolNetworkPortProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentPoolNetworkPortProtocol"/> values are not the same. </summary>

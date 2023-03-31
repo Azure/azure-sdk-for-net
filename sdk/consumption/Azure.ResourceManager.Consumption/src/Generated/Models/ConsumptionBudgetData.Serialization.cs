@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Consumption
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteStringValue(Category.Value.ToString());
+                writer.WriteStringValue(Category.Value.ToSerialString());
             }
             if (Optional.IsDefined(Amount))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Consumption
             if (Optional.IsDefined(TimeGrain))
             {
                 writer.WritePropertyName("timeGrain"u8);
-                writer.WriteStringValue(TimeGrain.Value.ToString());
+                writer.WriteStringValue(TimeGrain.Value.ToSerialString());
             }
             if (Optional.IsDefined(TimePeriod))
             {

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static DnsNameLabelReusePolicy ResourceGroupReuse { get; } = new DnsNameLabelReusePolicy(ResourceGroupReuseValue);
         /// <summary> Noreuse. </summary>
         public static DnsNameLabelReusePolicy NoReuse { get; } = new DnsNameLabelReusePolicy(NoReuseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DnsNameLabelReusePolicy"/> values are the same. </summary>
         public static bool operator ==(DnsNameLabelReusePolicy left, DnsNameLabelReusePolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsNameLabelReusePolicy"/> values are not the same. </summary>

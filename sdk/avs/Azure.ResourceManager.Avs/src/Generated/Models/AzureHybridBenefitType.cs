@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static AzureHybridBenefitType SqlHost { get; } = new AzureHybridBenefitType(SqlHostValue);
         /// <summary> None. </summary>
         public static AzureHybridBenefitType None { get; } = new AzureHybridBenefitType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AzureHybridBenefitType"/> values are the same. </summary>
         public static bool operator ==(AzureHybridBenefitType left, AzureHybridBenefitType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureHybridBenefitType"/> values are not the same. </summary>

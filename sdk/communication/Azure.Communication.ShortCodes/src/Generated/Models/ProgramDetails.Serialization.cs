@@ -35,7 +35,7 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(NumberType))
             {
                 writer.WritePropertyName("numberType"u8);
-                writer.WriteStringValue(NumberType.Value.ToString());
+                writer.WriteStringValue(NumberType.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsPoliticalCampaign))
             {
@@ -63,7 +63,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in SignUpTypes)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

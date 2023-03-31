@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceFleetMemberProvisioningState Leaving { get; } = new ContainerServiceFleetMemberProvisioningState(LeavingValue);
         /// <summary> Updating. </summary>
         public static ContainerServiceFleetMemberProvisioningState Updating { get; } = new ContainerServiceFleetMemberProvisioningState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceFleetMemberProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceFleetMemberProvisioningState left, ContainerServiceFleetMemberProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceFleetMemberProvisioningState"/> values are not the same. </summary>

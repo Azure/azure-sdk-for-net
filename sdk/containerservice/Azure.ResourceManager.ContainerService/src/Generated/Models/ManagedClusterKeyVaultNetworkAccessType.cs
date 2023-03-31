@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ManagedClusterKeyVaultNetworkAccessType Public { get; } = new ManagedClusterKeyVaultNetworkAccessType(PublicValue);
         /// <summary> Private. </summary>
         public static ManagedClusterKeyVaultNetworkAccessType Private { get; } = new ManagedClusterKeyVaultNetworkAccessType(PrivateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterKeyVaultNetworkAccessType"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterKeyVaultNetworkAccessType left, ManagedClusterKeyVaultNetworkAccessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterKeyVaultNetworkAccessType"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static CognitiveServicesSkuTier Premium { get; } = new CognitiveServicesSkuTier(PremiumValue);
         /// <summary> Enterprise. </summary>
         public static CognitiveServicesSkuTier Enterprise { get; } = new CognitiveServicesSkuTier(EnterpriseValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CognitiveServicesSkuTier"/> values are the same. </summary>
         public static bool operator ==(CognitiveServicesSkuTier left, CognitiveServicesSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CognitiveServicesSkuTier"/> values are not the same. </summary>

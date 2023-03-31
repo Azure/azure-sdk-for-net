@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskEncryptionSetType EncryptionAtRestWithPlatformAndCustomerKeys { get; } = new DiskEncryptionSetType(EncryptionAtRestWithPlatformAndCustomerKeysValue);
         /// <summary> Confidential VM supported disk and VM guest state would be encrypted with customer managed key. </summary>
         public static DiskEncryptionSetType ConfidentialVmEncryptedWithCustomerKey { get; } = new DiskEncryptionSetType(ConfidentialVmEncryptedWithCustomerKeyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskEncryptionSetType"/> values are the same. </summary>
         public static bool operator ==(DiskEncryptionSetType left, DiskEncryptionSetType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskEncryptionSetType"/> values are not the same. </summary>

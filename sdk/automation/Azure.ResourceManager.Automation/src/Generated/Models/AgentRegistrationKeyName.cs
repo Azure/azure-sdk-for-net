@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static AgentRegistrationKeyName Primary { get; } = new AgentRegistrationKeyName(PrimaryValue);
         /// <summary> secondary. </summary>
         public static AgentRegistrationKeyName Secondary { get; } = new AgentRegistrationKeyName(SecondaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AgentRegistrationKeyName"/> values are the same. </summary>
         public static bool operator ==(AgentRegistrationKeyName left, AgentRegistrationKeyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentRegistrationKeyName"/> values are not the same. </summary>

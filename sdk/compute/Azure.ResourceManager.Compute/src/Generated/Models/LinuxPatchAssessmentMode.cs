@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static LinuxPatchAssessmentMode ImageDefault { get; } = new LinuxPatchAssessmentMode(ImageDefaultValue);
         /// <summary> AutomaticByPlatform. </summary>
         public static LinuxPatchAssessmentMode AutomaticByPlatform { get; } = new LinuxPatchAssessmentMode(AutomaticByPlatformValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LinuxPatchAssessmentMode"/> values are the same. </summary>
         public static bool operator ==(LinuxPatchAssessmentMode left, LinuxPatchAssessmentMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LinuxPatchAssessmentMode"/> values are not the same. </summary>

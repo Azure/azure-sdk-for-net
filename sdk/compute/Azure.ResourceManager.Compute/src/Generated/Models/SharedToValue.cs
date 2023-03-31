@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> tenant. </summary>
         public static SharedToValue Tenant { get; } = new SharedToValue(TenantValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SharedToValue"/> values are the same. </summary>
         public static bool operator ==(SharedToValue left, SharedToValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SharedToValue"/> values are not the same. </summary>

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (OptimizationType != null)
                 {
                     writer.WritePropertyName("optimizationType"u8);
-                    writer.WriteStringValue(OptimizationType.Value.ToString());
+                    writer.WriteStringValue(OptimizationType.Value.ToSerialString());
                 }
                 else
                 {

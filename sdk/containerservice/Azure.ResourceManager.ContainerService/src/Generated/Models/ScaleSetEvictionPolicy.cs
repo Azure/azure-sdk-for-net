@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ScaleSetEvictionPolicy Delete { get; } = new ScaleSetEvictionPolicy(DeleteValue);
         /// <summary> Nodes in the underlying Scale Set of the node pool are set to the stopped-deallocated state upon eviction. Nodes in the stopped-deallocated state count against your compute quota and can cause issues with cluster scaling or upgrading. </summary>
         public static ScaleSetEvictionPolicy Deallocate { get; } = new ScaleSetEvictionPolicy(DeallocateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScaleSetEvictionPolicy"/> values are the same. </summary>
         public static bool operator ==(ScaleSetEvictionPolicy left, ScaleSetEvictionPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScaleSetEvictionPolicy"/> values are not the same. </summary>

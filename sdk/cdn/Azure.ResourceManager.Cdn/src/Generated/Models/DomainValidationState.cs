@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static DomainValidationState RefreshingValidationToken { get; } = new DomainValidationState(RefreshingValidationTokenValue);
         /// <summary> InternalError. </summary>
         public static DomainValidationState InternalError { get; } = new DomainValidationState(InternalErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DomainValidationState"/> values are the same. </summary>
         public static bool operator ==(DomainValidationState left, DomainValidationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainValidationState"/> values are not the same. </summary>

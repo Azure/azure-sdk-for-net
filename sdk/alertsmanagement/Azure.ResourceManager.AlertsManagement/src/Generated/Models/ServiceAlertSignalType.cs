@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static ServiceAlertSignalType Log { get; } = new ServiceAlertSignalType(LogValue);
         /// <summary> Unknown. </summary>
         public static ServiceAlertSignalType Unknown { get; } = new ServiceAlertSignalType(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceAlertSignalType"/> values are the same. </summary>
         public static bool operator ==(ServiceAlertSignalType left, ServiceAlertSignalType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAlertSignalType"/> values are not the same. </summary>

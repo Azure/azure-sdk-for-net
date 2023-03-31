@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(Ssl))
             {
                 writer.WritePropertyName("ssl"u8);
-                writer.WriteStringValue(Ssl.Value.ToString());
+                writer.WriteStringValue(Ssl.Value.ToSerialString());
             }
             if (Optional.IsDefined(Username))
             {

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Standard. </summary>
         public static CosmosDBAccountOfferType Standard { get; } = new CosmosDBAccountOfferType(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBAccountOfferType"/> values are the same. </summary>
         public static bool operator ==(CosmosDBAccountOfferType left, CosmosDBAccountOfferType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBAccountOfferType"/> values are not the same. </summary>

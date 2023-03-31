@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ClientAuthenticationMethod Basic { get; } = new ClientAuthenticationMethod(BasicValue);
         /// <summary> Body based Authentication method. </summary>
         public static ClientAuthenticationMethod Body { get; } = new ClientAuthenticationMethod(BodyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClientAuthenticationMethod"/> values are the same. </summary>
         public static bool operator ==(ClientAuthenticationMethod left, ClientAuthenticationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClientAuthenticationMethod"/> values are not the same. </summary>

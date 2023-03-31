@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static ContainerGpuSku P100 { get; } = new ContainerGpuSku(P100Value);
         /// <summary> V100. </summary>
         public static ContainerGpuSku V100 { get; } = new ContainerGpuSku(V100Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerGpuSku"/> values are the same. </summary>
         public static bool operator ==(ContainerGpuSku left, ContainerGpuSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerGpuSku"/> values are not the same. </summary>

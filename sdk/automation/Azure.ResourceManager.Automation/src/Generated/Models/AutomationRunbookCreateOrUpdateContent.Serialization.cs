@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteBooleanValue(IsLogProgressEnabled.Value);
             }
             writer.WritePropertyName("runbookType"u8);
-            writer.WriteStringValue(RunbookType.ToString());
+            writer.WriteStringValue(RunbookType.ToSerialString());
             if (Optional.IsDefined(Draft))
             {
                 writer.WritePropertyName("draft"u8);

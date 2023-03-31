@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteNumberValue(LeaseTime.Value);
             }
             writer.WritePropertyName("dhcpType"u8);
-            writer.WriteStringValue(DhcpType.ToString());
+            writer.WriteStringValue(DhcpType.ToSerialString());
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);

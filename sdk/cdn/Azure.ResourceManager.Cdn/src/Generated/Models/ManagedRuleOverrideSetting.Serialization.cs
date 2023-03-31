@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
-                writer.WriteStringValue(EnabledState.Value.ToString());
+                writer.WriteStringValue(EnabledState.Value.ToSerialString());
             }
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteStringValue(Action.Value.ToString());
+                writer.WriteStringValue(Action.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

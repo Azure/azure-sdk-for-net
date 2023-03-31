@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(RestoreFromBackupId))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AuthenticationMethod))
             {
                 writer.WritePropertyName("authenticationMethod"u8);
-                writer.WriteStringValue(AuthenticationMethod.Value.ToString());
+                writer.WriteStringValue(AuthenticationMethod.Value.ToSerialString());
             }
             if (Optional.IsDefined(InitialCassandraAdminPassword))
             {

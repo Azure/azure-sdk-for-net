@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleHostNameConditionParameters. </summary>
         public static HostNameMatchConditionType HostNameCondition { get; } = new HostNameMatchConditionType(HostNameConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HostNameMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(HostNameMatchConditionType left, HostNameMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HostNameMatchConditionType"/> values are not the same. </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServicePrivateEndpointConnectionProvisioningState Failed { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Succeeded. </summary>
         public static ContainerServicePrivateEndpointConnectionProvisioningState Succeeded { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(SucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServicePrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerServicePrivateEndpointConnectionProvisioningState left, ContainerServicePrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServicePrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

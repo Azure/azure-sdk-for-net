@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(VersioningScheme))
             {
                 writer.WritePropertyName("versioningScheme"u8);
-                writer.WriteStringValue(VersioningScheme.Value.ToString());
+                writer.WriteStringValue(VersioningScheme.Value.ToSerialString());
             }
             if (Optional.IsDefined(VersionQueryName))
             {

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBSqlTriggerOperation Delete { get; } = new CosmosDBSqlTriggerOperation(DeleteValue);
         /// <summary> Replace. </summary>
         public static CosmosDBSqlTriggerOperation Replace { get; } = new CosmosDBSqlTriggerOperation(ReplaceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBSqlTriggerOperation"/> values are the same. </summary>
         public static bool operator ==(CosmosDBSqlTriggerOperation left, CosmosDBSqlTriggerOperation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBSqlTriggerOperation"/> values are not the same. </summary>

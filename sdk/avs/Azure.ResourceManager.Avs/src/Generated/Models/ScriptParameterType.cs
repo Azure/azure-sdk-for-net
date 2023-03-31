@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static ScriptParameterType Bool { get; } = new ScriptParameterType(BoolValue);
         /// <summary> Float. </summary>
         public static ScriptParameterType Float { get; } = new ScriptParameterType(FloatValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScriptParameterType"/> values are the same. </summary>
         public static bool operator ==(ScriptParameterType left, ScriptParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptParameterType"/> values are not the same. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBApiType Sql { get; } = new CosmosDBApiType(SqlValue);
         /// <summary> GremlinV2. </summary>
         public static CosmosDBApiType GremlinV2 { get; } = new CosmosDBApiType(GremlinV2Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBApiType"/> values are the same. </summary>
         public static bool operator ==(CosmosDBApiType left, CosmosDBApiType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBApiType"/> values are not the same. </summary>

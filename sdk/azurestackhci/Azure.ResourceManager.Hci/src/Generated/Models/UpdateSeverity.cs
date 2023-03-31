@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static UpdateSeverity Informational { get; } = new UpdateSeverity(InformationalValue);
         /// <summary> Hidden. </summary>
         public static UpdateSeverity Hidden { get; } = new UpdateSeverity(HiddenValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UpdateSeverity"/> values are the same. </summary>
         public static bool operator ==(UpdateSeverity left, UpdateSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpdateSeverity"/> values are not the same. </summary>

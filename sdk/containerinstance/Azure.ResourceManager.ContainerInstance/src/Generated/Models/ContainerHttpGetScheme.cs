@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static ContainerHttpGetScheme Http { get; } = new ContainerHttpGetScheme(HttpValue);
         /// <summary> https. </summary>
         public static ContainerHttpGetScheme Https { get; } = new ContainerHttpGetScheme(HttpsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerHttpGetScheme"/> values are the same. </summary>
         public static bool operator ==(ContainerHttpGetScheme left, ContainerHttpGetScheme right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerHttpGetScheme"/> values are not the same. </summary>

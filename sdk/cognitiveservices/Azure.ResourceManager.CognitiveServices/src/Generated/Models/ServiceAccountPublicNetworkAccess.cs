@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static ServiceAccountPublicNetworkAccess Enabled { get; } = new ServiceAccountPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static ServiceAccountPublicNetworkAccess Disabled { get; } = new ServiceAccountPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceAccountPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(ServiceAccountPublicNetworkAccess left, ServiceAccountPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAccountPublicNetworkAccess"/> values are not the same. </summary>

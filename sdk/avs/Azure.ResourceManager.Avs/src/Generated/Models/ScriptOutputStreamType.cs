@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static ScriptOutputStreamType Output { get; } = new ScriptOutputStreamType(OutputValue);
         /// <summary> Error. </summary>
         public static ScriptOutputStreamType Error { get; } = new ScriptOutputStreamType(ErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScriptOutputStreamType"/> values are the same. </summary>
         public static bool operator ==(ScriptOutputStreamType left, ScriptOutputStreamType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptOutputStreamType"/> values are not the same. </summary>

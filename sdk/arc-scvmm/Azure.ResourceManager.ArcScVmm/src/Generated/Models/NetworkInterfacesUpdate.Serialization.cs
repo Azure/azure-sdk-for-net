@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             if (Optional.IsDefined(IPv4AddressType))
             {
                 writer.WritePropertyName("ipv4AddressType"u8);
-                writer.WriteStringValue(IPv4AddressType.Value.ToString());
+                writer.WriteStringValue(IPv4AddressType.Value.ToSerialString());
             }
             if (Optional.IsDefined(IPv6AddressType))
             {
                 writer.WritePropertyName("ipv6AddressType"u8);
-                writer.WriteStringValue(IPv6AddressType.Value.ToString());
+                writer.WriteStringValue(IPv6AddressType.Value.ToSerialString());
             }
             if (Optional.IsDefined(MacAddressType))
             {
                 writer.WritePropertyName("macAddressType"u8);
-                writer.WriteStringValue(MacAddressType.Value.ToString());
+                writer.WriteStringValue(MacAddressType.Value.ToSerialString());
             }
             if (Optional.IsDefined(NicId))
             {

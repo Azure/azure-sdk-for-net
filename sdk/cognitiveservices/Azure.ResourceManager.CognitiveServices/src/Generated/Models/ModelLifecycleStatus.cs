@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static ModelLifecycleStatus GenerallyAvailable { get; } = new ModelLifecycleStatus(GenerallyAvailableValue);
         /// <summary> Preview. </summary>
         public static ModelLifecycleStatus Preview { get; } = new ModelLifecycleStatus(PreviewValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ModelLifecycleStatus"/> values are the same. </summary>
         public static bool operator ==(ModelLifecycleStatus left, ModelLifecycleStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ModelLifecycleStatus"/> values are not the same. </summary>

@@ -19,7 +19,7 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(ContentCategory))
             {
                 writer.WritePropertyName("contentCategory"u8);
-                writer.WriteStringValue(ContentCategory.Value.ToString());
+                writer.WriteStringValue(ContentCategory.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Examples))
             {

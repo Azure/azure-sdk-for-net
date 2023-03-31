@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleManagementPrincipalType ForeignGroup { get; } = new RoleManagementPrincipalType(ForeignGroupValue);
         /// <summary> Device. </summary>
         public static RoleManagementPrincipalType Device { get; } = new RoleManagementPrincipalType(DeviceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleManagementPrincipalType"/> values are the same. </summary>
         public static bool operator ==(RoleManagementPrincipalType left, RoleManagementPrincipalType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementPrincipalType"/> values are not the same. </summary>

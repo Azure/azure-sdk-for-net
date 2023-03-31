@@ -38,6 +38,9 @@ namespace Azure.Communication.MediaComposition
         public static LayoutType Presentation { get; } = new LayoutType(PresentationValue);
         /// <summary> presenter. </summary>
         public static LayoutType Presenter { get; } = new LayoutType(PresenterValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LayoutType"/> values are the same. </summary>
         public static bool operator ==(LayoutType left, LayoutType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LayoutType"/> values are not the same. </summary>

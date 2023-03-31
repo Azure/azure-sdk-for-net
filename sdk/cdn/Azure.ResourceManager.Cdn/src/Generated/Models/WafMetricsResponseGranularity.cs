@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static WafMetricsResponseGranularity PT1H { get; } = new WafMetricsResponseGranularity(PT1HValue);
         /// <summary> P1D. </summary>
         public static WafMetricsResponseGranularity P1D { get; } = new WafMetricsResponseGranularity(P1DValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WafMetricsResponseGranularity"/> values are the same. </summary>
         public static bool operator ==(WafMetricsResponseGranularity left, WafMetricsResponseGranularity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafMetricsResponseGranularity"/> values are not the same. </summary>

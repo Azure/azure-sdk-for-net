@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiManagementUserState Pending { get; } = new ApiManagementUserState(PendingValue);
         /// <summary> User account is closed. All identities and related entities are removed. </summary>
         public static ApiManagementUserState Deleted { get; } = new ApiManagementUserState(DeletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ApiManagementUserState"/> values are the same. </summary>
         public static bool operator ==(ApiManagementUserState left, ApiManagementUserState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiManagementUserState"/> values are not the same. </summary>

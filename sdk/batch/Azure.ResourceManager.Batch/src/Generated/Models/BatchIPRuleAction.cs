@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Allow. </summary>
         public static BatchIPRuleAction Allow { get; } = new BatchIPRuleAction(AllowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BatchIPRuleAction"/> values are the same. </summary>
         public static bool operator ==(BatchIPRuleAction left, BatchIPRuleAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchIPRuleAction"/> values are not the same. </summary>

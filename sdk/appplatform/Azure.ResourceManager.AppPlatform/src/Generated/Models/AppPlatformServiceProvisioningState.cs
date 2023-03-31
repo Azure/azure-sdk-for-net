@@ -56,6 +56,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformServiceProvisioningState Moved { get; } = new AppPlatformServiceProvisioningState(MovedValue);
         /// <summary> MoveFailed. </summary>
         public static AppPlatformServiceProvisioningState MoveFailed { get; } = new AppPlatformServiceProvisioningState(MoveFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformServiceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AppPlatformServiceProvisioningState left, AppPlatformServiceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformServiceProvisioningState"/> values are not the same. </summary>

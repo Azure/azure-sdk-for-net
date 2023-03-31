@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(UnderlyingResourceType.ToString());
+            writer.WriteStringValue(UnderlyingResourceType.ToSerialString());
             writer.WritePropertyName("mountPath"u8);
             writer.WriteStringValue(MountPath);
             if (Optional.IsDefined(IsReadOnly))

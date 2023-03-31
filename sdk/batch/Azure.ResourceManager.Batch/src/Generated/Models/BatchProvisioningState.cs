@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchProvisioningState Failed { get; } = new BatchProvisioningState(FailedValue);
         /// <summary> The last operation for the account is cancelled. </summary>
         public static BatchProvisioningState Cancelled { get; } = new BatchProvisioningState(CancelledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BatchProvisioningState"/> values are the same. </summary>
         public static bool operator ==(BatchProvisioningState left, BatchProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchProvisioningState"/> values are not the same. </summary>

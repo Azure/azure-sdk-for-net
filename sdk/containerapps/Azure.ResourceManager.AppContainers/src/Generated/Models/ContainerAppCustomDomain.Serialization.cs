@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(BindingType))
             {
                 writer.WritePropertyName("bindingType"u8);
-                writer.WriteStringValue(BindingType.Value.ToString());
+                writer.WriteStringValue(BindingType.Value.ToSerialString());
             }
             writer.WritePropertyName("certificateId"u8);
             writer.WriteStringValue(CertificateId);

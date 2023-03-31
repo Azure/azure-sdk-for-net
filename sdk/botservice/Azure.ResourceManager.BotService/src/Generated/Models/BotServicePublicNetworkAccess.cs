@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.BotService.Models
         public static BotServicePublicNetworkAccess Enabled { get; } = new BotServicePublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static BotServicePublicNetworkAccess Disabled { get; } = new BotServicePublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BotServicePublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(BotServicePublicNetworkAccess left, BotServicePublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BotServicePublicNetworkAccess"/> values are not the same. </summary>

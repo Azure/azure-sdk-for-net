@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static AlertProcessingRuleOperator Contains { get; } = new AlertProcessingRuleOperator(ContainsValue);
         /// <summary> DoesNotContain. </summary>
         public static AlertProcessingRuleOperator DoesNotContain { get; } = new AlertProcessingRuleOperator(DoesNotContainValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AlertProcessingRuleOperator"/> values are the same. </summary>
         public static bool operator ==(AlertProcessingRuleOperator left, AlertProcessingRuleOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertProcessingRuleOperator"/> values are not the same. </summary>

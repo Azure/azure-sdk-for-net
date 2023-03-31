@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static InventoryType Datastore { get; } = new InventoryType(DatastoreValue);
         /// <summary> Host. </summary>
         public static InventoryType Host { get; } = new InventoryType(HostValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InventoryType"/> values are the same. </summary>
         public static bool operator ==(InventoryType left, InventoryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InventoryType"/> values are not the same. </summary>

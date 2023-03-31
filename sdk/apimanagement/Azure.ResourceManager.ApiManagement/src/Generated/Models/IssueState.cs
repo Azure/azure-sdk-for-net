@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static IssueState Resolved { get; } = new IssueState(ResolvedValue);
         /// <summary> The issue was closed. </summary>
         public static IssueState Closed { get; } = new IssueState(ClosedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IssueState"/> values are the same. </summary>
         public static bool operator ==(IssueState left, IssueState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IssueState"/> values are not the same. </summary>

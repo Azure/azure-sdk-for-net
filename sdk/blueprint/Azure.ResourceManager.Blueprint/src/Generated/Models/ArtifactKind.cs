@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static ArtifactKind RoleAssignment { get; } = new ArtifactKind(RoleAssignmentValue);
         /// <summary> policyAssignment. </summary>
         public static ArtifactKind PolicyAssignment { get; } = new ArtifactKind(PolicyAssignmentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ArtifactKind"/> values are the same. </summary>
         public static bool operator ==(ArtifactKind left, ArtifactKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArtifactKind"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchAccountCertificateProvisioningState Deleting { get; } = new BatchAccountCertificateProvisioningState(DeletingValue);
         /// <summary> The user requested that the certificate be deleted, but there are pools that still have references to the certificate, or it is still installed on one or more compute nodes. (The latter can occur if the certificate has been removed from the pool, but the node has not yet restarted. Nodes refresh their certificates only when they restart.) You may use the cancel certificate delete operation to cancel the delete, or the delete certificate operation to retry the delete. </summary>
         public static BatchAccountCertificateProvisioningState Failed { get; } = new BatchAccountCertificateProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BatchAccountCertificateProvisioningState"/> values are the same. </summary>
         public static bool operator ==(BatchAccountCertificateProvisioningState left, BatchAccountCertificateProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchAccountCertificateProvisioningState"/> values are not the same. </summary>

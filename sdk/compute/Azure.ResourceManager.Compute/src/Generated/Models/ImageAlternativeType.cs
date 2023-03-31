@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static ImageAlternativeType Offer { get; } = new ImageAlternativeType(OfferValue);
         /// <summary> Plan. </summary>
         public static ImageAlternativeType Plan { get; } = new ImageAlternativeType(PlanValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ImageAlternativeType"/> values are the same. </summary>
         public static bool operator ==(ImageAlternativeType left, ImageAlternativeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageAlternativeType"/> values are not the same. </summary>

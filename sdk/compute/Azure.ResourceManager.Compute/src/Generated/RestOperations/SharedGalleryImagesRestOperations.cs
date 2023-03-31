@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", _apiVersion, true);
             if (sharedTo != null)
             {
-                uri.AppendQuery("sharedTo", sharedTo.Value.ToString(), true);
+                uri.AppendQuery("sharedTo", sharedTo.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformDeploymentProvisioningState Succeeded { get; } = new AppPlatformDeploymentProvisioningState(SucceededValue);
         /// <summary> Failed. </summary>
         public static AppPlatformDeploymentProvisioningState Failed { get; } = new AppPlatformDeploymentProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformDeploymentProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AppPlatformDeploymentProvisioningState left, AppPlatformDeploymentProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformDeploymentProvisioningState"/> values are not the same. </summary>

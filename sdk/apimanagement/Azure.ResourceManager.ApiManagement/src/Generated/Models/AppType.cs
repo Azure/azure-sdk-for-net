@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static AppType Portal { get; } = new AppType(PortalValue);
         /// <summary> User create request was sent by new developer portal. </summary>
         public static AppType DeveloperPortal { get; } = new AppType(DeveloperPortalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppType"/> values are the same. </summary>
         public static bool operator ==(AppType left, AppType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppType"/> values are not the same. </summary>

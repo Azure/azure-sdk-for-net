@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static ComputeDeleteOption Delete { get; } = new ComputeDeleteOption(DeleteValue);
         /// <summary> Detach. </summary>
         public static ComputeDeleteOption Detach { get; } = new ComputeDeleteOption(DetachValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ComputeDeleteOption"/> values are the same. </summary>
         public static bool operator ==(ComputeDeleteOption left, ComputeDeleteOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeDeleteOption"/> values are not the same. </summary>

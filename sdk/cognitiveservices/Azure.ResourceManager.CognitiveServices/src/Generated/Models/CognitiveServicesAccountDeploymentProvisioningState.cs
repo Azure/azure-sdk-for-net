@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static CognitiveServicesAccountDeploymentProvisioningState Failed { get; } = new CognitiveServicesAccountDeploymentProvisioningState(FailedValue);
         /// <summary> Succeeded. </summary>
         public static CognitiveServicesAccountDeploymentProvisioningState Succeeded { get; } = new CognitiveServicesAccountDeploymentProvisioningState(SucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CognitiveServicesAccountDeploymentProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CognitiveServicesAccountDeploymentProvisioningState left, CognitiveServicesAccountDeploymentProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CognitiveServicesAccountDeploymentProvisioningState"/> values are not the same. </summary>

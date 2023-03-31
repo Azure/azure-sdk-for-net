@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ManagedClusterNodeOSUpgradeChannel SecurityPatch { get; } = new ManagedClusterNodeOSUpgradeChannel(SecurityPatchValue);
         /// <summary> AKS will update the nodes with a newly patched VHD containing security fixes and bugfixes on a weekly cadence. With the VHD update machines will be rolling reimaged to that VHD following maintenance windows and surge settings. No extra VHD cost is incurred when choosing this option as AKS hosts the images. </summary>
         public static ManagedClusterNodeOSUpgradeChannel NodeImage { get; } = new ManagedClusterNodeOSUpgradeChannel(NodeImageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterNodeOSUpgradeChannel"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterNodeOSUpgradeChannel left, ManagedClusterNodeOSUpgradeChannel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterNodeOSUpgradeChannel"/> values are not the same. </summary>

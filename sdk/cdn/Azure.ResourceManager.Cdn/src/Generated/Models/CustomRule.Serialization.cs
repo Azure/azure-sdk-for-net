@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
-                writer.WriteStringValue(EnabledState.Value.ToString());
+                writer.WriteStringValue(EnabledState.Value.ToSerialString());
             }
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);
-            writer.WriteStringValue(Action.ToString());
+            writer.WriteStringValue(Action.ToSerialString());
             writer.WriteEndObject();
         }
 

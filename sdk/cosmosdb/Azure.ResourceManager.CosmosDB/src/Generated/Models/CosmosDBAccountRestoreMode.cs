@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> PointInTime. </summary>
         public static CosmosDBAccountRestoreMode PointInTime { get; } = new CosmosDBAccountRestoreMode(PointInTimeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBAccountRestoreMode"/> values are the same. </summary>
         public static bool operator ==(CosmosDBAccountRestoreMode left, CosmosDBAccountRestoreMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBAccountRestoreMode"/> values are not the same. </summary>

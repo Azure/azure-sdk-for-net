@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static ServiceAccountHostingModel ConnectedContainer { get; } = new ServiceAccountHostingModel(ConnectedContainerValue);
         /// <summary> DisconnectedContainer. </summary>
         public static ServiceAccountHostingModel DisconnectedContainer { get; } = new ServiceAccountHostingModel(DisconnectedContainerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ServiceAccountHostingModel"/> values are the same. </summary>
         public static bool operator ==(ServiceAccountHostingModel left, ServiceAccountHostingModel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAccountHostingModel"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static AuthorizationRoleType BuiltInRole { get; } = new AuthorizationRoleType(BuiltInRoleValue);
         /// <summary> CustomRole. </summary>
         public static AuthorizationRoleType CustomRole { get; } = new AuthorizationRoleType(CustomRoleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AuthorizationRoleType"/> values are the same. </summary>
         public static bool operator ==(AuthorizationRoleType left, AuthorizationRoleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthorizationRoleType"/> values are not the same. </summary>

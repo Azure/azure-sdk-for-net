@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static DataAccessAuthMode AzureActiveDirectory { get; } = new DataAccessAuthMode(AzureActiveDirectoryValue);
         /// <summary> No additional authentication would be performed when accessing export/upload URL. </summary>
         public static DataAccessAuthMode None { get; } = new DataAccessAuthMode(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataAccessAuthMode"/> values are the same. </summary>
         public static bool operator ==(DataAccessAuthMode left, DataAccessAuthMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataAccessAuthMode"/> values are not the same. </summary>

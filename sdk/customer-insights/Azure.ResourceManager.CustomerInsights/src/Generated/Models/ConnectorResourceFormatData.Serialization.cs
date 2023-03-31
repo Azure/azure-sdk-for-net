@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(ConnectorType))
             {
                 writer.WritePropertyName("connectorType"u8);
-                writer.WriteStringValue(ConnectorType.Value.ToString());
+                writer.WriteStringValue(ConnectorType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DisplayName))
             {

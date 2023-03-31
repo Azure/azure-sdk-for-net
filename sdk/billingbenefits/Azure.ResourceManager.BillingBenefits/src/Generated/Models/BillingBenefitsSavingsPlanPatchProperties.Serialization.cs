@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(AppliedScopeType))
             {
                 writer.WritePropertyName("appliedScopeType"u8);
-                writer.WriteStringValue(AppliedScopeType.Value.ToString());
+                writer.WriteStringValue(AppliedScopeType.Value.ToSerialString());
             }
             if (Optional.IsDefined(AppliedScopeProperties))
             {

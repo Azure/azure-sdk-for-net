@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(KeyVaultNetworkAccess))
             {
                 writer.WritePropertyName("keyVaultNetworkAccess"u8);
-                writer.WriteStringValue(KeyVaultNetworkAccess.Value.ToString());
+                writer.WriteStringValue(KeyVaultNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(KeyVaultResourceId))
             {

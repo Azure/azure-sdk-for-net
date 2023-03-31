@@ -46,7 +46,7 @@ namespace Azure.Security.Attestation
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_instanceUrl, false);
             uri.AppendPath("/policies/", false);
-            uri.AppendPath(attestationType.ToString(), true);
+            uri.AppendPath(attestationType.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -103,7 +103,7 @@ namespace Azure.Security.Attestation
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_instanceUrl, false);
             uri.AppendPath("/policies/", false);
-            uri.AppendPath(attestationType.ToString(), true);
+            uri.AppendPath(attestationType.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -176,7 +176,7 @@ namespace Azure.Security.Attestation
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_instanceUrl, false);
             uri.AppendPath("/policies/", false);
-            uri.AppendPath(attestationType.ToString(), true);
+            uri.AppendPath(attestationType.ToSerialString(), true);
             uri.AppendPath(":reset", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

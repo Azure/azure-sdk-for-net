@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CertificateSource AzureKeyVault { get; } = new CertificateSource(AzureKeyVaultValue);
         /// <summary> Cdn. </summary>
         public static CertificateSource Cdn { get; } = new CertificateSource(CdnValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CertificateSource"/> values are the same. </summary>
         public static bool operator ==(CertificateSource left, CertificateSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CertificateSource"/> values are not the same. </summary>

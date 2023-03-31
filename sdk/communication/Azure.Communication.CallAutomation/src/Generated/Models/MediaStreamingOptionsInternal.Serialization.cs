@@ -18,11 +18,11 @@ namespace Azure.Communication.CallAutomation
             writer.WritePropertyName("transportUrl"u8);
             writer.WriteStringValue(TransportUrl);
             writer.WritePropertyName("transportType"u8);
-            writer.WriteStringValue(TransportType.ToString());
+            writer.WriteStringValue(TransportType.ToSerialString());
             writer.WritePropertyName("contentType"u8);
-            writer.WriteStringValue(ContentType.ToString());
+            writer.WriteStringValue(ContentType.ToSerialString());
             writer.WritePropertyName("audioChannelType"u8);
-            writer.WriteStringValue(AudioChannelType.ToString());
+            writer.WriteStringValue(AudioChannelType.ToSerialString());
             writer.WriteEndObject();
         }
     }

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> count. </summary>
         public static CdnUsageUnit Count { get; } = new CdnUsageUnit(CountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CdnUsageUnit"/> values are the same. </summary>
         public static bool operator ==(CdnUsageUnit left, CdnUsageUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CdnUsageUnit"/> values are not the same. </summary>

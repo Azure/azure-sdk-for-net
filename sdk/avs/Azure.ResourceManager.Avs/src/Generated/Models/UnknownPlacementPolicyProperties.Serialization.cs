@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Avs.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(PolicyType.ToString());
+            writer.WriteStringValue(PolicyType.ToSerialString());
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsDefined(DisplayName))
             {

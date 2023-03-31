@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static AgentPoolMode System { get; } = new AgentPoolMode(SystemValue);
         /// <summary> User agent pools are primarily for hosting your application pods. </summary>
         public static AgentPoolMode User { get; } = new AgentPoolMode(UserValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AgentPoolMode"/> values are the same. </summary>
         public static bool operator ==(AgentPoolMode left, AgentPoolMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentPoolMode"/> values are not the same. </summary>

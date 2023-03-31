@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static HcxEnterpriseSiteStatus Deactivated { get; } = new HcxEnterpriseSiteStatus(DeactivatedValue);
         /// <summary> Deleted. </summary>
         public static HcxEnterpriseSiteStatus Deleted { get; } = new HcxEnterpriseSiteStatus(DeletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HcxEnterpriseSiteStatus"/> values are the same. </summary>
         public static bool operator ==(HcxEnterpriseSiteStatus left, HcxEnterpriseSiteStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HcxEnterpriseSiteStatus"/> values are not the same. </summary>

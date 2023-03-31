@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryWebhookStatus Enabled { get; } = new ContainerRegistryWebhookStatus(EnabledValue);
         /// <summary> disabled. </summary>
         public static ContainerRegistryWebhookStatus Disabled { get; } = new ContainerRegistryWebhookStatus(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryWebhookStatus"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryWebhookStatus left, ContainerRegistryWebhookStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryWebhookStatus"/> values are not the same. </summary>

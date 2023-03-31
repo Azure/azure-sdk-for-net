@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SecurityType))
             {
                 writer.WritePropertyName("securityType"u8);
-                writer.WriteStringValue(SecurityType.Value.ToString());
+                writer.WriteStringValue(SecurityType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchAccountPoolProvisioningState Succeeded { get; } = new BatchAccountPoolProvisioningState(SucceededValue);
         /// <summary> The user has requested that the pool be deleted, but the delete operation has not yet completed. </summary>
         public static BatchAccountPoolProvisioningState Deleting { get; } = new BatchAccountPoolProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BatchAccountPoolProvisioningState"/> values are the same. </summary>
         public static bool operator ==(BatchAccountPoolProvisioningState left, BatchAccountPoolProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchAccountPoolProvisioningState"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static RepairAction Restart { get; } = new RepairAction(RestartValue);
         /// <summary> Reimage. </summary>
         public static RepairAction Reimage { get; } = new RepairAction(ReimageValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RepairAction"/> values are the same. </summary>
         public static bool operator ==(RepairAction left, RepairAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RepairAction"/> values are not the same. </summary>

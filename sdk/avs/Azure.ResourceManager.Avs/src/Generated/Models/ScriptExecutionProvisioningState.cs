@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static ScriptExecutionProvisioningState Deleting { get; } = new ScriptExecutionProvisioningState(DeletingValue);
         /// <summary> Canceled. </summary>
         public static ScriptExecutionProvisioningState Canceled { get; } = new ScriptExecutionProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScriptExecutionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ScriptExecutionProvisioningState left, ScriptExecutionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScriptExecutionProvisioningState"/> values are not the same. </summary>

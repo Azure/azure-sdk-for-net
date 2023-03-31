@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static ContainerGroupIPAddressType Public { get; } = new ContainerGroupIPAddressType(PublicValue);
         /// <summary> Private. </summary>
         public static ContainerGroupIPAddressType Private { get; } = new ContainerGroupIPAddressType(PrivateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerGroupIPAddressType"/> values are the same. </summary>
         public static bool operator ==(ContainerGroupIPAddressType left, ContainerGroupIPAddressType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerGroupIPAddressType"/> values are not the same. </summary>

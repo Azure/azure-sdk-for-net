@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ApiType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ApiType.Value.ToString());
+                writer.WriteStringValue(ApiType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ApiRevision))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Protocols)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteStringValue(Format.Value.ToString());
+                writer.WriteStringValue(Format.Value.ToSerialString());
             }
             if (Optional.IsDefined(WsdlSelector))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(SoapApiType))
             {
                 writer.WritePropertyName("apiType"u8);
-                writer.WriteStringValue(SoapApiType.Value.ToString());
+                writer.WriteStringValue(SoapApiType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

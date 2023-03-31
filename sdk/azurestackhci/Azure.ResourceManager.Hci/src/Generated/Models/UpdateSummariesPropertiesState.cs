@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static UpdateSummariesPropertiesState PreparationInProgress { get; } = new UpdateSummariesPropertiesState(PreparationInProgressValue);
         /// <summary> PreparationFailed. </summary>
         public static UpdateSummariesPropertiesState PreparationFailed { get; } = new UpdateSummariesPropertiesState(PreparationFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UpdateSummariesPropertiesState"/> values are the same. </summary>
         public static bool operator ==(UpdateSummariesPropertiesState left, UpdateSummariesPropertiesState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpdateSummariesPropertiesState"/> values are not the same. </summary>

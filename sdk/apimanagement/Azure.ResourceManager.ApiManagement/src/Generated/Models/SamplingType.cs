@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Fixed-rate sampling. </summary>
         public static SamplingType Fixed { get; } = new SamplingType(FixedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SamplingType"/> values are the same. </summary>
         public static bool operator ==(SamplingType left, SamplingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SamplingType"/> values are not the same. </summary>

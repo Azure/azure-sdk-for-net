@@ -25,7 +25,7 @@ namespace Azure.Communication.MediaComposition
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
@@ -49,7 +49,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
-                writer.WriteStringValue(ScalingMode.Value.ToString());
+                writer.WriteStringValue(ScalingMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

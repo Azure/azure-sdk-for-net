@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> SHA256. </summary>
         public static UriSigningAlgorithm Sha256 { get; } = new UriSigningAlgorithm(Sha256Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UriSigningAlgorithm"/> values are the same. </summary>
         public static bool operator ==(UriSigningAlgorithm left, UriSigningAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriSigningAlgorithm"/> values are not the same. </summary>

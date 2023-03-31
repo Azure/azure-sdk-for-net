@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static SmartGroupsSortByField StartDateTime { get; } = new SmartGroupsSortByField(StartDateTimeValue);
         /// <summary> lastModifiedDateTime. </summary>
         public static SmartGroupsSortByField LastModifiedDateTime { get; } = new SmartGroupsSortByField(LastModifiedDateTimeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SmartGroupsSortByField"/> values are the same. </summary>
         public static bool operator ==(SmartGroupsSortByField left, SmartGroupsSortByField right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SmartGroupsSortByField"/> values are not the same. </summary>

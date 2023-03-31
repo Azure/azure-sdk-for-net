@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static RequestUriOperator GreaterThanOrEqual { get; } = new RequestUriOperator(GreaterThanOrEqualValue);
         /// <summary> RegEx. </summary>
         public static RequestUriOperator RegEx { get; } = new RequestUriOperator(RegExValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RequestUriOperator"/> values are the same. </summary>
         public static bool operator ==(RequestUriOperator left, RequestUriOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestUriOperator"/> values are not the same. </summary>

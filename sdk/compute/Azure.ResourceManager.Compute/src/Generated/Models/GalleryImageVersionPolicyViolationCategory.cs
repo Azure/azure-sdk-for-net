@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static GalleryImageVersionPolicyViolationCategory CopyrightValidation { get; } = new GalleryImageVersionPolicyViolationCategory(CopyrightValidationValue);
         /// <summary> IpTheft. </summary>
         public static GalleryImageVersionPolicyViolationCategory IPTheft { get; } = new GalleryImageVersionPolicyViolationCategory(IPTheftValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GalleryImageVersionPolicyViolationCategory"/> values are the same. </summary>
         public static bool operator ==(GalleryImageVersionPolicyViolationCategory left, GalleryImageVersionPolicyViolationCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GalleryImageVersionPolicyViolationCategory"/> values are not the same. </summary>

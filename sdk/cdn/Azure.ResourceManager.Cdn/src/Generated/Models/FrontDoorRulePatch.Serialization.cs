@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(MatchProcessingBehavior))
             {
                 writer.WritePropertyName("matchProcessingBehavior"u8);
-                writer.WriteStringValue(MatchProcessingBehavior.Value.ToString());
+                writer.WriteStringValue(MatchProcessingBehavior.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

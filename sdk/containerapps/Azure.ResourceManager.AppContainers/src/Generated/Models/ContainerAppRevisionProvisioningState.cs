@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppRevisionProvisioningState Deprovisioning { get; } = new ContainerAppRevisionProvisioningState(DeprovisioningValue);
         /// <summary> Deprovisioned. </summary>
         public static ContainerAppRevisionProvisioningState Deprovisioned { get; } = new ContainerAppRevisionProvisioningState(DeprovisionedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppRevisionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppRevisionProvisioningState left, ContainerAppRevisionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppRevisionProvisioningState"/> values are not the same. </summary>

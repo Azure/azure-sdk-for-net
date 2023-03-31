@@ -35,6 +35,9 @@ namespace Azure.Communication.MediaComposition
         public static SupportPosition BottomLeft { get; } = new SupportPosition(BottomLeftValue);
         /// <summary> bottomRight. </summary>
         public static SupportPosition BottomRight { get; } = new SupportPosition(BottomRightValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SupportPosition"/> values are the same. </summary>
         public static bool operator ==(SupportPosition left, SupportPosition right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SupportPosition"/> values are not the same. </summary>

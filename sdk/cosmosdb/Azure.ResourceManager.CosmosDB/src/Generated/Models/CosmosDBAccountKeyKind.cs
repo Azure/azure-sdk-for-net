@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBAccountKeyKind PrimaryReadonly { get; } = new CosmosDBAccountKeyKind(PrimaryReadonlyValue);
         /// <summary> secondaryReadonly. </summary>
         public static CosmosDBAccountKeyKind SecondaryReadonly { get; } = new CosmosDBAccountKeyKind(SecondaryReadonlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBAccountKeyKind"/> values are the same. </summary>
         public static bool operator ==(CosmosDBAccountKeyKind left, CosmosDBAccountKeyKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBAccountKeyKind"/> values are not the same. </summary>

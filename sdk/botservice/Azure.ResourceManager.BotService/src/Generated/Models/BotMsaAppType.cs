@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.BotService.Models
         public static BotMsaAppType SingleTenant { get; } = new BotMsaAppType(SingleTenantValue);
         /// <summary> MultiTenant. </summary>
         public static BotMsaAppType MultiTenant { get; } = new BotMsaAppType(MultiTenantValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BotMsaAppType"/> values are the same. </summary>
         public static bool operator ==(BotMsaAppType left, BotMsaAppType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BotMsaAppType"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static CertificateSource Custom { get; } = new CertificateSource(CustomValue);
         /// <summary> BuiltIn. </summary>
         public static CertificateSource BuiltIn { get; } = new CertificateSource(BuiltInValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CertificateSource"/> values are the same. </summary>
         public static bool operator ==(CertificateSource left, CertificateSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CertificateSource"/> values are not the same. </summary>

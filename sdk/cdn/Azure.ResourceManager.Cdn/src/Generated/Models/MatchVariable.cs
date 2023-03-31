@@ -80,6 +80,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static MatchVariable HostName { get; } = new MatchVariable(HostNameValue);
         /// <summary> SslProtocol. </summary>
         public static MatchVariable SslProtocol { get; } = new MatchVariable(SslProtocolValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MatchVariable"/> values are the same. </summary>
         public static bool operator ==(MatchVariable left, MatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MatchVariable"/> values are not the same. </summary>

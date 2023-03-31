@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(IncludedUpdateClassifications))
             {
                 writer.WritePropertyName("includedUpdateClassifications"u8);
-                writer.WriteStringValue(IncludedUpdateClassifications.Value.ToString());
+                writer.WriteStringValue(IncludedUpdateClassifications.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ExcludedKBNumbers))
             {

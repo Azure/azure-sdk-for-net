@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Advisor.Models
         public static CpuThreshold Fifteen { get; } = new CpuThreshold(FifteenValue);
         /// <summary> 20. </summary>
         public static CpuThreshold Twenty { get; } = new CpuThreshold(TwentyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CpuThreshold"/> values are the same. </summary>
         public static bool operator ==(CpuThreshold left, CpuThreshold right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CpuThreshold"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> count. </summary>
         public static WafMetricsResponseSeriesItemUnit Count { get; } = new WafMetricsResponseSeriesItemUnit(CountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WafMetricsResponseSeriesItemUnit"/> values are the same. </summary>
         public static bool operator ==(WafMetricsResponseSeriesItemUnit left, WafMetricsResponseSeriesItemUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafMetricsResponseSeriesItemUnit"/> values are not the same. </summary>

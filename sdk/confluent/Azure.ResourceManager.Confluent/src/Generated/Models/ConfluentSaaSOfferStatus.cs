@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Confluent.Models
         public static ConfluentSaaSOfferStatus Unsubscribed { get; } = new ConfluentSaaSOfferStatus(UnsubscribedValue);
         /// <summary> Updating. </summary>
         public static ConfluentSaaSOfferStatus Updating { get; } = new ConfluentSaaSOfferStatus(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConfluentSaaSOfferStatus"/> values are the same. </summary>
         public static bool operator ==(ConfluentSaaSOfferStatus left, ConfluentSaaSOfferStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfluentSaaSOfferStatus"/> values are not the same. </summary>

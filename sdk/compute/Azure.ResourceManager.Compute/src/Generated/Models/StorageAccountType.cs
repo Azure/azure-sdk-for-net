@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static StorageAccountType StandardSsdZrs { get; } = new StorageAccountType(StandardSsdZrsValue);
         /// <summary> PremiumV2_LRS. </summary>
         public static StorageAccountType PremiumV2Lrs { get; } = new StorageAccountType(PremiumV2LrsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageAccountType"/> values are the same. </summary>
         public static bool operator ==(StorageAccountType left, StorageAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountType"/> values are not the same. </summary>

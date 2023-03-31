@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static RequestMethodMatchConditionMatchValue Options { get; } = new RequestMethodMatchConditionMatchValue(OptionsValue);
         /// <summary> TRACE. </summary>
         public static RequestMethodMatchConditionMatchValue Trace { get; } = new RequestMethodMatchConditionMatchValue(TraceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RequestMethodMatchConditionMatchValue"/> values are the same. </summary>
         public static bool operator ==(RequestMethodMatchConditionMatchValue left, RequestMethodMatchConditionMatchValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestMethodMatchConditionMatchValue"/> values are not the same. </summary>

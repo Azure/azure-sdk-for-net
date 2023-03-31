@@ -29,6 +29,9 @@ namespace Azure.Communication.PhoneNumbers
         public static PhoneNumberType Geographic { get; } = new PhoneNumberType(GeographicValue);
         /// <summary> tollFree. </summary>
         public static PhoneNumberType TollFree { get; } = new PhoneNumberType(TollFreeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PhoneNumberType"/> values are the same. </summary>
         public static bool operator ==(PhoneNumberType left, PhoneNumberType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoneNumberType"/> values are not the same. </summary>

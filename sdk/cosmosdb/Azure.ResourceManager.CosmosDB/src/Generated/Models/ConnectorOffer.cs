@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Small. </summary>
         public static ConnectorOffer Small { get; } = new ConnectorOffer(SmallValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConnectorOffer"/> values are the same. </summary>
         public static bool operator ==(ConnectorOffer left, ConnectorOffer right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectorOffer"/> values are not the same. </summary>

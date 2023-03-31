@@ -22,14 +22,14 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedProtocols)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteStringValue(Recurrence.Value.ToString());
+                writer.WriteStringValue(Recurrence.Value.ToSerialString());
             }
             if (Optional.IsDefined(HelpMessage))
             {
@@ -59,7 +59,7 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(Directionality))
             {
                 writer.WritePropertyName("directionality"u8);
-                writer.WriteStringValue(Directionality.Value.ToString());
+                writer.WriteStringValue(Directionality.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(UseCases))
             {

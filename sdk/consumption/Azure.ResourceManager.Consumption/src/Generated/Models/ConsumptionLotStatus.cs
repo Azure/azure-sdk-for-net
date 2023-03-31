@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public static ConsumptionLotStatus Complete { get; } = new ConsumptionLotStatus(CompleteValue);
         /// <summary> Canceled. </summary>
         public static ConsumptionLotStatus Canceled { get; } = new ConsumptionLotStatus(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConsumptionLotStatus"/> values are the same. </summary>
         public static bool operator ==(ConsumptionLotStatus left, ConsumptionLotStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConsumptionLotStatus"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppHttpScheme Http { get; } = new ContainerAppHttpScheme(HttpValue);
         /// <summary> HTTPS. </summary>
         public static ContainerAppHttpScheme Https { get; } = new ContainerAppHttpScheme(HttpsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppHttpScheme"/> values are the same. </summary>
         public static bool operator ==(ContainerAppHttpScheme left, ContainerAppHttpScheme right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppHttpScheme"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static RuleQueryStringCachingBehavior IgnoreSpecifiedQueryStrings { get; } = new RuleQueryStringCachingBehavior(IgnoreSpecifiedQueryStringsValue);
         /// <summary> IncludeSpecifiedQueryStrings. </summary>
         public static RuleQueryStringCachingBehavior IncludeSpecifiedQueryStrings { get; } = new RuleQueryStringCachingBehavior(IncludeSpecifiedQueryStringsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RuleQueryStringCachingBehavior"/> values are the same. </summary>
         public static bool operator ==(RuleQueryStringCachingBehavior left, RuleQueryStringCachingBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RuleQueryStringCachingBehavior"/> values are not the same. </summary>

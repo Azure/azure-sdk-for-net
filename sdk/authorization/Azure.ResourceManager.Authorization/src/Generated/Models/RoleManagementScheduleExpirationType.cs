@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleManagementScheduleExpirationType AfterDateTime { get; } = new RoleManagementScheduleExpirationType(AfterDateTimeValue);
         /// <summary> NoExpiration. </summary>
         public static RoleManagementScheduleExpirationType NoExpiration { get; } = new RoleManagementScheduleExpirationType(NoExpirationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleManagementScheduleExpirationType"/> values are the same. </summary>
         public static bool operator ==(RoleManagementScheduleExpirationType left, RoleManagementScheduleExpirationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementScheduleExpirationType"/> values are not the same. </summary>

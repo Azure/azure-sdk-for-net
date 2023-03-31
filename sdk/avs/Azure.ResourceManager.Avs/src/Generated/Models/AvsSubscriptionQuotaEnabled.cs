@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsSubscriptionQuotaEnabled Enabled { get; } = new AvsSubscriptionQuotaEnabled(EnabledValue);
         /// <summary> Disabled. </summary>
         public static AvsSubscriptionQuotaEnabled Disabled { get; } = new AvsSubscriptionQuotaEnabled(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvsSubscriptionQuotaEnabled"/> values are the same. </summary>
         public static bool operator ==(AvsSubscriptionQuotaEnabled left, AvsSubscriptionQuotaEnabled right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvsSubscriptionQuotaEnabled"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static FrontDoorQueryStringCachingBehavior IgnoreSpecifiedQueryStrings { get; } = new FrontDoorQueryStringCachingBehavior(IgnoreSpecifiedQueryStringsValue);
         /// <summary> IncludeSpecifiedQueryStrings. </summary>
         public static FrontDoorQueryStringCachingBehavior IncludeSpecifiedQueryStrings { get; } = new FrontDoorQueryStringCachingBehavior(IncludeSpecifiedQueryStringsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorQueryStringCachingBehavior"/> values are the same. </summary>
         public static bool operator ==(FrontDoorQueryStringCachingBehavior left, FrontDoorQueryStringCachingBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorQueryStringCachingBehavior"/> values are not the same. </summary>

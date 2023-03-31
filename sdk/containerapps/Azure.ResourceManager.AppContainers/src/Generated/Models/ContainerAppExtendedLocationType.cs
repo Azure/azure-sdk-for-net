@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> CustomLocation. </summary>
         public static ContainerAppExtendedLocationType CustomLocation { get; } = new ContainerAppExtendedLocationType(CustomLocationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppExtendedLocationType"/> values are the same. </summary>
         public static bool operator ==(ContainerAppExtendedLocationType left, ContainerAppExtendedLocationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppExtendedLocationType"/> values are not the same. </summary>

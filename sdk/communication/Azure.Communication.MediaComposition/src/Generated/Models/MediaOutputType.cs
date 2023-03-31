@@ -38,6 +38,9 @@ namespace Azure.Communication.MediaComposition
         public static MediaOutputType Srt { get; } = new MediaOutputType(SrtValue);
         /// <summary> rtmp. </summary>
         public static MediaOutputType Rtmp { get; } = new MediaOutputType(RtmpValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaOutputType"/> values are the same. </summary>
         public static bool operator ==(MediaOutputType left, MediaOutputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaOutputType"/> values are not the same. </summary>

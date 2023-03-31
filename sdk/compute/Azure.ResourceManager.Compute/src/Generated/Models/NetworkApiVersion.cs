@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> 2020-11-01. </summary>
         public static NetworkApiVersion TwoThousandTwenty1101 { get; } = new NetworkApiVersion(TwoThousandTwenty1101Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NetworkApiVersion"/> values are the same. </summary>
         public static bool operator ==(NetworkApiVersion left, NetworkApiVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkApiVersion"/> values are not the same. </summary>

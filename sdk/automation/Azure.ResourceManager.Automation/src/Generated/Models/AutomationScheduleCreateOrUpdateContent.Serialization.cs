@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Automation.Models
 #endif
             }
             writer.WritePropertyName("frequency"u8);
-            writer.WriteStringValue(Frequency.ToString());
+            writer.WriteStringValue(Frequency.ToSerialString());
             if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);

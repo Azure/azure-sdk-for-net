@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskState ReadyToUpload { get; } = new DiskState(ReadyToUploadValue);
         /// <summary> A disk is created for upload and a write token has been issued for uploading to it. </summary>
         public static DiskState ActiveUpload { get; } = new DiskState(ActiveUploadValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskState"/> values are the same. </summary>
         public static bool operator ==(DiskState left, DiskState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskState"/> values are not the same. </summary>

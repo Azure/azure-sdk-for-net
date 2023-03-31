@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static KPackBuildStageProvisioningState Succeeded { get; } = new KPackBuildStageProvisioningState(SucceededValue);
         /// <summary> Failed. </summary>
         public static KPackBuildStageProvisioningState Failed { get; } = new KPackBuildStageProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KPackBuildStageProvisioningState"/> values are the same. </summary>
         public static bool operator ==(KPackBuildStageProvisioningState left, KPackBuildStageProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KPackBuildStageProvisioningState"/> values are not the same. </summary>

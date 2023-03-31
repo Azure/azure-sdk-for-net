@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.Value.ToSerialString());
             }
             writer.WritePropertyName("progress"u8);
             writer.WriteStartObject();

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ActionsRequiredForPrivateLinkServiceConsumer None { get; } = new ActionsRequiredForPrivateLinkServiceConsumer(NoneValue);
         /// <summary> Recreate. </summary>
         public static ActionsRequiredForPrivateLinkServiceConsumer Recreate { get; } = new ActionsRequiredForPrivateLinkServiceConsumer(RecreateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ActionsRequiredForPrivateLinkServiceConsumer"/> values are the same. </summary>
         public static bool operator ==(ActionsRequiredForPrivateLinkServiceConsumer left, ActionsRequiredForPrivateLinkServiceConsumer right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ActionsRequiredForPrivateLinkServiceConsumer"/> values are not the same. </summary>

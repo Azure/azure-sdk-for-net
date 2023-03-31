@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.ApiManagement
             uri.AppendQuery("api-version", _apiVersion, true);
             if (appType != null)
             {
-                uri.AppendQuery("appType", appType.Value.ToString(), true);
+                uri.AppendQuery("appType", appType.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("If-Match", ifMatch);

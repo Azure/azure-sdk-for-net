@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static RuleCacheBehavior OverrideAlways { get; } = new RuleCacheBehavior(OverrideAlwaysValue);
         /// <summary> OverrideIfOriginMissing. </summary>
         public static RuleCacheBehavior OverrideIfOriginMissing { get; } = new RuleCacheBehavior(OverrideIfOriginMissingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RuleCacheBehavior"/> values are the same. </summary>
         public static bool operator ==(RuleCacheBehavior left, RuleCacheBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RuleCacheBehavior"/> values are not the same. </summary>

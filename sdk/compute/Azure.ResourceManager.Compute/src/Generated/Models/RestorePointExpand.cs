@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> instanceView. </summary>
         public static RestorePointExpand InstanceView { get; } = new RestorePointExpand(InstanceViewValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RestorePointExpand"/> values are the same. </summary>
         public static bool operator ==(RestorePointExpand left, RestorePointExpand right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RestorePointExpand"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.Communication.MediaComposition
         public static LayerVisibility Visible { get; } = new LayerVisibility(VisibleValue);
         /// <summary> hidden. </summary>
         public static LayerVisibility Hidden { get; } = new LayerVisibility(HiddenValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LayerVisibility"/> values are the same. </summary>
         public static bool operator ==(LayerVisibility left, LayerVisibility right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LayerVisibility"/> values are not the same. </summary>

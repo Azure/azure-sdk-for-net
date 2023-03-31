@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Attestation.Models
         public static AttestationPrivateEndpointConnectionProvisioningState Deleting { get; } = new AttestationPrivateEndpointConnectionProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static AttestationPrivateEndpointConnectionProvisioningState Failed { get; } = new AttestationPrivateEndpointConnectionProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AttestationPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AttestationPrivateEndpointConnectionProvisioningState left, AttestationPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AttestationPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

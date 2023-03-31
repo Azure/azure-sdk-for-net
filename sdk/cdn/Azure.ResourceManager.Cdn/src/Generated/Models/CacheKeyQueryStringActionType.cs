@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleCacheKeyQueryStringBehaviorActionParameters. </summary>
         public static CacheKeyQueryStringActionType CacheKeyQueryStringBehaviorAction { get; } = new CacheKeyQueryStringActionType(CacheKeyQueryStringBehaviorActionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CacheKeyQueryStringActionType"/> values are the same. </summary>
         public static bool operator ==(CacheKeyQueryStringActionType left, CacheKeyQueryStringActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CacheKeyQueryStringActionType"/> values are not the same. </summary>

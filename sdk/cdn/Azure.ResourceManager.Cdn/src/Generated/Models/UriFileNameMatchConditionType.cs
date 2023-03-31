@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleUrlFilenameConditionParameters. </summary>
         public static UriFileNameMatchConditionType UriFilenameCondition { get; } = new UriFileNameMatchConditionType(UriFilenameConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UriFileNameMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(UriFileNameMatchConditionType left, UriFileNameMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriFileNameMatchConditionType"/> values are not the same. </summary>

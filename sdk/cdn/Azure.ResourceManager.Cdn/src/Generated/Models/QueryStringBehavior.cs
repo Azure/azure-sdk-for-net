@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static QueryStringBehavior Exclude { get; } = new QueryStringBehavior(ExcludeValue);
         /// <summary> ExcludeAll. </summary>
         public static QueryStringBehavior ExcludeAll { get; } = new QueryStringBehavior(ExcludeAllValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="QueryStringBehavior"/> values are the same. </summary>
         public static bool operator ==(QueryStringBehavior left, QueryStringBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryStringBehavior"/> values are not the same. </summary>

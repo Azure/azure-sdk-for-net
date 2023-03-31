@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static VirtualMachineRestrictMovementState Enabled { get; } = new VirtualMachineRestrictMovementState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static VirtualMachineRestrictMovementState Disabled { get; } = new VirtualMachineRestrictMovementState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VirtualMachineRestrictMovementState"/> values are the same. </summary>
         public static bool operator ==(VirtualMachineRestrictMovementState left, VirtualMachineRestrictMovementState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachineRestrictMovementState"/> values are not the same. </summary>

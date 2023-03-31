@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ConfirmationEmailType SignUp { get; } = new ConfirmationEmailType(SignUpValue);
         /// <summary> Send an e-mail inviting the user to sign-up and complete registration. </summary>
         public static ConfirmationEmailType Invite { get; } = new ConfirmationEmailType(InviteValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConfirmationEmailType"/> values are the same. </summary>
         public static bool operator ==(ConfirmationEmailType left, ConfirmationEmailType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfirmationEmailType"/> values are not the same. </summary>

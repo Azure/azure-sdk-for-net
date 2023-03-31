@@ -31,7 +31,7 @@ namespace Azure.Communication.NetworkTraversal
             writer.WritePropertyName("credential"u8);
             writer.WriteStringValue(Credential);
             writer.WritePropertyName("routeType"u8);
-            writer.WriteStringValue(RouteType.ToString());
+            writer.WriteStringValue(RouteType.ToSerialString());
             writer.WriteEndObject();
         }
 

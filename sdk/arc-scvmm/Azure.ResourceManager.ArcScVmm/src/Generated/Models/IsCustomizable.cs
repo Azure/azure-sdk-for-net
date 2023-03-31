@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public static IsCustomizable False { get; } = new IsCustomizable(FalseValue);
         /// <summary> true. </summary>
         public static IsCustomizable True { get; } = new IsCustomizable(TrueValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IsCustomizable"/> values are the same. </summary>
         public static bool operator ==(IsCustomizable left, IsCustomizable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IsCustomizable"/> values are not the same. </summary>

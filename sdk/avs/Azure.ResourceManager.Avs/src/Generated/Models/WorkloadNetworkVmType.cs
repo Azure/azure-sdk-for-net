@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static WorkloadNetworkVmType Edge { get; } = new WorkloadNetworkVmType(EdgeValue);
         /// <summary> SERVICE. </summary>
         public static WorkloadNetworkVmType Service { get; } = new WorkloadNetworkVmType(ServiceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WorkloadNetworkVmType"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkVmType left, WorkloadNetworkVmType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkVmType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleAssignmentScheduleAssignmentType Activated { get; } = new RoleAssignmentScheduleAssignmentType(ActivatedValue);
         /// <summary> Assigned. </summary>
         public static RoleAssignmentScheduleAssignmentType Assigned { get; } = new RoleAssignmentScheduleAssignmentType(AssignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleAssignmentScheduleAssignmentType"/> values are the same. </summary>
         public static bool operator ==(RoleAssignmentScheduleAssignmentType left, RoleAssignmentScheduleAssignmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleAssignmentScheduleAssignmentType"/> values are not the same. </summary>

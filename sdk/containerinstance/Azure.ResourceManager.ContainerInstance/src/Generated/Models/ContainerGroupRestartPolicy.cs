@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static ContainerGroupRestartPolicy OnFailure { get; } = new ContainerGroupRestartPolicy(OnFailureValue);
         /// <summary> Never. </summary>
         public static ContainerGroupRestartPolicy Never { get; } = new ContainerGroupRestartPolicy(NeverValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerGroupRestartPolicy"/> values are the same. </summary>
         public static bool operator ==(ContainerGroupRestartPolicy left, ContainerGroupRestartPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerGroupRestartPolicy"/> values are not the same. </summary>

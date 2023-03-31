@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(OS))
             {
                 writer.WritePropertyName("os"u8);
-                writer.WriteStringValue(OS.Value.ToString());
+                writer.WriteStringValue(OS.Value.ToSerialString());
             }
             if (Optional.IsDefined(VirtualNetworkSubnetResourceId))
             {

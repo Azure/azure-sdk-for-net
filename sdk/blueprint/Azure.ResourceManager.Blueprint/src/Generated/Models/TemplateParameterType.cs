@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static TemplateParameterType SecureObject { get; } = new TemplateParameterType(SecureObjectValue);
         /// <summary> secureString. </summary>
         public static TemplateParameterType SecureString { get; } = new TemplateParameterType(SecureStringValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TemplateParameterType"/> values are the same. </summary>
         public static bool operator ==(TemplateParameterType left, TemplateParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TemplateParameterType"/> values are not the same. </summary>

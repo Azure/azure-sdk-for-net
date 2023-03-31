@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static CertificateStatus Failed { get; } = new CertificateStatus(FailedValue);
         /// <summary> InProgress. </summary>
         public static CertificateStatus InProgress { get; } = new CertificateStatus(InProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CertificateStatus"/> values are the same. </summary>
         public static bool operator ==(CertificateStatus left, CertificateStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CertificateStatus"/> values are not the same. </summary>

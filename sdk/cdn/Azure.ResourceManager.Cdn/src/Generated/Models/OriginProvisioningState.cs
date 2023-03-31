@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static OriginProvisioningState Deleting { get; } = new OriginProvisioningState(DeletingValue);
         /// <summary> Creating. </summary>
         public static OriginProvisioningState Creating { get; } = new OriginProvisioningState(CreatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OriginProvisioningState"/> values are the same. </summary>
         public static bool operator ==(OriginProvisioningState left, OriginProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OriginProvisioningState"/> values are not the same. </summary>

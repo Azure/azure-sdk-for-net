@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceStateCode Running { get; } = new ContainerServiceStateCode(RunningValue);
         /// <summary> The cluster is stopped. </summary>
         public static ContainerServiceStateCode Stopped { get; } = new ContainerServiceStateCode(StoppedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceStateCode"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceStateCode left, ContainerServiceStateCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceStateCode"/> values are not the same. </summary>

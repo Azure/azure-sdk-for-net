@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageType"u8);
-            writer.WriteStringValue(StorageType.ToString());
+            writer.WriteStringValue(StorageType.ToSerialString());
             if (Optional.IsDefined(BlobStorage))
             {
                 writer.WritePropertyName("blobStorage"u8);

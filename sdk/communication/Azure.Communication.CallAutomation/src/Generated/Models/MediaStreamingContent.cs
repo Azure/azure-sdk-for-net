@@ -26,6 +26,9 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> audio. </summary>
         public static MediaStreamingContent Audio { get; } = new MediaStreamingContent(AudioValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MediaStreamingContent"/> values are the same. </summary>
         public static bool operator ==(MediaStreamingContent left, MediaStreamingContent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaStreamingContent"/> values are not the same. </summary>

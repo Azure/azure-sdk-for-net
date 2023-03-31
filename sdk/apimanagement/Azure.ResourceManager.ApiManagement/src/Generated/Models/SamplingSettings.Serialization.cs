@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(SamplingType))
             {
                 writer.WritePropertyName("samplingType"u8);
-                writer.WriteStringValue(SamplingType.Value.ToString());
+                writer.WriteStringValue(SamplingType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Percentage))
             {

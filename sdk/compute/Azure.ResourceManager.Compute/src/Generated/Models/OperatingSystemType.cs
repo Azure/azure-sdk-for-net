@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static OperatingSystemType Windows { get; } = new OperatingSystemType(WindowsValue);
         /// <summary> Linux. </summary>
         public static OperatingSystemType Linux { get; } = new OperatingSystemType(LinuxValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OperatingSystemType"/> values are the same. </summary>
         public static bool operator ==(OperatingSystemType left, OperatingSystemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperatingSystemType"/> values are not the same. </summary>

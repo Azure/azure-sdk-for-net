@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Blueprint
             if (Optional.IsDefined(TargetScope))
             {
                 writer.WritePropertyName("targetScope"u8);
-                writer.WriteStringValue(TargetScope.Value.ToString());
+                writer.WriteStringValue(TargetScope.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Parameters))
             {

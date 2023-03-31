@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(RepairAction))
             {
                 writer.WritePropertyName("repairAction"u8);
-                writer.WriteStringValue(RepairAction.Value.ToString());
+                writer.WriteStringValue(RepairAction.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

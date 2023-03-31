@@ -65,6 +65,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static MonitorServiceSourceForAlert VmInsights { get; } = new MonitorServiceSourceForAlert(VmInsightsValue);
         /// <summary> Zabbix. </summary>
         public static MonitorServiceSourceForAlert Zabbix { get; } = new MonitorServiceSourceForAlert(ZabbixValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MonitorServiceSourceForAlert"/> values are the same. </summary>
         public static bool operator ==(MonitorServiceSourceForAlert left, MonitorServiceSourceForAlert right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorServiceSourceForAlert"/> values are not the same. </summary>

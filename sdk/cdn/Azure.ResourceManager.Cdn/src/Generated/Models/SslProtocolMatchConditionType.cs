@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleSslProtocolConditionParameters. </summary>
         public static SslProtocolMatchConditionType SslProtocolCondition { get; } = new SslProtocolMatchConditionType(SslProtocolConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SslProtocolMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(SslProtocolMatchConditionType left, SslProtocolMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SslProtocolMatchConditionType"/> values are not the same. </summary>

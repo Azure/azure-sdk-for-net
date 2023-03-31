@@ -32,6 +32,9 @@ namespace Azure.Communication.MediaComposition
         public static ScalingMode Crop { get; } = new ScalingMode(CropValue);
         /// <summary> fit. </summary>
         public static ScalingMode Fit { get; } = new ScalingMode(FitValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ScalingMode"/> values are the same. </summary>
         public static bool operator ==(ScalingMode left, ScalingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScalingMode"/> values are not the same. </summary>

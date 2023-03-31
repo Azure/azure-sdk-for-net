@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static MetricsResponseSeriesItemUnit BitsPerSecond { get; } = new MetricsResponseSeriesItemUnit(BitsPerSecondValue);
         /// <summary> milliSeconds. </summary>
         public static MetricsResponseSeriesItemUnit MilliSeconds { get; } = new MetricsResponseSeriesItemUnit(MilliSecondsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MetricsResponseSeriesItemUnit"/> values are the same. </summary>
         public static bool operator ==(MetricsResponseSeriesItemUnit left, MetricsResponseSeriesItemUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricsResponseSeriesItemUnit"/> values are not the same. </summary>

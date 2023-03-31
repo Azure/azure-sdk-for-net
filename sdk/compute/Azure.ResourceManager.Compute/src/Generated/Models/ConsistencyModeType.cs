@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static ConsistencyModeType FileSystemConsistent { get; } = new ConsistencyModeType(FileSystemConsistentValue);
         /// <summary> ApplicationConsistent. </summary>
         public static ConsistencyModeType ApplicationConsistent { get; } = new ConsistencyModeType(ApplicationConsistentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ConsistencyModeType"/> values are the same. </summary>
         public static bool operator ==(ConsistencyModeType left, ConsistencyModeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConsistencyModeType"/> values are not the same. </summary>

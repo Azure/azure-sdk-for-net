@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static PlatformVersion Stv2 { get; } = new PlatformVersion(Stv2Value);
         /// <summary> Platform running the service on Multi Tenant V1 platform. </summary>
         public static PlatformVersion Mtv1 { get; } = new PlatformVersion(Mtv1Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PlatformVersion"/> values are the same. </summary>
         public static bool operator ==(PlatformVersion left, PlatformVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlatformVersion"/> values are not the same. </summary>

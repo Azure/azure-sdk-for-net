@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformApiPortalProvisioningState Failed { get; } = new AppPlatformApiPortalProvisioningState(FailedValue);
         /// <summary> Deleting. </summary>
         public static AppPlatformApiPortalProvisioningState Deleting { get; } = new AppPlatformApiPortalProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformApiPortalProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AppPlatformApiPortalProvisioningState left, AppPlatformApiPortalProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformApiPortalProvisioningState"/> values are not the same. </summary>

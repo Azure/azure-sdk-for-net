@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Scheme))
             {
                 writer.WritePropertyName("scheme"u8);
-                writer.WriteStringValue(Scheme.Value.ToString());
+                writer.WriteStringValue(Scheme.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

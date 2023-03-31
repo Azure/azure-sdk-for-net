@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static DataMaskingMode Mask { get; } = new DataMaskingMode(MaskValue);
         /// <summary> Hide the presence of an entity. </summary>
         public static DataMaskingMode Hide { get; } = new DataMaskingMode(HideValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DataMaskingMode"/> values are the same. </summary>
         public static bool operator ==(DataMaskingMode left, DataMaskingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataMaskingMode"/> values are not the same. </summary>

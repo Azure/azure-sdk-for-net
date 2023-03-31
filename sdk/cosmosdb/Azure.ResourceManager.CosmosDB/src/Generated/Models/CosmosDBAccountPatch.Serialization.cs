@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ConnectorOffer))
             {
                 writer.WritePropertyName("connectorOffer"u8);
-                writer.WriteStringValue(ConnectorOffer.Value.ToString());
+                writer.WriteStringValue(ConnectorOffer.Value.ToSerialString());
             }
             if (Optional.IsDefined(DisableKeyBasedMetadataWriteAccess))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsFreeTierEnabled))
             {

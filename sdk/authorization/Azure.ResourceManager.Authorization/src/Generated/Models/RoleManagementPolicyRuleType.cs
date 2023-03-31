@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static RoleManagementPolicyRuleType RoleManagementPolicyExpirationRule { get; } = new RoleManagementPolicyRuleType(RoleManagementPolicyExpirationRuleValue);
         /// <summary> RoleManagementPolicyNotificationRule. </summary>
         public static RoleManagementPolicyRuleType RoleManagementPolicyNotificationRule { get; } = new RoleManagementPolicyRuleType(RoleManagementPolicyNotificationRuleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleManagementPolicyRuleType"/> values are the same. </summary>
         public static bool operator ==(RoleManagementPolicyRuleType left, RoleManagementPolicyRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleManagementPolicyRuleType"/> values are not the same. </summary>

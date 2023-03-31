@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             if (Optional.IsDefined(LedgerType))
             {
                 writer.WritePropertyName("ledgerType"u8);
-                writer.WriteStringValue(LedgerType.Value.ToString());
+                writer.WriteStringValue(LedgerType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AadBasedSecurityPrincipals))
             {

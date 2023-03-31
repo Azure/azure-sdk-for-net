@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> ServiceProfiler. </summary>
         public static StorageType ServiceProfiler { get; } = new StorageType(ServiceProfilerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StorageType"/> values are the same. </summary>
         public static bool operator ==(StorageType left, StorageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageType"/> values are not the same. </summary>

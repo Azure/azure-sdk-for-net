@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static CapacityReservationGroupGetExpand VirtualMachineScaleSetVmsRef { get; } = new CapacityReservationGroupGetExpand(VirtualMachineScaleSetVmsRefValue);
         /// <summary> virtualMachines/$ref. </summary>
         public static CapacityReservationGroupGetExpand VirtualMachinesRef { get; } = new CapacityReservationGroupGetExpand(VirtualMachinesRefValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CapacityReservationGroupGetExpand"/> values are the same. </summary>
         public static bool operator ==(CapacityReservationGroupGetExpand left, CapacityReservationGroupGetExpand right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CapacityReservationGroupGetExpand"/> values are not the same. </summary>

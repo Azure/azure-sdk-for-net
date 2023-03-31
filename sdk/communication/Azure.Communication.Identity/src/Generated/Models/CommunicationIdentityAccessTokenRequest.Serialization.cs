@@ -19,7 +19,7 @@ namespace Azure.Communication.Identity.Models
             writer.WriteStartArray();
             foreach (var item in Scopes)
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WriteStringValue(item.ToSerialString());
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ExpiresInMinutes))

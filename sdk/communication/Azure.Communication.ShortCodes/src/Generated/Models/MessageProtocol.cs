@@ -29,6 +29,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static MessageProtocol Sms { get; } = new MessageProtocol(SmsValue);
         /// <summary> mms. </summary>
         public static MessageProtocol Mms { get; } = new MessageProtocol(MmsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MessageProtocol"/> values are the same. </summary>
         public static bool operator ==(MessageProtocol left, MessageProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageProtocol"/> values are not the same. </summary>

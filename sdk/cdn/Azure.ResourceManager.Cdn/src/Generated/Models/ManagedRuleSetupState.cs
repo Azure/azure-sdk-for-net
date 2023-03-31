@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static ManagedRuleSetupState Disabled { get; } = new ManagedRuleSetupState(DisabledValue);
         /// <summary> Enabled. </summary>
         public static ManagedRuleSetupState Enabled { get; } = new ManagedRuleSetupState(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedRuleSetupState"/> values are the same. </summary>
         public static bool operator ==(ManagedRuleSetupState left, ManagedRuleSetupState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedRuleSetupState"/> values are not the same. </summary>

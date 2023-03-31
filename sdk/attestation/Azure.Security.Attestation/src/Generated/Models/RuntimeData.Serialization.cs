@@ -23,7 +23,7 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
-                writer.WriteStringValue(DataType.Value.ToString());
+                writer.WriteStringValue(DataType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

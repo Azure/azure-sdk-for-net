@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static AccessName TenantAccess { get; } = new AccessName(TenantAccessValue);
         /// <summary> gitAccess. </summary>
         public static AccessName TenantGitAccess { get; } = new AccessName(TenantGitAccessValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AccessName"/> values are the same. </summary>
         public static bool operator ==(AccessName left, AccessName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AccessName"/> values are not the same. </summary>

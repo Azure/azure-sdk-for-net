@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ManagedClusterLoadBalancerBackendPoolType NodeIPConfiguration { get; } = new ManagedClusterLoadBalancerBackendPoolType(NodeIPConfigurationValue);
         /// <summary> The type of the managed inbound Load Balancer BackendPool. https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend. </summary>
         public static ManagedClusterLoadBalancerBackendPoolType NodeIP { get; } = new ManagedClusterLoadBalancerBackendPoolType(NodeIPValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalancerBackendPoolType"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterLoadBalancerBackendPoolType left, ManagedClusterLoadBalancerBackendPoolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalancerBackendPoolType"/> values are not the same. </summary>

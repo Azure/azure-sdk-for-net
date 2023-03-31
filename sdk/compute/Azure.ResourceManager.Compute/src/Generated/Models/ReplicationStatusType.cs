@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> ReplicationStatus. </summary>
         public static ReplicationStatusType ReplicationStatus { get; } = new ReplicationStatusType(ReplicationStatusValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ReplicationStatusType"/> values are the same. </summary>
         public static bool operator ==(ReplicationStatusType left, ReplicationStatusType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReplicationStatusType"/> values are not the same. </summary>

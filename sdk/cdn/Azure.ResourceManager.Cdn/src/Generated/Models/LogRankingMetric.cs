@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static LogRankingMetric UserErrorCount { get; } = new LogRankingMetric(UserErrorCountValue);
         /// <summary> errorCount. </summary>
         public static LogRankingMetric ErrorCount { get; } = new LogRankingMetric(ErrorCountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogRankingMetric"/> values are the same. </summary>
         public static bool operator ==(LogRankingMetric left, LogRankingMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogRankingMetric"/> values are not the same. </summary>

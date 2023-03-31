@@ -48,7 +48,7 @@ namespace Azure.AI.Language.QuestionAnswering
             if (Optional.IsDefined(RankerKind))
             {
                 writer.WritePropertyName("rankerType"u8);
-                writer.WriteStringValue(RankerKind.Value.ToString());
+                writer.WriteStringValue(RankerKind.Value.ToSerialString());
             }
             if (Optional.IsDefined(Filters))
             {

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBServiceType GraphApiCompute { get; } = new CosmosDBServiceType(GraphApiComputeValue);
         /// <summary> MaterializedViewsBuilder. </summary>
         public static CosmosDBServiceType MaterializedViewsBuilder { get; } = new CosmosDBServiceType(MaterializedViewsBuilderValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBServiceType"/> values are the same. </summary>
         public static bool operator ==(CosmosDBServiceType left, CosmosDBServiceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBServiceType"/> values are not the same. </summary>

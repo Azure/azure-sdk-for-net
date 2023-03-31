@@ -36,23 +36,23 @@ namespace Azure.ResourceManager.Avs.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("affinityType"u8);
-            writer.WriteStringValue(AffinityType.ToString());
+            writer.WriteStringValue(AffinityType.ToSerialString());
             if (Optional.IsDefined(AffinityStrength))
             {
                 writer.WritePropertyName("affinityStrength"u8);
-                writer.WriteStringValue(AffinityStrength.Value.ToString());
+                writer.WriteStringValue(AffinityStrength.Value.ToSerialString());
             }
             if (Optional.IsDefined(AzureHybridBenefitType))
             {
                 writer.WritePropertyName("azureHybridBenefitType"u8);
-                writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());
+                writer.WriteStringValue(AzureHybridBenefitType.Value.ToSerialString());
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(PolicyType.ToString());
+            writer.WriteStringValue(PolicyType.ToSerialString());
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsDefined(DisplayName))
             {

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Hourly. </summary>
         public static BillingBenefitsCommitmentGrain Hourly { get; } = new BillingBenefitsCommitmentGrain(HourlyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BillingBenefitsCommitmentGrain"/> values are the same. </summary>
         public static bool operator ==(BillingBenefitsCommitmentGrain left, BillingBenefitsCommitmentGrain right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingBenefitsCommitmentGrain"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static NumberType ShortCode { get; } = new NumberType(ShortCodeValue);
         /// <summary> alphaId. </summary>
         public static NumberType AlphaId { get; } = new NumberType(AlphaIdValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="NumberType"/> values are the same. </summary>
         public static bool operator ==(NumberType left, NumberType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NumberType"/> values are not the same. </summary>

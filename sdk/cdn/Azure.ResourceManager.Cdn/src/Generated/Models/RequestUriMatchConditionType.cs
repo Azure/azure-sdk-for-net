@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleRequestUriConditionParameters. </summary>
         public static RequestUriMatchConditionType RequestUriCondition { get; } = new RequestUriMatchConditionType(RequestUriConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RequestUriMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(RequestUriMatchConditionType left, RequestUriMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestUriMatchConditionType"/> values are not the same. </summary>

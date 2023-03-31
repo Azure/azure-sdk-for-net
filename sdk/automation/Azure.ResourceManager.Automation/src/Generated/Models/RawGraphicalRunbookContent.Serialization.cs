@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(RunbookType))
             {
                 writer.WritePropertyName("runbookType"u8);
-                writer.WriteStringValue(RunbookType.Value.ToString());
+                writer.WriteStringValue(RunbookType.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformDeploymentStatus Stopped { get; } = new AppPlatformDeploymentStatus(StoppedValue);
         /// <summary> Running. </summary>
         public static AppPlatformDeploymentStatus Running { get; } = new AppPlatformDeploymentStatus(RunningValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformDeploymentStatus"/> values are the same. </summary>
         public static bool operator ==(AppPlatformDeploymentStatus left, AppPlatformDeploymentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformDeploymentStatus"/> values are not the same. </summary>

@@ -101,6 +101,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static BillingBenefitsReservedResourceType SqlEdge { get; } = new BillingBenefitsReservedResourceType(SqlEdgeValue);
         /// <summary> VirtualMachineSoftware. </summary>
         public static BillingBenefitsReservedResourceType VirtualMachineSoftware { get; } = new BillingBenefitsReservedResourceType(VirtualMachineSoftwareValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BillingBenefitsReservedResourceType"/> values are the same. </summary>
         public static bool operator ==(BillingBenefitsReservedResourceType left, BillingBenefitsReservedResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingBenefitsReservedResourceType"/> values are not the same. </summary>

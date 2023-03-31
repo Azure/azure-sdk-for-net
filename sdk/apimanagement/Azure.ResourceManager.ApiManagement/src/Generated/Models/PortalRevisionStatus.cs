@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static PortalRevisionStatus Completed { get; } = new PortalRevisionStatus(CompletedValue);
         /// <summary> Portal&apos;s revision publishing failed. </summary>
         public static PortalRevisionStatus Failed { get; } = new PortalRevisionStatus(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PortalRevisionStatus"/> values are the same. </summary>
         public static bool operator ==(PortalRevisionStatus left, PortalRevisionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PortalRevisionStatus"/> values are not the same. </summary>

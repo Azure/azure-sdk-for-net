@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static WafMatchVariable Cookies { get; } = new WafMatchVariable(CookiesValue);
         /// <summary> PostArgs. </summary>
         public static WafMatchVariable PostArgs { get; } = new WafMatchVariable(PostArgsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WafMatchVariable"/> values are the same. </summary>
         public static bool operator ==(WafMatchVariable left, WafMatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafMatchVariable"/> values are not the same. </summary>

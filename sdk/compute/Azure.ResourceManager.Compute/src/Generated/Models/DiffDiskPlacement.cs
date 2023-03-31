@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiffDiskPlacement CacheDisk { get; } = new DiffDiskPlacement(CacheDiskValue);
         /// <summary> ResourceDisk. </summary>
         public static DiffDiskPlacement ResourceDisk { get; } = new DiffDiskPlacement(ResourceDiskValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiffDiskPlacement"/> values are the same. </summary>
         public static bool operator ==(DiffDiskPlacement left, DiffDiskPlacement right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiffDiskPlacement"/> values are not the same. </summary>

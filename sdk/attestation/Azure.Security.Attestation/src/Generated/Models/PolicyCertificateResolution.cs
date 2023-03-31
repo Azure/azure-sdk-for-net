@@ -29,6 +29,9 @@ namespace Azure.Security.Attestation
         public static PolicyCertificateResolution IsPresent { get; } = new PolicyCertificateResolution(IsPresentValue);
         /// <summary> After the operation was performed, the certificate is no longer present in the set of certificates. </summary>
         public static PolicyCertificateResolution IsAbsent { get; } = new PolicyCertificateResolution(IsAbsentValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyCertificateResolution"/> values are the same. </summary>
         public static bool operator ==(PolicyCertificateResolution left, PolicyCertificateResolution right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyCertificateResolution"/> values are not the same. </summary>

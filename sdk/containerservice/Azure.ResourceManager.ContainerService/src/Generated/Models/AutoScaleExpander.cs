@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static AutoScaleExpander Priority { get; } = new AutoScaleExpander(PriorityValue);
         /// <summary> Used when you don&apos;t have a particular need for the node groups to scale differently. </summary>
         public static AutoScaleExpander Random { get; } = new AutoScaleExpander(RandomValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutoScaleExpander"/> values are the same. </summary>
         public static bool operator ==(AutoScaleExpander left, AutoScaleExpander right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutoScaleExpander"/> values are not the same. </summary>

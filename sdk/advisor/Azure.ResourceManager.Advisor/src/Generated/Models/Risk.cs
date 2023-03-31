@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Advisor.Models
         public static Risk Warning { get; } = new Risk(WarningValue);
         /// <summary> None. </summary>
         public static Risk None { get; } = new Risk(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="Risk"/> values are the same. </summary>
         public static bool operator ==(Risk left, Risk right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Risk"/> values are not the same. </summary>

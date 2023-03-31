@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static LogMetric OriginRequestBandwidth { get; } = new LogMetric(OriginRequestBandwidthValue);
         /// <summary> totalLatency. </summary>
         public static LogMetric TotalLatency { get; } = new LogMetric(TotalLatencyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogMetric"/> values are the same. </summary>
         public static bool operator ==(LogMetric left, LogMetric right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogMetric"/> values are not the same. </summary>

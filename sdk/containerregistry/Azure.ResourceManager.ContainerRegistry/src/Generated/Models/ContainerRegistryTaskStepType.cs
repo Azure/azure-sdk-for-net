@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryTaskStepType FileTask { get; } = new ContainerRegistryTaskStepType(FileTaskValue);
         /// <summary> EncodedTask. </summary>
         public static ContainerRegistryTaskStepType EncodedTask { get; } = new ContainerRegistryTaskStepType(EncodedTaskValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryTaskStepType"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryTaskStepType left, ContainerRegistryTaskStepType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryTaskStepType"/> values are not the same. </summary>

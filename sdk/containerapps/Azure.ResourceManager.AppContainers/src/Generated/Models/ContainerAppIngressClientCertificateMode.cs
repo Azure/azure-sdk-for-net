@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppIngressClientCertificateMode Accept { get; } = new ContainerAppIngressClientCertificateMode(AcceptValue);
         /// <summary> require. </summary>
         public static ContainerAppIngressClientCertificateMode Require { get; } = new ContainerAppIngressClientCertificateMode(RequireValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppIngressClientCertificateMode"/> values are the same. </summary>
         public static bool operator ==(ContainerAppIngressClientCertificateMode left, ContainerAppIngressClientCertificateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppIngressClientCertificateMode"/> values are not the same. </summary>

@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static AlertsManagementDayOfWeek Friday { get; } = new AlertsManagementDayOfWeek(FridayValue);
         /// <summary> Saturday. </summary>
         public static AlertsManagementDayOfWeek Saturday { get; } = new AlertsManagementDayOfWeek(SaturdayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AlertsManagementDayOfWeek"/> values are the same. </summary>
         public static bool operator ==(AlertsManagementDayOfWeek left, AlertsManagementDayOfWeek right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertsManagementDayOfWeek"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static AlertsManagementQuerySortOrder Asc { get; } = new AlertsManagementQuerySortOrder(AscValue);
         /// <summary> desc. </summary>
         public static AlertsManagementQuerySortOrder Desc { get; } = new AlertsManagementQuerySortOrder(DescValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AlertsManagementQuerySortOrder"/> values are the same. </summary>
         public static bool operator ==(AlertsManagementQuerySortOrder left, AlertsManagementQuerySortOrder right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertsManagementQuerySortOrder"/> values are not the same. </summary>

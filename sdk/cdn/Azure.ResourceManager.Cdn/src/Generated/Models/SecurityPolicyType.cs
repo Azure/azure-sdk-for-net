@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> WebApplicationFirewall. </summary>
         public static SecurityPolicyType WebApplicationFirewall { get; } = new SecurityPolicyType(WebApplicationFirewallValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SecurityPolicyType"/> values are the same. </summary>
         public static bool operator ==(SecurityPolicyType left, SecurityPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityPolicyType"/> values are not the same. </summary>

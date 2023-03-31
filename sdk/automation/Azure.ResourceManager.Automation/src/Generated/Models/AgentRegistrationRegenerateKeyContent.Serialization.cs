@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyName"u8);
-            writer.WriteStringValue(KeyName.ToString());
+            writer.WriteStringValue(KeyName.ToSerialString());
             writer.WriteEndObject();
         }
     }

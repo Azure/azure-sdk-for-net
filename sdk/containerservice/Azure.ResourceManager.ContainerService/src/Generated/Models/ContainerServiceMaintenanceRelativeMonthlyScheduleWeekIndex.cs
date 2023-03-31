@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex Fourth { get; } = new ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex(FourthValue);
         /// <summary> Last. </summary>
         public static ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex Last { get; } = new ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex(LastValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex left, ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex"/> values are not the same. </summary>

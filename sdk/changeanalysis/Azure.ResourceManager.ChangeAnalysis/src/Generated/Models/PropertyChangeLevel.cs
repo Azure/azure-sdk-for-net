@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         public static PropertyChangeLevel Normal { get; } = new PropertyChangeLevel(NormalValue);
         /// <summary> Important. </summary>
         public static PropertyChangeLevel Important { get; } = new PropertyChangeLevel(ImportantValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PropertyChangeLevel"/> values are the same. </summary>
         public static bool operator ==(PropertyChangeLevel left, PropertyChangeLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PropertyChangeLevel"/> values are not the same. </summary>

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
-                writer.WriteStringValue(HyperVGeneration.Value.ToString());
+                writer.WriteStringValue(HyperVGeneration.Value.ToSerialString());
             }
             if (Optional.IsDefined(EndOfLifeOn))
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture"u8);
-                writer.WriteStringValue(Architecture.Value.ToString());
+                writer.WriteStringValue(Architecture.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version);
             writer.WritePropertyName("level"u8);
-            writer.WriteStringValue(Level.ToString());
+            writer.WriteStringValue(Level.ToSerialString());
             if (Optional.IsCollectionDefined(ExcludedNamespaces))
             {
                 writer.WritePropertyName("excludedNamespaces"u8);

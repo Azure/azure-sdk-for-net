@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath("/providers/microsoft.insights/components/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/linkedStorageAccounts/", false);
-            uri.AppendPath(storageType.ToString(), true);
+            uri.AppendPath(storageType.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath("/providers/microsoft.insights/components/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/linkedStorageAccounts/", false);
-            uri.AppendPath(storageType.ToString(), true);
+            uri.AppendPath(storageType.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath("/providers/microsoft.insights/components/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/linkedStorageAccounts/", false);
-            uri.AppendPath(storageType.ToString(), true);
+            uri.AppendPath(storageType.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath("/providers/microsoft.insights/components/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/linkedStorageAccounts/", false);
-            uri.AppendPath(storageType.ToString(), true);
+            uri.AppendPath(storageType.ToSerialString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

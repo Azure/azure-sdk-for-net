@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static ComputePublicIPAddressSkuName Basic { get; } = new ComputePublicIPAddressSkuName(BasicValue);
         /// <summary> Standard. </summary>
         public static ComputePublicIPAddressSkuName Standard { get; } = new ComputePublicIPAddressSkuName(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ComputePublicIPAddressSkuName"/> values are the same. </summary>
         public static bool operator ==(ComputePublicIPAddressSkuName left, ComputePublicIPAddressSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputePublicIPAddressSkuName"/> values are not the same. </summary>

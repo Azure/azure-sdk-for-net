@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppCustomDomainBindingType Disabled { get; } = new ContainerAppCustomDomainBindingType(DisabledValue);
         /// <summary> SniEnabled. </summary>
         public static ContainerAppCustomDomainBindingType SniEnabled { get; } = new ContainerAppCustomDomainBindingType(SniEnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppCustomDomainBindingType"/> values are the same. </summary>
         public static bool operator ==(ContainerAppCustomDomainBindingType left, ContainerAppCustomDomainBindingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppCustomDomainBindingType"/> values are not the same. </summary>

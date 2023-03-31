@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static CategoryType PartiallyAutomated { get; } = new CategoryType(PartiallyAutomatedValue);
         /// <summary> Manual. </summary>
         public static CategoryType Manual { get; } = new CategoryType(ManualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CategoryType"/> values are the same. </summary>
         public static bool operator ==(CategoryType left, CategoryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CategoryType"/> values are not the same. </summary>

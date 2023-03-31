@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static ExecutionState TimedOut { get; } = new ExecutionState(TimedOutValue);
         /// <summary> Canceled. </summary>
         public static ExecutionState Canceled { get; } = new ExecutionState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExecutionState"/> values are the same. </summary>
         public static bool operator ==(ExecutionState left, ExecutionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExecutionState"/> values are not the same. </summary>

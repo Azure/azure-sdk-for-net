@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static AlertsSummaryGroupByField SignalType { get; } = new AlertsSummaryGroupByField(SignalTypeValue);
         /// <summary> alertRule. </summary>
         public static AlertsSummaryGroupByField AlertRule { get; } = new AlertsSummaryGroupByField(AlertRuleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AlertsSummaryGroupByField"/> values are the same. </summary>
         public static bool operator ==(AlertsSummaryGroupByField left, AlertsSummaryGroupByField right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertsSummaryGroupByField"/> values are not the same. </summary>

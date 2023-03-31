@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleRequestBodyConditionParameters. </summary>
         public static RequestBodyMatchConditionType RequestBodyCondition { get; } = new RequestBodyMatchConditionType(RequestBodyConditionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RequestBodyMatchConditionType"/> values are the same. </summary>
         public static bool operator ==(RequestBodyMatchConditionType left, RequestBodyMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestBodyMatchConditionType"/> values are not the same. </summary>

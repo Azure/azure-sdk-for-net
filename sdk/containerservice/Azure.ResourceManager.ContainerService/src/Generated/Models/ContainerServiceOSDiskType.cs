@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceOSDiskType Managed { get; } = new ContainerServiceOSDiskType(ManagedValue);
         /// <summary> Ephemeral OS disks are stored only on the host machine, just like a temporary disk. This provides lower read/write latency, along with faster node scaling and cluster upgrades. </summary>
         public static ContainerServiceOSDiskType Ephemeral { get; } = new ContainerServiceOSDiskType(EphemeralValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceOSDiskType"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceOSDiskType left, ContainerServiceOSDiskType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceOSDiskType"/> values are not the same. </summary>

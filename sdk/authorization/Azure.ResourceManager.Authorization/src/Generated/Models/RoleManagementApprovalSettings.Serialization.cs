@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(ApprovalMode))
             {
                 writer.WritePropertyName("approvalMode"u8);
-                writer.WriteStringValue(ApprovalMode.Value.ToString());
+                writer.WriteStringValue(ApprovalMode.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ApprovalStages))
             {

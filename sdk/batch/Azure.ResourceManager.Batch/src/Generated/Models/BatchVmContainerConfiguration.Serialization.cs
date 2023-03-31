@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ContainerType.ToString());
+            writer.WriteStringValue(ContainerType.ToSerialString());
             if (Optional.IsCollectionDefined(ContainerImageNames))
             {
                 writer.WritePropertyName("containerImageNames"u8);

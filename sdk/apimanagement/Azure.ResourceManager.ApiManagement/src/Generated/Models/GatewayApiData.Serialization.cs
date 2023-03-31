@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ApiType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ApiType.Value.ToString());
+                writer.WriteStringValue(ApiType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ApiRevision))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Protocols)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static PlacementPolicyType VmVm { get; } = new PlacementPolicyType(VmVmValue);
         /// <summary> VmHost. </summary>
         public static PlacementPolicyType VmHost { get; } = new PlacementPolicyType(VmHostValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PlacementPolicyType"/> values are the same. </summary>
         public static bool operator ==(PlacementPolicyType left, PlacementPolicyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlacementPolicyType"/> values are not the same. </summary>

@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static BackupPolicyMigrationStatus Completed { get; } = new BackupPolicyMigrationStatus(CompletedValue);
         /// <summary> Failed. </summary>
         public static BackupPolicyMigrationStatus Failed { get; } = new BackupPolicyMigrationStatus(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackupPolicyMigrationStatus"/> values are the same. </summary>
         public static bool operator ==(BackupPolicyMigrationStatus left, BackupPolicyMigrationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupPolicyMigrationStatus"/> values are not the same. </summary>

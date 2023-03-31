@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationKeyPermission Read { get; } = new AutomationKeyPermission(ReadValue);
         /// <summary> Full. </summary>
         public static AutomationKeyPermission Full { get; } = new AutomationKeyPermission(FullValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AutomationKeyPermission"/> values are the same. </summary>
         public static bool operator ==(AutomationKeyPermission left, AutomationKeyPermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationKeyPermission"/> values are not the same. </summary>

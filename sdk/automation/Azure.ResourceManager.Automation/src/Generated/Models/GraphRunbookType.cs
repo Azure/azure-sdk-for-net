@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Automation.Models
         public static GraphRunbookType GraphPowerShell { get; } = new GraphRunbookType(GraphPowerShellValue);
         /// <summary> GraphPowerShellWorkflow. </summary>
         public static GraphRunbookType GraphPowerShellWorkflow { get; } = new GraphRunbookType(GraphPowerShellWorkflowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GraphRunbookType"/> values are the same. </summary>
         public static bool operator ==(GraphRunbookType left, GraphRunbookType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GraphRunbookType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryImportMode NoForce { get; } = new ContainerRegistryImportMode(NoForceValue);
         /// <summary> Force. </summary>
         public static ContainerRegistryImportMode Force { get; } = new ContainerRegistryImportMode(ForceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryImportMode"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryImportMode left, ContainerRegistryImportMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryImportMode"/> values are not the same. </summary>

@@ -77,6 +77,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static HciUpdateState ScanInProgress { get; } = new HciUpdateState(ScanInProgressValue);
         /// <summary> ScanFailed. </summary>
         public static HciUpdateState ScanFailed { get; } = new HciUpdateState(ScanFailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HciUpdateState"/> values are the same. </summary>
         public static bool operator ==(HciUpdateState left, HciUpdateState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciUpdateState"/> values are not the same. </summary>

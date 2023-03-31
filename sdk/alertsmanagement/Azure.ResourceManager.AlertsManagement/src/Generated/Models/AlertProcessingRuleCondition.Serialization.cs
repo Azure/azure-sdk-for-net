@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(Field))
             {
                 writer.WritePropertyName("field"u8);
-                writer.WriteStringValue(Field.Value.ToString());
+                writer.WriteStringValue(Field.Value.ToSerialString());
             }
             if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
-                writer.WriteStringValue(Operator.Value.ToString());
+                writer.WriteStringValue(Operator.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Values))
             {

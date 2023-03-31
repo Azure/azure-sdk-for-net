@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public static BillingBenefitsPaymentStatus Scheduled { get; } = new BillingBenefitsPaymentStatus(ScheduledValue);
         /// <summary> Cancelled. </summary>
         public static BillingBenefitsPaymentStatus Cancelled { get; } = new BillingBenefitsPaymentStatus(CancelledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BillingBenefitsPaymentStatus"/> values are the same. </summary>
         public static bool operator ==(BillingBenefitsPaymentStatus left, BillingBenefitsPaymentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingBenefitsPaymentStatus"/> values are not the same. </summary>

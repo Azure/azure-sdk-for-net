@@ -29,6 +29,9 @@ namespace Azure.Communication.CallingServer
         public static RecordingChannel Mixed { get; } = new RecordingChannel(MixedValue);
         /// <summary> unmixed. </summary>
         public static RecordingChannel Unmixed { get; } = new RecordingChannel(UnmixedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RecordingChannel"/> values are the same. </summary>
         public static bool operator ==(RecordingChannel left, RecordingChannel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecordingChannel"/> values are not the same. </summary>

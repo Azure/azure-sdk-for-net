@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CustomHttpsProvisioningState Disabled { get; } = new CustomHttpsProvisioningState(DisabledValue);
         /// <summary> Failed. </summary>
         public static CustomHttpsProvisioningState Failed { get; } = new CustomHttpsProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CustomHttpsProvisioningState"/> values are the same. </summary>
         public static bool operator ==(CustomHttpsProvisioningState left, CustomHttpsProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomHttpsProvisioningState"/> values are not the same. </summary>

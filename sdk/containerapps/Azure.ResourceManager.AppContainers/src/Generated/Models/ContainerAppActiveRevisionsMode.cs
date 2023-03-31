@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppActiveRevisionsMode Multiple { get; } = new ContainerAppActiveRevisionsMode(MultipleValue);
         /// <summary> Single. </summary>
         public static ContainerAppActiveRevisionsMode Single { get; } = new ContainerAppActiveRevisionsMode(SingleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppActiveRevisionsMode"/> values are the same. </summary>
         public static bool operator ==(ContainerAppActiveRevisionsMode left, ContainerAppActiveRevisionsMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppActiveRevisionsMode"/> values are not the same. </summary>

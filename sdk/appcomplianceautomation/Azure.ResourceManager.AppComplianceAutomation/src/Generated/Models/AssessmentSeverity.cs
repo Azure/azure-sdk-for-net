@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static AssessmentSeverity Medium { get; } = new AssessmentSeverity(MediumValue);
         /// <summary> Low. </summary>
         public static AssessmentSeverity Low { get; } = new AssessmentSeverity(LowValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AssessmentSeverity"/> values are the same. </summary>
         public static bool operator ==(AssessmentSeverity left, AssessmentSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssessmentSeverity"/> values are not the same. </summary>

@@ -77,6 +77,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static HciProvisioningState Provisioning { get; } = new HciProvisioningState(ProvisioningValue);
         /// <summary> DisableInProgress. </summary>
         public static HciProvisioningState DisableInProgress { get; } = new HciProvisioningState(DisableInProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HciProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HciProvisioningState left, HciProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciProvisioningState"/> values are not the same. </summary>

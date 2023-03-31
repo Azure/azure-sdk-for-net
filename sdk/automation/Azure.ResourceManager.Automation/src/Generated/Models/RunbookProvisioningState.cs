@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Succeeded. </summary>
         public static RunbookProvisioningState Succeeded { get; } = new RunbookProvisioningState(SucceededValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RunbookProvisioningState"/> values are the same. </summary>
         public static bool operator ==(RunbookProvisioningState left, RunbookProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunbookProvisioningState"/> values are not the same. </summary>

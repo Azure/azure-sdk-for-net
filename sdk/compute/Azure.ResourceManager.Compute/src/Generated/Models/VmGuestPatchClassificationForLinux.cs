@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static VmGuestPatchClassificationForLinux Security { get; } = new VmGuestPatchClassificationForLinux(SecurityValue);
         /// <summary> Other. </summary>
         public static VmGuestPatchClassificationForLinux Other { get; } = new VmGuestPatchClassificationForLinux(OtherValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VmGuestPatchClassificationForLinux"/> values are the same. </summary>
         public static bool operator ==(VmGuestPatchClassificationForLinux left, VmGuestPatchClassificationForLinux right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmGuestPatchClassificationForLinux"/> values are not the same. </summary>

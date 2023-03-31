@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Hci.Models
         public static HciHealthState Error { get; } = new HciHealthState(ErrorValue);
         /// <summary> InProgress. </summary>
         public static HciHealthState InProgress { get; } = new HciHealthState(InProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HciHealthState"/> values are the same. </summary>
         public static bool operator ==(HciHealthState left, HciHealthState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciHealthState"/> values are not the same. </summary>

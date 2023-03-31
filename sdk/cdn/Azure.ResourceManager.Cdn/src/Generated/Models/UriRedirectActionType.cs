@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleUrlRedirectActionParameters. </summary>
         public static UriRedirectActionType UriRedirectAction { get; } = new UriRedirectActionType(UriRedirectActionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UriRedirectActionType"/> values are the same. </summary>
         public static bool operator ==(UriRedirectActionType left, UriRedirectActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriRedirectActionType"/> values are not the same. </summary>

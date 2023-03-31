@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(RestoreMode))
             {
                 writer.WritePropertyName("restoreMode"u8);
-                writer.WriteStringValue(RestoreMode.Value.ToString());
+                writer.WriteStringValue(RestoreMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(RestoreSource))
             {

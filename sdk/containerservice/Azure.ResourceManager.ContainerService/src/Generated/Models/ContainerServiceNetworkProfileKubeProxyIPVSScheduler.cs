@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceNetworkProfileKubeProxyIPVSScheduler RoundRobin { get; } = new ContainerServiceNetworkProfileKubeProxyIPVSScheduler(RoundRobinValue);
         /// <summary> Least Connection. </summary>
         public static ContainerServiceNetworkProfileKubeProxyIPVSScheduler LeastConnection { get; } = new ContainerServiceNetworkProfileKubeProxyIPVSScheduler(LeastConnectionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerServiceNetworkProfileKubeProxyIPVSScheduler"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceNetworkProfileKubeProxyIPVSScheduler left, ContainerServiceNetworkProfileKubeProxyIPVSScheduler right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkProfileKubeProxyIPVSScheduler"/> values are not the same. </summary>

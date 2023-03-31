@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static VmGuestPatchClassificationForWindows Tools { get; } = new VmGuestPatchClassificationForWindows(ToolsValue);
         /// <summary> Updates. </summary>
         public static VmGuestPatchClassificationForWindows Updates { get; } = new VmGuestPatchClassificationForWindows(UpdatesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="VmGuestPatchClassificationForWindows"/> values are the same. </summary>
         public static bool operator ==(VmGuestPatchClassificationForWindows left, VmGuestPatchClassificationForWindows right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmGuestPatchClassificationForWindows"/> values are not the same. </summary>

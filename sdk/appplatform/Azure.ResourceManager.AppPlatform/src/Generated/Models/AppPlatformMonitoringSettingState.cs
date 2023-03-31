@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static AppPlatformMonitoringSettingState Succeeded { get; } = new AppPlatformMonitoringSettingState(SucceededValue);
         /// <summary> Updating. </summary>
         public static AppPlatformMonitoringSettingState Updating { get; } = new AppPlatformMonitoringSettingState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AppPlatformMonitoringSettingState"/> values are the same. </summary>
         public static bool operator ==(AppPlatformMonitoringSettingState left, AppPlatformMonitoringSettingState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformMonitoringSettingState"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Equal. </summary>
         public static HttpVersionOperator Equal { get; } = new HttpVersionOperator(EqualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HttpVersionOperator"/> values are the same. </summary>
         public static bool operator ==(HttpVersionOperator left, HttpVersionOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HttpVersionOperator"/> values are not the same. </summary>

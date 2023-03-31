@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(UserType))
             {
                 writer.WritePropertyName("userType"u8);
-                writer.WriteStringValue(UserType.Value.ToString());
+                writer.WriteStringValue(UserType.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsBackup))
             {

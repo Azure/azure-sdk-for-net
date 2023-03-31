@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> DeliveryRuleUrlSigningActionParameters. </summary>
         public static UriSigningActionType UriSigningAction { get; } = new UriSigningActionType(UriSigningActionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="UriSigningActionType"/> values are the same. </summary>
         public static bool operator ==(UriSigningActionType left, UriSigningActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UriSigningActionType"/> values are not the same. </summary>

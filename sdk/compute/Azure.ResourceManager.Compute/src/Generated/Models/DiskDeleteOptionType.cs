@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskDeleteOptionType Delete { get; } = new DiskDeleteOptionType(DeleteValue);
         /// <summary> Detach. </summary>
         public static DiskDeleteOptionType Detach { get; } = new DiskDeleteOptionType(DetachValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DiskDeleteOptionType"/> values are the same. </summary>
         public static bool operator ==(DiskDeleteOptionType left, DiskDeleteOptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskDeleteOptionType"/> values are not the same. </summary>

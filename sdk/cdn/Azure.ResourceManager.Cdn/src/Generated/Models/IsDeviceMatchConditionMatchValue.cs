@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static IsDeviceMatchConditionMatchValue Mobile { get; } = new IsDeviceMatchConditionMatchValue(MobileValue);
         /// <summary> Desktop. </summary>
         public static IsDeviceMatchConditionMatchValue Desktop { get; } = new IsDeviceMatchConditionMatchValue(DesktopValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IsDeviceMatchConditionMatchValue"/> values are the same. </summary>
         public static bool operator ==(IsDeviceMatchConditionMatchValue left, IsDeviceMatchConditionMatchValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IsDeviceMatchConditionMatchValue"/> values are not the same. </summary>

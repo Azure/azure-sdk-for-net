@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBDataType LineString { get; } = new CosmosDBDataType(LineStringValue);
         /// <summary> MultiPolygon. </summary>
         public static CosmosDBDataType MultiPolygon { get; } = new CosmosDBDataType(MultiPolygonValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CosmosDBDataType"/> values are the same. </summary>
         public static bool operator ==(CosmosDBDataType left, CosmosDBDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBDataType"/> values are not the same. </summary>

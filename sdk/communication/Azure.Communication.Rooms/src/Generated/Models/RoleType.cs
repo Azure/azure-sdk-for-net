@@ -32,6 +32,9 @@ namespace Azure.Communication.Rooms
         public static RoleType Attendee { get; } = new RoleType(AttendeeValue);
         /// <summary> Consumer. </summary>
         public static RoleType Consumer { get; } = new RoleType(ConsumerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoleType"/> values are the same. </summary>
         public static bool operator ==(RoleType left, RoleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoleType"/> values are not the same. </summary>

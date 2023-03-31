@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Equal. </summary>
         public static RequestMethodOperator Equal { get; } = new RequestMethodOperator(EqualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RequestMethodOperator"/> values are the same. </summary>
         public static bool operator ==(RequestMethodOperator left, RequestMethodOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestMethodOperator"/> values are not the same. </summary>

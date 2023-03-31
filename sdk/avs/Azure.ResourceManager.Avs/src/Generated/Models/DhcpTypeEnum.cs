@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Avs.Models
         public static DhcpTypeEnum Server { get; } = new DhcpTypeEnum(ServerValue);
         /// <summary> RELAY. </summary>
         public static DhcpTypeEnum Relay { get; } = new DhcpTypeEnum(RelayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DhcpTypeEnum"/> values are the same. </summary>
         public static bool operator ==(DhcpTypeEnum left, DhcpTypeEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DhcpTypeEnum"/> values are not the same. </summary>

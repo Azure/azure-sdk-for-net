@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static CategoryStatus Healthy { get; } = new CategoryStatus(HealthyValue);
         /// <summary> Unhealthy. </summary>
         public static CategoryStatus Unhealthy { get; } = new CategoryStatus(UnhealthyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="CategoryStatus"/> values are the same. </summary>
         public static bool operator ==(CategoryStatus left, CategoryStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CategoryStatus"/> values are not the same. </summary>

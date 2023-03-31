@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(MsaAppType))
             {
                 writer.WritePropertyName("msaAppType"u8);
-                writer.WriteStringValue(MsaAppType.Value.ToString());
+                writer.WriteStringValue(MsaAppType.Value.ToSerialString());
             }
             writer.WritePropertyName("msaAppId"u8);
             writer.WriteStringValue(MsaAppId);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsStreamingSupported))
             {

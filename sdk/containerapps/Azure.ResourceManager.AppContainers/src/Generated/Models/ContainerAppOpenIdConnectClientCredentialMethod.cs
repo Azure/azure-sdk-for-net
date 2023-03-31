@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> ClientSecretPost. </summary>
         public static ContainerAppOpenIdConnectClientCredentialMethod ClientSecretPost { get; } = new ContainerAppOpenIdConnectClientCredentialMethod(ClientSecretPostValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/> values are the same. </summary>
         public static bool operator ==(ContainerAppOpenIdConnectClientCredentialMethod left, ContainerAppOpenIdConnectClientCredentialMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/> values are not the same. </summary>

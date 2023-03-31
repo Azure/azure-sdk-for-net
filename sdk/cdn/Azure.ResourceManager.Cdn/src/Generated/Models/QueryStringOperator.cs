@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static QueryStringOperator GreaterThanOrEqual { get; } = new QueryStringOperator(GreaterThanOrEqualValue);
         /// <summary> RegEx. </summary>
         public static QueryStringOperator RegEx { get; } = new QueryStringOperator(RegExValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="QueryStringOperator"/> values are the same. </summary>
         public static bool operator ==(QueryStringOperator left, QueryStringOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryStringOperator"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static ContainerRegistryNetworkRuleBypassOption AzureServices { get; } = new ContainerRegistryNetworkRuleBypassOption(AzureServicesValue);
         /// <summary> None. </summary>
         public static ContainerRegistryNetworkRuleBypassOption None { get; } = new ContainerRegistryNetworkRuleBypassOption(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ContainerRegistryNetworkRuleBypassOption"/> values are the same. </summary>
         public static bool operator ==(ContainerRegistryNetworkRuleBypassOption left, ContainerRegistryNetworkRuleBypassOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryNetworkRuleBypassOption"/> values are not the same. </summary>

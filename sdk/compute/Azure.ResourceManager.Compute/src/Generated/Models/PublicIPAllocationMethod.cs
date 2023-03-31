@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         public static PublicIPAllocationMethod Dynamic { get; } = new PublicIPAllocationMethod(DynamicValue);
         /// <summary> Static. </summary>
         public static PublicIPAllocationMethod Static { get; } = new PublicIPAllocationMethod(StaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PublicIPAllocationMethod"/> values are the same. </summary>
         public static bool operator ==(PublicIPAllocationMethod left, PublicIPAllocationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PublicIPAllocationMethod"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static MessageRecurrence Subscription { get; } = new MessageRecurrence(SubscriptionValue);
         /// <summary> transaction. </summary>
         public static MessageRecurrence Transaction { get; } = new MessageRecurrence(TransactionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="MessageRecurrence"/> values are the same. </summary>
         public static bool operator ==(MessageRecurrence left, MessageRecurrence right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageRecurrence"/> values are not the same. </summary>
