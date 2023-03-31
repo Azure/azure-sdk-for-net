@@ -6,3 +6,4 @@ extends:
       ServiceDirectory: monitor
       Project: Azure.Monitor.Query
       Clouds: 'Public,China'
+      TimeoutInMinutes: 240
