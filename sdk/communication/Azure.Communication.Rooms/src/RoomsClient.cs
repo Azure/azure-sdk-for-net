@@ -113,8 +113,10 @@ namespace Azure.Communication.Rooms
         /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response<CommunicationRoom>> CreateRoomAsync(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<InvitedRoomParticipant> participants = default, CancellationToken cancellationToken = default)
+#nullable enable
+        public virtual async Task<Response<CommunicationRoom>> CreateRoomAsync(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<InvitedRoomParticipant>? participants = default, CancellationToken cancellationToken = default)
         {
+#nullable disable
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(CreateRoom)}");
             scope.Start();
             try
@@ -138,8 +140,10 @@ namespace Azure.Communication.Rooms
         /// <param name="validUntil"></param>
         /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
-        public virtual Response<CommunicationRoom> CreateRoom(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<InvitedRoomParticipant> participants = default, CancellationToken cancellationToken = default)
+#nullable enable
+        public virtual Response<CommunicationRoom> CreateRoom(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<InvitedRoomParticipant>? participants = default, CancellationToken cancellationToken = default)
         {
+#nullable disable
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(CreateRoom)}");
             scope.Start();
             try
