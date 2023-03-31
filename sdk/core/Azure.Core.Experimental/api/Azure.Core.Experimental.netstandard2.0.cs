@@ -132,36 +132,6 @@ namespace Azure.Core.Dynamic
         public static implicit operator string (Azure.Core.Dynamic.DynamicData value) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
-        [System.Diagnostics.DebuggerDisplayAttribute("{Current,nq}")]
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-        public partial struct ArrayEnumerator : System.Collections.Generic.IEnumerable<Azure.Core.Dynamic.DynamicData>, System.Collections.Generic.IEnumerator<Azure.Core.Dynamic.DynamicData>, System.Collections.IEnumerable, System.Collections.IEnumerator, System.IDisposable
-        {
-            private object _dummy;
-            private int _dummyPrimitive;
-            public Azure.Core.Dynamic.DynamicData Current { get { throw null; } }
-            object System.Collections.IEnumerator.Current { get { throw null; } }
-            public void Dispose() { }
-            public Azure.Core.Dynamic.DynamicData.ArrayEnumerator GetEnumerator() { throw null; }
-            public bool MoveNext() { throw null; }
-            public void Reset() { }
-            System.Collections.Generic.IEnumerator<Azure.Core.Dynamic.DynamicData> System.Collections.Generic.IEnumerable<Azure.Core.Dynamic.DynamicData>.GetEnumerator() { throw null; }
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        }
-        [System.Diagnostics.DebuggerDisplayAttribute("{Current,nq}")]
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-        public partial struct ObjectEnumerator : System.Collections.Generic.IEnumerable<Azure.Core.Dynamic.DynamicDataProperty>, System.Collections.Generic.IEnumerator<Azure.Core.Dynamic.DynamicDataProperty>, System.Collections.IEnumerable, System.Collections.IEnumerator, System.IDisposable
-        {
-            private object _dummy;
-            private int _dummyPrimitive;
-            public Azure.Core.Dynamic.DynamicDataProperty Current { get { throw null; } }
-            object System.Collections.IEnumerator.Current { get { throw null; } }
-            public void Dispose() { }
-            public Azure.Core.Dynamic.DynamicData.ObjectEnumerator GetEnumerator() { throw null; }
-            public bool MoveNext() { throw null; }
-            public void Reset() { }
-            System.Collections.Generic.IEnumerator<Azure.Core.Dynamic.DynamicDataProperty> System.Collections.Generic.IEnumerable<Azure.Core.Dynamic.DynamicDataProperty>.GetEnumerator() { throw null; }
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        }
     }
     public enum DynamicDataNameMapping
     {

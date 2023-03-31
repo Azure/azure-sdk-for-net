@@ -14,7 +14,7 @@ namespace Azure.Core.Dynamic
         /// An enumerable and enumerator for the contents of a mutable JSON array.
         /// </summary>
         [DebuggerDisplay("{Current,nq}")]
-        public struct ArrayEnumerator : IEnumerable<DynamicData>, IEnumerator<DynamicData>
+        internal struct ArrayEnumerator : IEnumerable<DynamicData>, IEnumerator<DynamicData>
         {
             private MutableJsonElement.ArrayEnumerator _enumerator;
             private readonly DynamicJsonOptions _options;
