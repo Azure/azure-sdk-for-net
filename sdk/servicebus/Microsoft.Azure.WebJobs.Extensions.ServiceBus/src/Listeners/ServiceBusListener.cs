@@ -19,6 +19,7 @@ using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 {
@@ -47,6 +48,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly SemaphoreSlim _cachedEventsGuard = new SemaphoreSlim(1, 1);
         private CancellationTokenSource _backgroundCacheMonitoringCts;
         private ServiceBusMessageManager _cachedMessagesManager;
+        private ServiceBusReceiver _lastUsedReceiver;
 
         // internal for testing
         internal volatile bool Disposed;
@@ -397,6 +399,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 receiver = _batchReceiver.Value;
             }
 
+            _lastUsedReceiver = receiver;
+
             // The batch receive loop below only executes functions at a concurrency level of 1,
             // so we don't need to do anything special when DynamicConcurrency is enabled. If in
             // the future we make this loop concurrent, we'll have to check with ConcurrencyManager.
@@ -421,6 +425,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                     PrefetchCount = _serviceBusOptions.PrefetchCount
                                 },
                                 cancellationToken).ConfigureAwait(false);
+                            _lastUsedReceiver = receiver;
                         }
                         catch (ServiceBusException ex)
                             when (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
@@ -459,7 +464,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         }
                         else
                         {
-                            // TODO - 
+                            // TODO
                             // break?
                         }
 
@@ -619,13 +624,26 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 if (triggerEvents.Length > 0)
                 {
                     // TODO: log
+                    if (_lastUsedReceiver != null && !_lastUsedReceiver.IsClosed)
+                    {
+                        var messageActions = _isSessionsEnabled
+                            ? new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)_lastUsedReceiver)
+                            : new ServiceBusMessageActions(_lastUsedReceiver);
+                        var receiveActions = new ServiceBusReceiveActions(_lastUsedReceiver);
 
-                    ProcessMessagesInternal()
+                        ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(
+                            triggerEvents,
+                            messageActions,
+                            receiveActions,
+                            _client.Value);
+
+                        ProcessMessagesInternal(triggerEvents, backgroundCancellationTokenSource.Token, input, receiveActions, messageActions);
+                    }
                 }
                 else
                 {
-                    var details = GetOperationDetails(_mostRecentPartitionContext, "MaxWaitTimeElapsed");
-                    _logger.LogDebug($"Partition Processor has waited MaxWaitTime since last invocation but there are no events still being held ({details})");
+                    // TODO
+                    //_logger.LogDebug($"Partition Processor has waited MaxWaitTime since last invocation but there are no events still being held ({details})");
                 }
 
                 // After one wait cycle, cancel and null the background task cancellation token source. It can be assumed that there will never be more than the

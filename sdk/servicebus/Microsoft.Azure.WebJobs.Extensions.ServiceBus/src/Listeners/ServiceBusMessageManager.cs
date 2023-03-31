@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 		private int _minBatchSize;
 
 		// This is internal for mocking purposes only.
-		internal Queue<ServiceBusMessage> CachedMessages { get; set; }
+		internal Queue<ServiceBusReceivedMessage> CachedMessages { get; set; }
 
 		public bool HasCachedMessages
 		{
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
 		public ServiceBusMessageManager(int maxBatchSize, int minBatchSize)
 		{
-			CachedMessages = new Queue<ServiceBusMessage>();
+			CachedMessages = new Queue<ServiceBusReceivedMessage>();
 			_maxBatchSize = maxBatchSize;
 			_minBatchSize = minBatchSize;
 		}
@@ -48,9 +48,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 		/// <param name="messages">An array of messages to either add to a batch or cache.</param>
 		/// <param name="allowPartialBatch">True if batches smaller than the minimum batch size can be returned.</param>
 		/// <returns></returns>
-		public ServiceBusMessage[] TryGetBatchofEventsWithCached(ServiceBusMessage[] messages = null, bool allowPartialBatch = false)
+		public ServiceBusReceivedMessage[] TryGetBatchofEventsWithCached(ServiceBusReceivedMessage[] messages = null, bool allowPartialBatch = false)
 		{
-			ServiceBusMessage[] messagesToReturn;
+            ServiceBusReceivedMessage[] messagesToReturn;
 			var inputMessages = messages?.Length ?? 0;
 			var totalMessages = CachedMessages.Count + inputMessages;
 
@@ -66,13 +66,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 			if (totalMessages < _minBatchSize && !allowPartialBatch)
 			{
 				// If we don't have enough messages, and we can't return a partial batch, just return an empty array.
-				messagesToReturn = Array.Empty<ServiceBusMessage>();
+				messagesToReturn = Array.Empty<ServiceBusReceivedMessage>();
 			}
 			else
 			{
 				// If we have enough messages, pull all the messages off the queue to return.
 				var sizeOfBatch = totalMessages > _maxBatchSize ? _maxBatchSize : totalMessages;
-				messagesToReturn = new ServiceBusMessage[sizeOfBatch];
+				messagesToReturn = new ServiceBusReceivedMessage[sizeOfBatch];
 				for (int i = 0; i < sizeOfBatch; i++)
 				{
 					var nextMessage = CachedMessages.Dequeue();
