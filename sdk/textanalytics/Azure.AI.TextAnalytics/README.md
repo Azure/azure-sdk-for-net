@@ -11,7 +11,6 @@ Text Analytics is part of the Azure Cognitive Service for Language, a cloud-base
 * Text analytics for health
 * Custom named entity recognition (Custom NER)
 * Custom text classification
-* Dynamic text classification
 * Extractive text summarization
 * Abstractive text summarization
 
