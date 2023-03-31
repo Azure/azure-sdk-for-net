@@ -17,7 +17,7 @@ namespace Azure.Core.Dynamic
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [JsonConverter(typeof(JsonConverter))]
-    public sealed partial class DynamicJson : DynamicData, IDisposable
+    public sealed partial class DynamicJson : IDisposable
     {
         private static readonly MethodInfo GetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(SetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
@@ -34,7 +34,7 @@ namespace Azure.Core.Dynamic
             _options = options;
         }
 
-        internal override void WriteTo(Stream stream)
+        internal void WriteTo(Stream stream)
         {
             Utf8JsonWriter writer = new(stream);
             _element.WriteTo(writer);
