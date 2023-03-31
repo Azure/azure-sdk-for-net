@@ -21,14 +21,14 @@ namespace ApiManagement.Tests.ResourceProviderTests
         [Trait("owner", "sasolank")]
         public void CreateMultiRegionService()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+                      Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
 
                 var additionalLocation = new AdditionalLocation()
                 {
-                    Location = testBase.GetLocation("Europe"),
+                    Location = testBase.GetAdditionLocation(testBase.location, "Europe"),
                     Sku = new ApiManagementServiceSkuProperties(SkuType.Premium, capacity: 1)
                 };
 
@@ -97,5 +97,5 @@ namespace ApiManagement.Tests.ResourceProviderTests
                 });
             }
         }
-    }   
+    }
 }
