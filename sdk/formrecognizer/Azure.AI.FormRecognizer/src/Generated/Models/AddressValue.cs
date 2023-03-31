@@ -24,7 +24,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="postalCode"> Postal code used for mail sorting. </param>
         /// <param name="countryRegion"> Country/region. </param>
         /// <param name="streetAddress"> Street-level address, excluding city, state, countryRegion, and postalCode. </param>
-        internal AddressValue(string houseNumber, string poBox, string road, string city, string state, string postalCode, string countryRegion, string streetAddress)
+        /// <param name="unit"> Apartment or office number. </param>
+        /// <param name="cityDistrict"> Districts or boroughs within a city, such as Brooklyn in New York City or City of Westminster in London. </param>
+        /// <param name="stateDistrict"> Second-level administrative division used in certain locales. </param>
+        /// <param name="suburb"> Unofficial neighborhood name, like Chinatown. </param>
+        /// <param name="house"> Build name, such as World Trade Center. </param>
+        /// <param name="level"> Floor number, such as 3F. </param>
+        internal AddressValue(string houseNumber, string poBox, string road, string city, string state, string postalCode, string countryRegion, string streetAddress, string unit, string cityDistrict, string stateDistrict, string suburb, string house, string level)
         {
             HouseNumber = houseNumber;
             PoBox = poBox;
@@ -34,6 +40,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             PostalCode = postalCode;
             CountryRegion = countryRegion;
             StreetAddress = streetAddress;
+            Unit = unit;
+            CityDistrict = cityDistrict;
+            StateDistrict = stateDistrict;
+            Suburb = suburb;
+            House = house;
+            Level = level;
         }
 
         /// <summary> House or building number. </summary>

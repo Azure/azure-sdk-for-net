@@ -20,6 +20,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             Optional<bool> isHandwritten = default;
+            Optional<string> similarFontFamily = default;
+            Optional<FontStyle> fontStyle = default;
+            Optional<FontWeight> fontWeight = default;
+            Optional<string> color = default;
+            Optional<string> backgroundColor = default;
             IReadOnlyList<DocumentSpan> spans = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
@@ -32,6 +37,41 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         continue;
                     }
                     isHandwritten = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("similarFontFamily"u8))
+                {
+                    similarFontFamily = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fontStyle"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    fontStyle = new FontStyle(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("fontWeight"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    fontWeight = new FontWeight(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("color"u8))
+                {
+                    color = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("backgroundColor"u8))
+                {
+                    backgroundColor = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("spans"u8))
@@ -50,7 +90,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentStyle(Optional.ToNullable(isHandwritten), spans, confidence);
+            return new DocumentStyle(Optional.ToNullable(isHandwritten), similarFontFamily.Value, Optional.ToNullable(fontStyle), Optional.ToNullable(fontWeight), color.Value, backgroundColor.Value, spans, confidence);
         }
     }
 }

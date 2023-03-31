@@ -29,11 +29,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Initializes a new instance of DocumentStyle. </summary>
         /// <param name="isHandwritten"> Is content handwritten?. </param>
+        /// <param name="similarFontFamily"> Visually most similar font from among the set of supported font families, with fallback fonts following CSS convention (ex. &apos;Arial, sans-serif&apos;). </param>
+        /// <param name="fontStyle"> Font style. </param>
+        /// <param name="fontWeight"> Font weight. </param>
+        /// <param name="color"> Foreground color in #rrggbb hexadecimal format. </param>
+        /// <param name="backgroundColor"> Background color in #rrggbb hexadecimal format.. </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
-        internal DocumentStyle(bool? isHandwritten, IReadOnlyList<DocumentSpan> spans, float confidence)
+        internal DocumentStyle(bool? isHandwritten, string similarFontFamily, FontStyle? fontStyle, FontWeight? fontWeight, string color, string backgroundColor, IReadOnlyList<DocumentSpan> spans, float confidence)
         {
             IsHandwritten = isHandwritten;
+            SimilarFontFamily = similarFontFamily;
+            FontStyle = fontStyle;
+            FontWeight = fontWeight;
+            Color = color;
+            BackgroundColor = backgroundColor;
             Spans = spans;
             Confidence = confidence;
         }

@@ -25,6 +25,16 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("usageModel"u8);
                 writer.WriteStringValue(UsageModel);
             }
+            if (Optional.IsDefined(VerificationDelayInSeconds))
+            {
+                writer.WritePropertyName("verificationTimer"u8);
+                writer.WriteNumberValue(VerificationDelayInSeconds.Value);
+            }
+            if (Optional.IsDefined(WriteBackDelayInSeconds))
+            {
+                writer.WritePropertyName("writeBackTimer"u8);
+                writer.WriteNumberValue(WriteBackDelayInSeconds.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -36,6 +46,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             Optional<string> target = default;
             Optional<string> usageModel = default;
+            Optional<int> verificationTimer = default;
+            Optional<int> writeBackTimer = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("target"u8))
@@ -48,8 +60,28 @@ namespace Azure.ResourceManager.StorageCache.Models
                     usageModel = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("verificationTimer"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    verificationTimer = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("writeBackTimer"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    writeBackTimer = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new Nfs3Target(target.Value, usageModel.Value);
+            return new Nfs3Target(target.Value, usageModel.Value, Optional.ToNullable(verificationTimer), Optional.ToNullable(writeBackTimer));
         }
     }
 }

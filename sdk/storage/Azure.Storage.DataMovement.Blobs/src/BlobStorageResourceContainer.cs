@@ -57,22 +57,23 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="path">The path to the storage resource.</param>
         public override StorageResource GetChildStorageResource(string path)
         {
-            switch (_options.BlobType)
+            if (_options?.BlobType == BlobType.Append)
             {
-                case BlobType.Block:
-                    return new BlockBlobStorageResource(
-                        _blobContainerClient.GetBlockBlobClient(string.Join("/", path)),
-                        _options.ToBlockBlobStorageResourceOptions());
-                case BlobType.Append:
-                    return new AppendBlobStorageResource(
-                        _blobContainerClient.GetAppendBlobClient(string.Join("/", path)),
-                        _options.ToAppendBlobStorageResourceOptions());
-                case BlobType.Page:
-                    return new PageBlobStorageResource(
-                        _blobContainerClient.GetPageBlobClient(string.Join("/", path)),
-                        _options.ToPageBlobStorageResourceOptions());
-                default:
-                    throw new ArgumentException("Invalid BlobType.");
+                return new AppendBlobStorageResource(
+                    _blobContainerClient.GetAppendBlobClient(string.Join("/", path)),
+                    _options?.ToAppendBlobStorageResourceOptions());
+            }
+            else if (_options?.BlobType == BlobType.Page)
+            {
+                return new PageBlobStorageResource(
+                    _blobContainerClient.GetPageBlobClient(string.Join("/", path)),
+                    _options?.ToPageBlobStorageResourceOptions());
+            }
+            else // BlobType.Block or null
+            {
+                return new BlockBlobStorageResource(
+                    _blobContainerClient.GetBlockBlobClient(string.Join("/", path)),
+                    _options?.ToBlockBlobStorageResourceOptions());
             }
         }
 
