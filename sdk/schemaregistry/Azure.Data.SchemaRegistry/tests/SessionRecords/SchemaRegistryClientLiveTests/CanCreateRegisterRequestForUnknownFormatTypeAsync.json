@@ -1,39 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mreddingschemaregistry-avro.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-19788?api-version=2022-10",
+      "RequestUri": "https://tcf1bded27398a4cb-avro.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-10749?api-version=2022-10",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "5",
         "Content-Type": "text/plain; charset=utf-8",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230111.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8566709fbfce4f551eeb0a9438c71717",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230330.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "adaf3d5f1778559daa6d881b55f0a3ed",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "Hello",
-      "StatusCode": 403,
+      "StatusCode": 415,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Thu, 12 Jan 2023 19:02:21 GMT",
+        "Date": "Fri, 31 Mar 2023 00:39:14 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked",
-        "x-ms-error-code": "NotAvaliable"
+        "x-ms-error-code": "InvalidSchemaType"
       },
       "ResponseBody": {
         "error": {
-          "code": "NotAvaliable",
-          "message": "SubCode=40301, Schema of type Custom cannot be created within group \u0027azsdk_net_test_group\u0027 that support Avro schema type. TrackingId:ae11a4e6-3549-441c-a7ba-a803fd0c57d4_G2, SystemTracker:NoSystemTracker, Timestamp:2023-01-12T19:02:22"
+          "code": "InvalidSchemaType",
+          "message": "SubCode=41500, The messaging entity \u0027Schema of type Custom cannot be created within group \u0027azsdk_net_test_group\u0027 that supports Avro schema type.\u0027 could not be found. To know more visit https://aka.ms/sbResourceMgrExceptions. . TrackingId:882b31c5-f271-4c82-acae-d2bf14a51351_G0, SystemTracker:NoSystemTracker, Timestamp:2023-03-31T00:39:14"
         }
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1424268794",
-    "SCHEMAREGISTRY_ENDPOINT_AVRO": "mreddingschemaregistry-avro.servicebus.windows.net",
+    "RandomSeed": "1110260265",
+    "SCHEMAREGISTRY_ENDPOINT_AVRO": "tcf1bded27398a4cb-avro.servicebus.windows.net",
     "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
   }
 }
