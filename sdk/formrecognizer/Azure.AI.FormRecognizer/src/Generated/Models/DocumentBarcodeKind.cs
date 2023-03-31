@@ -74,6 +74,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static DocumentBarcodeKind DataMatrix { get; } = new DocumentBarcodeKind(DataMatrixValue);
         /// <summary> MaxiCode, as defined in ISO/IEC 16023:2000. </summary>
         public static DocumentBarcodeKind MaxiCode { get; } = new DocumentBarcodeKind(MaxiCodeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DocumentBarcodeKind"/> values are the same. </summary>
         public static bool operator ==(DocumentBarcodeKind left, DocumentBarcodeKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentBarcodeKind"/> values are not the same. </summary>

@@ -47,6 +47,9 @@ namespace Azure.Health.Insights.CancerProfiling
         public static OncoPhenotypeInferenceType PathologicStageN { get; } = new OncoPhenotypeInferenceType(PathologicStageNValue);
         /// <summary> pathologicStageM. </summary>
         public static OncoPhenotypeInferenceType PathologicStageM { get; } = new OncoPhenotypeInferenceType(PathologicStageMValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OncoPhenotypeInferenceType"/> values are the same. </summary>
         public static bool operator ==(OncoPhenotypeInferenceType left, OncoPhenotypeInferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OncoPhenotypeInferenceType"/> values are not the same. </summary>

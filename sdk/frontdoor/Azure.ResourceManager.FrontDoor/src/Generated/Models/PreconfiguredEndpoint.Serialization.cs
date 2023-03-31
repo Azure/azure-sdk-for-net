@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("endpointType"u8);
-                writer.WriteStringValue(EndpointType.Value.ToString());
+                writer.WriteStringValue(EndpointType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Backend))
             {

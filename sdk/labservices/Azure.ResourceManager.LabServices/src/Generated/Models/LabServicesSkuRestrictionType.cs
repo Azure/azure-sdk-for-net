@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.LabServices.Models
 
         /// <summary> Location. </summary>
         public static LabServicesSkuRestrictionType Location { get; } = new LabServicesSkuRestrictionType(LocationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LabServicesSkuRestrictionType"/> values are the same. </summary>
         public static bool operator ==(LabServicesSkuRestrictionType left, LabServicesSkuRestrictionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LabServicesSkuRestrictionType"/> values are not the same. </summary>

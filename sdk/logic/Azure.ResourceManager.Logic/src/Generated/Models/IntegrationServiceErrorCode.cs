@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static IntegrationServiceErrorCode InternalServerError { get; } = new IntegrationServiceErrorCode(InternalServerErrorValue);
         /// <summary> InvalidOperationId. </summary>
         public static IntegrationServiceErrorCode InvalidOperationId { get; } = new IntegrationServiceErrorCode(InvalidOperationIdValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationServiceErrorCode"/> values are the same. </summary>
         public static bool operator ==(IntegrationServiceErrorCode left, IntegrationServiceErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationServiceErrorCode"/> values are not the same. </summary>

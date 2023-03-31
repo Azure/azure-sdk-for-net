@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static BlobStorageEventType MicrosoftStorageBlobCreated { get; } = new BlobStorageEventType(MicrosoftStorageBlobCreatedValue);
         /// <summary> Microsoft.Storage.BlobRenamed. </summary>
         public static BlobStorageEventType MicrosoftStorageBlobRenamed { get; } = new BlobStorageEventType(MicrosoftStorageBlobRenamedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BlobStorageEventType"/> values are the same. </summary>
         public static bool operator ==(BlobStorageEventType left, BlobStorageEventType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobStorageEventType"/> values are not the same. </summary>

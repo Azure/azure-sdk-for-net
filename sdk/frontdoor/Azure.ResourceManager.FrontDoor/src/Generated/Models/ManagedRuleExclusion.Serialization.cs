@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("matchVariable"u8);
-            writer.WriteStringValue(MatchVariable.ToString());
+            writer.WriteStringValue(MatchVariable.ToSerialString());
             writer.WritePropertyName("selectorMatchOperator"u8);
-            writer.WriteStringValue(SelectorMatchOperator.ToString());
+            writer.WriteStringValue(SelectorMatchOperator.ToSerialString());
             writer.WritePropertyName("selector"u8);
             writer.WriteStringValue(Selector);
             writer.WriteEndObject();

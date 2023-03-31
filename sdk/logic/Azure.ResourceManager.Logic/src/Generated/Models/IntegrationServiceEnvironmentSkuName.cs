@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static IntegrationServiceEnvironmentSkuName Premium { get; } = new IntegrationServiceEnvironmentSkuName(PremiumValue);
         /// <summary> Developer. </summary>
         public static IntegrationServiceEnvironmentSkuName Developer { get; } = new IntegrationServiceEnvironmentSkuName(DeveloperValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentSkuName"/> values are the same. </summary>
         public static bool operator ==(IntegrationServiceEnvironmentSkuName left, IntegrationServiceEnvironmentSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentSkuName"/> values are not the same. </summary>

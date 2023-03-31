@@ -89,6 +89,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static LogicWorkflowProvisioningState Waiting { get; } = new LogicWorkflowProvisioningState(WaitingValue);
         /// <summary> InProgress. </summary>
         public static LogicWorkflowProvisioningState InProgress { get; } = new LogicWorkflowProvisioningState(InProgressValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogicWorkflowProvisioningState"/> values are the same. </summary>
         public static bool operator ==(LogicWorkflowProvisioningState left, LogicWorkflowProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicWorkflowProvisioningState"/> values are not the same. </summary>

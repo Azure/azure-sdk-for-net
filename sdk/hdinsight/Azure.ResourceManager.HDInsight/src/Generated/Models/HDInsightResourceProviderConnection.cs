@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightResourceProviderConnection Inbound { get; } = new HDInsightResourceProviderConnection(InboundValue);
         /// <summary> Outbound. </summary>
         public static HDInsightResourceProviderConnection Outbound { get; } = new HDInsightResourceProviderConnection(OutboundValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightResourceProviderConnection"/> values are the same. </summary>
         public static bool operator ==(HDInsightResourceProviderConnection left, HDInsightResourceProviderConnection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightResourceProviderConnection"/> values are not the same. </summary>

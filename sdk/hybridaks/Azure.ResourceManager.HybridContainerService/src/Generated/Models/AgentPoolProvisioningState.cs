@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static AgentPoolProvisioningState InProgress { get; } = new AgentPoolProvisioningState(InProgressValue);
         /// <summary> Canceled. </summary>
         public static AgentPoolProvisioningState Canceled { get; } = new AgentPoolProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AgentPoolProvisioningState"/> values are the same. </summary>
         public static bool operator ==(AgentPoolProvisioningState left, AgentPoolProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentPoolProvisioningState"/> values are not the same. </summary>

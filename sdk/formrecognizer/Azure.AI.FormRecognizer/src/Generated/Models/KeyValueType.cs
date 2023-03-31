@@ -29,6 +29,9 @@ namespace Azure.AI.FormRecognizer.Models
         public static KeyValueType String { get; } = new KeyValueType(StringValue);
         /// <summary> selectionMark. </summary>
         public static KeyValueType SelectionMark { get; } = new KeyValueType(SelectionMarkValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KeyValueType"/> values are the same. </summary>
         public static bool operator ==(KeyValueType left, KeyValueType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyValueType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static DocumentAnnotationKind Check { get; } = new DocumentAnnotationKind(CheckValue);
         /// <summary> A visual cross X. </summary>
         public static DocumentAnnotationKind Cross { get; } = new DocumentAnnotationKind(CrossValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DocumentAnnotationKind"/> values are the same. </summary>
         public static bool operator ==(DocumentAnnotationKind left, DocumentAnnotationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentAnnotationKind"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.Health.Insights.CancerProfiling
         public static PatientInfoSex Male { get; } = new PatientInfoSex(MaleValue);
         /// <summary> unspecified. </summary>
         public static PatientInfoSex Unspecified { get; } = new PatientInfoSex(UnspecifiedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PatientInfoSex"/> values are the same. </summary>
         public static bool operator ==(PatientInfoSex left, PatientInfoSex right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PatientInfoSex"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static OSType Linux { get; } = new OSType(LinuxValue);
         /// <summary> Windows. </summary>
         public static OSType Windows { get; } = new OSType(WindowsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="OSType"/> values are the same. </summary>
         public static bool operator ==(OSType left, OSType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OSType"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoDatabasePrincipalType Group { get; } = new KustoDatabasePrincipalType(GroupValue);
         /// <summary> User. </summary>
         public static KustoDatabasePrincipalType User { get; } = new KustoDatabasePrincipalType(UserValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoDatabasePrincipalType"/> values are the same. </summary>
         public static bool operator ==(KustoDatabasePrincipalType left, KustoDatabasePrincipalType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoDatabasePrincipalType"/> values are not the same. </summary>

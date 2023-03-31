@@ -16,7 +16,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         {
             writer.WriteStartObject();
             writer.WritePropertyName("subType"u8);
-            writer.WriteStringValue(SubType.ToString());
+            writer.WriteStringValue(SubType.ToSerialString());
             writer.WritePropertyName("radius"u8);
             writer.WriteNumberValue(Radius);
             writer.WriteEndObject();

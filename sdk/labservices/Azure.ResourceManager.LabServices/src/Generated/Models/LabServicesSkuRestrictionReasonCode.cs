@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.LabServices.Models
         public static LabServicesSkuRestrictionReasonCode QuotaId { get; } = new LabServicesSkuRestrictionReasonCode(QuotaIdValue);
         /// <summary> NotAvailableForSubscription. </summary>
         public static LabServicesSkuRestrictionReasonCode NotAvailableForSubscription { get; } = new LabServicesSkuRestrictionReasonCode(NotAvailableForSubscriptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LabServicesSkuRestrictionReasonCode"/> values are the same. </summary>
         public static bool operator ==(LabServicesSkuRestrictionReasonCode left, LabServicesSkuRestrictionReasonCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LabServicesSkuRestrictionReasonCode"/> values are not the same. </summary>

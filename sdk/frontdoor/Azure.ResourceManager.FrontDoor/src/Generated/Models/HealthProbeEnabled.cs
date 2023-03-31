@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static HealthProbeEnabled Enabled { get; } = new HealthProbeEnabled(EnabledValue);
         /// <summary> Disabled. </summary>
         public static HealthProbeEnabled Disabled { get; } = new HealthProbeEnabled(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HealthProbeEnabled"/> values are the same. </summary>
         public static bool operator ==(HealthProbeEnabled left, HealthProbeEnabled right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthProbeEnabled"/> values are not the same. </summary>

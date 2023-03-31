@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorQuery StripOnly { get; } = new FrontDoorQuery(StripOnlyValue);
         /// <summary> StripAllExcept. </summary>
         public static FrontDoorQuery StripAllExcept { get; } = new FrontDoorQuery(StripAllExceptValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorQuery"/> values are the same. </summary>
         public static bool operator ==(FrontDoorQuery left, FrontDoorQuery right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorQuery"/> values are not the same. </summary>

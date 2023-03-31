@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static IntegrationAccountMapType Xslt30 { get; } = new IntegrationAccountMapType(Xslt30Value);
         /// <summary> Liquid. </summary>
         public static IntegrationAccountMapType Liquid { get; } = new IntegrationAccountMapType(LiquidValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationAccountMapType"/> values are the same. </summary>
         public static bool operator ==(IntegrationAccountMapType left, IntegrationAccountMapType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationAccountMapType"/> values are not the same. </summary>

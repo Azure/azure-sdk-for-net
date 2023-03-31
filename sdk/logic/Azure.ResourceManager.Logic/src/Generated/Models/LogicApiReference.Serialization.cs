@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteStringValue(Category.Value.ToString());
+                writer.WriteStringValue(Category.Value.ToSerialString());
             }
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {

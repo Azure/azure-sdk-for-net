@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.GraphServices.Models
         public static GraphServicesProvisioningState Failed { get; } = new GraphServicesProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static GraphServicesProvisioningState Canceled { get; } = new GraphServicesProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GraphServicesProvisioningState"/> values are the same. </summary>
         public static bool operator ==(GraphServicesProvisioningState left, GraphServicesProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GraphServicesProvisioningState"/> values are not the same. </summary>

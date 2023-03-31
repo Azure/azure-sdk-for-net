@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Microsoft.Kusto/clusters/principalAssignments. </summary>
         public static KustoClusterPrincipalAssignmentType MicrosoftKustoClustersPrincipalAssignments { get; } = new KustoClusterPrincipalAssignmentType(MicrosoftKustoClustersPrincipalAssignmentsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoClusterPrincipalAssignmentType"/> values are the same. </summary>
         public static bool operator ==(KustoClusterPrincipalAssignmentType left, KustoClusterPrincipalAssignmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoClusterPrincipalAssignmentType"/> values are not the same. </summary>

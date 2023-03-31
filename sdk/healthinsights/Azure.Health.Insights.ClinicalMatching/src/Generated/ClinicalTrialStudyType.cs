@@ -35,6 +35,9 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static ClinicalTrialStudyType ExpandedAccess { get; } = new ClinicalTrialStudyType(ExpandedAccessValue);
         /// <summary> patientRegistries. </summary>
         public static ClinicalTrialStudyType PatientRegistries { get; } = new ClinicalTrialStudyType(PatientRegistriesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClinicalTrialStudyType"/> values are the same. </summary>
         public static bool operator ==(ClinicalTrialStudyType left, ClinicalTrialStudyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClinicalTrialStudyType"/> values are not the same. </summary>

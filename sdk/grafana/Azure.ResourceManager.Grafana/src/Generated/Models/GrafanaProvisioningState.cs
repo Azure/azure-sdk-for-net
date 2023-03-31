@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Grafana.Models
         public static GrafanaProvisioningState Deleted { get; } = new GrafanaProvisioningState(DeletedValue);
         /// <summary> NotSpecified. </summary>
         public static GrafanaProvisioningState NotSpecified { get; } = new GrafanaProvisioningState(NotSpecifiedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GrafanaProvisioningState"/> values are the same. </summary>
         public static bool operator ==(GrafanaProvisioningState left, GrafanaProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GrafanaProvisioningState"/> values are not the same. </summary>

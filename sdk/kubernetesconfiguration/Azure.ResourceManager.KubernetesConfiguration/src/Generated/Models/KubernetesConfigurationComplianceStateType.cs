@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static KubernetesConfigurationComplianceStateType Installed { get; } = new KubernetesConfigurationComplianceStateType(InstalledValue);
         /// <summary> Failed. </summary>
         public static KubernetesConfigurationComplianceStateType Failed { get; } = new KubernetesConfigurationComplianceStateType(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KubernetesConfigurationComplianceStateType"/> values are the same. </summary>
         public static bool operator ==(KubernetesConfigurationComplianceStateType left, KubernetesConfigurationComplianceStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesConfigurationComplianceStateType"/> values are not the same. </summary>

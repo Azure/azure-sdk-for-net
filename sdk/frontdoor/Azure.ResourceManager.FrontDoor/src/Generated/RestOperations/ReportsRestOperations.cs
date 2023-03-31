@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 uri.AppendQuery("country", country, true);
             }
-            uri.AppendQuery("aggregationInterval", aggregationInterval.ToString(), true);
+            uri.AppendQuery("aggregationInterval", aggregationInterval.ToSerialString(), true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.FrontDoor
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("startDateTimeUTC", startOn, "O", true);
             uri.AppendQuery("endDateTimeUTC", endOn, "O", true);
-            uri.AppendQuery("aggregationInterval", aggregationInterval.ToString(), true);
-            uri.AppendQuery("timeseriesType", timeSeriesType.ToString(), true);
+            uri.AppendQuery("aggregationInterval", aggregationInterval.ToSerialString(), true);
+            uri.AppendQuery("timeseriesType", timeSeriesType.ToSerialString(), true);
             if (endpoint != null)
             {
                 uri.AppendQuery("endpoint", endpoint, true);

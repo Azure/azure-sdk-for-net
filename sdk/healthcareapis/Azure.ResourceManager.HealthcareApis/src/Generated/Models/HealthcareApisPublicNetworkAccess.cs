@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static HealthcareApisPublicNetworkAccess Enabled { get; } = new HealthcareApisPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static HealthcareApisPublicNetworkAccess Disabled { get; } = new HealthcareApisPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HealthcareApisPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(HealthcareApisPublicNetworkAccess left, HealthcareApisPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthcareApisPublicNetworkAccess"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static FontWeight Normal { get; } = new FontWeight(NormalValue);
         /// <summary> Characters are represented with thicker strokes. </summary>
         public static FontWeight Bold { get; } = new FontWeight(BoldValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FontWeight"/> values are the same. </summary>
         public static bool operator ==(FontWeight left, FontWeight right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FontWeight"/> values are not the same. </summary>

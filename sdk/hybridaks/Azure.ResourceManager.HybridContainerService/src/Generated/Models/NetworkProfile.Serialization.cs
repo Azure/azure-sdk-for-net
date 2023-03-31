@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(LoadBalancerSku))
             {
                 writer.WritePropertyName("loadBalancerSku"u8);
-                writer.WriteStringValue(LoadBalancerSku.Value.ToString());
+                writer.WriteStringValue(LoadBalancerSku.Value.ToSerialString());
             }
             if (Optional.IsDefined(DnsServiceIP))
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(NetworkPolicy))
             {
                 writer.WritePropertyName("networkPolicy"u8);
-                writer.WriteStringValue(NetworkPolicy.Value.ToString());
+                writer.WriteStringValue(NetworkPolicy.Value.ToSerialString());
             }
             if (Optional.IsDefined(PodCidr))
             {

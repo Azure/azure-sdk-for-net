@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static IntegrationServiceEnvironmentAccessEndpointType External { get; } = new IntegrationServiceEnvironmentAccessEndpointType(ExternalValue);
         /// <summary> Internal. </summary>
         public static IntegrationServiceEnvironmentAccessEndpointType Internal { get; } = new IntegrationServiceEnvironmentAccessEndpointType(InternalValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentAccessEndpointType"/> values are the same. </summary>
         public static bool operator ==(IntegrationServiceEnvironmentAccessEndpointType left, IntegrationServiceEnvironmentAccessEndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentAccessEndpointType"/> values are not the same. </summary>

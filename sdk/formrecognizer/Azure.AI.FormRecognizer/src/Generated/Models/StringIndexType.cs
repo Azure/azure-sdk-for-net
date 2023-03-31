@@ -32,6 +32,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static StringIndexType UnicodeCodePoint { get; } = new StringIndexType(UnicodeCodePointValue);
         /// <summary> Character unit represented by a 16-bit Unicode code unit.  Used by JavaScript, Java, and .NET. </summary>
         public static StringIndexType Utf16CodeUnit { get; } = new StringIndexType(Utf16CodeUnitValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="StringIndexType"/> values are the same. </summary>
         public static bool operator ==(StringIndexType left, StringIndexType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StringIndexType"/> values are not the same. </summary>

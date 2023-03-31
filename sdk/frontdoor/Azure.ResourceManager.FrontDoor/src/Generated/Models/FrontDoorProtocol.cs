@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorProtocol Http { get; } = new FrontDoorProtocol(HttpValue);
         /// <summary> Https. </summary>
         public static FrontDoorProtocol Https { get; } = new FrontDoorProtocol(HttpsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorProtocol"/> values are the same. </summary>
         public static bool operator ==(FrontDoorProtocol left, FrontDoorProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorProtocol"/> values are not the same. </summary>

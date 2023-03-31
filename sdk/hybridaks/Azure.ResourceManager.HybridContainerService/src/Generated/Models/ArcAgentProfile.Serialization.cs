@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(AgentAutoUpgrade))
             {
                 writer.WritePropertyName("agentAutoUpgrade"u8);
-                writer.WriteStringValue(AgentAutoUpgrade.Value.ToString());
+                writer.WriteStringValue(AgentAutoUpgrade.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

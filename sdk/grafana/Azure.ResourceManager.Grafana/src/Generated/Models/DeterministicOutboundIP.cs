@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Grafana.Models
         public static DeterministicOutboundIP Disabled { get; } = new DeterministicOutboundIP(DisabledValue);
         /// <summary> Enabled. </summary>
         public static DeterministicOutboundIP Enabled { get; } = new DeterministicOutboundIP(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeterministicOutboundIP"/> values are the same. </summary>
         public static bool operator ==(DeterministicOutboundIP left, DeterministicOutboundIP right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeterministicOutboundIP"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.IotHub.Models
         public static RouteErrorSeverity Error { get; } = new RouteErrorSeverity(ErrorValue);
         /// <summary> warning. </summary>
         public static RouteErrorSeverity Warning { get; } = new RouteErrorSeverity(WarningValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RouteErrorSeverity"/> values are the same. </summary>
         public static bool operator ==(RouteErrorSeverity left, RouteErrorSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouteErrorSeverity"/> values are not the same. </summary>

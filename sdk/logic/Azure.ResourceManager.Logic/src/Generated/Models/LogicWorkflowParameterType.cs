@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static LogicWorkflowParameterType Object { get; } = new LogicWorkflowParameterType(ObjectValue);
         /// <summary> SecureObject. </summary>
         public static LogicWorkflowParameterType SecureObject { get; } = new LogicWorkflowParameterType(SecureObjectValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogicWorkflowParameterType"/> values are the same. </summary>
         public static bool operator ==(LogicWorkflowParameterType left, LogicWorkflowParameterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicWorkflowParameterType"/> values are not the same. </summary>

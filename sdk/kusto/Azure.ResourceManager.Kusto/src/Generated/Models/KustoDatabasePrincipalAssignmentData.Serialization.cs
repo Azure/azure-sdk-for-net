@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Kusto
             if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
-                writer.WriteStringValue(Role.Value.ToString());
+                writer.WriteStringValue(Role.Value.ToSerialString());
             }
             if (Optional.IsDefined(TenantId))
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Kusto
             if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
-                writer.WriteStringValue(PrincipalType.Value.ToString());
+                writer.WriteStringValue(PrincipalType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubPublicNetworkAccess Enabled { get; } = new IotHubPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static IotHubPublicNetworkAccess Disabled { get; } = new IotHubPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotHubPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(IotHubPublicNetworkAccess left, IotHubPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubPublicNetworkAccess"/> values are not the same. </summary>

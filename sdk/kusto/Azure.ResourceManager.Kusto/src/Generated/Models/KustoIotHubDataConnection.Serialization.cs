@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind.ToSerialString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IotHubResourceId))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(DataFormat))
             {
                 writer.WritePropertyName("dataFormat"u8);
-                writer.WriteStringValue(DataFormat.Value.ToString());
+                writer.WriteStringValue(DataFormat.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(EventSystemProperties))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(DatabaseRouting))
             {
                 writer.WritePropertyName("databaseRouting"u8);
-                writer.WriteStringValue(DatabaseRouting.Value.ToString());
+                writer.WriteStringValue(DatabaseRouting.Value.ToSerialString());
             }
             if (Optional.IsDefined(RetrievalStartOn))
             {

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static RulesEngineMatchTransform UriEncode { get; } = new RulesEngineMatchTransform(UriEncodeValue);
         /// <summary> RemoveNulls. </summary>
         public static RulesEngineMatchTransform RemoveNulls { get; } = new RulesEngineMatchTransform(RemoveNullsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RulesEngineMatchTransform"/> values are the same. </summary>
         public static bool operator ==(RulesEngineMatchTransform left, RulesEngineMatchTransform right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RulesEngineMatchTransform"/> values are not the same. </summary>

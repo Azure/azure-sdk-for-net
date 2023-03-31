@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Microsoft.Kusto/clusters/managedPrivateEndpoints. </summary>
         public static KustoManagedPrivateEndpointsType MicrosoftKustoClustersManagedPrivateEndpoints { get; } = new KustoManagedPrivateEndpointsType(MicrosoftKustoClustersManagedPrivateEndpointsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoManagedPrivateEndpointsType"/> values are the same. </summary>
         public static bool operator ==(KustoManagedPrivateEndpointsType left, KustoManagedPrivateEndpointsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoManagedPrivateEndpointsType"/> values are not the same. </summary>

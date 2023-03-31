@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontendEndpointCustomHttpsProvisioningState Disabled { get; } = new FrontendEndpointCustomHttpsProvisioningState(DisabledValue);
         /// <summary> Failed. </summary>
         public static FrontendEndpointCustomHttpsProvisioningState Failed { get; } = new FrontendEndpointCustomHttpsProvisioningState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontendEndpointCustomHttpsProvisioningState"/> values are the same. </summary>
         public static bool operator ==(FrontendEndpointCustomHttpsProvisioningState left, FrontendEndpointCustomHttpsProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontendEndpointCustomHttpsProvisioningState"/> values are not the same. </summary>

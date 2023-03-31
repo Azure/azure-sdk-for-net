@@ -34,12 +34,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToSerialString());
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(Progress))
             {
@@ -74,7 +74,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(StorageAuthenticationType))
             {
                 writer.WritePropertyName("storageAuthenticationType"u8);
-                writer.WriteStringValue(StorageAuthenticationType.Value.ToString());
+                writer.WriteStringValue(StorageAuthenticationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(FailureReason))
             {

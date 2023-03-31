@@ -29,6 +29,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static FontStyle Normal { get; } = new FontStyle(NormalValue);
         /// <summary> Characters are visually slanted to the right. </summary>
         public static FontStyle Italic { get; } = new FontStyle(ItalicValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FontStyle"/> values are the same. </summary>
         public static bool operator ==(FontStyle left, FontStyle right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FontStyle"/> values are not the same. </summary>

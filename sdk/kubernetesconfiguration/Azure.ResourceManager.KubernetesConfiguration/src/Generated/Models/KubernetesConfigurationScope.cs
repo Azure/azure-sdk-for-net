@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static KubernetesConfigurationScope Cluster { get; } = new KubernetesConfigurationScope(ClusterValue);
         /// <summary> namespace. </summary>
         public static KubernetesConfigurationScope Namespace { get; } = new KubernetesConfigurationScope(NamespaceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KubernetesConfigurationScope"/> values are the same. </summary>
         public static bool operator ==(KubernetesConfigurationScope left, KubernetesConfigurationScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesConfigurationScope"/> values are not the same. </summary>

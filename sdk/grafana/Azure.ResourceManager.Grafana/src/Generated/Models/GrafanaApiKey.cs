@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Grafana.Models
         public static GrafanaApiKey Disabled { get; } = new GrafanaApiKey(DisabledValue);
         /// <summary> Enabled. </summary>
         public static GrafanaApiKey Enabled { get; } = new GrafanaApiKey(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GrafanaApiKey"/> values are the same. </summary>
         public static bool operator ==(GrafanaApiKey left, GrafanaApiKey right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GrafanaApiKey"/> values are not the same. </summary>

@@ -44,6 +44,9 @@ namespace Azure.IoT.Hub.Service.Models
         public static ExportImportDeviceImportMode UpdateTwin { get; } = new ExportImportDeviceImportMode(UpdateTwinValue);
         /// <summary> updateTwinIfMatchETag. </summary>
         public static ExportImportDeviceImportMode UpdateTwinIfMatchETag { get; } = new ExportImportDeviceImportMode(UpdateTwinIfMatchETagValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ExportImportDeviceImportMode"/> values are the same. </summary>
         public static bool operator ==(ExportImportDeviceImportMode left, ExportImportDeviceImportMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExportImportDeviceImportMode"/> values are not the same. </summary>

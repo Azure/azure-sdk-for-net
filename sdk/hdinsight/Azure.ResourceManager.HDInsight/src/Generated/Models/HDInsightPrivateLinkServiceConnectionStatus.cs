@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightPrivateLinkServiceConnectionStatus Pending { get; } = new HDInsightPrivateLinkServiceConnectionStatus(PendingValue);
         /// <summary> Removed. </summary>
         public static HDInsightPrivateLinkServiceConnectionStatus Removed { get; } = new HDInsightPrivateLinkServiceConnectionStatus(RemovedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightPrivateLinkServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(HDInsightPrivateLinkServiceConnectionStatus left, HDInsightPrivateLinkServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightPrivateLinkServiceConnectionStatus"/> values are not the same. </summary>

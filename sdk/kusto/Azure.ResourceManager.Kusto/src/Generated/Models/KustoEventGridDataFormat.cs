@@ -71,6 +71,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoEventGridDataFormat ApacheAvro { get; } = new KustoEventGridDataFormat(ApacheAvroValue);
         /// <summary> W3CLOGFILE. </summary>
         public static KustoEventGridDataFormat W3CLogFile { get; } = new KustoEventGridDataFormat(W3CLogFileValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoEventGridDataFormat"/> values are the same. </summary>
         public static bool operator ==(KustoEventGridDataFormat left, KustoEventGridDataFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoEventGridDataFormat"/> values are not the same. </summary>

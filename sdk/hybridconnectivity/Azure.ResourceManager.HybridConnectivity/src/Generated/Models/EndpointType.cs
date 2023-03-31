@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static EndpointType Default { get; } = new EndpointType(DefaultValue);
         /// <summary> custom. </summary>
         public static EndpointType Custom { get; } = new EndpointType(CustomValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EndpointType"/> values are the same. </summary>
         public static bool operator ==(EndpointType left, EndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EndpointType"/> values are not the same. </summary>

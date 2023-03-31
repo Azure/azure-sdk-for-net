@@ -29,6 +29,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static DocumentSignatureType Signed { get; } = new DocumentSignatureType(SignedValue);
         /// <summary> No signatures are detected. </summary>
         public static DocumentSignatureType Unsigned { get; } = new DocumentSignatureType(UnsignedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DocumentSignatureType"/> values are the same. </summary>
         public static bool operator ==(DocumentSignatureType left, DocumentSignatureType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentSignatureType"/> values are not the same. </summary>

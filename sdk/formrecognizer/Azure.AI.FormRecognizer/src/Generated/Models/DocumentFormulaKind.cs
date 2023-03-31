@@ -29,6 +29,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static DocumentFormulaKind Inline { get; } = new DocumentFormulaKind(InlineValue);
         /// <summary> A formula in display mode that takes up an entire line. </summary>
         public static DocumentFormulaKind Display { get; } = new DocumentFormulaKind(DisplayValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DocumentFormulaKind"/> values are the same. </summary>
         public static bool operator ==(DocumentFormulaKind left, DocumentFormulaKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentFormulaKind"/> values are not the same. </summary>

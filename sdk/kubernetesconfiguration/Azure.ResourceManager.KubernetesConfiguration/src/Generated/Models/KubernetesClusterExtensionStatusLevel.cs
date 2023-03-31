@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static KubernetesClusterExtensionStatusLevel Warning { get; } = new KubernetesClusterExtensionStatusLevel(WarningValue);
         /// <summary> Information. </summary>
         public static KubernetesClusterExtensionStatusLevel Information { get; } = new KubernetesClusterExtensionStatusLevel(InformationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KubernetesClusterExtensionStatusLevel"/> values are the same. </summary>
         public static bool operator ==(KubernetesClusterExtensionStatusLevel left, KubernetesClusterExtensionStatusLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesClusterExtensionStatusLevel"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static JsonWebKeyEncryptionAlgorithm RsaOaep256 { get; } = new JsonWebKeyEncryptionAlgorithm(RsaOaep256Value);
         /// <summary> RSA1_5. </summary>
         public static JsonWebKeyEncryptionAlgorithm Rsa15 { get; } = new JsonWebKeyEncryptionAlgorithm(Rsa15Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JsonWebKeyEncryptionAlgorithm"/> values are the same. </summary>
         public static bool operator ==(JsonWebKeyEncryptionAlgorithm left, JsonWebKeyEncryptionAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JsonWebKeyEncryptionAlgorithm"/> values are not the same. </summary>

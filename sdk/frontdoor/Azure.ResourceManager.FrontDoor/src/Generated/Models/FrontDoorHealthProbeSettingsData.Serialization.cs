@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
-                writer.WriteStringValue(Protocol.Value.ToString());
+                writer.WriteStringValue(Protocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(HealthProbeMethod))
             {
                 writer.WritePropertyName("healthProbeMethod"u8);
-                writer.WriteStringValue(HealthProbeMethod.Value.ToString());
+                writer.WriteStringValue(HealthProbeMethod.Value.ToSerialString());
             }
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
-                writer.WriteStringValue(EnabledState.Value.ToString());
+                writer.WriteStringValue(EnabledState.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

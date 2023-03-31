@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static PatchModeType AutomaticByOS { get; } = new PatchModeType(AutomaticByOSValue);
         /// <summary> Manual. </summary>
         public static PatchModeType Manual { get; } = new PatchModeType(ManualValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PatchModeType"/> values are the same. </summary>
         public static bool operator ==(PatchModeType left, PatchModeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PatchModeType"/> values are not the same. </summary>

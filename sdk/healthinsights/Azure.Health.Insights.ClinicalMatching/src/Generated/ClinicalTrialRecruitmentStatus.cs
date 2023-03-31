@@ -35,6 +35,9 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static ClinicalTrialRecruitmentStatus Recruiting { get; } = new ClinicalTrialRecruitmentStatus(RecruitingValue);
         /// <summary> enrollingByInvitation. </summary>
         public static ClinicalTrialRecruitmentStatus EnrollingByInvitation { get; } = new ClinicalTrialRecruitmentStatus(EnrollingByInvitationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClinicalTrialRecruitmentStatus"/> values are the same. </summary>
         public static bool operator ==(ClinicalTrialRecruitmentStatus left, ClinicalTrialRecruitmentStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClinicalTrialRecruitmentStatus"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.LabServices.Models
 
         /// <summary> Count. </summary>
         public static LabServicesUsageUnit Count { get; } = new LabServicesUsageUnit(CountValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LabServicesUsageUnit"/> values are the same. </summary>
         public static bool operator ==(LabServicesUsageUnit left, LabServicesUsageUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LabServicesUsageUnit"/> values are not the same. </summary>

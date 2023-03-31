@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static LicenseType WindowsServer { get; } = new LicenseType(WindowsServerValue);
         /// <summary> None. </summary>
         public static LicenseType None { get; } = new LicenseType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LicenseType"/> values are the same. </summary>
         public static bool operator ==(LicenseType left, LicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LicenseType"/> values are not the same. </summary>

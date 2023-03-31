@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static IdentityAccessSecretPermission Recover { get; } = new IdentityAccessSecretPermission(RecoverValue);
         /// <summary> purge. </summary>
         public static IdentityAccessSecretPermission Purge { get; } = new IdentityAccessSecretPermission(PurgeValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IdentityAccessSecretPermission"/> values are the same. </summary>
         public static bool operator ==(IdentityAccessSecretPermission left, IdentityAccessSecretPermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IdentityAccessSecretPermission"/> values are not the same. </summary>

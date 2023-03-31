@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightAsyncOperationState Succeeded { get; } = new HDInsightAsyncOperationState(SucceededValue);
         /// <summary> Failed. </summary>
         public static HDInsightAsyncOperationState Failed { get; } = new HDInsightAsyncOperationState(FailedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightAsyncOperationState"/> values are the same. </summary>
         public static bool operator ==(HDInsightAsyncOperationState left, HDInsightAsyncOperationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightAsyncOperationState"/> values are not the same. </summary>

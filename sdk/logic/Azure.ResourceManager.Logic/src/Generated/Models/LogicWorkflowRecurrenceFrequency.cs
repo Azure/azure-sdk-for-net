@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static LogicWorkflowRecurrenceFrequency Month { get; } = new LogicWorkflowRecurrenceFrequency(MonthValue);
         /// <summary> Year. </summary>
         public static LogicWorkflowRecurrenceFrequency Year { get; } = new LogicWorkflowRecurrenceFrequency(YearValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogicWorkflowRecurrenceFrequency"/> values are the same. </summary>
         public static bool operator ==(LogicWorkflowRecurrenceFrequency left, LogicWorkflowRecurrenceFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicWorkflowRecurrenceFrequency"/> values are not the same. </summary>

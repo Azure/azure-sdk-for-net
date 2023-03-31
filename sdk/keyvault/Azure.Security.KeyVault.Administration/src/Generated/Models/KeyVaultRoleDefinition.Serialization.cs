@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Administration
             if (Optional.IsDefined(RoleType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(RoleType.Value.ToString());
+                writer.WriteStringValue(RoleType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Permissions))
             {
@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault.Administration
                 writer.WriteStartArray();
                 foreach (var item in AssignableScopes)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

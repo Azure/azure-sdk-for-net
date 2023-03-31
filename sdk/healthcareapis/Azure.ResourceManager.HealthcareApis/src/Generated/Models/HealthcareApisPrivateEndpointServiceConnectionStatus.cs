@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static HealthcareApisPrivateEndpointServiceConnectionStatus Approved { get; } = new HealthcareApisPrivateEndpointServiceConnectionStatus(ApprovedValue);
         /// <summary> Rejected. </summary>
         public static HealthcareApisPrivateEndpointServiceConnectionStatus Rejected { get; } = new HealthcareApisPrivateEndpointServiceConnectionStatus(RejectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HealthcareApisPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(HealthcareApisPrivateEndpointServiceConnectionStatus left, HealthcareApisPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthcareApisPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>

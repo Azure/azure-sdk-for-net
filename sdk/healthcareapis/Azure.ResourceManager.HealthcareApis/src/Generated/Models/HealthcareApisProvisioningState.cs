@@ -62,6 +62,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static HealthcareApisProvisioningState Warned { get; } = new HealthcareApisProvisioningState(WarnedValue);
         /// <summary> SystemMaintenance. </summary>
         public static HealthcareApisProvisioningState SystemMaintenance { get; } = new HealthcareApisProvisioningState(SystemMaintenanceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HealthcareApisProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HealthcareApisProvisioningState left, HealthcareApisProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthcareApisProvisioningState"/> values are not the same. </summary>

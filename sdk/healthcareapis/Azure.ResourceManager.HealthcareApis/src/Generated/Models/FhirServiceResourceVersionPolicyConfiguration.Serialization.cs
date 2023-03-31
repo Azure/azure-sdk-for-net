@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
-                writer.WriteStringValue(Default.Value.ToString());
+                writer.WriteStringValue(Default.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(ResourceTypeOverrides))
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 foreach (var item in ResourceTypeOverrides)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value.ToString());
+                    writer.WriteStringValue(item.Value.ToSerialString());
                 }
                 writer.WriteEndObject();
             }

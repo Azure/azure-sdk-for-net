@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static AssignedGuestConfigurationMachineComplianceStatus NonCompliant { get; } = new AssignedGuestConfigurationMachineComplianceStatus(NonCompliantValue);
         /// <summary> Pending. </summary>
         public static AssignedGuestConfigurationMachineComplianceStatus Pending { get; } = new AssignedGuestConfigurationMachineComplianceStatus(PendingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AssignedGuestConfigurationMachineComplianceStatus"/> values are the same. </summary>
         public static bool operator ==(AssignedGuestConfigurationMachineComplianceStatus left, AssignedGuestConfigurationMachineComplianceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssignedGuestConfigurationMachineComplianceStatus"/> values are not the same. </summary>

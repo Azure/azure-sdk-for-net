@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static WebApplicationRuleMatchTransformType UriEncode { get; } = new WebApplicationRuleMatchTransformType(UriEncodeValue);
         /// <summary> RemoveNulls. </summary>
         public static WebApplicationRuleMatchTransformType RemoveNulls { get; } = new WebApplicationRuleMatchTransformType(RemoveNullsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchTransformType"/> values are the same. </summary>
         public static bool operator ==(WebApplicationRuleMatchTransformType left, WebApplicationRuleMatchTransformType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchTransformType"/> values are not the same. </summary>

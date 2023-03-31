@@ -53,6 +53,9 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubJobType FactoryResetDevice { get; } = new IotHubJobType(FactoryResetDeviceValue);
         /// <summary> firmwareUpdate. </summary>
         public static IotHubJobType FirmwareUpdate { get; } = new IotHubJobType(FirmwareUpdateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotHubJobType"/> values are the same. </summary>
         public static bool operator ==(IotHubJobType left, IotHubJobType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubJobType"/> values are not the same. </summary>

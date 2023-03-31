@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static LogicApiTier Standard { get; } = new LogicApiTier(StandardValue);
         /// <summary> Premium. </summary>
         public static LogicApiTier Premium { get; } = new LogicApiTier(PremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogicApiTier"/> values are the same. </summary>
         public static bool operator ==(LogicApiTier left, LogicApiTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicApiTier"/> values are not the same. </summary>

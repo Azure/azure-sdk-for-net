@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(RuleSetAction))
             {
                 writer.WritePropertyName("ruleSetAction"u8);
-                writer.WriteStringValue(RuleSetAction.Value.ToString());
+                writer.WriteStringValue(RuleSetAction.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Exclusions))
             {

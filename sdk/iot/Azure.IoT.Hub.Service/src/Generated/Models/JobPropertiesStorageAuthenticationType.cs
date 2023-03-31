@@ -29,6 +29,9 @@ namespace Azure.IoT.Hub.Service.Models
         public static JobPropertiesStorageAuthenticationType KeyBased { get; } = new JobPropertiesStorageAuthenticationType(KeyBasedValue);
         /// <summary> identityBased. </summary>
         public static JobPropertiesStorageAuthenticationType IdentityBased { get; } = new JobPropertiesStorageAuthenticationType(IdentityBasedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobPropertiesStorageAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(JobPropertiesStorageAuthenticationType left, JobPropertiesStorageAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobPropertiesStorageAuthenticationType"/> values are not the same. </summary>

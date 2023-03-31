@@ -34,12 +34,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
-                writer.WriteStringValue(ConnectionState.Value.ToString());
+                writer.WriteStringValue(ConnectionState.Value.ToSerialString());
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(StatusReason))
             {

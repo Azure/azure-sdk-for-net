@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.IotHub.Models
         public static RoutingStorageContainerPropertiesEncoding AvroDeflate { get; } = new RoutingStorageContainerPropertiesEncoding(AvroDeflateValue);
         /// <summary> JSON. </summary>
         public static RoutingStorageContainerPropertiesEncoding Json { get; } = new RoutingStorageContainerPropertiesEncoding(JsonValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="RoutingStorageContainerPropertiesEncoding"/> values are the same. </summary>
         public static bool operator ==(RoutingStorageContainerPropertiesEncoding left, RoutingStorageContainerPropertiesEncoding right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoutingStorageContainerPropertiesEncoding"/> values are not the same. </summary>

@@ -47,6 +47,9 @@ namespace Azure.IoT.Hub.Service.Models
         public static JobResponseStatus Scheduled { get; } = new JobResponseStatus(ScheduledValue);
         /// <summary> queued. </summary>
         public static JobResponseStatus Queued { get; } = new JobResponseStatus(QueuedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="JobResponseStatus"/> values are the same. </summary>
         public static bool operator ==(JobResponseStatus left, JobResponseStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobResponseStatus"/> values are not the same. </summary>

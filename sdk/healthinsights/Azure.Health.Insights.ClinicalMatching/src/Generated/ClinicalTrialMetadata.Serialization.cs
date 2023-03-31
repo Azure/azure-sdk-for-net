@@ -23,7 +23,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Phases)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }
@@ -32,7 +32,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 if (StudyType != null)
                 {
                     writer.WritePropertyName("studyType"u8);
-                    writer.WriteStringValue(StudyType.Value.ToString());
+                    writer.WriteStringValue(StudyType.Value.ToSerialString());
                 }
                 else
                 {
@@ -44,7 +44,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 if (RecruitmentStatus != null)
                 {
                     writer.WritePropertyName("recruitmentStatus"u8);
-                    writer.WriteStringValue(RecruitmentStatus.Value.ToString());
+                    writer.WriteStringValue(RecruitmentStatus.Value.ToSerialString());
                 }
                 else
                 {

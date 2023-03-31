@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WritePropertyName("allowLeadingAndTrailingSpacesAndZeroes"u8);
             writer.WriteBooleanValue(AllowLeadingAndTrailingSpacesAndZeroes);
             writer.WritePropertyName("trailingSeparatorPolicy"u8);
-            writer.WriteStringValue(TrailingSeparatorPolicy.ToString());
+            writer.WriteStringValue(TrailingSeparatorPolicy.ToSerialString());
             writer.WritePropertyName("trimLeadingAndTrailingSpacesAndZeroes"u8);
             writer.WriteBooleanValue(TrimLeadingAndTrailingSpacesAndZeroes);
             writer.WriteEndObject();

@@ -53,6 +53,9 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static ClinicalTrialPurpose BasicScience { get; } = new ClinicalTrialPurpose(BasicScienceValue);
         /// <summary> other. </summary>
         public static ClinicalTrialPurpose Other { get; } = new ClinicalTrialPurpose(OtherValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClinicalTrialPurpose"/> values are the same. </summary>
         public static bool operator ==(ClinicalTrialPurpose left, ClinicalTrialPurpose right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClinicalTrialPurpose"/> values are not the same. </summary>

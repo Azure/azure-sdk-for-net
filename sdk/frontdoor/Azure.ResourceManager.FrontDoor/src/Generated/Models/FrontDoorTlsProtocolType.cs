@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> ServerNameIndication. </summary>
         public static FrontDoorTlsProtocolType ServerNameIndication { get; } = new FrontDoorTlsProtocolType(ServerNameIndicationValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorTlsProtocolType"/> values are the same. </summary>
         public static bool operator ==(FrontDoorTlsProtocolType left, FrontDoorTlsProtocolType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorTlsProtocolType"/> values are not the same. </summary>

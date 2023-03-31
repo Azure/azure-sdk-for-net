@@ -71,6 +71,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoIotHubDataFormat ApacheAvro { get; } = new KustoIotHubDataFormat(ApacheAvroValue);
         /// <summary> W3CLOGFILE. </summary>
         public static KustoIotHubDataFormat W3CLogFile { get; } = new KustoIotHubDataFormat(W3CLogFileValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoIotHubDataFormat"/> values are the same. </summary>
         public static bool operator ==(KustoIotHubDataFormat left, KustoIotHubDataFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoIotHubDataFormat"/> values are not the same. </summary>

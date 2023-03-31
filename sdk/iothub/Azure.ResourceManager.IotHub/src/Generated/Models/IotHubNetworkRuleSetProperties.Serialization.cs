@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
-                writer.WriteStringValue(DefaultAction.Value.ToString());
+                writer.WriteStringValue(DefaultAction.Value.ToSerialString());
             }
             writer.WritePropertyName("applyToBuiltInEventHubEndpoint"u8);
             writer.WriteBooleanValue(ApplyToBuiltInEventHubEndpoint);

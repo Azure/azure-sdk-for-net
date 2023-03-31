@@ -77,6 +77,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static LogicWorkflowTriggerProvisioningState Unregistered { get; } = new LogicWorkflowTriggerProvisioningState(UnregisteredValue);
         /// <summary> Completed. </summary>
         public static LogicWorkflowTriggerProvisioningState Completed { get; } = new LogicWorkflowTriggerProvisioningState(CompletedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogicWorkflowTriggerProvisioningState"/> values are the same. </summary>
         public static bool operator ==(LogicWorkflowTriggerProvisioningState left, LogicWorkflowTriggerProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicWorkflowTriggerProvisioningState"/> values are not the same. </summary>

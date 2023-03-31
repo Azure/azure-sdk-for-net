@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(DirectoryType))
             {
                 writer.WritePropertyName("directoryType"u8);
-                writer.WriteStringValue(DirectoryType.Value.ToString());
+                writer.WriteStringValue(DirectoryType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Domain))
             {

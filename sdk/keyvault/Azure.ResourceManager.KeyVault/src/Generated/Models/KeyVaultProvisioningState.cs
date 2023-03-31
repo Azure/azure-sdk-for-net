@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static KeyVaultProvisioningState Succeeded { get; } = new KeyVaultProvisioningState(SucceededValue);
         /// <summary> RegisteringDns. </summary>
         public static KeyVaultProvisioningState RegisteringDns { get; } = new KeyVaultProvisioningState(RegisteringDnsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KeyVaultProvisioningState"/> values are the same. </summary>
         public static bool operator ==(KeyVaultProvisioningState left, KeyVaultProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultProvisioningState"/> values are not the same. </summary>

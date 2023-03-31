@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ParameterType.Value.ToString());
+                writer.WriteStringValue(ParameterType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Value))
             {

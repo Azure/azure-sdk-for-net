@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightPrivateEndpointConnectionProvisioningState Canceled { get; } = new HDInsightPrivateEndpointConnectionProvisioningState(CanceledValue);
         /// <summary> Deleting. </summary>
         public static HDInsightPrivateEndpointConnectionProvisioningState Deleting { get; } = new HDInsightPrivateEndpointConnectionProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HDInsightPrivateEndpointConnectionProvisioningState left, HDInsightPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

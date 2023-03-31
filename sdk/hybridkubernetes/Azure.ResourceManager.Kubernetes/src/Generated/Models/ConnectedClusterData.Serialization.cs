@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kubernetes
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(Distribution))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Kubernetes
             if (Optional.IsDefined(PrivateLinkState))
             {
                 writer.WritePropertyName("privateLinkState"u8);
-                writer.WriteStringValue(PrivateLinkState.Value.ToString());
+                writer.WriteStringValue(PrivateLinkState.Value.ToSerialString());
             }
             if (Optional.IsDefined(PrivateLinkScopeResourceId))
             {

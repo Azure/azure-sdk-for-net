@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HealthcareApis
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("resourceIdentityResolutionType"u8);
-            writer.WriteStringValue(ResourceIdentityResolutionType.ToString());
+            writer.WriteStringValue(ResourceIdentityResolutionType.ToSerialString());
             writer.WritePropertyName("fhirServiceResourceId"u8);
             writer.WriteStringValue(FhirServiceResourceId);
             writer.WritePropertyName("fhirMapping"u8);

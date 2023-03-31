@@ -65,7 +65,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             if (stringIndexType != null)
             {
-                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             if (features != null)
@@ -169,7 +169,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             if (stringIndexType != null)
             {
-                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             if (features != null)
@@ -273,7 +273,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             if (stringIndexType != null)
             {
-                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             if (features != null)
@@ -1317,7 +1317,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendPath(":analyze", false);
             if (stringIndexType != null)
             {
-                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1397,7 +1397,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendPath(":analyze", false);
             if (stringIndexType != null)
             {
-                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1477,7 +1477,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             uri.AppendPath(":analyze", false);
             if (stringIndexType != null)
             {
-                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToSerialString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

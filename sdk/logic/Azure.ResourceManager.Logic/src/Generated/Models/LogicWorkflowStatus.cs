@@ -62,6 +62,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static LogicWorkflowStatus Aborted { get; } = new LogicWorkflowStatus(AbortedValue);
         /// <summary> Ignored. </summary>
         public static LogicWorkflowStatus Ignored { get; } = new LogicWorkflowStatus(IgnoredValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogicWorkflowStatus"/> values are the same. </summary>
         public static bool operator ==(LogicWorkflowStatus left, LogicWorkflowStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicWorkflowStatus"/> values are not the same. </summary>

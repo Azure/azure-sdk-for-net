@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorWebApplicationFirewallPolicyMode Prevention { get; } = new FrontDoorWebApplicationFirewallPolicyMode(PreventionValue);
         /// <summary> Detection. </summary>
         public static FrontDoorWebApplicationFirewallPolicyMode Detection { get; } = new FrontDoorWebApplicationFirewallPolicyMode(DetectionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorWebApplicationFirewallPolicyMode"/> values are the same. </summary>
         public static bool operator ==(FrontDoorWebApplicationFirewallPolicyMode left, FrontDoorWebApplicationFirewallPolicyMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorWebApplicationFirewallPolicyMode"/> values are not the same. </summary>

@@ -20,7 +20,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 if (AcceptedSex != null)
                 {
                     writer.WritePropertyName("acceptedSex"u8);
-                    writer.WriteStringValue(AcceptedSex.Value.ToString());
+                    writer.WriteStringValue(AcceptedSex.Value.ToSerialString());
                 }
                 else
                 {

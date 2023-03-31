@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Microsoft.Kusto/clusters/databases/scripts. </summary>
         public static KustoScriptType MicrosoftKustoClustersDatabasesScripts { get; } = new KustoScriptType(MicrosoftKustoClustersDatabasesScriptsValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoScriptType"/> values are the same. </summary>
         public static bool operator ==(KustoScriptType left, KustoScriptType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoScriptType"/> values are not the same. </summary>

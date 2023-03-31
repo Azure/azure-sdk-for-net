@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(EnforceCertificateNameCheck))
             {
                 writer.WritePropertyName("enforceCertificateNameCheck"u8);
-                writer.WriteStringValue(EnforceCertificateNameCheck.Value.ToString());
+                writer.WriteStringValue(EnforceCertificateNameCheck.Value.ToSerialString());
             }
             if (Optional.IsDefined(SendRecvTimeoutInSeconds))
             {

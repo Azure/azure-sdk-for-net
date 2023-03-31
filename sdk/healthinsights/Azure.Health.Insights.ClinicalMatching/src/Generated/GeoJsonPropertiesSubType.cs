@@ -26,6 +26,9 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         /// <summary> Circle. </summary>
         public static GeoJsonPropertiesSubType Circle { get; } = new GeoJsonPropertiesSubType(CircleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GeoJsonPropertiesSubType"/> values are the same. </summary>
         public static bool operator ==(GeoJsonPropertiesSubType left, GeoJsonPropertiesSubType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GeoJsonPropertiesSubType"/> values are not the same. </summary>

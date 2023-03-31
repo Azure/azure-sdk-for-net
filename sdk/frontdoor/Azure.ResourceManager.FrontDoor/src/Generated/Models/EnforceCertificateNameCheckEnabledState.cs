@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static EnforceCertificateNameCheckEnabledState Enabled { get; } = new EnforceCertificateNameCheckEnabledState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static EnforceCertificateNameCheckEnabledState Disabled { get; } = new EnforceCertificateNameCheckEnabledState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="EnforceCertificateNameCheckEnabledState"/> values are the same. </summary>
         public static bool operator ==(EnforceCertificateNameCheckEnabledState left, EnforceCertificateNameCheckEnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnforceCertificateNameCheckEnabledState"/> values are not the same. </summary>

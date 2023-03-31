@@ -29,6 +29,9 @@ namespace Azure.IoT.Hub.Service.Models
         public static TwinConnectionState Disconnected { get; } = new TwinConnectionState(DisconnectedValue);
         /// <summary> Connected. </summary>
         public static TwinConnectionState Connected { get; } = new TwinConnectionState(ConnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="TwinConnectionState"/> values are the same. </summary>
         public static bool operator ==(TwinConnectionState left, TwinConnectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TwinConnectionState"/> values are not the same. </summary>

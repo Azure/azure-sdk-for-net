@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (SourceKind != null)
                 {
                     writer.WritePropertyName("sourceKind"u8);
-                    writer.WriteStringValue(SourceKind.Value.ToString());
+                    writer.WriteStringValue(SourceKind.Value.ToSerialString());
                 }
                 else
                 {

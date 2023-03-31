@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
-                writer.WriteStringValue(EnabledState.Value.ToString());
+                writer.WriteStringValue(EnabledState.Value.ToSerialString());
             }
             writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType.ToString());
+            writer.WriteStringValue(RuleType.ToSerialString());
             if (Optional.IsDefined(RateLimitDurationInMinutes))
             {
                 writer.WritePropertyName("rateLimitDurationInMinutes"u8);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);
-            writer.WriteStringValue(Action.ToString());
+            writer.WriteStringValue(Action.ToSerialString());
             writer.WriteEndObject();
         }
 

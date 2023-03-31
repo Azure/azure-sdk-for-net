@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WritePropertyName("eventTime"u8);
             writer.WriteStringValue(EventOn, "O");
             writer.WritePropertyName("recordType"u8);
-            writer.WriteStringValue(RecordType.ToString());
+            writer.WriteStringValue(RecordType.ToSerialString());
             if (Optional.IsDefined(Record))
             {
                 writer.WritePropertyName("record"u8);

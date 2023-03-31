@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendQuery("api-version", _apiVersion, true);
             if (callerRole != null)
             {
-                uri.AppendQuery("callerRole", callerRole.Value.ToString(), true);
+                uri.AppendQuery("callerRole", callerRole.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Kusto
             uri.AppendQuery("api-version", _apiVersion, true);
             if (callerRole != null)
             {
-                uri.AppendQuery("callerRole", callerRole.Value.ToString(), true);
+                uri.AppendQuery("callerRole", callerRole.Value.ToSerialString(), true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static FhirServiceEventState Enabled { get; } = new FhirServiceEventState(EnabledValue);
         /// <summary> Updating. </summary>
         public static FhirServiceEventState Updating { get; } = new FhirServiceEventState(UpdatingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FhirServiceEventState"/> values are the same. </summary>
         public static bool operator ==(FhirServiceEventState left, FhirServiceEventState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FhirServiceEventState"/> values are not the same. </summary>

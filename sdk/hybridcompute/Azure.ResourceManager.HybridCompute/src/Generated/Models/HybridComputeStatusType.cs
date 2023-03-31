@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static HybridComputeStatusType Disconnected { get; } = new HybridComputeStatusType(DisconnectedValue);
         /// <summary> Error. </summary>
         public static HybridComputeStatusType Error { get; } = new HybridComputeStatusType(ErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HybridComputeStatusType"/> values are the same. </summary>
         public static bool operator ==(HybridComputeStatusType left, HybridComputeStatusType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridComputeStatusType"/> values are not the same. </summary>

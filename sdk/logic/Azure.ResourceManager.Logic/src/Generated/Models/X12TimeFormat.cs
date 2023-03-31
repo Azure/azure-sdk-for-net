@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static X12TimeFormat HhmmsSdd { get; } = new X12TimeFormat(HhmmsSddValue);
         /// <summary> HHMMSSd. </summary>
         public static X12TimeFormat HhmmsSd { get; } = new X12TimeFormat(HhmmsSdValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="X12TimeFormat"/> values are the same. </summary>
         public static bool operator ==(X12TimeFormat left, X12TimeFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="X12TimeFormat"/> values are not the same. </summary>

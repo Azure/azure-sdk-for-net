@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static AgentConfigurationMode Full { get; } = new AgentConfigurationMode(FullValue);
         /// <summary> monitor. </summary>
         public static AgentConfigurationMode Monitor { get; } = new AgentConfigurationMode(MonitorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AgentConfigurationMode"/> values are the same. </summary>
         public static bool operator ==(AgentConfigurationMode left, AgentConfigurationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentConfigurationMode"/> values are not the same. </summary>

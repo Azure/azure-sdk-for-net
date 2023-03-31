@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static ManagedRuleEnabledState Disabled { get; } = new ManagedRuleEnabledState(DisabledValue);
         /// <summary> Enabled. </summary>
         public static ManagedRuleEnabledState Enabled { get; } = new ManagedRuleEnabledState(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedRuleEnabledState"/> values are the same. </summary>
         public static bool operator ==(ManagedRuleEnabledState left, ManagedRuleEnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedRuleEnabledState"/> values are not the same. </summary>

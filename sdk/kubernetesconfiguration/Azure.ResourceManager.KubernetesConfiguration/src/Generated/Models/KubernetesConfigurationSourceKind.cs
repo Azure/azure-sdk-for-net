@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static KubernetesConfigurationSourceKind Bucket { get; } = new KubernetesConfigurationSourceKind(BucketValue);
         /// <summary> AzureBlob. </summary>
         public static KubernetesConfigurationSourceKind AzureBlob { get; } = new KubernetesConfigurationSourceKind(AzureBlobValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KubernetesConfigurationSourceKind"/> values are the same. </summary>
         public static bool operator ==(KubernetesConfigurationSourceKind left, KubernetesConfigurationSourceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesConfigurationSourceKind"/> values are not the same. </summary>

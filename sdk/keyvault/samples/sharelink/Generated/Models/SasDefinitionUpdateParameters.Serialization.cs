@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             if (Optional.IsDefined(SasType))
             {
                 writer.WritePropertyName("sasType"u8);
-                writer.WriteStringValue(SasType.Value.ToString());
+                writer.WriteStringValue(SasType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ValidityPeriod))
             {

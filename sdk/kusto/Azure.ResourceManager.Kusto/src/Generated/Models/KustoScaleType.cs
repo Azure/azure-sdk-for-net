@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoScaleType Manual { get; } = new KustoScaleType(ManualValue);
         /// <summary> none. </summary>
         public static KustoScaleType None { get; } = new KustoScaleType(NoneValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoScaleType"/> values are the same. </summary>
         public static bool operator ==(KustoScaleType left, KustoScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoScaleType"/> values are not the same. </summary>

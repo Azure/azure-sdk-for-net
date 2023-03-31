@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static GuestConfigurationProvisioningState Canceled { get; } = new GuestConfigurationProvisioningState(CanceledValue);
         /// <summary> Created. </summary>
         public static GuestConfigurationProvisioningState Created { get; } = new GuestConfigurationProvisioningState(CreatedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GuestConfigurationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(GuestConfigurationProvisioningState left, GuestConfigurationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GuestConfigurationProvisioningState"/> values are not the same. </summary>

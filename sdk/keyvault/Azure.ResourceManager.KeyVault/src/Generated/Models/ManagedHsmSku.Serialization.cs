@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("family"u8);
-            writer.WriteStringValue(Family.ToString());
+            writer.WriteStringValue(Family.ToSerialString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToSerialString());
             writer.WriteEndObject();

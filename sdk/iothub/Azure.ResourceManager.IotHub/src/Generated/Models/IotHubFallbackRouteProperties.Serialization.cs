@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("source"u8);
-            writer.WriteStringValue(Source.ToString());
+            writer.WriteStringValue(Source.ToSerialString());
             if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);

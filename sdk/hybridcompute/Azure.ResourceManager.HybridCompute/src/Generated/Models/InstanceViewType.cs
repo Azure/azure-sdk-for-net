@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> instanceView. </summary>
         public static InstanceViewType InstanceView { get; } = new InstanceViewType(InstanceViewValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="InstanceViewType"/> values are the same. </summary>
         public static bool operator ==(InstanceViewType left, InstanceViewType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstanceViewType"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubTestResultStatus False { get; } = new IotHubTestResultStatus(FalseValue);
         /// <summary> true. </summary>
         public static IotHubTestResultStatus True { get; } = new IotHubTestResultStatus(TrueValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotHubTestResultStatus"/> values are the same. </summary>
         public static bool operator ==(IotHubTestResultStatus left, IotHubTestResultStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubTestResultStatus"/> values are not the same. </summary>

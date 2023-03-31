@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorEndpointType Cdn { get; } = new FrontDoorEndpointType(CdnValue);
         /// <summary> ATM. </summary>
         public static FrontDoorEndpointType AzureTrafficManager { get; } = new FrontDoorEndpointType(AzureTrafficManagerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorEndpointType"/> values are the same. </summary>
         public static bool operator ==(FrontDoorEndpointType left, FrontDoorEndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorEndpointType"/> values are not the same. </summary>

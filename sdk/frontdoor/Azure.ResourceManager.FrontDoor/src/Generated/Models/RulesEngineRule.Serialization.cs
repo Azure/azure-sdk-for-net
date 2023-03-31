@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 if (MatchProcessingBehavior != null)
                 {
                     writer.WritePropertyName("matchProcessingBehavior"u8);
-                    writer.WriteStringValue(MatchProcessingBehavior.Value.ToString());
+                    writer.WriteStringValue(MatchProcessingBehavior.Value.ToSerialString());
                 }
                 else
                 {

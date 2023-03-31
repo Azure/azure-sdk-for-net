@@ -32,6 +32,9 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static AgeUnit Months { get; } = new AgeUnit(MonthsValue);
         /// <summary> days. </summary>
         public static AgeUnit Days { get; } = new AgeUnit(DaysValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AgeUnit"/> values are the same. </summary>
         public static bool operator ==(AgeUnit left, AgeUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgeUnit"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.AI.FormRecognizer.Models
         public static FieldValueSelectionMark Selected { get; } = new FieldValueSelectionMark(SelectedValue);
         /// <summary> unselected. </summary>
         public static FieldValueSelectionMark Unselected { get; } = new FieldValueSelectionMark(UnselectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FieldValueSelectionMark"/> values are the same. </summary>
         public static bool operator ==(FieldValueSelectionMark left, FieldValueSelectionMark right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FieldValueSelectionMark"/> values are not the same. </summary>

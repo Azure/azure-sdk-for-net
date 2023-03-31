@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoClusterPrincipalRole AllDatabasesAdmin { get; } = new KustoClusterPrincipalRole(AllDatabasesAdminValue);
         /// <summary> AllDatabasesViewer. </summary>
         public static KustoClusterPrincipalRole AllDatabasesViewer { get; } = new KustoClusterPrincipalRole(AllDatabasesViewerValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoClusterPrincipalRole"/> values are the same. </summary>
         public static bool operator ==(KustoClusterPrincipalRole left, KustoClusterPrincipalRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoClusterPrincipalRole"/> values are not the same. </summary>

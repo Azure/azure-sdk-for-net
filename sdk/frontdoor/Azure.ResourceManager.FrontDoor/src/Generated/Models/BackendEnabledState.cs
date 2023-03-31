@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static BackendEnabledState Enabled { get; } = new BackendEnabledState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static BackendEnabledState Disabled { get; } = new BackendEnabledState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="BackendEnabledState"/> values are the same. </summary>
         public static bool operator ==(BackendEnabledState left, BackendEnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackendEnabledState"/> values are not the same. </summary>

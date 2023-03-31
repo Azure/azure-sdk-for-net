@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightClusterProvisioningState Canceled { get; } = new HDInsightClusterProvisioningState(CanceledValue);
         /// <summary> Deleting. </summary>
         public static HDInsightClusterProvisioningState Deleting { get; } = new HDInsightClusterProvisioningState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightClusterProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HDInsightClusterProvisioningState left, HDInsightClusterProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightClusterProvisioningState"/> values are not the same. </summary>

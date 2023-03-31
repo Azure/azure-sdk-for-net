@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static ManagedHsmPrivateEndpointConnectionProvisioningState Failed { get; } = new ManagedHsmPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Disconnected. </summary>
         public static ManagedHsmPrivateEndpointConnectionProvisioningState Disconnected { get; } = new ManagedHsmPrivateEndpointConnectionProvisioningState(DisconnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedHsmPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ManagedHsmPrivateEndpointConnectionProvisioningState left, ManagedHsmPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>

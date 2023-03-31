@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubReplicaRoleType Primary { get; } = new IotHubReplicaRoleType(PrimaryValue);
         /// <summary> secondary. </summary>
         public static IotHubReplicaRoleType Secondary { get; } = new IotHubReplicaRoleType(SecondaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotHubReplicaRoleType"/> values are the same. </summary>
         public static bool operator ==(IotHubReplicaRoleType left, IotHubReplicaRoleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubReplicaRoleType"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.Security.KeyVault.Administration
         public static KeyVaultRoleType BuiltInRole { get; } = new KeyVaultRoleType(BuiltInRoleValue);
         /// <summary> Custom role. </summary>
         public static KeyVaultRoleType CustomRole { get; } = new KeyVaultRoleType(CustomRoleValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KeyVaultRoleType"/> values are the same. </summary>
         public static bool operator ==(KeyVaultRoleType left, KeyVaultRoleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultRoleType"/> values are not the same. </summary>

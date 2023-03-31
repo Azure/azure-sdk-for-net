@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 if (Kind != null)
                 {
                     writer.WritePropertyName("kind"u8);
-                    writer.WriteStringValue(Kind.Value.ToString());
+                    writer.WriteStringValue(Kind.Value.ToSerialString());
                 }
                 else
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 if (AssignmentType != null)
                 {
                     writer.WritePropertyName("assignmentType"u8);
-                    writer.WriteStringValue(AssignmentType.Value.ToString());
+                    writer.WriteStringValue(AssignmentType.Value.ToSerialString());
                 }
                 else
                 {

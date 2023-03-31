@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.LabServices.Models
         public static AvailableLabServicesSkuTier Standard { get; } = new AvailableLabServicesSkuTier(StandardValue);
         /// <summary> Premium. </summary>
         public static AvailableLabServicesSkuTier Premium { get; } = new AvailableLabServicesSkuTier(PremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AvailableLabServicesSkuTier"/> values are the same. </summary>
         public static bool operator ==(AvailableLabServicesSkuTier left, AvailableLabServicesSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AvailableLabServicesSkuTier"/> values are not the same. </summary>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static LogicSkuName Standard { get; } = new LogicSkuName(StandardValue);
         /// <summary> Premium. </summary>
         public static LogicSkuName Premium { get; } = new LogicSkuName(PremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogicSkuName"/> values are the same. </summary>
         public static bool operator ==(LogicSkuName left, LogicSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicSkuName"/> values are not the same. </summary>

@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static SwaggerSchemaType Object { get; } = new SwaggerSchemaType(ObjectValue);
         /// <summary> Null. </summary>
         public static SwaggerSchemaType Null { get; } = new SwaggerSchemaType(NullValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SwaggerSchemaType"/> values are the same. </summary>
         public static bool operator ==(SwaggerSchemaType left, SwaggerSchemaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SwaggerSchemaType"/> values are not the same. </summary>

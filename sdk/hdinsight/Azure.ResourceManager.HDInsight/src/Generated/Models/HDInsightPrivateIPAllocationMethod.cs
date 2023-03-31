@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightPrivateIPAllocationMethod Dynamic { get; } = new HDInsightPrivateIPAllocationMethod(DynamicValue);
         /// <summary> static. </summary>
         public static HDInsightPrivateIPAllocationMethod Static { get; } = new HDInsightPrivateIPAllocationMethod(StaticValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightPrivateIPAllocationMethod"/> values are the same. </summary>
         public static bool operator ==(HDInsightPrivateIPAllocationMethod left, HDInsightPrivateIPAllocationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightPrivateIPAllocationMethod"/> values are not the same. </summary>

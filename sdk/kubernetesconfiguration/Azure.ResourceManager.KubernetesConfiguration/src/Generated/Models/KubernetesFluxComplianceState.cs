@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         public static KubernetesFluxComplianceState Suspended { get; } = new KubernetesFluxComplianceState(SuspendedValue);
         /// <summary> Unknown. </summary>
         public static KubernetesFluxComplianceState Unknown { get; } = new KubernetesFluxComplianceState(UnknownValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KubernetesFluxComplianceState"/> values are the same. </summary>
         public static bool operator ==(KubernetesFluxComplianceState left, KubernetesFluxComplianceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesFluxComplianceState"/> values are not the same. </summary>

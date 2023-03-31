@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorWebApplicationFirewallPolicyResourceState Disabled { get; } = new FrontDoorWebApplicationFirewallPolicyResourceState(DisabledValue);
         /// <summary> Deleting. </summary>
         public static FrontDoorWebApplicationFirewallPolicyResourceState Deleting { get; } = new FrontDoorWebApplicationFirewallPolicyResourceState(DeletingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorWebApplicationFirewallPolicyResourceState"/> values are the same. </summary>
         public static bool operator ==(FrontDoorWebApplicationFirewallPolicyResourceState left, FrontDoorWebApplicationFirewallPolicyResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorWebApplicationFirewallPolicyResourceState"/> values are not the same. </summary>

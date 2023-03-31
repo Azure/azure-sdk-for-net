@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static IntegrationAccountPartnerType NotSpecified { get; } = new IntegrationAccountPartnerType(NotSpecifiedValue);
         /// <summary> B2B. </summary>
         public static IntegrationAccountPartnerType B2B { get; } = new IntegrationAccountPartnerType(B2BValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IntegrationAccountPartnerType"/> values are the same. </summary>
         public static bool operator ==(IntegrationAccountPartnerType left, IntegrationAccountPartnerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationAccountPartnerType"/> values are not the same. </summary>

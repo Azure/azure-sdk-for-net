@@ -35,6 +35,9 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static DocumentType Dicom { get; } = new DocumentType(DicomValue);
         /// <summary> genomicSequencing. </summary>
         public static DocumentType GenomicSequencing { get; } = new DocumentType(GenomicSequencingValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DocumentType"/> values are the same. </summary>
         public static bool operator ==(DocumentType left, DocumentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentType"/> values are not the same. </summary>

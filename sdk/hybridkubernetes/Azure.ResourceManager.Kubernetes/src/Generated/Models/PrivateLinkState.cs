@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public static PrivateLinkState Enabled { get; } = new PrivateLinkState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static PrivateLinkState Disabled { get; } = new PrivateLinkState(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PrivateLinkState"/> values are the same. </summary>
         public static bool operator ==(PrivateLinkState left, PrivateLinkState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateLinkState"/> values are not the same. </summary>

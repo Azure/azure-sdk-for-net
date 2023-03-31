@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static FhirResourceVersionPolicy Versioned { get; } = new FhirResourceVersionPolicy(VersionedValue);
         /// <summary> versioned-update. </summary>
         public static FhirResourceVersionPolicy VersionedUpdate { get; } = new FhirResourceVersionPolicy(VersionedUpdateValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FhirResourceVersionPolicy"/> values are the same. </summary>
         public static bool operator ==(FhirResourceVersionPolicy left, FhirResourceVersionPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FhirResourceVersionPolicy"/> values are not the same. </summary>

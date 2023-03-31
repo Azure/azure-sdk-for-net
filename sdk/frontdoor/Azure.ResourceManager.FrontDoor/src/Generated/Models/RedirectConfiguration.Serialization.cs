@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(RedirectType))
             {
                 writer.WritePropertyName("redirectType"u8);
-                writer.WriteStringValue(RedirectType.Value.ToString());
+                writer.WriteStringValue(RedirectType.Value.ToSerialString());
             }
             if (Optional.IsDefined(RedirectProtocol))
             {
                 writer.WritePropertyName("redirectProtocol"u8);
-                writer.WriteStringValue(RedirectProtocol.Value.ToString());
+                writer.WriteStringValue(RedirectProtocol.Value.ToSerialString());
             }
             if (Optional.IsDefined(CustomHost))
             {

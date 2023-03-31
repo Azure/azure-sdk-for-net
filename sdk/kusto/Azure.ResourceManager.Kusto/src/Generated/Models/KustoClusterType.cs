@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Microsoft.Kusto/clusters. </summary>
         public static KustoClusterType MicrosoftKustoClusters { get; } = new KustoClusterType(MicrosoftKustoClustersValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoClusterType"/> values are the same. </summary>
         public static bool operator ==(KustoClusterType left, KustoClusterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoClusterType"/> values are not the same. </summary>

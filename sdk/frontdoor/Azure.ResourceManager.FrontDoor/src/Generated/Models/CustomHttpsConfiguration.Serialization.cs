@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("certificateSource"u8);
-            writer.WriteStringValue(CertificateSource.ToString());
+            writer.WriteStringValue(CertificateSource.ToSerialString());
             writer.WritePropertyName("protocolType"u8);
-            writer.WriteStringValue(ProtocolType.ToString());
+            writer.WriteStringValue(ProtocolType.ToSerialString());
             writer.WritePropertyName("minimumTlsVersion"u8);
-            writer.WriteStringValue(MinimumTlsVersion.ToString());
+            writer.WriteStringValue(MinimumTlsVersion.ToSerialString());
             writer.WritePropertyName("frontDoorCertificateSourceParameters"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CertificateType))
             {
                 writer.WritePropertyName("certificateType"u8);
-                writer.WriteStringValue(CertificateType.Value.ToString());
+                writer.WriteStringValue(CertificateType.Value.ToSerialString());
             }
             writer.WriteEndObject();
             writer.WritePropertyName("keyVaultCertificateSourceParameters"u8);

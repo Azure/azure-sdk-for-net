@@ -29,6 +29,9 @@ namespace Azure.Security.KeyVault.Storage.Models
         public static SasTokenType Account { get; } = new SasTokenType(AccountValue);
         /// <summary> service. </summary>
         public static SasTokenType Service { get; } = new SasTokenType(ServiceValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="SasTokenType"/> values are the same. </summary>
         public static bool operator ==(SasTokenType left, SasTokenType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SasTokenType"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static LogicApiOperationAnnotationStatus Preview { get; } = new LogicApiOperationAnnotationStatus(PreviewValue);
         /// <summary> Production. </summary>
         public static LogicApiOperationAnnotationStatus Production { get; } = new LogicApiOperationAnnotationStatus(ProductionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogicApiOperationAnnotationStatus"/> values are the same. </summary>
         public static bool operator ==(LogicApiOperationAnnotationStatus left, LogicApiOperationAnnotationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicApiOperationAnnotationStatus"/> values are not the same. </summary>

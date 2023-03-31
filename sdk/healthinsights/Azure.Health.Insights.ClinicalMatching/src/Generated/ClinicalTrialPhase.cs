@@ -41,6 +41,9 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static ClinicalTrialPhase Phase3 { get; } = new ClinicalTrialPhase(Phase3Value);
         /// <summary> phase4. </summary>
         public static ClinicalTrialPhase Phase4 { get; } = new ClinicalTrialPhase(Phase4Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClinicalTrialPhase"/> values are the same. </summary>
         public static bool operator ==(ClinicalTrialPhase left, ClinicalTrialPhase right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClinicalTrialPhase"/> values are not the same. </summary>

@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.FluidRelay.Models
         public static FluidRelayProvisioningState Failed { get; } = new FluidRelayProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static FluidRelayProvisioningState Canceled { get; } = new FluidRelayProvisioningState(CanceledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FluidRelayProvisioningState"/> values are the same. </summary>
         public static bool operator ==(FluidRelayProvisioningState left, FluidRelayProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FluidRelayProvisioningState"/> values are not the same. </summary>

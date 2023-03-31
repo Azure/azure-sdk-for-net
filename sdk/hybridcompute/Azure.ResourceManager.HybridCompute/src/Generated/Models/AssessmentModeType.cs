@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static AssessmentModeType ImageDefault { get; } = new AssessmentModeType(ImageDefaultValue);
         /// <summary> AutomaticByPlatform. </summary>
         public static AssessmentModeType AutomaticByPlatform { get; } = new AssessmentModeType(AutomaticByPlatformValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AssessmentModeType"/> values are the same. </summary>
         public static bool operator ==(AssessmentModeType left, AssessmentModeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssessmentModeType"/> values are not the same. </summary>

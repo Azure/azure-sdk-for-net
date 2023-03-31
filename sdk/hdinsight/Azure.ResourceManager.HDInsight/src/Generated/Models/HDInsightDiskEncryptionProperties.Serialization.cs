@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 if (EncryptionAlgorithm != null)
                 {
                     writer.WritePropertyName("encryptionAlgorithm"u8);
-                    writer.WriteStringValue(EncryptionAlgorithm.Value.ToString());
+                    writer.WriteStringValue(EncryptionAlgorithm.Value.ToSerialString());
                 }
                 else
                 {

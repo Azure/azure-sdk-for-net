@@ -35,6 +35,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorTimeSeriesType LatencyP75 { get; } = new FrontDoorTimeSeriesType(LatencyP75Value);
         /// <summary> LatencyP95. </summary>
         public static FrontDoorTimeSeriesType LatencyP95 { get; } = new FrontDoorTimeSeriesType(LatencyP95Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorTimeSeriesType"/> values are the same. </summary>
         public static bool operator ==(FrontDoorTimeSeriesType left, FrontDoorTimeSeriesType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorTimeSeriesType"/> values are not the same. </summary>

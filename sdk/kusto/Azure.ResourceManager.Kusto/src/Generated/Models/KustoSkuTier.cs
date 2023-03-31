@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoSkuTier Basic { get; } = new KustoSkuTier(BasicValue);
         /// <summary> Standard. </summary>
         public static KustoSkuTier Standard { get; } = new KustoSkuTier(StandardValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoSkuTier"/> values are the same. </summary>
         public static bool operator ==(KustoSkuTier left, KustoSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoSkuTier"/> values are not the same. </summary>

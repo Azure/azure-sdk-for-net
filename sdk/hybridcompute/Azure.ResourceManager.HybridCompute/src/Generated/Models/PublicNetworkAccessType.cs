@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static PublicNetworkAccessType Enabled { get; } = new PublicNetworkAccessType(EnabledValue);
         /// <summary> Does not allow Azure Arc agents to communicate with Azure Arc services over public (internet) endpoints. The agents must use the private link. </summary>
         public static PublicNetworkAccessType Disabled { get; } = new PublicNetworkAccessType(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PublicNetworkAccessType"/> values are the same. </summary>
         public static bool operator ==(PublicNetworkAccessType left, PublicNetworkAccessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PublicNetworkAccessType"/> values are not the same. </summary>

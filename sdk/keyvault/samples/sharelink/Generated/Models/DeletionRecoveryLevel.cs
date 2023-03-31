@@ -44,6 +44,9 @@ namespace Azure.Security.KeyVault.Storage.Models
         public static DeletionRecoveryLevel CustomizedRecoverable { get; } = new DeletionRecoveryLevel(CustomizedRecoverableValue);
         /// <summary> Denotes a vault and subscription state in which deletion is recoverable, immediate and permanent deletion (i.e. purge) is not permitted, and in which the subscription itself cannot be permanently canceled when 7&lt;= SoftDeleteRetentionInDays &lt; 90. This level guarantees the recoverability of the deleted entity during the retention interval, and also reflects the fact that the subscription itself cannot be cancelled. </summary>
         public static DeletionRecoveryLevel CustomizedRecoverableProtectedSubscription { get; } = new DeletionRecoveryLevel(CustomizedRecoverableProtectedSubscriptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeletionRecoveryLevel"/> values are the same. </summary>
         public static bool operator ==(DeletionRecoveryLevel left, DeletionRecoveryLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeletionRecoveryLevel"/> values are not the same. </summary>

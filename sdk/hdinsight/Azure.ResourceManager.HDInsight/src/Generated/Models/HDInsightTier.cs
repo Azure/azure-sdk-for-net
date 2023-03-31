@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightTier Standard { get; } = new HDInsightTier(StandardValue);
         /// <summary> Premium. </summary>
         public static HDInsightTier Premium { get; } = new HDInsightTier(PremiumValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HDInsightTier"/> values are the same. </summary>
         public static bool operator ==(HDInsightTier left, HDInsightTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HDInsightTier"/> values are not the same. </summary>

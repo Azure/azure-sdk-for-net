@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static IotCentralPublicNetworkAccess Enabled { get; } = new IotCentralPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static IotCentralPublicNetworkAccess Disabled { get; } = new IotCentralPublicNetworkAccess(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotCentralPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(IotCentralPublicNetworkAccess left, IotCentralPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotCentralPublicNetworkAccess"/> values are not the same. </summary>

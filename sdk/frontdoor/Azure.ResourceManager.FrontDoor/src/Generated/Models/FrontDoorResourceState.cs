@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static FrontDoorResourceState Migrating { get; } = new FrontDoorResourceState(MigratingValue);
         /// <summary> Migrated. </summary>
         public static FrontDoorResourceState Migrated { get; } = new FrontDoorResourceState(MigratedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="FrontDoorResourceState"/> values are the same. </summary>
         public static bool operator ==(FrontDoorResourceState left, FrontDoorResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorResourceState"/> values are not the same. </summary>

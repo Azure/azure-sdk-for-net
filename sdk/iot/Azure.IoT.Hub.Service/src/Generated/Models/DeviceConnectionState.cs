@@ -29,6 +29,9 @@ namespace Azure.IoT.Hub.Service.Models
         public static DeviceConnectionState Disconnected { get; } = new DeviceConnectionState(DisconnectedValue);
         /// <summary> Connected. </summary>
         public static DeviceConnectionState Connected { get; } = new DeviceConnectionState(ConnectedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DeviceConnectionState"/> values are the same. </summary>
         public static bool operator ==(DeviceConnectionState left, DeviceConnectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceConnectionState"/> values are not the same. </summary>

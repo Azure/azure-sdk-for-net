@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static HybridComputeStatusLevelType Warning { get; } = new HybridComputeStatusLevelType(WarningValue);
         /// <summary> Error. </summary>
         public static HybridComputeStatusLevelType Error { get; } = new HybridComputeStatusLevelType(ErrorValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="HybridComputeStatusLevelType"/> values are the same. </summary>
         public static bool operator ==(HybridComputeStatusLevelType left, HybridComputeStatusLevelType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridComputeStatusLevelType"/> values are not the same. </summary>

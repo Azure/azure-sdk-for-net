@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubEndpointHealthStatus Unhealthy { get; } = new IotHubEndpointHealthStatus(UnhealthyValue);
         /// <summary> dead. </summary>
         public static IotHubEndpointHealthStatus Dead { get; } = new IotHubEndpointHealthStatus(DeadValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="IotHubEndpointHealthStatus"/> values are the same. </summary>
         public static bool operator ==(IotHubEndpointHealthStatus left, IotHubEndpointHealthStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubEndpointHealthStatus"/> values are not the same. </summary>

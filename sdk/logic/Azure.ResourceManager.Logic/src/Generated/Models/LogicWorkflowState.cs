@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static LogicWorkflowState Deleted { get; } = new LogicWorkflowState(DeletedValue);
         /// <summary> Suspended. </summary>
         public static LogicWorkflowState Suspended { get; } = new LogicWorkflowState(SuspendedValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogicWorkflowState"/> values are the same. </summary>
         public static bool operator ==(LogicWorkflowState left, LogicWorkflowState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicWorkflowState"/> values are not the same. </summary>

@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> DSC. </summary>
         public static GuestConfigurationKind Dsc { get; } = new GuestConfigurationKind(DscValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GuestConfigurationKind"/> values are the same. </summary>
         public static bool operator ==(GuestConfigurationKind left, GuestConfigurationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GuestConfigurationKind"/> values are not the same. </summary>

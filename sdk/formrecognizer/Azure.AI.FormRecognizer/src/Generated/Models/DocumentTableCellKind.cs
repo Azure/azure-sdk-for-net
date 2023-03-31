@@ -38,6 +38,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static DocumentTableCellKind StubHead { get; } = new DocumentTableCellKind(StubHeadValue);
         /// <summary> Describes the content in (parts of) the table. </summary>
         public static DocumentTableCellKind Description { get; } = new DocumentTableCellKind(DescriptionValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="DocumentTableCellKind"/> values are the same. </summary>
         public static bool operator ==(DocumentTableCellKind left, DocumentTableCellKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentTableCellKind"/> values are not the same. </summary>

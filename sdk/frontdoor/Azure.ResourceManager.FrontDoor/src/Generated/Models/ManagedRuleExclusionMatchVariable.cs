@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static ManagedRuleExclusionMatchVariable RequestBodyPostArgNames { get; } = new ManagedRuleExclusionMatchVariable(RequestBodyPostArgNamesValue);
         /// <summary> RequestBodyJsonArgNames. </summary>
         public static ManagedRuleExclusionMatchVariable RequestBodyJsonArgNames { get; } = new ManagedRuleExclusionMatchVariable(RequestBodyJsonArgNamesValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ManagedRuleExclusionMatchVariable"/> values are the same. </summary>
         public static bool operator ==(ManagedRuleExclusionMatchVariable left, ManagedRuleExclusionMatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedRuleExclusionMatchVariable"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static GuestConfigurationAssignmentReportType Consistency { get; } = new GuestConfigurationAssignmentReportType(ConsistencyValue);
         /// <summary> Initial. </summary>
         public static GuestConfigurationAssignmentReportType Initial { get; } = new GuestConfigurationAssignmentReportType(InitialValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="GuestConfigurationAssignmentReportType"/> values are the same. </summary>
         public static bool operator ==(GuestConfigurationAssignmentReportType left, GuestConfigurationAssignmentReportType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GuestConfigurationAssignmentReportType"/> values are not the same. </summary>

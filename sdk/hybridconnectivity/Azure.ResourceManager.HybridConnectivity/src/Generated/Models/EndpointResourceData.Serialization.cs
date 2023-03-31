@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(EndpointType.Value.ToString());
+                writer.WriteStringValue(EndpointType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ResourceId))
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             if (Optional.IsDefined(CreatedByType))
             {
                 writer.WritePropertyName("createdByType"u8);
-                writer.WriteStringValue(CreatedByType.Value.ToString());
+                writer.WriteStringValue(CreatedByType.Value.ToSerialString());
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             if (Optional.IsDefined(LastModifiedByType))
             {
                 writer.WritePropertyName("lastModifiedByType"u8);
-                writer.WriteStringValue(LastModifiedByType.Value.ToString());
+                writer.WriteStringValue(LastModifiedByType.Value.ToSerialString());
             }
             if (Optional.IsDefined(LastModifiedOn))
             {

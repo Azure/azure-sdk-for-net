@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static KeyVaultNetworkRuleAction Allow { get; } = new KeyVaultNetworkRuleAction(AllowValue);
         /// <summary> Deny. </summary>
         public static KeyVaultNetworkRuleAction Deny { get; } = new KeyVaultNetworkRuleAction(DenyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KeyVaultNetworkRuleAction"/> values are the same. </summary>
         public static bool operator ==(KeyVaultNetworkRuleAction left, KeyVaultNetworkRuleAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultNetworkRuleAction"/> values are not the same. </summary>

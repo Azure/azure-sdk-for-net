@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static PolicyRequestBodyCheck Disabled { get; } = new PolicyRequestBodyCheck(DisabledValue);
         /// <summary> Enabled. </summary>
         public static PolicyRequestBodyCheck Enabled { get; } = new PolicyRequestBodyCheck(EnabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="PolicyRequestBodyCheck"/> values are the same. </summary>
         public static bool operator ==(PolicyRequestBodyCheck left, PolicyRequestBodyCheck right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyRequestBodyCheck"/> values are not the same. </summary>

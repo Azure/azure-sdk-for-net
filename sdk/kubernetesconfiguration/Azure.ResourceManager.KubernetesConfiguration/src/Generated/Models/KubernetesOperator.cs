@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         /// <summary> Flux. </summary>
         public static KubernetesOperator Flux { get; } = new KubernetesOperator(FluxValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KubernetesOperator"/> values are the same. </summary>
         public static bool operator ==(KubernetesOperator left, KubernetesOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesOperator"/> values are not the same. </summary>

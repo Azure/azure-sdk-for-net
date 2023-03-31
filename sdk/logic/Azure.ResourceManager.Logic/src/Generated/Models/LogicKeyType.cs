@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static LogicKeyType Primary { get; } = new LogicKeyType(PrimaryValue);
         /// <summary> Secondary. </summary>
         public static LogicKeyType Secondary { get; } = new LogicKeyType(SecondaryValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogicKeyType"/> values are the same. </summary>
         public static bool operator ==(LogicKeyType left, LogicKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicKeyType"/> values are not the same. </summary>

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Logic
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("partnerType"u8);
-            writer.WriteStringValue(PartnerType.ToString());
+            writer.WriteStringValue(PartnerType.ToSerialString());
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);

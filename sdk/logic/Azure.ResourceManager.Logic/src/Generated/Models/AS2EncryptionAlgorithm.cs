@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static AS2EncryptionAlgorithm Aes192 { get; } = new AS2EncryptionAlgorithm(Aes192Value);
         /// <summary> AES256. </summary>
         public static AS2EncryptionAlgorithm Aes256 { get; } = new AS2EncryptionAlgorithm(Aes256Value);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="AS2EncryptionAlgorithm"/> values are the same. </summary>
         public static bool operator ==(AS2EncryptionAlgorithm left, AS2EncryptionAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AS2EncryptionAlgorithm"/> values are not the same. </summary>

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoClusterNetworkAccessFlag Enabled { get; } = new KustoClusterNetworkAccessFlag(EnabledValue);
         /// <summary> Disabled. </summary>
         public static KustoClusterNetworkAccessFlag Disabled { get; } = new KustoClusterNetworkAccessFlag(DisabledValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="KustoClusterNetworkAccessFlag"/> values are the same. </summary>
         public static bool operator ==(KustoClusterNetworkAccessFlag left, KustoClusterNetworkAccessFlag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoClusterNetworkAccessFlag"/> values are not the same. </summary>

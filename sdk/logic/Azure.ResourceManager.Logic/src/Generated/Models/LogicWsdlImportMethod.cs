@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static LogicWsdlImportMethod SoapToRest { get; } = new LogicWsdlImportMethod(SoapToRestValue);
         /// <summary> SoapPassThrough. </summary>
         public static LogicWsdlImportMethod SoapPassThrough { get; } = new LogicWsdlImportMethod(SoapPassThroughValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="LogicWsdlImportMethod"/> values are the same. </summary>
         public static bool operator ==(LogicWsdlImportMethod left, LogicWsdlImportMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LogicWsdlImportMethod"/> values are not the same. </summary>

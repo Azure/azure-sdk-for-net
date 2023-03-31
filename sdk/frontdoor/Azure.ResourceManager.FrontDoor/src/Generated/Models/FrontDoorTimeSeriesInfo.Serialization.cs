@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(AggregationInterval))
             {
                 writer.WritePropertyName("aggregationInterval"u8);
-                writer.WriteStringValue(AggregationInterval.Value.ToString());
+                writer.WriteStringValue(AggregationInterval.Value.ToSerialString());
             }
             if (Optional.IsDefined(TimeSeriesType))
             {
                 writer.WritePropertyName("timeseriesType"u8);
-                writer.WriteStringValue(TimeSeriesType.Value.ToString());
+                writer.WriteStringValue(TimeSeriesType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Country))
             {

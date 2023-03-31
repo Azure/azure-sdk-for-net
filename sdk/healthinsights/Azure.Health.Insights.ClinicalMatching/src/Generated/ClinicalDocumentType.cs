@@ -47,6 +47,9 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static ClinicalDocumentType Laboratory { get; } = new ClinicalDocumentType(LaboratoryValue);
         /// <summary> pathology. </summary>
         public static ClinicalDocumentType Pathology { get; } = new ClinicalDocumentType(PathologyValue);
+
+        internal string ToSerialString() => _value;
+
         /// <summary> Determines if two <see cref="ClinicalDocumentType"/> values are the same. </summary>
         public static bool operator ==(ClinicalDocumentType left, ClinicalDocumentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClinicalDocumentType"/> values are not the same. </summary>
