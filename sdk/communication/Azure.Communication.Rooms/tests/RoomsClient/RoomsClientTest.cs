@@ -35,7 +35,7 @@ namespace Azure.Communication.Rooms.Tests
                 participant2
             };
 
-            Response<CommunicationRoom>? expectedRoomResult = default;
+            Response<CommunicationRoom> expectedRoomResult = new Mock<Response<CommunicationRoom>>().Object;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
 
             mockRoomsClient
