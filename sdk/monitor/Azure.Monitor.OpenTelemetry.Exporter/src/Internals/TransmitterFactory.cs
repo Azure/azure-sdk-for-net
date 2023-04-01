@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     if (!_transmitters.TryGetValue(key, out transmitter))
                     {
-                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions);
+                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, new DefaultPlatform());
 
                         _transmitters.Add(key, transmitter);
                     }

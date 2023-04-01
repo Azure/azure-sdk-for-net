@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
@@ -28,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private static string? s_sdkVersion => SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter));
 
-        private static string? s_operatingSystem = GetOS();
+        private static string? s_operatingSystem;
 
         private readonly string? _customer_Ikey;
 
@@ -36,8 +37,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal static Regex s_endpoint_pattern => new("^https?://(?:www\\.)?([^/.-]+)");
 
-        internal AzureMonitorStatsbeat(ConnectionVars connectionStringVars)
+        internal AzureMonitorStatsbeat(ConnectionVars connectionStringVars, IPlatform platform)
         {
+            s_operatingSystem = platform.GetOSPlatformName();
+
             _statsbeat_ConnectionString = GetStatsbeatConnectionString(connectionStringVars?.IngestionEndpoint);
 
             // Initialize only if we are able to determine the correct region to send the data to.
@@ -66,24 +69,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.AttachStatsbeatInterval)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
-        }
-
-        private static string GetOS()
-        {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                return "windows";
-            }
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return "linux";
-            }
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                return "osx";
-            }
-
-            return "unknown";
         }
 
         internal static string? GetStatsbeatConnectionString(string? ingestionEndpoint)
