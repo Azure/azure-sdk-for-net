@@ -10,7 +10,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("BoundingRegion")]
     [CodeGenSuppress(nameof(BoundingRegion), typeof(int), typeof(IEnumerable<float>))]
     [CodeGenSuppress("Polygon")]
     public readonly partial struct BoundingRegion : IEquatable<BoundingRegion>

@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Network.Samples
         // Get Available Waf Rule Sets
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetApplicationGatewayAvailableWafRuleSetsAsync_GetAvailableWafRuleSets()
+        public async Task GetAppGatewayAvailableWafRuleSets_GetAvailableWafRuleSets()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/ApplicationGatewayAvailableWafRuleSetsGet.json
             // this example is just showing the usage of "ApplicationGateways_ListAvailableWafRuleSets" operation, for the dependent resources, they will have to be created separately.
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Network.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ApplicationGatewayFirewallRuleSet item in subscriptionResource.GetApplicationGatewayAvailableWafRuleSetsAsyncAsync())
+            await foreach (ApplicationGatewayFirewallRuleSet item in subscriptionResource.GetAppGatewayAvailableWafRuleSetsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

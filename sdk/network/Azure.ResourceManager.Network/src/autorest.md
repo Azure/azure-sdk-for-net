@@ -178,7 +178,7 @@ request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
 
 override-operation-name:
-  ApplicationGateways_ListAvailableWafRuleSets: GetApplicationGatewayAvailableWafRuleSetsAsync
+  ApplicationGateways_ListAvailableWafRuleSets: GetAppGatewayAvailableWafRuleSets
   VirtualNetworkGateways_VpnDeviceConfigurationScript: VpnDeviceConfigurationScript
   VirtualHubBgpConnections_ListLearnedRoutes: GetLearnedRoutesVirtualHubBgpConnection
   VirtualHubBgpConnections_ListAdvertisedRoutes: GetAdvertisedRoutesVirtualHubBgpConnection

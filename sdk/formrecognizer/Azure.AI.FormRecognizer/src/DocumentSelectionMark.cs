@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentSelectionMark")]
     public partial class DocumentSelectionMark
     {
         /// <summary>

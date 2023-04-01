@@ -18,7 +18,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         /// <param name="loggerOptions"><see cref="OpenTelemetryLoggerOptions"/> options to use.</param>
         /// <param name="configure">Exporter configuration options.</param>
-        /// <param name="credential"><see cref="TokenCredential" /></param>
+        /// <param name="credential">
+        /// An Azure <see cref="TokenCredential" /> capable of providing an OAuth token.
+        /// Note: if a credential is provided to both <see cref="AzureMonitorExporterOptions"/> and this parameter,
+        /// the Options will take precedence.
+        /// </param>
         /// <returns>The instance of <see cref="OpenTelemetryLoggerOptions"/> to chain the calls.</returns>
         public static OpenTelemetryLoggerOptions AddAzureMonitorLogExporter(this OpenTelemetryLoggerOptions loggerOptions, Action<AzureMonitorExporterOptions>? configure = null, TokenCredential? credential = null)
         {
@@ -34,7 +38,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
-            return loggerOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(options, options.Credential ?? credential)));
+            if (credential != null)
+            {
+                // Credential can be set by either AzureMonitorExporterOptions or Extension Method Parameter.
+                // Options should take precedence.
+                options.Credential ??= credential;
+            }
+
+            return loggerOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(options)));
         }
     }
 }
