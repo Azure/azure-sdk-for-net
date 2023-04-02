@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static UnknownGcpOrganizationalData DeserializeUnknownGcpOrganizationalData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             OrganizationMembershipType organizationMembershipType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

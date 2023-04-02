@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Avs
 
         internal static PlacementPolicyData DeserializePlacementPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PlacementPolicyProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

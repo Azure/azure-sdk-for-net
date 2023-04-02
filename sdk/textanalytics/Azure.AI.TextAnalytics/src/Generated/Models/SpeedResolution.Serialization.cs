@@ -27,6 +27,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static SpeedResolution DeserializeSpeedResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SpeedUnit unit = default;
             double value = default;
             ResolutionKind resolutionKind = default;

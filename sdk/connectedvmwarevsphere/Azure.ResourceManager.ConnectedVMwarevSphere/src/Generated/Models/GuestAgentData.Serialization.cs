@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static GuestAgentData DeserializeGuestAgentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

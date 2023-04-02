@@ -13,7 +13,10 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing the SnapshotPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the SnapshotPolicy data model.
+    /// Snapshot policy information
+    /// </summary>
     public partial class SnapshotPolicyData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SnapshotPolicyData. </summary>

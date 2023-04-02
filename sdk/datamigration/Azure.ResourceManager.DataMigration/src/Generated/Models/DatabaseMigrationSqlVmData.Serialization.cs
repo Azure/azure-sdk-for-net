@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataMigration
 
         internal static DatabaseMigrationSqlVmData DeserializeDatabaseMigrationSqlVmData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DatabaseMigrationSqlVmProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

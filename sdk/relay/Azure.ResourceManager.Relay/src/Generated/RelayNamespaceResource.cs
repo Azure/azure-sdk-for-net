@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayNetworkRuleSetResource" /> object. </returns>
         public virtual RelayNetworkRuleSetResource GetRelayNetworkRuleSet()
         {
-            return new RelayNetworkRuleSetResource(Client, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
+            return new RelayNetworkRuleSetResource(Client, Id.AppendChildResource("networkRuleSets", "default"));
         }
 
         /// <summary> Gets a collection of RelayHybridConnectionResources in the RelayNamespace. </summary>

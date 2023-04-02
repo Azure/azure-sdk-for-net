@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static ScriptActionsList DeserializeScriptActionsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RuntimeScriptActionDetail>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

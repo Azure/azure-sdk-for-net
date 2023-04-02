@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlUpsertSettings DeserializeSqlUpsertSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> useTempDB = default;
             Optional<BinaryData> interimSchemaName = default;
             Optional<BinaryData> keys = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SqlServerPrivateEndpointConnection DeserializeSqlServerPrivateEndpointConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<ServerPrivateEndpointConnectionProperties> properties = default;
             foreach (var property in element.EnumerateObject())

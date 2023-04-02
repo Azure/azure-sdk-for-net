@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.Training
     {
         internal static CustomFormModelInfo DeserializeCustomFormModelInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string modelId = default;
             CustomFormModelStatus status = default;
             DateTimeOffset createdDateTime = default;

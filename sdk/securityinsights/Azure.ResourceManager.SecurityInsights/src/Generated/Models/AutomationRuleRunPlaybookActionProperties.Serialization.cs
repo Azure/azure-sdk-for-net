@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AutomationRuleRunPlaybookActionProperties DeserializeAutomationRuleRunPlaybookActionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier logicAppResourceId = default;
             Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())

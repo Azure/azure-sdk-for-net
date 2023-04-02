@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformDeploymentData DeserializeAppPlatformDeploymentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformDeploymentProperties> properties = default;
             Optional<AppPlatformSku> sku = default;
             ResourceIdentifier id = default;

@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningHDInsightProperties DeserializeMachineLearningHDInsightProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> sshPort = default;
             Optional<IPAddress> address = default;
             Optional<MachineLearningVmSshCredentials> administratorAccount = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static ControlFamily DeserializeControlFamily(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> familyName = default;
             Optional<ControlFamilyType> familyType = default;
             Optional<ControlFamilyStatus> familyStatus = default;

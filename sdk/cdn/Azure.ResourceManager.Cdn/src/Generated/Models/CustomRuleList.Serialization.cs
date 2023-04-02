@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CustomRuleList DeserializeCustomRuleList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<CustomRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {

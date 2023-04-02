@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static KustoPrivateEndpointConnectionListResult DeserializeKustoPrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<KustoPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

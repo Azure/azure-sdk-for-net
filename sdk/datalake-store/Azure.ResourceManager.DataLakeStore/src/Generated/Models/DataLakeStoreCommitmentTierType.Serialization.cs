@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         public static DataLakeStoreCommitmentTierType ToDataLakeStoreCommitmentTierType(this string value)
         {
-            if (string.Equals(value, "Consumption", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreCommitmentTierType.Consumption;
-            if (string.Equals(value, "Commitment_1TB", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreCommitmentTierType.Commitment1TB;
-            if (string.Equals(value, "Commitment_10TB", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreCommitmentTierType.Commitment10TB;
-            if (string.Equals(value, "Commitment_100TB", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreCommitmentTierType.Commitment100TB;
-            if (string.Equals(value, "Commitment_500TB", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreCommitmentTierType.Commitment500TB;
-            if (string.Equals(value, "Commitment_1PB", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreCommitmentTierType.Commitment1PB;
-            if (string.Equals(value, "Commitment_5PB", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreCommitmentTierType.Commitment5PB;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Consumption")) return DataLakeStoreCommitmentTierType.Consumption;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commitment_1TB")) return DataLakeStoreCommitmentTierType.Commitment1TB;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commitment_10TB")) return DataLakeStoreCommitmentTierType.Commitment10TB;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commitment_100TB")) return DataLakeStoreCommitmentTierType.Commitment100TB;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commitment_500TB")) return DataLakeStoreCommitmentTierType.Commitment500TB;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commitment_1PB")) return DataLakeStoreCommitmentTierType.Commitment1PB;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commitment_5PB")) return DataLakeStoreCommitmentTierType.Commitment5PB;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeStoreCommitmentTierType value.");
         }
     }

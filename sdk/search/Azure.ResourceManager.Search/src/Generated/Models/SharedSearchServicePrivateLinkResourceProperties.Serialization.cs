@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SharedSearchServicePrivateLinkResourceProperties DeserializeSharedSearchServicePrivateLinkResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> privateLinkResourceId = default;
             Optional<string> groupId = default;
             Optional<string> requestMessage = default;

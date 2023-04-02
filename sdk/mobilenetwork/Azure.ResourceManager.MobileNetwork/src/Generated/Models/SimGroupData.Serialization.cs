@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal static SimGroupData DeserializeSimGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

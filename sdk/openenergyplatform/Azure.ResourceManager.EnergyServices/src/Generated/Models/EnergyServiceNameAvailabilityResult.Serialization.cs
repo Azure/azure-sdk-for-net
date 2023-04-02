@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EnergyServices.Models
     {
         internal static EnergyServiceNameAvailabilityResult DeserializeEnergyServiceNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<EnergyServiceNameUnavailableReason> reason = default;
             Optional<string> message = default;

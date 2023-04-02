@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    /// <summary> A class representing the KpiResourceFormat data model. </summary>
+    /// <summary>
+    /// A class representing the KpiResourceFormat data model.
+    /// The KPI resource format.
+    /// </summary>
     public partial class KpiResourceFormatData : ResourceData
     {
         /// <summary> Initializes a new instance of KpiResourceFormatData. </summary>

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static BackupConfiguration DeserializeBackupConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SourceLocation> sourceLocation = default;
             Optional<TargetLocation> targetLocation = default;
             foreach (var property in element.EnumerateObject())

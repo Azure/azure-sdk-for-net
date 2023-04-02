@@ -13,7 +13,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the GovernanceRule data model. </summary>
+    /// <summary>
+    /// A class representing the GovernanceRule data model.
+    /// Security GovernanceRule over a given scope
+    /// </summary>
     public partial class GovernanceRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of GovernanceRuleData. </summary>

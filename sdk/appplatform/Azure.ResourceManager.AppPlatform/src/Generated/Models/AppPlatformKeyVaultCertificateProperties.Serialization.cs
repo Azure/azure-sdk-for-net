@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformKeyVaultCertificateProperties DeserializeAppPlatformKeyVaultCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri vaultUri = default;
             string keyVaultCertName = default;
             Optional<string> certVersion = default;

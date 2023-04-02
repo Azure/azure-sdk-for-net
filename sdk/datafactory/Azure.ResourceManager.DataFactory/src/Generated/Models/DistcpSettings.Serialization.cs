@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DistcpSettings DeserializeDistcpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData resourceManagerEndpoint = default;
             BinaryData tempScriptPath = default;
             Optional<BinaryData> distcpOptions = default;

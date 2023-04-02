@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ReplicationProtectedItemCollection DeserializeReplicationProtectedItemCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ReplicationProtectedItemData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

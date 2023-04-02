@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceProviderCapabilities DeserializeResourceProviderCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string quotaId = default;
             ResourceProviderCapabilitiesEffect effect = default;
             Optional<IList<string>> requiredFeatures = default;

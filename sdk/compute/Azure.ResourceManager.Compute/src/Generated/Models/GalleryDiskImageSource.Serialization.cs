@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryDiskImageSource DeserializeGalleryDiskImageSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> uri = default;
             Optional<ResourceIdentifier> storageAccountId = default;
             Optional<ResourceIdentifier> id = default;

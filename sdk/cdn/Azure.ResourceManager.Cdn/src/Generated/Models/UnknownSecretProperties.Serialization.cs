@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UnknownSecretProperties DeserializeUnknownSecretProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SecretType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

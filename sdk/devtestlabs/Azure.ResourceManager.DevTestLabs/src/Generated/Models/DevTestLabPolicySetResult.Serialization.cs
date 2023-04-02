@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static DevTestLabPolicySetResult DeserializeDevTestLabPolicySetResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> hasError = default;
             Optional<IReadOnlyList<DevTestLabPolicyViolation>> policyViolations = default;
             foreach (var property in element.EnumerateObject())

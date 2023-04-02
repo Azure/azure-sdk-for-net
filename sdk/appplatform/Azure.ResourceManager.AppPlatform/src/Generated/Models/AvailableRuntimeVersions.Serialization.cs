@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AvailableRuntimeVersions DeserializeAvailableRuntimeVersions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AppPlatformSupportedRuntimeVersion>> value = default;
             foreach (var property in element.EnumerateObject())
             {

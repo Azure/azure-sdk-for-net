@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsChatParticipantRemovedFromThreadWithUserEventData DeserializeAcsChatParticipantRemovedFromThreadWithUserEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> time = default;
             Optional<CommunicationIdentifierModel> removedByCommunicationIdentifier = default;
             Optional<AcsChatThreadParticipantProperties> participantRemoved = default;

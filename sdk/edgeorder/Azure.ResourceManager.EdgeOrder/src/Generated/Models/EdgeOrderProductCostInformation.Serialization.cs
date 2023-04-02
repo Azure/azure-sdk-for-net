@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static EdgeOrderProductCostInformation DeserializeEdgeOrderProductCostInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EdgeOrderProductBillingMeterDetails>> billingMeterDetails = default;
             Optional<Uri> billingInfoUrl = default;
             foreach (var property in element.EnumerateObject())

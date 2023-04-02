@@ -9,7 +9,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options for configuring the <see cref="VisualStudioCredential"/>.
     /// </summary>
-    public class VisualStudioCredentialOptions : TokenCredentialOptions
+    public class VisualStudioCredentialOptions : TokenCredentialOptions, ISupportsAdditionallyAllowedTenants
     {
         private string _tenantId;
 
@@ -27,7 +27,7 @@ namespace Azure.Identity
         /// Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the logged in account can access.
         /// If no value is specified for <see cref="TenantId"/>, this option will have no effect, and the credential will acquire tokens for any requested tenant.
         /// </summary>
-        public IList<string> AdditionallyAllowedTenants => AdditionallyAllowedTenantsCore;
+        public IList<string> AdditionallyAllowedTenants { get; internal set; } = new List<string>();
 
         /// <summary>
         /// The VisualStudio process timeout.

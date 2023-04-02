@@ -14,6 +14,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static PiiTaskResult DeserializePiiTaskResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PiiResult> results = default;
             foreach (var property in element.EnumerateObject())
             {

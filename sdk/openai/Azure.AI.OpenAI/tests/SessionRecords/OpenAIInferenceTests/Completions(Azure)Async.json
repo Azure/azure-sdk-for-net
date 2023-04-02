@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/text-davinci-002/completions?api-version=2023-03-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "61",
+        "Content-Type": "application/json",
+        "traceparent": "00-8b9d47f57f49a33ee73eb2de2a34b9e0-b087eab541f7c6e3-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "3696022627096d4a864a595cbc012ec2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world",
+          "running over the same old ground"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "51110ed0-4bc8-4b91-b701-9d5bf823271d",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Length": "395",
+        "Content-Type": "application/json",
+        "Date": "Tue, 21 Mar 2023 00:36:51 GMT",
+        "openai-model": "text-davinci-002",
+        "openai-processing-ms": "1588.9141",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3696022627096d4a864a595cbc012ec2",
+        "x-ms-region": "East US",
+        "X-Request-ID": "68c50a88-6509-4110-9f1e-db83c17c086f"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6wKHaKypoQRdRaMkbJdJy6mOz4NRq",
+        "object": "text_completion",
+        "created": 1679359010,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "!\u0027)\n",
+            "index": 0,
+            "finish_reason": "stop",
+            "logprobs": null
+          },
+          {
+            "text": "\u0022\u00A7\u0027,\n               check_command(\u0022git rebase master\u0022))\n\n\n",
+            "index": 1,
+            "finish_reason": "length",
+            "logprobs": null
+          }
+        ],
+        "usage": {
+          "completion_tokens": 19,
+          "prompt_tokens": 8,
+          "total_tokens": 27
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "1640192865"
+  }
+}

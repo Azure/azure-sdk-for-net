@@ -12,7 +12,10 @@ using Azure.ResourceManager.WorkloadMonitor.Models;
 
 namespace Azure.ResourceManager.WorkloadMonitor
 {
-    /// <summary> A class representing the HealthMonitorStateChange data model. </summary>
+    /// <summary>
+    /// A class representing the HealthMonitorStateChange data model.
+    /// Information about the monitor’s health state change at the provided timestamp.
+    /// </summary>
     public partial class HealthMonitorStateChangeData : ResourceData
     {
         /// <summary> Initializes a new instance of HealthMonitorStateChangeData. </summary>

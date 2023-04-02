@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicySnapShot DeserializeManagementPolicySnapShot(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateAfterCreation> tierToCool = default;
             Optional<DateAfterCreation> tierToArchive = default;
             Optional<DateAfterCreation> tierToCold = default;

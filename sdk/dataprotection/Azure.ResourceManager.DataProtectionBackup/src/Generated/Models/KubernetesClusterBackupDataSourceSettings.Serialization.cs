@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static KubernetesClusterBackupDataSourceSettings DeserializeKubernetesClusterBackupDataSourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool snapshotVolumes = default;
             bool includeClusterScopeResources = default;
             Optional<IList<string>> includedNamespaces = default;

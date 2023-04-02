@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static PacketCaptureQueryStatusResult DeserializePacketCaptureQueryStatusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<DateTimeOffset> captureStartTime = default;

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabVirtualMachineShutdownOnIdleMode ToLabVirtualMachineShutdownOnIdleMode(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineShutdownOnIdleMode.None;
-            if (string.Equals(value, "UserAbsence", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineShutdownOnIdleMode.UserAbsence;
-            if (string.Equals(value, "LowUsage", StringComparison.InvariantCultureIgnoreCase)) return LabVirtualMachineShutdownOnIdleMode.LowUsage;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return LabVirtualMachineShutdownOnIdleMode.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserAbsence")) return LabVirtualMachineShutdownOnIdleMode.UserAbsence;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LowUsage")) return LabVirtualMachineShutdownOnIdleMode.LowUsage;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabVirtualMachineShutdownOnIdleMode value.");
         }
     }

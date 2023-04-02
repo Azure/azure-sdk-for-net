@@ -116,6 +116,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ProviderRegistrationProperties DeserializeProviderRegistrationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProviderRegistrationPropertiesProviderHubMetadata> providerHubMetadata = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications> subscriptionLifecycleNotificationSpecifications = default;

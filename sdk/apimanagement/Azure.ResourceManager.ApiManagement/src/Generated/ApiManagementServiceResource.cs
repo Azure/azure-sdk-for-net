@@ -1153,21 +1153,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource" /> object. </returns>
         public virtual ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSetting()
         {
-            return new ApiManagementPortalSignInSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/signin"));
+            return new ApiManagementPortalSignInSettingResource(Client, Id.AppendChildResource("portalsettings", "signin"));
         }
 
         /// <summary> Gets an object representing a ApiManagementPortalSignUpSettingResource along with the instance operations that can be performed on it in the ApiManagementService. </summary>
         /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource" /> object. </returns>
         public virtual ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSetting()
         {
-            return new ApiManagementPortalSignUpSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/signup"));
+            return new ApiManagementPortalSignUpSettingResource(Client, Id.AppendChildResource("portalsettings", "signup"));
         }
 
         /// <summary> Gets an object representing a ApiManagementPortalDelegationSettingResource along with the instance operations that can be performed on it in the ApiManagementService. </summary>
         /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource" /> object. </returns>
         public virtual ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSetting()
         {
-            return new ApiManagementPortalDelegationSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/delegation"));
+            return new ApiManagementPortalDelegationSettingResource(Client, Id.AppendChildResource("portalsettings", "delegation"));
         }
 
         /// <summary> Gets a collection of ApiManagementPrivateEndpointConnectionResources in the ApiManagementService. </summary>

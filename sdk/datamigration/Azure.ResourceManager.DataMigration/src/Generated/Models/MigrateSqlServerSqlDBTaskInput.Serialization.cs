@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlDBTaskInput DeserializeMigrateSqlServerSqlDBTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<MigrateSqlServerSqlDBDatabaseInput> selectedDatabases = default;
             Optional<MigrationValidationOptions> validationOptions = default;
             Optional<string> startedOn = default;

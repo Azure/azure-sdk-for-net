@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlServerAdministratorListResult DeserializeMySqlServerAdministratorListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MySqlServerAdministratorData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

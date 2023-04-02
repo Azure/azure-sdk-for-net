@@ -47,6 +47,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static CategoricalVariable DeserializeCategoricalVariable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSeriesExpression value = default;
             Optional<TimeSeriesInterpolation> interpolation = default;
             Optional<IList<TimeSeriesAggregateCategory>> categories = default;

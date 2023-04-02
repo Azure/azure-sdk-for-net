@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CommitmentPlanAssociation DeserializeCommitmentPlanAssociation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> commitmentPlanId = default;
             Optional<string> commitmentPlanLocation = default;
             foreach (var property in element.EnumerateObject())

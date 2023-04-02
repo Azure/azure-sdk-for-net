@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         internal static ElasticSanVirtualNetworkRule DeserializeElasticSanVirtualNetworkRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             Optional<ElasticSanVirtualNetworkRuleAction> action = default;
             Optional<ElasticSanVirtualNetworkRuleState> state = default;

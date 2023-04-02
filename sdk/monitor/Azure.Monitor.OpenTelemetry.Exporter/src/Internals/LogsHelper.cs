@@ -31,25 +31,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             foreach (var logRecord in batchLogRecord)
             {
-                telemetryItem = new TelemetryItem(logRecord, resource, instrumentationKey);
-                if (logRecord.Exception != null)
+                try
                 {
-                    telemetryItem.Data = new MonitorBase
+                    telemetryItem = new TelemetryItem(logRecord, resource, instrumentationKey);
+                    if (logRecord.Exception != null)
                     {
-                        BaseType = "ExceptionData",
-                        BaseData = new TelemetryExceptionData(Version, logRecord),
-                    };
-                }
-                else
-                {
-                    telemetryItem.Data = new MonitorBase
+                        telemetryItem.Data = new MonitorBase
+                        {
+                            BaseType = "ExceptionData",
+                            BaseData = new TelemetryExceptionData(Version, logRecord),
+                        };
+                    }
+                    else
                     {
-                        BaseType = "MessageData",
-                        BaseData = new MessageData(Version, logRecord),
-                    };
-                }
+                        telemetryItem.Data = new MonitorBase
+                        {
+                            BaseType = "MessageData",
+                            BaseData = new MessageData(Version, logRecord),
+                        };
+                    }
 
-                telemetryItems.Add(telemetryItem);
+                    telemetryItems.Add(telemetryItem);
+                }
+                catch (Exception ex)
+                {
+                    AzureMonitorExporterEventSource.Log.WriteError("FailedToConvertLogRecord", ex);
+                }
             }
 
             return telemetryItems;
@@ -57,17 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static string? GetMessageAndSetProperties(LogRecord logRecord, IDictionary<string, string> properties)
         {
-            string? message = logRecord.FormattedMessage;
-
-            // Both logRecord.State and logRecord.StateValues will not be set at the same time for LogRecord.
-            // Either logRecord.State != null or logRecord.StateValues will be called.
-            if (logRecord.State != null)
-            {
-                if (logRecord.State is IReadOnlyCollection<KeyValuePair<string, object?>> stateDictionary)
-                {
-                    ExtractProperties(ref message, properties, stateDictionary);
-                }
-            }
+            string? message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
 
             if (logRecord.StateValues != null)
             {

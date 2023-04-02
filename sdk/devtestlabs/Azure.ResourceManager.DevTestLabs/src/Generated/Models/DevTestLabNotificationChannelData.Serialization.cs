@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.DevTestLabs
 
         internal static DevTestLabNotificationChannelData DeserializeDevTestLabNotificationChannelData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;

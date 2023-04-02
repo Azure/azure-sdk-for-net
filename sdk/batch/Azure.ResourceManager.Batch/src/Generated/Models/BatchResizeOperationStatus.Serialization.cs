@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static BatchResizeOperationStatus DeserializeBatchResizeOperationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> targetDedicatedNodes = default;
             Optional<int> targetLowPriorityNodes = default;
             Optional<TimeSpan> resizeTimeout = default;

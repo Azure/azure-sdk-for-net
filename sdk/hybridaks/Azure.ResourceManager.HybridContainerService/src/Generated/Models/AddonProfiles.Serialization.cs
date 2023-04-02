@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static AddonProfiles DeserializeAddonProfiles(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> config = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())

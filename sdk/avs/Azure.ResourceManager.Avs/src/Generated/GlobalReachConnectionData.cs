@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the GlobalReachConnection data model. </summary>
+    /// <summary>
+    /// A class representing the GlobalReachConnection data model.
+    /// A global reach connection resource
+    /// </summary>
     public partial class GlobalReachConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of GlobalReachConnectionData. </summary>

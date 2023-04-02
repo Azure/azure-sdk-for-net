@@ -59,10 +59,34 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("aadServicePrincipalObjectId"u8);
                 writer.WriteStringValue(AadServicePrincipalObjectId.Value);
             }
+            if (Optional.IsDefined(SoftwareAssuranceProperties))
+            {
+                writer.WritePropertyName("softwareAssuranceProperties"u8);
+                writer.WriteObjectValue(SoftwareAssuranceProperties);
+            }
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
                 writer.WriteObjectValue(DesiredProperties);
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("identity"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TypeIdentityType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(TypeIdentityType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            {
+                writer.WritePropertyName("userAssignedIdentities"u8);
+                writer.WriteStartObject();
+                foreach (var item in UserAssignedIdentities)
+                {
+                    writer.WritePropertyName(item.Key);
+                    JsonSerializer.Serialize(writer, item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -70,6 +94,10 @@ namespace Azure.ResourceManager.Hci
 
         internal static HciClusterData DeserializeHciClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -84,6 +112,7 @@ namespace Azure.ResourceManager.Hci
             Optional<Guid> aadTenantId = default;
             Optional<Guid> aadApplicationObjectId = default;
             Optional<Guid> aadServicePrincipalObjectId = default;
+            Optional<SoftwareAssuranceProperties> softwareAssuranceProperties = default;
             Optional<HciClusterDesiredProperties> desiredProperties = default;
             Optional<HciClusterReportedProperties> reportedProperties = default;
             Optional<float> trialDaysRemaining = default;
@@ -92,6 +121,11 @@ namespace Azure.ResourceManager.Hci
             Optional<DateTimeOffset> lastSyncTimestamp = default;
             Optional<DateTimeOffset> lastBillingTimestamp = default;
             Optional<string> serviceEndpoint = default;
+            Optional<string> resourceProviderObjectId = default;
+            Optional<Guid> principalId = default;
+            Optional<Guid> tenantId = default;
+            Optional<HciManagedServiceIdentityType> type0 = default;
+            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -223,6 +257,16 @@ namespace Azure.ResourceManager.Hci
                             aadServicePrincipalObjectId = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("softwareAssuranceProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            softwareAssuranceProperties = SoftwareAssuranceProperties.DeserializeSoftwareAssuranceProperties(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("desiredProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -293,11 +337,73 @@ namespace Azure.ResourceManager.Hci
                             serviceEndpoint = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("resourceProviderObjectId"u8))
+                        {
+                            resourceProviderObjectId = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("principalId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            principalId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("tenantId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            tenantId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("type"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            type0 = new HciManagedServiceIdentityType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("userAssignedIdentities"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property1.Value.GetRawText()));
+                            }
+                            userAssignedIdentities = dictionary;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new HciClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadApplicationObjectId), Optional.ToNullable(aadServicePrincipalObjectId), desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value);
+            return new HciClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadApplicationObjectId), Optional.ToNullable(aadServicePrincipalObjectId), softwareAssuranceProperties.Value, desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value, resourceProviderObjectId.Value, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type0), Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

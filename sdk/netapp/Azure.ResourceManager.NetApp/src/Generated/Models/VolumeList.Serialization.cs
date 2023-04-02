@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static VolumeList DeserializeVolumeList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NetAppVolumeData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

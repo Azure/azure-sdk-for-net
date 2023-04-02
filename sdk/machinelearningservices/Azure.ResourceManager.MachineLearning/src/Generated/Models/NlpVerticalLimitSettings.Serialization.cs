@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static NlpVerticalLimitSettings DeserializeNlpVerticalLimitSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxConcurrentTrials = default;
             Optional<int> maxTrials = default;
             Optional<TimeSpan> timeout = default;

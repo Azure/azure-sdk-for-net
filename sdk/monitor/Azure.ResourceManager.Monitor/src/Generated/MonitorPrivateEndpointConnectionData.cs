@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the MonitorPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the MonitorPrivateEndpointConnection data model.
+    /// The Private Endpoint Connection resource.
+    /// </summary>
     public partial class MonitorPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of MonitorPrivateEndpointConnectionData. </summary>

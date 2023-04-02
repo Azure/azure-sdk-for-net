@@ -20,13 +20,14 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
         {
             IgnoreTestInLiveMode();
         }
-
-        public bool IsTestTenant = false;
-        public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
-        public Dictionary<string, string> Tags { get; internal set; }
+        public WebPubHubServiceClientTestBase(bool isAsync, RecordedTestMode mode)
+        : base(isAsync, mode)
+        {
+            IgnoreTestInLiveMode();
+        }
 
         public ArmClient ArmClient { get; set; }
-
+        protected AzureLocation DefaultLocation = AzureLocation.WestUS2;
         public SubscriptionResource Subscription
         {
             get

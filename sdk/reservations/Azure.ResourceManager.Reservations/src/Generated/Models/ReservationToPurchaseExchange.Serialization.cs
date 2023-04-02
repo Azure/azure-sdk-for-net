@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationToPurchaseExchange DeserializeReservationToPurchaseExchange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> reservationOrderId = default;
             Optional<ResourceIdentifier> reservationId = default;
             Optional<ReservationPurchaseContent> properties = default;

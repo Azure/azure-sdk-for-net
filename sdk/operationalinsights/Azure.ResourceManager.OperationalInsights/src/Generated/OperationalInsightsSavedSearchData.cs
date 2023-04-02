@@ -14,7 +14,10 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the OperationalInsightsSavedSearch data model. </summary>
+    /// <summary>
+    /// A class representing the OperationalInsightsSavedSearch data model.
+    /// Value object for saved search results.
+    /// </summary>
     public partial class OperationalInsightsSavedSearchData : ResourceData
     {
         /// <summary> Initializes a new instance of OperationalInsightsSavedSearchData. </summary>

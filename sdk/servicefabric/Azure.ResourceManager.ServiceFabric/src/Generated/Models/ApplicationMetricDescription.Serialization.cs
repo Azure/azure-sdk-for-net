@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ApplicationMetricDescription DeserializeApplicationMetricDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<long> maximumCapacity = default;
             Optional<long> reservationCapacity = default;

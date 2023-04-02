@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static O365PolicyProperties DeserializeO365PolicyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<O365BreakOutCategoryPolicies> breakOutCategories = default;
             foreach (var property in element.EnumerateObject())
             {

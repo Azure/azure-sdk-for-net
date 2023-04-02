@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing the VirtualApplicationGroup data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualApplicationGroup data model.
+    /// Represents a ApplicationGroup definition.
+    /// </summary>
     public partial class VirtualApplicationGroupData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualApplicationGroupData. </summary>

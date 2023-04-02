@@ -12,7 +12,10 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    /// <summary> A class representing the CloudEndpoint data model. </summary>
+    /// <summary>
+    /// A class representing the CloudEndpoint data model.
+    /// Cloud Endpoint object.
+    /// </summary>
     public partial class CloudEndpointData : ResourceData
     {
         /// <summary> Initializes a new instance of CloudEndpointData. </summary>

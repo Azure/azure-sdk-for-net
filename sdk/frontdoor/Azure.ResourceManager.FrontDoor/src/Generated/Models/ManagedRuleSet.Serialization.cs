@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static ManagedRuleSet DeserializeManagedRuleSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleSetType = default;
             string ruleSetVersion = default;
             Optional<ManagedRuleSetActionType> ruleSetAction = default;

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> Returns a <see cref="AppPlatformConfigServerResource" /> object. </returns>
         public virtual AppPlatformConfigServerResource GetAppPlatformConfigServer()
         {
-            return new AppPlatformConfigServerResource(Client, new ResourceIdentifier(Id.ToString() + "/configServers/default"));
+            return new AppPlatformConfigServerResource(Client, Id.AppendChildResource("configServers", "default"));
         }
 
         /// <summary> Gets a collection of AppPlatformConfigurationServiceResources in the AppPlatformService. </summary>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> Returns a <see cref="AppPlatformMonitoringSettingResource" /> object. </returns>
         public virtual AppPlatformMonitoringSettingResource GetAppPlatformMonitoringSetting()
         {
-            return new AppPlatformMonitoringSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/monitoringSettings/default"));
+            return new AppPlatformMonitoringSettingResource(Client, Id.AppendChildResource("monitoringSettings", "default"));
         }
 
         /// <summary> Gets a collection of AppPlatformAppResources in the AppPlatformService. </summary>

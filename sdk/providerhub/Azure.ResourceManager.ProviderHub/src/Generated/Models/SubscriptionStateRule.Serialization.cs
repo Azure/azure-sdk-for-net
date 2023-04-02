@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static SubscriptionStateRule DeserializeSubscriptionStateRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SubscriptionState> state = default;
             Optional<IList<string>> allowedActions = default;
             foreach (var property in element.EnumerateObject())

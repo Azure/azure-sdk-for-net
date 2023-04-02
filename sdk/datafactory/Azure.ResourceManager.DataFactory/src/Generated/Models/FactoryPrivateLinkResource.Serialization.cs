@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryPrivateLinkResource DeserializeFactoryPrivateLinkResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryPrivateLinkResourceProperties> properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

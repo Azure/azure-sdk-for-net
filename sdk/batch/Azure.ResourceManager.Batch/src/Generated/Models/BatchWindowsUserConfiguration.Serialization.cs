@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchWindowsUserConfiguration DeserializeBatchWindowsUserConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BatchWindowsLoginMode> loginMode = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    /// <summary> A class representing the BatchPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the BatchPrivateEndpointConnection data model.
+    /// Contains information about a private link resource.
+    /// </summary>
     public partial class BatchPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of BatchPrivateEndpointConnectionData. </summary>

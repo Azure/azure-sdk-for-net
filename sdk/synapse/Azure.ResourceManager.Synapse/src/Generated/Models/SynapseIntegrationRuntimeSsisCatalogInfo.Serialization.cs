@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseIntegrationRuntimeSsisCatalogInfo DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> catalogServerEndpoint = default;
             Optional<string> catalogAdminUserName = default;
             Optional<SynapseSecureString> catalogAdminPassword = default;

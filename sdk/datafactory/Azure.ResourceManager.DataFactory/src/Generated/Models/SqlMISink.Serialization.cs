@@ -166,6 +166,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlMISink DeserializeSqlMISink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> sqlWriterStoredProcedureName = default;
             Optional<BinaryData> sqlWriterTableType = default;
             Optional<BinaryData> preCopyScript = default;

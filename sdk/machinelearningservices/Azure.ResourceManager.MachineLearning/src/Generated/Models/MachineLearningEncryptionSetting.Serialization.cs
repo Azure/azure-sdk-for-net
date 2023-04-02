@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningEncryptionSetting DeserializeMachineLearningEncryptionSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningEncryptionStatus status = default;
             Optional<MachineLearningCmkIdentity> identity = default;
             MachineLearningEncryptionKeyVaultProperties keyVaultProperties = default;

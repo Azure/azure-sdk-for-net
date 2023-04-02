@@ -22,14 +22,6 @@ namespace Azure.Communication.CallAutomation
             return new TransferCallToParticipantResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of RemoveParticipantsResult. </summary>
-        /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallAutomation.RemoveParticipantsResult"/> instance for mocking. </returns>
-        public static RemoveParticipantsResult RemoveParticipantsResult(string operationContext = null)
-        {
-            return new RemoveParticipantsResult(operationContext);
-        }
-
         /// <summary> Initializes a new instance of MuteParticipantsResponse. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.MuteParticipantsResponse"/> instance for mocking. </returns>

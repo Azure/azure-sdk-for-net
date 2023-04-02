@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryPlatformProperties DeserializeContainerRegistryPlatformProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ContainerRegistryOS os = default;
             Optional<ContainerRegistryOSArchitecture> architecture = default;
             Optional<ContainerRegistryCpuVariant> variant = default;

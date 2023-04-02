@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ClientPortMatchCondition DeserializeClientPortMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ClientPortMatchConditionType typeName = default;
             ClientPortOperator @operator = default;
             Optional<bool> negateCondition = default;

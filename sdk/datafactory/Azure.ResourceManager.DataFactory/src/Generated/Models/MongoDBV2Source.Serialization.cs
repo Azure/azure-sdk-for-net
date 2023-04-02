@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MongoDBV2Source DeserializeMongoDBV2Source(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> filter = default;
             Optional<MongoDBCursorMethodsProperties> cursorMethods = default;
             Optional<BinaryData> batchSize = default;

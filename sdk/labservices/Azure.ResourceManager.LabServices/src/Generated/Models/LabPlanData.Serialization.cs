@@ -85,6 +85,10 @@ namespace Azure.ResourceManager.LabServices
 
         internal static LabPlanData DeserializeLabPlanData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.DeploymentManager
 
         internal static ServiceUnitResourceData DeserializeServiceUnitResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;

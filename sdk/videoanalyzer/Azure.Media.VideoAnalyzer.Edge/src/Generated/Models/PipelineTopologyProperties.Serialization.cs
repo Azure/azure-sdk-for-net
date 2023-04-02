@@ -66,6 +66,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static PipelineTopologyProperties DeserializePipelineTopologyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<IList<ParameterDeclaration>> parameters = default;
             Optional<IList<SourceNodeBase>> sources = default;

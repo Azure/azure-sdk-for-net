@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12MessageFilter DeserializeX12MessageFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MessageFilterType messageFilterType = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static SoftwareUpdateConfigurationTargetProperties DeserializeSoftwareUpdateConfigurationTargetProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AzureQueryProperties>> azureQueries = default;
             Optional<IList<NonAzureQueryProperties>> nonAzureQueries = default;
             foreach (var property in element.EnumerateObject())

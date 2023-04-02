@@ -45,6 +45,8 @@ namespace Azure.Messaging.EventHubs
         ///   identifier.
         /// </summary>
         ///
+        /// <value>If not specified, a random unique identifier will be generated.</value>
+        ///
         public string Identifier { get; set; }
 
         /// <summary>
@@ -52,7 +54,10 @@ namespace Azure.Messaging.EventHubs
         ///   associated with a given event, and track that information as events are received.
         /// </summary>
         ///
-        /// <value><c>true</c> if information about a partition's last event should be requested and tracked; otherwise, <c>false</c>.</value>
+        /// <value>
+        ///   <c>true</c> if information about a partition's last event should be requested and tracked; otherwise, <c>false</c>.  The
+        ///   default value is <c>true</c>.
+        /// </value>
         ///
         /// <remarks>
         ///   When information about a partition's last enqueued event is being tracked, each event received from the Event Hubs
@@ -69,7 +74,7 @@ namespace Azure.Messaging.EventHubs
         ///   other event processors.
         /// </summary>
         ///
-        /// <value>If not specified, the <see cref="LoadBalancingStrategy.Greedy" /> strategy will be used.</value>
+        /// <value>The default strategy is <see cref="LoadBalancingStrategy.Greedy" />.</value>
         ///
         /// <seealso cref="Processor.LoadBalancingStrategy" />
         ///
@@ -119,6 +124,8 @@ namespace Azure.Messaging.EventHubs
         ///   The <see cref="CacheEventCount" /> is a control that developers can use to help tune performance for the specific
         ///   needs of an application, given its expected size of events, throughput needs, and expected scenarios for using
         ///   Event Hubs.
+        ///
+        ///   The default cache count is 100.
         /// </value>
         ///
         /// <remarks>
@@ -159,6 +166,8 @@ namespace Azure.Messaging.EventHubs
         ///   The <see cref="PrefetchCount" /> is a control that developers can use to help tune performance for the specific
         ///   needs of an application, given its expected size of events, throughput needs, and expected scenarios for using
         ///   Event Hubs.
+        ///
+        ///   The default prefetch count is 300.
         /// </value>
         ///
         /// <remarks>
@@ -205,6 +214,8 @@ namespace Azure.Messaging.EventHubs
         ///   smaller than the number of bytes specified, and will always contain at least one event when the <see cref="PrefetchSizeInBytes" />
         ///   is specified.  A heuristic is used to predict the average event size to use for size calculations, which should be expected to fluctuate
         ///   as traffic passes through the system.  Consequently, the resulting resource use will fluctuate as well.</para>
+        ///
+        ///   <para>This option is disabled by default with the value set to <c>null</c>.</para>
         /// </value>
         ///
         /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested size is negative.</exception>
@@ -227,7 +238,7 @@ namespace Azure.Messaging.EventHubs
         ///   The desired amount of time to allow between load balancing verification attempts.
         /// </summary>
         ///
-        /// <value>If not specified, a load balancing interval of 30 seconds will be assumed.</value>
+        /// <value>The default load balancing interval is 30 seconds.</value>
         ///
         /// <remarks>
         ///   Because load balancing holds less priority than processing events, this interval
@@ -254,7 +265,7 @@ namespace Azure.Messaging.EventHubs
         ///   requested by another event processor that wishes to assume responsibility for processing it.
         /// </summary>
         ///
-        /// <value>If not specified, an ownership interval of 2 minutes will be assumed.</value>
+        /// <value>The default ownership interval is 2 minutes.</value>
         ///
         /// <remarks>
         ///   As a general guideline, it is advised that this value be greater than the configured

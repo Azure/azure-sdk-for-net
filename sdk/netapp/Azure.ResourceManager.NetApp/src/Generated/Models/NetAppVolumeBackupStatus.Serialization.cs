@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppVolumeBackupStatus DeserializeNetAppVolumeBackupStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> healthy = default;
             Optional<NetAppRelationshipStatus> relationshipStatus = default;
             Optional<NetAppMirrorState> mirrorState = default;

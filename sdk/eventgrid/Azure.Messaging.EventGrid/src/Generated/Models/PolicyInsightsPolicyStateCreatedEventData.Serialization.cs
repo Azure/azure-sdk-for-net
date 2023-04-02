@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static PolicyInsightsPolicyStateCreatedEventData DeserializePolicyInsightsPolicyStateCreatedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> policyAssignmentId = default;
             Optional<string> policyDefinitionId = default;

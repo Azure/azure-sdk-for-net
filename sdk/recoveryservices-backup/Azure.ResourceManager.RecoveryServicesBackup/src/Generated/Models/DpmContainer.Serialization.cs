@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UpgradeAvailable))
+            if (Optional.IsDefined(IsUpgradeAvailable))
             {
                 writer.WritePropertyName("upgradeAvailable"u8);
-                writer.WriteBooleanValue(UpgradeAvailable.Value);
+                writer.WriteBooleanValue(IsUpgradeAvailable.Value);
             }
             if (Optional.IsDefined(ProtectionStatus))
             {
@@ -93,11 +93,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DpmContainer DeserializeDpmContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("containerType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupServerContainer": return AzureBackupServerContainer.DeserializeAzureBackupServerContainer(element);
+                    case "AzureBackupServerContainer": return BackupServerContainer.DeserializeBackupServerContainer(element);
                 }
             }
             Optional<bool> canReRegister = default;

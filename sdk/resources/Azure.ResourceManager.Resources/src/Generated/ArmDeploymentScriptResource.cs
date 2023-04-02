@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ScriptLogResource" /> object. </returns>
         public virtual ScriptLogResource GetScriptLog()
         {
-            return new ScriptLogResource(Client, new ResourceIdentifier(Id.ToString() + "/logs/default"));
+            return new ScriptLogResource(Client, Id.AppendChildResource("logs", "default"));
         }
 
         /// <summary>

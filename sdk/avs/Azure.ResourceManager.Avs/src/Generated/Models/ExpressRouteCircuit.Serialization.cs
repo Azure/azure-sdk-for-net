@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static ExpressRouteCircuit DeserializeExpressRouteCircuit(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primarySubnet = default;
             Optional<string> secondarySubnet = default;
             Optional<ResourceIdentifier> expressRouteId = default;

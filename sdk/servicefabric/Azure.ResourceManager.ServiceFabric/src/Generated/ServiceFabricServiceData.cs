@@ -13,7 +13,10 @@ using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    /// <summary> A class representing the ServiceFabricService data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceFabricService data model.
+    /// The service resource.
+    /// </summary>
     public partial class ServiceFabricServiceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceFabricServiceData. </summary>

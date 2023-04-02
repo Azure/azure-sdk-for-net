@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
@@ -12,6 +13,7 @@ using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Synapse.Tests
@@ -22,6 +24,7 @@ namespace Azure.ResourceManager.Synapse.Tests
         protected SubscriptionResource DefaultSubscription { get; private set; }
         protected CommonTestFixture CommonData { get; private set; }
         protected ResourceGroupResource ResourceGroup { get; private set; }
+        protected SynapseWorkspaceResource WorkspaceResource { get; private set; }
 
         protected SynapseManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -51,6 +54,12 @@ namespace Azure.ResourceManager.Synapse.Tests
             CommonData.StorageAccountKey = await CreateStorageAccount(CommonData.ResourceGroupName, CommonData.StorageAccountName, CommonData.Location);
         }
 
+        protected async Task CreateWorkspace()
+        {
+            // create workspace
+            WorkspaceResource = await CreateWorkspaceResource();
+        }
+
         protected async Task<ResourceGroupResource> CreateResourceGroup(string resourceGroupName, AzureLocation location)
         {
             ArmOperation<ResourceGroupResource> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
@@ -78,6 +87,19 @@ namespace Azure.ResourceManager.Synapse.Tests
             CommonData.DefaultDataLakeStorageAccountUrl = account.Data.PrimaryEndpoints.DfsUri;
 
             return accessKey;
+        }
+
+        /// <summary>
+        /// create Synapse workspace Resource
+        /// </summary>
+        /// <returns></returns>
+        protected async Task<SynapseWorkspaceResource> CreateWorkspaceResource()
+        {
+            string workspaceName = Recording.GenerateAssetName("synapsesdkworkspace");
+            var createWorkspaceParams = CommonData.PrepareWorkspaceCreateParams();
+            SynapseWorkspaceCollection workspaceCollection = ResourceGroup.GetSynapseWorkspaces();
+            var workspace = (await workspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, createWorkspaceParams)).Value;
+            return workspace;
         }
 
         /// <summary>
@@ -111,10 +133,10 @@ namespace Azure.ResourceManager.Synapse.Tests
                 AutoScaleMinNodeCount = 3,
                 AutoScaleMaxNodeCount = 6,
                 AutoPauseDelayInMinute = 15,
-                StartIpAddress = "0.0.0.0",
-                EndIpAddress = "255.255.255.255",
-                UpdatedStartIpAddress = "10.0.0.0",
-                UpdatedEndIpAddress = "255.0.0.0",
+                StartIpAddress = IPAddress.Parse("0.0.0.0"),
+                EndIpAddress = IPAddress.Parse("255.255.255.255"),
+                UpdatedStartIpAddress = IPAddress.Parse("10.0.0.0"),
+                UpdatedEndIpAddress = IPAddress.Parse("255.0.0.0"),
                 KustoSku = new SynapseDataSourceSku(SynapseSkuName.StorageOptimized, KustoPoolSkuSize.Medium),
                 UpdatedKustoSku = new SynapseDataSourceSku(SynapseSkuName.StorageOptimized, KustoPoolSkuSize.Large),
                 SoftDeletePeriod = TimeSpan.FromDays(4),

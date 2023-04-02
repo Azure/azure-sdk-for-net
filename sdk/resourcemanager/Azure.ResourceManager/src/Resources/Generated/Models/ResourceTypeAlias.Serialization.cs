@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<ResourceTypeAliasPath>> paths = default;
             Optional<ResourceTypeAliasType> type = default;

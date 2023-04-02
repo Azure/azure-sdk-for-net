@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Grafana
 {
-    /// <summary> A class representing the ManagedGrafana data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedGrafana data model.
+    /// The grafana resource type.
+    /// </summary>
     public partial class ManagedGrafanaData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedGrafanaData. </summary>

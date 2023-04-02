@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoKeyVaultProperties DeserializeKustoKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyName = default;
             Optional<string> keyVersion = default;
             Optional<Uri> keyVaultUri = default;

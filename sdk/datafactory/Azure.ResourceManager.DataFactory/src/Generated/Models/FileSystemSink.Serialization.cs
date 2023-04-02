@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FileSystemSink DeserializeFileSystemSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> copyBehavior = default;
             string type = default;
             Optional<BinaryData> writeBatchSize = default;

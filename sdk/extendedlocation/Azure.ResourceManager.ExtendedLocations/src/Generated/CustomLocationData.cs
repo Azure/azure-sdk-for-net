@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ExtendedLocations
 {
-    /// <summary> A class representing the CustomLocation data model. </summary>
+    /// <summary>
+    /// A class representing the CustomLocation data model.
+    /// Custom Locations definition.
+    /// </summary>
     public partial class CustomLocationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CustomLocationData. </summary>

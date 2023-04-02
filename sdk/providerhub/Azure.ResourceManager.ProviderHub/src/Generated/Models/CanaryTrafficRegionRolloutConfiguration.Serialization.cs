@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CanaryTrafficRegionRolloutConfiguration DeserializeCanaryTrafficRegionRolloutConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> skipRegions = default;
             Optional<IList<string>> regions = default;
             foreach (var property in element.EnumerateObject())

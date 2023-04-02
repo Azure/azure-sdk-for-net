@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
 
         internal static ManagedServicesPlan DeserializeManagedServicesPlan(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string publisher = default;
             string product = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         internal static MessageCountDetails DeserializeMessageCountDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> activeMessageCount = default;
             Optional<long> deadLetterMessageCount = default;
             Optional<long> scheduledMessageCount = default;

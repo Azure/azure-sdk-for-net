@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AutoHealCustomAction DeserializeAutoHealCustomAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> exe = default;
             Optional<string> parameters = default;
             foreach (var property in element.EnumerateObject())

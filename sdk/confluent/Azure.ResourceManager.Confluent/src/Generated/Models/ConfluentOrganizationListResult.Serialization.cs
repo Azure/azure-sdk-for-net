@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Confluent.Models
     {
         internal static ConfluentOrganizationListResult DeserializeConfluentOrganizationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ConfluentOrganizationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

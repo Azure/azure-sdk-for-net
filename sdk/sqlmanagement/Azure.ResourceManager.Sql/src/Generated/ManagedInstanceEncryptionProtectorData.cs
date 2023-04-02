@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedInstanceEncryptionProtector data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedInstanceEncryptionProtector data model.
+    /// The managed instance encryption protector.
+    /// </summary>
     public partial class ManagedInstanceEncryptionProtectorData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceEncryptionProtectorData. </summary>

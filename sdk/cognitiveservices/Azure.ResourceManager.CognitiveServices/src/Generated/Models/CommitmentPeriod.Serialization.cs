@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CommitmentPeriod DeserializeCommitmentPeriod(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tier = default;
             Optional<int> count = default;
             Optional<CommitmentQuota> quota = default;

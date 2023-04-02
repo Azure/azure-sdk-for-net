@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static AzureToAzureVmSyncedConfigDetails DeserializeAzureToAzureVmSyncedConfigDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             Optional<IReadOnlyList<InputEndpoint>> inputEndpoints = default;
             foreach (var property in element.EnumerateObject())

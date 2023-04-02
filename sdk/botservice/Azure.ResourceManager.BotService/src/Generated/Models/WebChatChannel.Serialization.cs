@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static WebChatChannel DeserializeWebChatChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WebChatChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;

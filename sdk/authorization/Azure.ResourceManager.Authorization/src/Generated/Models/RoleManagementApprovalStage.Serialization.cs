@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementApprovalStage DeserializeRoleManagementApprovalStage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> approvalStageTimeOutInDays = default;
             Optional<bool> isApproverJustificationRequired = default;
             Optional<int> escalationTimeInMinutes = default;

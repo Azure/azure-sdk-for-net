@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     {
         internal static ResourceQueryResult DeserializeResourceQueryResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             long totalRecords = default;
             long count = default;
             ResultTruncated resultTruncated = default;

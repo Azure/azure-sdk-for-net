@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static PublicNetworkAcls DeserializePublicNetworkAcls(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WebPubSubRequestType>> allow = default;
             Optional<IList<WebPubSubRequestType>> deny = default;
             foreach (var property in element.EnumerateObject())

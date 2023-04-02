@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         internal static EmissionPoliciesPropertiesFormat DeserializeEmissionPoliciesPropertiesFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EmissionType> emissionType = default;
             Optional<IList<EmissionPolicyDestination>> emissionDestinations = default;
             foreach (var property in element.EnumerateObject())

@@ -14,7 +14,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseKustoPool data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseKustoPool data model.
+    /// Class representing a Kusto kusto pool.
+    /// </summary>
     public partial class SynapseKustoPoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SynapseKustoPoolData. </summary>

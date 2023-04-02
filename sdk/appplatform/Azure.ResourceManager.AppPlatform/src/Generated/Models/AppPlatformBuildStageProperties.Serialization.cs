@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformBuildStageProperties DeserializeAppPlatformBuildStageProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<KPackBuildStageProvisioningState> status = default;
             foreach (var property in element.EnumerateObject())

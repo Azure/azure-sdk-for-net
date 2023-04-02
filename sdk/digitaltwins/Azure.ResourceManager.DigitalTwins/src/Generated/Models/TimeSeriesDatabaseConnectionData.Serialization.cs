@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DigitalTwins
 
         internal static TimeSeriesDatabaseConnectionData DeserializeTimeSeriesDatabaseConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSeriesDatabaseConnectionProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

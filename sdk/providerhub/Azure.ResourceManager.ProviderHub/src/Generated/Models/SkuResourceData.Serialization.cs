@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ProviderHub
 
         internal static SkuResourceData DeserializeSkuResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SkuResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

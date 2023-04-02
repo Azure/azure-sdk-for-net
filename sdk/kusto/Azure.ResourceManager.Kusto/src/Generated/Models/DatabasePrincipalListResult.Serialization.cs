@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static DatabasePrincipalListResult DeserializeDatabasePrincipalListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<KustoDatabasePrincipal>> value = default;
             foreach (var property in element.EnumerateObject())
             {

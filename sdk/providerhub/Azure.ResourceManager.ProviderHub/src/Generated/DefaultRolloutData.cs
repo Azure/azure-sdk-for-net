@@ -11,7 +11,10 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    /// <summary> A class representing the DefaultRollout data model. </summary>
+    /// <summary>
+    /// A class representing the DefaultRollout data model.
+    /// Default rollout definition.
+    /// </summary>
     public partial class DefaultRolloutData : ResourceData
     {
         /// <summary> Initializes a new instance of DefaultRolloutData. </summary>

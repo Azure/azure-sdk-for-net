@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static EventHubsNspAccessRuleProperties DeserializeEventHubsNspAccessRuleProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventHubsNspAccessRuleDirection> direction = default;
             Optional<IReadOnlyList<string>> addressPrefixes = default;
             Optional<IReadOnlyList<SubResource>> subscriptions = default;

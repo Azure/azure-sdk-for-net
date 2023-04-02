@@ -87,6 +87,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SharePointOnlineListSource DeserializeSharePointOnlineListSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> query = default;
             Optional<BinaryData> httpRequestTimeout = default;
             string type = default;

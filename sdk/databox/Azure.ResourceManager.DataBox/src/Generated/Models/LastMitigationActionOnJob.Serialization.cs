@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static LastMitigationActionOnJob DeserializeLastMitigationActionOnJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> actionDateTimeInUtc = default;
             Optional<bool> isPerformedByCustomer = default;
             Optional<CustomerResolutionCode> customerResolution = default;

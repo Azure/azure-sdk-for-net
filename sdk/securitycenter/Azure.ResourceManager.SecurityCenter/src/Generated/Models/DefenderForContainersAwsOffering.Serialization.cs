@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForContainersAwsOffering DeserializeDefenderForContainersAwsOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DefenderForContainersAwsOfferingKubernetesService> kubernetesService = default;
             Optional<DefenderForContainersAwsOfferingKubernetesScubaReader> kubernetesScubaReader = default;
             Optional<DefenderForContainersAwsOfferingCloudWatchToKinesis> cloudWatchToKinesis = default;

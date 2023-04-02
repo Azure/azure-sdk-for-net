@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheDirectorySettings DeserializeStorageCacheDirectorySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageCacheActiveDirectorySettings> activeDirectory = default;
             Optional<StorageCacheUsernameDownloadSettings> usernameDownload = default;
             foreach (var property in element.EnumerateObject())

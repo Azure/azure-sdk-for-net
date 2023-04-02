@@ -27,6 +27,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <value>
         ///   A value that can be used to identify events that should be published to the same partition.  If <c>null</c>,
         ///   the events will either respect the specified <see cref="PartitionId" /> or be automatically assigned to a partition.
+        ///
+        ///   The default partition key value is <c>null</c>.
         /// </value>
         ///
         /// <remarks>
@@ -46,6 +48,8 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <value>
         ///   The identifier of the desired partition to assign for the events, if <c>null</c>, the events will be
         ///   automatically assigned to a partition.
+        ///
+        ///   The default partition identifier value is <c>null</c>.
         /// </value>
         ///
         /// <remarks>

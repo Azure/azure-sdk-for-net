@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static PyTorchDistributionConfiguration DeserializePyTorchDistributionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> processCountPerInstance = default;
             DistributionType distributionType = default;
             foreach (var property in element.EnumerateObject())

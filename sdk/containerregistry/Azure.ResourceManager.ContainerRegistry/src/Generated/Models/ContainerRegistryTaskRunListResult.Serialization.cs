@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryTaskRunListResult DeserializeContainerRegistryTaskRunListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ContainerRegistryTaskRunData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

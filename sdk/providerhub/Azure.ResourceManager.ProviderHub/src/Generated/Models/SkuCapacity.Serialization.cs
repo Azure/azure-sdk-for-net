@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static SkuCapacity DeserializeSkuCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int minimum = default;
             Optional<int> maximum = default;
             Optional<int> @default = default;

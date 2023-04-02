@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static StorageSpacesProperties DeserializeStorageSpacesProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageSpacesPropertiesHciStorageProfile> hciStorageProfile = default;
             Optional<StorageSpacesPropertiesVmwareStorageProfile> vmwareStorageProfile = default;
             Optional<ProvisioningState> provisioningState = default;

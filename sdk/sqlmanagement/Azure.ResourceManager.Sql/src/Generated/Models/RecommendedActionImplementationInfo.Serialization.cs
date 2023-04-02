@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static RecommendedActionImplementationInfo DeserializeRecommendedActionImplementationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ImplementationMethod> method = default;
             Optional<string> script = default;
             foreach (var property in element.EnumerateObject())

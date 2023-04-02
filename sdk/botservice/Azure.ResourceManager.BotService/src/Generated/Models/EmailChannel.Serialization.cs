@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static EmailChannel DeserializeEmailChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EmailChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;

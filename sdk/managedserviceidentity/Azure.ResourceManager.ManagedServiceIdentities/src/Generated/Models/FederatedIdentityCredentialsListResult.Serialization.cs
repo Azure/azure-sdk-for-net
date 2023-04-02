@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
     {
         internal static FederatedIdentityCredentialsListResult DeserializeFederatedIdentityCredentialsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FederatedIdentityCredentialData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

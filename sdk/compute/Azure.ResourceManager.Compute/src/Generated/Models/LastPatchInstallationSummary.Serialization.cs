@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static LastPatchInstallationSummary DeserializeLastPatchInstallationSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PatchOperationStatus> status = default;
             Optional<string> installationActivityId = default;
             Optional<bool> maintenanceWindowExceeded = default;

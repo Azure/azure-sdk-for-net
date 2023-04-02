@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.AppConfiguration
 
         internal static AppConfigurationStoreData DeserializeAppConfigurationStoreData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             AppConfigurationSku sku = default;
             Optional<IDictionary<string, string>> tags = default;

@@ -22,6 +22,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static UnknownBaseResolution DeserializeUnknownBaseResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResolutionKind resolutionKind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

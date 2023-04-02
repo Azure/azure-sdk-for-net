@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceTwitterProvider DeserializeAppServiceTwitterProvider(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<TwitterRegistration> registration = default;
             foreach (var property in element.EnumerateObject())

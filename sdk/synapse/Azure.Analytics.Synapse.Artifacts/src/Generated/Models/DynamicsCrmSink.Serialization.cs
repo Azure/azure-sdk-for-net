@@ -68,6 +68,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DynamicsCrmSink DeserializeDynamicsCrmSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DynamicsSinkWriteBehavior writeBehavior = default;
             Optional<object> ignoreNullValues = default;
             Optional<object> alternateKeyName = default;

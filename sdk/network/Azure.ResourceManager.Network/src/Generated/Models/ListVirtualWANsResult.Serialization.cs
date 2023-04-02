@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ListVirtualWANsResult DeserializeListVirtualWANsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<VirtualWanData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

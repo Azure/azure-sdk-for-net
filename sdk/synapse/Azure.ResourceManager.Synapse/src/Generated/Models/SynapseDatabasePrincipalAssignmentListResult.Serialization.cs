@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseDatabasePrincipalAssignmentListResult DeserializeSynapseDatabasePrincipalAssignmentListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SynapseDatabasePrincipalAssignmentData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

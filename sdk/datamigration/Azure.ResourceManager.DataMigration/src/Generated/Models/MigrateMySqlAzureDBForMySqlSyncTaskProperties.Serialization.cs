@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateMySqlAzureDBForMySqlSyncTaskProperties DeserializeMigrateMySqlAzureDBForMySqlSyncTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigrateMySqlAzureDBForMySqlSyncTaskInput> input = default;
             Optional<IReadOnlyList<MigrateMySqlAzureDBForMySqlSyncTaskOutput>> output = default;
             TaskType taskType = default;

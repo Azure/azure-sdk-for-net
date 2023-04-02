@@ -30,6 +30,10 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static SymmetricKey DeserializeSymmetricKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             foreach (var property in element.EnumerateObject())

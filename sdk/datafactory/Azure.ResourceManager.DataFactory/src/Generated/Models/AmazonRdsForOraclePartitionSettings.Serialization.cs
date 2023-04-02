@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AmazonRdsForOraclePartitionSettings DeserializeAmazonRdsForOraclePartitionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> partitionNames = default;
             Optional<BinaryData> partitionColumnName = default;
             Optional<BinaryData> partitionUpperBound = default;

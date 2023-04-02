@@ -16,6 +16,8 @@ namespace Azure.Identity.Tests.Mock
         private Mock<EnvironmentCredential> mockEnvironmentCredential = new();
         public Action<Mock<AzureCliCredential>> OnCreateAzureCliCredential { get; set; }
         private Mock<AzureCliCredential> mockAzureCliCredential = new();
+        public Action<Mock<WorkloadIdentityCredential>> OnCreateWorkloadIdentityCredential { get; set; }
+        private Mock<WorkloadIdentityCredential> mockWorkloadIdentityCredential = new();
         public Action<Mock<ManagedIdentityCredential>> OnCreateManagedIdentityCredential { get; set; }
         private Mock<ManagedIdentityCredential> mockManagedIdentityCredential = new();
         public Action<Mock<AzureDeveloperCliCredential>> OnCreateAzureDeveloperCliCredential { get; set; }
@@ -35,6 +37,12 @@ namespace Azure.Identity.Tests.Mock
         {
             OnCreateEnvironmentCredential?.Invoke(mockEnvironmentCredential);
             return mockEnvironmentCredential.Object;
+        }
+
+        public override TokenCredential CreateWorkloadIdentityCredential()
+        {
+            OnCreateWorkloadIdentityCredential?.Invoke(mockWorkloadIdentityCredential);
+            return mockWorkloadIdentityCredential.Object;
         }
 
         public override TokenCredential CreateManagedIdentityCredential()

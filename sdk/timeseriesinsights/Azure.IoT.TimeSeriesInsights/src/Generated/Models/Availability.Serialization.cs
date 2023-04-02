@@ -16,6 +16,10 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static Availability DeserializeAvailability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeRange> range = default;
             Optional<TimeSpan> intervalSize = default;
             Optional<IReadOnlyDictionary<string, int>> distribution = default;

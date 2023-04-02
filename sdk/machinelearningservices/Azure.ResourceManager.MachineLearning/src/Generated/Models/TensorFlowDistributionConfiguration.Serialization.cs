@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TensorFlowDistributionConfiguration DeserializeTensorFlowDistributionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> parameterServerCount = default;
             Optional<int?> workerCount = default;
             DistributionType distributionType = default;

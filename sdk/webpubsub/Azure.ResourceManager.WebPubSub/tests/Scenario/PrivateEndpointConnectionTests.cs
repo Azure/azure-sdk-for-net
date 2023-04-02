@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.WebPubSub.Tests
     {
         private ResourceGroupResource _resourceGroup;
         private WebPubSubResource _webPubSub;
-        private VirtualNetworkResource _vnet;
         private string _vnetName;
         private string _privateEndPointName;
 
         private ResourceIdentifier _resourceGroupIdentifier;
+        private ResourceIdentifier _vnetId;
 
         public PrivateEndpointConnectionTests(bool isAsync) : base(isAsync)
         {
@@ -40,19 +40,29 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             _vnetName = SessionRecording.GenerateAssetName("Vnet-");
             _privateEndPointName = SessionRecording.GenerateAssetName("PrivateEndPoint-");
 
-            //create vnet
-            var vnetData = new VirtualNetworkData()
+            if (Mode == RecordedTestMode.Record)
             {
-                Location = "westus2",
-                Subnets =
+                using (SessionRecording.DisableRecording())
                 {
-                    new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
-                    new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicy = "Disabled", }
-                },
-            };
-            vnetData.AddressPrefixes.Add("10.10.0.0/16");
-            var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, _vnetName, vnetData);
-            _vnet = vnetLro.Value;
+                    //create vnet
+                    var vnetData = new VirtualNetworkData()
+                    {
+                        Location = DefaultLocation,
+                        Subnets =
+                    {
+                        new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
+                        new SubnetData() { Name = "subnet02", AddressPrefix = "10.10.2.0/24", PrivateEndpointNetworkPolicy = "Disabled", }
+                    },
+                    };
+                    vnetData.AddressPrefixes.Add("10.10.0.0/16");
+                    var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, _vnetName, vnetData);
+                    _vnetId = vnetLro.Value.Id;
+                }
+            }
+            else
+            {
+                _vnetId = VirtualNetworkResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Data.Name, _vnetName);
+            }
 
             await StopSessionRecordingAsync();
         }
@@ -62,6 +72,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             var client = GetArmClient();
             _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
+            _webPubSub = await CreateDefaultWebPubSub(Recording.GenerateAssetName("WebPubSub-"), DefaultLocation, _resourceGroup);
         }
 
         [TearDown]
@@ -81,31 +92,35 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         public async Task CreatePrivateEndpointConnection(string privateEndPointName)
         {
-            //create private endpoint (privateEndpoint of WebPubSUb will be generated automatically)
-            var privateEndPointData = new PrivateEndpointData()
+            if (Mode == RecordedTestMode.Record)
             {
-                Subnet = new SubnetData() { Id = new ResourceIdentifier($"{_vnet.Id}" + "/subnets/subnet02") },
-                Location = "westus2",
-                PrivateLinkServiceConnections =
+                using (Recording.DisableRecording())
                 {
-                    new NetworkPrivateLinkServiceConnection()
+                    //create private endpoint (privateEndpoint of WebPubSUb will be generated automatically)
+                    var privateEndPointData = new PrivateEndpointData()
                     {
-                        Name = privateEndPointName,
-                        PrivateLinkServiceId = _webPubSub.Data.Id,
-                        GroupIds = { "webpubsub" },
-                    }
-                },
-            };
-            var privateEndPointContainer = _resourceGroup.GetPrivateEndpoints();
-            var privateEndPointLro = await (await privateEndPointContainer.CreateOrUpdateAsync(WaitUntil.Completed, privateEndPointName, privateEndPointData)).WaitForCompletionAsync();
+                        Subnet = new SubnetData() { Id = new ResourceIdentifier($"{_vnetId}" + "/subnets/subnet02") },
+                        Location = "westus2",
+                        PrivateLinkServiceConnections =
+                        {
+                            new NetworkPrivateLinkServiceConnection()
+                            {
+                                Name = privateEndPointName,
+                                PrivateLinkServiceId = _webPubSub.Data.Id,
+                                GroupIds = { "webpubsub" },
+                            }
+                        },
+                    };
+                    var privateEndPointContainer = _resourceGroup.GetPrivateEndpoints();
+                    var privateEndPointLro = await (await privateEndPointContainer.CreateOrUpdateAsync(WaitUntil.Completed, privateEndPointName, privateEndPointData)).WaitForCompletionAsync();
+                }
+            }
         }
 
         [Test]
         [RecordedTest]
         public async Task Get()
         {
-            string webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
-            _webPubSub = await CreateDefaultWebPubSub(webPubSubName,AzureLocation.WestUS2, _resourceGroup);
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             var PrivateEndpointConnection = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAsync(list[0].Data.Name);
@@ -117,8 +132,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [RecordedTest]
         public async Task GetAll()
         {
-            string webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
-            _webPubSub = await CreateDefaultWebPubSub(webPubSubName,AzureLocation.WestUS2, _resourceGroup);
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
             await CreatePrivateEndpointConnection(_privateEndPointName);
@@ -130,8 +143,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [RecordedTest]
         public async Task CheckIfExist()
         {
-            string webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
-            _webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.True(await _webPubSub.GetWebPubSubPrivateEndpointConnections().ExistsAsync(list[0].Data.Name));
@@ -142,8 +153,6 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            string webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
-            _webPubSub = await CreateDefaultWebPubSub(webPubSubName, AzureLocation.WestUS2, _resourceGroup);
             await CreatePrivateEndpointConnection(_privateEndPointName);
             var list = await _webPubSub.GetWebPubSubPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, list.Count);

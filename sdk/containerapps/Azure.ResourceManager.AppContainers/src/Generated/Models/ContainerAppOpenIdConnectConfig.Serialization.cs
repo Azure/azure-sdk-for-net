@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppOpenIdConnectConfig DeserializeContainerAppOpenIdConnectConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> authorizationEndpoint = default;
             Optional<string> tokenEndpoint = default;
             Optional<string> issuer = default;

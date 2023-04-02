@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         internal static ManagedRuleDefinition DeserializeManagedRuleDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ruleId = default;
             Optional<ManagedRuleEnabledState> defaultState = default;
             Optional<RuleMatchActionType> defaultAction = default;

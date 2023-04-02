@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetTdeCertificatesSqlTaskProperties DeserializeGetTdeCertificatesSqlTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GetTdeCertificatesSqlTaskInput> input = default;
             Optional<IReadOnlyList<GetTdeCertificatesSqlTaskOutput>> output = default;
             TaskType taskType = default;

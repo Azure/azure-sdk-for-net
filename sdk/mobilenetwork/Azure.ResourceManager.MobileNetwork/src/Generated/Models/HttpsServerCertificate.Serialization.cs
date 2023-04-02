@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static HttpsServerCertificate DeserializeHttpsServerCertificate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri certificateUrl = default;
             Optional<CertificateProvisioning> provisioning = default;
             foreach (var property in element.EnumerateObject())

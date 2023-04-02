@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AseV3NetworkingConfigurationResource" /> object. </returns>
         public virtual AseV3NetworkingConfigurationResource GetAseV3NetworkingConfiguration()
         {
-            return new AseV3NetworkingConfigurationResource(Client, new ResourceIdentifier(Id.ToString() + "/configurations/networking"));
+            return new AseV3NetworkingConfigurationResource(Client, Id.AppendChildResource("configurations", "networking"));
         }
 
         /// <summary> Gets an object representing a HostingEnvironmentMultiRolePoolResource along with the instance operations that can be performed on it in the AppServiceEnvironment. </summary>
         /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePoolResource" /> object. </returns>
         public virtual HostingEnvironmentMultiRolePoolResource GetHostingEnvironmentMultiRolePool()
         {
-            return new HostingEnvironmentMultiRolePoolResource(Client, new ResourceIdentifier(Id.ToString() + "/multiRolePools/default"));
+            return new HostingEnvironmentMultiRolePoolResource(Client, Id.AppendChildResource("multiRolePools", "default"));
         }
 
         /// <summary> Gets a collection of HostingEnvironmentWorkerPoolResources in the AppServiceEnvironment. </summary>

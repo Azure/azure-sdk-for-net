@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorHttpConfiguration DeserializeConnectionMonitorHttpConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> port = default;
             Optional<NetworkHttpConfigurationMethod> method = default;
             Optional<string> path = default;

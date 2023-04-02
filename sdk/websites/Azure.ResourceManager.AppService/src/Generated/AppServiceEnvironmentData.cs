@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AppServiceEnvironment data model. </summary>
+    /// <summary>
+    /// A class representing the AppServiceEnvironment data model.
+    /// App Service Environment ARM resource.
+    /// </summary>
     public partial class AppServiceEnvironmentData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AppServiceEnvironmentData. </summary>

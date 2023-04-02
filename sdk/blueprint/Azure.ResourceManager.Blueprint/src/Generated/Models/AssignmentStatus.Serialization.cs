@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Blueprint.Models
     {
         internal static AssignmentStatus DeserializeAssignmentStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> managedResources = default;
             Optional<DateTimeOffset> timeCreated = default;
             Optional<DateTimeOffset> lastModified = default;

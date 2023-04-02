@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static SnapshotPolicyWeeklySchedule DeserializeSnapshotPolicyWeeklySchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> snapshotsToKeep = default;
             Optional<string> day = default;
             Optional<int> hour = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ChangeDirectoryDetail DeserializeChangeDirectoryDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ChangeDirectoryResult> reservationOrder = default;
             Optional<IReadOnlyList<ChangeDirectoryResult>> reservations = default;
             foreach (var property in element.EnumerateObject())

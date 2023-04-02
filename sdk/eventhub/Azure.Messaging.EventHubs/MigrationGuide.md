@@ -18,6 +18,7 @@ Familiarity with the `Microsoft.Azure.EventHubs` family of packages is assumed. 
   - [Reading events](#reading-events)
     - [From all partitions](#reading-events-from-all-partitions)
     - [From a single partition](#reading-events-from-a-single-partition)
+  - [Distributed tracing](#distributed-tracing)
 - [Migrating Event Processor checkpoints](#migrating-eventprocessorhost-checkpoints)
 - [Additional samples](#additional-samples)
 
@@ -747,6 +748,12 @@ finally
     await receiver.CloseAsync();
 }
 ```
+
+### Distributed tracing
+
+In `Microsoft.Azure.EventHubs`, the library would automatically flow [activity baggage](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity.baggage) via the `Correlation-Context` entry of the `EventData.Properties` dictionary. This would allow producers and consumers to correlate any information that was added to an Activity's baggage by an application.
+
+In `Azure.Messaging.EventHubs`, Activity baggage is not currently flowed through the event. Instead, when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/), `tracestate` can be used to correlate the [Activity.TraceStateString](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity.tracestatestring) between producers, consumers, and processors. The `tracestate` entry is populated in the `EventData.Properties` if the enclosing Activity has a non-null `TraceStateString`. In the future, we plan to add additional support for propagating context between producers, consumers, and processors.
 
 ## Migrating EventProcessorHost checkpoints
 

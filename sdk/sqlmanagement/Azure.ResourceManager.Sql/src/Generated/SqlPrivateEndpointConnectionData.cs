@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the SqlPrivateEndpointConnection data model.
+    /// A private endpoint connection
+    /// </summary>
     public partial class SqlPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlPrivateEndpointConnectionData. </summary>

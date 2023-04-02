@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,7 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2023-03-08)
+
+### Bugs Fixed
+
 - Custom defined entity models that implement `ITableEntity` explicitly will now be serialized properly ([#26514](https://github.com/Azure/azure-sdk-for-net/issues/26514))
+
+- Added support for parsing JSON bytes to `TableEntity` to support out-of-process language workers.
 
 ## 1.0.0 (2022-04-11)
 

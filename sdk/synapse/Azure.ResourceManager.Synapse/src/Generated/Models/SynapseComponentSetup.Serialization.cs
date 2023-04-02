@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseComponentSetup DeserializeSynapseComponentSetup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             string componentName = default;
             Optional<SynapseSecretBase> licenseKey = default;

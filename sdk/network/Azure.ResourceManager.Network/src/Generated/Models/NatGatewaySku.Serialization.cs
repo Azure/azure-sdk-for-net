@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NatGatewaySku DeserializeNatGatewaySku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NatGatewaySkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {

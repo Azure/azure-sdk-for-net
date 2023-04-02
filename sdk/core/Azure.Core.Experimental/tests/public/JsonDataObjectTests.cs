@@ -121,7 +121,6 @@ namespace Azure.Core.Tests.Public
         #endregion
 
         [Test]
-        [Ignore("To be implemented.")]
         public void CanEnumerateObject()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "first": 1, "second": 2 }""");

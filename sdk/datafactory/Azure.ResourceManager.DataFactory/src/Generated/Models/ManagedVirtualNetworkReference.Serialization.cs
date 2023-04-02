@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ManagedVirtualNetworkReference DeserializeManagedVirtualNetworkReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagedVirtualNetworkReferenceType type = default;
             string referenceName = default;
             foreach (var property in element.EnumerateObject())

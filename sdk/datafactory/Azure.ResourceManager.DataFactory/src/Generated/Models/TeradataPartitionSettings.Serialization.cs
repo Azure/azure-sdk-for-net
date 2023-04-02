@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static TeradataPartitionSettings DeserializeTeradataPartitionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> partitionColumnName = default;
             Optional<BinaryData> partitionUpperBound = default;
             Optional<BinaryData> partitionLowerBound = default;

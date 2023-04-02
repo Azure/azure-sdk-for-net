@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static AutoscaleNotification DeserializeAutoscaleNotification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MonitorOperationType operation = default;
             Optional<EmailNotification> email = default;
             Optional<IList<WebhookNotification>> webhooks = default;

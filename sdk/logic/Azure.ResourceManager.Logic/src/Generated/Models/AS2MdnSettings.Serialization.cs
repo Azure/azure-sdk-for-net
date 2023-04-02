@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2MdnSettings DeserializeAS2MdnSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool needMdn = default;
             bool signMdn = default;
             bool sendMdnAsynchronously = default;

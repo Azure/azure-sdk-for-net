@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ManagedRuleGroupDefinition DeserializeManagedRuleGroupDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ruleGroupName = default;
             Optional<string> description = default;
             Optional<IReadOnlyList<ManagedRuleDefinition>> rules = default;

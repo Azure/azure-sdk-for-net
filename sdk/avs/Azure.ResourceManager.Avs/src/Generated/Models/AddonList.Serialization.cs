@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static AddonList DeserializeAddonList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AvsPrivateCloudAddonData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

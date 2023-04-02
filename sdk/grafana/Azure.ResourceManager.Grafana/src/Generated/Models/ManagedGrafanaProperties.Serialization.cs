@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.Grafana.Models
 
         internal static ManagedGrafanaProperties DeserializeManagedGrafanaProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GrafanaProvisioningState> provisioningState = default;
             Optional<string> grafanaVersion = default;
             Optional<string> endpoint = default;

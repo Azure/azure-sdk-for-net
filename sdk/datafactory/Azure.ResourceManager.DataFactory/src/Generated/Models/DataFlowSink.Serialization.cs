@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFlowSink DeserializeDataFlowSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryLinkedServiceReference> schemaLinkedService = default;
             Optional<FactoryLinkedServiceReference> rejectedDataLinkedService = default;
             string name = default;

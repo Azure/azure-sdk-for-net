@@ -13,7 +13,10 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    /// <summary> A class representing the PolicyAttestation data model. </summary>
+    /// <summary>
+    /// A class representing the PolicyAttestation data model.
+    /// An attestation resource.
+    /// </summary>
     public partial class PolicyAttestationData : ResourceData
     {
         /// <summary> Initializes a new instance of PolicyAttestationData. </summary>

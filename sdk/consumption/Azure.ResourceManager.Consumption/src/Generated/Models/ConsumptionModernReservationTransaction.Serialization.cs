@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionModernReservationTransaction DeserializeConsumptionModernReservationTransaction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;

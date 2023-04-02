@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static SampleUtterance DeserializeSampleUtterance(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> text = default;
             Optional<IList<string>> links = default;
             Optional<string> qid = default;

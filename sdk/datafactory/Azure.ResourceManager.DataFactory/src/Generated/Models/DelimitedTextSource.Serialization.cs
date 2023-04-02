@@ -88,6 +88,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DelimitedTextSource DeserializeDelimitedTextSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoreReadSettings> storeSettings = default;
             Optional<DelimitedTextReadSettings> formatSettings = default;
             Optional<BinaryData> additionalColumns = default;

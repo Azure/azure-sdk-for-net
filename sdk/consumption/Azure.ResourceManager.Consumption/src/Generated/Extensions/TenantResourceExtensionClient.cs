@@ -5,35 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _balancesClientDiagnostics;
-        private BalancesRestOperations _balancesRestClient;
-        private ClientDiagnostics _reservationsSummariesClientDiagnostics;
-        private ReservationsSummariesRestOperations _reservationsSummariesRestClient;
-        private ClientDiagnostics _reservationsDetailsClientDiagnostics;
-        private ReservationsDetailsRestOperations _reservationsDetailsRestClient;
-        private ClientDiagnostics _reservationTransactionsClientDiagnostics;
-        private ReservationTransactionsRestOperations _reservationTransactionsRestClient;
-        private ClientDiagnostics _eventsClientDiagnostics;
-        private EventsRestOperations _eventsRestClient;
-        private ClientDiagnostics _lotsClientDiagnostics;
-        private LotsRestOperations _lotsRestClient;
-        private ClientDiagnostics _creditsClientDiagnostics;
-        private CreditsRestOperations _creditsRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
         {
@@ -45,21 +24,6 @@ namespace Azure.ResourceManager.Consumption
         internal TenantResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics BalancesClientDiagnostics => _balancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BalancesRestOperations BalancesRestClient => _balancesRestClient ??= new BalancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ReservationsSummariesClientDiagnostics => _reservationsSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ReservationsSummariesRestOperations ReservationsSummariesRestClient => _reservationsSummariesRestClient ??= new ReservationsSummariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ReservationsDetailsClientDiagnostics => _reservationsDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ReservationsDetailsRestOperations ReservationsDetailsRestClient => _reservationsDetailsRestClient ??= new ReservationsDetailsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ReservationTransactionsClientDiagnostics => _reservationTransactionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ReservationTransactionsRestOperations ReservationTransactionsRestClient => _reservationTransactionsRestClient ??= new ReservationTransactionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics EventsClientDiagnostics => _eventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private EventsRestOperations EventsRestClient => _eventsRestClient ??= new EventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics LotsClientDiagnostics => _lotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private LotsRestOperations LotsRestClient => _lotsRestClient ??= new LotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics CreditsClientDiagnostics => _creditsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private CreditsRestOperations CreditsRestClient => _creditsRestClient ??= new CreditsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

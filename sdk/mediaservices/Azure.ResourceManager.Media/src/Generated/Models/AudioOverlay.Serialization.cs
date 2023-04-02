@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static AudioOverlay DeserializeAudioOverlay(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = default;
             string inputLabel = default;
             Optional<TimeSpan> start = default;

@@ -86,6 +86,10 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static DeviceIdentity DeserializeDeviceIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deviceId = default;
             Optional<string> generationId = default;
             Optional<string> etag = default;

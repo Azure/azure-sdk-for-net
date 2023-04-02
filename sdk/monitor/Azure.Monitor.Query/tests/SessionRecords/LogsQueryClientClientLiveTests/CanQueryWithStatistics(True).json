@@ -1,40 +1,35 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/0a1f6b9a-caa1-4e5a-ac9a-54aa9b2fb131/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Connection": "keep-alive",
         "Content-Length": "72",
         "Content-Type": "application/json",
         "Prefer": "include-statistics=true",
-        "traceparent": "00-6d7125aca84f8d4aa8ae1461a6178bbd-7bf23633076bde48-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210614.1",
-          "(.NET 5.0.7; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "530ebcf3be3d499eac2baf959539ff7f",
+        "traceparent": "00-18b442919e86984d9d372edcc91e66ee-313ab80a38a6d94c-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "f38b7c58c046b48f8e305e12e0322a89",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "TableA1_158_CL",
-        "timespan": "2021-06-07T00:00:00.0000000Z/P7D"
+        "query": "TableA1_59_CL",
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
-        "Content-Length": "1694",
+        "Content-Length": "2600",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 14 Jun 2021 21:37:19 GMT",
+        "Date": "Tue, 14 Mar 2023 22:27:05 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Vary": [
-          "Accept-Encoding",
-          "Accept-Encoding"
-        ],
-        "Via": "1.1 draft-oms-7d56d985c5-2zgbb",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-5974bf9684-2dbrs",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -97,48 +92,138 @@
             ],
             "rows": [
               [
-                "0a1f6b9a-caa1-4e5a-ac9a-54aa9b2fb131",
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
                 "RestAPI",
                 "",
                 "",
-                "2021-06-07T00:00:00Z",
+                "2023-03-14T20:57:43.1872735Z",
                 "",
                 "",
                 1,
                 "a",
                 false,
                 0,
-                "TableA1_158_CL",
+                "TableA1_59_CL",
                 ""
               ],
               [
-                "0a1f6b9a-caa1-4e5a-ac9a-54aa9b2fb131",
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
                 "RestAPI",
                 "",
                 "",
-                "2021-06-09T00:00:00Z",
+                "2023-03-14T20:57:43.1872735Z",
+                "",
+                "",
+                2,
+                "b",
+                true,
+                1.20000005,
+                "TableA1_59_CL",
+                ""
+              ],
+              [
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
+                "RestAPI",
+                "",
+                "",
+                "2023-03-14T20:57:43.1872735Z",
                 "",
                 "",
                 3,
-                "b",
-                true,
-                1.2,
-                "TableA1_158_CL",
+                "c",
+                false,
+                1.10000002,
+                "TableA1_59_CL",
                 ""
               ],
               [
-                "0a1f6b9a-caa1-4e5a-ac9a-54aa9b2fb131",
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
                 "RestAPI",
                 "",
                 "",
-                "2021-06-12T00:00:00Z",
+                "2023-03-14T20:49:08.116641Z",
                 "",
                 "",
                 1,
+                "a",
+                false,
+                0,
+                "TableA1_59_CL",
+                ""
+              ],
+              [
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
+                "RestAPI",
+                "",
+                "",
+                "2023-03-14T20:49:08.116641Z",
+                "",
+                "",
+                2,
+                "b",
+                true,
+                1.20000005,
+                "TableA1_59_CL",
+                ""
+              ],
+              [
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
+                "RestAPI",
+                "",
+                "",
+                "2023-03-14T20:49:08.116641Z",
+                "",
+                "",
+                3,
                 "c",
                 false,
-                1.1,
-                "TableA1_158_CL",
+                1.10000002,
+                "TableA1_59_CL",
+                ""
+              ],
+              [
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
+                "RestAPI",
+                "",
+                "",
+                "2023-03-14T20:46:27.9577001Z",
+                "",
+                "",
+                1,
+                "a",
+                false,
+                0,
+                "TableA1_59_CL",
+                ""
+              ],
+              [
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
+                "RestAPI",
+                "",
+                "",
+                "2023-03-14T20:46:27.9577001Z",
+                "",
+                "",
+                2,
+                "b",
+                true,
+                1.20000005,
+                "TableA1_59_CL",
+                ""
+              ],
+              [
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
+                "RestAPI",
+                "",
+                "",
+                "2023-03-14T20:46:27.9577001Z",
+                "",
+                "",
+                3,
+                "c",
+                false,
+                1.10000002,
+                "TableA1_59_CL",
                 ""
               ]
             ]
@@ -146,13 +231,13 @@
         ],
         "statistics": {
           "query": {
-            "executionTime": 0.0156002,
+            "executionTime": 0.0156284,
             "resourceUsage": {
               "cache": {
                 "memory": {
-                  "hits": 32,
+                  "hits": 0,
                   "misses": 0,
-                  "total": 32
+                  "total": 0
                 },
                 "disk": {
                   "hits": 0,
@@ -161,7 +246,7 @@
                 },
                 "shards": {
                   "hot": {
-                    "hitbytes": 0,
+                    "hitbytes": 2406,
                     "missbytes": 0,
                     "retrievebytes": 0
                   },
@@ -174,52 +259,58 @@
                 }
               },
               "cpu": {
-                "user": "00:00:00.0156250",
-                "kernel": "00:00:00.0156250",
-                "totalCpu": "00:00:00.0312500"
+                "user": "00:00:00",
+                "kernel": "00:00:00",
+                "totalCpu": "00:00:00"
               },
               "memory": {
-                "peakPerNode": 3670976
+                "peakPerNode": 4195520
+              },
+              "network": {
+                "interClusterTotalBytes": 10936,
+                "crossClusterTotalBytes": 0
               }
             },
             "inputDatasetStatistics": {
               "extents": {
                 "total": 1,
                 "scanned": 1,
-                "scannedMinDatetime": "2021-06-14T21:35:26.0703222Z",
-                "scannedMaxDatetime": "2021-06-14T21:35:26.0703222Z"
+                "scannedMinDatetime": "2023-03-14T20:57:49.4661236Z",
+                "scannedMaxDatetime": "2023-03-14T20:57:49.4661236Z"
               },
               "rows": {
-                "total": 3,
-                "scanned": 3
+                "total": 9,
+                "scanned": 9
               },
               "rowstores": {
                 "scannedRows": 0,
                 "scannedValuesSize": 0
               },
               "shards": {
-                "queriesGeneric": 0,
+                "queriesGeneric": 1,
                 "queriesSpecialized": 0
               }
             },
             "datasetStatistics": [
               {
-                "tableRowCount": 3,
-                "tableSize": 266
+                "tableRowCount": 9,
+                "tableSize": 779
               }
-            ]
+            ],
+            "crossClusterResourceUsage": {}
           }
         }
       }
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-06-14T14:26:37.7415380-07:00",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DateTimeOffsetNow": "2023-03-14T15:26:58.1198096-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "89860256",
-    "SECONDARY_WORKSPACE_ID": "0cf963f0-c6a5-4ced-8cd8-93a8d6e3e9d3",
+    "RandomSeed": "1915682137",
+    "SECONDARY_WORKSPACE_ID": "db3bd3a5-5caf-4700-8b68-14962531541d",
     "SECONDARY_WORKSPACE_KEY": "Kg==",
-    "WORKSPACE_ID": "0a1f6b9a-caa1-4e5a-ac9a-54aa9b2fb131",
+    "WORKSPACE_ID": "314be15c-6065-462b-a0dc-8fe1213796f2",
     "WORKSPACE_KEY": "Kg=="
   }
 }

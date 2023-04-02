@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.FluidRelay
 
         internal static FluidRelayContainerData DeserializeFluidRelayContainerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static HybridComputeSettingsProperties DeserializeHybridComputeSettingsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HybridComputeProvisioningState> hybridComputeProvisioningState = default;
             AutoProvisionState autoProvision = default;
             Optional<string> resourceGroupName = default;

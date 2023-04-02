@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ErrorResponseBody DeserializeErrorResponseBody(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<IList<ErrorFieldContract>> details = default;

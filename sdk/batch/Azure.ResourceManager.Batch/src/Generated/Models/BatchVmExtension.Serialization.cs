@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchVmExtension DeserializeBatchVmExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string publisher = default;
             string type = default;

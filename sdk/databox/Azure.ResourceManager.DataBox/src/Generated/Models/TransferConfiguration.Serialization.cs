@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static TransferConfiguration DeserializeTransferConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TransferConfigurationType transferConfigurationType = default;
             Optional<TransferConfigurationTransferFilterDetails> transferFilterDetails = default;
             Optional<TransferConfigurationTransferAllDetails> transferAllDetails = default;

@@ -3,9 +3,19 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
+- Updated to support ANF api-version 2022-09-01
+- Added `BackupRestoreFiles` to `NetAppVolumeResource` to restore the specified files from the specified backup to the active file system
+- Added `BreakFileLocks` to `NetAppVolumeResource` to allow clients to break file locks on a volume
+- Added `FileAccessLog` to `NetAppVolumeData`, a flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume.
+- Added propperty `PreferredServersForLdapClient` to `NetAppAccountActiveDirectory`, a comma separated list of IPv4 addresses of preferred servers for LDAP client
+- Added `VolumeRelocation` to `NetAppVolumeDataProtection`
+- Added `DataStoreResourceId` to `NetAppVolumeGroupVolume`
+- Added `Tags` property to NetAppVolumeQuotaRulePatch and `AddTag`, `RemoveTag` and `SetTags` to `NetAppVolumeQuotaResource`
+- Added `RestoreFiles` for `NetAppVolumeBackupResource`
 
 ### Breaking Changes
-
+- `NetAppVault` is no longer needed scheduled for deprecation
+- `VaultId` is not longer needed it has been deprecated from `NetAppVolumeBackupConfiguration` in api-version 2022-09-01, but will continue to be supported in pervious api-verisons, 2022-05-01 and older
 ### Bugs Fixed
 
 ### Other Changes

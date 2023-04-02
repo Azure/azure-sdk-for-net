@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.DnsResolver
 
         internal static DnsResolverData DeserializeDnsResolverData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

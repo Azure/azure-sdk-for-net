@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static SsisProject DeserializeSsisProject(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> folderId = default;
             Optional<long> version = default;
             Optional<IReadOnlyList<SsisEnvironmentReference>> environmentRefs = default;

@@ -140,6 +140,10 @@ namespace Azure.ResourceManager.Resources
 
         internal static ArmApplicationDefinitionData DeserializeArmApplicationDefinitionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> managedBy = default;
             Optional<ArmApplicationSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;

@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverAvailabilitySetResourceSettings DeserializeMoverAvailabilitySetResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<int?> faultDomain = default;
             Optional<int?> updateDomain = default;

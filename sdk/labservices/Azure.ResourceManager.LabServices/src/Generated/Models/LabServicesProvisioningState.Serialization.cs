@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabServicesProvisioningState ToLabServicesProvisioningState(this string value)
         {
-            if (string.Equals(value, "Creating", StringComparison.InvariantCultureIgnoreCase)) return LabServicesProvisioningState.Creating;
-            if (string.Equals(value, "Updating", StringComparison.InvariantCultureIgnoreCase)) return LabServicesProvisioningState.Updating;
-            if (string.Equals(value, "Deleting", StringComparison.InvariantCultureIgnoreCase)) return LabServicesProvisioningState.Deleting;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return LabServicesProvisioningState.Succeeded;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return LabServicesProvisioningState.Failed;
-            if (string.Equals(value, "Locked", StringComparison.InvariantCultureIgnoreCase)) return LabServicesProvisioningState.Locked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return LabServicesProvisioningState.Creating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Updating")) return LabServicesProvisioningState.Updating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return LabServicesProvisioningState.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return LabServicesProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return LabServicesProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Locked")) return LabServicesProvisioningState.Locked;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabServicesProvisioningState value.");
         }
     }

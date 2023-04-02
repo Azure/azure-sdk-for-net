@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerHeatMapEndpoint DeserializeTrafficManagerHeatMapEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<int> endpointId = default;
             foreach (var property in element.EnumerateObject())

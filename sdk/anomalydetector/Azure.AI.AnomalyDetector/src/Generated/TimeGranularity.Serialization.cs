@@ -27,15 +27,15 @@ namespace Azure.AI.AnomalyDetector
 
         public static TimeGranularity ToTimeGranularity(this string value)
         {
-            if (string.Equals(value, "yearly", StringComparison.InvariantCultureIgnoreCase)) return TimeGranularity.Yearly;
-            if (string.Equals(value, "monthly", StringComparison.InvariantCultureIgnoreCase)) return TimeGranularity.Monthly;
-            if (string.Equals(value, "weekly", StringComparison.InvariantCultureIgnoreCase)) return TimeGranularity.Weekly;
-            if (string.Equals(value, "daily", StringComparison.InvariantCultureIgnoreCase)) return TimeGranularity.Daily;
-            if (string.Equals(value, "hourly", StringComparison.InvariantCultureIgnoreCase)) return TimeGranularity.Hourly;
-            if (string.Equals(value, "minutely", StringComparison.InvariantCultureIgnoreCase)) return TimeGranularity.PerMinute;
-            if (string.Equals(value, "secondly", StringComparison.InvariantCultureIgnoreCase)) return TimeGranularity.PerSecond;
-            if (string.Equals(value, "microsecond", StringComparison.InvariantCultureIgnoreCase)) return TimeGranularity.Microsecond;
-            if (string.Equals(value, "none", StringComparison.InvariantCultureIgnoreCase)) return TimeGranularity.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "yearly")) return TimeGranularity.Yearly;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "monthly")) return TimeGranularity.Monthly;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "weekly")) return TimeGranularity.Weekly;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "daily")) return TimeGranularity.Daily;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hourly")) return TimeGranularity.Hourly;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "minutely")) return TimeGranularity.PerMinute;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "secondly")) return TimeGranularity.PerSecond;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "microsecond")) return TimeGranularity.Microsecond;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none")) return TimeGranularity.None;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TimeGranularity value.");
         }
     }

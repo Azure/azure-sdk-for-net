@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationAccountKeyVaultKeyList DeserializeIntegrationAccountKeyVaultKeyList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<IntegrationAccountKeyVaultKey>> value = default;
             Optional<string> skipToken = default;
             foreach (var property in element.EnumerateObject())

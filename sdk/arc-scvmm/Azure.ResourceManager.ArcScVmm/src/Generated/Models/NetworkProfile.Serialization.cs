@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static NetworkProfile DeserializeNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<NetworkInterfaces>> networkInterfaces = default;
             foreach (var property in element.EnumerateObject())
             {

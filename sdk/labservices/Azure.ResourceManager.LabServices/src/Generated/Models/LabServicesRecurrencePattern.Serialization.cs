@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabServicesRecurrencePattern DeserializeLabServicesRecurrencePattern(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LabServicesRecurrenceFrequency frequency = default;
             Optional<IList<LabServicesDayOfWeek>> weekDays = default;
             Optional<int> interval = default;

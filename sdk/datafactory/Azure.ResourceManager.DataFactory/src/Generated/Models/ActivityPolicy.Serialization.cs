@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ActivityPolicy DeserializeActivityPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> timeout = default;
             Optional<BinaryData> retry = default;
             Optional<int> retryIntervalInSeconds = default;

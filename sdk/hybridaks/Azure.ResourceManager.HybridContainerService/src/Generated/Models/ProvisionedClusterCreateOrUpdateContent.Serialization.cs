@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ProvisionedClusterCreateOrUpdateContent DeserializeProvisionedClusterCreateOrUpdateContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ProvisionedClustersAllProperties> properties = default;
             Optional<ProvisionedClustersExtendedLocation> extendedLocation = default;

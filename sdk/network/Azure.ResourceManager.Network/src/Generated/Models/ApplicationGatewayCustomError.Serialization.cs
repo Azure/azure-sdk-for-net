@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayCustomError DeserializeApplicationGatewayCustomError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ApplicationGatewayCustomErrorStatusCode> statusCode = default;
             Optional<Uri> customErrorPageUrl = default;
             foreach (var property in element.EnumerateObject())

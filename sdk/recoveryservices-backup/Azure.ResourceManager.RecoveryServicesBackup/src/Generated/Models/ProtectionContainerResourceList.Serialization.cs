@@ -16,7 +16,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static ProtectionContainerResourceList DeserializeProtectionContainerResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<ProtectionContainerResourceData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<BackupProtectionContainerData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +31,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProtectionContainerResourceData> array = new List<ProtectionContainerResourceData>();
+                    List<BackupProtectionContainerData> array = new List<BackupProtectionContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(item));
+                        array.Add(BackupProtectionContainerData.DeserializeBackupProtectionContainerData(item));
                     }
                     value = array;
                     continue;

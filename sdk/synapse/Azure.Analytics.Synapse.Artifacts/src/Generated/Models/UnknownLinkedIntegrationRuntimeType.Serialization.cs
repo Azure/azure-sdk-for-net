@@ -22,6 +22,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static UnknownLinkedIntegrationRuntimeType DeserializeUnknownLinkedIntegrationRuntimeType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string authorizationType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

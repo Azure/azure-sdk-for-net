@@ -94,6 +94,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static StatelessServiceProperties DeserializeStatelessServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int instanceCount = default;
             Optional<int> minInstanceCount = default;
             Optional<int> minInstancePercentage = default;

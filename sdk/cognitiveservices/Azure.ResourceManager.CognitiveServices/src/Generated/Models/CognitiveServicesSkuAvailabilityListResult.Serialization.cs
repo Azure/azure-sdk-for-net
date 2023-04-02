@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CognitiveServicesSkuAvailabilityListResult DeserializeCognitiveServicesSkuAvailabilityListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CognitiveServicesSkuAvailabilityList>> value = default;
             foreach (var property in element.EnumerateObject())
             {

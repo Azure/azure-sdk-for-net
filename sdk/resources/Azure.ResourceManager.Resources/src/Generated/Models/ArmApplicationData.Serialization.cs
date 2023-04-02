@@ -86,6 +86,10 @@ namespace Azure.ResourceManager.Resources
 
         internal static ArmApplicationData DeserializeArmApplicationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArmPlan> plan = default;
             string kind = default;
             Optional<ArmApplicationManagedIdentity> identity = default;

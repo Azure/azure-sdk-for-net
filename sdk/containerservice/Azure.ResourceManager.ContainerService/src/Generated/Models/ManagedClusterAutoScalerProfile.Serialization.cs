@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterAutoScalerProfile DeserializeManagedClusterAutoScalerProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> balanceSimilarNodeGroups = default;
             Optional<AutoScaleExpander> expander = default;
             Optional<string> maxEmptyBulkDelete = default;

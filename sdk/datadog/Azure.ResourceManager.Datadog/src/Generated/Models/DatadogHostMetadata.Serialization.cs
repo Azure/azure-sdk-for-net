@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal static DatadogHostMetadata DeserializeDatadogHostMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> agentVersion = default;
             Optional<DatadogInstallMethod> installMethod = default;
             Optional<DatadogLogsAgent> logsAgent = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoverResourceList DeserializeMoverResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MoverResourceData>> value = default;
             Optional<string> nextLink = default;
             Optional<MoverSummaryList> summaryCollection = default;

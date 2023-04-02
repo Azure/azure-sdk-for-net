@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ManagedRuleOverride DeserializeManagedRuleOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleId = default;
             Optional<ManagedRuleEnabledState> state = default;
             foreach (var property in element.EnumerateObject())

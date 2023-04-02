@@ -15,6 +15,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static AcrManifests DeserializeAcrManifests(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> registry = default;
             Optional<string> imageName = default;
             Optional<IReadOnlyList<ManifestAttributesBase>> manifests = default;

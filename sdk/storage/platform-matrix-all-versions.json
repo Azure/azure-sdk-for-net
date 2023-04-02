@@ -6,8 +6,8 @@
           "Pool": "azsdk-pool-mms-ubuntu-2004-storage"
       },
       "windows-2022": {
-          "OSVmImage": "MMS2022",
-          "Pool": "azsdk-pool-mms-win-2019-storage"
+          "OSVmImage": "windows-2022",
+          "Pool": "azsdk-pool-mms-win-2022-storage"
       }
     },
     "TestTargetFramework": [
@@ -29,7 +29,13 @@
         "V2021_06_08",
         "V2021_08_06",
         "V2021_10_04",
-        "V2021_12_02"
+        "V2021_12_02",
+        "V2021-04-10",
+        "V2021-06-08",
+        "V2021-08-06",
+        "V2021-10-04",
+        "V2021-12-02",
+        "V2022-11-02"
     ]
   }
 }

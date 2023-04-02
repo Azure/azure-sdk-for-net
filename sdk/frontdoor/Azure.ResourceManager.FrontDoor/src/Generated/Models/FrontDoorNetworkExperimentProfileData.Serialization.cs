@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.FrontDoor
 
         internal static FrontDoorNetworkExperimentProfileData DeserializeFrontDoorNetworkExperimentProfileData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

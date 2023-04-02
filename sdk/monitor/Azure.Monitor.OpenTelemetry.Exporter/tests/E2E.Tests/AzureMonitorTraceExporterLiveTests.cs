@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 #if !NETCOREAPP3_1
 namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
 {
@@ -56,16 +54,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
             }
 
             // Export
-            tracerProvider.ForceFlush();
+            tracerProvider?.ForceFlush();
 
             // Query
             var client = CreateClient();
 
             string query = $"AppDependencies | where AppRoleName == '{nameof(VerifyTraceExporter)}' | top 1 by TimeGenerated";
 
-            LogsTable table = await CheckForRecord(client, query);
-
-            var rowCount = table.Rows.Count();
+            LogsTable? table = await CheckForRecord(client, query);
+            var rowCount = table?.Rows.Count();
 
             // Assert
 
@@ -76,13 +73,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
             }
             else
             {
-                Assert.True(table.Rows.Count() == 1);
+                Assert.True(table?.Rows.Count() == 1);
             }
         }
 
-        private async Task<LogsTable> CheckForRecord(LogsQueryClient client, string query)
+        private async Task<LogsTable?> CheckForRecord(LogsQueryClient client, string query)
         {
-            LogsTable table = null;
+            LogsTable? table = null;
             int count = 0;
 
             // Try every 30 secs for total of 5 minutes.

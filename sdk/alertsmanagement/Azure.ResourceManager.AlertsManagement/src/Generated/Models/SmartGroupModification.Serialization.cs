@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static SmartGroupModification DeserializeSmartGroupModification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SmartGroupModificationProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

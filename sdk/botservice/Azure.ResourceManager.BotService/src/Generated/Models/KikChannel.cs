@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Kik channel definition. </summary>
-    public partial class KikChannel : Channel
+    public partial class KikChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of KikChannel. </summary>
         public KikChannel()

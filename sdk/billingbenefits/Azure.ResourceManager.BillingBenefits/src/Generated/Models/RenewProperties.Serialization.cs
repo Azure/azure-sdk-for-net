@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static RenewProperties DeserializeRenewProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BillingBenefitsPurchaseContent> purchaseProperties = default;
             foreach (var property in element.EnumerateObject())
             {

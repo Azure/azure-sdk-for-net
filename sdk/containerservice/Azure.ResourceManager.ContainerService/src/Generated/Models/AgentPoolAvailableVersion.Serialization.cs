@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static AgentPoolAvailableVersion DeserializeAgentPoolAvailableVersion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> @default = default;
             Optional<string> kubernetesVersion = default;
             Optional<bool> isPreview = default;

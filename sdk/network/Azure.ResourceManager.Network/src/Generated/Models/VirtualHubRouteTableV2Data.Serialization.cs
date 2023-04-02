@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Network
 
         internal static VirtualHubRouteTableV2Data DeserializeVirtualHubRouteTableV2Data(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;

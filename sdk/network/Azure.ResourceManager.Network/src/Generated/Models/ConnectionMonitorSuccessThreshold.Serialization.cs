@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorSuccessThreshold DeserializeConnectionMonitorSuccessThreshold(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> checksFailedPercent = default;
             Optional<float> roundTripTimeMs = default;
             foreach (var property in element.EnumerateObject())

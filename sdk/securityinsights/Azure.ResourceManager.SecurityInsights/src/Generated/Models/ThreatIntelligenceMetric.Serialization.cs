@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static ThreatIntelligenceMetric DeserializeThreatIntelligenceMetric(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> lastUpdatedTimeUtc = default;
             Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> threatTypeMetrics = default;
             Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> patternTypeMetrics = default;

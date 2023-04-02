@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationAdvancedScheduleMonthlyOccurrence DeserializeAutomationAdvancedScheduleMonthlyOccurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> occurrence = default;
             Optional<AutomationDayOfWeek> day = default;
             foreach (var property in element.EnumerateObject())

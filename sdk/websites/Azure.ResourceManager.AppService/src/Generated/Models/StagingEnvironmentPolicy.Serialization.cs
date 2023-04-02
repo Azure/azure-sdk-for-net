@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static StagingEnvironmentPolicy ToStagingEnvironmentPolicy(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return StagingEnvironmentPolicy.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return StagingEnvironmentPolicy.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return StagingEnvironmentPolicy.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return StagingEnvironmentPolicy.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StagingEnvironmentPolicy value.");
         }
     }

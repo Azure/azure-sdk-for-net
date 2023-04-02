@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     {
         internal static VirtualMachineTemplateListResult DeserializeVirtualMachineTemplateListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ScVmmVirtualMachineTemplateData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

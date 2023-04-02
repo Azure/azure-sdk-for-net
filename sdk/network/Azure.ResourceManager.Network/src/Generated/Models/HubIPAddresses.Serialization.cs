@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static HubIPAddresses DeserializeHubIPAddresses(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HubPublicIPAddresses> publicIPs = default;
             Optional<string> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())

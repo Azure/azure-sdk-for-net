@@ -27,6 +27,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static AzureActiveDirectoryApplicationCredentials DeserializeAzureActiveDirectoryApplicationCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string applicationId = default;
             Optional<string> applicationSecret = default;
             foreach (var property in element.EnumerateObject())

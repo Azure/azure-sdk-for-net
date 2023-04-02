@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.NotificationHubs
 
         internal static NotificationHubNamespaceData DeserializeNotificationHubNamespaceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NotificationHubSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

@@ -7,8 +7,7 @@ using System.Collections.Generic;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A representation of the result of performing dynamic classification or custom text classification on a given
-    /// document.
+    /// A representation of the result of performing custom text classification on a given document.
     /// </summary>
     public class ClassifyDocumentResult : TextAnalyticsResult
     {

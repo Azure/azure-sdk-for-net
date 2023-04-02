@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static ReservationOrderAliasResponsePropertiesReservedResourceProperties DeserializeReservationOrderAliasResponsePropertiesReservedResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BillingBenefitsInstanceFlexibility> instanceFlexibility = default;
             foreach (var property in element.EnumerateObject())
             {

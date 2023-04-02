@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static DevCenterSku DeserializeDevCenterSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<DevCenterSkuTier> tier = default;
             Optional<string> size = default;

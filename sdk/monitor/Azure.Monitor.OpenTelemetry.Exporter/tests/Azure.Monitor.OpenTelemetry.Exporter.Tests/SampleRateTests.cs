@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -52,8 +50,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Client,
                 parentContext: default,
                 startTime: DateTime.UtcNow,
-                tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
+                tags: new Dictionary<string, object?>() { ["sampleRate"] = SampleRate });
 
+            Assert.NotNull(activity);
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, "00000000-0000-0000-0000-000000000000");
             var expTelemetryItem = new TelemetryItem("Exception", telemetryItem, default, default, default);
@@ -83,8 +82,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityKind.Client,
                 parentContext: default,
                 startTime: DateTime.UtcNow,
-                tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
+                tags: new Dictionary<string, object?>() { ["sampleRate"] = SampleRate });
 
+            Assert.NotNull(activity);
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, "00000000-0000-0000-0000-000000000000");
 
@@ -112,10 +112,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
             }
 
-            tracerProvider.ForceFlush();
+            tracerProvider?.ForceFlush();
 
             Assert.NotEmpty(telemetryItems);
-            Assert.Equal(100F, telemetryItems.FirstOrDefault().SampleRate);
+            Assert.Equal(100F, telemetryItems.First().SampleRate);
         }
 
         [Fact]
@@ -132,7 +132,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
             }
 
-            tracerProvider.ForceFlush();
+            tracerProvider?.ForceFlush();
 
             Assert.Empty(telemetryItems);
         }

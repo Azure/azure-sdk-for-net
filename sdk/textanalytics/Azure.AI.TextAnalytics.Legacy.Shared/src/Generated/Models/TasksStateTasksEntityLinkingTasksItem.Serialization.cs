@@ -16,6 +16,10 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     {
         internal static TasksStateTasksEntityLinkingTasksItem DeserializeTasksStateTasksEntityLinkingTasksItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EntityLinkingResult> results = default;
             DateTimeOffset lastUpdateDateTime = default;
             Optional<string> taskName = default;

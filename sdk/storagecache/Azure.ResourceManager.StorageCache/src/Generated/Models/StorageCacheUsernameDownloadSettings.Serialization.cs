@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheUsernameDownloadSettings DeserializeStorageCacheUsernameDownloadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> extendedGroups = default;
             Optional<StorageCacheUsernameSourceType> usernameSource = default;
             Optional<Uri> groupFileUri = default;

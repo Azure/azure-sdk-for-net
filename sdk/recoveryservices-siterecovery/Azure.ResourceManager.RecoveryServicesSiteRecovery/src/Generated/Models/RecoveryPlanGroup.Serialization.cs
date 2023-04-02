@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static RecoveryPlanGroup DeserializeRecoveryPlanGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RecoveryPlanGroupType groupType = default;
             Optional<IList<RecoveryPlanProtectedItem>> replicationProtectedItems = default;
             Optional<IList<RecoveryPlanAction>> startGroupActions = default;

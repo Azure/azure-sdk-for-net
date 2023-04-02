@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiVersionSetContractDetails DeserializeApiVersionSetContractDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> description = default;

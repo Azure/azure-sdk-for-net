@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Analysis
 
         internal static AnalysisServerData DeserializeAnalysisServerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnalysisResourceSku sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

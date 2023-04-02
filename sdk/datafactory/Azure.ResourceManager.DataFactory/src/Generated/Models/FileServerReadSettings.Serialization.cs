@@ -137,6 +137,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FileServerReadSettings DeserializeFileServerReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> recursive = default;
             Optional<BinaryData> wildcardFolderPath = default;
             Optional<BinaryData> wildcardFileName = default;

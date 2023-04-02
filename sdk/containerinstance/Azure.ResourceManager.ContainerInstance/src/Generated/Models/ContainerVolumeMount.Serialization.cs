@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerVolumeMount DeserializeContainerVolumeMount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string mountPath = default;
             Optional<bool> readOnly = default;

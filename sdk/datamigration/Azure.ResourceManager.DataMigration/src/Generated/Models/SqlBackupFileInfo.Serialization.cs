@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static SqlBackupFileInfo DeserializeSqlBackupFileInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fileName = default;
             Optional<string> status = default;
             Optional<long> totalSize = default;

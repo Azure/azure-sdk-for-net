@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerGroupImageRegistryCredential DeserializeContainerGroupImageRegistryCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string server = default;
             Optional<string> username = default;
             Optional<string> password = default;

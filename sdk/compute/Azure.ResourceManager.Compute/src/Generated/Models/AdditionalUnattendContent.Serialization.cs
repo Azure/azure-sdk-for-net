@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AdditionalUnattendContent DeserializeAdditionalUnattendContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PassName> passName = default;
             Optional<ComponentName> componentName = default;
             Optional<SettingName> settingName = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static PolicyProperties DeserializePolicyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<PolicyProviderSpecificDetails> providerSpecificDetails = default;
             foreach (var property in element.EnumerateObject())

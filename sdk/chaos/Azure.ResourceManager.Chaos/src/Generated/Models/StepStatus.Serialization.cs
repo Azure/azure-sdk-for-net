@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         internal static StepStatus DeserializeStepStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> stepName = default;
             Optional<string> stepId = default;
             Optional<string> status = default;

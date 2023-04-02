@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static UnknownBackupEngineBase DeserializeUnknownBackupEngineBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<BackupManagementType> backupManagementType = default;
             Optional<string> registrationStatus = default;

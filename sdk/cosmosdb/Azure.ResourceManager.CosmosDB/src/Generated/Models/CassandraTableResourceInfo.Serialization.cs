@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraTableResourceInfo DeserializeCassandraTableResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<int> defaultTtl = default;
             Optional<CassandraSchema> schema = default;

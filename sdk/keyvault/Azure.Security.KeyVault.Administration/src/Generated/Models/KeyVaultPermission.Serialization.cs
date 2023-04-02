@@ -61,6 +61,10 @@ namespace Azure.Security.KeyVault.Administration
 
         internal static KeyVaultPermission DeserializeKeyVaultPermission(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> actions = default;
             Optional<IList<string>> notActions = default;
             Optional<IList<KeyVaultDataAction>> dataActions = default;

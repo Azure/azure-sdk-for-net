@@ -18,6 +18,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaJobErroredEventData DeserializeMediaJobErroredEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MediaJobOutput>> outputs = default;
             Optional<MediaJobState> previousState = default;
             Optional<MediaJobState> state = default;

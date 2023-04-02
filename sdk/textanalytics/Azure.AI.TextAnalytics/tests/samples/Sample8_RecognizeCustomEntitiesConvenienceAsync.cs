@@ -13,58 +13,81 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task RecognizeCustomEntitiesConvenienceAsync()
         {
-            // Create a text analytics client.
-            string endpoint = TestEnvironment.StaticEndpoint;
-            string apiKey = TestEnvironment.StaticApiKey;
+            Uri endpoint = new(TestEnvironment.StaticEndpoint);
+            AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            string documentA =
+                "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+                + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+                + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+                + " athletic among us.";
 
-            // Create input documents.
-            string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
-                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
-                                We tried again today and it was amazing. Everyone in my family liked the trail although
-                                it was too challenging for the less athletic among us.";
+            string documentB =
+                "Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about our anniversary"
+                + " so they helped me organize a little surprise for my partner. The room was clean and with the"
+                + " decoration I requested. It was perfect!";
 
-            string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about
-                                our anniversary so they helped me organize a little surprise for my partner.
-                                The room was clean and with the decoration I requested. It was perfect!";
-
-            var batchDocuments = new List<string>
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<string> batchedDocuments = new()
             {
                 documentA,
                 documentB
             };
 
-            // Set project and deployment names of the target model
-            // To train a model to recognize your custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition
+            // Specify the project and deployment names of the desired custom model. To train your own custom model to
+            // recognize custom entities, see https://aka.ms/azsdk/textanalytics/customentityrecognition.
             string projectName = TestEnvironment.RecognizeCustomEntitiesProjectName;
             string deploymentName = TestEnvironment.RecognizeCustomEntitiesDeploymentName;
+            RecognizeCustomEntitiesAction recognizeCustomEntitiesAction = new(projectName, deploymentName);
 
-            var recognizeCustomEntitiesAction = new RecognizeCustomEntitiesAction(projectName, deploymentName);
-
-            // prepare actions.
-            var actions = new TextAnalyticsActions()
+            TextAnalyticsActions actions = new()
             {
                 RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>() { recognizeCustomEntitiesAction }
             };
 
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchDocuments, actions);
-
+            // Perform the text analysis operation.
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchedDocuments, actions);
             await operation.WaitForCompletionAsync();
 
+            Console.WriteLine($"The operation has completed.");
+            Console.WriteLine();
+
+            // View the operation status.
+            Console.WriteLine($"Created On   : {operation.CreatedOn}");
+            Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
+            Console.WriteLine($"Id           : {operation.Id}");
+            Console.WriteLine($"Status       : {operation.Status}");
+            Console.WriteLine($"Last Modified: {operation.LastModified}");
+            Console.WriteLine();
+
+            int i = 0;
+
+            // View the operation results.
             await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
             {
                 IReadOnlyCollection<RecognizeCustomEntitiesActionResult> customEntitiesActionResults = documentsInPage.RecognizeCustomEntitiesResults;
                 foreach (RecognizeCustomEntitiesActionResult customEntitiesActionResult in customEntitiesActionResults)
                 {
-                    Console.WriteLine($" Action name: {customEntitiesActionResult.ActionName}");
-                    int docNumber = 1;
-                    foreach (RecognizeEntitiesResult documentResults in customEntitiesActionResult.DocumentsResults)
-                    {
-                        Console.WriteLine($" Document #{docNumber++}");
-                        Console.WriteLine($"  Recognized the following {documentResults.Entities.Count} entities:");
+                    Console.WriteLine($"Action name: {customEntitiesActionResult.ActionName}");
 
-                        foreach (CategorizedEntity entity in documentResults.Entities)
+                    foreach (RecognizeEntitiesResult documentResult in customEntitiesActionResult.DocumentsResults)
+                    {
+                        Console.WriteLine($"Result for document with Text = \"{batchedDocuments[i++]}\"");
+
+                        if (documentResult.HasError)
+                        {
+                            Console.WriteLine($"  Error!");
+                            Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                            Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                            Console.WriteLine();
+                            continue;
+                        }
+
+                        Console.WriteLine($"  Recognized {documentResult.Entities.Count} entities:");
+
+                        foreach (CategorizedEntity entity in documentResult.Entities)
                         {
                             Console.WriteLine($"  Entity: {entity.Text}");
                             Console.WriteLine($"  Category: {entity.Category}");
@@ -72,8 +95,9 @@ namespace Azure.AI.TextAnalytics.Samples
                             Console.WriteLine($"  Length: {entity.Length}");
                             Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
                             Console.WriteLine($"  SubCategory: {entity.SubCategory}");
+                            Console.WriteLine();
                         }
-                        Console.WriteLine("");
+                        Console.WriteLine();
                     }
                 }
             }

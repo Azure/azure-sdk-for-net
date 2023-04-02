@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static SyslogDataSource DeserializeSyslogDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SyslogDataSourceStream>> streams = default;
             Optional<IList<SyslogDataSourceFacilityName>> facilityNames = default;
             Optional<IList<SyslogDataSourceLogLevel>> logLevels = default;

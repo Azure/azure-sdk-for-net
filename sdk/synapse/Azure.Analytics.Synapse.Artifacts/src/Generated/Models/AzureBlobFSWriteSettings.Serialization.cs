@@ -46,6 +46,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureBlobFSWriteSettings DeserializeAzureBlobFSWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> blockSizeInMB = default;
             string type = default;
             Optional<object> maxConcurrentConnections = default;

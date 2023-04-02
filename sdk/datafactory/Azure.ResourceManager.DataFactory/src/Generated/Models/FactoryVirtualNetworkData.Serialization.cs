@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static FactoryVirtualNetworkData DeserializeFactoryVirtualNetworkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagedVirtualNetwork properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

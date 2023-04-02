@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineGalleryApplication DeserializeVirtualMachineGalleryApplication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tags = default;
             Optional<int> order = default;
             string packageReferenceId = default;

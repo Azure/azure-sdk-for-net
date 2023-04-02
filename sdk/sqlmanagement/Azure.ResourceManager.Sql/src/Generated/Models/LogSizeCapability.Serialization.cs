@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static LogSizeCapability DeserializeLogSizeCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> limit = default;
             Optional<LogSizeUnit> unit = default;
             foreach (var property in element.EnumerateObject())

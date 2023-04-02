@@ -16,6 +16,10 @@ namespace Azure.Communication.ShortCodes.Models
     {
         internal static ShortCode DeserializeShortCode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> number = default;
             Optional<NumberType> numberType = default;
             Optional<string> countryCode = default;

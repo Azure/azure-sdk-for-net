@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the CosmosDBPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the CosmosDBPrivateLinkResource data model.
+    /// A private link resource
+    /// </summary>
     public partial class CosmosDBPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of CosmosDBPrivateLinkResourceData. </summary>

@@ -90,6 +90,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static WebHookActivity DeserializeWebHookActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string type = default;
             Optional<string> description = default;

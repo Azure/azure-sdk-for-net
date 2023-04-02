@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerDnsConfig DeserializeTrafficManagerDnsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> relativeName = default;
             Optional<string> fqdn = default;
             Optional<long> ttl = default;

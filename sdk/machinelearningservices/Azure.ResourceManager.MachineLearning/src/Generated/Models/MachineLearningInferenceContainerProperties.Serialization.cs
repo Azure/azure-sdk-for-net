@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningInferenceContainerProperties DeserializeMachineLearningInferenceContainerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningInferenceContainerRoute> livenessRoute = default;
             Optional<MachineLearningInferenceContainerRoute> readinessRoute = default;
             Optional<MachineLearningInferenceContainerRoute> scoringRoute = default;

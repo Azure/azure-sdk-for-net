@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBSqlContainerResourceInfo DeserializeCosmosDBSqlContainerResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
             Optional<CosmosDBContainerPartitionKey> partitionKey = default;

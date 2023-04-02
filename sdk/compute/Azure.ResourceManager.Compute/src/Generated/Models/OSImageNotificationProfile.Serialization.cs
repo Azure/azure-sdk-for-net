@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static OSImageNotificationProfile DeserializeOSImageNotificationProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> notBeforeTimeout = default;
             Optional<bool> enable = default;
             foreach (var property in element.EnumerateObject())

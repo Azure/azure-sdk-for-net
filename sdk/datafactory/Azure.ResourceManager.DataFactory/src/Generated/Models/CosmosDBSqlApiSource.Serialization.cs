@@ -114,6 +114,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CosmosDBSqlApiSource DeserializeCosmosDBSqlApiSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> query = default;
             Optional<BinaryData> pageSize = default;
             Optional<BinaryData> preferredRegions = default;

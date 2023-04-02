@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeArcAddon DeserializeEdgeArcAddon(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AddonType kind = default;
             ResourceIdentifier id = default;
             string name = default;

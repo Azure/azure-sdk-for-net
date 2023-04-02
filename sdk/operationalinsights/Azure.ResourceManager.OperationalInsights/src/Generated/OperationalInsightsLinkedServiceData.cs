@@ -12,7 +12,10 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the OperationalInsightsLinkedService data model. </summary>
+    /// <summary>
+    /// A class representing the OperationalInsightsLinkedService data model.
+    /// The top level Linked service resource container.
+    /// </summary>
     public partial class OperationalInsightsLinkedServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of OperationalInsightsLinkedServiceData. </summary>

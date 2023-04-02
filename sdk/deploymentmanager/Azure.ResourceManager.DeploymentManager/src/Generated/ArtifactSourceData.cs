@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeploymentManager
 {
-    /// <summary> A class representing the ArtifactSource data model. </summary>
+    /// <summary>
+    /// A class representing the ArtifactSource data model.
+    /// The resource that defines the source location where the artifacts are located.
+    /// </summary>
     public partial class ArtifactSourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ArtifactSourceData. </summary>

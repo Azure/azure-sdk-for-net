@@ -11,7 +11,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the ApplicationGatewayPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the ApplicationGatewayPrivateEndpointConnection data model.
+    /// Private Endpoint connection on an application gateway.
+    /// </summary>
     public partial class ApplicationGatewayPrivateEndpointConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionData. </summary>

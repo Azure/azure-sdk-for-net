@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchResourceFile DeserializeBatchResourceFile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> autoStorageContainerName = default;
             Optional<Uri> storageContainerUrl = default;
             Optional<Uri> httpUrl = default;

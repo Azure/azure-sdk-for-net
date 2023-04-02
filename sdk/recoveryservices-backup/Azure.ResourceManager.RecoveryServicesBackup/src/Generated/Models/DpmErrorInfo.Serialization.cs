@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DpmErrorInfo DeserializeDpmErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> errorString = default;
             Optional<IList<string>> recommendations = default;
             foreach (var property in element.EnumerateObject())

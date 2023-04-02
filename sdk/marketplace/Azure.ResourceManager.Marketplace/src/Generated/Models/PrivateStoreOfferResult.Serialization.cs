@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static PrivateStoreOfferResult DeserializePrivateStoreOfferResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> uniqueOfferId = default;
             Optional<string> offerDisplayName = default;
             Optional<string> publisherDisplayName = default;
@@ -120,7 +124,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                     Dictionary<string, Uri> dictionary = new Dictionary<string, Uri>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, new Uri(property0.Value.GetString()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, new Uri(property0.Value.GetString()));
+                        }
                     }
                     iconFileUris = dictionary;
                     continue;

@@ -16,6 +16,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static DataSourceCredentialList DeserializeDataSourceCredentialList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<DataSourceCredentialEntity>> value = default;
             foreach (var property in element.EnumerateObject())

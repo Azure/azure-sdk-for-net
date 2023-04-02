@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static PaginatedOperationalizationClustersList DeserializePaginatedOperationalizationClustersList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<OperationalizationClusterData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

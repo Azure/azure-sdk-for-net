@@ -14,6 +14,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteInstructionGroup DeserializeRouteInstructionGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> firstInstructionIndex = default;
             Optional<int> lastInstructionIndex = default;
             Optional<int> groupLengthInMeters = default;

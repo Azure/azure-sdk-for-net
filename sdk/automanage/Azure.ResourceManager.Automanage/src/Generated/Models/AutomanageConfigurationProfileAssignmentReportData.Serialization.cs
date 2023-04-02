@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Automanage
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndTime);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -38,18 +38,22 @@ namespace Azure.ResourceManager.Automanage
 
         internal static AutomanageConfigurationProfileAssignmentReportData DeserializeAutomanageConfigurationProfileAssignmentReportData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
-            Optional<string> lastModifiedTime = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<TimeSpan> duration = default;
             Optional<string> type0 = default;
             Optional<string> status = default;
             Optional<string> configurationProfile = default;
-            Optional<IReadOnlyList<ReportResource>> resources = default;
+            Optional<IReadOnlyList<ConfigurationProfileAssignmentReportResourceDetails>> resources = default;
             Optional<ResponseError> error = default;
             Optional<string> reportFormatVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -90,17 +94,32 @@ namespace Azure.ResourceManager.Automanage
                     {
                         if (property0.NameEquals("startTime"u8))
                         {
-                            startTime = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("endTime"u8))
                         {
-                            endTime = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            endTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedTime"u8))
                         {
-                            lastModifiedTime = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("duration"u8))
@@ -135,10 +154,10 @@ namespace Azure.ResourceManager.Automanage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ReportResource> array = new List<ReportResource>();
+                            List<ConfigurationProfileAssignmentReportResourceDetails> array = new List<ConfigurationProfileAssignmentReportResourceDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ReportResource.DeserializeReportResource(item));
+                                array.Add(ConfigurationProfileAssignmentReportResourceDetails.DeserializeConfigurationProfileAssignmentReportResourceDetails(item));
                             }
                             resources = array;
                             continue;
@@ -162,7 +181,7 @@ namespace Azure.ResourceManager.Automanage
                     continue;
                 }
             }
-            return new AutomanageConfigurationProfileAssignmentReportData(id, name, type, systemData.Value, startTime.Value, endTime.Value, lastModifiedTime.Value, Optional.ToNullable(duration), type0.Value, status.Value, configurationProfile.Value, Optional.ToList(resources), error.Value, reportFormatVersion.Value);
+            return new AutomanageConfigurationProfileAssignmentReportData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(duration), type0.Value, status.Value, configurationProfile.Value, Optional.ToList(resources), error.Value, reportFormatVersion.Value);
         }
     }
 }

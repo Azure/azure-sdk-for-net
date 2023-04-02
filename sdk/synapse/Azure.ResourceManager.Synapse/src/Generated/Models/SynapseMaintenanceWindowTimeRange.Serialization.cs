@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseMaintenanceWindowTimeRange DeserializeSynapseMaintenanceWindowTimeRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SynapseDayOfWeek> dayOfWeek = default;
             Optional<TimeSpan> startTime = default;
             Optional<TimeSpan> duration = default;

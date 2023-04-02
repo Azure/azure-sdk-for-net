@@ -45,6 +45,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomLabelClassificationResult DeserializeCustomLabelClassificationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<CustomLabelClassificationResultDocumentsItem> documents = default;
             IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;

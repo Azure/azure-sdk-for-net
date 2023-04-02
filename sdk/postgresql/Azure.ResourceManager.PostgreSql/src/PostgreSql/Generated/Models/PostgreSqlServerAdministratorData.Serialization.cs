@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.PostgreSql
 
         internal static PostgreSqlServerAdministratorData DeserializePostgreSqlServerAdministratorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

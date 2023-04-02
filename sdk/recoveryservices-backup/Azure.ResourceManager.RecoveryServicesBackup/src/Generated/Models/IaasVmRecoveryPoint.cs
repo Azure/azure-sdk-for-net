@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> IaaS VM workload specific backup copy. </summary>
-    public partial class IaasVmRecoveryPoint : RecoveryPoint
+    public partial class IaasVmRecoveryPoint : BackupGenericRecoveryPoint
     {
         /// <summary> Initializes a new instance of IaasVmRecoveryPoint. </summary>
         public IaasVmRecoveryPoint()

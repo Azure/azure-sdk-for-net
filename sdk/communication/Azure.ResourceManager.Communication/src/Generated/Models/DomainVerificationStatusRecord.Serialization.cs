@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Communication.Models
     {
         internal static DomainVerificationStatusRecord DeserializeDomainVerificationStatusRecord(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DomainRecordVerificationStatus> status = default;
             Optional<string> errorCode = default;
             foreach (var property in element.EnumerateObject())

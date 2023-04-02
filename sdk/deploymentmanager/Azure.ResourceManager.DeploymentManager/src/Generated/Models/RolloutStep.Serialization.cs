@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static RolloutStep DeserializeRolloutStep(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> status = default;
             Optional<string> stepGroup = default;

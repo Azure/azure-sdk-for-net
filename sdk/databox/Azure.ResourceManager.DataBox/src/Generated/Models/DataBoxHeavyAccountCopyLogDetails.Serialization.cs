@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxHeavyAccountCopyLogDetails DeserializeDataBoxHeavyAccountCopyLogDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountName = default;
             Optional<IReadOnlyList<string>> copyLogLink = default;
             Optional<IReadOnlyList<string>> copyVerboseLogLink = default;

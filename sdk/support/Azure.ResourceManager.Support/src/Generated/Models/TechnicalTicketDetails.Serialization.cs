@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static TechnicalTicketDetails DeserializeTechnicalTicketDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {

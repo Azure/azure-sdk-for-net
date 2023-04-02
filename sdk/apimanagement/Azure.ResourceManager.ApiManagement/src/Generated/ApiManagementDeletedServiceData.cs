@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementDeletedService data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementDeletedService data model.
+    /// Deleted API Management Service information.
+    /// </summary>
     public partial class ApiManagementDeletedServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementDeletedServiceData. </summary>

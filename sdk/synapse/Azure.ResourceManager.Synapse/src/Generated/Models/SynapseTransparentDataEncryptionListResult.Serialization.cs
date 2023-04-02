@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseTransparentDataEncryptionListResult DeserializeSynapseTransparentDataEncryptionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SynapseTransparentDataEncryptionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static RecoveryPlanProtectedItem DeserializeRecoveryPlanProtectedItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> virtualMachineId = default;
             foreach (var property in element.EnumerateObject())

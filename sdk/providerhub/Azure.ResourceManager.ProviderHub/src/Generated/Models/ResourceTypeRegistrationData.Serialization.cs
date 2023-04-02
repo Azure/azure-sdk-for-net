@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ProviderHub
 
         internal static ResourceTypeRegistrationData DeserializeResourceTypeRegistrationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceTypeRegistrationProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

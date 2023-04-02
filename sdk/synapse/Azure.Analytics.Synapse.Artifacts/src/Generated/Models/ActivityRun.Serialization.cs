@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static ActivityRun DeserializeActivityRun(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> pipelineName = default;
             Optional<string> pipelineRunId = default;
             Optional<string> activityName = default;

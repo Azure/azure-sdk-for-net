@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Synapse.Models
 
         public static SynapseReplicationRole ToSynapseReplicationRole(this string value)
         {
-            if (string.Equals(value, "Primary", StringComparison.InvariantCultureIgnoreCase)) return SynapseReplicationRole.Primary;
-            if (string.Equals(value, "Secondary", StringComparison.InvariantCultureIgnoreCase)) return SynapseReplicationRole.Secondary;
-            if (string.Equals(value, "NonReadableSecondary", StringComparison.InvariantCultureIgnoreCase)) return SynapseReplicationRole.NonReadableSecondary;
-            if (string.Equals(value, "Source", StringComparison.InvariantCultureIgnoreCase)) return SynapseReplicationRole.Source;
-            if (string.Equals(value, "Copy", StringComparison.InvariantCultureIgnoreCase)) return SynapseReplicationRole.Copy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return SynapseReplicationRole.Primary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return SynapseReplicationRole.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NonReadableSecondary")) return SynapseReplicationRole.NonReadableSecondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Source")) return SynapseReplicationRole.Source;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Copy")) return SynapseReplicationRole.Copy;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SynapseReplicationRole value.");
         }
     }

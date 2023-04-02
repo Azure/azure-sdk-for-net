@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static EventHubsNetworkSecurityPerimeter DeserializeEventHubsNetworkSecurityPerimeter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> perimeterGuid = default;
             Optional<AzureLocation> location = default;

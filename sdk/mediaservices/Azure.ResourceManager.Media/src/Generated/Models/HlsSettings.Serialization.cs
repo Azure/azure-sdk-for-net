@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static HlsSettings DeserializeHlsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> @default = default;
             Optional<bool> forced = default;
             Optional<string> characteristics = default;

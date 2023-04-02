@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static TextAnalyticsWarning DeserializeTextAnalyticsWarning(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WarningCodeValue code = default;
             string message = default;
             Optional<string> targetRef = default;

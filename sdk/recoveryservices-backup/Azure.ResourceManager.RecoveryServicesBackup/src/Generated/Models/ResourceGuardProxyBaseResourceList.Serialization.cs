@@ -16,7 +16,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static ResourceGuardProxyBaseResourceList DeserializeResourceGuardProxyBaseResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<ResourceGuardProxyBaseResourceData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<ResourceGuardProxyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +31,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceGuardProxyBaseResourceData> array = new List<ResourceGuardProxyBaseResourceData>();
+                    List<ResourceGuardProxyData> array = new List<ResourceGuardProxyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGuardProxyBaseResourceData.DeserializeResourceGuardProxyBaseResourceData(item));
+                        array.Add(ResourceGuardProxyData.DeserializeResourceGuardProxyData(item));
                     }
                     value = array;
                     continue;

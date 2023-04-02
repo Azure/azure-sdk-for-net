@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static SharedAccessAuthorizationRuleProperties DeserializeSharedAccessAuthorizationRuleProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AuthorizationRuleAccessRight>> rights = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;

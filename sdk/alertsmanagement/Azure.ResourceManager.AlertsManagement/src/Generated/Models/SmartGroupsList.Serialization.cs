@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         internal static SmartGroupsList DeserializeSmartGroupsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<SmartGroupData>> value = default;
             foreach (var property in element.EnumerateObject())

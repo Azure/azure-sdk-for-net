@@ -35,6 +35,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static ImageScale DeserializeImageScale(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ImageScaleMode> mode = default;
             Optional<string> width = default;
             Optional<string> height = default;

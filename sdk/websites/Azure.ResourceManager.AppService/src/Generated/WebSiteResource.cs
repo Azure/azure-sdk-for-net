@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteResourceHealthMetadataResource" /> object. </returns>
         public virtual WebSiteResourceHealthMetadataResource GetWebSiteResourceHealthMetadata()
         {
-            return new WebSiteResourceHealthMetadataResource(Client, new ResourceIdentifier(Id.ToString() + "/resourceHealthMetadata/default"));
+            return new WebSiteResourceHealthMetadataResource(Client, Id.AppendChildResource("resourceHealthMetadata", "default"));
         }
 
         /// <summary> Gets a collection of WebSiteSlotResources in the WebSite. </summary>
@@ -546,14 +546,14 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteFtpPublishingCredentialsPolicyResource" /> object. </returns>
         public virtual WebSiteFtpPublishingCredentialsPolicyResource GetWebSiteFtpPublishingCredentialsPolicy()
         {
-            return new WebSiteFtpPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/ftp"));
+            return new WebSiteFtpPublishingCredentialsPolicyResource(Client, Id.AppendChildResource("basicPublishingCredentialsPolicies", "ftp"));
         }
 
         /// <summary> Gets an object representing a ScmSiteBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it in the WebSite. </summary>
         /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> object. </returns>
         public virtual ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicy()
         {
-            return new ScmSiteBasicPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
+            return new ScmSiteBasicPublishingCredentialsPolicyResource(Client, Id.AppendChildResource("basicPublishingCredentialsPolicies", "scm"));
         }
 
         /// <summary> Gets a collection of SiteConfigAppsettingResources in the WebSite. </summary>
@@ -666,21 +666,21 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="LogsSiteConfigResource" /> object. </returns>
         public virtual LogsSiteConfigResource GetLogsSiteConfig()
         {
-            return new LogsSiteConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/config/logs"));
+            return new LogsSiteConfigResource(Client, Id.AppendChildResource("config", "logs"));
         }
 
         /// <summary> Gets an object representing a SlotConfigNamesResource along with the instance operations that can be performed on it in the WebSite. </summary>
         /// <returns> Returns a <see cref="SlotConfigNamesResource" /> object. </returns>
         public virtual SlotConfigNamesResource GetSlotConfigNamesResource()
         {
-            return new SlotConfigNamesResource(Client, new ResourceIdentifier(Id.ToString() + "/config/slotConfigNames"));
+            return new SlotConfigNamesResource(Client, Id.AppendChildResource("config", "slotConfigNames"));
         }
 
         /// <summary> Gets an object representing a WebSiteConfigResource along with the instance operations that can be performed on it in the WebSite. </summary>
         /// <returns> Returns a <see cref="WebSiteConfigResource" /> object. </returns>
         public virtual WebSiteConfigResource GetWebSiteConfig()
         {
-            return new WebSiteConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/config/web"));
+            return new WebSiteConfigResource(Client, Id.AppendChildResource("config", "web"));
         }
 
         /// <summary> Gets a collection of WebSiteContinuousWebJobResources in the WebSite. </summary>
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteExtensionResource" /> object. </returns>
         public virtual SiteExtensionResource GetSiteExtension()
         {
-            return new SiteExtensionResource(Client, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
+            return new SiteExtensionResource(Client, Id.AppendChildResource("extensions", "MSDeploy"));
         }
 
         /// <summary> Gets a collection of SiteFunctionResources in the WebSite. </summary>
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteNetworkConfigResource" /> object. </returns>
         public virtual SiteNetworkConfigResource GetSiteNetworkConfig()
         {
-            return new SiteNetworkConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/networkConfig/virtualNetwork"));
+            return new SiteNetworkConfigResource(Client, Id.AppendChildResource("networkConfig", "virtualNetwork"));
         }
 
         /// <summary> Gets a collection of WebSitePremierAddonResources in the WebSite. </summary>
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSitePrivateAccessResource" /> object. </returns>
         public virtual WebSitePrivateAccessResource GetWebSitePrivateAccess()
         {
-            return new WebSitePrivateAccessResource(Client, new ResourceIdentifier(Id.ToString() + "/privateAccess/virtualNetworks"));
+            return new WebSitePrivateAccessResource(Client, Id.AppendChildResource("privateAccess", "virtualNetworks"));
         }
 
         /// <summary> Gets a collection of SitePublicCertificateResources in the WebSite. </summary>
@@ -1291,7 +1291,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSourceControlResource" /> object. </returns>
         public virtual WebSiteSourceControlResource GetWebSiteSourceControl()
         {
-            return new WebSiteSourceControlResource(Client, new ResourceIdentifier(Id.ToString() + "/sourcecontrols/web"));
+            return new WebSiteSourceControlResource(Client, Id.AppendChildResource("sourcecontrols", "web"));
         }
 
         /// <summary> Gets a collection of WebSiteSlotTriggeredWebJobResources in the WebSite. </summary>

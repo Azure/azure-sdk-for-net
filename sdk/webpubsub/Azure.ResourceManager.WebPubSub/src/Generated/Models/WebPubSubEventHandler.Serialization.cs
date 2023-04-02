@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static WebPubSubEventHandler DeserializeWebPubSubEventHandler(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string urlTemplate = default;
             Optional<string> userEventPattern = default;
             Optional<IList<string>> systemEvents = default;

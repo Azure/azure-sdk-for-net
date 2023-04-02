@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Avs
 
         internal static AvsPrivateCloudClusterData DeserializeAvsPrivateCloudClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AvsSku sku = default;
             ResourceIdentifier id = default;
             string name = default;

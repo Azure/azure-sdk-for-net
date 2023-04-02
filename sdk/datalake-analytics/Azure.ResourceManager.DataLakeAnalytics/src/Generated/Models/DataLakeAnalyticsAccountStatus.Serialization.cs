@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         public static DataLakeAnalyticsAccountStatus ToDataLakeAnalyticsAccountStatus(this string value)
         {
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsAccountStatus.Failed;
-            if (string.Equals(value, "Creating", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsAccountStatus.Creating;
-            if (string.Equals(value, "Running", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsAccountStatus.Running;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsAccountStatus.Succeeded;
-            if (string.Equals(value, "Patching", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsAccountStatus.Patching;
-            if (string.Equals(value, "Suspending", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsAccountStatus.Suspending;
-            if (string.Equals(value, "Resuming", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsAccountStatus.Resuming;
-            if (string.Equals(value, "Deleting", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsAccountStatus.Deleting;
-            if (string.Equals(value, "Deleted", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsAccountStatus.Deleted;
-            if (string.Equals(value, "Undeleting", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsAccountStatus.Undeleting;
-            if (string.Equals(value, "Canceled", StringComparison.InvariantCultureIgnoreCase)) return DataLakeAnalyticsAccountStatus.Canceled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return DataLakeAnalyticsAccountStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return DataLakeAnalyticsAccountStatus.Creating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Running")) return DataLakeAnalyticsAccountStatus.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return DataLakeAnalyticsAccountStatus.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Patching")) return DataLakeAnalyticsAccountStatus.Patching;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Suspending")) return DataLakeAnalyticsAccountStatus.Suspending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Resuming")) return DataLakeAnalyticsAccountStatus.Resuming;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return DataLakeAnalyticsAccountStatus.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted")) return DataLakeAnalyticsAccountStatus.Deleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Undeleting")) return DataLakeAnalyticsAccountStatus.Undeleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled")) return DataLakeAnalyticsAccountStatus.Canceled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeAnalyticsAccountStatus value.");
         }
     }

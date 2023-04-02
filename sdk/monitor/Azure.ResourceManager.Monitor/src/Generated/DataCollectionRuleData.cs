@@ -13,7 +13,10 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the DataCollectionRule data model. </summary>
+    /// <summary>
+    /// A class representing the DataCollectionRule data model.
+    /// Definition of ARM tracked top level resource.
+    /// </summary>
     public partial class DataCollectionRuleData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DataCollectionRuleData. </summary>

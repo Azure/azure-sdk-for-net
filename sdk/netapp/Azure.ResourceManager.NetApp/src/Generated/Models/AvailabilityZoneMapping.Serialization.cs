@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static AvailabilityZoneMapping DeserializeAvailabilityZoneMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> availabilityZone = default;
             Optional<bool> isAvailable = default;
             foreach (var property in element.EnumerateObject())

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(AadTenantId))
             {
                 writer.WritePropertyName("aadTenantId"u8);
-                writer.WriteStringValue(AadTenantId);
+                writer.WriteStringValue(AadTenantId.Value);
             }
             if (Optional.IsDefined(ServicePrincipalClientId))
             {
@@ -40,8 +41,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static ContainerIdentityInfo DeserializeContainerIdentityInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> uniqueName = default;
-            Optional<string> aadTenantId = default;
+            Optional<Guid> aadTenantId = default;
             Optional<string> servicePrincipalClientId = default;
             Optional<string> audience = default;
             foreach (var property in element.EnumerateObject())
@@ -53,7 +58,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("aadTenantId"u8))
                 {
-                    aadTenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    aadTenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("servicePrincipalClientId"u8))
@@ -67,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new ContainerIdentityInfo(uniqueName.Value, aadTenantId.Value, servicePrincipalClientId.Value, audience.Value);
+            return new ContainerIdentityInfo(uniqueName.Value, Optional.ToNullable(aadTenantId), servicePrincipalClientId.Value, audience.Value);
         }
     }
 }

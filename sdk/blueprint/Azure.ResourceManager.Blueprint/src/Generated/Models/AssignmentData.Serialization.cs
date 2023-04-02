@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Blueprint
 
         internal static AssignmentData DeserializeAssignmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Models.ManagedServiceIdentity identity = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;

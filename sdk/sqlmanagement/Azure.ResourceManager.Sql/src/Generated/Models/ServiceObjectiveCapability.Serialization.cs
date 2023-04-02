@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServiceObjectiveCapability DeserializeServiceObjectiveCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> id = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedMaxSizes = default;

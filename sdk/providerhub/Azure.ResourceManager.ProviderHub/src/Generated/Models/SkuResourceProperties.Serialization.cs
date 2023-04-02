@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static SkuResourceProperties DeserializeSkuResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<SkuSetting> skuSettings = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())

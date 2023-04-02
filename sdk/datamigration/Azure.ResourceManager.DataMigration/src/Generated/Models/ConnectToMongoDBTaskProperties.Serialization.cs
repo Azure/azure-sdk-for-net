@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToMongoDBTaskProperties DeserializeConnectToMongoDBTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MongoDBConnectionInfo> input = default;
             Optional<IReadOnlyList<MongoDBClusterInfo>> output = default;
             TaskType taskType = default;

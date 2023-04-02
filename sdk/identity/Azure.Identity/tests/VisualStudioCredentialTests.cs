@@ -37,7 +37,7 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Output = processOutput };
             var vsOptions = new VisualStudioCredentialOptions
             {
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
             };
             return InstrumentClient(new VisualStudioCredential(config.TenantId, default, fileSystem, new TestProcessService(testProcess, true), vsOptions));
         }

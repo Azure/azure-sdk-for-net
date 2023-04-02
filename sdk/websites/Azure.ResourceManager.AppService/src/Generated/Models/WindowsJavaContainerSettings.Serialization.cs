@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static WindowsJavaContainerSettings DeserializeWindowsJavaContainerSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> javaContainer = default;
             Optional<string> javaContainerVersion = default;
             Optional<bool> isPreview = default;

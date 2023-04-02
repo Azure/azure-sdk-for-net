@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         public static RecordType ToRecordType(this string value)
         {
-            if (string.Equals(value, "A", StringComparison.InvariantCultureIgnoreCase)) return RecordType.A;
-            if (string.Equals(value, "AAAA", StringComparison.InvariantCultureIgnoreCase)) return RecordType.Aaaa;
-            if (string.Equals(value, "CNAME", StringComparison.InvariantCultureIgnoreCase)) return RecordType.Cname;
-            if (string.Equals(value, "MX", StringComparison.InvariantCultureIgnoreCase)) return RecordType.MX;
-            if (string.Equals(value, "PTR", StringComparison.InvariantCultureIgnoreCase)) return RecordType.PTR;
-            if (string.Equals(value, "SOA", StringComparison.InvariantCultureIgnoreCase)) return RecordType.SOA;
-            if (string.Equals(value, "SRV", StringComparison.InvariantCultureIgnoreCase)) return RecordType.SRV;
-            if (string.Equals(value, "TXT", StringComparison.InvariantCultureIgnoreCase)) return RecordType.TXT;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "A")) return RecordType.A;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AAAA")) return RecordType.Aaaa;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CNAME")) return RecordType.Cname;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MX")) return RecordType.MX;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PTR")) return RecordType.PTR;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SOA")) return RecordType.SOA;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SRV")) return RecordType.SRV;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TXT")) return RecordType.TXT;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecordType value.");
         }
     }

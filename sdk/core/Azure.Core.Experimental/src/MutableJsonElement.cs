@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -12,6 +13,7 @@ namespace Azure.Core.Json
     /// <summary>
     /// A mutable representation of a JSON element.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public readonly partial struct MutableJsonElement
     {
         private readonly MutableJsonDocument _root;
@@ -260,9 +262,8 @@ namespace Azure.Core.Json
         }
 
         /// <summary>
-        /// Get an enumerator to enumerate the values in the JSON array represented by this MutableJsonElement.
+        /// Gets an enumerator to enumerate the values in the JSON array represented by this MutableJsonElement.
         /// </summary>
-        /// <returns></returns>
         public ArrayEnumerator EnumerateArray()
         {
             EnsureValid();
@@ -270,6 +271,18 @@ namespace Azure.Core.Json
             EnsureArray();
 
             return new ArrayEnumerator(this);
+        }
+
+        /// <summary>
+        /// Gets an enumerator to enumerate the properties in the JSON object represented by this JsonElement.
+        /// </summary>
+        public ObjectEnumerator EnumerateObject()
+        {
+            EnsureValid();
+
+            EnsureObject();
+
+            return new ObjectEnumerator(this);
         }
 
         /// <summary>
@@ -566,5 +579,8 @@ namespace Azure.Core.Json
                 throw new InvalidOperationException("An ancestor node of this element has unapplied changes.  Please re-request this property from the RootElement.");
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        internal string DebuggerDisplay => $"ValueKind = {ValueKind} : \"{ToString()}\"";
     }
 }

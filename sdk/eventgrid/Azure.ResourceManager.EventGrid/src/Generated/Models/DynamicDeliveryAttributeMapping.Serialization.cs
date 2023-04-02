@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static DynamicDeliveryAttributeMapping DeserializeDynamicDeliveryAttributeMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             DeliveryAttributeMappingType type = default;
             Optional<string> sourceField = default;

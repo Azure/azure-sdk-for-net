@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    /// <summary> A class representing the LogicWorkflowRequestHistory data model. </summary>
+    /// <summary>
+    /// A class representing the LogicWorkflowRequestHistory data model.
+    /// The request history.
+    /// </summary>
     public partial class LogicWorkflowRequestHistoryData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of LogicWorkflowRequestHistoryData. </summary>

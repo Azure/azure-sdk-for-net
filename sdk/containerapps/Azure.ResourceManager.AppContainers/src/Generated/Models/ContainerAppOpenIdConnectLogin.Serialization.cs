@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppOpenIdConnectLogin DeserializeContainerAppOpenIdConnectLogin(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nameClaimType = default;
             Optional<IList<string>> scopes = default;
             foreach (var property in element.EnumerateObject())

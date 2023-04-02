@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaJobInputSequence DeserializeMediaJobInputSequence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<MediaJobInputClip>> inputs = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Orbital.Models
     {
         internal static OrbitalAvailableContact DeserializeOrbitalAvailableContact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> spacecraft = default;
             Optional<string> groundStationName = default;
             Optional<float> maximumElevationDegrees = default;

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static FileSystemTokenStore DeserializeFileSystemTokenStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> directory = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static UpgradeChannel Stable { get; } = new UpgradeChannel(StableValue);
         /// <summary> Automatically upgrade the cluster to the latest supported patch version when it becomes available while keeping the minor version the same. For example, if a cluster is running version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, your cluster is upgraded to 1.17.9. </summary>
         public static UpgradeChannel Patch { get; } = new UpgradeChannel(PatchValue);
-        /// <summary> Automatically upgrade the node image to the latest version available. Microsoft provides patches and new images for image nodes frequently (usually weekly), but your running nodes won&apos;t get the new images unless you do a node image upgrade. Turning on the node-image channel will automatically update your node images whenever a new version is available. </summary>
+        /// <summary> Automatically upgrade the node image to the latest version available. Consider using nodeOSUpgradeChannel instead as that allows you to configure node OS patching separate from Kubernetes version patching. </summary>
         public static UpgradeChannel NodeImage { get; } = new UpgradeChannel(NodeImageValue);
         /// <summary> Disables auto-upgrades and keeps the cluster at its current version of Kubernetes. </summary>
         public static UpgradeChannel None { get; } = new UpgradeChannel(NoneValue);

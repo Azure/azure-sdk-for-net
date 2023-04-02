@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.HybridData.Models
 
         internal static HybridDataJobErrorDetails DeserializeHybridDataJobErrorDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> errorMessage = default;
             Optional<int> errorCode = default;
             Optional<string> recommendedAction = default;

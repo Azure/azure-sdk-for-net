@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StaticSitePatch DeserializeStaticSitePatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;

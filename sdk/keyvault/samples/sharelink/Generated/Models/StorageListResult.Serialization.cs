@@ -15,6 +15,10 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         internal static StorageListResult DeserializeStorageListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StorageAccountItem>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

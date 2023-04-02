@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.Shares.Models
 
         public static ShareLeaseDuration ToShareLeaseDuration(this string value)
         {
-            if (string.Equals(value, "infinite", StringComparison.InvariantCultureIgnoreCase)) return ShareLeaseDuration.Infinite;
-            if (string.Equals(value, "fixed", StringComparison.InvariantCultureIgnoreCase)) return ShareLeaseDuration.Fixed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "infinite")) return ShareLeaseDuration.Infinite;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fixed")) return ShareLeaseDuration.Fixed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareLeaseDuration value.");
         }
     }

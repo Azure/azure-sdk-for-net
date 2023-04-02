@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxNetworkProfile DeserializeNginxNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NginxFrontendIPConfiguration> frontEndIPConfiguration = default;
             Optional<NginxNetworkInterfaceConfiguration> networkInterfaceConfiguration = default;
             foreach (var property in element.EnumerateObject())

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing the VMwareDatastore data model. </summary>
+    /// <summary>
+    /// A class representing the VMwareDatastore data model.
+    /// Define the datastore.
+    /// </summary>
     public partial class VMwareDatastoreData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VMwareDatastoreData. </summary>

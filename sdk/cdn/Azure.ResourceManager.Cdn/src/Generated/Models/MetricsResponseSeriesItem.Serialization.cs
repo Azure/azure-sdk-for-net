@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static MetricsResponseSeriesItem DeserializeMetricsResponseSeriesItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> metric = default;
             Optional<MetricsResponseSeriesItemUnit> unit = default;
             Optional<IReadOnlyList<MetricsResponseSeriesPropertiesItemsItem>> groups = default;

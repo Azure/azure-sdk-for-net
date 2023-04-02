@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AvroWriteSettings DeserializeAvroWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recordName = default;
             Optional<string> recordNamespace = default;
             Optional<BinaryData> maxRowsPerFile = default;

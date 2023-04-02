@@ -14,7 +14,10 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the LogProfile data model. </summary>
+    /// <summary>
+    /// A class representing the LogProfile data model.
+    /// The log profile resource.
+    /// </summary>
     public partial class LogProfileData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of LogProfileData. </summary>

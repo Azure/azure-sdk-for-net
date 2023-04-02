@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerBackupProperties DeserializeMySqlFlexibleServerBackupProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> backupRetentionDays = default;
             Optional<MySqlFlexibleServerEnableStatusEnum> geoRedundantBackup = default;
             Optional<DateTimeOffset> earliestRestoreDate = default;

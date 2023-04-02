@@ -13,7 +13,10 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the OperationalInsightsDataExport data model. </summary>
+    /// <summary>
+    /// A class representing the OperationalInsightsDataExport data model.
+    /// The top level data export resource container.
+    /// </summary>
     public partial class OperationalInsightsDataExportData : ResourceData
     {
         /// <summary> Initializes a new instance of OperationalInsightsDataExportData. </summary>

@@ -17,6 +17,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static TriggerSubscriptionOperationStatus DeserializeTriggerSubscriptionOperationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> triggerName = default;
             Optional<EventSubscriptionStatus> status = default;
             foreach (var property in element.EnumerateObject())

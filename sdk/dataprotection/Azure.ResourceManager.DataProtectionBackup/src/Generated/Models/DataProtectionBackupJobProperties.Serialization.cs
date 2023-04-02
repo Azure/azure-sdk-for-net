@@ -87,6 +87,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupJobProperties DeserializeDataProtectionBackupJobProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string activityId = default;
             string backupInstanceFriendlyName = default;
             Optional<ResourceIdentifier> backupInstanceId = default;

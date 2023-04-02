@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.DataLake.Models
 
         public static EncryptionAlgorithmTypeInternal ToEncryptionAlgorithmTypeInternal(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return EncryptionAlgorithmTypeInternal.None;
-            if (string.Equals(value, "AES256", StringComparison.InvariantCultureIgnoreCase)) return EncryptionAlgorithmTypeInternal.AES256;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return EncryptionAlgorithmTypeInternal.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AES256")) return EncryptionAlgorithmTypeInternal.AES256;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EncryptionAlgorithmTypeInternal value.");
         }
     }

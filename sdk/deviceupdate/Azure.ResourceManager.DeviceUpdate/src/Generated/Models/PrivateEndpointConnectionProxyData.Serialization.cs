@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         internal static PrivateEndpointConnectionProxyData DeserializePrivateEndpointConnectionProxyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> eTag = default;
             Optional<RemotePrivateEndpoint> remotePrivateEndpoint = default;
             Optional<string> status = default;

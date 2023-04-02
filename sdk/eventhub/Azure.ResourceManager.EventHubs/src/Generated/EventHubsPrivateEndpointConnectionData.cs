@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHubsPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the EventHubsPrivateEndpointConnection data model.
+    /// Properties of the PrivateEndpointConnection.
+    /// </summary>
     public partial class EventHubsPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of EventHubsPrivateEndpointConnectionData. </summary>

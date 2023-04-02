@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryExpressionDefinition DeserializeFactoryExpressionDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FactoryExpressionType type = default;
             string value = default;
             foreach (var property in element.EnumerateObject())

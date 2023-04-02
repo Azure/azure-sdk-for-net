@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static VaultPropertiesRedundancySettings DeserializeVaultPropertiesRedundancySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StandardTierStorageRedundancy> standardTierStorageRedundancy = default;
             Optional<CrossRegionRestore> crossRegionRestore = default;
             foreach (var property in element.EnumerateObject())

@@ -21,16 +21,20 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of DiscoveryConfiguration. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
         /// <param name="centralServerVmId"> The virtual machine ID of the Central Server. </param>
+        /// <param name="managedRgStorageAccountName"> The custom storage account name for the storage account created by the service in the managed resource group created as part of VIS deployment.&lt;br&gt;&lt;br&gt;Refer to the storage account naming rules [here](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules#microsoftstorage).&lt;br&gt;&lt;br&gt;If not provided, the service will create the storage account with a random name. </param>
         /// <param name="appLocation"> The geo-location where the SAP system exists. </param>
-        internal DiscoveryConfiguration(SapConfigurationType configurationType, string centralServerVmId, AzureLocation? appLocation) : base(configurationType)
+        internal DiscoveryConfiguration(SapConfigurationType configurationType, string centralServerVmId, string managedRgStorageAccountName, AzureLocation? appLocation) : base(configurationType)
         {
             CentralServerVmId = centralServerVmId;
+            ManagedRgStorageAccountName = managedRgStorageAccountName;
             AppLocation = appLocation;
             ConfigurationType = configurationType;
         }
 
         /// <summary> The virtual machine ID of the Central Server. </summary>
         public string CentralServerVmId { get; set; }
+        /// <summary> The custom storage account name for the storage account created by the service in the managed resource group created as part of VIS deployment.&lt;br&gt;&lt;br&gt;Refer to the storage account naming rules [here](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules#microsoftstorage).&lt;br&gt;&lt;br&gt;If not provided, the service will create the storage account with a random name. </summary>
+        public string ManagedRgStorageAccountName { get; set; }
         /// <summary> The geo-location where the SAP system exists. </summary>
         public AzureLocation? AppLocation { get; }
     }

@@ -38,14 +38,14 @@ namespace Azure.Monitor.Ingestion
         /// <summary>
         /// An optional EventHandler that provides the list of failed logs and the corresponding exception.
         /// </summary>
-        public event SyncAsyncEventHandler<UploadFailedEventArgs> UploadFailed;
+        public event SyncAsyncEventHandler<LogsUploadFailedEventArgs> UploadFailed;
 
-        internal virtual async Task InvokeEvent(UploadFailedEventArgs uploadFailedArgs)
+        internal virtual async Task InvokeEvent(LogsUploadFailedEventArgs uploadFailedArgs)
         {
             await UploadFailed.RaiseAsync(uploadFailedArgs, nameof(LogsIngestionClient), "Upload", uploadFailedArgs.ClientDiagnostics).ConfigureAwait(false);
         }
 
-        internal virtual async Task<Exception> OnUploadFailedAsync(UploadFailedEventArgs eventArgs)
+        internal virtual async Task<Exception> OnUploadFailedAsync(LogsUploadFailedEventArgs eventArgs)
         {
             try
             {

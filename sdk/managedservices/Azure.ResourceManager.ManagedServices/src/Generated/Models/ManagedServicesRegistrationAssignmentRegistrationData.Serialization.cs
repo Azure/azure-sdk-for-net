@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
     {
         internal static ManagedServicesRegistrationAssignmentRegistrationData DeserializeManagedServicesRegistrationAssignmentRegistrationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServicesRegistrationAssignmentRegistrationProperties> properties = default;
             Optional<ManagedServicesPlan> plan = default;
             ResourceIdentifier id = default;

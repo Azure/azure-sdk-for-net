@@ -76,6 +76,11 @@ namespace Azure.Storage.Blobs.Specialized
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
+        /// True when batch is disposed, false otherwise
+        /// </summary>
+        private bool _disposed;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -389,8 +394,13 @@ namespace Azure.Storage.Blobs.Specialized
         public void Dispose()
         {
             GC.SuppressFinalize(this);
-            foreach (HttpMessage message in _messages) {
-                message.Dispose();
+            if (!_disposed)
+            {
+                _disposed = true;
+                foreach (HttpMessage message in _messages)
+                {
+                    message.Dispose();
+                }
             }
         }
         #endregion SetBlobAccessTier

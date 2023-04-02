@@ -15,6 +15,10 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static KnowledgeBaseAnswerDialog DeserializeKnowledgeBaseAnswerDialog(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isContextOnly = default;
             Optional<IReadOnlyList<KnowledgeBaseAnswerPrompt>> prompts = default;
             foreach (var property in element.EnumerateObject())

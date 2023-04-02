@@ -12,7 +12,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the IotSecuritySolution data model. </summary>
+    /// <summary>
+    /// A class representing the IotSecuritySolution data model.
+    /// IoT Security solution configuration and resource information.
+    /// </summary>
     public partial class IotSecuritySolutionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of IotSecuritySolutionData. </summary>

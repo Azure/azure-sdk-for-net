@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         internal static GitHubOwnerData DeserializeGitHubOwnerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GitHubOwnerProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

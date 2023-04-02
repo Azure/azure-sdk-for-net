@@ -10,7 +10,10 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the CommunityGallery data model. </summary>
+    /// <summary>
+    /// A class representing the CommunityGallery data model.
+    /// Specifies information about the Community Gallery that you want to create or update.
+    /// </summary>
     public partial class CommunityGalleryData : PirCommunityGalleryResourceData
     {
         /// <summary> Initializes a new instance of CommunityGalleryData. </summary>

@@ -5,8 +5,12 @@
 ### Features Added
 
 - Added a `ArmComputeModelFactory` class to include static factory methods for those models that contains at least one read-only property.
+- Added new properties `ComputerName`, `OSName`, `OSVersion` and `HyperVGeneration` to `VirtualMachineScaleSetVmInstanceView` class
+- Added new value `StandardSsdLrs` to `ImageStorageAccountType`
 
 ### Breaking Changes
+
+- Class `VirtualMachineScaleSetNetworkConfiguration` and `VirtualMachineScaleSetIPConfiguration` no longer have the property `Id`
 
 ### Bugs Fixed
 

@@ -41,8 +41,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WeeklyRetentionFormat DeserializeWeeklyRetentionFormat(JsonElement element)
         {
-            Optional<IList<DayOfWeek>> daysOfTheWeek = default;
-            Optional<IList<WeekOfMonth>> weeksOfTheMonth = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<BackupDayOfWeek>> daysOfTheWeek = default;
+            Optional<IList<BackupWeekOfMonth>> weeksOfTheMonth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysOfTheWeek"u8))
@@ -52,10 +56,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DayOfWeek> array = new List<DayOfWeek>();
+                    List<BackupDayOfWeek> array = new List<BackupDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToDayOfWeek());
+                        array.Add(item.GetString().ToBackupDayOfWeek());
                     }
                     daysOfTheWeek = array;
                     continue;
@@ -67,10 +71,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WeekOfMonth> array = new List<WeekOfMonth>();
+                    List<BackupWeekOfMonth> array = new List<BackupWeekOfMonth>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToWeekOfMonth());
+                        array.Add(item.GetString().ToBackupWeekOfMonth());
                     }
                     weeksOfTheMonth = array;
                     continue;

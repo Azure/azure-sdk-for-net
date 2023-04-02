@@ -28,6 +28,11 @@ namespace Azure.Communication.JobRouter
                 foreach (var item in _labelsToUpsert)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -39,6 +44,10 @@ namespace Azure.Communication.JobRouter
 
         internal static ReclassifyExceptionAction DeserializeReclassifyExceptionAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> classificationPolicyId = default;
             Optional<IDictionary<string, object>> labelsToUpsert = default;
             string kind = default;
@@ -59,7 +68,14 @@ namespace Azure.Communication.JobRouter
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
                     }
                     labelsToUpsert = dictionary;
                     continue;

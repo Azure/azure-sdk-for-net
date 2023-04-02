@@ -45,6 +45,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static CustomNormalizer DeserializeCustomNormalizer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<TokenFilterName>> tokenFilters = default;
             Optional<IList<CharFilterName>> charFilters = default;
             string odataType = default;

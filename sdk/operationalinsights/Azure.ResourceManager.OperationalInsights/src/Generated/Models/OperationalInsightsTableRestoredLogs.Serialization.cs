@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsTableRestoredLogs DeserializeOperationalInsightsTableRestoredLogs(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> startRestoreTime = default;
             Optional<DateTimeOffset> endRestoreTime = default;
             Optional<string> sourceTable = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Search.Models
     {
         internal static SearchServiceListResult DeserializeSearchServiceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SearchServiceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

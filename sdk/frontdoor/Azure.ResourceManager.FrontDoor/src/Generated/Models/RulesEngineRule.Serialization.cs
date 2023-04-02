@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static RulesEngineRule DeserializeRulesEngineRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             int priority = default;
             RulesEngineAction action = default;

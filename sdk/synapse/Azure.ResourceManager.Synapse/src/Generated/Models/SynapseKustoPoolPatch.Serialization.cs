@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseKustoPoolPatch DeserializeSynapseKustoPoolPatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<SynapseDataSourceSku> sku = default;
             ResourceIdentifier id = default;

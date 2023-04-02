@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AmazonRedshiftSource DeserializeAmazonRedshiftSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> query = default;
             Optional<RedshiftUnloadSettings> redshiftUnloadSettings = default;
             Optional<BinaryData> queryTimeout = default;

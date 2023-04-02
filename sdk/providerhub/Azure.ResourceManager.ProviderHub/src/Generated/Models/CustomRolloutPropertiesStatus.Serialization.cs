@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CustomRolloutPropertiesStatus DeserializeCustomRolloutPropertiesStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> completedRegions = default;
             Optional<IDictionary<string, ExtendedErrorInfo>> failedOrSkippedRegions = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static GlobalSchemaListResult DeserializeGlobalSchemaListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ApiManagementGlobalSchemaData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;

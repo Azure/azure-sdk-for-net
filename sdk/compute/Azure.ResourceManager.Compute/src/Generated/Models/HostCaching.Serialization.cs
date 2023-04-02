@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static HostCaching ToHostCaching(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return HostCaching.None;
-            if (string.Equals(value, "ReadOnly", StringComparison.InvariantCultureIgnoreCase)) return HostCaching.ReadOnly;
-            if (string.Equals(value, "ReadWrite", StringComparison.InvariantCultureIgnoreCase)) return HostCaching.ReadWrite;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return HostCaching.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadOnly")) return HostCaching.ReadOnly;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadWrite")) return HostCaching.ReadWrite;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HostCaching value.");
         }
     }

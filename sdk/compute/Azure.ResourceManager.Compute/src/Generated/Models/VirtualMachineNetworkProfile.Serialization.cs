@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineNetworkProfile DeserializeVirtualMachineNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<VirtualMachineNetworkInterfaceReference>> networkInterfaces = default;
             Optional<NetworkApiVersion> networkApiVersion = default;
             Optional<IList<VirtualMachineNetworkInterfaceConfiguration>> networkInterfaceConfigurations = default;

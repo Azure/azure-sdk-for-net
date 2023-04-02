@@ -14,6 +14,10 @@ namespace Azure.Communication.CallingServer
     {
         internal static CallDisconnected DeserializeCallDisconnected(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> eventSource = default;
             Optional<string> version = default;
             Optional<string> operationContext = default;

@@ -14,6 +14,7 @@ modelerfour:
   flatten-payloads: false
 request-path-is-non-resource:
   - /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}
+  - /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals/default
 
 parameterized-scopes:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}
@@ -27,6 +28,11 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}: AutomanageVmConfigurationProfileAssignmentReport
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}: AutomanageHcrpConfigurationProfileAssignmentReport
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}: AutomanageHciClusterConfigurationProfileAssignmentReport
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}: AutomanageConfigurationProfile
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}/versions/{versionName}: AutomanageConfigurationProfileVersion
+
+override-operation-name:
+  ServicePrincipals_ListBySubscription: GetServicePrincipals
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -58,8 +64,21 @@ rename-rules:
   Etag: ETag|etag
 
 rename-mapping:
+  ConfigurationProfile: AutomanageConfigurationProfile
   ConfigurationProfileAssignment: AutomanageConfigurationProfileAssignment
+  ConfigurationProfileAssignmentProperties: AutomanageConfigurationProfileAssignmentProperties
+  ConfigurationProfileAssignmentProperties.configurationProfile: -|arm-id
+  ConfigurationProfileAssignmentProperties.targetId: -|arm-id
   Report: AutomanageConfigurationProfileAssignmentReport
+  Report.properties.startTime: StartOn|date-time
+  Report.properties.endTime: EndOn|date-time
+  Report.properties.lastModifiedTime: LastModifiedOn|date-time
+  Report.properties.type: ConfigurationProfileAssignmentProcessingType
+  ReportResource: ConfigurationProfileAssignmentReportResourceDetails
+  BestPractice: AutomanageBestPractice
+  ServicePrincipal: AutomanageServicePrincipalData
+  ServicePrincipal.properties.authorizationSet: IsAuthorizationSet
+  UpdateResource: AutomanageResourceUpdateDetails
 
 directive:
   # these operations will be supported in the future

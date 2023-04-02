@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static LiveTraceConfiguration DeserializeLiveTraceConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> enabled = default;
             Optional<IList<LiveTraceCategory>> categories = default;
             foreach (var property in element.EnumerateObject())

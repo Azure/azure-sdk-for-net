@@ -15,6 +15,10 @@ namespace Azure.Data.Tables.Models
     {
         internal static TableQueryResponse DeserializeTableQueryResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> odataMetadata = default;
             Optional<IReadOnlyList<TableItem>> value = default;
             foreach (var property in element.EnumerateObject())

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationConnectionFieldDefinition DeserializeAutomationConnectionFieldDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isEncrypted = default;
             Optional<bool> isOptional = default;
             string type = default;

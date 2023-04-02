@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static ShareList DeserializeShareList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataBoxEdgeShareData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

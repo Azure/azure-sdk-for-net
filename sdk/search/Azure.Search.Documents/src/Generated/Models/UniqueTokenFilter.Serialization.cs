@@ -29,6 +29,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static UniqueTokenFilter DeserializeUniqueTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> onlyOnSamePosition = default;
             string odataType = default;
             string name = default;

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static FilterFileType ToFilterFileType(this string value)
         {
-            if (string.Equals(value, "AzureBlob", StringComparison.InvariantCultureIgnoreCase)) return FilterFileType.AzureBlob;
-            if (string.Equals(value, "AzureFile", StringComparison.InvariantCultureIgnoreCase)) return FilterFileType.AzureFile;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureBlob")) return FilterFileType.AzureBlob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureFile")) return FilterFileType.AzureFile;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FilterFileType value.");
         }
     }

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static HubPublicIPAddresses DeserializeHubPublicIPAddresses(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AzureFirewallPublicIPAddress>> addresses = default;
             Optional<int> count = default;
             foreach (var property in element.EnumerateObject())

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static AttachNewDataDiskDetails DeserializeAttachNewDataDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> diskSizeGiB = default;
             Optional<string> diskName = default;
             Optional<DevTestLabStorageType> diskType = default;

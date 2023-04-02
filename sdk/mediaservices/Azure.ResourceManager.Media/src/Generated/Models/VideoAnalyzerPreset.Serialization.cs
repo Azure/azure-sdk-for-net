@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static VideoAnalyzerPreset DeserializeVideoAnalyzerPreset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<InsightsType> insightsToExtract = default;
             Optional<string> audioLanguage = default;
             Optional<AudioAnalysisMode> mode = default;

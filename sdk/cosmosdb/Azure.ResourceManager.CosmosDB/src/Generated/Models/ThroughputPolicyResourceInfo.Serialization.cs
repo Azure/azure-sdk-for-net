@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ThroughputPolicyResourceInfo DeserializeThroughputPolicyResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isEnabled = default;
             Optional<int> incrementPercent = default;
             foreach (var property in element.EnumerateObject())

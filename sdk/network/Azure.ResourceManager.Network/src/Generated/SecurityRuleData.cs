@@ -12,7 +12,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the SecurityRule data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityRule data model.
+    /// Network security rule.
+    /// </summary>
     public partial class SecurityRuleData : NetworkWritableResourceData
     {
         /// <summary> Initializes a new instance of SecurityRuleData. </summary>

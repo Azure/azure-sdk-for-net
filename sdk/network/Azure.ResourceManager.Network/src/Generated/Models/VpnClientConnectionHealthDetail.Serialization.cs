@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VpnClientConnectionHealthDetail DeserializeVpnClientConnectionHealthDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vpnConnectionId = default;
             Optional<long> vpnConnectionDuration = default;
             Optional<DateTimeOffset> vpnConnectionTime = default;

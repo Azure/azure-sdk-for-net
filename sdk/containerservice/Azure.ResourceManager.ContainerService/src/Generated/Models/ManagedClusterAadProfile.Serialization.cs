@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterAadProfile DeserializeManagedClusterAadProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> managed = default;
             Optional<bool> enableAzureRBAC = default;
             Optional<IList<Guid>> adminGroupObjectIds = default;

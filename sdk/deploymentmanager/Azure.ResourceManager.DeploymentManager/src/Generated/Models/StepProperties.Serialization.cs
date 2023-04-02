@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static StepProperties DeserializeStepProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("stepType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static BlobRestoreContent DeserializeBlobRestoreContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset timetoRestore = default;
             IList<BlobRestoreRange> blobRanges = default;
             foreach (var property in element.EnumerateObject())

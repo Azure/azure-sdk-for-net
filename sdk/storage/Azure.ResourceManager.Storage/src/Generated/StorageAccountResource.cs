@@ -97,14 +97,14 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource" /> object. </returns>
         public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicy()
         {
-            return new StorageAccountManagementPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/managementPolicies/default"));
+            return new StorageAccountManagementPolicyResource(Client, Id.AppendChildResource("managementPolicies", "default"));
         }
 
         /// <summary> Gets an object representing a BlobInventoryPolicyResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
         /// <returns> Returns a <see cref="BlobInventoryPolicyResource" /> object. </returns>
         public virtual BlobInventoryPolicyResource GetBlobInventoryPolicy()
         {
-            return new BlobInventoryPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/inventoryPolicies/default"));
+            return new BlobInventoryPolicyResource(Client, Id.AppendChildResource("inventoryPolicies", "default"));
         }
 
         /// <summary> Gets a collection of StoragePrivateEndpointConnectionResources in the StorageAccount. </summary>
@@ -323,28 +323,28 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="BlobServiceResource" /> object. </returns>
         public virtual BlobServiceResource GetBlobService()
         {
-            return new BlobServiceResource(Client, new ResourceIdentifier(Id.ToString() + "/blobServices/default"));
+            return new BlobServiceResource(Client, Id.AppendChildResource("blobServices", "default"));
         }
 
         /// <summary> Gets an object representing a FileServiceResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
         /// <returns> Returns a <see cref="FileServiceResource" /> object. </returns>
         public virtual FileServiceResource GetFileService()
         {
-            return new FileServiceResource(Client, new ResourceIdentifier(Id.ToString() + "/fileServices/default"));
+            return new FileServiceResource(Client, Id.AppendChildResource("fileServices", "default"));
         }
 
         /// <summary> Gets an object representing a QueueServiceResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
         /// <returns> Returns a <see cref="QueueServiceResource" /> object. </returns>
         public virtual QueueServiceResource GetQueueService()
         {
-            return new QueueServiceResource(Client, new ResourceIdentifier(Id.ToString() + "/queueServices/default"));
+            return new QueueServiceResource(Client, Id.AppendChildResource("queueServices", "default"));
         }
 
         /// <summary> Gets an object representing a TableServiceResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
         /// <returns> Returns a <see cref="TableServiceResource" /> object. </returns>
         public virtual TableServiceResource GetTableService()
         {
-            return new TableServiceResource(Client, new ResourceIdentifier(Id.ToString() + "/tableServices/default"));
+            return new TableServiceResource(Client, Id.AppendChildResource("tableServices", "default"));
         }
 
         /// <summary>

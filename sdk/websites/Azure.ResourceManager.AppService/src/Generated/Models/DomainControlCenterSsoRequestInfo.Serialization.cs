@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static DomainControlCenterSsoRequestInfo DeserializeDomainControlCenterSsoRequestInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> url = default;
             Optional<string> postParameterKey = default;
             Optional<string> postParameterValue = default;

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAutomationRuleSet DeserializeSecurityAutomationRuleSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SecurityAutomationTriggeringRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
