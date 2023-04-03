@@ -28,11 +28,11 @@ namespace Azure.Core.Pipeline
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
         /// </summary>
         /// <param name="maxRetries"></param>
-        /// <param name="delayStrategy">The delay strategy to use</param>
-        public RetryPolicy(int maxRetries = 3, Delay? delayStrategy = default)
+        /// <param name="delay">The delay strategy to use</param>
+        public RetryPolicy(int maxRetries = 3, Delay? delay = default)
         {
             _maxRetries = maxRetries;
-            _delayStrategy = delayStrategy ?? Delay.CreateExponentialDelay();
+            _delayStrategy = delay ?? Delay.CreateExponentialDelay();
         }
 
         /// <summary>

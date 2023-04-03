@@ -107,7 +107,7 @@ namespace Azure.Core.Samples
             var strategy = Delay.CreateFixedDelay(TimeSpan.FromSeconds(2));
             SecretClientOptions options = new SecretClientOptions()
             {
-                RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delayStrategy: strategy, timeout: TimeSpan.FromSeconds(30))
+                RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delay: strategy, timeout: TimeSpan.FromSeconds(30))
             };
             #endregion
         }
@@ -119,7 +119,7 @@ namespace Azure.Core.Samples
             var strategy = Delay.CreateExponentialDelay();
             SecretClientOptions options = new SecretClientOptions()
             {
-                RetryPolicy = new RetryPolicy(delayStrategy: strategy)
+                RetryPolicy = new RetryPolicy(delay: strategy)
             };
             #endregion
         }
