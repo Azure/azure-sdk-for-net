@@ -235,6 +235,28 @@ namespace Azure.ResourceManager.IotHub
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.IotHub.Mock
+{
+    public partial class IotHubDescriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected IotHubDescriptionResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityResponse> CheckIotHubNameAvailability(Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityResponse>> CheckIotHubNameAvailabilityAsync(Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotHub.IotHubDescriptionResource> GetIotHubDescriptions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotHub.IotHubDescriptionResource> GetIotHubDescriptionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.IotHub.IotHubDescriptionCollection GetIotHubDescriptions() { throw null; }
+    }
+    public partial class SubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SubscriptionResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotHub.Models.IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuota(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotHub.Models.IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuotaAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class CloudToDeviceFeedbackQueueProperties

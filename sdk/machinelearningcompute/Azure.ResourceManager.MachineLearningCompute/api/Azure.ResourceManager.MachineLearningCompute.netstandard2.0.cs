@@ -68,6 +68,26 @@ namespace Azure.ResourceManager.MachineLearningCompute
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse>> UpdateSystemServicesAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.MachineLearningCompute.Mock
+{
+    public partial class OperationalizationClusterResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected OperationalizationClusterResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource> GetOperationalizationClusters(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource> GetOperationalizationClustersAsync(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterCollection GetOperationalizationClusters() { throw null; }
+    }
+    public partial class TenantResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected TenantResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation> GetAvailableOperationsMachineLearningComputes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation> GetAvailableOperationsMachineLearningComputesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     public partial class AcsClusterProperties

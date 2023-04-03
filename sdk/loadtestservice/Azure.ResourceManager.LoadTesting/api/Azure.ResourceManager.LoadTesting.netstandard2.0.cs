@@ -92,6 +92,25 @@ namespace Azure.ResourceManager.LoadTesting
         public Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState? ProvisioningState { get { throw null; } }
     }
 }
+namespace Azure.ResourceManager.LoadTesting.Mock
+{
+    public partial class LoadTestingResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected LoadTestingResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.LoadTesting.LoadTestingResource> GetLoadTestingResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.LoadTesting.LoadTestingResource> GetLoadTestingResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.LoadTesting.LoadTestingResourceCollection GetLoadTestingResources() { throw null; }
+    }
+    public partial class SubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SubscriptionResourceExtension() { }
+        public virtual Azure.ResourceManager.LoadTesting.LoadTestingQuotaCollection GetAllLoadTestingQuota(Azure.Core.AzureLocation location) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     public partial class LoadTestingCmkEncryptionProperties

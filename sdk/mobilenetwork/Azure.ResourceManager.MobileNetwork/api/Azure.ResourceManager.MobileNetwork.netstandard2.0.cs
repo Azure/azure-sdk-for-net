@@ -580,6 +580,39 @@ namespace Azure.ResourceManager.MobileNetwork
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.SliceResource>> UpdateAsync(Azure.ResourceManager.MobileNetwork.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.MobileNetwork.Mock
+{
+    public partial class MobileNetworkResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected MobileNetworkResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.MobileNetwork.MobileNetworkResource> GetMobileNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MobileNetwork.MobileNetworkResource> GetMobileNetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class PacketCoreControlPlaneResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected PacketCoreControlPlaneResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneResource> GetPacketCoreControlPlanes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneResource> GetPacketCoreControlPlanesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkCollection GetMobileNetworks() { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneCollection GetPacketCoreControlPlanes() { throw null; }
+        public virtual Azure.ResourceManager.MobileNetwork.SimGroupCollection GetSimGroups() { throw null; }
+    }
+    public partial class SimGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SimGroupResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.MobileNetwork.SimGroupResource> GetSimGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MobileNetwork.SimGroupResource> GetSimGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TenantResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected TenantResourceExtension() { }
+        public virtual Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneVersionCollection GetPacketCoreControlPlaneVersions() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class Ambr

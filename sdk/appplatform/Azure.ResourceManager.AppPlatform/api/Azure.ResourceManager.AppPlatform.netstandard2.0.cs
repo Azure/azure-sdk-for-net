@@ -928,6 +928,34 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.AppPlatformSupportedStackResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.AppPlatform.Mock
+{
+    public partial class AppPlatformServiceResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AppPlatformServiceResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.AppPlatform.Models.AppPlatformNameAvailabilityResult> CheckAppPlatformNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.AppPlatform.Models.AppPlatformNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.Models.AppPlatformNameAvailabilityResult>> CheckAppPlatformNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.AppPlatform.Models.AppPlatformNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppPlatform.AppPlatformServiceResource> GetAppPlatformServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppPlatform.AppPlatformServiceResource> GetAppPlatformServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.AppPlatform.AppPlatformServiceCollection GetAppPlatformServices() { throw null; }
+    }
+    public partial class SubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SubscriptionResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppPlatform.Models.AvailableAppPlatformSku> GetSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppPlatform.Models.AvailableAppPlatformSku> GetSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TenantResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected TenantResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimeVersion> GetRuntimeVersions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppPlatform.Models.AppPlatformSupportedRuntimeVersion> GetRuntimeVersionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class ActiveAppPlatformDeploymentsContent

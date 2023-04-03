@@ -291,6 +291,27 @@ namespace Azure.ResourceManager.DnsResolver
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.WritableSubResource> GetDnsResolversAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.DnsResolver.Mock
+{
+    public partial class DnsForwardingRulesetResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DnsForwardingRulesetResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource> GetDnsForwardingRulesets(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource> GetDnsForwardingRulesetsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DnsResolverResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DnsResolverResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DnsResolver.DnsResolverResource> GetDnsResolvers(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DnsResolver.DnsResolverResource> GetDnsResolversAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.DnsResolver.DnsForwardingRulesetCollection GetDnsForwardingRulesets() { throw null; }
+        public virtual Azure.ResourceManager.DnsResolver.DnsResolverCollection GetDnsResolvers() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DnsResolver.Models
 {
     public partial class DnsForwardingRulePatch
