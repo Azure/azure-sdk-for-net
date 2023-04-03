@@ -83,6 +83,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void SetsSdkVersionPrefixFromResource()
         {
+            // SDK version is static, preserve to clean up later.
+            var sdkVersion = SdkVersionUtils.s_sdkVersion;
             var testAttributes = new Dictionary<string, object>
             {
                 { "ai.sdk.prefix", "pre_" }
@@ -92,21 +94,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             _ = resource.UpdateRoleNameAndInstance();
 
             Assert.StartsWith("pre_", SdkVersionUtils.s_sdkVersion);
+
+            // Clean up
+            SdkVersionUtils.s_sdkVersion = sdkVersion;
         }
 
         [Fact]
         public void MissingPrefixResourceDoesNotSetSdkPrefix()
         {
+            // SDK version is static, preserve to clean up later.
+            var sdkVersion = SdkVersionUtils.s_sdkVersion;
+
             var resource = ResourceBuilder.CreateDefault().Build();
             _ = resource.UpdateRoleNameAndInstance();
 
             Assert.NotNull(SdkVersionUtils.s_sdkVersion);
             Assert.DoesNotContain("_", SdkVersionUtils.s_sdkVersion);
+
+            // Clean up
+            SdkVersionUtils.s_sdkVersion = sdkVersion;
         }
 
         [Fact]
         public void EmptyPrefixResourceDoesNotSetSdkPrefix()
         {
+            // SDK version is static, preserve to clean up later.
+            var sdkVersion = SdkVersionUtils.s_sdkVersion;
+
             var testAttributes = new Dictionary<string, object>
             {
                 { "ai.sdk.prefix", string.Empty }
@@ -117,6 +131,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.NotNull(SdkVersionUtils.s_sdkVersion);
             Assert.DoesNotContain("_", SdkVersionUtils.s_sdkVersion);
+
+            // Clean up
+            SdkVersionUtils.s_sdkVersion = sdkVersion;
         }
 
         /// <summary>
