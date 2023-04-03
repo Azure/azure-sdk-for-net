@@ -17,12 +17,11 @@ namespace Azure.Core.Pipeline
     public class RetryPolicy : HttpPipelinePolicy
     {
         private readonly int _maxRetries;
-        private readonly Delay _delayStrategy;
 
         /// <summary>
         ///
         /// </summary>
-        protected Delay DelayStrategy => _delayStrategy;
+        protected Delay Delay { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
@@ -32,7 +31,7 @@ namespace Azure.Core.Pipeline
         public RetryPolicy(int maxRetries = 3, Delay? delay = default)
         {
             _maxRetries = maxRetries;
-            _delayStrategy = delay ?? Delay.CreateExponentialDelay();
+            Delay = delay ?? Delay.CreateExponentialDelay();
         }
 
         /// <summary>
@@ -260,7 +259,7 @@ namespace Azure.Core.Pipeline
 
         private TimeSpan GetNextDelayInternal(HttpMessage message)
         {
-            return _delayStrategy.GetNextDelay(
+            return Delay.GetNextDelay(
                 message.HasResponse ? message.Response : default,
                 message.RetryNumber,
                 message.HasResponse ? message.Response.Headers.RetryAfter : default);
