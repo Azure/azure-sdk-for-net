@@ -3,7 +3,7 @@
 This package contains a C# SDK for the Rooms Service of Azure Communication Services.
 Azure Communication Services (ACS) Rooms is a set of APIs, used by Contoso server applications to create a server-managed conversation space with fixed set of lifetime and participants, pre-defining rules from server-tier both who and when can communicate (like scheduled meeting creation).
 
-With the General Availability preview release of ACS Rooms, Contoso will be able to:
+With the preview release of ACS Rooms, Contoso will be able to:
 
     - Create a meeting space with known time coordinates (start/end time)
     - Join voice/video calls within that meeting space using the ACS web calling SDK or native mobile calling SDKs
@@ -15,10 +15,8 @@ The main scenarios where Rooms can best be used:
 
     - Virtual Visits (e.g., telemedicine, remote financial advisor, virtual classroom, etc...)
     - Virtual Events (e.g., live event, company all-hands, live concert, etc...)
-    - Champion scenarios
 
-
-[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
+[Source code][source] <!--| [Package (NuGet)][package]--> | [Product documentation][product_docs] | [Samples][source_samples]
 ## Getting started
 
 ### Install the package
@@ -53,7 +51,7 @@ RoomsClient client = new RoomsClient(connectionString);
 ### Create a room
 To create a room, call the `CreateRoom` or `CreateRoomAsync` function from `RoomsClient`.
 The `validFrom`, `validUntil`, and `participants` arguments are all optional. If `validFrom` and `validUntil` are not provided, then the default for `validFrom` is current date time and the default for `validUntil` is `validFrom + 180 days`.
-When defining `InvitedRoomParticipants`, if role is not specified, then it will be `Attendee` by default.
+When defining `InvitedRoomParticipant`, if role is not specified, then it will be `Attendee` by default.
 The returned value is `Response<CommunicationRoom>` which contains created room details as well as the status and associated error codes in case of a failure.
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
@@ -113,7 +111,7 @@ participant2 = new InvitedRoomParticipant(communicationUser2) { Role = Participa
 
 List<InvitedRoomParticipant> participantsToUpsert = new List<InvitedRoomParticipant>
 {
-    participant2,   // participant2 updated from Presenter to Consumer
+    participant2,   // participant2 updated from Presenter to Attendee
     newParticipant, // newParticipant added to the room
 };
 
@@ -186,8 +184,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
-[product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [nuget]: https://www.nuget.org/
+[product_docs]: https://docs.microsoft.com/azure/communication-services/overview
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Rooms/src
+[source_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Rooms/tests/Samples
 
 <!-- TODO -->
 Update the sample code links once the sdk is published

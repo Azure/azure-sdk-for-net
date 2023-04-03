@@ -107,7 +107,7 @@ namespace Azure.Communication.Rooms.Tests.samples
 
             List<InvitedRoomParticipant> participantsToUpsert = new List<InvitedRoomParticipant>
             {
-                participant2,   // participant2 updated from Presenter to Consumer
+                participant2,   // participant2 updated from Presenter to Attendee
                 newParticipant, // newParticipant added to the room
             };
 

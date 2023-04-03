@@ -76,7 +76,7 @@ participant2 = new InvitedRoomParticipant(communicationUser2) { Role = Participa
 
 List<InvitedRoomParticipant> participantsToUpsert = new List<InvitedRoomParticipant>
 {
-    participant2,   // participant2 updated from Presenter to Consumer
+    participant2,   // participant2 updated from Presenter to Attendee
     newParticipant, // newParticipant added to the room
 };
 
