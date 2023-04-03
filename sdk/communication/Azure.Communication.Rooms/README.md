@@ -90,9 +90,6 @@ Response<CommunicationRoom> getRoomResponse = await roomsClient.GetRoomAsync(cre
 CommunicationRoom getCommunicationRoom = getRoomResponse.Value;
 ```
 
-### List all created rooms
-Coming soon...
-
 ### Delete room
 To delete a room, call the `DeleteRoom` or `DeleteRoomAsync` function from RoomsClient.
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_DeleteRoomAsync
