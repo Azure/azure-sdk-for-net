@@ -179,6 +179,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkResourceProperties Properties { get { throw null; } }
     }
 }
+namespace Azure.ResourceManager.DeviceProvisioningServices.Mock
+{
+    public partial class DeviceProvisioningServiceResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DeviceProvisioningServiceResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityResult> CheckDeviceProvisioningServicesNameAvailability(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityResult>> CheckDeviceProvisioningServicesNameAvailabilityAsync(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetDeviceProvisioningServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetDeviceProvisioningServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceCollection GetDeviceProvisioningServices() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     public partial class CertificateVerificationCodeContent

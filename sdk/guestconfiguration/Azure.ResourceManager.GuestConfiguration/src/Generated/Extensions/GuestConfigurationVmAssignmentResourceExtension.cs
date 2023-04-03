@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
@@ -40,88 +41,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Mock
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// List all guest configuration assignments for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationAssignments_SubscriptionList</description>
-        /// </item>
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationAssignments_RGList</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestConfigurationVmAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationVmAssignmentResource> GetGuestConfigurationAssignmentsAsync(CancellationToken cancellationToken = default)
-        {
-            if (Id.ResourceType == SubscriptionResource.ResourceType)
-            {
-                HttpMessage FirstPageRequest(int? pageSizeHint) => GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateSubscriptionListRequest(Id.SubscriptionId);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GuestConfigurationVmAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics, Pipeline, "GuestConfigurationVmAssignmentResourceExtension.GetGuestConfigurationAssignments", "value", null, cancellationToken);
-            }
-            else if (Id.ResourceType == ResourceGroupResource.ResourceType)
-            {
-                HttpMessage FirstPageRequest(int? pageSizeHint) => GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateRGListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GuestConfigurationVmAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics, Pipeline, "GuestConfigurationVmAssignmentResourceExtension.GetGuestConfigurationAssignments", "value", null, cancellationToken);
-            }
-            else
-            {
-                throw new InvalidOperationException($"{Id.ResourceType} is not supported here");
-            }
-        }
-
-        /// <summary>
-        /// List all guest configuration assignments for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationAssignments_SubscriptionList</description>
-        /// </item>
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationAssignments_RGList</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationVmAssignmentResource> GetGuestConfigurationAssignments(CancellationToken cancellationToken = default)
-        {
-            if (Id.ResourceType == SubscriptionResource.ResourceType)
-            {
-                HttpMessage FirstPageRequest(int? pageSizeHint) => GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateSubscriptionListRequest(Id.SubscriptionId);
-                return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new GuestConfigurationVmAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics, Pipeline, "GuestConfigurationVmAssignmentResourceExtension.GetGuestConfigurationAssignments", "value", null, cancellationToken);
-            }
-            else if (Id.ResourceType == ResourceGroupResource.ResourceType)
-            {
-                HttpMessage FirstPageRequest(int? pageSizeHint) => GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateRGListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-                return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new GuestConfigurationVmAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics, Pipeline, "GuestConfigurationVmAssignmentResourceExtension.GetGuestConfigurationAssignments", "value", null, cancellationToken);
-            }
-            else
-            {
-                throw new InvalidOperationException($"{Id.ResourceType} is not supported here");
-            }
         }
     }
 }

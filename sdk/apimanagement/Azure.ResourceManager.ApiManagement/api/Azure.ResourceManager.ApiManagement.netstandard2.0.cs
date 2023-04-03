@@ -2217,6 +2217,37 @@ namespace Azure.ResourceManager.ApiManagement
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState? State { get { throw null; } set { } }
     }
 }
+namespace Azure.ResourceManager.ApiManagement.Mock
+{
+    public partial class ApiManagementDeletedServiceResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ApiManagementDeletedServiceResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.ApiManagementDeletedServiceResource> GetApiManagementDeletedServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.ApiManagementDeletedServiceResource> GetApiManagementDeletedServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ApiManagementServiceResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ApiManagementServiceResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityResult> CheckApiManagementServiceNameAvailability(Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityResult>> CheckApiManagementServiceNameAvailabilityAsync(Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceGetDomainOwnershipIdentifierResult> GetApiManagementServiceDomainOwnershipIdentifier(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceGetDomainOwnershipIdentifierResult>> GetApiManagementServiceDomainOwnershipIdentifierAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.ApiManagementServiceResource> GetApiManagementServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.ApiManagementServiceResource> GetApiManagementServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementServiceCollection GetApiManagementServices() { throw null; }
+    }
+    public partial class SubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SubscriptionResourceExtension() { }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementDeletedServiceCollection GetApiManagementDeletedServices() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.Models.ApiManagementSku> GetApiManagementSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.Models.ApiManagementSku> GetApiManagementSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

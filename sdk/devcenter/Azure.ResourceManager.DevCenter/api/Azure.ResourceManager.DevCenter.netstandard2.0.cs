@@ -668,6 +668,44 @@ namespace Azure.ResourceManager.DevCenter
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DevCenter.Models.SchedulePatch patch, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.DevCenter.Mock
+{
+    public partial class DevCenterResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DevCenterResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevCenter.DevCenterResource> GetDevCenters(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevCenter.DevCenterResource> GetDevCentersAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkConnectionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NetworkConnectionResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevCenter.NetworkConnectionResource> GetNetworkConnections(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevCenter.NetworkConnectionResource> GetNetworkConnectionsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ProjectResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ProjectResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevCenter.ProjectResource> GetProjects(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevCenter.ProjectResource> GetProjectsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.DevCenter.DevCenterCollection GetDevCenters() { throw null; }
+        public virtual Azure.ResourceManager.DevCenter.NetworkConnectionCollection GetNetworkConnections() { throw null; }
+        public virtual Azure.ResourceManager.DevCenter.ProjectCollection GetProjects() { throw null; }
+    }
+    public partial class SubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SubscriptionResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.OperationStatus> GetOperationStatus(Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.OperationStatus>> GetOperationStatusAsync(Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevCenter.Models.DevCenterSkuDetails> GetSkusBySubscription(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevCenter.Models.DevCenterSkuDetails> GetSkusBySubscriptionAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevCenter.Models.DevCenterUsage> GetUsagesByLocation(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevCenter.Models.DevCenterUsage> GetUsagesByLocationAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class Capability

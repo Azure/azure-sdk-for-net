@@ -200,6 +200,24 @@ namespace Azure.ResourceManager.BillingBenefits
         public virtual Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult> ValidateUpdateAsync(Azure.ResourceManager.BillingBenefits.Models.SavingsPlanUpdateValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.BillingBenefits.Mock
+{
+    public partial class BillingBenefitsSavingsPlanResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected BillingBenefitsSavingsPlanResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(Azure.ResourceManager.BillingBenefits.Models.TenantResourceGetBillingBenefitsSavingsPlansOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(Azure.ResourceManager.BillingBenefits.Models.TenantResourceGetBillingBenefitsSavingsPlansOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TenantResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected TenantResourceExtension() { }
+        public virtual Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasCollection GetBillingBenefitsReservationOrderAliases() { throw null; }
+        public virtual Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasCollection GetBillingBenefitsSavingsPlanOrderAliases() { throw null; }
+        public virtual Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderCollection GetBillingBenefitsSavingsPlanOrders() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult> ValidatePurchase(Azure.ResourceManager.BillingBenefits.Models.SavingsPlanPurchaseValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult> ValidatePurchaseAsync(Azure.ResourceManager.BillingBenefits.Models.SavingsPlanPurchaseValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     public partial class BillingBenefitsAppliedScopeProperties

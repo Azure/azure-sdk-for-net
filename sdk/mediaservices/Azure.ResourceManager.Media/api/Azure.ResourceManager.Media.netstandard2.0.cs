@@ -720,6 +720,26 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.StreamingPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.StreamingPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Media.Mock
+{
+    public partial class MediaServicesAccountResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected MediaServicesAccountResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Media.MediaServicesAccountResource> GetMediaServicesAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.MediaServicesAccountResource> GetMediaServicesAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.Media.MediaServicesAccountCollection GetMediaServicesAccounts() { throw null; }
+    }
+    public partial class SubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SubscriptionResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityResult> CheckMediaServicesNameAvailability(Azure.Core.AzureLocation locationName, Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityResult>> CheckMediaServicesNameAvailabilityAsync(Azure.Core.AzureLocation locationName, Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Media.Models
 {
     public partial class AacAudio : Azure.ResourceManager.Media.Models.MediaAudioBase

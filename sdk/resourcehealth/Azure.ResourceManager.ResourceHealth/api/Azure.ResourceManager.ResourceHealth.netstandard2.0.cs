@@ -246,6 +246,26 @@ namespace Azure.ResourceManager.ResourceHealth
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
 }
+namespace Azure.ResourceManager.ResourceHealth.Mock
+{
+    public partial class ArmResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ArmResourceExtension() { }
+        public virtual Azure.ResourceManager.ResourceHealth.AvailabilityStatusResource GetAvailabilityStatus() { throw null; }
+    }
+    public partial class SubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SubscriptionResourceExtension() { }
+        public virtual Azure.ResourceManager.ResourceHealth.SubscriptionEventCollection GetSubscriptionEvents() { throw null; }
+    }
+    public partial class TenantResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected TenantResourceExtension() { }
+        public virtual Azure.ResourceManager.ResourceHealth.EmergingIssuesGetResultCollection GetEmergingIssuesGetResults() { throw null; }
+        public virtual Azure.ResourceManager.ResourceHealth.MetadataEntityCollection GetMetadataEntities() { throw null; }
+        public virtual Azure.ResourceManager.ResourceHealth.TenantEventCollection GetTenantEvents() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     public static partial class ArmResourceHealthModelFactory

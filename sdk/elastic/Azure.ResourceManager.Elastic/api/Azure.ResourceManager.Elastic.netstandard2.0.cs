@@ -100,6 +100,20 @@ namespace Azure.ResourceManager.Elastic
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Elastic.MonitoringTagRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Elastic.MonitoringTagRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Elastic.Mock
+{
+    public partial class ElasticMonitorResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ElasticMonitorResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Elastic.ElasticMonitorResource> GetElasticMonitorResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Elastic.ElasticMonitorResource> GetElasticMonitorResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.Elastic.ElasticMonitorResourceCollection GetElasticMonitorResources() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Elastic.Models
 {
     public partial class CompanyInfo

@@ -118,6 +118,33 @@ namespace Azure.ResourceManager.MixedReality
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountResource>> UpdateAsync(Azure.ResourceManager.MixedReality.SpatialAnchorsAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.MixedReality.Mock
+{
+    public partial class RemoteRenderingAccountResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected RemoteRenderingAccountResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.MixedReality.RemoteRenderingAccountResource> GetRemoteRenderingAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MixedReality.RemoteRenderingAccountResource> GetRemoteRenderingAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.MixedReality.RemoteRenderingAccountCollection GetRemoteRenderingAccounts() { throw null; }
+        public virtual Azure.ResourceManager.MixedReality.SpatialAnchorsAccountCollection GetSpatialAnchorsAccounts() { throw null; }
+    }
+    public partial class SpatialAnchorsAccountResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SpatialAnchorsAccountResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountResource> GetSpatialAnchorsAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MixedReality.SpatialAnchorsAccountResource> GetSpatialAnchorsAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SubscriptionResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityResult> CheckMixedRealityNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityResult>> CheckMixedRealityNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.MixedReality.Models.MixedRealityNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.MixedReality.Models
 {
     public partial class MixedRealityAccountKeyRegenerateContent

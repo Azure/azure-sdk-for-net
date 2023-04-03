@@ -786,6 +786,43 @@ namespace Azure.ResourceManager.Cdn
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.ProfileResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.ProfilePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Cdn.Mock
+{
+    public partial class ProfileResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ProfileResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.ProfileResource> GetProfiles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.ProfileResource> GetProfilesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityResult> CheckEndpointNameAvailability(Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityAsync(Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies() { throw null; }
+        public virtual Azure.ResourceManager.Cdn.ProfileCollection GetProfiles() { throw null; }
+    }
+    public partial class SubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SubscriptionResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult> CheckCdnNameAvailabilityWithSubscription(Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult>> CheckCdnNameAvailabilityWithSubscriptionAsync(Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSetsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateProbeResult> ValidateProbe(Azure.ResourceManager.Cdn.Models.ValidateProbeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateProbeResult>> ValidateProbeAsync(Azure.ResourceManager.Cdn.Models.ValidateProbeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TenantResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected TenantResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult> CheckCdnNameAvailability(Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult>> CheckCdnNameAvailabilityAsync(Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.EdgeNode> GetEdgeNodes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.EdgeNode> GetEdgeNodesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class AzureFirstPartyManagedCertificateProperties : Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties

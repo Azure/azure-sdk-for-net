@@ -140,6 +140,20 @@ namespace Azure.ResourceManager.Nginx
         public static Azure.AsyncPageable<Azure.ResourceManager.Nginx.NginxDeploymentResource> GetNginxDeploymentsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Nginx.Mock
+{
+    public partial class NginxDeploymentResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NginxDeploymentResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Nginx.NginxDeploymentResource> GetNginxDeployments(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Nginx.NginxDeploymentResource> GetNginxDeploymentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.Nginx.NginxDeploymentCollection GetNginxDeployments() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Nginx.Models
 {
     public partial class NginxCertificateProperties
