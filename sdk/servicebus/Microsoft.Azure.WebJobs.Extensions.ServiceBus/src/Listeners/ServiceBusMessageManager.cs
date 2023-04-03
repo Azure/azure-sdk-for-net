@@ -15,6 +15,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 	{
 		private int _maxBatchSize;
 		private int _minBatchSize;
+		private string _sessionId;
 
 		// This is internal for mocking purposes only.
 		internal Queue<ServiceBusReceivedMessage> CachedMessages { get; set; }
@@ -27,11 +28,20 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 			}
 		}
 
-		public ServiceBusMessageManager(int maxBatchSize, int minBatchSize)
+        public string SessionId
+        {
+            get
+            {
+                return _sessionId;
+            }
+        }
+
+        public ServiceBusMessageManager(int maxBatchSize, int minBatchSize, string sessionID=null)
 		{
 			CachedMessages = new Queue<ServiceBusReceivedMessage>();
 			_maxBatchSize = maxBatchSize;
 			_minBatchSize = minBatchSize;
+			_sessionId = sessionID;
 		}
 
 		public void ClearEventCache()
