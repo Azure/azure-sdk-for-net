@@ -1664,6 +1664,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var snapshotName = "snapshot_wait_until_completed";
                 CreateSnapshotOperation snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
+                ValidateCompletedOperation(snapshotOperation);
                 ConfigurationSettingsSnapshot createdSnapshot = snapshotOperation.Value;
                 ConfigurationSettingsSnapshot retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
                 ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
@@ -1672,7 +1673,8 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 snapshotName = "snapshot_wait_for_completion";
                 snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
-                var completed = snapshotOperation.WaitForCompletion();
+                snapshotOperation.WaitForCompletion();
+                ValidateCompletedOperation(snapshotOperation);
                 createdSnapshot = snapshotOperation.Value;
                 retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
                 ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
@@ -1681,7 +1683,8 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 snapshotName = "snapshot_wait_for_completion_async";
                 snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
-                var completedAsync = await snapshotOperation.WaitForCompletionAsync().ConfigureAwait(false);
+                await snapshotOperation.WaitForCompletionAsync().ConfigureAwait(false);
+                ValidateCompletedOperation(snapshotOperation);
                 createdSnapshot = snapshotOperation.Value;
                 retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
                 ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
@@ -1694,7 +1697,10 @@ namespace Azure.Data.AppConfiguration.Tests
                 {
                     snapshotOperation.UpdateStatus();
                     if (snapshotOperation.HasCompleted)
+                    {
+                        ValidateCompletedOperation(snapshotOperation);
                         break;
+                    }
                     await Task.Delay(1000);
                 }
                 createdSnapshot = snapshotOperation.Value;
@@ -1709,7 +1715,10 @@ namespace Azure.Data.AppConfiguration.Tests
                 {
                     await snapshotOperation.UpdateStatusAsync();
                     if (snapshotOperation.HasCompleted)
+                    {
+                        ValidateCompletedOperation(snapshotOperation);
                         break;
+                    }
                     await Task.Delay(1000);
                 }
                 createdSnapshot = snapshotOperation.Value;
@@ -1729,6 +1738,13 @@ namespace Azure.Data.AppConfiguration.Tests
 
             Assert.NotNull(retrievedSnapshot);
             Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
+        }
+
+        private static void ValidateCompletedOperation(CreateSnapshotOperation operation)
+        {
+            Assert.IsTrue(operation.HasValue);
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.NotNull(operation.Id);
         }
 
         [Test]

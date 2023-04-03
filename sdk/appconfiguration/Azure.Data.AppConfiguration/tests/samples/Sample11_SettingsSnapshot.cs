@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -12,7 +13,7 @@ namespace Azure.Data.AppConfiguration.Samples
     {
         [Test]
         [Ignore("Snapshot feature is currently available only in the dogfood version")]
-        public void CreateSnapshot()
+        public void CreateSnapshotAutomaticPolling()
         {
             var connectionString = TestEnvironment.ConnectionString;
             var client = new ConfigurationClient(connectionString);
@@ -22,7 +23,7 @@ namespace Azure.Data.AppConfiguration.Samples
             {
                 client.SetConfigurationSetting(setting);
 
-                // #region Snippet:AzConfigSample11_CreateSnapshot
+                // #region Snippet:AzConfigSample11_CreateSnapshot_AutomaticPolling
                 List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
                 var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
 
@@ -31,7 +32,87 @@ namespace Azure.Data.AppConfiguration.Samples
                 Console.WriteLine($"Created configuration setting snapshot is: {createdSnapshot}");
                 // #endregion
 
-                // #region Snippet:AzConfigSample11_RetrieveSnapshot
+                // #region Snippet:AzConfigSample11_RetrieveSnapshot_AutomaticPolling
+                ConfigurationSettingsSnapshot retrievedSnapshot = client.GetSnapshot("some_snapshot");
+                Console.WriteLine($"Retrieved configuration setting snapshot is: {retrievedSnapshot}");
+                // #endregion
+
+                Assert.NotNull(retrievedSnapshot);
+                Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
+            }
+            finally
+            {
+                AssertStatus200(client.DeleteConfigurationSetting(setting.Key, setting.Label));
+            }
+        }
+
+        [Test]
+        [Ignore("Snapshot feature is currently available only in the dogfood version")]
+        public async Task CreateSnapshotManualPolling()
+        {
+            var connectionString = TestEnvironment.ConnectionString;
+            var client = new ConfigurationClient(connectionString);
+            var setting = new ConfigurationSetting("some_key", "some_value");
+
+            try
+            {
+                client.SetConfigurationSetting(setting);
+
+                // #region Snippet:AzConfigSample11_CreateSnapshot_ManualPolling
+                List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
+                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+
+                CreateSnapshotOperation createSnapshotOperation = client.CreateSnapshot(WaitUntil.Started, "some_snapshot", settingsSnapshot);
+                while (true)
+                {
+                    createSnapshotOperation.UpdateStatus();
+                    if (createSnapshotOperation.HasCompleted)
+                        break;
+                    await Task.Delay(1000); // play some elevator music
+                }
+
+                ConfigurationSettingsSnapshot createdSnapshot = createSnapshotOperation.Value;
+                Console.WriteLine($"Created configuration setting snapshot is: {createdSnapshot}");
+                // #endregion
+
+                // #region Snippet:AzConfigSample11_RetrieveSnapshot_ManualPolling
+                ConfigurationSettingsSnapshot retrievedSnapshot = client.GetSnapshot("some_snapshot");
+                Console.WriteLine($"Retrieved configuration setting snapshot is: {retrievedSnapshot}");
+                // #endregion
+
+                Assert.NotNull(retrievedSnapshot);
+                Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
+            }
+            finally
+            {
+                AssertStatus200(client.DeleteConfigurationSetting(setting.Key, setting.Label));
+            }
+        }
+
+        [Test]
+        [Ignore("Snapshot feature is currently available only in the dogfood version")]
+        public void CreateSnapshotAutomaticPollingLater()
+        {
+            var connectionString = TestEnvironment.ConnectionString;
+            var client = new ConfigurationClient(connectionString);
+            var setting = new ConfigurationSetting("some_key", "some_value");
+
+            try
+            {
+                client.SetConfigurationSetting(setting);
+
+                // #region Snippet:AzConfigSample11_CreateSnapshot_AutomaticPollingLater
+                List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
+                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+
+                CreateSnapshotOperation createSnapshotOperation = client.CreateSnapshot(WaitUntil.Started, "some_snapshot", settingsSnapshot);
+                createSnapshotOperation.WaitForCompletion();
+
+                ConfigurationSettingsSnapshot createdSnapshot = createSnapshotOperation.Value;
+                Console.WriteLine($"Created configuration setting snapshot is: {createdSnapshot}");
+                // #endregion
+
+                // #region Snippet:AzConfigSample11_RetrieveSnapshot_AutomaticPollingLater
                 ConfigurationSettingsSnapshot retrievedSnapshot = client.GetSnapshot("some_snapshot");
                 Console.WriteLine($"Retrieved configuration setting snapshot is: {retrievedSnapshot}");
                 // #endregion
