@@ -652,6 +652,32 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public System.Collections.Generic.IList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.TagInfo> Tags { get { throw null; } }
     }
 }
+namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mock
+{
+    public partial class FirewallResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected FirewallResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallResource> GetFirewallResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallResource> GetFirewallResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class LocalRulestackResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected LocalRulestackResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetLocalRulestackResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetLocalRulestackResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallResourceCollection GetFirewallResources() { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResourceCollection GetLocalRulestackResources() { throw null; }
+    }
+    public partial class TenantResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected TenantResourceExtension() { }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResourceCollection GetGlobalRulestackResources() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

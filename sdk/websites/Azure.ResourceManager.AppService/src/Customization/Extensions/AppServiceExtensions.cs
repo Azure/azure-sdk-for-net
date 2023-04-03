@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
 
-            return GetExtensionClient(subscriptionResource).GetAllSiteIdentifierDataAsync(nameIdentifier, cancellationToken);
+            return GetSubscriptionResourceExtension(subscriptionResource).GetAllSiteIdentifierDataAsync(nameIdentifier, cancellationToken);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
 
-            return GetExtensionClient(subscriptionResource).GetAllSiteIdentifierData(nameIdentifier, cancellationToken);
+            return GetSubscriptionResourceExtension(subscriptionResource).GetAllSiteIdentifierData(nameIdentifier, cancellationToken);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataDataAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataDataAsync(cancellationToken);
+            return GetResourceGroupResourceExtension(resourceGroupResource).GetAllResourceHealthMetadataDataAsync(cancellationToken);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataData(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataData(cancellationToken);
+            return GetResourceGroupResourceExtension(resourceGroupResource).GetAllResourceHealthMetadataData(cancellationToken);
         }
     }
 }

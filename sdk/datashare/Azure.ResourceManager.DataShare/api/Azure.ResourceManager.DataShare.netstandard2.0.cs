@@ -460,6 +460,35 @@ namespace Azure.ResourceManager.DataShare
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.ShareSubscriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.ShareSubscriptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.DataShare.Mock
+{
+    public partial class DataShareAccountResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DataShareAccountResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareAccountResource> GetDataShareAccounts(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareAccountResource> GetDataShareAccountsAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DataShareConsumerInvitationResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DataShareConsumerInvitationResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource> RejectConsumerInvitation(Azure.Core.AzureLocation location, Azure.ResourceManager.DataShare.DataShareConsumerInvitationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource>> RejectConsumerInvitationAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataShare.DataShareConsumerInvitationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.DataShare.DataShareAccountCollection GetDataShareAccounts() { throw null; }
+    }
+    public partial class TenantResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected TenantResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration> ActivateEmail(Azure.Core.AzureLocation location, Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration emailRegistration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration>> ActivateEmailAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration emailRegistration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataShare.DataShareConsumerInvitationCollection GetDataShareConsumerInvitations() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration> RegisterEmail(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration>> RegisterEmailAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class AdlsGen1FileDataSet : Azure.ResourceManager.DataShare.ShareDataSetData
