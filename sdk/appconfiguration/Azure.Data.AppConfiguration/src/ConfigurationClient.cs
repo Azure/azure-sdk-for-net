@@ -926,12 +926,7 @@ namespace Azure.Data.AppConfiguration
                 // Start the operation
                 var operationT = await CreateSnapshotAsync(wait, name, content, contentType, context).ConfigureAwait(false);
 
-                // Get the operation details so that we can pull the operation Id
-                var operationDetails = await GetOperationDetailsAsync(name, context).ConfigureAwait(false);
-                JsonElement result = JsonDocument.Parse(operationDetails.ContentStream).RootElement;
-                var id = result.GetProperty("id").ToString();
-
-                var createSnapshotOperation = new CreateSnapshotOperation(id, ClientDiagnostics, operationT);
+                var createSnapshotOperation = new CreateSnapshotOperation(name, ClientDiagnostics, operationT);
 
                 if (wait == WaitUntil.Completed)
                 {
@@ -971,12 +966,7 @@ namespace Azure.Data.AppConfiguration
                 // Start the operation
                 var operationT = CreateSnapshot(wait, name, content, contentType, context);
 
-                // Get the operation details so that we can pull the operation Id
-                var operationDetails = GetOperationDetails(name, context);
-                JsonElement result = JsonDocument.Parse(operationDetails.ContentStream).RootElement;
-                var id = result.GetProperty("id").ToString();
-
-                var createSnapshotOperation = new CreateSnapshotOperation(id, ClientDiagnostics, operationT);
+                var createSnapshotOperation = new CreateSnapshotOperation(name, ClientDiagnostics, operationT);
 
                 if (wait == WaitUntil.Completed)
                 {

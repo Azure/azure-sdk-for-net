@@ -39,13 +39,13 @@ namespace Azure.Data.AppConfiguration
         /// <inheritdoc/>
         public override bool HasCompleted => _operation.HasCompleted;
 
-        internal CreateSnapshotOperation(string id)
+        internal CreateSnapshotOperation(string snapshotName)
         {
-            _id = id;
+            _id = snapshotName;
         }
 
-        internal CreateSnapshotOperation(string id, ClientDiagnostics diagnostics, Operation<BinaryData> operation)
-            : this(id)
+        internal CreateSnapshotOperation(string snapshotName, ClientDiagnostics diagnostics, Operation<BinaryData> operation)
+            : this(snapshotName)
         {
             _diagnostics = diagnostics;
             _operation = operation;
