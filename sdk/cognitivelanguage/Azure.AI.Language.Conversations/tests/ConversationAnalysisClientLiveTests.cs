@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 },
                 parameters = new
                 {
-                    projectNam = TestEnvironment.ProjectName,
+                    projectName = TestEnvironment.ProjectName,
                     deploymentName = TestEnvironment.DeploymentName,
                 },
                 kind = "Conversation",
@@ -80,7 +80,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 },
                 parameters = new
                 {
-                    projectNam = TestEnvironment.OrchestrationProjectName,
+                    projectName = TestEnvironment.OrchestrationProjectName,
                     deploymentName = TestEnvironment.OrchestrationDeploymentName,
                 },
                 kind = "Conversation",
@@ -137,7 +137,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 },
                 parameters = new
                 {
-                    projectNam = TestEnvironment.OrchestrationProjectName,
+                    projectName = TestEnvironment.OrchestrationProjectName,
                     deploymentName = TestEnvironment.OrchestrationDeploymentName,
                 },
                 kind = "Conversation",
@@ -189,7 +189,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 },
                 parameters = new
                 {
-                    projectNam = TestEnvironment.OrchestrationProjectName,
+                    projectName = TestEnvironment.OrchestrationProjectName,
                     deploymentName = TestEnvironment.OrchestrationDeploymentName,
                 },
                 kind = "Conversation",
@@ -301,21 +301,21 @@ namespace Azure.AI.Language.Conversations.Tests
                             modality = "text",
                         },
                     },
-                    tasks = new[]
+                },
+                tasks = new[]
+                {
+                    new
                     {
-                        new
+                        parameters = new
                         {
-                            parameters = new
+                            summaryAspects = new[]
                             {
-                                summaryAspects = new[]
-                                {
-                                    "issue",
-                                    "resolution",
-                                },
+                                "issue",
+                                "resolution",
                             },
-                            kind = "ConversationalSummarizationTask",
-                            taskName = "1",
                         },
+                        kind = "ConversationalSummarizationTask",
+                        taskName = "1",
                     },
                 },
             };
@@ -384,6 +384,24 @@ namespace Azure.AI.Language.Conversations.Tests
                         },
                     },
                 },
+                tasks = new[]
+                {
+                    new
+                    {
+                        parameters = new
+                        {
+                            piiCategories = new[]
+                            {
+                                "All"
+                            },
+                            includeAudioRedaction = false,
+                            modelVersion = "2022-05-15-preview",
+                            loggingOptOut = false,
+                        },
+                        kind = "ConversationalPIITask",
+                        taskName = "analyze"
+                    }
+                }
             };
 
             Operation<BinaryData> analyzeConversationOperation = await Client.AnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
