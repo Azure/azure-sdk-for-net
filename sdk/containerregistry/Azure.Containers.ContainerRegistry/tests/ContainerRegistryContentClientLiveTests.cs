@@ -684,6 +684,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         [Test]
         [LiveOnly]
+        [IgnoreServiceError(404, "BLOB_UPLOAD_INVALID")]
         public async Task CanUploadAndDownloadLargeBlob()
         {
             long sizeInGiB = 1;
