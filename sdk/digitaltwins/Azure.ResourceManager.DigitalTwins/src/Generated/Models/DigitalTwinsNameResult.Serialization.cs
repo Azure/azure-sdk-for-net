@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static DigitalTwinsNameResult DeserializeDigitalTwinsNameResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<string> message = default;
             Optional<DigitalTwinsNameUnavailableReason?> reason = default;

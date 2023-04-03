@@ -54,10 +54,7 @@ namespace Azure.Communication.CallAutomation
         public IList<CommunicationIdentifier> AudioChannelParticipantOrdering { get; } =
             new List<CommunicationIdentifier>();
 
-        /// <summary> Recording storage mode. `External` enables bring your own storage. </summary>
-        public RecordingStorageType? RecordingStorageType { get; set; }
-
-        /// <summary> The location where recording is stored, when RecordingStorageType is set to BlobStorage. </summary>
-        public Uri ExternalStorageLocation { get; set; }
+        /// <summary> (Optional) Used to specify external storage for call recording. </summary>
+        public ExternalStorage ExternalStorage { get; set; }
     }
 }

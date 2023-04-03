@@ -16,6 +16,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static TextAnalyticsError DeserializeTextAnalyticsError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ErrorCodeValue code = default;
             string message = default;
             Optional<string> target = default;

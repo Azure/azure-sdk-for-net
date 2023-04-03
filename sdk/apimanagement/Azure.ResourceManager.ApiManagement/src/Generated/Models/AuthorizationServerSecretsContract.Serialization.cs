@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static AuthorizationServerSecretsContract DeserializeAuthorizationServerSecretsContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientSecret = default;
             Optional<string> resourceOwnerUsername = default;
             Optional<string> resourceOwnerPassword = default;

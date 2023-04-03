@@ -14,8 +14,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentKeyValuePair DeserializeDocumentKeyValuePair(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DocumentKeyValueElement key = default;
             Optional<DocumentKeyValueElement> value = default;
+            Optional<string> commonName = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -34,13 +39,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     value = DocumentKeyValueElement.DeserializeDocumentKeyValueElement(property.Value);
                     continue;
                 }
+                if (property.NameEquals("commonName"u8))
+                {
+                    commonName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("confidence"u8))
                 {
                     confidence = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new DocumentKeyValuePair(key, value.Value, confidence);
+            return new DocumentKeyValuePair(key, value.Value, commonName.Value, confidence);
         }
     }
 }

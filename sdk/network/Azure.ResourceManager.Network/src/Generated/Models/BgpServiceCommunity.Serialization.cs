@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BgpServiceCommunity DeserializeBgpServiceCommunity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;

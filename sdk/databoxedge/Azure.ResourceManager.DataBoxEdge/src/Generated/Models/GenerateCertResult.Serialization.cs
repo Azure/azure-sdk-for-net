@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static GenerateCertResult DeserializeGenerateCertResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> publicKey = default;
             Optional<string> privateKey = default;
             Optional<DateTimeOffset> expiryTimeInUtc = default;

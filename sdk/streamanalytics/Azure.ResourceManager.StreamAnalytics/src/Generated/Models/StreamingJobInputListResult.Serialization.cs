@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamingJobInputListResult DeserializeStreamingJobInputListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StreamingJobInputData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

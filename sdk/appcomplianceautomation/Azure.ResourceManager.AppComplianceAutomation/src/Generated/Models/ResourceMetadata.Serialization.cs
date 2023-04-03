@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         internal static ResourceMetadata DeserializeResourceMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string resourceId = default;
             Optional<string> resourceType = default;
             Optional<string> resourceKind = default;

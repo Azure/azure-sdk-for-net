@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Analysis.Models
 
         internal static AnalysisResourceSku DeserializeAnalysisResourceSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<AnalysisSkuTier> tier = default;
             Optional<int> capacity = default;

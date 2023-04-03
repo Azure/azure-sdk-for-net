@@ -84,6 +84,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static KubernetesBucket DeserializeKubernetesBucket(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> url = default;
             Optional<string> bucketName = default;
             Optional<bool> insecure = default;

@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DevTestLabs
 
         internal static DevTestLabArtifactData DeserializeDevTestLabArtifactData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;

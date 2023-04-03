@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static LatencyMetric DeserializeLatencyMetric(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<DateTimeOffset> endDateTimeUtc = default;
             Optional<float> aValue = default;

@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static DeviceTwinInfoProperties DeserializeDeviceTwinInfoProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeviceTwinProperties> desired = default;
             Optional<DeviceTwinProperties> reported = default;
             foreach (var property in element.EnumerateObject())

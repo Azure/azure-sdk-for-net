@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlDBSyncTaskInput DeserializeMigrateSqlServerSqlDBSyncTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases = default;
             Optional<MigrationValidationOptions> validationOptions = default;
             SqlConnectionInfo sourceConnectionInfo = default;

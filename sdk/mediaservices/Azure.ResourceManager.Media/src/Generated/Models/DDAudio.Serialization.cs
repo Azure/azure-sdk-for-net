@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static DDAudio DeserializeDDAudio(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> channels = default;
             Optional<int> samplingRate = default;
             Optional<int> bitrate = default;

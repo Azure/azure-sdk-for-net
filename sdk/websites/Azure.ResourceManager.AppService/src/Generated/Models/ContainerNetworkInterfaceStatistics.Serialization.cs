@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ContainerNetworkInterfaceStatistics DeserializeContainerNetworkInterfaceStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> rxBytes = default;
             Optional<long> rxPackets = default;
             Optional<long> rxErrors = default;

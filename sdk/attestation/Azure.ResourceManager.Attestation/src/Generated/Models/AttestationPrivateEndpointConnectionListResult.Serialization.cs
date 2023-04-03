@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Attestation.Models
     {
         internal static AttestationPrivateEndpointConnectionListResult DeserializeAttestationPrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AttestationPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

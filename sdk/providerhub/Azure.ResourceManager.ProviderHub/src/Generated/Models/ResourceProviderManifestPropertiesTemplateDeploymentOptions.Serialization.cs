@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceProviderManifestPropertiesTemplateDeploymentOptions DeserializeResourceProviderManifestPropertiesTemplateDeploymentOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> preflightSupported = default;
             Optional<IList<PreflightOption>> preflightOptions = default;
             foreach (var property in element.EnumerateObject())

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabDataDiskStorageTypeInfo DeserializeDevTestLabDataDiskStorageTypeInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> lun = default;
             Optional<DevTestLabStorageType> storageType = default;
             foreach (var property in element.EnumerateObject())

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static BackupPolicyMigrationState DeserializeBackupPolicyMigrationState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupPolicyMigrationStatus> status = default;
             Optional<BackupPolicyType> targetType = default;
             Optional<DateTimeOffset> startTime = default;

@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static RolloutCreateOrUpdateContent DeserializeRolloutCreateOrUpdateContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Identity identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

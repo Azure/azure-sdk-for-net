@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentWord DeserializeDocumentWord(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string content = default;
             Optional<IReadOnlyList<float>> polygon = default;
             DocumentSpan span = default;

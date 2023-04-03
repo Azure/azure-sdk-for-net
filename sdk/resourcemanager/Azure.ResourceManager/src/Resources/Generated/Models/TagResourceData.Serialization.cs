@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Resources
 
         internal static TagResourceData DeserializeTagResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Tag properties = default;
             ResourceIdentifier id = default;
             string name = default;

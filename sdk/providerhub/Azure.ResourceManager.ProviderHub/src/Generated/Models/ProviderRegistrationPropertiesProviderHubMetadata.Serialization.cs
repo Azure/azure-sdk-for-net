@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ProviderRegistrationPropertiesProviderHubMetadata DeserializeProviderRegistrationPropertiesProviderHubMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ResourceProviderAuthorization>> providerAuthorizations = default;
             Optional<ProviderHubMetadataProviderAuthentication> providerAuthentication = default;
             Optional<ProviderHubMetadataThirdPartyProviderAuthorization> thirdPartyProviderAuthorization = default;

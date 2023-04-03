@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static RecoveryPointDataStoreDetail DeserializeRecoveryPointDataStoreDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> expiryTime = default;
             Optional<Guid> id = default;

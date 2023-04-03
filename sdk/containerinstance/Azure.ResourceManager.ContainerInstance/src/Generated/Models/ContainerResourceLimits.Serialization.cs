@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerResourceLimits DeserializeContainerResourceLimits(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> memoryInGB = default;
             Optional<double> cpu = default;
             Optional<ContainerGpuResourceInfo> gpu = default;

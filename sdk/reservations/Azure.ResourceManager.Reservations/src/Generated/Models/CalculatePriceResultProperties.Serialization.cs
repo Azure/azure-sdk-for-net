@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static CalculatePriceResultProperties DeserializeCalculatePriceResultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CalculatePriceResultPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;
             Optional<double> netTotal = default;
             Optional<double> taxTotal = default;

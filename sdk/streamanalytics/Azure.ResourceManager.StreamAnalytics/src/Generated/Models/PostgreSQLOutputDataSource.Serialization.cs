@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static PostgreSQLOutputDataSource DeserializePostgreSQLOutputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> server = default;
             Optional<string> database = default;

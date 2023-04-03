@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         internal static SavingsPlanValidateResult DeserializeSavingsPlanValidateResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> valid = default;
             Optional<string> reasonCode = default;
             Optional<string> reason = default;

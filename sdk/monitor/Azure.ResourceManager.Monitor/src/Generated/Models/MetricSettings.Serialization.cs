@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricSettings DeserializeMetricSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> timeGrain = default;
             Optional<string> category = default;
             bool enabled = default;

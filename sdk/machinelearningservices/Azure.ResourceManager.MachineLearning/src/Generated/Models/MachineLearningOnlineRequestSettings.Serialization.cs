@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningOnlineRequestSettings DeserializeMachineLearningOnlineRequestSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxConcurrentRequestsPerInstance = default;
             Optional<TimeSpan> maxQueueWait = default;
             Optional<TimeSpan> requestTimeout = default;

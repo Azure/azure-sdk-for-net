@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertProperties DeserializeServiceAlertProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceAlertEssentials> essentials = default;
             Optional<BinaryData> context = default;
             Optional<BinaryData> egressConfig = default;

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static AzureDevOpsConnectorProperties DeserializeAzureDevOpsConnectorProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<AuthorizationInfo> authorization = default;
             Optional<IList<AzureDevOpsOrgMetadata>> orgs = default;

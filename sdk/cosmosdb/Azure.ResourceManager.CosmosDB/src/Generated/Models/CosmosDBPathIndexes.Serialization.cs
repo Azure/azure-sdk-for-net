@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBPathIndexes DeserializeCosmosDBPathIndexes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CosmosDBDataType> dataType = default;
             Optional<int> precision = default;
             Optional<CosmosDBIndexKind> kind = default;

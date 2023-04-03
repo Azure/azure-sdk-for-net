@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.HybridData.Models
 
         internal static HybridDataJobStage DeserializeHybridDataJobStage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> stageName = default;
             HybridDataJobStatus stageStatus = default;
             Optional<BinaryData> jobStageDetails = default;

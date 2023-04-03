@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ConflictResolutionPolicy DeserializeConflictResolutionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConflictResolutionMode> mode = default;
             Optional<string> conflictResolutionPath = default;
             Optional<string> conflictResolutionProcedure = default;

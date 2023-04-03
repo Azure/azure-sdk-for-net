@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.BotService.Models
     {
         internal static BotServicePrivateEndpointConnectionListResult DeserializeBotServicePrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BotServicePrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

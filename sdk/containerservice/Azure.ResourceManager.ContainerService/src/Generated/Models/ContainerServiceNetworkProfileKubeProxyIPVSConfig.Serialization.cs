@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceNetworkProfileKubeProxyIPVSConfig DeserializeContainerServiceNetworkProfileKubeProxyIPVSConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerServiceNetworkProfileKubeProxyIPVSScheduler> scheduler = default;
             Optional<int> tcpTimeoutSeconds = default;
             Optional<int> tcpFinTimeoutSeconds = default;

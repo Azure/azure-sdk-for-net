@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectionMonitorQueryResult DeserializeConnectionMonitorQueryResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConnectionMonitorSourceStatus> sourceStatus = default;
             Optional<IReadOnlyList<ConnectionStateSnapshot>> states = default;
             foreach (var property in element.EnumerateObject())

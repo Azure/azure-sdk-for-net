@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformBuildResultLog DeserializeAppPlatformBuildResultLog(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> blobUri = default;
             foreach (var property in element.EnumerateObject())
             {

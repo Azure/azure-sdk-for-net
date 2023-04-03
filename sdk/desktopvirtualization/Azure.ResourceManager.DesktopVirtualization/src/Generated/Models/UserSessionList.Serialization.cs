@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal static UserSessionList DeserializeUserSessionList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<UserSessionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DataBoxEdgeAlertData DeserializeDataBoxEdgeAlertData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

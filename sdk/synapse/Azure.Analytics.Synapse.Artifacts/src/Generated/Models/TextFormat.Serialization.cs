@@ -86,6 +86,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static TextFormat DeserializeTextFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> columnDelimiter = default;
             Optional<object> rowDelimiter = default;
             Optional<object> escapeChar = default;

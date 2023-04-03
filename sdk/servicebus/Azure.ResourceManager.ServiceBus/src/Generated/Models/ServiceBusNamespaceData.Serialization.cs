@@ -95,6 +95,10 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static ServiceBusNamespaceData DeserializeServiceBusNamespaceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceBusSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

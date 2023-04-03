@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         internal static StoragePoolSkuListResult DeserializeStoragePoolSkuListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StoragePoolSkuInfo>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

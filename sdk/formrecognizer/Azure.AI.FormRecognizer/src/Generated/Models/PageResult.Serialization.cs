@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static PageResult DeserializePageResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int page = default;
             Optional<int?> clusterId = default;
             Optional<IReadOnlyList<KeyValuePair>> keyValuePairs = default;

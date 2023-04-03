@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryCredentialReference DeserializeFactoryCredentialReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FactoryCredentialReferenceType type = default;
             string referenceName = default;
             IDictionary<string, BinaryData> additionalProperties = default;

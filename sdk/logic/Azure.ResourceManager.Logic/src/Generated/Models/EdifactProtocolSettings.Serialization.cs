@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactProtocolSettings DeserializeEdifactProtocolSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EdifactValidationSettings validationSettings = default;
             EdifactFramingSettings framingSettings = default;
             EdifactEnvelopeSettings envelopeSettings = default;

@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static WebRestoreOperationCompletedEventData DeserializeWebRestoreOperationCompletedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppEventTypeDetail> appEventTypeDetail = default;
             Optional<string> name = default;
             Optional<string> clientRequestId = default;

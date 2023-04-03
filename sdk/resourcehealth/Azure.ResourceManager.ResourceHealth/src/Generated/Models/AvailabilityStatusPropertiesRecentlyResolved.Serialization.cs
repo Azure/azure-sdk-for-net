@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static AvailabilityStatusPropertiesRecentlyResolved DeserializeAvailabilityStatusPropertiesRecentlyResolved(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> unavailableOccuredTime = default;
             Optional<DateTimeOffset> resolvedTime = default;
             Optional<string> unavailableSummary = default;

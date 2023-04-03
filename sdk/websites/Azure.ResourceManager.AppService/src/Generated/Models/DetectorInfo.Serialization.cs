@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DetectorInfo DeserializeDetectorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> description = default;

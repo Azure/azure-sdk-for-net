@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppBillingMeter DeserializeContainerAppBillingMeter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<ContainerAppBillingMeterProperties> properties = default;
             ResourceIdentifier id = default;

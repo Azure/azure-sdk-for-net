@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineExtensionInstanceView DeserializeVirtualMachineExtensionInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> typeHandlerVersion = default;

@@ -31,6 +31,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static ReviewNote DeserializeReviewNote(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<DateTimeOffset> date = default;
             foreach (var property in element.EnumerateObject())

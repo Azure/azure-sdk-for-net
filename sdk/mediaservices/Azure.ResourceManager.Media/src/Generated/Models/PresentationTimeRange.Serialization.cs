@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static PresentationTimeRange DeserializePresentationTimeRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> startTimestamp = default;
             Optional<long> endTimestamp = default;
             Optional<long> presentationWindowDuration = default;

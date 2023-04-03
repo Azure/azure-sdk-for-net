@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static StreamingEndpointSkuInfo DeserializeStreamingEndpointSkuInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceType> resourceType = default;
             Optional<StreamingEndpointCapacity> capacity = default;
             Optional<StreamingEndpointSku> sku = default;

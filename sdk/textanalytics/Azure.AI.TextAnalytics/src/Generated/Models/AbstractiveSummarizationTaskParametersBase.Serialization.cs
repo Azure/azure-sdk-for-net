@@ -30,6 +30,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static AbstractiveSummarizationTaskParametersBase DeserializeAbstractiveSummarizationTaskParametersBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> sentenceCount = default;
             Optional<StringIndexType> stringIndexType = default;
             foreach (var property in element.EnumerateObject())

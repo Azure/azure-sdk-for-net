@@ -17,6 +17,10 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static JobState DeserializeJobState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayName = default;
             DateTimeOffset createdDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;

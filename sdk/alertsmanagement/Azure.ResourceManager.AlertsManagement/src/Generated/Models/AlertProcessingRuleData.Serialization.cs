@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AlertsManagement
 
         internal static AlertProcessingRuleData DeserializeAlertProcessingRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AlertProcessingRuleProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

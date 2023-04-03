@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorWebApplicationFirewallPolicySettings DeserializeFrontDoorWebApplicationFirewallPolicySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolicyEnabledState> enabledState = default;
             Optional<FrontDoorWebApplicationFirewallPolicyMode> mode = default;
             Optional<Uri> redirectUrl = default;

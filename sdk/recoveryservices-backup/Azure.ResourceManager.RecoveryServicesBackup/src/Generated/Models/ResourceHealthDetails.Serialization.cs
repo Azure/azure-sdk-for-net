@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static ResourceHealthDetails DeserializeResourceHealthDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> code = default;
             Optional<string> title = default;
             Optional<string> message = default;

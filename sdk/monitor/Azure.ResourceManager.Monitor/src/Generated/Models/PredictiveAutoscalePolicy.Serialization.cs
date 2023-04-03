@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static PredictiveAutoscalePolicy DeserializePredictiveAutoscalePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PredictiveAutoscalePolicyScaleMode scaleMode = default;
             Optional<TimeSpan> scaleLookAheadTime = default;
             foreach (var property in element.EnumerateObject())

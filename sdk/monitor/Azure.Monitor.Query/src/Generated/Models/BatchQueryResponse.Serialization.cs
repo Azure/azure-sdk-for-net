@@ -15,6 +15,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static BatchQueryResponse DeserializeBatchQueryResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<int> status = default;
             Optional<LogsBatchQueryResult> body = default;

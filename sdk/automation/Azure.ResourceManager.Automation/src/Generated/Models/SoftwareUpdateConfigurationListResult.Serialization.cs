@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static SoftwareUpdateConfigurationListResult DeserializeSoftwareUpdateConfigurationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SoftwareUpdateConfigurationCollectionItem>> value = default;
             foreach (var property in element.EnumerateObject())
             {

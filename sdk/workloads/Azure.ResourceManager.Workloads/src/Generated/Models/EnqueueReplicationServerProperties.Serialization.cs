@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static EnqueueReplicationServerProperties DeserializeEnqueueReplicationServerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EnqueueReplicationServerType> ersVersion = default;
             Optional<string> instanceNo = default;
             Optional<string> hostname = default;

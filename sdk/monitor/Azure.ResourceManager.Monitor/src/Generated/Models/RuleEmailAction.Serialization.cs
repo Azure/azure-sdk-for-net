@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static RuleEmailAction DeserializeRuleEmailAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> sendToServiceOwners = default;
             Optional<IList<string>> customEmails = default;
             string odataType = default;

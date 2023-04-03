@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.StorageMover
 
         internal static StorageMoverProjectData DeserializeStorageMoverProjectData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

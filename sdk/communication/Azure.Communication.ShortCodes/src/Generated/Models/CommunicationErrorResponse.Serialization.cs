@@ -14,6 +14,10 @@ namespace Azure.Communication.ShortCodes.Models
     {
         internal static CommunicationErrorResponse DeserializeCommunicationErrorResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CommunicationError error = default;
             foreach (var property in element.EnumerateObject())
             {

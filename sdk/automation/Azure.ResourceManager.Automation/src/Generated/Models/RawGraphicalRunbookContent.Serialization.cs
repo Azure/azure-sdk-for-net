@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static RawGraphicalRunbookContent DeserializeRawGraphicalRunbookContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> schemaVersion = default;
             Optional<string> runbookDefinition = default;
             Optional<GraphRunbookType> runbookType = default;

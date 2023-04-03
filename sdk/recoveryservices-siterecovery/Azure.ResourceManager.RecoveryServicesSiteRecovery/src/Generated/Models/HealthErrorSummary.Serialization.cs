@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static HealthErrorSummary DeserializeHealthErrorSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> summaryCode = default;
             Optional<HealthErrorCategory> category = default;
             Optional<Severity> severity = default;

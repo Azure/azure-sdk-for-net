@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBuilderProperties DeserializeAppPlatformBuilderProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformBuilderProvisioningState> provisioningState = default;
             Optional<AppPlatformClusterStackProperties> stack = default;
             Optional<IList<BuildpacksGroupProperties>> buildpackGroups = default;

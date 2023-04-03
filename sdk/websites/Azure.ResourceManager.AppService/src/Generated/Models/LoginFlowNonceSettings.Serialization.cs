@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static LoginFlowNonceSettings DeserializeLoginFlowNonceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> validateNonce = default;
             Optional<string> nonceExpirationInterval = default;
             foreach (var property in element.EnumerateObject())

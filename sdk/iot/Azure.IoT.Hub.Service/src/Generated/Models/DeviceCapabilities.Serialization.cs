@@ -25,6 +25,10 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static DeviceCapabilities DeserializeDeviceCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> iotEdge = default;
             foreach (var property in element.EnumerateObject())
             {

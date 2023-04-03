@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static PartnerDetails DeserializePartnerDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<string> longDescription = default;
             Optional<Uri> setupUri = default;

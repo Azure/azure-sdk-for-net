@@ -107,6 +107,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static LoadBalancerProfile DeserializeLoadBalancerProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinuxProfileProperties> linuxProfile = default;
             Optional<string> name = default;
             Optional<int> count = default;

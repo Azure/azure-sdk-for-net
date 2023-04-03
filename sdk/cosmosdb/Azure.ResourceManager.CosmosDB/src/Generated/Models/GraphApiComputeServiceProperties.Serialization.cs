@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static GraphApiComputeServiceProperties DeserializeGraphApiComputeServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> graphApiComputeEndpoint = default;
             Optional<IReadOnlyList<GraphApiComputeRegionalService>> locations = default;
             Optional<DateTimeOffset> creationTime = default;

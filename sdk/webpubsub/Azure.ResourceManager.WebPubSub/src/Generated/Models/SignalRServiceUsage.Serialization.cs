@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         internal static SignalRServiceUsage DeserializeSignalRServiceUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<long> currentValue = default;
             Optional<long> limit = default;

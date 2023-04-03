@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxDiskJobSecrets DeserializeDataBoxDiskJobSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataBoxDiskSecret>> diskSecrets = default;
             Optional<string> passKey = default;
             Optional<bool> isPasskeyUserDefined = default;

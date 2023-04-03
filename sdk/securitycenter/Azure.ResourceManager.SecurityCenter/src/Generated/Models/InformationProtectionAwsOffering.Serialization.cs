@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static InformationProtectionAwsOffering DeserializeInformationProtectionAwsOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AwsInformationProtection> informationProtection = default;
             OfferingType offeringType = default;
             Optional<string> description = default;

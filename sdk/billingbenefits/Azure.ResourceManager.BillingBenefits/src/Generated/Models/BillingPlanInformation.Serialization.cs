@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static BillingPlanInformation DeserializeBillingPlanInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
             Optional<DateTimeOffset> startDate = default;
             Optional<DateTimeOffset> nextPaymentDueDate = default;

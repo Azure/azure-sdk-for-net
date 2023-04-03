@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.RecoveryServices
 
         internal static RecoveryServicesVaultData DeserializeRecoveryServicesVaultData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<RecoveryServicesVaultProperties> properties = default;
             Optional<RecoveryServicesSku> sku = default;

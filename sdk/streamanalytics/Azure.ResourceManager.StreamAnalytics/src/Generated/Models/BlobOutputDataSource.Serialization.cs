@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static BlobOutputDataSource DeserializeBlobOutputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
             Optional<string> container = default;

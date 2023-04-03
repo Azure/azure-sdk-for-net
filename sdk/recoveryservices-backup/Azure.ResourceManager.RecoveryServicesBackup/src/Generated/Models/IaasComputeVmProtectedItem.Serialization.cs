@@ -150,6 +150,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static IaasComputeVmProtectedItem DeserializeIaasComputeVmProtectedItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<ResourceIdentifier> virtualMachineId = default;
             Optional<string> protectionStatus = default;

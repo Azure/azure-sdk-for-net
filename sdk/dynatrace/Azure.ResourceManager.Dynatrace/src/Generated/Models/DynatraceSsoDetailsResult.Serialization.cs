@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static DynatraceSsoDetailsResult DeserializeDynatraceSsoDetailsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DynatraceSsoStatus> isSsoEnabled = default;
             Optional<Uri> metadataUrl = default;
             Optional<Uri> singleSignOnUrl = default;

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaTransformOutput DeserializeMediaTransformOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MediaTransformOnErrorType> onError = default;
             Optional<MediaJobPriority> relativePriority = default;
             MediaTransformPreset preset = default;

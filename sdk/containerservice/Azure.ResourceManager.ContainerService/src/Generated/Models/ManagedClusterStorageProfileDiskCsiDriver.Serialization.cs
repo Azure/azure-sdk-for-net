@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterStorageProfileDiskCsiDriver DeserializeManagedClusterStorageProfileDiskCsiDriver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())

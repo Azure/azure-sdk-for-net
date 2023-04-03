@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static AutoscaleSettingsResourceInfo DeserializeAutoscaleSettingsResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int maxThroughput = default;
             Optional<AutoUpgradePolicyResourceInfo> autoUpgradePolicy = default;
             Optional<int> targetMaxThroughput = default;

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DynamicThresholdFailingPeriods DeserializeDynamicThresholdFailingPeriods(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             float numberOfEvaluationPeriods = default;
             float minFailingPeriodsToAlert = default;
             foreach (var property in element.EnumerateObject())

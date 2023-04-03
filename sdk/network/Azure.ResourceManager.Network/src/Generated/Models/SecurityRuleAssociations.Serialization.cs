@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static SecurityRuleAssociations DeserializeSecurityRuleAssociations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetworkInterfaceAssociation> networkInterfaceAssociation = default;
             Optional<SubnetAssociation> subnetAssociation = default;
             Optional<IReadOnlyList<SecurityRuleData>> defaultSecurityRules = default;

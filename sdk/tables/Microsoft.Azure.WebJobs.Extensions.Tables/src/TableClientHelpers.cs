@@ -84,7 +84,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             if (!IsValidAzureTableKeyValue(value))
             {
                 throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture,
-                    "'{0}' is not a valid value for a partition key or row key.", value));
+                    "'{0}' is not a valid value for a partition key or row key. " +
+                    "Ensure that the table entity contains valid 'PartitionKey' and 'RowKey' values.", value));
             }
         }
 

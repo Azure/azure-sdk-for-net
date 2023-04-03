@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningDatabricksProperties DeserializeMachineLearningDatabricksProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> databricksAccessToken = default;
             Optional<Uri> workspaceUrl = default;
             foreach (var property in element.EnumerateObject())

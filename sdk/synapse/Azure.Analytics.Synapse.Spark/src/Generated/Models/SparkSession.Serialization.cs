@@ -15,6 +15,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkSession DeserializeSparkSession(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SparkSessionState> livyInfo = default;
             Optional<string> name = default;
             Optional<string> workspaceName = default;

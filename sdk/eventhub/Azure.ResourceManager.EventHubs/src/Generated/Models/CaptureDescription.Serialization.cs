@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static CaptureDescription DeserializeCaptureDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<EncodingCaptureDescription> encoding = default;
             Optional<int> intervalInSeconds = default;

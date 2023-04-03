@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static ServiceDataFlowTemplate DeserializeServiceDataFlowTemplate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string templateName = default;
             SdfDirection direction = default;
             IList<string> protocol = default;

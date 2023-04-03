@@ -123,6 +123,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SapOpenHubSource DeserializeSapOpenHubSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> excludeLastRequest = default;
             Optional<BinaryData> baseRequestId = default;
             Optional<BinaryData> customRfcReadTableFunctionModule = default;

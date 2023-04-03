@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static WebAppBackupData DeserializeWebAppBackupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;

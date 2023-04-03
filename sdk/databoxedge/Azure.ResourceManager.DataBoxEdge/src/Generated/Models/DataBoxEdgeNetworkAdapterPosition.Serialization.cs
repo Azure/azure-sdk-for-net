@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static DataBoxEdgeNetworkAdapterPosition DeserializeDataBoxEdgeNetworkAdapterPosition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeNetworkGroup> networkGroup = default;
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())

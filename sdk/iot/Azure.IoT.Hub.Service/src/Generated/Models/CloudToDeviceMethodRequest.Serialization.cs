@@ -40,6 +40,10 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static CloudToDeviceMethodRequest DeserializeCloudToDeviceMethodRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> methodName = default;
             Optional<object> payload = default;
             Optional<int> responseTimeoutInSeconds = default;

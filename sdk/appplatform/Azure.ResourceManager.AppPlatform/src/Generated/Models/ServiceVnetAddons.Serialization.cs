@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static ServiceVnetAddons DeserializeServiceVnetAddons(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> logStreamPublicEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {

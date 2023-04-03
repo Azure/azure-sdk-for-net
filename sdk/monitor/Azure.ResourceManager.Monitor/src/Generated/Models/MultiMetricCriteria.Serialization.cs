@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MultiMetricCriteria DeserializeMultiMetricCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("criterionType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

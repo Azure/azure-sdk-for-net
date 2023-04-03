@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ConnectionStringDictionary DeserializeConnectionStringDictionary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, ConnStringValueTypePair>> properties = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;

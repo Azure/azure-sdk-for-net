@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static MatchCondition DeserializeMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<MatchVariable> matchVariables = default;
             WebApplicationFirewallOperator @operator = default;
             Optional<bool> negationConditon = default;

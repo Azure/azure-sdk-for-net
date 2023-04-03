@@ -88,6 +88,10 @@ namespace Azure.ResourceManager.Network
 
         internal static PrivateEndpointData DeserializePrivateEndpointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;

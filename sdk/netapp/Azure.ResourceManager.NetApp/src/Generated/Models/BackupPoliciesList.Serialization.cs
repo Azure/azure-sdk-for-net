@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static BackupPoliciesList DeserializeBackupPoliciesList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NetAppBackupPolicyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

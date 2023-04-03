@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.HybridData
 
         internal static HybridDataPublicKeyData DeserializeHybridDataPublicKeyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

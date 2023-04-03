@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static CustomHttpsConfiguration DeserializeCustomHttpsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FrontDoorCertificateSource certificateSource = default;
             FrontDoorTlsProtocolType protocolType = default;
             FrontDoorRequiredMinimumTlsVersion minimumTlsVersion = default;

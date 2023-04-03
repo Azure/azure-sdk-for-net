@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ServiceTypeDeltaHealthPolicy DeserializeServiceTypeDeltaHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxPercentDeltaUnhealthyServices = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static CheckPolicyRestrictionsResult DeserializeCheckPolicyRestrictionsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FieldRestrictions>> fieldRestrictions = default;
             Optional<CheckRestrictionsResultContentEvaluationResult> contentEvaluationResult = default;
             foreach (var property in element.EnumerateObject())

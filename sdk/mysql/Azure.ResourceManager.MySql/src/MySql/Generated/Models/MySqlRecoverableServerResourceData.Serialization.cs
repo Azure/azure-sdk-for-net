@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlRecoverableServerResourceData DeserializeMySqlRecoverableServerResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static ContainerServiceCredentials DeserializeContainerServiceCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> acsKubeConfig = default;
             Optional<ServicePrincipalProperties> servicePrincipalConfiguration = default;
             Optional<string> imagePullSecretName = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CognitiveServicesAccountSkuListResult DeserializeCognitiveServicesAccountSkuListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CognitiveServicesAccountSku>> value = default;
             foreach (var property in element.EnumerateObject())
             {

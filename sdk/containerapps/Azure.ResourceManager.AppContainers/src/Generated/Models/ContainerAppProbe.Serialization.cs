@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppProbe DeserializeContainerAppProbe(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> failureThreshold = default;
             Optional<ContainerAppHttpRequestInfo> httpGet = default;
             Optional<int> initialDelaySeconds = default;

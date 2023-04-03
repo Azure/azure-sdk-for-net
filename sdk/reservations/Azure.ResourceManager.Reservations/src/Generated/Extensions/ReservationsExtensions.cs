@@ -437,16 +437,14 @@ namespace Azure.ResourceManager.Reservations
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
-        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
-        /// <param name="publisherId"> Publisher id used to get the third party products. </param>
-        /// <param name="offerId"> Offer id used to get the third party products. </param>
-        /// <param name="planId"> Plan id used to get the third party products. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetCatalogAsync(reservedResourceType, location, publisherId, offerId, planId, cancellationToken);
+            options ??= new SubscriptionResourceGetCatalogOptions();
+
+            return GetExtensionClient(subscriptionResource).GetCatalogAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -463,16 +461,14 @@ namespace Azure.ResourceManager.Reservations
         /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
-        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
-        /// <param name="publisherId"> Publisher id used to get the third party products. </param>
-        /// <param name="offerId"> Offer id used to get the third party products. </param>
-        /// <param name="planId"> Plan id used to get the third party products. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetCatalog(reservedResourceType, location, publisherId, offerId, planId, cancellationToken);
+            options ??= new SubscriptionResourceGetCatalogOptions();
+
+            return GetExtensionClient(subscriptionResource).GetCatalog(options, cancellationToken);
         }
 
         /// <summary>

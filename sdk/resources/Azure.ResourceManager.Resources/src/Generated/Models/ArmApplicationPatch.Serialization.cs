@@ -88,6 +88,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationPatch DeserializeArmApplicationPatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArmPlan> plan = default;
             Optional<string> kind = default;
             Optional<ArmApplicationManagedIdentity> identity = default;

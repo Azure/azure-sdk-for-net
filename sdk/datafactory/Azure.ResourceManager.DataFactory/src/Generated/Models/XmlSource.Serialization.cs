@@ -88,6 +88,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static XmlSource DeserializeXmlSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoreReadSettings> storeSettings = default;
             Optional<XmlReadSettings> formatSettings = default;
             Optional<BinaryData> additionalColumns = default;

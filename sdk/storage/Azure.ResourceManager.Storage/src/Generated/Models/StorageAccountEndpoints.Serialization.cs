@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageAccountEndpoints DeserializeStorageAccountEndpoints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> blob = default;
             Optional<Uri> queue = default;
             Optional<Uri> table = default;

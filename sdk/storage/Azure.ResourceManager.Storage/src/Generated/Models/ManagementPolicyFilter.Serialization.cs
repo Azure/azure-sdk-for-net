@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyFilter DeserializeManagementPolicyFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> prefixMatch = default;
             IList<string> blobTypes = default;
             Optional<IList<ManagementPolicyTagFilter>> blobIndexMatch = default;

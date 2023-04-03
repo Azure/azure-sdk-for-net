@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrationEligibilityInfo DeserializeMigrationEligibilityInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isEligibleForMigration = default;
             Optional<IReadOnlyList<string>> validationMessages = default;
             foreach (var property in element.EnumerateObject())

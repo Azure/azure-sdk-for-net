@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorCacheConfiguration DeserializeFrontDoorCacheConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FrontDoorQuery> queryParameterStripDirective = default;
             Optional<string> queryParameters = default;
             Optional<DynamicCompressionEnabled> dynamicCompression = default;

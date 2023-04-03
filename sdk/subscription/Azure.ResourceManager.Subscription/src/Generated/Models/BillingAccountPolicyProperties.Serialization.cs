@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static BillingAccountPolicyProperties DeserializeBillingAccountPolicyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ServiceTenant>> serviceTenants = default;
             Optional<bool> allowTransfers = default;
             foreach (var property in element.EnumerateObject())

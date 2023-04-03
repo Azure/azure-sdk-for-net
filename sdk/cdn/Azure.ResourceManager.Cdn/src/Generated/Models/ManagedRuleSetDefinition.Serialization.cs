@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleSetDefinition DeserializeManagedRuleSetDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CdnSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;

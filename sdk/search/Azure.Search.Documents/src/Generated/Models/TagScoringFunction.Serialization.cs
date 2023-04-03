@@ -33,6 +33,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static TagScoringFunction DeserializeTagScoringFunction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TagScoringParameters tag = default;
             string type = default;
             string fieldName = default;

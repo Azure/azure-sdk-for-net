@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static NotificationEndpoint DeserializeNotificationEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> notificationDestination = default;
             Optional<IList<string>> locations = default;
             foreach (var property in element.EnumerateObject())

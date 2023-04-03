@@ -15,6 +15,10 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static TimeSeriesModelSettings DeserializeTimeSeriesModelSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<TimeSeriesIdProperty>> timeSeriesIdProperties = default;
             Optional<string> defaultTypeId = default;

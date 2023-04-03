@@ -87,6 +87,10 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static ContainerRegistryData DeserializeContainerRegistryData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ContainerRegistrySku sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

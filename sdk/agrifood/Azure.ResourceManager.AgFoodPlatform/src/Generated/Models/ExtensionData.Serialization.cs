@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         internal static ExtensionData DeserializeExtensionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;

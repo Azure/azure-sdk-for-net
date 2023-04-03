@@ -93,6 +93,10 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityInsightsIncidentData DeserializeSecurityInsightsIncidentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -296,7 +300,14 @@ namespace Azure.ResourceManager.SecurityInsights
                             List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new ResourceIdentifier(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             relatedAnalyticRuleIds = array;
                             continue;

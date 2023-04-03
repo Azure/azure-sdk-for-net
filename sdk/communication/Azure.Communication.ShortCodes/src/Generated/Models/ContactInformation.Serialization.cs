@@ -35,6 +35,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static ContactInformation DeserializeContactInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> phone = default;
             Optional<string> email = default;

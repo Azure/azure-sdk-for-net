@@ -61,6 +61,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static CosmosDbSqlApiSink DeserializeCosmosDbSqlApiSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> writeBehavior = default;
             string type = default;
             Optional<object> writeBatchSize = default;

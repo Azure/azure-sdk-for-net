@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static AlertProcessingRuleMonthlyRecurrence DeserializeAlertProcessingRuleMonthlyRecurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<int> daysOfMonth = default;
             RecurrenceType recurrenceType = default;
             Optional<TimeSpan> startTime = default;

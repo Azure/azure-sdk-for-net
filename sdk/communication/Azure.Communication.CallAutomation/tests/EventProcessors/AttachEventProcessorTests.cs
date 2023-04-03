@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         {
             // Ongoing handler with delegate tests
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
-            EventProcessor handler = callAutomationClient.GetEventProcessor();
+            CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
             string callConnectionIdPassedFromOngoingEventProcessor = ServerCallId;
 
             // Add delegate for call connected event
@@ -36,7 +36,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         {
             // Ongoing handler with delegate tests
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
-            EventProcessor handler = callAutomationClient.GetEventProcessor();
+            CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
             string callConnectionIdPassedFromOngoingEventProcessor = ServerCallId;
 
             // Add delegate for call connected event
@@ -57,7 +57,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         {
             // Ongoing handler with delegate tests
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
-            EventProcessor handler = callAutomationClient.GetEventProcessor();
+            CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
             string callConnectionIdPassedFromOngoingEventProcessor = ServerCallId;
 
             // Add delegate for call connected event
@@ -77,7 +77,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         {
             // Ongoing handler with delegate tests
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
-            EventProcessor handler = callAutomationClient.GetEventProcessor();
+            CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
             string callConnectionIdPassedFromOngoingEventProcessor = ServerCallId;
 
             // Add delegate for call connected event
@@ -95,7 +95,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         {
             // Ongoing handler with delegate tests
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
-            EventProcessor handler = callAutomationClient.GetEventProcessor();
+            CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
             string callConnectionIdPassedFromOngoingEventProcessor = ServerCallId;
 
             // Add delegate for call connected event

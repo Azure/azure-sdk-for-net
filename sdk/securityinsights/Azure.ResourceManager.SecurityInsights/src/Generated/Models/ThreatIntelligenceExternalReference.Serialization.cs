@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static ThreatIntelligenceExternalReference DeserializeThreatIntelligenceExternalReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<string> externalId = default;
             Optional<string> sourceName = default;

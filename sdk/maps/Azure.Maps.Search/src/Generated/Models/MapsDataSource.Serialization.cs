@@ -14,6 +14,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static MapsDataSource DeserializeMapsDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GeometryIdentifier> geometry = default;
             foreach (var property in element.EnumerateObject())
             {

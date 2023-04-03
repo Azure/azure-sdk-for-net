@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static UnknownTarget DeserializeUnknownTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> attributes = default;
             foreach (var property in element.EnumerateObject())
             {

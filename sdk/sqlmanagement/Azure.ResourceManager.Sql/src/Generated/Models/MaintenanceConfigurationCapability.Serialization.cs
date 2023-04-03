@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static MaintenanceConfigurationCapability DeserializeMaintenanceConfigurationCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<bool> zoneRedundant = default;
             Optional<SqlCapabilityStatus> status = default;

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12AgreementContent DeserializeX12AgreementContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             X12OneWayAgreement receiveAgreement = default;
             X12OneWayAgreement sendAgreement = default;
             foreach (var property in element.EnumerateObject())

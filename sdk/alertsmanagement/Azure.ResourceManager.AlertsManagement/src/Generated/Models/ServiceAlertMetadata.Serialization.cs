@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         internal static ServiceAlertMetadata DeserializeServiceAlertMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceAlertMetadataProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {

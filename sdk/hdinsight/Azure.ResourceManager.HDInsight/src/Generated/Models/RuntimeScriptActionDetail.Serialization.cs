@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static RuntimeScriptActionDetail DeserializeRuntimeScriptActionDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> scriptExecutionId = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;

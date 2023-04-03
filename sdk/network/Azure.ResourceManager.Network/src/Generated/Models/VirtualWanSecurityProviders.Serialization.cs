@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VirtualWanSecurityProviders DeserializeVirtualWanSecurityProviders(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<VirtualWanSecurityProvider>> supportedProviders = default;
             foreach (var property in element.EnumerateObject())
             {

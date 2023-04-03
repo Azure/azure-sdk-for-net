@@ -48,6 +48,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ScriptActivityParameter DeserializeScriptActivityParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> name = default;
             Optional<ScriptActivityParameterType> type = default;
             Optional<object> value = default;

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static RedisPersistenceSettings DeserializeRedisPersistenceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> aofEnabled = default;
             Optional<bool> rdbEnabled = default;
             Optional<PersistenceSettingAofFrequency> aofFrequency = default;

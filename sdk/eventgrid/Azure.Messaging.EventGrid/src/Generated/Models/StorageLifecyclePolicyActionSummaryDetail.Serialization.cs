@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static StorageLifecyclePolicyActionSummaryDetail DeserializeStorageLifecyclePolicyActionSummaryDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> totalObjectsCount = default;
             Optional<long> successCount = default;
             Optional<string> errorList = default;

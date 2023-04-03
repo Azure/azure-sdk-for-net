@@ -51,6 +51,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static KnowledgeStoreProjection DeserializeKnowledgeStoreProjection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<KnowledgeStoreTableProjectionSelector>> tables = default;
             Optional<IList<KnowledgeStoreObjectProjectionSelector>> objects = default;
             Optional<IList<KnowledgeStoreFileProjectionSelector>> files = default;

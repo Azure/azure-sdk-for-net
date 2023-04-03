@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServiceDeploymentLocations DeserializeAppServiceDeploymentLocations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AppServiceGeoRegion>> locations = default;
             Optional<IReadOnlyList<AppServiceEnvironmentProperties>> hostingEnvironments = default;
             Optional<IReadOnlyList<HostingEnvironmentDeploymentInfo>> hostingEnvironmentDeploymentInfos = default;

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightAutoScaleTimeAndCapacity DeserializeHDInsightAutoScaleTimeAndCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> time = default;
             Optional<int> minInstanceCount = default;
             Optional<int> maxInstanceCount = default;

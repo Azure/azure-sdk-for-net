@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeVmMemory DeserializeDataBoxEdgeVmMemory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> startupMemoryMB = default;
             Optional<long> currentMemoryUsageMB = default;
             foreach (var property in element.EnumerateObject())

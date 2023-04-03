@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static FromAllInputFile DeserializeFromAllInputFile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = default;
             Optional<IList<TrackDescriptor>> includedTracks = default;
             foreach (var property in element.EnumerateObject())

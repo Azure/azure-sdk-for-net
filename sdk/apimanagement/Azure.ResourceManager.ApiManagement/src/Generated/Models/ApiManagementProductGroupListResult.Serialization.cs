@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiManagementProductGroupListResult DeserializeApiManagementProductGroupListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ProductGroupData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;

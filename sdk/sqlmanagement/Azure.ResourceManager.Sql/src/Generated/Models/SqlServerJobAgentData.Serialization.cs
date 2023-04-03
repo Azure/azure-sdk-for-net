@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlServerJobAgentData DeserializeSqlServerJobAgentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

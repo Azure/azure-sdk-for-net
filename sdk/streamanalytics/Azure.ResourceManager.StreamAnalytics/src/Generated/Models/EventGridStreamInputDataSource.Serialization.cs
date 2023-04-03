@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static EventGridStreamInputDataSource DeserializeEventGridStreamInputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<EventHubV2StreamInputDataSource> subscriber = default;
             Optional<EventGridEventSchemaType> schema = default;

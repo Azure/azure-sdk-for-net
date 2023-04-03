@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageEncryptionService DeserializeStorageEncryptionService(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<DateTimeOffset> lastEnabledTime = default;
             Optional<StorageEncryptionKeyType> keyType = default;

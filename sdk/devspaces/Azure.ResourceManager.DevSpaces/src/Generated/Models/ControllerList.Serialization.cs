@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DevSpaces.Models
     {
         internal static ControllerList DeserializeControllerList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ControllerData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static FactoryIntegrationRuntimeData DeserializeFactoryIntegrationRuntimeData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationRuntimeDefinition properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

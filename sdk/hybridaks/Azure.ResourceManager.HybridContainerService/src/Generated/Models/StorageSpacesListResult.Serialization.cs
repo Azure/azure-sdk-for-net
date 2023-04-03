@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static StorageSpacesListResult DeserializeStorageSpacesListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StorageSpaceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

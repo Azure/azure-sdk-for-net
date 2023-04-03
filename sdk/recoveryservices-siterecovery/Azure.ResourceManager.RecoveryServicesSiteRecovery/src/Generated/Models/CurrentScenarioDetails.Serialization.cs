@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static CurrentScenarioDetails DeserializeCurrentScenarioDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> scenarioName = default;
             Optional<string> jobId = default;
             Optional<DateTimeOffset> startTime = default;

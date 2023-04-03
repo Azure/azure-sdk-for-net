@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_SAPDatabaseInstancesGet()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/sapvirtualinstances/SAPDatabaseInstances_Get.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPDatabaseInstances_Get.json
             // this example is just showing the usage of "SAPDatabaseInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_SAPDatabaseInstancesUpdate()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/sapvirtualinstances/SAPDatabaseInstances_Update.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPDatabaseInstances_Update.json
             // this example is just showing the usage of "SAPDatabaseInstances_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Workloads.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_SAPDatabaseInstancesDelete()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2021-12-01-preview/examples/sapvirtualinstances/SAPDatabaseInstances_Delete.json
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPDatabaseInstances_Delete.json
             // this example is just showing the usage of "SAPDatabaseInstances_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,6 +115,68 @@ namespace Azure.ResourceManager.Workloads.Samples
 
             // invoke the operation
             ArmOperation<OperationStatusResult> lro = await sapDatabaseInstance.DeleteAsync(WaitUntil.Completed);
+            OperationStatusResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Start the database instance of the SAP system.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task StartInstance_StartTheDatabaseInstanceOfTheSAPSystem()
+        {
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPDatabaseInstances_StartInstance.json
+            // this example is just showing the usage of "SAPDatabaseInstances_StartInstance" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SapDatabaseInstanceResource created on azure
+            // for more information of creating SapDatabaseInstanceResource, please refer to the document of SapDatabaseInstanceResource
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string resourceGroupName = "test-rg";
+            string sapVirtualInstanceName = "X00";
+            string databaseInstanceName = "db0";
+            ResourceIdentifier sapDatabaseInstanceResourceId = SapDatabaseInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sapVirtualInstanceName, databaseInstanceName);
+            SapDatabaseInstanceResource sapDatabaseInstance = client.GetSapDatabaseInstanceResource(sapDatabaseInstanceResourceId);
+
+            // invoke the operation
+            ArmOperation<OperationStatusResult> lro = await sapDatabaseInstance.StartInstanceAsync(WaitUntil.Completed);
+            OperationStatusResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Stop the database instance of the SAP system.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task StopInstance_StopTheDatabaseInstanceOfTheSAPSystem()
+        {
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/preview/2022-11-01-preview/examples/sapvirtualinstances/SAPDatabaseInstances_StopInstance.json
+            // this example is just showing the usage of "SAPDatabaseInstances_StopInstance" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SapDatabaseInstanceResource created on azure
+            // for more information of creating SapDatabaseInstanceResource, please refer to the document of SapDatabaseInstanceResource
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string resourceGroupName = "test-rg";
+            string sapVirtualInstanceName = "X00";
+            string databaseInstanceName = "db0";
+            ResourceIdentifier sapDatabaseInstanceResourceId = SapDatabaseInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, sapVirtualInstanceName, databaseInstanceName);
+            SapDatabaseInstanceResource sapDatabaseInstance = client.GetSapDatabaseInstanceResource(sapDatabaseInstanceResourceId);
+
+            // invoke the operation
+            StopRequest body = new StopRequest()
+            {
+                SoftStopTimeoutSeconds = 0,
+            };
+            ArmOperation<OperationStatusResult> lro = await sapDatabaseInstance.StopInstanceAsync(WaitUntil.Completed, body: body);
             OperationStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

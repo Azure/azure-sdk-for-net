@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryPipelineListResult DeserializeFactoryPipelineListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<FactoryPipelineData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

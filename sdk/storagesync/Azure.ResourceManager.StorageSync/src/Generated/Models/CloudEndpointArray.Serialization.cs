@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static CloudEndpointArray DeserializeCloudEndpointArray(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CloudEndpointData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static HttpErrorRange DeserializeHttpErrorRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> begin = default;
             Optional<int> end = default;
             foreach (var property in element.EnumerateObject())

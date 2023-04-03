@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static KubeEnvironmentData DeserializeKubeEnvironmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;

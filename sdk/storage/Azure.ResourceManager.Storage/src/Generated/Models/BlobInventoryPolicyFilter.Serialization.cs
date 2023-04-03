@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static BlobInventoryPolicyFilter DeserializeBlobInventoryPolicyFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> prefixMatch = default;
             Optional<IList<string>> excludePrefix = default;
             Optional<IList<string>> blobTypes = default;

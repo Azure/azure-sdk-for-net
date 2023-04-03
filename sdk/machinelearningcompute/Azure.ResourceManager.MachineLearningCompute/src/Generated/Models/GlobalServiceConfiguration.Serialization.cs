@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static GlobalServiceConfiguration DeserializeGlobalServiceConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<SslConfiguration> ssl = default;
             Optional<ServiceAuthConfiguration> serviceAuth = default;

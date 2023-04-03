@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EffectiveRouteListResult DeserializeEffectiveRouteListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EffectiveRoute>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

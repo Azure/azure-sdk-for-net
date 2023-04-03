@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static DscReportResource DeserializeDscReportResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceId = default;
             Optional<string> sourceInfo = default;
             Optional<IReadOnlyList<DscReportResourceNavigation>> dependsOn = default;

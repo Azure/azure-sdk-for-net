@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationServiceEnvironmentSkuDefinitionSku DeserializeIntegrationServiceEnvironmentSkuDefinitionSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationServiceEnvironmentSkuName> name = default;
             Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())

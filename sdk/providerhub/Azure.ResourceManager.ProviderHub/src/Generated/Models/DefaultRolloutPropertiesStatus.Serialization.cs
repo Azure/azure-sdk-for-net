@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static DefaultRolloutPropertiesStatus DeserializeDefaultRolloutPropertiesStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TrafficRegionCategory> nextTrafficRegion = default;
             Optional<DateTimeOffset> nextTrafficRegionScheduledTime = default;
             Optional<SubscriptionReregistrationResult> subscriptionReregistrationResult = default;

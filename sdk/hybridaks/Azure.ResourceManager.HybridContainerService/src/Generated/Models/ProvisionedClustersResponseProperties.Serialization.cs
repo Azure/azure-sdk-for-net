@@ -97,6 +97,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ProvisionedClustersResponseProperties DeserializeProvisionedClustersResponseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableRbac = default;
             Optional<LinuxProfileProperties> linuxProfile = default;
             Optional<ProvisionedClustersCommonPropertiesFeatures> features = default;

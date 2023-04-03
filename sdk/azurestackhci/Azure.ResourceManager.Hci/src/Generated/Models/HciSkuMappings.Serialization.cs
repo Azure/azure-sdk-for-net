@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static HciSkuMappings DeserializeHciSkuMappings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> catalogPlanId = default;
             Optional<string> marketplaceSkuId = default;
             Optional<IList<string>> marketplaceSkuVersions = default;

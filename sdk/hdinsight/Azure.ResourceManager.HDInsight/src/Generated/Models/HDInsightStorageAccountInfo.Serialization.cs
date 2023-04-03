@@ -79,6 +79,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightStorageAccountInfo DeserializeHDInsightStorageAccountInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<bool> isDefault = default;
             Optional<string> container = default;

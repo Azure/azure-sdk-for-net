@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     {
         internal static ConnectivityCollection DeserializeConnectivityCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManagedNetworkGroupData>> groups = default;
             Optional<IReadOnlyList<ManagedNetworkPeeringPolicyData>> peerings = default;
             foreach (var property in element.EnumerateObject())

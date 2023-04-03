@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static ContainerRegistryTaskRunData DeserializeContainerRegistryTaskRunData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

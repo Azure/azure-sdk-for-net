@@ -120,6 +120,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static VirtualMachineData DeserializeVirtualMachineData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;
             Optional<ManagedServiceIdentity> identity = default;

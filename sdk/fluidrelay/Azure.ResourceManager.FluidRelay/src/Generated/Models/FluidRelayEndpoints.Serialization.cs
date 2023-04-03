@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.FluidRelay.Models
     {
         internal static FluidRelayEndpoints DeserializeFluidRelayEndpoints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> ordererEndpoints = default;
             Optional<IReadOnlyList<string>> storageEndpoints = default;
             Optional<IReadOnlyList<string>> serviceEndpoints = default;

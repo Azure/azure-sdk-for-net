@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static SingleSignOnIdentitySource DeserializeSingleSignOnIdentitySource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> @alias = default;
             Optional<string> domain = default;

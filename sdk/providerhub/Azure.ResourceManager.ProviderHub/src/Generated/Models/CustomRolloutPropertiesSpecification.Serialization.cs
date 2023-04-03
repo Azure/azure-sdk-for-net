@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CustomRolloutPropertiesSpecification DeserializeCustomRolloutPropertiesSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CustomRolloutSpecificationCanary canary = default;
             Optional<CustomRolloutSpecificationProviderRegistration> providerRegistration = default;
             Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;

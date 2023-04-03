@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HybridData.Models
     {
         internal static DataStoreTypeList DeserializeDataStoreTypeList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HybridDataStoreTypeData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -24,6 +24,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static TargetRelation DeserializeTargetRelation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TargetRelationType relationType = default;
             string @ref = default;
             foreach (var property in element.EnumerateObject())

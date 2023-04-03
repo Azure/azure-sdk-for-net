@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static SecurityInsightsIncidentEntitiesResult DeserializeSecurityInsightsIncidentEntitiesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SecurityInsightsEntity>> entities = default;
             Optional<IReadOnlyList<SecurityInsightsIncidentEntitiesMetadata>> metaData = default;
             foreach (var property in element.EnumerateObject())

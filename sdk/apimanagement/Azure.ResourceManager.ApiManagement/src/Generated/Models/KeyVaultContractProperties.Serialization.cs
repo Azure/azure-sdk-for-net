@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static KeyVaultContractProperties DeserializeKeyVaultContractProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KeyVaultLastAccessStatusContractProperties> lastStatus = default;
             Optional<string> secretIdentifier = default;
             Optional<string> identityClientId = default;

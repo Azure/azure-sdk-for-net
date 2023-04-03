@@ -27,6 +27,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static WeightResolution DeserializeWeightResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WeightUnit unit = default;
             double value = default;
             ResolutionKind resolutionKind = default;

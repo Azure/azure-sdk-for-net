@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal static MonitoringTagRulesListResponse DeserializeMonitoringTagRulesListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MonitoringTagRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

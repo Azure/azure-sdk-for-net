@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformConfigServerProperties DeserializeAppPlatformConfigServerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformConfigServerState> provisioningState = default;
             Optional<AppPlatformErrorInfo> error = default;
             Optional<ConfigServerSettings> configServer = default;

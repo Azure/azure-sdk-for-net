@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static GalleryImageList DeserializeGalleryImageList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DevTestLabGalleryImage>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

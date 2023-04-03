@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MongoDBCollectionInfo DeserializeMongoDBCollectionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string databaseName = default;
             bool isCapped = default;
             bool isSystemCollection = default;

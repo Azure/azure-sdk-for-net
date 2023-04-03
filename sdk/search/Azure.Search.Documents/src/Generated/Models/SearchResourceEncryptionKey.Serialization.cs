@@ -43,6 +43,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchResourceEncryptionKey DeserializeSearchResourceEncryptionKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyVaultKeyName = default;
             string keyVaultKeyVersion = default;
             string keyVaultUri = default;

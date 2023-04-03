@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ManagedInstanceQueryStatistics DeserializeManagedInstanceQueryStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<QueryStatistics>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

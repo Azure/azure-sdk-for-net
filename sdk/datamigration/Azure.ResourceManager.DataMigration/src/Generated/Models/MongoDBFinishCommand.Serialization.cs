@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBFinishCommand DeserializeMongoDBFinishCommand(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MongoDBFinishCommandInput> input = default;
             CommandType commandType = default;
             Optional<IReadOnlyList<ODataError>> errors = default;

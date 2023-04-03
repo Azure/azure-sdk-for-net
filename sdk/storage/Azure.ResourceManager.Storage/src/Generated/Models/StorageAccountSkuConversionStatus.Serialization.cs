@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountSkuConversionStatus DeserializeStorageAccountSkuConversionStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageAccountSkuConversionState> skuConversionStatus = default;
             Optional<StorageSkuName> targetSkuName = default;
             Optional<DateTimeOffset> startTime = default;

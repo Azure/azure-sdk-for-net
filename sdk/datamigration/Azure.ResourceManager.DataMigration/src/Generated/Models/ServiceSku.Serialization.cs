@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ServiceSku DeserializeServiceSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> tier = default;
             Optional<string> family = default;

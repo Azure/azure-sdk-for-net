@@ -34,6 +34,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static DateTimeResolution DeserializeDateTimeResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string timex = default;
             DateTimeSubKind dateTimeSubKind = default;
             string value = default;

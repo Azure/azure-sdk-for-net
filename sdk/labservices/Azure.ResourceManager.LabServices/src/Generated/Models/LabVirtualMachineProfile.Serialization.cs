@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabVirtualMachineProfile DeserializeLabVirtualMachineProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LabVirtualMachineCreateOption createOption = default;
             LabVirtualMachineImageReference imageReference = default;
             Optional<LabVirtualMachineImageOSType> osType = default;

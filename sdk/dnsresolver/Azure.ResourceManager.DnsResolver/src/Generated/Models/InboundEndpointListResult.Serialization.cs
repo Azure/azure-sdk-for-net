@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
     {
         internal static InboundEndpointListResult DeserializeInboundEndpointListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DnsResolverInboundEndpointData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

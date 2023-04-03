@@ -88,6 +88,10 @@ namespace Azure.ResourceManager.BillingBenefits
 
         internal static BillingBenefitsReservationOrderAliasData DeserializeBillingBenefitsReservationOrderAliasData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BillingBenefitsSku sku = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

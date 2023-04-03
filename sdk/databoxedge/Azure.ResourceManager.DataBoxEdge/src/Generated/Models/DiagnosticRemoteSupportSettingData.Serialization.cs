@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DiagnosticRemoteSupportSettingData DeserializeDiagnosticRemoteSupportSettingData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

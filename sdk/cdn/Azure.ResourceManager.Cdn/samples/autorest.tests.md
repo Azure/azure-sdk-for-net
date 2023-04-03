@@ -10,4 +10,7 @@ require: ../src/autorest.md
 include-x-ms-examples-original-file: true
 testgen:
   sample: true
+  skipped-operations:
+  - LogAnalytics_GetLogAnalyticsMetrics
+  - LogAnalytics_GetWafLogAnalyticsMetrics
 ```

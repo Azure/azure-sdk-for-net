@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Elastic.Models
     {
         internal static MonitoredResource DeserializeMonitoredResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<SendingLog> sendingLogs = default;
             Optional<string> reasonForLogsStatus = default;

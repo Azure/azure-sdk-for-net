@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsServers)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
@@ -47,6 +52,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheNetworkSettings DeserializeStorageCacheNetworkSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> mtu = default;
             Optional<IReadOnlyList<IPAddress>> utilityAddresses = default;
             Optional<IList<IPAddress>> dnsServers = default;
@@ -74,7 +83,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.Parse(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
                     }
                     utilityAddresses = array;
                     continue;
@@ -89,7 +105,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddress.Parse(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
                     }
                     dnsServers = array;
                     continue;

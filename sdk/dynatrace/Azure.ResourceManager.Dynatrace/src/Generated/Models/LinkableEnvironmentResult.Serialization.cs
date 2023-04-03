@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static LinkableEnvironmentResult DeserializeLinkableEnvironmentResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> environmentId = default;
             Optional<string> environmentName = default;
             Optional<DynatraceBillingPlanInfo> planData = default;

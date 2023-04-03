@@ -50,6 +50,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static PatternAnalyzer DeserializePatternAnalyzer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> lowercase = default;
             Optional<string> pattern = default;
             Optional<string> flags = default;

@@ -172,6 +172,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AutoMLVerticalRegression DeserializeAutoMLVerticalRegression(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutoMLVerticalRegressionPrimaryMetric> primaryMetric = default;
             Optional<RegressionTrainingSettings> trainingSettings = default;
             Optional<IList<string>> cvSplitColumnNames = default;

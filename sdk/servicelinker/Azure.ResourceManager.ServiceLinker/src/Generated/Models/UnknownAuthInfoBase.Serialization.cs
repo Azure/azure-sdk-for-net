@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static UnknownAuthInfoBase DeserializeUnknownAuthInfoBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LinkerAuthType authType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

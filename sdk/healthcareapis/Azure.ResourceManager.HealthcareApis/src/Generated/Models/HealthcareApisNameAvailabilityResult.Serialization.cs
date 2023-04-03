@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     {
         internal static HealthcareApisNameAvailabilityResult DeserializeHealthcareApisNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<HealthcareApisNameUnavailableReason> reason = default;
             Optional<string> message = default;

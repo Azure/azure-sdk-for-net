@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.HybridContainerService
 
         internal static StorageSpaceData DeserializeStorageSpaceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageSpacesProperties> properties = default;
             Optional<StorageSpacesExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;

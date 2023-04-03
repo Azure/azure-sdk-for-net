@@ -15,6 +15,10 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         internal static Path DeserializePath(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<DateTimeOffset> lastModified = default;
             Optional<string> owner = default;

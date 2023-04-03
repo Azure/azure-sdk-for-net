@@ -33,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static GitHubClientSecret DeserializeGitHubClientSecret(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> byoaSecretAkvUrl = default;
             Optional<string> byoaSecretName = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Advisor.Models
     {
         internal static ResourceRecommendationBaseListResult DeserializeResourceRecommendationBaseListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<ResourceRecommendationBaseData>> value = default;
             foreach (var property in element.EnumerateObject())

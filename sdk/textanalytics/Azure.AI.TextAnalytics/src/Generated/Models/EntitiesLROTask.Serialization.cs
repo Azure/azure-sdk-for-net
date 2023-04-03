@@ -32,6 +32,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static EntitiesLROTask DeserializeEntitiesLROTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EntitiesTaskParameters> parameters = default;
             AnalyzeTextLROTaskKind kind = default;
             Optional<string> taskName = default;

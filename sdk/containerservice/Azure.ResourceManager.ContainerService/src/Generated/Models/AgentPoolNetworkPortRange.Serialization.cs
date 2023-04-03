@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static AgentPoolNetworkPortRange DeserializeAgentPoolNetworkPortRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> portStart = default;
             Optional<int> portEnd = default;
             Optional<AgentPoolNetworkPortProtocol> protocol = default;

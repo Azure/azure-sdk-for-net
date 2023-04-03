@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static ContainerAppNameAvailabilityResult DeserializeContainerAppNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<ContainerAppNameUnavailableReason> reason = default;
             Optional<string> message = default;

@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static DailySchedule DeserializeDailySchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int intervalDays = default;
             foreach (var property in element.EnumerateObject())
             {

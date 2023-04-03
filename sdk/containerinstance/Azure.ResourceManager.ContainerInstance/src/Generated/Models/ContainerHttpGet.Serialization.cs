@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerHttpGet DeserializeContainerHttpGet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> path = default;
             int port = default;
             Optional<ContainerHttpGetScheme> scheme = default;

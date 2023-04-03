@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlAdvisorListResult DeserializeMySqlAdvisorListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MySqlAdvisorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

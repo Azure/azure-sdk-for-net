@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static DataNetworkConfiguration DeserializeDataNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WritableSubResource dataNetwork = default;
             Ambr sessionAmbr = default;
             Optional<int> _5qi = default;

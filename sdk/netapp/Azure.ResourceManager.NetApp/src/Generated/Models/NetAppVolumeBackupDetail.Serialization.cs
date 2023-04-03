@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppVolumeBackupDetail DeserializeNetAppVolumeBackupDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> volumeName = default;
             Optional<int> backupsCount = default;
             Optional<bool> policyEnabled = default;

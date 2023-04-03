@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseWorkspaceRepositoryConfiguration DeserializeSynapseWorkspaceRepositoryConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<string> hostName = default;
             Optional<string> accountName = default;

@@ -76,6 +76,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static Office365Source DeserializeOffice365Source(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> allowedGroups = default;
             Optional<object> userScopeFilterUri = default;
             Optional<object> dateFilterColumn = default;

@@ -14,6 +14,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static OperatingHoursTime DeserializeOperatingHoursTime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> date = default;
             Optional<int> hour = default;
             Optional<int> minute = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         internal static PacketCoreDataPlaneListResult DeserializePacketCoreDataPlaneListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PacketCoreDataPlaneData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

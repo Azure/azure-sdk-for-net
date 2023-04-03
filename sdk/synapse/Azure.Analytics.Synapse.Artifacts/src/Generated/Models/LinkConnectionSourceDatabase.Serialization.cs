@@ -33,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkConnectionSourceDatabase DeserializeLinkConnectionSourceDatabase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinkedServiceReference> linkedService = default;
             Optional<LinkConnectionSourceDatabaseTypeProperties> typeProperties = default;
             foreach (var property in element.EnumerateObject())

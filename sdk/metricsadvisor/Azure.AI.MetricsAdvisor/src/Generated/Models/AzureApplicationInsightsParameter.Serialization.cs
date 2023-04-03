@@ -65,6 +65,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureApplicationInsightsParameter DeserializeAzureApplicationInsightsParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> azureCloud = default;
             Optional<string> applicationId = default;
             Optional<string> apiKey = default;

@@ -22,6 +22,10 @@ namespace Azure.Communication.AlphaIds.Models
 
         internal static AlphaIdConfiguration DeserializeAlphaIdConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             foreach (var property in element.EnumerateObject())
             {

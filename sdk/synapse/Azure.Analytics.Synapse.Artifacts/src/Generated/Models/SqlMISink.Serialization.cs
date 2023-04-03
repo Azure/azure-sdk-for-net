@@ -92,6 +92,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlMISink DeserializeSqlMISink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> sqlWriterStoredProcedureName = default;
             Optional<object> sqlWriterTableType = default;
             Optional<object> preCopyScript = default;

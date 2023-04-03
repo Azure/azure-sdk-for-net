@@ -79,6 +79,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static BinarySource DeserializeBinarySource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoreReadSettings> storeSettings = default;
             Optional<BinaryReadSettings> formatSettings = default;
             string type = default;

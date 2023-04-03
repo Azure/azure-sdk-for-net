@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureBlobFSLocation DeserializeAzureBlobFSLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> fileSystem = default;
             string type = default;
             Optional<BinaryData> folderPath = default;

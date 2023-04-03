@@ -28,6 +28,10 @@ namespace Azure.Communication.MediaComposition.Models
 
         internal static LayoutLayer DeserializeLayoutLayer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int zIndex = default;
             Optional<LayerVisibility> visibility = default;
             foreach (var property in element.EnumerateObject())

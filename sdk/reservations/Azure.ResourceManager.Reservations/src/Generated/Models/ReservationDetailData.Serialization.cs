@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Reservations
     {
         internal static ReservationDetailData DeserializeReservationDetailData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<int> etag = default;
             Optional<ReservationsSkuName> sku = default;

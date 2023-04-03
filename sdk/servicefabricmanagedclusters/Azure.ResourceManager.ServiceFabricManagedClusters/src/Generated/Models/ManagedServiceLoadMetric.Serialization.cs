@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedServiceLoadMetric DeserializeManagedServiceLoadMetric(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<ManagedServiceLoadMetricWeight> weight = default;
             Optional<int> primaryDefaultLoad = default;

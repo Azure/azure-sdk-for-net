@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static EdgeUsageDataCollectionPolicy DeserializeEdgeUsageDataCollectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataCollectionFrequency = default;
             Optional<string> dataReportingFrequency = default;
             Optional<TimeSpan> maxAllowedUnreportedUsageDuration = default;

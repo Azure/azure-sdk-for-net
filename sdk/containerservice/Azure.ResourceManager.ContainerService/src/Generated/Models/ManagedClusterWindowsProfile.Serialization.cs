@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterWindowsProfile DeserializeManagedClusterWindowsProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string adminUsername = default;
             Optional<string> adminPassword = default;
             Optional<WindowsVmLicenseType> licenseType = default;

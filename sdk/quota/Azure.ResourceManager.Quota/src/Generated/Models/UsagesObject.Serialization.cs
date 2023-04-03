@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Quota.Models
     {
         internal static UsagesObject DeserializeUsagesObject(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int value = default;
             Optional<UsagesType> usagesType = default;
             foreach (var property in element.EnumerateObject())

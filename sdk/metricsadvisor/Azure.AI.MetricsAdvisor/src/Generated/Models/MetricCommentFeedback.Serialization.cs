@@ -54,6 +54,10 @@ namespace Azure.AI.MetricsAdvisor
 
         internal static MetricCommentFeedback DeserializeMetricCommentFeedback(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
             CommentFeedbackValue value = default;

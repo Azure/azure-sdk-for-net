@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppWorkloadProfile DeserializeContainerAppWorkloadProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string workloadProfileType = default;
             int minimumCount = default;
             int maximumCount = default;

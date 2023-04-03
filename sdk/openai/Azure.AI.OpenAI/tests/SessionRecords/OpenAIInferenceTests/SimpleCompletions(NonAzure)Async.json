@@ -1,0 +1,71 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.openai.com/v1/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "71",
+        "Content-Type": "application/json",
+        "traceparent": "00-c3c795cf3d7a586b5685f9848ff0ff07-06474da23cc124a7-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "8b5b04b2ce388d2af8d8aa32c6a25389",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world!"
+        ],
+        "max_tokens": 100,
+        "model": "text-davinci-002"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Connection": "keep-alive",
+        "Content-Length": "284",
+        "Content-Type": "application/json",
+        "Date": "Tue, 21 Mar 2023 00:37:58 GMT",
+        "Openai-Model": "text-davinci-002",
+        "Openai-Organization": "msft-finetuning-2",
+        "Openai-Processing-Ms": "452",
+        "Openai-Version": "2020-10-01",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Ratelimit-Limit-Requests": "3000",
+        "X-Ratelimit-Limit-Tokens": "250000",
+        "X-Ratelimit-Remaining-Requests": "2999",
+        "X-Ratelimit-Remaining-Tokens": "249900",
+        "X-Ratelimit-Reset-Requests": "20ms",
+        "X-Ratelimit-Reset-Tokens": "24ms",
+        "X-Request-ID": "024733da287e1b0b58f3d42e1660e77b"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6wKIfHrvW3uG3qw73IWoZDzl4ZZNf",
+        "object": "text_completion",
+        "created": 1679359077,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "\\n\u0022);\n\treturn 0;\n}",
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 3,
+          "completion_tokens": 10,
+          "total_tokens": 13
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "821302551"
+  }
+}

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedClusterAzureActiveDirectory DeserializeManagedClusterAzureActiveDirectory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> tenantId = default;
             Optional<string> clusterApplication = default;
             Optional<string> clientApplication = default;

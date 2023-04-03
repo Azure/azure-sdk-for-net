@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static DscConfigurationParameterDefinition DeserializeDscConfigurationParameterDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<bool> isMandatory = default;
             Optional<int> position = default;

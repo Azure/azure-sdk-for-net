@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static ExchangePeeringFacility DeserializeExchangePeeringFacility(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> exchangeName = default;
             Optional<int> bandwidthInMbps = default;
             Optional<IPAddress> microsoftIPv4Address = default;

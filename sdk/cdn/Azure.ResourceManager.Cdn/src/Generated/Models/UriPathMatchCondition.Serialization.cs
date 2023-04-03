@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UriPathMatchCondition DeserializeUriPathMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             UriPathMatchConditionType typeName = default;
             UriPathOperator @operator = default;
             Optional<bool> negateCondition = default;

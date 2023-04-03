@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.IotCentral.Models
 
         internal static IotCentralAppSkuInfo DeserializeIotCentralAppSkuInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IotCentralAppSku name = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DomainPurchaseConsent DeserializeDomainPurchaseConsent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> agreementKeys = default;
             Optional<string> agreedBy = default;
             Optional<DateTimeOffset> agreedAt = default;

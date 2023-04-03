@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static ManagedHsmNetworkRuleSet DeserializeManagedHsmNetworkRuleSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedHsmNetworkRuleBypassOption> bypass = default;
             Optional<ManagedHsmNetworkRuleAction> defaultAction = default;
             Optional<IList<ManagedHsmIPRule>> ipRules = default;

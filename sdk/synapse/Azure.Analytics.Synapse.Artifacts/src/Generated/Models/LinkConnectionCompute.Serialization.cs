@@ -38,6 +38,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkConnectionCompute DeserializeLinkConnectionCompute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> coreCount = default;
             Optional<string> computeType = default;
             Optional<int> dataProcessIntervalMinutes = default;

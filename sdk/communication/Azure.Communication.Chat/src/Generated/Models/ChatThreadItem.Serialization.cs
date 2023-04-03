@@ -15,6 +15,10 @@ namespace Azure.Communication.Chat
     {
         internal static ChatThreadItem DeserializeChatThreadItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string topic = default;
             Optional<DateTimeOffset> deletedOn = default;

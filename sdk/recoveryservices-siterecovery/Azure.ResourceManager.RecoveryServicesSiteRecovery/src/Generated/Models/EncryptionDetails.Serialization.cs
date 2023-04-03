@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static EncryptionDetails DeserializeEncryptionDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kekState = default;
             Optional<string> kekCertThumbprint = default;
             Optional<DateTimeOffset> kekCertExpiryDate = default;

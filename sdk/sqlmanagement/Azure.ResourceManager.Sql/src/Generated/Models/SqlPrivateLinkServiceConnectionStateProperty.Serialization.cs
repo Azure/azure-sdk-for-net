@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlPrivateLinkServiceConnectionStateProperty DeserializeSqlPrivateLinkServiceConnectionStateProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SqlPrivateLinkServiceConnectionStatus status = default;
             string description = default;
             Optional<SqlPrivateLinkServiceConnectionActionsRequired> actionsRequired = default;

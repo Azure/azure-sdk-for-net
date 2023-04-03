@@ -30,6 +30,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static ChangeThresholdCondition DeserializeChangeThresholdCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double changePercentage = default;
             int shiftPoint = default;
             bool withinRange = default;

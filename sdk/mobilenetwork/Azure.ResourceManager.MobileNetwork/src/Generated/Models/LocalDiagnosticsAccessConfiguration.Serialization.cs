@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static LocalDiagnosticsAccessConfiguration DeserializeLocalDiagnosticsAccessConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AuthenticationType authenticationType = default;
             Optional<HttpsServerCertificate> httpsServerCertificate = default;
             foreach (var property in element.EnumerateObject())

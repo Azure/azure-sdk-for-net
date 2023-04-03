@@ -48,6 +48,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static UnknownInputGroup DeserializeUnknownInputGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             InputGroupType kind = "Unknown";
             Optional<InputPosition> position = default;
             Optional<string> width = default;

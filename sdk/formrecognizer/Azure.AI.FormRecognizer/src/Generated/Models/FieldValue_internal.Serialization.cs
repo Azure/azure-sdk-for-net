@@ -16,6 +16,10 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static FieldValue_internal DeserializeFieldValue_internal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FieldValueType type = default;
             Optional<string> valueString = default;
             Optional<DateTimeOffset> valueDate = default;
@@ -114,14 +118,7 @@ namespace Azure.AI.FormRecognizer.Models
                     Dictionary<string, FieldValue_internal> dictionary = new Dictionary<string, FieldValue_internal>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, DeserializeFieldValue_internal(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, DeserializeFieldValue_internal(property0.Value));
                     }
                     valueObject = dictionary;
                     continue;

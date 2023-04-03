@@ -112,6 +112,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ControlPlaneProfile DeserializeControlPlaneProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ControlPlaneEndpointProfileControlPlaneEndpoint> controlPlaneEndpoint = default;
             Optional<LinuxProfileProperties> linuxProfile = default;
             Optional<string> name = default;

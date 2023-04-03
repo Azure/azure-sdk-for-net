@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineStorageProfile DeserializeVirtualMachineStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ImageReference> imageReference = default;
             Optional<VirtualMachineOSDisk> osDisk = default;
             Optional<IList<VirtualMachineDataDisk>> dataDisks = default;

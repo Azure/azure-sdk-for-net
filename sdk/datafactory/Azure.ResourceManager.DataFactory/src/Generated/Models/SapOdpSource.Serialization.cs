@@ -123,6 +123,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SapOdpSource DeserializeSapOdpSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> extractionMode = default;
             Optional<BinaryData> subscriberProcess = default;
             Optional<BinaryData> selection = default;

@@ -46,6 +46,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlScriptContent DeserializeSqlScriptContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string query = default;
             Optional<SqlConnection> currentConnection = default;
             Optional<int> resultLimit = default;

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDiagnosticRendering DeserializeContainerAppDiagnosticRendering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> type = default;
             Optional<string> title = default;
             Optional<string> description = default;

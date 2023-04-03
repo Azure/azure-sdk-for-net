@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static PathRecommendation DeserializePathRecommendation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> path = default;
             Optional<RecommendationAction> action = default;
             Optional<IotSecurityRecommendationType> type = default;

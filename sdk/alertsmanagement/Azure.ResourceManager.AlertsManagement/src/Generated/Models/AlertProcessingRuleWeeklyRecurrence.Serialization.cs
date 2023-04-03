@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static AlertProcessingRuleWeeklyRecurrence DeserializeAlertProcessingRuleWeeklyRecurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<AlertsManagementDayOfWeek> daysOfWeek = default;
             RecurrenceType recurrenceType = default;
             Optional<TimeSpan> startTime = default;

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryPrivateLinkServiceConnectionState DeserializeContainerRegistryPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerRegistryPrivateLinkServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<ActionsRequiredForPrivateLinkServiceConsumer> actionsRequired = default;

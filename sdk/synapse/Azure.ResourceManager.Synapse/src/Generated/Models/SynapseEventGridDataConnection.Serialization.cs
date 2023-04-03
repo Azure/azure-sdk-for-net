@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseEventGridDataConnection DeserializeSynapseEventGridDataConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             SynapseDataConnectionKind kind = default;
             ResourceIdentifier id = default;

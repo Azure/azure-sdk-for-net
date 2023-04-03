@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static LoadBalancerBackendAddress DeserializeLoadBalancerBackendAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<WritableSubResource> virtualNetwork = default;
             Optional<WritableSubResource> subnet = default;

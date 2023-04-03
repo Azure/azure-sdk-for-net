@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AadSolutionProperties DeserializeAadSolutionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AadConnectivityStateType> connectivityState = default;
             Optional<string> deviceVendor = default;
             Optional<string> deviceType = default;

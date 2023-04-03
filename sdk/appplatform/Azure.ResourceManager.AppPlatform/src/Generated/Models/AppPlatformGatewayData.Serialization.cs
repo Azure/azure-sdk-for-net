@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformGatewayData DeserializeAppPlatformGatewayData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformGatewayProperties> properties = default;
             Optional<AppPlatformSku> sku = default;
             ResourceIdentifier id = default;

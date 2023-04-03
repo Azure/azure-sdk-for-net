@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationPrivateEndpointConnectionListResult DeserializeAutomationPrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AutomationPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

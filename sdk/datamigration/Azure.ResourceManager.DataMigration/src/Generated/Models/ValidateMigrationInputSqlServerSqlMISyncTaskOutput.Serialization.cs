@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ValidateMigrationInputSqlServerSqlMISyncTaskOutput DeserializeValidateMigrationInputSqlServerSqlMISyncTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;

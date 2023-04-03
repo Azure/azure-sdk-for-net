@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static DirectPeeringProperties DeserializeDirectPeeringProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<PeeringDirectConnection>> connections = default;
             Optional<bool> useForPeeringService = default;
             Optional<WritableSubResource> peerAsn = default;

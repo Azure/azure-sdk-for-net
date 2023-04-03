@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DiagnosticDataset DeserializeDiagnosticDataset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataTableResponseObject> table = default;
             Optional<DiagnosticDataRendering> renderingProperties = default;
             foreach (var property in element.EnumerateObject())

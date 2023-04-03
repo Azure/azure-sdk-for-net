@@ -1,0 +1,4174 @@
+[
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "taskName": "Add needs triage label to new issues",
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "opened"
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isPartOfProject",
+                "parameters": {}
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isAssignedToSomeone",
+                "parameters": {}
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isLabeled",
+                "parameters": {}
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "needs-triage"
+          }
+        }
+      ],
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ]
+    },
+    "disabled": false
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssueCommentResponder",
+    "version": "1.0",
+    "config": {
+      "taskName": "Replace needs author feedback label with needs attention label when the author comments on an issue",
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "created"
+            }
+          },
+          {
+            "name": "isActivitySender",
+            "parameters": {
+              "user": {
+                "type": "author"
+              }
+            }
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "needs-author-feedback"
+            }
+          },
+          {
+            "name": "isOpen",
+            "parameters": {}
+          }
+        ]
+      },
+      "actions": [
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "needs-team-attention"
+          }
+        },
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-author-feedback"
+          }
+        }
+      ],
+      "eventType": "issue",
+      "eventNames": [
+        "issue_comment"
+      ]
+    },
+    "disabled": false
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "taskName": "Remove no recent activity label from issues",
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isAction",
+                "parameters": {
+                  "action": "closed"
+                }
+              }
+            ]
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isAction",
+                "parameters": {
+                  "action": "labeled"
+                }
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isAction",
+                "parameters": {
+                  "action": "unlabeled"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        }
+      ],
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ]
+    },
+    "disabled": false
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssueCommentResponder",
+    "version": "1.0",
+    "config": {
+      "taskName": "Remove no recent activity label when an issue is commented on",
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          }
+        ]
+      },
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        }
+      ],
+      "eventType": "issue",
+      "eventNames": [
+        "issue_comment"
+      ]
+    },
+    "disabled": false
+  },
+  {
+    "taskType": "scheduled",
+    "capabilityId": "ScheduledSearch",
+    "subCapability": "ScheduledSearch",
+    "version": "1.1",
+    "config": {
+      "taskName": "Close stale issues",
+      "frequency": [
+        {
+          "weekDay": 0,
+          "hours": [
+            1
+          ],
+          "timezoneOffset": -7
+        },
+        {
+          "weekDay": 1,
+          "hours": [
+            1
+          ],
+          "timezoneOffset": -7
+        },
+        {
+          "weekDay": 2,
+          "hours": [
+            1
+          ],
+          "timezoneOffset": -7
+        },
+        {
+          "weekDay": 3,
+          "hours": [
+            1
+          ],
+          "timezoneOffset": -7
+        },
+        {
+          "weekDay": 4,
+          "hours": [
+            1
+          ],
+          "timezoneOffset": -7
+        },
+        {
+          "weekDay": 5,
+          "hours": [
+            1
+          ],
+          "timezoneOffset": -7
+        },
+        {
+          "weekDay": 6,
+          "hours": [
+            1
+          ],
+          "timezoneOffset": -7
+        }
+      ],
+      "searchTerms": [
+        {
+          "name": "isIssue",
+          "parameters": {}
+        },
+        {
+          "name": "isOpen",
+          "parameters": {}
+        },
+        {
+          "name": "hasLabel",
+          "parameters": {
+            "label": "needs-author-feedback"
+          }
+        },
+        {
+          "name": "hasLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        },
+        {
+          "name": "noActivitySince",
+          "parameters": {
+            "days": 14
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "closeIssue",
+          "parameters": {}
+        }
+      ]
+    },
+    "disabled": false
+  },
+  {
+    "taskType": "scheduled",
+    "capabilityId": "ScheduledSearch",
+    "subCapability": "ScheduledSearch",
+    "version": "1.1",
+    "config": {
+      "taskName": "Add no recent activity label to issues",
+      "frequency": [
+        {
+          "weekDay": 0,
+          "hours": [
+            1,
+            7,
+            13,
+            19
+          ],
+          "timezoneOffset": -7
+        },
+        {
+          "weekDay": 1,
+          "hours": [
+            1,
+            7,
+            13,
+            19
+          ],
+          "timezoneOffset": -7
+        },
+        {
+          "weekDay": 2,
+          "hours": [
+            1,
+            7,
+            13,
+            19
+          ],
+          "timezoneOffset": -7
+        },
+        {
+          "weekDay": 3,
+          "hours": [
+            1,
+            7,
+            13,
+            19
+          ],
+          "timezoneOffset": -7
+        },
+        {
+          "weekDay": 4,
+          "hours": [
+            1,
+            7,
+            13,
+            19
+          ],
+          "timezoneOffset": -7
+        },
+        {
+          "weekDay": 5,
+          "hours": [
+            1,
+            7,
+            13,
+            19
+          ],
+          "timezoneOffset": -7
+        },
+        {
+          "weekDay": 6,
+          "hours": [
+            1,
+            7,
+            13,
+            19
+          ],
+          "timezoneOffset": -7
+        }
+      ],
+      "searchTerms": [
+        {
+          "name": "isIssue",
+          "parameters": {}
+        },
+        {
+          "name": "isOpen",
+          "parameters": {}
+        },
+        {
+          "name": "hasLabel",
+          "parameters": {
+            "label": "needs-author-feedback"
+          }
+        },
+        {
+          "name": "noActivitySince",
+          "parameters": {
+            "days": 7
+          }
+        },
+        {
+          "name": "noLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        },
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "Hi, we're sending this friendly reminder because we haven't heard back from you in **7 days**. We need more information about this issue to help address it. Please be sure to give us your input. If we don't hear back from you within **14 days** of this comment the issue will be automatically closed. Thank you!"
+          }
+        }
+      ]
+    },
+    "disabled": false
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "labeled"
+            }
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "needs-triage"
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "labelAdded",
+                "parameters": {
+                  "label": "needs-triage"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "taskName": "Remove needs-triage label on issues once they are labeled",
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-triage"
+          }
+        }
+      ]
+    },
+    "disabled": false
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "opened"
+            }
+          },
+          {
+            "operator": "and",
+            "operands": [
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "activitySenderHasPermissions",
+                    "parameters": {
+                      "association": "MEMBER",
+                      "permissions": "write"
+                    }
+                  }
+                ]
+              },
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "activitySenderHasAssociation",
+                    "parameters": {
+                      "association": "MEMBER"
+                    }
+                  }
+                ]
+              },
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "activitySenderHasAssociation",
+                    "parameters": {
+                      "association": "COLLABORATOR"
+                    }
+                  }
+                ]
+              },
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "activitySenderHasPermissions",
+                    "parameters": {
+                      "permissions": "admin"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "taskName": "Add customer-reported label to issues coming from non-collaborators",
+      "actions": [
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "customer-reported"
+          }
+        },
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "question"
+          }
+        }
+      ]
+    },
+    "disabled": false
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssueCommentResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isOpen",
+                "parameters": {}
+              }
+            ]
+          },
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "created"
+            }
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "needs-author-feedback"
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "noActivitySince",
+                "parameters": {
+                  "days": 7
+                }
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isCloseAndComment",
+                "parameters": {}
+              }
+            ]
+          },
+          {
+            "name": "isActivitySender",
+            "parameters": {
+              "user": {
+                "type": "author"
+              }
+            }
+          },
+          {
+            "name": "activitySenderHasPermissions",
+            "parameters": {
+              "permissions": "none"
+            }
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issue_comment"
+      ],
+      "taskName": "For issues closed due to inactivity, re-open an issue if issue author posts a reply within 7 days.",
+      "actions": [
+        {
+          "name": "reopenIssue",
+          "parameters": {}
+        },
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        },
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-author-feedback"
+          }
+        },
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "needs-team-attention"
+          }
+        }
+      ]
+    },
+    "disabled": false
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssueCommentResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "created"
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isOpen",
+                "parameters": {}
+              }
+            ]
+          },
+          {
+            "name": "activitySenderHasPermissions",
+            "parameters": {
+              "permissions": "none"
+            }
+          },
+          {
+            "name": "noActivitySince",
+            "parameters": {
+              "days": 7
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isCloseAndComment",
+                "parameters": {}
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issue_comment"
+      ],
+      "taskName": "For issues closed with no activity over 7 days, ask non-contributor to consider opening a new issue instead.",
+      "actions": [
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "Thank you for your interest in this issue! Because it has been closed for a period of time, we strongly advise that you open a new issue linking to this to ensure better visibility of your comment. "
+          }
+        }
+      ]
+    },
+    "disabled": false
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "customer-reported"
+            }
+          },
+          {
+            "name": "labelRemoved",
+            "parameters": {
+              "label": "Service Attention"
+            }
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "taskName": "Add label after \"Service Attention\" is removed",
+      "actions": [
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "needs-team-triage"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "PrAutoLabel",
+    "subCapability": "Path",
+    "version": "1.0",
+    "config": {
+      "configs": [
+        {
+          "label": "Azure.Core",
+          "pathFilter": [
+            "sdk/core/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Azure.Identity",
+          "pathFilter": [
+            "sdk/identity/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "EngSys",
+          "pathFilter": [
+            "sdk/template/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "App Configuration",
+          "pathFilter": [
+            "sdk/appconfiguration/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Batch",
+          "pathFilter": [
+            "sdk/batch/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Cognitive - Form Recognizer",
+          "pathFilter": [
+            "sdk/formrecognizer/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Cognitive - Metrics Advisor",
+          "pathFilter": [
+            "sdk/metricsadvisor/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Cognitive - Text Analytics",
+          "pathFilter": [
+            "sdk/textanalytics/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Communication",
+          "pathFilter": [
+            "sdk/communication/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Compute",
+          "pathFilter": [
+            "sdk/compute/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "DevCenter",
+          "pathFilter": [
+            "sdk/devcenter/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Digital Twins",
+          "pathFilter": [
+            "sdk/digitaltwins/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "TimeseriesInsights",
+          "pathFilter": [
+            "sdk/timeseriesinsights/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Event Grid",
+          "pathFilter": [
+            "sdk/eventgrid/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Event Hubs",
+          "pathFilter": [
+            "sdk/eventhub/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "IoT",
+          "pathFilter": [
+            "sdk/iot/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "KeyVault",
+          "pathFilter": [
+            "sdk/keyvault/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Load Test Service",
+          "pathFilter": [
+            "sdk/loadtestservice/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Search",
+          "pathFilter": [
+            "sdk/search/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Service Bus",
+          "pathFilter": [
+            "sdk/servicebus/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Schema Registry",
+          "pathFilter": [
+            "sdk/schemaregistry/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Storage",
+          "pathFilter": [
+            "sdk/storage/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "Tables",
+          "pathFilter": [
+            "sdk/tables/"
+          ],
+          "exclude": [
+            ""
+          ]
+        },
+        {
+          "label": "WebPubSub",
+          "pathFilter": [
+            "/sdk/webpubsub/"
+          ]
+        },
+        {
+          "label": "Functions",
+          "pathFilter": [
+            "/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/"
+          ]
+        },
+        {
+          "label": "Functions",
+          "pathFilter": [
+            "/sdk/eventhub/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/"
+          ]
+        },
+        {
+          "label": "Functions",
+          "pathFilter": [
+            "/sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/"
+          ]
+        },
+        {
+          "label": "Functions",
+          "pathFilter": [
+            "/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/"
+          ]
+        },
+        {
+          "label": "Communication - Calling Server",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.CallingServer/"
+          ]
+        },
+        {
+          "label": "Communication - Chat",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Chat/"
+          ]
+        },
+        {
+          "label": "Communication - Common",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Common/"
+          ]
+        },
+        {
+          "label": "Communication - Identity",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Identity/"
+          ]
+        },
+        {
+          "label": "Communication - Network Traversal",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.NetworkTraversal/"
+          ]
+        },
+        {
+          "label": "Communication - Phone Numbers",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.PhoneNumbers/"
+          ]
+        },
+        {
+          "label": "Communication - Short Codes",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.ShortCodes/"
+          ]
+        },
+        {
+          "label": "Communication - SMS",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Sms/"
+          ]
+        },
+        {
+          "label": "Communication - Resource Manager",
+          "pathFilter": [
+            "/sdk/communication/Azure.ResourceManager.Communication/"
+          ]
+        },
+        {
+          "label": "Communication - Rooms",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Rooms/"
+          ]
+        },
+        {
+          "label": "Mixed Reality",
+          "pathFilter": [
+            "/sdk/mixedreality/",
+            "/sdk/objectanchors/"
+          ]
+        }
+      ],
+      "taskName": "Auto PR based on folder paths "
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "labeled"
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "needs-triage"
+                }
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "needs-team-triage"
+                }
+              }
+            ]
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "needs-author-feedback"
+                }
+              }
+            ]
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "customer-reported"
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isInMilestone",
+                "parameters": {}
+              }
+            ]
+          },
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "issue-addressed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "taskName": "Ensure 'needs-team-attention' label is assigned to issues not in a milestone",
+      "actions": [
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "needs-team-attention"
+          }
+        }
+      ]
+    },
+    "disabled": false
+  },
+  {
+    "taskType": "scheduledAndTrigger",
+    "capabilityId": "IssueRouting",
+    "version": "1.0",
+    "subCapability": "@Mention",
+    "config": {
+      "labelsAndMentions": [
+        {
+          "labels": [
+            "Service Attention",
+            "AAD"
+          ],
+          "mentionees": [
+            "adamedx"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "AKS"
+          ],
+          "mentionees": [
+            "Azure/aks-pm"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Alerts Management"
+          ],
+          "mentionees": [
+            "liadtal",
+            "yairgil"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "ARM"
+          ],
+          "mentionees": [
+            "armleads-azure"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "ARM - Templates"
+          ],
+          "mentionees": [
+            "armleads-azure"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "ARM - Tags"
+          ],
+          "mentionees": [
+            "armleads-azure"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "ARM - Core"
+          ],
+          "mentionees": [
+            "armleads-azure"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "ARM - Managed Applications"
+          ],
+          "mentionees": [
+            "armleads-azure"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "ARM - Service Catalog"
+          ],
+          "mentionees": [
+            "armleads-azure"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "ARM - RBAC"
+          ],
+          "mentionees": [
+            "armleads-azure"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Advisor"
+          ],
+          "mentionees": [
+            "mojayara",
+            "Prasanna-Padmanabhan"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Analysis Services"
+          ],
+          "mentionees": [
+            "athipp",
+            "taiwu",
+            "minghan"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "API Management"
+          ],
+          "mentionees": [
+            "miaojiang"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Application Insights"
+          ],
+          "mentionees": [
+            "azmonapplicationinsights"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "App Services"
+          ],
+          "mentionees": [
+            "antcp",
+            "AzureAppServiceCLI"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "App Configuration"
+          ],
+          "mentionees": [
+            "shenmuxiaosen",
+            "avanigupta"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "ARO"
+          ],
+          "mentionees": [
+            "mjudeikis",
+            "jim-minter",
+            "julienstroheker",
+            "amanohar"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Attestation"
+          ],
+          "mentionees": [
+            "anilba06"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Authorization"
+          ],
+          "mentionees": [
+            "darshanhs90",
+            "AshishGargMicrosoft"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Automation"
+          ],
+          "mentionees": [
+            "jaspkaur28",
+            "omairabdullah"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "AVS"
+          ],
+          "mentionees": [
+            "divka78",
+            "amitchat",
+            "aishu"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Azure Stack"
+          ],
+          "mentionees": [
+            "sijuman",
+            "sarathys",
+            "bganapa",
+            "rakku-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Batch"
+          ],
+          "mentionees": [
+            "paterasMSFT",
+            "dpwatrous",
+            "wiboris",
+            "mksuni",
+            "bgklein"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "BatchAI"
+          ],
+          "mentionees": [
+            "matthchr"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Billing"
+          ],
+          "mentionees": [
+            "cabbpt"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Blueprint"
+          ],
+          "mentionees": [
+            "alex-frankel",
+            "filizt"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Bot Service"
+          ],
+          "mentionees": [
+            "sgellock"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cloud Shell"
+          ],
+          "mentionees": [
+            "maertendMSFT"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - Text Analytics"
+          ],
+          "mentionees": [
+            "assafi"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - Form Recognizer"
+          ],
+          "mentionees": [
+            "ctstone",
+            "vkurpad"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - Anomaly Detector"
+          ],
+          "mentionees": [
+            "yingqunpku",
+            "bowgong"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - Custom Vision"
+          ],
+          "mentionees": [
+            "areddish",
+            "tburns10"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - Computer Vision"
+          ],
+          "mentionees": [
+            "ryogok",
+            "TFR258",
+            "tburns10"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - Face"
+          ],
+          "mentionees": [
+            "JinyuID",
+            "dipidoo",
+            "SteveMSFT"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - QnA Maker"
+          ],
+          "mentionees": [
+            "bingisbestest",
+            "nerajput1607"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - Translator"
+          ],
+          "mentionees": [
+            "swmachan"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - Speech"
+          ],
+          "mentionees": [
+            "robch",
+            "oscholz"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - LUIS"
+          ],
+          "mentionees": [
+            "cahann",
+            "kayousef"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - Content Moderator"
+          ],
+          "mentionees": [
+            "swiftarrow11"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - Personalizer"
+          ],
+          "mentionees": [
+            "dwaijam"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - Immersive Reader"
+          ],
+          "mentionees": [
+            "metanMSFT"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - Ink Recognizer"
+          ],
+          "mentionees": [
+            "olduroja"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - Bing"
+          ],
+          "mentionees": [
+            "jaggerbodas-ms",
+            "arwong"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cognitive - Mgmt"
+          ],
+          "mentionees": [
+            "yangyuan"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Commerce"
+          ],
+          "mentionees": [
+            "ms-premp",
+            "qiaozha"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Compute"
+          ],
+            "mentionees": [
+              "Drewm3",
+              "TravisCragg-MSFT",
+              "nikhilpatel909",
+              "sandeepraichura",
+              "hilaryw29",
+              "GabstaMSFT",
+              "ramankumarlive",
+              "ushnaarshadkhan"
+            ]
+          },
+          {
+            "labels": [
+              "Service Attention",
+              "Compute - Extensions"
+            ],
+            "mentionees": [
+              "TravisCragg-MSFT",
+              "GabstaMSFT"
+            ]
+          },
+          {
+            "labels": [
+              "Service Attention",
+              "Compute - Images"
+            ],
+            "mentionees": [
+              "TravisCragg-MSFT",
+              "sandeepraichura"
+            ]
+          },
+          {
+            "labels": [
+              "Service Attention",
+              "Compute - Managed Disks"
+            ],
+            "mentionees": [
+              "TravisCragg-MSFT",
+              "ramankumarlive",
+              "ushnaarshadkhan"
+            ]
+          },
+          {
+            "labels": [
+              "Service Attention",
+              "Compute - RDFE"
+            ],
+            "mentionees": [
+              "Drewm3",
+              "TravisCragg-MSFT"
+            ]
+          },
+          {
+            "labels": [
+              "Service Attention",
+              "Compute - VM"
+            ],
+            "mentionees": [
+              "Drewm3",
+              "TravisCragg-MSFT",
+              "nikhilpatel909",
+              "sandeepraichura",
+              "hilaryw29",
+              "GabstaMSFT"
+            ]
+          },
+          {
+            "labels": [
+              "Service Attention",
+              "Compute - VMSS"
+            ],
+            "mentionees": [
+              "TravisCragg-MSFT",
+              "hilaryw29"
+            ]
+          },
+          {
+          "labels": [
+            "Service Attention",
+            "Connected Kubernetes"
+          ],
+          "mentionees": [
+            "akashkeshari"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Container Instances"
+          ],
+          "mentionees": [
+            "macolso"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Container Registry"
+          ],
+          "mentionees": [
+            "toddysm",
+            "northtyphoon"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Container Service"
+          ],
+          "mentionees": [
+            "qike-ms",
+            "jwilder",
+            "thomas1206",
+            "seanmck"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cosmos"
+          ],
+          "mentionees": [
+            "pjohari-ms",
+            "MehaKaushik"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Customer Insights"
+          ],
+          "mentionees": [
+            "shefymk"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Custom Providers"
+          ],
+          "mentionees": [
+            "manoharp",
+            "MSEvanhi"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "CycleCloud"
+          ],
+          "mentionees": [
+            "adriankjohnson"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Data Bricks"
+          ],
+          "mentionees": [
+            "arindamc"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "DataBox"
+          ],
+          "mentionees": [
+            "tmvishwajit",
+            "matdickson",
+            "manuaery",
+            "madhurinms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "DataBox Edge"
+          ],
+          "mentionees": [
+            "a-t-mason",
+            "ganzee",
+            "manuaery"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Data Catalog"
+          ],
+          "mentionees": [
+            "ingave"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Data Factory"
+          ],
+          "mentionees": [
+            "zhangyd2015",
+            "Frey-Wang",
+            "Jingshu923"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Data Lake"
+          ],
+          "mentionees": [
+            "sumantmehtams"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Data Lake Storage Gen1"
+          ],
+          "mentionees": [
+            "sumantmehtams"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Data Lake Storage Gen2"
+          ],
+          "mentionees": [
+            "sumantmehtams"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Data Lake Analytics"
+          ],
+          "mentionees": [
+            "idear1203"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Data Lake Store"
+          ],
+          "mentionees": [
+            "sumantmehtams"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Data Migration"
+          ],
+          "mentionees": [
+            "radjaram",
+            "kavitham10"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Data Share"
+          ],
+          "mentionees": [
+            "raedJarrar",
+            "jifems"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "DevCenter"
+          ],
+          "mentionees": [
+            "sebrenna",
+            "mharlan",
+            "chrissmiller"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "DevOps"
+          ],
+          "mentionees": [
+            "narula0781",
+            "ashishonce",
+            "romil07"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Dev Spaces"
+          ],
+          "mentionees": [
+            "yuzorMa",
+            "johnsta",
+            "greenie-msft"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Devtestlab"
+          ],
+          "mentionees": [
+            "Tanmayeekamath"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Device Provisioning Service"
+          ],
+          "mentionees": [
+            "nberdy"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Digital Twins"
+          ],
+          "mentionees": [
+            "johngallardo",
+            "efriesner",
+            "abhinav-gha",
+            "Aashish93-stack",
+            "sjiherzig",
+            "Satya-Kolluri"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Event Grid"
+          ],
+          "mentionees": [
+            "jfggdl"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Event Hubs"
+          ],
+          "mentionees": [
+            "kasun04",
+            "saglodha"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Functions"
+          ],
+          "mentionees": [
+            "ahmedelnably",
+            "fabiocav"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Graph.Microsoft"
+          ],
+          "mentionees": [
+            "dkershaw10",
+            "baywet"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Guest Configuration"
+          ],
+          "mentionees": [
+            "mgreenegit",
+            "vivlingaiah"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "HDInsight"
+          ],
+          "mentionees": [
+            "aim-for-better",
+            "idear1203",
+            "deshriva"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "HPC Cache"
+          ],
+          "mentionees": [
+            "romahamu",
+            "omzevall"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Import Export"
+          ],
+          "mentionees": [
+            "madhurinms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoT"
+          ],
+          "mentionees": [
+            "ethanann-ms",
+            "vighatke"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoTHub"
+          ],
+          "mentionees": [
+            "ethanann-ms",
+            "vighatke"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoT Models Repository"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "digimaun",
+            "brycewang-microsoft",
+            "andyk-ms",
+            "mahmood-microsoft",
+            "ngastelum-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "KeyVault"
+          ],
+          "mentionees": [
+            "RandalliLama",
+            "schaabs",
+            "jlichwa"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Kubernetes Configuration"
+          ],
+          "mentionees": [
+            "NarayanThiru"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Azure Data Explorer"
+          ],
+          "mentionees": [
+            "ilayrn",
+            "orhasban",
+            "zoharHenMicrosoft",
+            "sagivf",
+            "Aviv-Yaniv"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Lab Services"
+          ],
+          "mentionees": [
+            "Tanmayeekamath"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Load Test Service"
+          ],
+          "mentionees": [
+            "abranj1219",
+            "ninallam",
+            "NiveditJain"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Logic App"
+          ],
+          "mentionees": [
+            "Azure/azure-logicapps-team"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "LOUIS"
+          ],
+          "mentionees": [
+            "minamnmik"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Managed Identity"
+          ],
+          "mentionees": [
+            "varunkch"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Machine Learning"
+          ],
+          "mentionees": [
+            "azureml-github"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Machine Learning Compute"
+          ],
+          "mentionees": [
+            "azureml-github"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Machine Learning Experimentation"
+          ],
+          "mentionees": [
+            "aashishb"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Managed Services"
+          ],
+          "mentionees": [
+            "Lighthouse-Azure"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "MariaDB"
+          ],
+          "mentionees": [
+            "ambhatna",
+            "savjani"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Marketplace Ordering"
+          ],
+          "mentionees": [
+            "prbansa"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Media Services"
+          ],
+          "mentionees": [
+            "akucer"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Migrate"
+          ],
+          "mentionees": [
+            "shijojoy"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Mixed Reality"
+          ],
+          "mentionees": [
+            "crtreasu",
+            "rgarcia"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Mobile Engagement"
+          ],
+          "mentionees": [
+            "kpiteira"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Monitor"
+          ],
+          "mentionees": [
+            "SameergMS",
+            "dadunl"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Monitor - Autoscale"
+          ],
+          "mentionees": [
+            "AzMonEssential"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Monitor - ActivityLogs"
+          ],
+          "mentionees": [
+            "AzMonEssential"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Monitor - Metrics"
+          ],
+          "mentionees": [
+            "AzMonEssential"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Monitor - Diagnostic Settings"
+          ],
+          "mentionees": [
+            "AzMonEssential"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Monitor - Alerts"
+          ],
+          "mentionees": [
+            "AzmonAlerts"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Monitor - ActionGroups"
+          ],
+          "mentionees": [
+            "AzmonActionG"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Monitor - LogAnalytics"
+          ],
+          "mentionees": [
+            "AzmonLogA"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Monitor - ApplicationInsights"
+          ],
+          "mentionees": [
+            "azmonapplicationinsights"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "MySQL"
+          ],
+          "mentionees": [
+            "ambhatna",
+            "savjani"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network"
+          ],
+          "mentionees": [
+            "aznetsuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - Application Gateway"
+          ],
+          "mentionees": [
+            "appgwsuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - CDN"
+          ],
+          "mentionees": [
+            "cdnfdsuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - DDOS Protection"
+          ],
+          "mentionees": [
+            "ddossuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - ExpressRoute"
+          ],
+          "mentionees": [
+            "exrsuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - Firewall"
+          ],
+          "mentionees": [
+            "fwsuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - Front Door"
+          ],
+          "mentionees": [
+            "cdnfdsuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - Load Balancer"
+          ],
+          "mentionees": [
+            "slbsupportgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - Virtual Network NAT"
+          ],
+          "mentionees": [
+            "vnetsuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - Network Watcher"
+          ],
+          "mentionees": [
+            "netwatchsuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - DNS"
+          ],
+          "mentionees": [
+            "dnssuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - Traffic Manager"
+          ],
+          "mentionees": [
+            "tmsuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - VPN Gateway"
+          ],
+          "mentionees": [
+            "vpngwsuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Notification Hub"
+          ],
+          "mentionees": [
+            "tjsomasundaram"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Operational Insights"
+          ],
+          "mentionees": [
+            "AzmonLogA"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Policy"
+          ],
+          "mentionees": [
+            "aperezcloud",
+            "kenieva"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Policy Insights"
+          ],
+          "mentionees": [
+            "kenieva"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "PostgreSQL"
+          ],
+          "mentionees": [
+            "sunilagarwal",
+            "lfittl-msft",
+            "sr-msft",
+            "niklarin"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Recovery Services Backup"
+          ],
+          "mentionees": [
+            "pvrk",
+            "Daya-Patil"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Recovery Services Site-Recovery"
+          ],
+          "mentionees": [
+            "Sharmistha-Rai"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Redis Cache"
+          ],
+          "mentionees": [
+            "yegu-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Relay"
+          ],
+          "mentionees": [
+            "jfggdl"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Reservations"
+          ],
+          "mentionees": [
+            "Rkapso"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Resource Authorization"
+          ],
+          "mentionees": [
+            "darshanhs90",
+            "AshishGargMicrosoft"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Resource Graph"
+          ],
+          "mentionees": [
+            "chiragg4u"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Resource Health"
+          ],
+          "mentionees": [
+            "stephbaron"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Scheduler"
+          ],
+          "mentionees": [
+            "derek1ee"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Search"
+          ],
+          "mentionees": [
+            "arv100kri",
+            "bleroy",
+            "tjacobhi"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Security"
+          ],
+          "mentionees": [
+            "chlahav"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Service Bus"
+          ],
+          "mentionees": [
+            "shankarsama",
+            "DorothySun216",
+            "EldertGrootenboer",
+            "saglodha"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Service Fabric"
+          ],
+          "mentionees": [
+            "QingChenmsft",
+            "vaishnavk",
+            "juhacket"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Schema Registry"
+          ],
+          "mentionees": [
+            "arerlend",
+            "alzimmermsft"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "SignalR"
+          ],
+          "mentionees": [
+            "sffamily",
+            "chenkennt",
+            "Y-Sindo"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "SQL"
+          ],
+          "mentionees": [
+            "azureSQLGitHub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "SQL - VM"
+          ],
+          "mentionees": [
+            "azureSQLGitHub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "SQL - Backup & Restore"
+          ],
+          "mentionees": [
+            "azureSQLGitHub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "SQL - Data Security"
+          ],
+          "mentionees": [
+            "azureSQLGitHub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "SQL - Elastic Jobs"
+          ],
+          "mentionees": [
+            "azureSQLGitHub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "SQL - Managed Instance"
+          ],
+          "mentionees": [
+            "azureSQLGitHub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "SQL - Replication & Failover"
+          ],
+          "mentionees": [
+            "azureSQLGitHub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Storage"
+          ],
+          "mentionees": [
+            "xgithubtriage"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Storsimple"
+          ],
+          "mentionees": [
+            "anoobbacker",
+            "ganzee",
+            "manuaery",
+            "patelkunal"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Stream Analytics"
+          ],
+          "mentionees": [
+            "atpham256"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Subscription"
+          ],
+          "mentionees": [
+            "anuragdalmia",
+            "shilpigautam",
+            "ramaganesan-rg"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Support"
+          ],
+          "mentionees": [
+            "shahbj79",
+            "mit2nil",
+            "aygoya",
+            "ganganarayanan"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Synapse"
+          ],
+          "mentionees": [
+            "wonner",
+            "yanjungao718"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Tables"
+          ],
+          "mentionees": [
+            "sakash279",
+            "sivethe",
+            "ThomasWeiss",
+            "PaulCheng"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "TimeseriesInsights"
+          ],
+          "mentionees": [
+            "Shipra1Mishra"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "vFXT"
+          ],
+          "mentionees": [
+            "zhusijia26"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Web Apps"
+          ],
+          "mentionees": [
+            "AzureAppServiceCLI",
+            "antcp"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - Virtual Network"
+          ],
+          "mentionees": [
+            "vnetsuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - Virtual WAN"
+          ],
+          "mentionees": [
+            "vwansuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - Network Virtual Appliance"
+          ],
+          "mentionees": [
+            "nvasuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - Bastion"
+          ],
+          "mentionees": [
+            "bastionsuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Azure.Spring - Cosmos"
+          ],
+          "mentionees": [
+            "kushagraThapar"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Network - Private Link"
+          ],
+          "mentionees": [
+            "privlinksuppgithub"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Azure Arc enabled servers"
+          ],
+          "mentionees": [
+            "rpsqrd",
+            "edyoung"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "SecurityInsights"
+          ],
+          "mentionees": [
+            "amirkeren"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoT/CLI"
+          ],
+          "mentionees": [
+            "Azure/azure-iot-cli-triage"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Communication"
+          ],
+          "mentionees": [
+            "acsdevx-msft"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Quantum"
+          ],
+          "mentionees": [
+            "xfield"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "WebPubSub"
+          ],
+          "mentionees": [
+            "vicancy",
+            "JialinXin"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Monitor - Exporter"
+          ],
+          "mentionees": [
+            "cijothomas",
+            "reyang",
+            "rajkumar-rangaraj",
+            "TimothyMothra",
+            "vishweshbankwar"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Monitor - Distro"
+          ],
+          "mentionees": [
+            "cijothomas",
+            "reyang",
+            "rajkumar-rangaraj",
+            "TimothyMothra",
+            "vishweshbankwar"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cost Management - Budget"
+          ],
+          "mentionees": [
+            "ccmaxpcrew"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Consumption - Budget"
+          ],
+          "mentionees": [
+            "ccmaxpcrew"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cost Management - Query"
+          ],
+          "mentionees": [
+            "ccmixpdevs"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Consumption - Query"
+          ],
+          "mentionees": [
+            "ccmixpdevs"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cost Management - Billing"
+          ],
+          "mentionees": [
+            "ccmbpxpcrew"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Consumption - Billing"
+          ],
+          "mentionees": [
+            "ccmbpxpcrew"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cost Management - UsageDetailsAndExport"
+          ],
+          "mentionees": [
+            "TiagoCrewGitHubIssues"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Consumption - UsageDetailsAndExport"
+          ],
+          "mentionees": [
+            "TiagoCrewGitHubIssues"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Cost Management - RIandShowBack"
+          ],
+          "mentionees": [
+            "ccmshowbackdevs"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "Consumption - RIandShowBack"
+          ],
+          "mentionees": [
+            "ccmshowbackdevs"
+          ]
+        }
+      ],
+      "replyTemplate": "Thanks for the feedback! We are routing this to the appropriate team for follow-up. cc ${mentionees}.",
+      "taskName": "Triage issues to the service team"
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "labeled"
+            }
+          },
+          {
+            "name": "labelAdded",
+            "parameters": {
+              "label": "needs-author-feedback"
+            }
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "taskName": "Remove needs* labels when needs-author-feedback label is added",
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-team-attention"
+          }
+        },
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-triage"
+          }
+        },
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-team-triage"
+          }
+        }
+      ]
+    },
+    "disabled": false
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "AutoMerge",
+    "subCapability": "AutoMerge",
+    "version": "1.0",
+    "config": {
+      "taskName": "Auto merge pull requests",
+      "label": "auto-merge",
+      "allowAutoMergeInstructionsWithoutLabel": false,
+      "mergeType": "squash",
+      "deleteBranches": true,
+      "removeLabelOnPush": true,
+      "requireAllStatuses": true,
+      "requireSpecificCheckRuns": false,
+      "usePrDescriptionAsCommitMessage": true
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "PullRequestResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "opened"
+            }
+          },
+          {
+            "operator": "and",
+            "operands": [
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "activitySenderHasPermissions",
+                    "parameters": {
+                      "permissions": "write"
+                    }
+                  }
+                ]
+              },
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "activitySenderHasAssociation",
+                    "parameters": {
+                      "association": "MEMBER"
+                    }
+                  }
+                ]
+              },
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "activitySenderHasAssociation",
+                    "parameters": {
+                      "association": "COLLABORATOR"
+                    }
+                  }
+                ]
+              },
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "activitySenderHasPermissions",
+                    "parameters": {
+                      "permissions": "admin"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "pull_request",
+      "eventNames": [
+        "pull_request",
+        "issues",
+        "project_card"
+      ],
+      "taskName": "Add customer-reported label to PRs from customers ",
+      "actions": [
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "customer-reported"
+          }
+        },
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "Thank you for your contribution @${issueAuthor}! We will review the pull request and get back to you soon."
+          }
+        },
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "Community Contribution"
+          }
+        }
+      ]
+    },
+    "disabled": false
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "PullRequestResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          },
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "operator": "or",
+            "operands": [
+              {
+                "name": "isAction",
+                "parameters": {
+                  "action": "merged"
+                }
+              },
+              {
+                "name": "isAction",
+                "parameters": {
+                  "action": "synchronize"
+                }
+              },
+              {
+                "name": "isAction",
+                "parameters": {
+                  "action": "review_requested"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "pull_request",
+      "eventNames": [
+        "pull_request",
+        "issues",
+        "project_card"
+      ],
+      "taskName": "[Stale Pull Requests] Remove Stale PR Designation on Activity",
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "PullRequestReviewResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          },
+          {
+            "name": "isOpen",
+            "parameters": {}
+          }
+        ]
+      },
+      "eventType": "pull_request",
+      "eventNames": [
+        "pull_request_review"
+      ],
+      "taskName": "[Stale Pull Requests] Remove Stale PR Designation on on Review",
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "PullRequestCommentResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "created"
+            }
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          },
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "operator": "and",
+            "operands": [
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "commentContains",
+                    "parameters": {
+                      "commentPattern": "What is Check Enforcer?"
+                    }
+                  }
+                ]
+              },
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "commentContains",
+                    "parameters": {
+                      "commentPattern": "Since there hasn't been recent engagement, this is being closed out."
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "pull_request",
+      "eventNames": [
+        "issue_comment"
+      ],
+      "taskName": "[Stale Pull Requests] Remove Stale PR Designation on on Comment",
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "scheduled",
+    "capabilityId": "ScheduledSearch",
+    "subCapability": "ScheduledSearch",
+    "version": "1.1",
+    "config": {
+      "frequency": [
+        {
+          "weekDay": 0,
+          "hours": [
+            1,
+            7,
+            13,
+            19
+          ],
+          "timezoneOffset": -4
+        },
+        {
+          "weekDay": 1,
+          "hours": [
+            1,
+            7,
+            13,
+            19
+          ],
+          "timezoneOffset": -4
+        },
+        {
+          "weekDay": 2,
+          "hours": [
+            1,
+            7,
+            13,
+            19
+          ],
+          "timezoneOffset": -4
+        },
+        {
+          "weekDay": 3,
+          "hours": [
+            1,
+            7,
+            13,
+            19
+          ],
+          "timezoneOffset": -4
+        },
+        {
+          "weekDay": 4,
+          "hours": [
+            1,
+            7,
+            13,
+            19
+          ],
+          "timezoneOffset": -4
+        },
+        {
+          "weekDay": 5,
+          "hours": [
+            1,
+            7,
+            13,
+            19
+          ],
+          "timezoneOffset": -4
+        },
+        {
+          "weekDay": 6,
+          "hours": [
+            1,
+            7,
+            13,
+            19
+          ],
+          "timezoneOffset": -4
+        }
+      ],
+      "searchTerms": [
+        {
+          "name": "isOpen",
+          "parameters": {}
+        },
+        {
+          "name": "hasLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        },
+        {
+          "name": "isPr",
+          "parameters": {}
+        },
+        {
+          "name": "noActivitySince",
+          "parameters": {
+            "days": 7
+          }
+        }
+      ],
+      "taskName": "[Stale Pull Requests] Scheduled Close for Stale PRs",
+      "actions": [
+        {
+          "name": "closeIssue",
+          "parameters": {}
+        },
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "Hi @${issueAuthor}.  Thank you for your contribution.  Since there hasn't been recent engagement, we're going to close this out.  Feel free to respond with a comment containing \"/reopen\" if you'd like to continue working on these changes.  Please be sure to use the command to reopen or remove the \"no-recent-activity\" label; otherwise, this is likely to be closed again with the next cleanup pass.  "
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "PullRequestCommentResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "isOpen",
+                "parameters": {}
+              }
+            ]
+          },
+          {
+            "name": "commentContains",
+            "parameters": {
+              "commentPattern": "/reopen"
+            }
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          },
+          {
+            "operator": "or",
+            "operands": [
+              {
+                "name": "isActivitySender",
+                "parameters": {
+                  "user": {
+                    "type": "author"
+                  }
+                }
+              },
+              {
+                "name": "activitySenderHasPermissions",
+                "parameters": {
+                  "permissions": "admin"
+                }
+              },
+              {
+                "name": "activitySenderHasPermissions",
+                "parameters": {
+                  "permissions": "write"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "pull_request",
+      "eventNames": [
+        "issue_comment"
+      ],
+      "taskName": "[Stale Pull Requests] Reopen Command",
+      "actions": [
+        {
+          "name": "reopenIssue",
+          "parameters": {}
+        },
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "scheduled",
+    "capabilityId": "ScheduledSearch",
+    "subCapability": "ScheduledSearch",
+    "version": "1.1",
+    "config": {
+      "frequency": [
+        {
+          "weekDay": 5,
+          "hours": [
+            5
+          ],
+          "timezoneOffset": -5
+        }
+      ],
+      "searchTerms": [
+        {
+          "name": "isOpen",
+          "parameters": {}
+        },
+        {
+          "name": "noLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        },
+        {
+          "name": "noActivitySince",
+          "parameters": {
+            "days": 60
+          }
+        },
+        {
+          "name": "isPr",
+          "parameters": {}
+        }
+      ],
+      "taskName": "[Stale Pull Requests] Scheduled Marking of Stale PRs",
+      "actions": [
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        },
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "Hi @${issueAuthor}.  Thank you for your interest in helping to improve the Azure SDK experience and for your contribution.  We've noticed that there hasn't been recent engagement on this pull request.  If this is still an active work stream, please let us know by pushing some changes or leaving a comment.  Otherwise, we'll close this out in 7 days."
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "PullRequestResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "auto-merge"
+            }
+          },
+          {
+            "name": "isAction",
+            "parameters": {
+              "action": "synchronize"
+            }
+          },
+          {
+            "operator": "and",
+            "operands": [
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "activitySenderHasPermissions",
+                    "parameters": {
+                      "permissions": "admin"
+                    }
+                  }
+                ]
+              },
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "activitySenderHasPermissions",
+                    "parameters": {
+                      "permissions": "write"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "pull_request",
+      "eventNames": [
+        "pull_request",
+        "issues",
+        "project_card"
+      ],
+      "taskName": "[Auto Merge] Reset Approvals on Untrusted Changes",
+      "actions": [
+        {
+          "name": "dismissApprovalPullRequest",
+          "parameters": {
+            "dismissAction": "dismissAll",
+            "comment": "Hi @{issueAuthor}.  We've noticed that new changes have been pushed to this pull request.  Because it is set to automatically merge, we've reset the approvals to allow the opportunity to review the updates."
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "labelAdded",
+            "parameters": {
+              "label": "issue-addressed"
+            }
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "taskName": "[Resolve Workflow] Issue Addressed Label Applied",
+      "actions": [
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "Hi @${issueAuthor}.  Thank you for opening this issue and giving us the opportunity to assist.  We believe that this has been addressed.  If you feel that further discussion is needed, please add a comment with the text “`/unresolve`” to remove the “issue-addressed” label and continue the conversation."
+          }
+        },
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-triage"
+          }
+        },
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-team-triage"
+          }
+        },
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-team-attention"
+          }
+        },
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "needs-author-feedback"
+          }
+        },
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "no-recent-activity"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "scheduled",
+    "capabilityId": "ScheduledSearch",
+    "subCapability": "ScheduledSearch",
+    "version": "1.1",
+    "config": {
+      "frequency": [
+        {
+          "weekDay": 0,
+          "hours": [
+            0,
+            6,
+            12,
+            18
+          ],
+          "timezoneOffset": -4
+        },
+        {
+          "weekDay": 1,
+          "hours": [
+            0,
+            6,
+            12,
+            18
+          ],
+          "timezoneOffset": -4
+        },
+        {
+          "weekDay": 2,
+          "hours": [
+            0,
+            6,
+            12,
+            18
+          ],
+          "timezoneOffset": -4
+        },
+        {
+          "weekDay": 3,
+          "hours": [
+            0,
+            6,
+            12,
+            18
+          ],
+          "timezoneOffset": -4
+        },
+        {
+          "weekDay": 4,
+          "hours": [
+            0,
+            6,
+            12,
+            18
+          ],
+          "timezoneOffset": -4
+        },
+        {
+          "weekDay": 5,
+          "hours": [
+            0,
+            6,
+            12,
+            18
+          ],
+          "timezoneOffset": -4
+        },
+        {
+          "weekDay": 6,
+          "hours": [
+            0,
+            6,
+            12,
+            18
+          ],
+          "timezoneOffset": -4
+        }
+      ],
+      "searchTerms": [
+        {
+          "name": "isIssue",
+          "parameters": {}
+        },
+        {
+          "name": "isOpen",
+          "parameters": {}
+        },
+        {
+          "name": "hasLabel",
+          "parameters": {
+            "label": "issue-addressed"
+          }
+        },
+        {
+          "name": "noActivitySince",
+          "parameters": {
+            "days": 7
+          }
+        }
+      ],
+      "taskName": "[Resolve Workflow] Close Addressed Issues",
+      "actions": [
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "Hi @${issueAuthor}, since you haven’t asked that we “`/unresolve`” the issue, we’ll close this out. If you believe further discussion is needed, please add a comment “`/unresolve`” to reopen the issue."
+          }
+        },
+        {
+          "name": "closeIssue",
+          "parameters": {}
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssueCommentResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "issue-addressed"
+            }
+          },
+          {
+            "name": "commentContains",
+            "parameters": {
+              "commentPattern": "/unresolve"
+            }
+          },
+          {
+            "operator": "or",
+            "operands": [
+              {
+                "name": "isActivitySender",
+                "parameters": {
+                  "user": {
+                    "type": "author"
+                  }
+                }
+              },
+              {
+                "name": "activitySenderHasPermissions",
+                "parameters": {
+                  "permissions": "admin"
+                }
+              },
+              {
+                "name": "activitySenderHasPermissions",
+                "parameters": {
+                  "permissions": "write"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issue_comment"
+      ],
+      "taskName": "[Resolve Workflow] Unresolve Command by Author",
+      "actions": [
+        {
+          "name": "reopenIssue",
+          "parameters": {}
+        },
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "issue-addressed"
+          }
+        },
+        {
+          "name": "addLabel",
+          "parameters": {
+            "label": "needs-team-attention"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssueCommentResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "issue-addressed"
+            }
+          },
+          {
+            "name": "commentContains",
+            "parameters": {
+              "commentPattern": "/unresolve",
+              "isRegex": false
+            }
+          },
+          {
+            "operator": "and",
+            "operands": [
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "isActivitySender",
+                    "parameters": {
+                      "user": {
+                        "type": "author"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "activitySenderHasPermissions",
+                    "parameters": {
+                      "permissions": "admin"
+                    }
+                  }
+                ]
+              },
+              {
+                "operator": "not",
+                "operands": [
+                  {
+                    "name": "activitySenderHasPermissions",
+                    "parameters": {
+                      "permissions": "write"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issue_comment"
+      ],
+      "taskName": "[Resolve Workflow] Unresolve Command Without Permissions",
+      "actions": [
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "Hi ${contextualAuthor}, only the original author of the issue can ask that it be unresolved.  Please open a new issue with your scenario and details if you would like to discuss this topic with the team."
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "issue-addressed"
+            }
+          },
+          {
+            "operator": "or",
+            "operands": [
+              {
+                "name": "labelAdded",
+                "parameters": {
+                  "label": "needs-team-attention"
+                }
+              },
+              {
+                "name": "labelAdded",
+                "parameters": {
+                  "label": "needs-author-feedback"
+                }
+              },
+              {
+                "name": "labelAdded",
+                "parameters": {
+                  "label": "Service Attention"
+                }
+              },
+              {
+                "name": "labelAdded",
+                "parameters": {
+                  "label": "needs-triage"
+                }
+              },
+              {
+                "name": "labelAdded",
+                "parameters": {
+                  "label": "needs-team-triage"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "taskName": "[Resolve Workflow] Unresolve on WIP Labels",
+      "actions": [
+        {
+          "name": "removeLabel",
+          "parameters": {
+            "label": "issue-addressed"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "taskType": "trigger",
+    "capabilityId": "IssueResponder",
+    "subCapability": "IssuesOnlyResponder",
+    "version": "1.0",
+    "config": {
+      "conditions": {
+        "operator": "and",
+        "operands": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "labelAdded",
+            "parameters": {
+              "label": "CXP Attention"
+            }
+          },
+          {
+            "operator": "not",
+            "operands": [
+              {
+                "name": "hasLabel",
+                "parameters": {
+                  "label": "Service Attention"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "eventType": "issue",
+      "eventNames": [
+        "issues",
+        "project_card"
+      ],
+      "taskName": "[CXP Pilot] CXP Attention Responder",
+      "actions": [
+        {
+          "name": "addReply",
+          "parameters": {
+            "comment": "Thank you for your feedback.  This has been routed to the support team for assistance."
+          }
+        }
+      ]
+    }
+  }
+]

@@ -81,6 +81,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SentimentSkillV3 DeserializeSentimentSkillV3(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> defaultLanguageCode = default;
             Optional<bool> includeOpinionMining = default;
             Optional<string> modelVersion = default;

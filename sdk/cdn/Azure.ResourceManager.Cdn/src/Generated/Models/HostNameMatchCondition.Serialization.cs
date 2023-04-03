@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static HostNameMatchCondition DeserializeHostNameMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HostNameMatchConditionType typeName = default;
             HostNameOperator @operator = default;
             Optional<bool> negateCondition = default;

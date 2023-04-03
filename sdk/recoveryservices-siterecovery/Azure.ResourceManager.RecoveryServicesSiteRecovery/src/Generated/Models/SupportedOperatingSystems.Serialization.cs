@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static SupportedOperatingSystems DeserializeSupportedOperatingSystems(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SupportedOSProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowRequest DeserializeLogicWorkflowRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> headers = default;
             Optional<Uri> uri = default;
             Optional<string> method = default;

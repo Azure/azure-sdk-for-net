@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountEncryption DeserializeStorageAccountEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageAccountEncryptionServices> services = default;
             Optional<StorageAccountKeySource> keySource = default;
             Optional<bool> requireInfrastructureEncryption = default;

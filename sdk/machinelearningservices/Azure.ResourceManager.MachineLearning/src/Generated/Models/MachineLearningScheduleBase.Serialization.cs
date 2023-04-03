@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningScheduleBase DeserializeMachineLearningScheduleBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<MachineLearningScheduleProvisioningState> provisioningStatus = default;
             Optional<MachineLearningScheduleStatus> status = default;

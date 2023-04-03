@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         internal static SkuList DeserializeSkuList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<WebPubSubSku>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

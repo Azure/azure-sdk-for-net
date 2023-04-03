@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToSourceSqlServerTaskInput DeserializeConnectToSourceSqlServerTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SqlConnectionInfo sourceConnectionInfo = default;
             Optional<ServerLevelPermissionsGroup> checkPermissionsGroup = default;
             Optional<bool> collectDatabases = default;

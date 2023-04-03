@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, EnvironmentRole>> roles = default;
             foreach (var property in element.EnumerateObject())
             {

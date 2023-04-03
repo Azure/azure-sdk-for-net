@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static SnapshotPolicyVolumeList DeserializeSnapshotPolicyVolumeList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NetAppVolumeData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

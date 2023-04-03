@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         internal static WebApplicationFirewallPolicyList DeserializeWebApplicationFirewallPolicyList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FrontDoorWebApplicationFirewallPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

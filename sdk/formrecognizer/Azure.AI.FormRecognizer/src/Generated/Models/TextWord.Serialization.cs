@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static TextWord DeserializeTextWord(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             IReadOnlyList<float> boundingBox = default;
             Optional<float> confidence = default;

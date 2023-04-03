@@ -242,6 +242,10 @@ namespace Azure.ResourceManager.ContainerService
 
         internal static ContainerServiceManagedClusterData DeserializeContainerServiceManagedClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedClusterSku> sku = default;
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<ManagedServiceIdentity> identity = default;

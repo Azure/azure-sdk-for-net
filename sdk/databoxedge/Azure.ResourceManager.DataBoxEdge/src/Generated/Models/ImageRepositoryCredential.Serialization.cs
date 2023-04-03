@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static ImageRepositoryCredential DeserializeImageRepositoryCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri imageRepositoryUrl = default;
             string userName = default;
             Optional<AsymmetricEncryptedSecret> password = default;

@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterNatGatewayProfile DeserializeManagedClusterNatGatewayProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedClusterManagedOutboundIPProfile> managedOutboundIPProfile = default;
             Optional<IList<WritableSubResource>> effectiveOutboundIPs = default;
             Optional<int> idleTimeoutInMinutes = default;

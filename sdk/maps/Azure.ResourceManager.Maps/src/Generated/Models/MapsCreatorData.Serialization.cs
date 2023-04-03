@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Maps
 
         internal static MapsCreatorData DeserializeMapsCreatorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MapsCreatorProperties properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

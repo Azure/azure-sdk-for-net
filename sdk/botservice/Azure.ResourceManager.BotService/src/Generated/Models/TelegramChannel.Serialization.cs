@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static TelegramChannel DeserializeTelegramChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TelegramChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;

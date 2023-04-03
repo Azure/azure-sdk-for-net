@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static LinuxOSConfig DeserializeLinuxOSConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SysctlConfig> sysctls = default;
             Optional<string> transparentHugePageEnabled = default;
             Optional<string> transparentHugePageDefrag = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Blueprint.Models
     {
         internal static ArtifactList DeserializeArtifactList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ArtifactData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

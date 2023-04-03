@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubApnsCredential DeserializeNotificationHubApnsCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apnsCertificate = default;
             Optional<string> certificateKey = default;
             Optional<Uri> endpoint = default;

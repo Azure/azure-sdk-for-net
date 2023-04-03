@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         internal static AzureDevOpsConnectorData DeserializeAzureDevOpsConnectorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureDevOpsConnectorProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

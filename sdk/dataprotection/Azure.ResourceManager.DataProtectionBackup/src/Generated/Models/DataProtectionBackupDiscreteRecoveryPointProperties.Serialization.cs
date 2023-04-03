@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupDiscreteRecoveryPointProperties DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<IList<RecoveryPointDataStoreDetail>> recoveryPointDataStoresDetails = default;
             DateTimeOffset recoveryPointTime = default;

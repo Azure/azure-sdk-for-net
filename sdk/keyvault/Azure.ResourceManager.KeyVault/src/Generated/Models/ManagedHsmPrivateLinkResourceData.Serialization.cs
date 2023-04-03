@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static ManagedHsmPrivateLinkResourceData DeserializeManagedHsmPrivateLinkResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedHsmSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

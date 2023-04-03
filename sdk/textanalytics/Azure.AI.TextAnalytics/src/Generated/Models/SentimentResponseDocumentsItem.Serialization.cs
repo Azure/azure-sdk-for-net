@@ -52,6 +52,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static SentimentResponseDocumentsItem DeserializeSentimentResponseDocumentsItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DetectedLanguageInternal> detectedLanguage = default;
             TextSentiment sentiment = default;
             SentimentConfidenceScores confidenceScores = default;

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceCorsSettings DeserializeAppServiceCorsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> allowedOrigins = default;
             Optional<bool> supportCredentials = default;
             foreach (var property in element.EnumerateObject())

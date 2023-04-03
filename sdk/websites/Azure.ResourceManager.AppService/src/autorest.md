@@ -546,6 +546,7 @@ rename-mapping:
   WebAppStackCollection: WebAppStackListResult
   WebJobCollection: WebJobCListResult
   WorkerPoolCollection: AppServiceWorkerPoolListResult
+  HybridConnection.properties.relayArmUri: relayArmId|arm-id
 
 prepend-rp-prefix:
   - ApiDefinitionInfo

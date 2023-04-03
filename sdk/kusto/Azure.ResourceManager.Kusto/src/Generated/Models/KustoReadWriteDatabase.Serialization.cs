@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoReadWriteDatabase DeserializeKustoReadWriteDatabase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             KustoKind kind = default;
             ResourceIdentifier id = default;

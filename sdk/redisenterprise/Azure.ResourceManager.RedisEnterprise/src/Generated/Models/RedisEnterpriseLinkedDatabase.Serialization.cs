@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static RedisEnterpriseLinkedDatabase DeserializeRedisEnterpriseLinkedDatabase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<RedisEnterpriseDatabaseLinkState> state = default;
             foreach (var property in element.EnumerateObject())

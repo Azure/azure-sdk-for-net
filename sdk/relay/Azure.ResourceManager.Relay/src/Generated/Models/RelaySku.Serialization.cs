@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Relay.Models
 
         internal static RelaySku DeserializeRelaySku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RelaySkuName name = default;
             Optional<RelaySkuTier> tier = default;
             foreach (var property in element.EnumerateObject())

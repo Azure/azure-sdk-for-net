@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static RecoveryPointDiskConfiguration DeserializeRecoveryPointDiskConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> numberOfDisksIncludedInBackup = default;
             Optional<int> numberOfDisksAttachedToVm = default;
             Optional<IList<DiskInformation>> includedDiskList = default;

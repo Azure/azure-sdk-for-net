@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         internal static ServiceFabricManagedUnsupportedVmSize DeserializeServiceFabricManagedUnsupportedVmSize(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VmSize> properties = default;
             ResourceIdentifier id = default;
             string name = default;

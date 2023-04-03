@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static TypePropertiesMapping DeserializeTypePropertiesMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string sourcePropertyName = default;
             string targetPropertyName = default;
             Optional<LinkType> linkType = default;

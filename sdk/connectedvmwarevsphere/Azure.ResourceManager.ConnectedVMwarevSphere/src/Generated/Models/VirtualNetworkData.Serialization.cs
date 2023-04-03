@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static VirtualNetworkData DeserializeVirtualNetworkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;

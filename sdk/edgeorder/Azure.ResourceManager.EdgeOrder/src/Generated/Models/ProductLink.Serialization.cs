@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ProductLink DeserializeProductLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProductLinkType> linkType = default;
             Optional<Uri> linkUrl = default;
             foreach (var property in element.EnumerateObject())

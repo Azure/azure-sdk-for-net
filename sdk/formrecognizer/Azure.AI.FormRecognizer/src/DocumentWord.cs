@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentWord")]
     public partial class DocumentWord
     {
         /// <summary>

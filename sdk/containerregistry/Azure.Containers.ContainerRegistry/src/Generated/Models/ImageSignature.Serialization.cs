@@ -14,6 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ImageSignature DeserializeImageSignature(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JWK> header = default;
             Optional<string> signature = default;
             Optional<string> @protected = default;

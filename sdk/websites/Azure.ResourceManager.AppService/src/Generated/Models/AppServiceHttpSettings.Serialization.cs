@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceHttpSettings DeserializeAppServiceHttpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> requireHttps = default;
             Optional<AppServiceHttpSettingsRoutes> routes = default;
             Optional<AppServiceForwardProxy> forwardProxy = default;

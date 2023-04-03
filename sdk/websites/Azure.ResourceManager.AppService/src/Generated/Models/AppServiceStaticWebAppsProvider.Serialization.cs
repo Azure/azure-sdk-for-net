@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceStaticWebAppsProvider DeserializeAppServiceStaticWebAppsProvider(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<AppServiceStaticWebAppsRegistration> registration = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberLocality DeserializePhoneNumberLocality(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string localizedName = default;
             Optional<PhoneNumberAdministrativeDivision> administrativeDivision = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static DownloadResponseComplianceDetailedPdfReport DeserializeDownloadResponseComplianceDetailedPdfReport(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> sasUri = default;
             foreach (var property in element.EnumerateObject())
             {

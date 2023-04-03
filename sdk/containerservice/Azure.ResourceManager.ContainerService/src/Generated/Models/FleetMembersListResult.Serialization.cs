@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static FleetMembersListResult DeserializeFleetMembersListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ContainerServiceFleetMemberData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

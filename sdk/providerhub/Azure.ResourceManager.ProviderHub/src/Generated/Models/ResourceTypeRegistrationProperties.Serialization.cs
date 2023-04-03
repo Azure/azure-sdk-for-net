@@ -252,6 +252,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceTypeRegistrationProperties DeserializeResourceTypeRegistrationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RoutingType> routingType = default;
             Optional<Regionality> regionality = default;
             Optional<IList<ResourceTypeEndpoint>> endpoints = default;

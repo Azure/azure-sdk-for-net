@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MongoDBV2Sink DeserializeMongoDBV2Sink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> writeBehavior = default;
             string type = default;
             Optional<BinaryData> writeBatchSize = default;

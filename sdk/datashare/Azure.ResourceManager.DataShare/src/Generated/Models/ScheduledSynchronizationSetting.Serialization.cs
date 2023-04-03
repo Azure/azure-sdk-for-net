@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ScheduledSynchronizationSetting DeserializeScheduledSynchronizationSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SynchronizationSettingKind kind = default;
             ResourceIdentifier id = default;
             string name = default;

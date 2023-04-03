@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static CloningInfo DeserializeCloningInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> correlationId = default;
             Optional<bool> overwrite = default;
             Optional<bool> cloneCustomHostNames = default;

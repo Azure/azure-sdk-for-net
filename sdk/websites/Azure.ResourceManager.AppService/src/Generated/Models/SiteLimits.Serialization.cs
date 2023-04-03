@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static SiteLimits DeserializeSiteLimits(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> maxPercentageCpu = default;
             Optional<long> maxMemoryInMb = default;
             Optional<long> maxDiskSizeInMb = default;

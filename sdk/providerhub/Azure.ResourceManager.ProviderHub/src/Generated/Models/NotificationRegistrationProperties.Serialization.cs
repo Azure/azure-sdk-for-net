@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static NotificationRegistrationProperties DeserializeNotificationRegistrationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NotificationMode> notificationMode = default;
             Optional<MessageScope> messageScope = default;
             Optional<IList<string>> includedEvents = default;

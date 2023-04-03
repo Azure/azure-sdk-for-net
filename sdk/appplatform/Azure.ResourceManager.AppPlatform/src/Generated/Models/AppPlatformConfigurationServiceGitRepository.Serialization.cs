@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformConfigurationServiceGitRepository DeserializeAppPlatformConfigurationServiceGitRepository(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             IList<string> patterns = default;
             Uri uri = default;

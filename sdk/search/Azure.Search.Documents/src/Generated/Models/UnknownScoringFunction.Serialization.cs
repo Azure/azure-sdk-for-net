@@ -32,6 +32,10 @@ namespace Azure.Search.Documents.Models
 
         internal static UnknownScoringFunction DeserializeUnknownScoringFunction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             string fieldName = default;
             double boost = default;

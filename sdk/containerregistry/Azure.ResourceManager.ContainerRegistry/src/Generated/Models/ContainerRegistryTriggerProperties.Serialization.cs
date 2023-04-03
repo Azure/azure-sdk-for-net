@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTriggerProperties DeserializeContainerRegistryTriggerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ContainerRegistryTimerTrigger>> timerTriggers = default;
             Optional<IList<ContainerRegistrySourceTrigger>> sourceTriggers = default;
             Optional<ContainerRegistryBaseImageTrigger> baseImageTrigger = default;

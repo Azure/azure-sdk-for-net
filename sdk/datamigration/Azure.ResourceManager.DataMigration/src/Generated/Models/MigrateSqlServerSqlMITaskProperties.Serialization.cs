@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlMITaskProperties DeserializeMigrateSqlServerSqlMITaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigrateSqlServerSqlMITaskInput> input = default;
             Optional<IReadOnlyList<MigrateSqlServerSqlMITaskOutput>> output = default;
             Optional<string> taskId = default;

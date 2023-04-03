@@ -88,6 +88,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningKubernetesProperties DeserializeMachineLearningKubernetesProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> relayConnectionString = default;
             Optional<string> serviceBusConnectionString = default;
             Optional<string> extensionPrincipalId = default;

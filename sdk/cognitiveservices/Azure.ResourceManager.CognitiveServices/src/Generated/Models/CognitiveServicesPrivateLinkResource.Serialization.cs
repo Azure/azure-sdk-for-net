@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesPrivateLinkResource DeserializeCognitiveServicesPrivateLinkResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CognitiveServicesPrivateLinkResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

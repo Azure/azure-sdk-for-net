@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Models
 
         internal static ArmSku DeserializeArmSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<ArmSkuTier> tier = default;
             Optional<string> size = default;

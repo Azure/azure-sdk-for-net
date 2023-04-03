@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static ServicePrincipalCertificateAuthInfo DeserializeServicePrincipalCertificateAuthInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string clientId = default;
             Guid principalId = default;
             string certificate = default;

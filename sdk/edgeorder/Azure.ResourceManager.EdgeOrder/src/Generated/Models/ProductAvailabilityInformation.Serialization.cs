@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ProductAvailabilityInformation DeserializeProductAvailabilityInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProductAvailabilityStage> availabilityStage = default;
             Optional<ProductDisabledReason> disabledReason = default;
             Optional<string> disabledReasonMessage = default;

@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningVirtualMachineCompute DeserializeMachineLearningVirtualMachineCompute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningVirtualMachineProperties> properties = default;
             ComputeType computeType = default;
             Optional<string> computeLocation = default;

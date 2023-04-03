@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static TableOutputDataSource DeserializeTableOutputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> accountName = default;
             Optional<string> accountKey = default;

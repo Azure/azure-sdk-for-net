@@ -20,9 +20,19 @@ namespace Azure.Maps.Search.Models
             writer.WriteStartArray();
             foreach (var item in Coordinates)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStartArray();
                 foreach (var item0 in item)
                 {
+                    if (item0 == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item1 in item0)
                     {
@@ -38,6 +48,10 @@ namespace Azure.Maps.Search.Models
 
         internal static GeoJsonMultiLineStringData DeserializeGeoJsonMultiLineStringData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<IList<IList<double>>> coordinates = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -46,17 +60,31 @@ namespace Azure.Maps.Search.Models
                     List<IList<IList<double>>> array = new List<IList<IList<double>>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<IList<double>> array0 = new List<IList<double>>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            List<double> array1 = new List<double>();
-                            foreach (var item1 in item0.EnumerateArray())
-                            {
-                                array1.Add(item1.GetDouble());
-                            }
-                            array0.Add(array1);
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<IList<double>> array0 = new List<IList<double>>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                if (item0.ValueKind == JsonValueKind.Null)
+                                {
+                                    array0.Add(null);
+                                }
+                                else
+                                {
+                                    List<double> array1 = new List<double>();
+                                    foreach (var item1 in item0.EnumerateArray())
+                                    {
+                                        array1.Add(item1.GetDouble());
+                                    }
+                                    array0.Add(array1);
+                                }
+                            }
+                            array.Add(array0);
+                        }
                     }
                     coordinates = array;
                     continue;

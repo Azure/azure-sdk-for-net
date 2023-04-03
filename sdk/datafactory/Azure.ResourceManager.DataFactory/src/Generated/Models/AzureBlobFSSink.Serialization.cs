@@ -106,6 +106,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureBlobFSSink DeserializeAzureBlobFSSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> copyBehavior = default;
             Optional<IList<FactoryMetadataItemInfo>> metadata = default;
             string type = default;

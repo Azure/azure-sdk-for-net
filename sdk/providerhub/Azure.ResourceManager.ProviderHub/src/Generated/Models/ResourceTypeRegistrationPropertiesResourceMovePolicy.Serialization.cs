@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceTypeRegistrationPropertiesResourceMovePolicy DeserializeResourceTypeRegistrationPropertiesResourceMovePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> validationRequired = default;
             Optional<bool> crossResourceGroupMoveEnabled = default;
             Optional<bool> crossSubscriptionMoveEnabled = default;

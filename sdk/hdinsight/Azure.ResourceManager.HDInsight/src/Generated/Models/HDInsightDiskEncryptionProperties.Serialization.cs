@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightDiskEncryptionProperties DeserializeHDInsightDiskEncryptionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> vaultUri = default;
             Optional<string> keyName = default;
             Optional<string> keyVersion = default;

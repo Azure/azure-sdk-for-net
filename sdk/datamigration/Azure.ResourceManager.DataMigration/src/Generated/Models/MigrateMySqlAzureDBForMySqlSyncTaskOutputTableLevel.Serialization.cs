@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tableName = default;
             Optional<string> databaseName = default;
             Optional<string> cdcInsertCounter = default;

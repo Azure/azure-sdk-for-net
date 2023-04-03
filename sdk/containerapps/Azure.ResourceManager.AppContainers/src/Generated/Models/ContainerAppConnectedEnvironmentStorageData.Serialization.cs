@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppConnectedEnvironmentStorageData DeserializeContainerAppConnectedEnvironmentStorageData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConnectedEnvironmentStorageProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxSkuCost DeserializeDataBoxSkuCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> meterId = default;
             Optional<string> meterType = default;
             Optional<double> multiplier = default;

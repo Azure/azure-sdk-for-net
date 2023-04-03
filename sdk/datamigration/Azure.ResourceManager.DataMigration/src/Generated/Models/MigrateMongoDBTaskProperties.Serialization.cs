@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateMongoDBTaskProperties DeserializeMigrateMongoDBTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MongoDBMigrationSettings> input = default;
             Optional<IReadOnlyList<MongoDBProgress>> output = default;
             TaskType taskType = default;

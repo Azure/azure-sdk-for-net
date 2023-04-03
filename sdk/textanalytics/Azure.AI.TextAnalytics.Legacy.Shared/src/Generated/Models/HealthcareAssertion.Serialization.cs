@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static HealthcareAssertion DeserializeHealthcareAssertion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Conditionality> conditionality = default;
             Optional<Certainty> certainty = default;
             Optional<Association> association = default;

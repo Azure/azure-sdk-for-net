@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static KustoSkuLocationInfoItem DeserializeKustoSkuLocationInfoItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AzureLocation location = default;
             Optional<IReadOnlyList<string>> zones = default;
             Optional<IReadOnlyList<KustoResourceSkuZoneDetails>> zoneDetails = default;

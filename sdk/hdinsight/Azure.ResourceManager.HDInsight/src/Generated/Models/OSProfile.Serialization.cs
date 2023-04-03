@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static OSProfile DeserializeOSProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HDInsightLinuxOSProfile> linuxOperatingSystemProfile = default;
             foreach (var property in element.EnumerateObject())
             {

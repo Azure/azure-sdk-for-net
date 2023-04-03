@@ -48,6 +48,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static KeyPhraseResultDocumentsItem DeserializeKeyPhraseResultDocumentsItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DetectedLanguageInternal> detectedLanguage = default;
             IList<string> keyPhrases = default;
             string id = default;

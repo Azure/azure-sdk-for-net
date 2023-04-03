@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesMultiRegionSettings DeserializeCognitiveServicesMultiRegionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CognitiveServicesRoutingMethod> routingMethod = default;
             Optional<IList<CognitiveServicesRegionSetting>> regions = default;
             foreach (var property in element.EnumerateObject())

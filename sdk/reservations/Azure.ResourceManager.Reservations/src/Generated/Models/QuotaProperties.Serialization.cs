@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static QuotaProperties DeserializeQuotaProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> limit = default;
             Optional<int> currentValue = default;
             Optional<string> unit = default;

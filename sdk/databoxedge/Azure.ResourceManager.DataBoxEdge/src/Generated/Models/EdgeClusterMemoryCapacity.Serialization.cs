@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeClusterMemoryCapacity DeserializeEdgeClusterMemoryCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> clusterFreeMemoryMb = default;
             Optional<double> clusterUsedMemoryMb = default;
             Optional<double> clusterFailoverMemoryMb = default;

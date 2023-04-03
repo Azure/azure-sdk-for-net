@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Blueprint.Models
     {
         internal static BlueprintStatus DeserializeBlueprintStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timeCreated = default;
             Optional<DateTimeOffset> lastModified = default;
             foreach (var property in element.EnumerateObject())
