@@ -1660,21 +1660,75 @@ namespace Azure.Data.AppConfiguration.Tests
                 List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
                 var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
 
-                CreateSnapshotOperation snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, "some_snapshot", settingsSnapshot);
+                // Automatic polling using WaitUntil.Completed
+
+                var snapshotName = "snapshot_wait_until_completed";
+                CreateSnapshotOperation snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
                 ConfigurationSettingsSnapshot createdSnapshot = snapshotOperation.Value;
+                ConfigurationSettingsSnapshot retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
 
-                Assert.NotNull(createdSnapshot);
-                Assert.AreEqual("some_snapshot", createdSnapshot.Name);
+                // Automatic polling using WaitForCompletion
 
-                ConfigurationSettingsSnapshot retrievedSnapshot = await service.GetSnapshotAsync("some_snapshot");
+                snapshotName = "snapshot_wait_for_completion";
+                snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
+                var completed = snapshotOperation.WaitForCompletion();
+                createdSnapshot = snapshotOperation.Value;
+                retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
 
-                Assert.NotNull(retrievedSnapshot);
-                Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
+                // Automatic polling using WaitForCompletionAsync
+
+                snapshotName = "snapshot_wait_for_completion_async";
+                snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
+                var completedAsync = await snapshotOperation.WaitForCompletionAsync().ConfigureAwait(false);
+                createdSnapshot = snapshotOperation.Value;
+                retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
+
+                // Manual polling using UpdateStatus
+
+                snapshotName = "snapshot_update_status";
+                snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
+                while (true)
+                {
+                    snapshotOperation.UpdateStatus();
+                    if (snapshotOperation.HasCompleted)
+                        break;
+                    await Task.Delay(1000);
+                }
+                createdSnapshot = snapshotOperation.Value;
+                retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
+
+                // Manual polling using UpdateStatusAsync
+
+                snapshotName = "snapshot_update_status_async";
+                snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
+                while (true)
+                {
+                    await snapshotOperation.UpdateStatusAsync();
+                    if (snapshotOperation.HasCompleted)
+                        break;
+                    await Task.Delay(1000);
+                }
+                createdSnapshot = snapshotOperation.Value;
+                retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
+                ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
             }
             finally
             {
                 AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label));
             }
+        }
+
+        private void ValidateCreatedSnapshot(ConfigurationSettingsSnapshot createdSnapshot, ConfigurationSettingsSnapshot retrievedSnapshot, string expectedName)
+        {
+            Assert.NotNull(createdSnapshot);
+            Assert.AreEqual(expectedName, createdSnapshot.Name);
+
+            Assert.NotNull(retrievedSnapshot);
+            Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
         }
 
         [Test]
