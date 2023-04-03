@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class RestorePointSourceMetadata
     {
         /// <summary> Initializes a new instance of RestorePointSourceMetadata. </summary>
-        internal RestorePointSourceMetadata()
+        public RestorePointSourceMetadata()
         {
         }
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the hardware profile. </summary>
         public VirtualMachineHardwareProfile HardwareProfile { get; }
         /// <summary> Gets the storage profile. </summary>
-        public RestorePointSourceVmStorageProfile StorageProfile { get; }
+        public RestorePointSourceVmStorageProfile StorageProfile { get; set; }
         /// <summary> Gets the OS profile. </summary>
         public VirtualMachineOSProfile OSProfile { get; }
         /// <summary> Gets the diagnostics profile. </summary>

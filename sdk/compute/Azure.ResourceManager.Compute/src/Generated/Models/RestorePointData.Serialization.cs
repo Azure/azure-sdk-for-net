@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SourceMetadata))
+            {
+                writer.WritePropertyName("sourceMetadata"u8);
+                writer.WriteObjectValue(SourceMetadata);
+            }
             if (Optional.IsDefined(ConsistencyMode))
             {
                 writer.WritePropertyName("consistencyMode"u8);

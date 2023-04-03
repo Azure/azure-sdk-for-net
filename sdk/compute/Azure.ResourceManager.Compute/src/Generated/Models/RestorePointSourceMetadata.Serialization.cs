@@ -10,8 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceMetadata
+    public partial class RestorePointSourceMetadata : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(StorageProfile))
+            {
+                writer.WritePropertyName("storageProfile"u8);
+                writer.WriteObjectValue(StorageProfile);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static RestorePointSourceMetadata DeserializeRestorePointSourceMetadata(JsonElement element)
         {
             Optional<VirtualMachineHardwareProfile> hardwareProfile = default;

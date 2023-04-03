@@ -5,16 +5,13 @@
 
 #nullable disable
 
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an Operating System disk. </summary>
     public partial class RestorePointSourceVmOSDisk
     {
         /// <summary> Initializes a new instance of RestorePointSourceVmOSDisk. </summary>
-        internal RestorePointSourceVmOSDisk()
+        public RestorePointSourceVmOSDisk()
         {
         }
 
@@ -25,8 +22,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="caching"> Gets the caching type. </param>
         /// <param name="diskSizeGB"> Gets the disk size in GB. </param>
         /// <param name="managedDisk"> Gets the managed disk details. </param>
-        /// <param name="diskRestorePoint"> Gets the disk restore point Id. </param>
-        internal RestorePointSourceVmOSDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, WritableSubResource diskRestorePoint)
+        /// <param name="diskRestorePoint"> Contains Disk Restore Point properties. </param>
+        internal RestorePointSourceVmOSDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskRestorePointAttributes diskRestorePoint)
         {
             OSType = osType;
             EncryptionSettings = encryptionSettings;
@@ -48,13 +45,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the disk size in GB. </summary>
         public int? DiskSizeGB { get; }
         /// <summary> Gets the managed disk details. </summary>
-        public VirtualMachineManagedDisk ManagedDisk { get; }
-        /// <summary> Gets the disk restore point Id. </summary>
-        internal WritableSubResource DiskRestorePoint { get; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier DiskRestorePointId
-        {
-            get => DiskRestorePoint?.Id;
-        }
+        public VirtualMachineManagedDisk ManagedDisk { get; set; }
+        /// <summary> Contains Disk Restore Point properties. </summary>
+        public DiskRestorePointAttributes DiskRestorePoint { get; set; }
     }
 }

@@ -7,12 +7,27 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceVmDataDisk
+    public partial class RestorePointSourceVmDataDisk : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ManagedDisk))
+            {
+                writer.WritePropertyName("managedDisk"u8);
+                writer.WriteObjectValue(ManagedDisk);
+            }
+            if (Optional.IsDefined(DiskRestorePoint))
+            {
+                writer.WritePropertyName("diskRestorePoint"u8);
+                writer.WriteObjectValue(DiskRestorePoint);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static RestorePointSourceVmDataDisk DeserializeRestorePointSourceVmDataDisk(JsonElement element)
         {
             Optional<int> lun = default;
@@ -20,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<CachingType> caching = default;
             Optional<int> diskSizeGB = default;
             Optional<VirtualMachineManagedDisk> managedDisk = default;
-            Optional<WritableSubResource> diskRestorePoint = default;
+            Optional<DiskRestorePointAttributes> diskRestorePoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -75,11 +90,11 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskRestorePoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    diskRestorePoint = DiskRestorePointAttributes.DeserializeDiskRestorePointAttributes(property.Value);
                     continue;
                 }
             }
-            return new RestorePointSourceVmDataDisk(Optional.ToNullable(lun), name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint);
+            return new RestorePointSourceVmDataDisk(Optional.ToNullable(lun), name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint.Value);
         }
     }
 }
