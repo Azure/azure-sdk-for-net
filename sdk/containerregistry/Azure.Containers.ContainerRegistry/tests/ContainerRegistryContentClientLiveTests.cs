@@ -563,7 +563,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [LiveOnly]
-        [IgnoreServiceError(404, "BLOB_UPLOAD_INVALID", Reason = "Service doesn't yet support getting uploaded size from status.")]
+        [IgnoreServiceError(404, "BLOB_UPLOAD_INVALID", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/35322")]
         public async Task CanDownloadBlobToStream_MultipleChunks()
         {
             // Download a blob that is larger than the max chunk size.
@@ -685,7 +685,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         [Test]
         [LiveOnly]
-        [IgnoreServiceError(404, "BLOB_UPLOAD_INVALID", Reason = "Service doesn't yet support getting uploaded size from status.")]
+        [IgnoreServiceError(404, "BLOB_UPLOAD_INVALID", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/35322")]
         public async Task CanUploadAndDownloadLargeBlob()
         {
             long sizeInGiB = 1;
