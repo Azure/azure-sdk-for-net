@@ -903,7 +903,10 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Creates a configuration setting snapshot. </summary>
-        /// <param name="wait">TODO</param>
+        /// <param name="wait">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation
+        /// </param>
         /// <param name="name"> The name of the configuration setting snapshot to create. </param>
         /// <param name="snapshot"> The configuration setting snapshot to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -945,7 +948,10 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Creates a configuration setting snapshot. </summary>
-        /// <param name="wait">TODO</param>
+        /// <param name="wait">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="name"> The name of the configuration setting snapshot to create. </param>
         /// <param name="snapshot"> The configuration setting snapshot to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
