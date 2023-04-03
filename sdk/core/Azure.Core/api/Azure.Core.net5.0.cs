@@ -139,6 +139,7 @@ namespace Azure
         public override string? ToString() { throw null; }
         public abstract Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public virtual Azure.Response WaitForCompletionResponse(Azure.Core.Delay delay, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response WaitForCompletionResponse(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response WaitForCompletionResponse(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(Azure.Core.Delay delay, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
