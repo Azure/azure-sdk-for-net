@@ -86,6 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         internal void ResetConsecutiveErrors()
         {
+            _nextMinTimeToUpdateConsecutiveErrors = DateTimeOffset.MinValue;
             Interlocked.Exchange(ref _consecutiveErrors, 0);
         }
 

@@ -133,7 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 linksJson.Append(']');
 
-                AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object>(msLinks, linksJson.ToString()));
+                AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(msLinks, linksJson.ToString()));
             }
         }
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using Azure.Core.Dynamic;
 using NUnit.Framework;
 
@@ -710,10 +711,138 @@ namespace Azure.Core.Experimental.Tests
             Assert.IsTrue(dynamicJson.Root.Child[0].Item.Leaf);
         }
 
-        #region Helpers
-        internal static dynamic GetDynamicJson(string json)
+        [Test]
+        public void CanEnumerateArrayCamelGetters()
         {
-            return new BinaryData(json).ToDynamic();
+            dynamic jsonData = GetDynamicJson("""
+                {
+                    "array": [
+                        {
+                            "foo": "a"
+                        },
+                        {
+                            "foo": "b"
+                        }
+                    ]
+                }
+                """);
+
+            IEnumerable ary = (IEnumerable)jsonData.array;
+            IEnumerator e = ary.GetEnumerator();
+
+            Assert.IsTrue(e.MoveNext());
+            dynamic item = e.Current;
+            Assert.AreEqual("a", (string)item.foo);
+
+            Assert.IsTrue(e.MoveNext());
+            item = e.Current;
+            Assert.AreEqual("b", (string)item.foo);
+
+            Assert.IsFalse(e.MoveNext());
+        }
+
+        [Test]
+        public void CanEnumerateArrayPascalGetters()
+        {
+            dynamic jsonData = GetDynamicJson("""
+                {
+                    "array": [
+                        {
+                            "foo": "a"
+                        },
+                        {
+                            "foo": "b"
+                        }
+                    ]
+                }
+                """, DynamicJsonNameMapping.PascalCaseGetters);
+
+            IEnumerable ary = (IEnumerable)jsonData.Array;
+            IEnumerator e = ary.GetEnumerator();
+
+            Assert.IsTrue(e.MoveNext());
+            dynamic item = e.Current;
+            Assert.AreEqual("a", (string)item.Foo);
+
+            Assert.IsTrue(e.MoveNext());
+            item = e.Current;
+            Assert.AreEqual("b", (string)item.Foo);
+
+            Assert.IsFalse(e.MoveNext());
+        }
+
+        [Test]
+        public void CanEnumeratePropertiesCamelGetters()
+        {
+            dynamic jsonData = GetDynamicJson("""
+                {
+                    "a": {
+                        "description": "description of a",
+                        "index": 1
+                    },
+                    "b": {
+                        "description": "description of b",
+                        "index": 2
+                    }
+                }
+                """);
+
+            IEnumerable ary = (IEnumerable)jsonData;
+            IEnumerator e = ary.GetEnumerator();
+
+            Assert.IsTrue(e.MoveNext());
+            dynamic item = e.Current;
+            Assert.AreEqual("a", (string)item.Name);
+            Assert.AreEqual("description of a", (string)item.Value.description);
+            Assert.AreEqual(1, (int)item.Value.index);
+
+            Assert.IsTrue(e.MoveNext());
+            item = e.Current;
+            Assert.AreEqual("b", (string)item.Name);
+            Assert.AreEqual("description of b", (string)item.Value.description);
+            Assert.AreEqual(2, (int)item.Value.index);
+
+            Assert.IsFalse(e.MoveNext());
+        }
+
+        [Test]
+        public void CanEnumeratePropertiesPascalGetters()
+        {
+            dynamic jsonData = GetDynamicJson("""
+                {
+                    "a": {
+                        "description": "description of a",
+                        "index": 1
+                    },
+                    "b": {
+                        "description": "description of b",
+                        "index": 2
+                    }
+                }
+                """, DynamicJsonNameMapping.PascalCaseGetters);
+
+            IEnumerable ary = (IEnumerable)jsonData;
+            IEnumerator e = ary.GetEnumerator();
+
+            Assert.IsTrue(e.MoveNext());
+            dynamic item = e.Current;
+            Assert.AreEqual("a", (string)item.Name);
+            Assert.AreEqual("description of a", (string)item.Value.Description);
+            Assert.AreEqual(1, (int)item.Value.Index);
+
+            Assert.IsTrue(e.MoveNext());
+            item = e.Current;
+            Assert.AreEqual("b", (string)item.Name);
+            Assert.AreEqual("description of b", (string)item.Value.Description);
+            Assert.AreEqual(2, (int)item.Value.Index);
+
+            Assert.IsFalse(e.MoveNext());
+        }
+
+        #region Helpers
+        internal static dynamic GetDynamicJson(string json, DynamicJsonNameMapping propertyNameCasing = default)
+        {
+            return new BinaryData(json).ToDynamic(propertyNameCasing);
         }
 
         internal class CustomType

@@ -28,7 +28,7 @@ namespace Azure.Communication.Identity
                 ServiceVersion.V2021_03_07 => "2021-03-07",
                 ServiceVersion.V2022_06_01 => "2022-06-01",
                 ServiceVersion.V2022_10_01 => "2022-10-01",
-                _ => throw new ArgumentOutOfRangeException(nameof(version)),
+                _ => throw new ArgumentOutOfRangeException(nameof(version))
             };
         }
 

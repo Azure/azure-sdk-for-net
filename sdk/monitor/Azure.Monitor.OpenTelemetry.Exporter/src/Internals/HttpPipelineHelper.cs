@@ -9,6 +9,9 @@ using System.Threading;
 
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using OpenTelemetry;
+using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -125,6 +128,136 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return Encoding.UTF8.GetBytes(partialContent);
+        }
+
+        internal static ExportResult IsSuccess(HttpMessage httpMessage)
+        {
+            if (httpMessage.HasResponse && httpMessage.Response.Status == ResponseStatusCodes.Success)
+            {
+                return ExportResult.Success;
+            }
+
+            return ExportResult.Failure;
+        }
+
+        internal static ExportResult HandleFailures(HttpMessage httpMessage, PersistentBlobProvider blobProvider)
+        {
+            ExportResult result = ExportResult.Failure;
+            int statusCode = 0;
+            byte[]? content;
+
+            if (!httpMessage.HasResponse)
+            {
+                // HttpRequestException
+                content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
+                if (content != null)
+                {
+                    result = blobProvider.SaveTelemetry(content);
+                }
+            }
+            else
+            {
+                statusCode = httpMessage.Response.Status;
+                switch (statusCode)
+                {
+                    case ResponseStatusCodes.PartialSuccess:
+                        // Parse retry-after header
+                        // Send Failed Messages To Storage
+                        TrackResponse trackResponse = HttpPipelineHelper.GetTrackResponse(httpMessage);
+                        content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
+                        if (content != null)
+                        {
+                            result = blobProvider.SaveTelemetry(content);
+                        }
+                        break;
+                    case ResponseStatusCodes.RequestTimeout:
+                    case ResponseStatusCodes.ResponseCodeTooManyRequests:
+                    case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
+                        // Parse retry-after header
+                        // Send Messages To Storage
+                        content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
+                        if (content != null)
+                        {
+                            result = blobProvider.SaveTelemetry(content);
+                        }
+                        break;
+                    case ResponseStatusCodes.Unauthorized:
+                    case ResponseStatusCodes.Forbidden:
+                    case ResponseStatusCodes.InternalServerError:
+                    case ResponseStatusCodes.BadGateway:
+                    case ResponseStatusCodes.ServiceUnavailable:
+                    case ResponseStatusCodes.GatewayTimeout:
+                        // Send Messages To Storage
+                        content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
+                        if (content != null)
+                        {
+                            result = blobProvider.SaveTelemetry(content);
+                        }
+                        break;
+                    default:
+                        // Log Non-Retriable Status and don't retry or store;
+                        break;
+                }
+            }
+
+            if (result == ExportResult.Success)
+            {
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is stored offline for retry");
+            }
+            else
+            {
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is dropped");
+            }
+
+            return result;
+        }
+
+        internal static void HandleFailures(HttpMessage httpMessage, PersistentBlob blob, PersistentBlobProvider blobProvider)
+        {
+            int statusCode = 0;
+            bool shouldRetry = true;
+
+            if (httpMessage.HasResponse)
+            {
+                statusCode = httpMessage.Response.Status;
+                switch (statusCode)
+                {
+                    case ResponseStatusCodes.PartialSuccess:
+                        // Parse retry-after header
+                        // Send Failed Messages To Storage
+                        // Delete existing file
+                        TrackResponse trackResponse = GetTrackResponse(httpMessage);
+                        var content = GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
+                        if (content != null)
+                        {
+                            blob.TryDelete();
+                            blobProvider.SaveTelemetry(content);
+                        }
+                        break;
+                    case ResponseStatusCodes.RequestTimeout:
+                    case ResponseStatusCodes.ResponseCodeTooManyRequests:
+                    case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
+                    case ResponseStatusCodes.Unauthorized:
+                    case ResponseStatusCodes.Forbidden:
+                    case ResponseStatusCodes.InternalServerError:
+                    case ResponseStatusCodes.BadGateway:
+                    case ResponseStatusCodes.ServiceUnavailable:
+                    case ResponseStatusCodes.GatewayTimeout:
+                        break;
+                    default:
+                        shouldRetry = false;
+                        break;
+                }
+            }
+
+            if (shouldRetry)
+            {
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is stored offline for retry");
+            }
+            else
+            {
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is dropped");
+            }
         }
     }
 }

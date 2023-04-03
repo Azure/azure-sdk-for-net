@@ -685,9 +685,8 @@ namespace Azure.ResourceManager.Network.Tests
             CompareApplicationGateway(appGw, getGateway.Value.Data);
 
             // Get available WAF rule sets (validate first result set/group)
-            // TODO -- double async, we need to fix this
             ApplicationGatewayFirewallRuleSet availableWAFRuleSet = null;
-            await foreach (var namespaceId in _subscription.GetApplicationGatewayAvailableWafRuleSetsAsyncAsync())
+            await foreach (var namespaceId in _subscription.GetAppGatewayAvailableWafRuleSetsAsync())
             {
                 availableWAFRuleSet = namespaceId;
                 break;
