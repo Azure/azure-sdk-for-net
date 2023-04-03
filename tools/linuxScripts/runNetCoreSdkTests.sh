@@ -3,7 +3,7 @@
 set -e
 base=`dirname {BASH_SOURCE[0]}`
 rootdir="$( cd "$base" && pwd )"
-netstd20="netstandard2.0"
+netstd14="netstandard1.4"
 #netcore11='netcoreapp3.1'
 net6='net6.0'
 ubuntu1404="ubuntu.14.04-x64"
@@ -16,11 +16,11 @@ restoreBuildCR() {
     echo "Restore ClientRuntime"
     dotnet restore src/SdkCommon/ClientRuntime.sln
 
-    echo "Build ClientRuntime for $netstd20"
+    echo "Build ClientRuntime for $netstd14"
     #dotnet restore src/SdkCommon/ClientRuntime/ClientRuntime/Microsoft.Rest.ClientRuntime.csproj
-    dotnet build src/SdkCommon/ClientRuntime/ClientRuntime/Microsoft.Rest.ClientRuntime.csproj -f $netstd20
-    dotnet build src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure/Microsoft.Rest.ClientRuntime.Azure.csproj -f $netstd20
-    dotnet build src/SdkCommon/Auth/Az.Auth/Az.Authentication/Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj -f $netstd20
+    dotnet build src/SdkCommon/ClientRuntime/ClientRuntime/Microsoft.Rest.ClientRuntime.csproj -f $netstd14
+    dotnet build src/SdkCommon/ClientRuntime.Azure/ClientRuntime.Azure/Microsoft.Rest.ClientRuntime.Azure.csproj -f $netstd14
+    dotnet build src/SdkCommon/Auth/Az.Auth/Az.Authentication/Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj -f $netstd14
 
     echo "Running ClientRuntime Tests $net6"
     #dotnet test src/SdkCommon/ClientRuntime/ClientRuntime.Tests/Microsoft.Rest.ClientRuntime.Tests.csproj -f $net6
@@ -150,7 +150,7 @@ restoreBuildKV() {
                     kvProj=$( skip_Rps $kvSdkProj )
                     if [ "$kvProj" == "false" ]; then
                         dotnet restore $kvSdkProj -r $ubuntu1404
-                        dotnet build $kvSdkProj -f $netstd20
+                        dotnet build $kvSdkProj -f $netstd14
                     fi
                 fi
             fi
