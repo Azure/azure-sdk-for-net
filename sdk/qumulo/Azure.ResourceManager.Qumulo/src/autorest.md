@@ -11,6 +11,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/aceee26b40a3251a1dbc
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
+generate-model-factory: false
 modelerfour:
   flatten-payloads: false
 
@@ -54,7 +55,7 @@ prepend-rp-prefix:
   - FileSystemResource
   - FileSystemResourceListResult
   - FileSystemsRestOperations
-  
+
 rename-mapping:
     Agent: QumuloAgent
     Endpoint: QumuloEndpoint
