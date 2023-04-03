@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net-pr/issues/1846")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35243")]
         public async Task AnalyzeDocumentPopulatesExtractedBusinessCardJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
@@ -966,7 +966,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net-pr/issues/1846")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35243")]
         public async Task AnalyzeDocumentCanParseMultipageInvoice(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
