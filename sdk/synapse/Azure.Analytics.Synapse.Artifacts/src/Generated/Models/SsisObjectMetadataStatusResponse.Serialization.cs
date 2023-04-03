@@ -43,6 +43,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SsisObjectMetadataStatusResponse DeserializeSsisObjectMetadataStatusResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> name = default;
             Optional<string> properties = default;

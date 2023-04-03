@@ -14,6 +14,10 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static InstancesOperationResult DeserializeInstancesOperationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSeriesInstance> instance = default;
             Optional<TimeSeriesOperationError> error = default;
             foreach (var property in element.EnumerateObject())

@@ -71,6 +71,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static TeradataSource DeserializeTeradataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> query = default;
             Optional<TeradataPartitionOption> partitionOption = default;
             Optional<TeradataPartitionSettings> partitionSettings = default;

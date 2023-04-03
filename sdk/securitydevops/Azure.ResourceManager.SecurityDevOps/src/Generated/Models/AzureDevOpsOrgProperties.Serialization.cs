@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static AzureDevOpsOrgProperties DeserializeAzureDevOpsOrgProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<AutoDiscovery> autoDiscovery = default;
             foreach (var property in element.EnumerateObject())

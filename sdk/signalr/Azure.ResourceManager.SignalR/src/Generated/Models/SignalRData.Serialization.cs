@@ -109,6 +109,10 @@ namespace Azure.ResourceManager.SignalR
 
         internal static SignalRData DeserializeSignalRData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SignalRResourceSku> sku = default;
             Optional<SignalRServiceKind> kind = default;
             Optional<ManagedServiceIdentity> identity = default;

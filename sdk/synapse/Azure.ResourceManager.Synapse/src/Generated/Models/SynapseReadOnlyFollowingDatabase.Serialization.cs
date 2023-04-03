@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseReadOnlyFollowingDatabase DeserializeSynapseReadOnlyFollowingDatabase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             SynapseKind kind = default;
             ResourceIdentifier id = default;

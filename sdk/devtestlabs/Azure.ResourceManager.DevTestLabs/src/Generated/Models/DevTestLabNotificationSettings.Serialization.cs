@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabNotificationSettings DeserializeDevTestLabNotificationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DevTestLabEnableStatus> status = default;
             Optional<int> timeInMinutes = default;
             Optional<Uri> webhookUrl = default;

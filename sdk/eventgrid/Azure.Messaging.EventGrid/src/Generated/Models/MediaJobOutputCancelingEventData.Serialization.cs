@@ -18,6 +18,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaJobOutputCancelingEventData DeserializeMediaJobOutputCancelingEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MediaJobState> previousState = default;
             Optional<MediaJobOutput> output = default;
             Optional<IReadOnlyDictionary<string, string>> jobCorrelationData = default;

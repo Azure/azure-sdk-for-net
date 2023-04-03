@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static EventDataInfo DeserializeEventDataInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SenderAuthorization> authorization = default;
             Optional<IReadOnlyDictionary<string, string>> claims = default;
             Optional<string> caller = default;

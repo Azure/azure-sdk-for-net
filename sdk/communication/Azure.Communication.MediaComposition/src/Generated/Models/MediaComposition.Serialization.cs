@@ -59,6 +59,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static MediaComposition DeserializeMediaComposition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<MediaCompositionLayout> layout = default;
             Optional<IDictionary<string, MediaInput>> inputs = default;

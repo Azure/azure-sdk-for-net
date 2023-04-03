@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecurityAlertData DeserializeSecurityAlertData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -235,12 +239,19 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<IDictionary<string, string>> array = new List<IDictionary<string, string>>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                                foreach (var property1 in item.EnumerateObject())
+                                if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary.Add(property1.Name, property1.Value.GetString());
+                                    array.Add(null);
                                 }
-                                array.Add(dictionary);
+                                else
+                                {
+                                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                                    foreach (var property1 in item.EnumerateObject())
+                                    {
+                                        dictionary.Add(property1.Name, property1.Value.GetString());
+                                    }
+                                    array.Add(dictionary);
+                                }
                             }
                             extendedLinks = array;
                             continue;

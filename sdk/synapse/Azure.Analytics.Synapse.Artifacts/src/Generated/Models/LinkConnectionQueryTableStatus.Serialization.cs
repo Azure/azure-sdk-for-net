@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static LinkConnectionQueryTableStatus DeserializeLinkConnectionQueryTableStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LinkTableStatus>> value = default;
             Optional<object> continuationToken = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static ActivityRunInfo DeserializeActivityRunInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> pipelineName = default;
             Optional<Guid> pipelineRunId = default;
             Optional<string> activityName = default;

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ResourceSetDescription DeserializeResourceSetDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> elements = default;
             Optional<IList<string>> exceptions = default;
             foreach (var property in element.EnumerateObject())

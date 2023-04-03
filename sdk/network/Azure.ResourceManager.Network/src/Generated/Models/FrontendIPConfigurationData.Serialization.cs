@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Network
 
         internal static FrontendIPConfigurationData DeserializeFrontendIPConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IList<string>> zones = default;
             Optional<ResourceIdentifier> id = default;

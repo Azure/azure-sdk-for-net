@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterSecurityProfile DeserializeManagedClusterSecurityProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedClusterSecurityProfileDefender> defender = default;
             Optional<ManagedClusterSecurityProfileKeyVaultKms> azureKeyVaultKms = default;
             Optional<ManagedClusterSecurityProfileWorkloadIdentity> workloadIdentity = default;

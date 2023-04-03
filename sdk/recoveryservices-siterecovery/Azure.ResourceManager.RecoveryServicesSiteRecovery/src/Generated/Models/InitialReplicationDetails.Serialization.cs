@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InitialReplicationDetails DeserializeInitialReplicationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> initialReplicationType = default;
             Optional<string> initialReplicationProgressPercentage = default;
             foreach (var property in element.EnumerateObject())

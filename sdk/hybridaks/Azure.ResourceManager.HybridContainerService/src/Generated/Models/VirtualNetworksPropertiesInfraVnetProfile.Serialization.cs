@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static VirtualNetworksPropertiesInfraVnetProfile DeserializeVirtualNetworksPropertiesInfraVnetProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualNetworksPropertiesInfraVnetProfileHci> hci = default;
             Optional<VirtualNetworksPropertiesInfraVnetProfileKubevirt> kubevirt = default;
             Optional<VirtualNetworksPropertiesInfraVnetProfileVmware> vmware = default;

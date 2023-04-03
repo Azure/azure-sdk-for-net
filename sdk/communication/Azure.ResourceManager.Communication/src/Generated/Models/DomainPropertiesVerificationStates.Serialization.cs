@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Communication.Models
     {
         internal static DomainPropertiesVerificationStates DeserializeDomainPropertiesVerificationStates(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DomainVerificationStatusRecord> domain = default;
             Optional<DomainVerificationStatusRecord> spf = default;
             Optional<DomainVerificationStatusRecord> dkim = default;

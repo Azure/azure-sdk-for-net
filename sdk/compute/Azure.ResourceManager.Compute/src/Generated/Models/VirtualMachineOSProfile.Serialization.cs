@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineOSProfile DeserializeVirtualMachineOSProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> computerName = default;
             Optional<string> adminUsername = default;
             Optional<string> adminPassword = default;

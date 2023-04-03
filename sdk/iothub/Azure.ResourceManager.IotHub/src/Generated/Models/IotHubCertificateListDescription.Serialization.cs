@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubCertificateListDescription DeserializeIotHubCertificateListDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<IotHubCertificateDescriptionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

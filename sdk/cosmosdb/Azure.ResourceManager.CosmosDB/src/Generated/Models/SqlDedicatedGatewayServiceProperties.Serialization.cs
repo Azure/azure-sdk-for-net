@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static SqlDedicatedGatewayServiceProperties DeserializeSqlDedicatedGatewayServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sqlDedicatedGatewayEndpoint = default;
             Optional<IReadOnlyList<SqlDedicatedGatewayRegionalService>> locations = default;
             Optional<DateTimeOffset> creationTime = default;

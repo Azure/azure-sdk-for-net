@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static FileSystemHttpLogsConfig DeserializeFileSystemHttpLogsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> retentionInMb = default;
             Optional<int> retentionInDays = default;
             Optional<bool> enabled = default;

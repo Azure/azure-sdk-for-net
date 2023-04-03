@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlFirewallRuleListResult DeserializeMySqlFirewallRuleListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MySqlFirewallRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

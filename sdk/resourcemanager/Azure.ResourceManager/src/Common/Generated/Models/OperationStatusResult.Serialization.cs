@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Models
 
         internal static OperationStatusResult DeserializeOperationStatusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             string status = default;

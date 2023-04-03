@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static StorageClassificationCollection DeserializeStorageClassificationCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StorageClassificationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

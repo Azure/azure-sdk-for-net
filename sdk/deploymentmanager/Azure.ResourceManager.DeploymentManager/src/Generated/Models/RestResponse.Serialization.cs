@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static RestResponse DeserializeRestResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> successStatusCodes = default;
             Optional<RestResponseRegex> regex = default;
             foreach (var property in element.EnumerateObject())

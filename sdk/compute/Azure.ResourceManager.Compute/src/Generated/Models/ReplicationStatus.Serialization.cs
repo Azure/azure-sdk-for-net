@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ReplicationStatus DeserializeReplicationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AggregatedReplicationState> aggregatedState = default;
             Optional<IReadOnlyList<RegionalReplicationStatus>> summary = default;
             foreach (var property in element.EnumerateObject())

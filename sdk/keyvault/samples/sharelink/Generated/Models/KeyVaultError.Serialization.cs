@@ -14,6 +14,10 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         internal static KeyVaultError DeserializeKeyVaultError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Error> error = default;
             foreach (var property in element.EnumerateObject())
             {

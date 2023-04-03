@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterNodeResourceGroupProfile DeserializeManagedClusterNodeResourceGroupProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedClusterNodeResourceGroupRestrictionLevel> restrictionLevel = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabArmTemplateParameter DeserializeDevTestLabArmTemplateParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

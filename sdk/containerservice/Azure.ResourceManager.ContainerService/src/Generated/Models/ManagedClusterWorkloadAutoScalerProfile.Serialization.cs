@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterWorkloadAutoScalerProfile DeserializeManagedClusterWorkloadAutoScalerProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedClusterWorkloadAutoScalerProfileKeda> keda = default;
             Optional<ManagedClusterVerticalPodAutoscaler> verticalPodAutoscaler = default;
             foreach (var property in element.EnumerateObject())

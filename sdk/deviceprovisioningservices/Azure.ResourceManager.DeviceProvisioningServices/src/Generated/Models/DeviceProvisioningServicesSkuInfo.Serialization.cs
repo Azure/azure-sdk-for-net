@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static DeviceProvisioningServicesSkuInfo DeserializeDeviceProvisioningServicesSkuInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeviceProvisioningServicesSku> name = default;
             Optional<string> tier = default;
             Optional<long> capacity = default;

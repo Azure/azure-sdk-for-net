@@ -34,6 +34,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static PhoneticTokenFilter DeserializePhoneticTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PhoneticEncoder> encoder = default;
             Optional<bool> replace = default;
             string odataType = default;

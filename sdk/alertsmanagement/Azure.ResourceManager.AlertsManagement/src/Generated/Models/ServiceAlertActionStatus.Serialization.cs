@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertActionStatus DeserializeServiceAlertActionStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isSuppressed = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static VirtualApplication DeserializeVirtualApplication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> virtualPath = default;
             Optional<string> physicalPath = default;
             Optional<bool> preloadEnabled = default;

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceProviderManifestPropertiesRequestHeaderOptions DeserializeResourceProviderManifestPropertiesRequestHeaderOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OptInHeaderType> optInHeaders = default;
             foreach (var property in element.EnumerateObject())
             {

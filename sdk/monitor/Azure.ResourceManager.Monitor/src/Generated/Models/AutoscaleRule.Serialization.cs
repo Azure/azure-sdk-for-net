@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static AutoscaleRule DeserializeAutoscaleRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MetricTrigger metricTrigger = default;
             MonitorScaleAction scaleAction = default;
             foreach (var property in element.EnumerateObject())

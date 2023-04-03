@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VirtualNetworkUsage DeserializeVirtualNetworkUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> currentValue = default;
             Optional<ResourceIdentifier> id = default;
             Optional<double> limit = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal static PostgreSqlFlexibleServerCapabilitiesListResult DeserializePostgreSqlFlexibleServerCapabilitiesListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

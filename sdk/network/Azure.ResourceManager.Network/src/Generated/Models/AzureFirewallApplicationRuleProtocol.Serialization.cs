@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureFirewallApplicationRuleProtocol DeserializeAzureFirewallApplicationRuleProtocol(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureFirewallApplicationRuleProtocolType> protocolType = default;
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())

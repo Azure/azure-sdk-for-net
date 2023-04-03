@@ -25,6 +25,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static TaskParameters DeserializeTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {

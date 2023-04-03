@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automanage.Models
     {
         internal static BestPracticeList DeserializeBestPracticeList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AutomanageBestPracticeData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -62,6 +62,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchIndexerSkillset DeserializeSearchIndexerSkillset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> description = default;
             IList<SearchIndexerSkill> skills = default;

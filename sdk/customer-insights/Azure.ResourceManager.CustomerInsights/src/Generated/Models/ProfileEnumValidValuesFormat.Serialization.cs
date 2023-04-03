@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ProfileEnumValidValuesFormat DeserializeProfileEnumValidValuesFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> value = default;
             Optional<IDictionary<string, string>> localizedValueNames = default;
             foreach (var property in element.EnumerateObject())

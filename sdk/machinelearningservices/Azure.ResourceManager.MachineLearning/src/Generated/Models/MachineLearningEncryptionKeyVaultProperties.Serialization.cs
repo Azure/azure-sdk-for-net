@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningEncryptionKeyVaultProperties DeserializeMachineLearningEncryptionKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier keyVaultArmId = default;
             string keyIdentifier = default;
             Optional<string> identityClientId = default;

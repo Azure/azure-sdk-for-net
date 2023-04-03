@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmWorkloadSapHanaDatabaseProtectableItem DeserializeVmWorkloadSapHanaDatabaseProtectableItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> parentName = default;
             Optional<string> parentUniqueName = default;
             Optional<string> serverName = default;

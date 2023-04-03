@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkVirtualApplianceSkuListResult DeserializeNetworkVirtualApplianceSkuListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NetworkVirtualApplianceSkuData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

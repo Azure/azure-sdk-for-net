@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerRegion DeserializeTrafficManagerRegion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> name = default;
             Optional<IList<TrafficManagerRegion>> regions = default;

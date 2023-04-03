@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerNetwork DeserializeMySqlFlexibleServerNetwork(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MySqlFlexibleServerEnableStatusEnum> publicNetworkAccess = default;
             Optional<ResourceIdentifier> delegatedSubnetResourceId = default;
             Optional<ResourceIdentifier> privateDnsZoneResourceId = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static RetentionVolume DeserializeRetentionVolume(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> volumeName = default;
             Optional<long> capacityInBytes = default;
             Optional<long> freeSpaceInBytes = default;

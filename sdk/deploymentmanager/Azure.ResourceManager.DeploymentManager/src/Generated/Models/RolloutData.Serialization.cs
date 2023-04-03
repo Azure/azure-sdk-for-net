@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.DeploymentManager
 
         internal static RolloutData DeserializeRolloutData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Identity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

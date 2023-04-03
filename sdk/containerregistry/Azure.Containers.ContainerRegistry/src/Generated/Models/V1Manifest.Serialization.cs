@@ -15,6 +15,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static V1Manifest DeserializeV1Manifest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> architecture = default;
             Optional<string> name = default;
             Optional<string> tag = default;

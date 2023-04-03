@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationContentSource DeserializeAutomationContentSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomationContentHash> hash = default;
             Optional<AutomationContentSourceType> type = default;
             Optional<string> value = default;

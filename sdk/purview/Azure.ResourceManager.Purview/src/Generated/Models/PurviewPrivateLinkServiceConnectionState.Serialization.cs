@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Purview.Models
 
         internal static PurviewPrivateLinkServiceConnectionState DeserializePurviewPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> actionsRequired = default;
             Optional<string> description = default;
             Optional<PurviewPrivateLinkServiceStatus> status = default;

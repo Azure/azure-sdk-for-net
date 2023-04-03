@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static CloudTieringLowDiskMode DeserializeCloudTieringLowDiskMode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<CloudTieringLowDiskModeState> state = default;
             foreach (var property in element.EnumerateObject())

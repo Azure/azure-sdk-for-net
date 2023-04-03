@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static JobStepAction DeserializeJobStepAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JobStepActionType> type = default;
             Optional<JobStepActionSource> source = default;
             string value = default;

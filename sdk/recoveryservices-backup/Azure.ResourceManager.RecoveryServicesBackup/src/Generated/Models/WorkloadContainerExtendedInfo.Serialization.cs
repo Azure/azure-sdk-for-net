@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadContainerExtendedInfo DeserializeWorkloadContainerExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostServerName = default;
             Optional<WorkloadContainerInquiryInfo> inquiryInfo = default;
             Optional<IList<DistributedNodesInfo>> nodesList = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.StorageCache.Models
     {
         internal static StorageCacheSkuCapability DeserializeStorageCacheSkuCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

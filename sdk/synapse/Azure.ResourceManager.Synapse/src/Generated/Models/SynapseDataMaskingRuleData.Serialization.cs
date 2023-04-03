@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseDataMaskingRuleData DeserializeSynapseDataMaskingRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;

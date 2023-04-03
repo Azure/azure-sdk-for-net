@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static SubProtectionPolicy DeserializeSubProtectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SubProtectionPolicyType> policyType = default;
             Optional<BackupSchedulePolicy> schedulePolicy = default;
             Optional<BackupRetentionPolicy> retentionPolicy = default;

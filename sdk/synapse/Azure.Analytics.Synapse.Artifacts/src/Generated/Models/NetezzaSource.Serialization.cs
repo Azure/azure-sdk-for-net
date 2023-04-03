@@ -71,6 +71,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static NetezzaSource DeserializeNetezzaSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> query = default;
             Optional<NetezzaPartitionOption> partitionOption = default;
             Optional<NetezzaPartitionSettings> partitionSettings = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static EventHubsNameAvailabilityResult DeserializeEventHubsNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<bool> nameAvailable = default;
             Optional<EventHubsNameUnavailableReason> reason = default;

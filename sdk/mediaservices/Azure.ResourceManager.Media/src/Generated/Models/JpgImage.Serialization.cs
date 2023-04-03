@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static JpgImage DeserializeJpgImage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<JpgLayer>> layers = default;
             Optional<int> spriteColumn = default;
             string start = default;

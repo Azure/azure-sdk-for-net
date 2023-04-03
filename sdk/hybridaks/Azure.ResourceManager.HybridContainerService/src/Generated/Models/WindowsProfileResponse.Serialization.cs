@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static WindowsProfileResponse DeserializeWindowsProfileResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> adminUsername = default;
             Optional<bool> enableCsiProxy = default;
             Optional<LicenseType> licenseType = default;

@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MySqlConnectionInfo DeserializeMySqlConnectionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string serverName = default;
             Optional<string> dataSource = default;
             int port = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ComputeApiError DeserializeComputeApiError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ComputeApiErrorBase>> details = default;
             Optional<InnerError> innererror = default;
             Optional<string> code = default;

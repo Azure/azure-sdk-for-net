@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static OracleSource DeserializeOracleSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> oracleReaderQuery = default;
             Optional<BinaryData> queryTimeout = default;
             Optional<BinaryData> partitionOption = default;

@@ -68,6 +68,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
@@ -78,10 +83,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Libraries)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartObject();
                     foreach (var item0 in item)
                     {
                         writer.WritePropertyName(item0.Key);
+                        if (item0.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
                         writer.WriteObjectValue(item0.Value);
                     }
                     writer.WriteEndObject();
@@ -99,6 +114,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatabricksSparkPythonActivity DeserializeDatabricksSparkPythonActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
@@ -202,7 +221,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             List<object> array = new List<object>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetObject());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(item.GetObject());
+                                }
                             }
                             parameters = array;
                             continue;
@@ -217,12 +243,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             List<IDictionary<string, object>> array = new List<IDictionary<string, object>>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                                foreach (var property1 in item.EnumerateObject())
+                                if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary.Add(property1.Name, property1.Value.GetObject());
+                                    array.Add(null);
                                 }
-                                array.Add(dictionary);
+                                else
+                                {
+                                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                                    foreach (var property1 in item.EnumerateObject())
+                                    {
+                                        if (property1.Value.ValueKind == JsonValueKind.Null)
+                                        {
+                                            dictionary.Add(property1.Name, null);
+                                        }
+                                        else
+                                        {
+                                            dictionary.Add(property1.Name, property1.Value.GetObject());
+                                        }
+                                    }
+                                    array.Add(dictionary);
+                                }
                             }
                             libraries = array;
                             continue;

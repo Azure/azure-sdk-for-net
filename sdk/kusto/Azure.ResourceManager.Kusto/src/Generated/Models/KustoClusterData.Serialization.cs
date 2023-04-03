@@ -168,6 +168,10 @@ namespace Azure.ResourceManager.Kusto
 
         internal static KustoClusterData DeserializeKustoClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             KustoSku sku = default;
             Optional<IList<string>> zones = default;
             Optional<ManagedServiceIdentity> identity = default;

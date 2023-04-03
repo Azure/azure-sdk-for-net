@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static WaitStatistics DeserializeWaitStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> waitType = default;
             Optional<float> waitTimeMs = default;
             Optional<long> waitCount = default;

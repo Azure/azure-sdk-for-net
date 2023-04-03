@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static QueryExecutionResult DeserializeQueryExecutionResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> queryText = default;
             Optional<long> statementsInBatch = default;
             Optional<ExecutionStatistics> sourceResult = default;

@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static TransferFilterDetails DeserializeTransferFilterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataAccountType dataAccountType = default;
             Optional<BlobFilterDetails> blobFilterDetails = default;
             Optional<AzureFileFilterDetails> azureFileFilterDetails = default;

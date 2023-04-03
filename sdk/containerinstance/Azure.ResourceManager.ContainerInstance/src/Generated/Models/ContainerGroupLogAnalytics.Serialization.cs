@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerGroupLogAnalytics DeserializeContainerGroupLogAnalytics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string workspaceId = default;
             string workspaceKey = default;
             Optional<ContainerGroupLogAnalyticsLogType> logType = default;

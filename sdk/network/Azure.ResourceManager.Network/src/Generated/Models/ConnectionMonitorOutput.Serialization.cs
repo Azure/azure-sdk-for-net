@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorOutput DeserializeConnectionMonitorOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OutputType> type = default;
             Optional<ConnectionMonitorWorkspaceSettings> workspaceSettings = default;
             foreach (var property in element.EnumerateObject())

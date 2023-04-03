@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static MetadataEntityListResult DeserializeMetadataEntityListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MetadataEntityData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static WebPubSubTlsSettings DeserializeWebPubSubTlsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> clientCertEnabled = default;
             foreach (var property in element.EnumerateObject())
             {

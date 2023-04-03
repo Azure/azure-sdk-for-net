@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkConfigurationDiagnosticProfile DeserializeNetworkConfigurationDiagnosticProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NetworkTrafficDirection direction = default;
             string protocol = default;
             string source = default;

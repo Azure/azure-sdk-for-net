@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static AmlComputeNodeInformation DeserializeAmlComputeNodeInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nodeId = default;
             Optional<IPAddress> privateIPAddress = default;
             Optional<IPAddress> publicIPAddress = default;

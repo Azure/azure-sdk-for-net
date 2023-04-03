@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAzureStaticWebAppsConfiguration DeserializeContainerAppAzureStaticWebAppsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<AzureStaticWebAppsRegistration> registration = default;
             foreach (var property in element.EnumerateObject())

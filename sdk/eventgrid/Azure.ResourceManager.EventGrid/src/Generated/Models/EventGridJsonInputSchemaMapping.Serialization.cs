@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventGridJsonInputSchemaMapping DeserializeEventGridJsonInputSchemaMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             InputSchemaMappingType inputSchemaMappingType = default;
             Optional<JsonField> id = default;
             Optional<JsonField> topic = default;

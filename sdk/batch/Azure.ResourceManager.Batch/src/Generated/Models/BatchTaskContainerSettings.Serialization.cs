@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchTaskContainerSettings DeserializeBatchTaskContainerSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> containerRunOptions = default;
             string imageName = default;
             Optional<BatchVmContainerRegistry> registry = default;

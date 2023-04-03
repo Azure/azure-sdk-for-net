@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmDeploymentTemplateLink DeserializeArmDeploymentTemplateLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> uri = default;
             Optional<string> id = default;
             Optional<string> relativePath = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static IotSecurityAggregatedAlertTopDevice DeserializeIotSecurityAggregatedAlertTopDevice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deviceId = default;
             Optional<long> alertsCount = default;
             Optional<string> lastOccurrence = default;

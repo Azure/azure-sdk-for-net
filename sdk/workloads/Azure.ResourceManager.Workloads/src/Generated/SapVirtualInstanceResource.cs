@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets the SAP Central Instance.
+        /// Gets the SAP Central Services Instance resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="centralInstanceName"> Central Instance name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets the SAP Central Instance.
+        /// Gets the SAP Central Services Instance resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="centralInstanceName"> Central Instance name string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="centralInstanceName"> Central Services Instance resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets the SAP Database Instance.
+        /// Gets the SAP Database Instance resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> is null. </exception>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets the SAP Database Instance.
+        /// Gets the SAP Database Instance resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="databaseInstanceName"> Database Instance string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="databaseInstanceName"> Database resource name string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="databaseInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> is null. </exception>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets the SAP Application Server Instance.
+        /// Gets the SAP Application Server Instance corresponding to the Virtual Instance for SAP solutions resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="applicationInstanceName"> The name of SAP Application Server instance. </param>
+        /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> is null. </exception>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets the SAP Application Server Instance.
+        /// Gets the SAP Application Server Instance corresponding to the Virtual Instance for SAP solutions resource.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="applicationInstanceName"> The name of SAP Application Server instance. </param>
+        /// <param name="applicationInstanceName"> The name of SAP Application Server instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> is null. </exception>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets an Virtual Instance for SAP.
+        /// Gets a Virtual Instance for SAP solutions resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Gets an Virtual Instance for SAP.
+        /// Gets a Virtual Instance for SAP solutions resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Deletes an Virtual Instance for SAP.
+        /// Deletes a Virtual Instance for SAP solutions resource and its child resources, that is the associated Central Services Instance, Application Server Instances and Database Instance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Deletes an Virtual Instance for SAP.
+        /// Deletes a Virtual Instance for SAP solutions resource and its child resources, that is the associated Central Services Instance, Application Server Instances and Database Instance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Updates an Virtual Instance for SAP.
+        /// Updates a Virtual Instance for SAP solutions resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The Update Virtual Instance for SAP request body. </param>
+        /// <param name="patch"> Request body to update a Virtual Instance for SAP solutions resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<SapVirtualInstanceResource>> UpdateAsync(SapVirtualInstancePatch patch, CancellationToken cancellationToken = default)
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Updates an Virtual Instance for SAP.
+        /// Updates a Virtual Instance for SAP solutions resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The Update Virtual Instance for SAP request body. </param>
+        /// <param name="patch"> Request body to update a Virtual Instance for SAP solutions resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<SapVirtualInstanceResource> Update(SapVirtualInstancePatch patch, CancellationToken cancellationToken = default)
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Starts the SAP System.
+        /// Starts the SAP application, that is the Central Services instance and Application server instances.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Starts the SAP System.
+        /// Starts the SAP application, that is the Central Services instance and Application server instances.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Stops the SAP System.
+        /// Stops the SAP Application, that is the Application server instances and Central Services instance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -531,16 +531,16 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The Virtual Instances for SAP stop request body. </param>
+        /// <param name="body"> The Virtual Instance for SAP solutions resource stop request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationStatusResult>> StopAsync(WaitUntil waitUntil, StopContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationStatusResult>> StopAsync(WaitUntil waitUntil, StopRequest body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceResource.Stop");
             scope.Start();
             try
             {
-                var response = await _sapVirtualInstanceSapVirtualInstancesRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _sapVirtualInstanceSapVirtualInstancesRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary>
-        /// Stops the SAP System.
+        /// Stops the SAP Application, that is the Application server instances and Central Services instance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -566,16 +566,16 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The Virtual Instances for SAP stop request body. </param>
+        /// <param name="body"> The Virtual Instance for SAP solutions resource stop request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationStatusResult> Stop(WaitUntil waitUntil, StopContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationStatusResult> Stop(WaitUntil waitUntil, StopRequest body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceResource.Stop");
             scope.Start();
             try
             {
-                var response = _sapVirtualInstanceSapVirtualInstancesRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _sapVirtualInstanceSapVirtualInstancesRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

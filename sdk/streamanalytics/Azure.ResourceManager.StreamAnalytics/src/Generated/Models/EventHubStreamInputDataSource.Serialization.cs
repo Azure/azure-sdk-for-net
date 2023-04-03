@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static EventHubStreamInputDataSource DeserializeEventHubStreamInputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> serviceBusNamespace = default;
             Optional<string> sharedAccessPolicyName = default;

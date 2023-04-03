@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static PrivateAccessVirtualNetwork DeserializePrivateAccessVirtualNetwork(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> key = default;
             Optional<ResourceIdentifier> resourceId = default;

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         internal static DataProtectionBackupJobData DeserializeDataProtectionBackupJobData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataProtectionBackupJobProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

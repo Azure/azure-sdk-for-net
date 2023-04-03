@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmWorkloadSqlInstanceWorkloadItem DeserializeVmWorkloadSqlInstanceWorkloadItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SqlDataDirectory>> dataDirectoryPaths = default;
             Optional<string> parentName = default;
             Optional<string> serverName = default;

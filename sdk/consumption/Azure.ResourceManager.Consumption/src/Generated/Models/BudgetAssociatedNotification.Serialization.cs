@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static BudgetAssociatedNotification DeserializeBudgetAssociatedNotification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             NotificationAlertTriggerType @operator = default;
             decimal threshold = default;

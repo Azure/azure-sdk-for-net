@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.Consumption
 
         internal static ConsumptionBudgetData DeserializeConsumptionBudgetData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;

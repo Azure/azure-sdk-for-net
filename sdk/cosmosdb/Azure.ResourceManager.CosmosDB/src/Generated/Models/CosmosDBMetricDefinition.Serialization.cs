@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CosmosDBMetricDefinition DeserializeCosmosDBMetricDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CosmosDBMetricAvailability>> metricAvailabilities = default;
             Optional<CosmosDBMetricPrimaryAggregationType> primaryAggregationType = default;
             Optional<CosmosDBMetricUnitType> unit = default;

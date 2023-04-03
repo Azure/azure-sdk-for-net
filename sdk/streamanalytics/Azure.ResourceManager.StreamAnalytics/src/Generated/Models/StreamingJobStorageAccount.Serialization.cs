@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingJobStorageAccount DeserializeStreamingJobStorageAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountName = default;
             Optional<string> accountKey = default;
             Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;

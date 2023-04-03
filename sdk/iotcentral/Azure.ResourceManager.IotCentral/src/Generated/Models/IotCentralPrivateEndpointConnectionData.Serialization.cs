@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.IotCentral
 
         internal static IotCentralPrivateEndpointConnectionData DeserializeIotCentralPrivateEndpointConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

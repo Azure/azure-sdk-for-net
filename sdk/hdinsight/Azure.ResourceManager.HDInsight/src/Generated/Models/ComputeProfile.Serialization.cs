@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static ComputeProfile DeserializeComputeProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<HDInsightClusterRole>> roles = default;
             foreach (var property in element.EnumerateObject())
             {

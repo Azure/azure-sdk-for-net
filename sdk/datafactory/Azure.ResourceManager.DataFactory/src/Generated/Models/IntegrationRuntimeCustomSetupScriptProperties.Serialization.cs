@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IntegrationRuntimeCustomSetupScriptProperties DeserializeIntegrationRuntimeCustomSetupScriptProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> blobContainerUri = default;
             Optional<FactorySecretString> sasToken = default;
             foreach (var property in element.EnumerateObject())

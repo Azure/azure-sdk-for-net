@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceVaultAndSecretReference DeserializeCloudServiceVaultAndSecretReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> sourceVault = default;
             Optional<Uri> secretUrl = default;
             foreach (var property in element.EnumerateObject())

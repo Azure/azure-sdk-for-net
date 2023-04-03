@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static QuotaCapability DeserializeQuotaCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> coresUsed = default;
             Optional<long> maxCoresAllowed = default;
             Optional<IReadOnlyList<RegionalQuotaCapability>> regionalQuotas = default;

@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static VirtualDisk DeserializeVirtualDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> label = default;
             Optional<string> diskObjectId = default;

@@ -43,6 +43,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static EntityLinkingResult DeserializeEntityLinkingResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<EntityLinkingResultWithDetectedLanguage> documents = default;
             IList<InputError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;

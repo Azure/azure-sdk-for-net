@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static AcsClusterProperties DeserializeAcsClusterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clusterFqdn = default;
             OrchestratorType orchestratorType = default;
             Optional<KubernetesClusterProperties> orchestratorProperties = default;

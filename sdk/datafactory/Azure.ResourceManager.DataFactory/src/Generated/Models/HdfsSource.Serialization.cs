@@ -83,6 +83,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HdfsSource DeserializeHdfsSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> recursive = default;
             Optional<DistcpSettings> distcpSettings = default;
             string type = default;

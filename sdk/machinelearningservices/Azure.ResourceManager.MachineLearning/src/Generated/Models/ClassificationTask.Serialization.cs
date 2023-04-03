@@ -184,6 +184,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ClassificationTask DeserializeClassificationTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> positiveLabel = default;
             Optional<ClassificationPrimaryMetric> primaryMetric = default;
             Optional<ClassificationTrainingSettings> trainingSettings = default;

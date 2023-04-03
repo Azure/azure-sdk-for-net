@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static SearchGetSchemaResponse DeserializeSearchGetSchemaResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchMetadata> metadata = default;
             Optional<IReadOnlyList<OperationalInsightsSearchSchemaValue>> value = default;
             foreach (var property in element.EnumerateObject())

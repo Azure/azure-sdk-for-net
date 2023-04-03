@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         internal static ReportResourceData DeserializeReportResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ReportProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;

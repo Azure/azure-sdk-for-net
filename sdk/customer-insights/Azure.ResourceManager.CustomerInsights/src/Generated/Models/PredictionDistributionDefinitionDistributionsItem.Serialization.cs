@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static PredictionDistributionDefinitionDistributionsItem DeserializePredictionDistributionDefinitionDistributionsItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> scoreThreshold = default;
             Optional<long> positives = default;
             Optional<long> negatives = default;

@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsIncidentActionConfiguration DeserializeSecurityInsightsIncidentActionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SecurityInsightsIncidentSeverity> severity = default;
             Optional<SecurityInsightsIncidentStatus> status = default;
             Optional<SecurityInsightsIncidentClassification> classification = default;

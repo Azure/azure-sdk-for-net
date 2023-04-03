@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StandardEncoderPreset DeserializeStandardEncoderPreset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> experimentalOptions = default;
             Optional<FilteringOperations> filters = default;
             IList<MediaCodecBase> codecs = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Relay.Models
     {
         internal static RelayNamespaceListResult DeserializeRelayNamespaceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RelayNamespaceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

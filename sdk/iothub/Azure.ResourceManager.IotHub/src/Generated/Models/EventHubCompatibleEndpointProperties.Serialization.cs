@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static EventHubCompatibleEndpointProperties DeserializeEventHubCompatibleEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> retentionTimeInDays = default;
             Optional<int> partitionCount = default;
             Optional<IReadOnlyList<string>> partitionIds = default;

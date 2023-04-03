@@ -30,6 +30,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static H264Configuration DeserializeH264Configuration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> govLength = default;
             Optional<H264Profile> profile = default;
             foreach (var property in element.EnumerateObject())

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.HybridCompute
 
         internal static HybridComputePrivateLinkScopeData DeserializeHybridComputePrivateLinkScopeData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HybridComputePrivateLinkScopeProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

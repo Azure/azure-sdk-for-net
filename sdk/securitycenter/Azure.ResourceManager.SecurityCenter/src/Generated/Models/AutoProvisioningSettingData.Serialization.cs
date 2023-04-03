@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static AutoProvisioningSettingData DeserializeAutoProvisioningSettingData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

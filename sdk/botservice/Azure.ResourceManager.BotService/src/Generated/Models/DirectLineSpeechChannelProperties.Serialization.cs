@@ -69,7 +69,11 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static DirectLineSpeechChannelProperties DeserializeDirectLineSpeechChannelProperties(JsonElement element)
         {
-            Optional<string> cognitiveServiceResourceId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
             Optional<string> cognitiveServiceRegion = default;
             Optional<string> cognitiveServiceSubscriptionKey = default;
             Optional<bool> isEnabled = default;
@@ -80,7 +84,12 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 if (property.NameEquals("cognitiveServiceResourceId"u8))
                 {
-                    cognitiveServiceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    cognitiveServiceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cognitiveServiceRegion"u8))

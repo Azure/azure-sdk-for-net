@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformContentCertificateProperties DeserializeAppPlatformContentCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> content = default;
             string type = default;
             Optional<string> thumbprint = default;

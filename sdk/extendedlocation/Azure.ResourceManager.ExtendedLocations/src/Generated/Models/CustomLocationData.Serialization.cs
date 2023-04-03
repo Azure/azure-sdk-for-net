@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.ExtendedLocations
                 writer.WriteStartArray();
                 foreach (var item in ClusterExtensionIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -84,6 +89,10 @@ namespace Azure.ResourceManager.ExtendedLocations
 
         internal static CustomLocationData DeserializeCustomLocationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -184,7 +193,14 @@ namespace Azure.ResourceManager.ExtendedLocations
                             List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new ResourceIdentifier(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             clusterExtensionIds = array;
                             continue;

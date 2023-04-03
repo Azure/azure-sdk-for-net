@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         internal static ResourceGuardData DeserializeResourceGuardData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceGuardProperties> properties = default;
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;

@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications DeserializeProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SubscriptionStateOverrideAction>> subscriptionStateOverrideActions = default;
             Optional<TimeSpan> softDeleteTTL = default;
             foreach (var property in element.EnumerateObject())

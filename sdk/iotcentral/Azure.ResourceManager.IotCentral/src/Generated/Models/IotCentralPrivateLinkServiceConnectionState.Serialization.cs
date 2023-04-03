@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.IotCentral.Models
 
         internal static IotCentralPrivateLinkServiceConnectionState DeserializeIotCentralPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IotCentralPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;

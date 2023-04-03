@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyLogAnalyticsResources DeserializeFirewallPolicyLogAnalyticsResources(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<FirewallPolicyLogAnalyticsWorkspace>> workspaces = default;
             Optional<WritableSubResource> defaultWorkspaceId = default;
             foreach (var property in element.EnumerateObject())

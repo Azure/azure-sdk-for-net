@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformServiceData DeserializeAppPlatformServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformServiceProperties> properties = default;
             Optional<AppPlatformSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;

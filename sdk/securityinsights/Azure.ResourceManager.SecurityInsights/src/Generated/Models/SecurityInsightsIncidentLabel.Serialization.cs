@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsIncidentLabel DeserializeSecurityInsightsIncidentLabel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string labelName = default;
             Optional<SecurityInsightsIncidentLabelType> labelType = default;
             foreach (var property in element.EnumerateObject())

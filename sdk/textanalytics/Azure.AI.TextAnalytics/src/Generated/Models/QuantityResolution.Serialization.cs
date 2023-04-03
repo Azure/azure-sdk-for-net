@@ -22,6 +22,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static QuantityResolution DeserializeQuantityResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double value = default;
             foreach (var property in element.EnumerateObject())
             {

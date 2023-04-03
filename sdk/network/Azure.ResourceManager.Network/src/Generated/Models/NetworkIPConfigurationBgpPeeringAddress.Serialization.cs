@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkIPConfigurationBgpPeeringAddress DeserializeNetworkIPConfigurationBgpPeeringAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ipconfigurationId = default;
             Optional<IReadOnlyList<string>> defaultBgpIPAddresses = default;
             Optional<IList<string>> customBgpIPAddresses = default;

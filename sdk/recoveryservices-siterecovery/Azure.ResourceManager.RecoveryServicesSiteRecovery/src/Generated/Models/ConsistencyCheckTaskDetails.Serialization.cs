@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ConsistencyCheckTaskDetails DeserializeConsistencyCheckTaskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<InconsistentVmDetails>> vmDetails = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberOffering DeserializePhoneNumberOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PhoneNumberType> phoneNumberType = default;
             Optional<PhoneNumberAssignmentType> assignmentType = default;
             Optional<PhoneNumberCapabilities> availableCapabilities = default;

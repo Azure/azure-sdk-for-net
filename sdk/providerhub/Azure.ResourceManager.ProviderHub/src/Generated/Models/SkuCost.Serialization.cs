@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static SkuCost DeserializeSkuCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string meterId = default;
             Optional<int> quantity = default;
             Optional<string> extendedUnit = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubPrivateLinkResources DeserializeIotHubPrivateLinkResources(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<IotHubPrivateEndpointGroupInformationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

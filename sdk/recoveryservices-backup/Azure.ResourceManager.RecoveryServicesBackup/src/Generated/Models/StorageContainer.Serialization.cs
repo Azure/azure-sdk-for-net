@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static StorageContainer DeserializeStorageContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<string> storageAccountVersion = default;
             Optional<string> resourceGroup = default;

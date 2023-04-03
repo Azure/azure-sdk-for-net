@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static DatabaseAccountKeysMetadata DeserializeDatabaseAccountKeysMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AccountKeyMetadata> primaryMasterKey = default;
             Optional<AccountKeyMetadata> secondaryMasterKey = default;
             Optional<AccountKeyMetadata> primaryReadonlyMasterKey = default;

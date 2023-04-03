@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.Redis.Models
     {
         internal static RedisOperationStatus DeserializeRedisOperationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -39,7 +43,14 @@ namespace Azure.ResourceManager.Redis.Models
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     properties = dictionary;
                     continue;

@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static MachineLearningBatchEndpointData DeserializeMachineLearningBatchEndpointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;
             MachineLearningBatchEndpointProperties properties = default;

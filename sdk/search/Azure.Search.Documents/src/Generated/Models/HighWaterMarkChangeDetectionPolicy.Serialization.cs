@@ -24,6 +24,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static HighWaterMarkChangeDetectionPolicy DeserializeHighWaterMarkChangeDetectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string highWaterMarkColumnName = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())

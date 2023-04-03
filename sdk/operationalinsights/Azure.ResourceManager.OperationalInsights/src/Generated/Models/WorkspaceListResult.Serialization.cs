@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static WorkspaceListResult DeserializeWorkspaceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<OperationalInsightsWorkspaceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

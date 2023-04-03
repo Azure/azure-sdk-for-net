@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Nginx
 
         internal static NginxCertificateData DeserializeNginxCertificateData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NginxCertificateProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

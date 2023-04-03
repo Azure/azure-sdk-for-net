@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static AccountImmutabilityPolicy DeserializeAccountImmutabilityPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> immutabilityPeriodSinceCreationInDays = default;
             Optional<AccountImmutabilityPolicyState> state = default;
             Optional<bool> allowProtectedAppendWrites = default;

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static RoutingRuleExperiments DeserializeRoutingRuleExperiments(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<RampUpRule>> rampUpRules = default;
             foreach (var property in element.EnumerateObject())
             {

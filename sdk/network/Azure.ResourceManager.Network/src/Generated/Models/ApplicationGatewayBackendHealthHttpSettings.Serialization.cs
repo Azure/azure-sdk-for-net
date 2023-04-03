@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ApplicationGatewayBackendHealthHttpSettings DeserializeApplicationGatewayBackendHealthHttpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ApplicationGatewayBackendHttpSettings> backendHttpSettings = default;
             Optional<IReadOnlyList<ApplicationGatewayBackendHealthServer>> servers = default;
             foreach (var property in element.EnumerateObject())

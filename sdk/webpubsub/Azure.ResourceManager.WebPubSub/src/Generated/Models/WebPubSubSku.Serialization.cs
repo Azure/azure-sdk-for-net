@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         internal static WebPubSubSku DeserializeWebPubSubSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceType> resourceType = default;
             Optional<BillingInfoSku> sku = default;
             Optional<WebPubSubSkuCapacity> capacity = default;

@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static EventHubsNamespaceData DeserializeEventHubsNamespaceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventHubsSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

@@ -27,6 +27,10 @@ namespace Azure.Communication.JobRouter
 
         internal static StaticRule DeserializeStaticRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> value = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())

@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlInstanceSettings DeserializeSqlInstanceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> collation = default;
             Optional<int> maxDop = default;
             Optional<bool> isOptimizeForAdHocWorkloadsEnabled = default;

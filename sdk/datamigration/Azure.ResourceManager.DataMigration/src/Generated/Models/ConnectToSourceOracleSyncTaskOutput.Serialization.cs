@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ConnectToSourceOracleSyncTaskOutput DeserializeConnectToSourceOracleSyncTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sourceServerVersion = default;
             Optional<IReadOnlyList<string>> databases = default;
             Optional<string> sourceServerBrandVersion = default;

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ProtocolCustomSettings DeserializeProtocolCustomSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DdosCustomPolicyProtocol> protocol = default;
             Optional<string> triggerRateOverride = default;
             Optional<string> sourceRateOverride = default;

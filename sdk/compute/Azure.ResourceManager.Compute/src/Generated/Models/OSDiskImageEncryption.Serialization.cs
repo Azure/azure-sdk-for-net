@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static OSDiskImageEncryption DeserializeOSDiskImageEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OSDiskImageSecurityProfile> securityProfile = default;
             Optional<ResourceIdentifier> diskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())

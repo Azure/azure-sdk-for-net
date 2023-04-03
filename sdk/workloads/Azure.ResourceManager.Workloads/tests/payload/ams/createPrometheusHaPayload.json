@@ -1,0 +1,12 @@
+{
+    "properties": {
+        "providerSettings": {
+            "sslPreference": "Disabled",
+            "providerType": "PrometheusHaCluster",
+            "prometheusUrl": "http://10.0.92.5:964/metrics",
+            "sid": "X00",
+            "hostname": "h20dbvm0",
+            "clusterName": "hacluster"
+        }
+    }
+}

@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppHttpScaleRule DeserializeContainerAppHttpScaleRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> metadata = default;
             Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
             foreach (var property in element.EnumerateObject())

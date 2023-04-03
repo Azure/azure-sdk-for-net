@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Relay
 
         internal static RelayAuthorizationRuleData DeserializeRelayAuthorizationRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;

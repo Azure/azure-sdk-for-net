@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppGlobalValidation DeserializeContainerAppGlobalValidation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppUnauthenticatedClientActionV2> unauthenticatedClientAction = default;
             Optional<string> redirectToProvider = default;
             Optional<IList<string>> excludedPaths = default;

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static ConfluentOfferDetail DeserializeConfluentOfferDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string publisherId = default;
             string id = default;
             string planId = default;

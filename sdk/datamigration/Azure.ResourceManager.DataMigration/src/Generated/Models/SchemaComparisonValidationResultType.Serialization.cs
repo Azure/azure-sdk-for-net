@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static SchemaComparisonValidationResultType DeserializeSchemaComparisonValidationResultType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> objectName = default;
             Optional<ObjectType> objectType = default;
             Optional<UpdateActionType> updateAction = default;

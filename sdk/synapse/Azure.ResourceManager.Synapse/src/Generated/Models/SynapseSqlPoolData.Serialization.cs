@@ -90,6 +90,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseSqlPoolData DeserializeSynapseSqlPoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SynapseSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

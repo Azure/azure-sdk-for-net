@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupVaultProperties DeserializeDataProtectionBackupVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MonitoringSettings> monitoringSettings = default;
             Optional<DataProtectionBackupProvisioningState> provisioningState = default;
             Optional<BackupVaultResourceMoveState> resourceMoveState = default;

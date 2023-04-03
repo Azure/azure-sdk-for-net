@@ -43,6 +43,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkConnectionLandingZone DeserializeLinkConnectionLandingZone(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinkedServiceReference> linkedService = default;
             Optional<string> fileSystem = default;
             Optional<string> folderPath = default;

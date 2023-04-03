@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static LoadBalancerResourceSettings DeserializeLoadBalancerResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> sku = default;
             Optional<IList<LoadBalancerFrontendIPConfigurationResourceSettings>> frontendIPConfigurations = default;

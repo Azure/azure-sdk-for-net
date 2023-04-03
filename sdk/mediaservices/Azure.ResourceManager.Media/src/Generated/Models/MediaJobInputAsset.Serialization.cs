@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaJobInputAsset DeserializeMediaJobInputAsset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string assetName = default;
             Optional<IList<string>> files = default;
             Optional<ClipTime> start = default;

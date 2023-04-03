@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     {
         internal static DeviceUpdatePrivateLinkResourceListResult DeserializeDeviceUpdatePrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PrivateLinkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

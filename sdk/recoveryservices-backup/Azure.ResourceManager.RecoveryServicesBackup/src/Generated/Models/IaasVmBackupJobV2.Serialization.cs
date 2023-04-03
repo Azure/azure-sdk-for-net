@@ -99,6 +99,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static IaasVmBackupJobV2 DeserializeIaasVmBackupJobV2(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<JobSupportedAction>> actionsInfo = default;
             Optional<string> containerName = default;
             Optional<TimeSpan> duration = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static DataShareOperationResult DeserializeDataShareOperationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> endTime = default;
             Optional<ResponseError> error = default;
             Optional<DateTimeOffset> startTime = default;

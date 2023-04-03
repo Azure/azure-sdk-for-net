@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxStorageAccount DeserializeNginxStorageAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountName = default;
             Optional<string> containerName = default;
             foreach (var property in element.EnumerateObject())

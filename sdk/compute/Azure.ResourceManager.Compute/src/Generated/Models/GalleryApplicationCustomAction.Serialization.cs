@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryApplicationCustomAction DeserializeGalleryApplicationCustomAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string script = default;
             Optional<string> description = default;

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static DefaultRolloutProperties DeserializeDefaultRolloutProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<DefaultRolloutPropertiesSpecification> specification = default;
             Optional<DefaultRolloutPropertiesStatus> status = default;

@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static TrafficAnalyticsConfigurationProperties DeserializeTrafficAnalyticsConfigurationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<string> workspaceId = default;
             Optional<string> workspaceRegion = default;

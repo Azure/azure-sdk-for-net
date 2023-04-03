@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ProductDescription DeserializeProductDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProductDescriptionType> descriptionType = default;
             Optional<string> shortDescription = default;
             Optional<string> longDescription = default;

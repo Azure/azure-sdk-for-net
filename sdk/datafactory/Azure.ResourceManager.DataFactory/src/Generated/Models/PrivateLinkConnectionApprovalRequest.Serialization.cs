@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PrivateLinkConnectionApprovalRequest DeserializePrivateLinkConnectionApprovalRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
             Optional<WritableSubResource> privateEndpoint = default;
             foreach (var property in element.EnumerateObject())

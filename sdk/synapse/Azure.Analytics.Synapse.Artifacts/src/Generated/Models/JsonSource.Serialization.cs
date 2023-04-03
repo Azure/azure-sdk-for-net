@@ -61,6 +61,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static JsonSource DeserializeJsonSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoreReadSettings> storeSettings = default;
             Optional<JsonReadSettings> formatSettings = default;
             Optional<object> additionalColumns = default;

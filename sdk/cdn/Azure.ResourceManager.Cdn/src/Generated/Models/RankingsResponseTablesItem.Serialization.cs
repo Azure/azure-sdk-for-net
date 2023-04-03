@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static RankingsResponseTablesItem DeserializeRankingsResponseTablesItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ranking = default;
             Optional<IReadOnlyList<RankingsResponseTablesPropertiesItemsItem>> data = default;
             foreach (var property in element.EnumerateObject())

@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static InformixSource DeserializeInformixSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> query = default;
             Optional<BinaryData> queryTimeout = default;
             Optional<BinaryData> additionalColumns = default;

@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseSecretBase DeserializeSynapseSecretBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

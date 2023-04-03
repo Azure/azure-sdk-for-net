@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CosmosDbSettings DeserializeCosmosDbSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> collectionsThroughput = default;
             foreach (var property in element.EnumerateObject())
             {

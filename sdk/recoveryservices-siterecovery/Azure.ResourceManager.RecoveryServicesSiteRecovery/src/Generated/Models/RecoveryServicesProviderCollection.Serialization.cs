@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static RecoveryServicesProviderCollection DeserializeRecoveryServicesProviderCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RecoveryServicesProviderData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

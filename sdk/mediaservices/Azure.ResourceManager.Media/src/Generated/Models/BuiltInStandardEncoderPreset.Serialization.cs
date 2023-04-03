@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static BuiltInStandardEncoderPreset DeserializeBuiltInStandardEncoderPreset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EncoderPresetConfigurations> configurations = default;
             EncoderNamedPreset presetName = default;
             string odataType = default;

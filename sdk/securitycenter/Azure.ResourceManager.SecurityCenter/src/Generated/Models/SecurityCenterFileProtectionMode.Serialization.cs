@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityCenterFileProtectionMode DeserializeSecurityCenterFileProtectionMode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AdaptiveApplicationControlEnforcementMode> exe = default;
             Optional<AdaptiveApplicationControlEnforcementMode> msi = default;
             Optional<AdaptiveApplicationControlEnforcementMode> script = default;

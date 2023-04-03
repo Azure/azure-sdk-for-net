@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static FactoryLinkedServiceData DeserializeFactoryLinkedServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FactoryLinkedServiceDefinition properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

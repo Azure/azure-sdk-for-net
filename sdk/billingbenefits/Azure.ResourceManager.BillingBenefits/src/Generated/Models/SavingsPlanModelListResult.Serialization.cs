@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         internal static SavingsPlanModelListResult DeserializeSavingsPlanModelListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BillingBenefitsSavingsPlanData>> value = default;
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<SavingsPlanSummary>> additionalProperties = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageCache.Models
     {
         internal static StorageCacheHealth DeserializeStorageCacheHealth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageCacheHealthStateType> state = default;
             Optional<string> statusDescription = default;
             Optional<IReadOnlyList<OutstandingCondition>> conditions = default;

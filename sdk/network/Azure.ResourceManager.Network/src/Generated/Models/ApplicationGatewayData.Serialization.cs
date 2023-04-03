@@ -285,6 +285,10 @@ namespace Azure.ResourceManager.Network
 
         internal static ApplicationGatewayData DeserializeApplicationGatewayData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IList<string>> zones = default;
             Optional<ManagedServiceIdentity> identity = default;

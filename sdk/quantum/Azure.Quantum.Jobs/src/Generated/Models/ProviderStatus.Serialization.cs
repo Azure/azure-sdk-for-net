@@ -15,6 +15,10 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static ProviderStatus DeserializeProviderStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<ProviderAvailability> currentAvailability = default;
             Optional<IReadOnlyList<TargetStatus>> targets = default;

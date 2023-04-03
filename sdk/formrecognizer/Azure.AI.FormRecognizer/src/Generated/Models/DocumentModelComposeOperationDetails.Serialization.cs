@@ -16,6 +16,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentModelComposeOperationDetails DeserializeDocumentModelComposeOperationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DocumentModelDetails> result = default;
             string operationId = default;
             DocumentOperationStatus status = default;

@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTaskRunContent DeserializeContainerRegistryTaskRunContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier taskId = default;
             Optional<ContainerRegistryOverrideTaskStepProperties> overrideTaskStepProperties = default;
             string type = default;

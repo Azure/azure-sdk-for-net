@@ -129,6 +129,10 @@ namespace Azure.ResourceManager.Network
 
         internal static LoadBalancerData DeserializeLoadBalancerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<LoadBalancerSku> sku = default;
             Optional<ETag> etag = default;

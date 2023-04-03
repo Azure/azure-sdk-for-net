@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ScriptAction DeserializeScriptAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Uri uri = default;
             BinaryData roles = default;

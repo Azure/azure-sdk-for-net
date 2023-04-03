@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Storage
 
         internal static FileServiceData DeserializeFileServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationServiceEnvironmentNetworkEndpoint DeserializeIntegrationServiceEnvironmentNetworkEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationServiceEnvironmentNetworkEndPointAccessibilityState> accessibility = default;
             Optional<string> domainName = default;
             Optional<IReadOnlyList<string>> ports = default;

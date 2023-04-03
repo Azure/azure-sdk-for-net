@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static LineChannel DeserializeLineChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LineChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;

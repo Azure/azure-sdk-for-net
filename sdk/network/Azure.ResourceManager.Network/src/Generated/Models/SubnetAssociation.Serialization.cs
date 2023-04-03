@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static SubnetAssociation DeserializeSubnetAssociation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<IReadOnlyList<SecurityRuleData>> securityRules = default;
             foreach (var property in element.EnumerateObject())

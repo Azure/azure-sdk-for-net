@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static TemplateArtifact DeserializeTemplateArtifact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ArtifactKind kind = default;
             ResourceIdentifier id = default;
             string name = default;

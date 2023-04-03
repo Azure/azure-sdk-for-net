@@ -34,6 +34,10 @@ namespace Azure.Communication.Chat
 
         internal static ChatParticipantInternal DeserializeChatParticipantInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CommunicationIdentifierModel communicationIdentifier = default;
             Optional<string> displayName = default;
             Optional<DateTimeOffset> shareHistoryTime = default;

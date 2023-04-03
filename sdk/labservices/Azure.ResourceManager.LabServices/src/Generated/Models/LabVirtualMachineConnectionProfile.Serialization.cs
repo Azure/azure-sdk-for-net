@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static LabVirtualMachineConnectionProfile DeserializeLabVirtualMachineConnectionProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> privateIPAddress = default;
             Optional<string> sshAuthority = default;
             Optional<Uri> sshInBrowserUrl = default;

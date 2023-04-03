@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static EncryptionProtectorListResult DeserializeEncryptionProtectorListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EncryptionProtectorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

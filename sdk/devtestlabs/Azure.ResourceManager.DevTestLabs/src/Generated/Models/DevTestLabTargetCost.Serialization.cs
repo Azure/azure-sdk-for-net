@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabTargetCost DeserializeDevTestLabTargetCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DevTestLabTargetCostStatus> status = default;
             Optional<int> target = default;
             Optional<IList<DevTestLabCostThreshold>> costThresholds = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Quota.Models
     {
         internal static UsagesProperties DeserializeUsagesProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<UsagesObject> usages = default;
             Optional<string> unit = default;
             Optional<ResourceName> name = default;

@@ -30,6 +30,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static OnvifDeviceDiscoverRequest DeserializeOnvifDeviceDiscoverRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> discoveryDuration = default;
             string methodName = default;
             Optional<string> apiVersion = default;

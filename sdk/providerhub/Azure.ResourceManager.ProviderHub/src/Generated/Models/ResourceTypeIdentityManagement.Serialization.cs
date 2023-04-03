@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static ResourceTypeIdentityManagement DeserializeResourceTypeIdentityManagement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IdentityManagementType> type = default;
             foreach (var property in element.EnumerateObject())
             {

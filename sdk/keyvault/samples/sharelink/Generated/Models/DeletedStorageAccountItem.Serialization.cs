@@ -16,6 +16,10 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         internal static DeletedStorageAccountItem DeserializeDeletedStorageAccountItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recoveryId = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
             Optional<DateTimeOffset> deletedDate = default;

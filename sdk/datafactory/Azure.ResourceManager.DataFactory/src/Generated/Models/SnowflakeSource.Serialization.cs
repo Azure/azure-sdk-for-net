@@ -83,6 +83,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SnowflakeSource DeserializeSnowflakeSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> query = default;
             Optional<SnowflakeExportCopyCommand> exportSettings = default;
             string type = default;

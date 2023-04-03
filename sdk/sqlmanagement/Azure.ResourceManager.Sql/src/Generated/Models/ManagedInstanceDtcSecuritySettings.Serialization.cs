@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedInstanceDtcSecuritySettings DeserializeManagedInstanceDtcSecuritySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedInstanceDtcTransactionManagerCommunicationSettings> transactionManagerCommunicationSettings = default;
             Optional<bool> xaTransactionsEnabled = default;
             Optional<bool> snaLu6point2TransactionsEnabled = default;

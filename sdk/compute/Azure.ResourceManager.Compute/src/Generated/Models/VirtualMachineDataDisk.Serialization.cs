@@ -74,6 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineDataDisk DeserializeVirtualMachineDataDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int lun = default;
             Optional<string> name = default;
             Optional<VirtualHardDisk> vhd = default;

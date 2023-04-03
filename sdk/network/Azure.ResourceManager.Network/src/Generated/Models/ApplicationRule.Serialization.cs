@@ -118,6 +118,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationRule DeserializeApplicationRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> sourceAddresses = default;
             Optional<IList<string>> destinationAddresses = default;
             Optional<IList<FirewallPolicyRuleApplicationProtocol>> protocols = default;

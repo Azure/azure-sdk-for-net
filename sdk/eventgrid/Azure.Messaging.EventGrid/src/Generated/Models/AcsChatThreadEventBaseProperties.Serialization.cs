@@ -15,6 +15,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsChatThreadEventBaseProperties DeserializeAcsChatThreadEventBaseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> createTime = default;
             Optional<long> version = default;
             Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;

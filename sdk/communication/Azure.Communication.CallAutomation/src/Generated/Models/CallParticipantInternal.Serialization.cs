@@ -15,6 +15,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal static CallParticipantInternal DeserializeCallParticipantInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CommunicationIdentifierModel> identifier = default;
             Optional<bool> isMuted = default;
             foreach (var property in element.EnumerateObject())

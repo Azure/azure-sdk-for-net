@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxOrderPreferences DeserializeDataBoxOrderPreferences(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> preferredDataCenterRegion = default;
             Optional<TransportPreferences> transportPreferences = default;
             Optional<DataBoxEncryptionPreferences> encryptionPreferences = default;

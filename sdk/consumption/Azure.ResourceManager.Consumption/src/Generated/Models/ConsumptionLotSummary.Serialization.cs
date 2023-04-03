@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionLotSummary DeserializeConsumptionLotSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;

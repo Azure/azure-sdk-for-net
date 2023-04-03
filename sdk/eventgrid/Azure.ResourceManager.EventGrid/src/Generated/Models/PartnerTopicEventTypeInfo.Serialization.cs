@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static PartnerTopicEventTypeInfo DeserializePartnerTopicEventTypeInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventDefinitionKind> kind = default;
             Optional<IDictionary<string, InlineEventProperties>> inlineEventTypes = default;
             foreach (var property in element.EnumerateObject())

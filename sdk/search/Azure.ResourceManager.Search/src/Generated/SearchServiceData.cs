@@ -43,9 +43,12 @@ namespace Azure.ResourceManager.Search
         /// <param name="statusDetails"> The details of the search service status. </param>
         /// <param name="provisioningState"> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either &apos;succeeded&apos; or &apos;failed&apos;. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as &apos;succeeded&apos; directly in the call to Create search service. This is because the free service uses capacity that is already set up. </param>
         /// <param name="networkRuleSet"> Network specific rules that determine how the Azure Cognitive Search service may be reached. </param>
+        /// <param name="encryptionWithCmk"> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </param>
+        /// <param name="isLocalAuthDisabled"> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if &apos;dataPlaneAuthOptions&apos; are defined. </param>
+        /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if &apos;disableLocalAuth&apos; is set to true. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure Cognitive Search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure Cognitive Search service. </param>
-        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku sku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, NetworkRuleSet networkRuleSet, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources) : base(id, name, resourceType, systemData, tags, location)
+        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku sku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, NetworkRuleSet networkRuleSet, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -57,6 +60,9 @@ namespace Azure.ResourceManager.Search
             StatusDetails = statusDetails;
             ProvisioningState = provisioningState;
             NetworkRuleSet = networkRuleSet;
+            EncryptionWithCmk = encryptionWithCmk;
+            IsLocalAuthDisabled = isLocalAuthDisabled;
+            AuthOptions = authOptions;
             PrivateEndpointConnections = privateEndpointConnections;
             SharedPrivateLinkResources = sharedPrivateLinkResources;
         }
@@ -104,6 +110,12 @@ namespace Azure.ResourceManager.Search
             }
         }
 
+        /// <summary> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </summary>
+        public SearchEncryptionWithCmk EncryptionWithCmk { get; set; }
+        /// <summary> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if &apos;dataPlaneAuthOptions&apos; are defined. </summary>
+        public bool? IsLocalAuthDisabled { get; set; }
+        /// <summary> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if &apos;disableLocalAuth&apos; is set to true. </summary>
+        public SearchAadAuthDataPlaneAuthOptions AuthOptions { get; set; }
         /// <summary> The list of private endpoint connections to the Azure Cognitive Search service. </summary>
         public IReadOnlyList<SearchPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The list of shared private link resources managed by the Azure Cognitive Search service. </summary>

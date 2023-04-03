@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventHubEventSubscriptionDestination DeserializeEventHubEventSubscriptionDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EndpointType endpointType = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;

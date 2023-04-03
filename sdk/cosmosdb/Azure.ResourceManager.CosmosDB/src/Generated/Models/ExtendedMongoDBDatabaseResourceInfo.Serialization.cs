@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ExtendedMongoDBDatabaseResourceInfo DeserializeExtendedMongoDBDatabaseResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> rid = default;
             Optional<float> ts = default;
             Optional<ETag> etag = default;

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static JitNetworkAccessRequestVirtualMachine DeserializeJitNetworkAccessRequestVirtualMachine(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             IList<JitNetworkAccessRequestPort> ports = default;
             foreach (var property in element.EnumerateObject())

@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static H265VideoLayer DeserializeH265VideoLayer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int bitrate = default;
             Optional<int> maxBitrate = default;
             Optional<int> bFrames = default;

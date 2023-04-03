@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static AggregateFunctionProperties DeserializeAggregateFunctionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<ETag> etag = default;
             Optional<IList<StreamingJobFunctionInput>> inputs = default;

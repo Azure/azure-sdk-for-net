@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningEndpointAuthToken DeserializeMachineLearningEndpointAuthToken(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accessToken = default;
             Optional<DateTimeOffset> expiryTimeUtc = default;
             Optional<DateTimeOffset> refreshAfterTimeUtc = default;

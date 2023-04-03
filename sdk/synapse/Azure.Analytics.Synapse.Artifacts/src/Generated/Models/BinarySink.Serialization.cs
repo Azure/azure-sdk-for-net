@@ -61,6 +61,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static BinarySink DeserializeBinarySink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoreWriteSettings> storeSettings = default;
             string type = default;
             Optional<object> writeBatchSize = default;

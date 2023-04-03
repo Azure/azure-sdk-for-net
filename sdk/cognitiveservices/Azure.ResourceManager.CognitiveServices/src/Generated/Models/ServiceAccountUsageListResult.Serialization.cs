@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static ServiceAccountUsageListResult DeserializeServiceAccountUsageListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ServiceAccountUsage>> value = default;
             foreach (var property in element.EnumerateObject())
             {

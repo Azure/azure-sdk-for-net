@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ConnectorMappingCompleteOperation DeserializeConnectorMappingCompleteOperation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CompletionOperationType> completionOperationType = default;
             Optional<string> destinationFolder = default;
             foreach (var property in element.EnumerateObject())

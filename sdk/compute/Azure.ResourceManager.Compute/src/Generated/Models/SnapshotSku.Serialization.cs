@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SnapshotSku DeserializeSnapshotSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SnapshotStorageAccountType> name = default;
             Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())

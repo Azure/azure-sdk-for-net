@@ -159,6 +159,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static AppServicePlanData DeserializeAppServicePlanData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppServiceSkuDescription> sku = default;
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;

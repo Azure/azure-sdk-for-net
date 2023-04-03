@@ -123,6 +123,10 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteCircuitData DeserializeExpressRouteCircuitData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExpressRouteCircuitSku> sku = default;
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;

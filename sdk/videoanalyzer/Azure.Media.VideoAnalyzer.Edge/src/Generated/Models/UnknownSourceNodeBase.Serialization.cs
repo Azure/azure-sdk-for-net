@@ -24,6 +24,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static UnknownSourceNodeBase DeserializeUnknownSourceNodeBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             string name = default;
             foreach (var property in element.EnumerateObject())

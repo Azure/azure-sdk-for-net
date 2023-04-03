@@ -15,6 +15,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static ReverseSearchAddressResult DeserializeReverseSearchAddressResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchSummary> summary = default;
             Optional<IReadOnlyList<ReverseSearchAddressItem>> addresses = default;
             foreach (var property in element.EnumerateObject())

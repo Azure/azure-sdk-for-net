@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static UpdateSystemServicesResponse DeserializeUpdateSystemServicesResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OperationStatus> updateStatus = default;
             Optional<DateTimeOffset> updateStartedOn = default;
             Optional<DateTimeOffset> updateCompletedOn = default;

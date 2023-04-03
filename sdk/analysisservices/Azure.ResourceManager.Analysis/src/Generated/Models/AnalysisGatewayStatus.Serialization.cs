@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Analysis.Models
     {
         internal static AnalysisGatewayStatus DeserializeAnalysisGatewayStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AnalysisStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -73,6 +73,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static MachineProperties DeserializeMachineProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LocationData> locationData = default;
             Optional<AgentConfiguration> agentConfiguration = default;
             Optional<HybridComputeServiceStatuses> serviceStatuses = default;

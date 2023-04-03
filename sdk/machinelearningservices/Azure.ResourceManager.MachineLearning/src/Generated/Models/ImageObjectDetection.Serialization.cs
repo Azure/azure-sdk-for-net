@@ -114,6 +114,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageObjectDetection DeserializeImageObjectDetection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ObjectDetectionPrimaryMetric> primaryMetric = default;
             Optional<ImageModelSettingsObjectDetection> modelSettings = default;
             Optional<IList<ImageModelDistributionSettingsObjectDetection>> searchSpace = default;

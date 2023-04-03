@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AwsOrganizationalDataMaster DeserializeAwsOrganizationalDataMaster(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> stacksetName = default;
             Optional<IList<string>> excludedAccountIds = default;
             OrganizationMembershipType organizationMembershipType = default;

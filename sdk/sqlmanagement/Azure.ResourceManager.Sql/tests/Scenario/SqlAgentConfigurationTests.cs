@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
         public SqlAgentConfigurationTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

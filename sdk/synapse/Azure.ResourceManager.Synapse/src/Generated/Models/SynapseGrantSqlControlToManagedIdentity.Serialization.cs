@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseGrantSqlControlToManagedIdentity DeserializeSynapseGrantSqlControlToManagedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SynapseDesiredState> desiredState = default;
             Optional<SynapseGrantSqlControlToManagedIdentityState> actualState = default;
             foreach (var property in element.EnumerateObject())

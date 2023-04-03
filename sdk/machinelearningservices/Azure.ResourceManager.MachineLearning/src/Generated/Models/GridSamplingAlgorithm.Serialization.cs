@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static GridSamplingAlgorithm DeserializeGridSamplingAlgorithm(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SamplingAlgorithmType samplingAlgorithmType = default;
             foreach (var property in element.EnumerateObject())
             {

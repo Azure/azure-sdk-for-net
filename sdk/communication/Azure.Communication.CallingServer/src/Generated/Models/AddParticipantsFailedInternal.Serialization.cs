@@ -16,6 +16,10 @@ namespace Azure.Communication.CallingServer
     {
         internal static AddParticipantsFailedInternal DeserializeAddParticipantsFailedInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> eventSource = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;

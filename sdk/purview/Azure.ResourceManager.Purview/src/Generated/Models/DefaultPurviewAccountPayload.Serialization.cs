@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Purview.Models
 
         internal static DefaultPurviewAccountPayload DeserializeDefaultPurviewAccountPayload(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountName = default;
             Optional<string> resourceGroupName = default;
             Optional<string> scope = default;

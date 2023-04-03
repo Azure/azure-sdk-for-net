@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
     {
         internal static MarketplaceRegistrationDefinitionList DeserializeMarketplaceRegistrationDefinitionList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManagedServicesMarketplaceRegistrationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

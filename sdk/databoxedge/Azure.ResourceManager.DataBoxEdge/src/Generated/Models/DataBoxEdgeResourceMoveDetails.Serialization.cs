@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static DataBoxEdgeResourceMoveDetails DeserializeDataBoxEdgeResourceMoveDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeResourceMoveStatus> operationInProgress = default;
             Optional<DateTimeOffset> operationInProgressLockTimeoutInUtc = default;
             foreach (var property in element.EnumerateObject())

@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyExpirationRule DeserializeRoleManagementPolicyExpirationRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isExpirationRequired = default;
             Optional<TimeSpan> maximumDuration = default;
             Optional<string> id = default;

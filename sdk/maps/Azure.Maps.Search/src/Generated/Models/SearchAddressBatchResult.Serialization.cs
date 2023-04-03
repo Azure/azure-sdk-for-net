@@ -15,6 +15,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static SearchAddressBatchResult DeserializeSearchAddressBatchResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SearchAddressBatchItem>> batchItems = default;
             Optional<BatchResultSummary> summary = default;
             foreach (var property in element.EnumerateObject())

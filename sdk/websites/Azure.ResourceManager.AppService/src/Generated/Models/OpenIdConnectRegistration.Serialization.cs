@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static OpenIdConnectRegistration DeserializeOpenIdConnectRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientId = default;
             Optional<OpenIdConnectClientCredential> clientCredential = default;
             Optional<OpenIdConnectConfig> openIdConnectConfiguration = default;

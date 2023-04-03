@@ -37,6 +37,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static KeepTokenFilter DeserializeKeepTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> keepWords = default;
             Optional<bool> keepWordsCase = default;
             string odataType = default;

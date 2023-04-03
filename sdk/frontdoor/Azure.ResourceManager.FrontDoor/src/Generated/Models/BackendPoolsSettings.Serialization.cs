@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static BackendPoolsSettings DeserializeBackendPoolsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EnforceCertificateNameCheckEnabledState> enforceCertificateNameCheck = default;
             Optional<int> sendRecvTimeoutSeconds = default;
             foreach (var property in element.EnumerateObject())

@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedServiceProperties DeserializeManagedServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("serviceKind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

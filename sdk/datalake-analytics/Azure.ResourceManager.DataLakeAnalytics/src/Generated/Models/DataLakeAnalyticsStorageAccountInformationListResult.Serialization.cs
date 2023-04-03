@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     {
         internal static DataLakeAnalyticsStorageAccountInformationListResult DeserializeDataLakeAnalyticsStorageAccountInformationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

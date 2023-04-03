@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesKeyVaultProperties DeserializeCognitiveServicesKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyName = default;
             Optional<string> keyVersion = default;
             Optional<Uri> keyVaultUri = default;

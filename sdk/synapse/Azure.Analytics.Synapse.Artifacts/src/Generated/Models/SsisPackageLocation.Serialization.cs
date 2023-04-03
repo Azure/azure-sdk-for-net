@@ -82,6 +82,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SsisPackageLocation DeserializeSsisPackageLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> packagePath = default;
             Optional<SsisPackageLocationType> type = default;
             Optional<SecretBase> packagePassword = default;

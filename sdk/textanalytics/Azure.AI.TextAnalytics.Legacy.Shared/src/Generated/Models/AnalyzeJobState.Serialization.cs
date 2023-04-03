@@ -17,6 +17,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static AnalyzeJobState DeserializeAnalyzeJobState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TasksStateTasks tasks = default;
             Optional<IReadOnlyList<TextAnalyticsError>> errors = default;
             Optional<RequestStatistics> statistics = default;

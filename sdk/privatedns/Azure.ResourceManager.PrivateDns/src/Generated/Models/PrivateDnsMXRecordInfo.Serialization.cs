@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         internal static PrivateDnsMXRecordInfo DeserializePrivateDnsMXRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> preference = default;
             Optional<string> exchange = default;
             foreach (var property in element.EnumerateObject())

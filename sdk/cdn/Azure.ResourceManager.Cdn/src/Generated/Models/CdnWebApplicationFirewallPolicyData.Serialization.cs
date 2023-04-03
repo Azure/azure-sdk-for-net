@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.Cdn
 
         internal static CdnWebApplicationFirewallPolicyData DeserializeCdnWebApplicationFirewallPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             CdnSku sku = default;
             Optional<IDictionary<string, string>> tags = default;

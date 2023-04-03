@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Subscription
     {
         internal static BillingAccountPolicyData DeserializeBillingAccountPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BillingAccountPolicyProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> category = default;
             Optional<IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>> endpoints = default;
             foreach (var property in element.EnumerateObject())

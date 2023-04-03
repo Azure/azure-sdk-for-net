@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.FrontDoor
 
         internal static FrontDoorWebApplicationFirewallPolicyData DeserializeFrontDoorWebApplicationFirewallPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<FrontDoorSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;

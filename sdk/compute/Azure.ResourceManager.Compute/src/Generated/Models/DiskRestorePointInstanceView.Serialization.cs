@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static DiskRestorePointInstanceView DeserializeDiskRestorePointInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<DiskRestorePointReplicationStatus> replicationStatus = default;
             foreach (var property in element.EnumerateObject())

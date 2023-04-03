@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static AssignmentLockSettings DeserializeAssignmentLockSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AssignmentLockMode> mode = default;
             Optional<IList<string>> excludedPrincipals = default;
             Optional<IList<string>> excludedActions = default;

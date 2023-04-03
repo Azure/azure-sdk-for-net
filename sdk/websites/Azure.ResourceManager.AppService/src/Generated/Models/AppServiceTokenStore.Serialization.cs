@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceTokenStore DeserializeAppServiceTokenStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<double> tokenRefreshExtensionHours = default;
             Optional<FileSystemTokenStore> fileSystem = default;

@@ -58,6 +58,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static CustomLayout DeserializeCustomLayout(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, LayoutLayer>> layers = default;
             IDictionary<string, InputGroup> inputGroups = default;
             LayoutType kind = default;

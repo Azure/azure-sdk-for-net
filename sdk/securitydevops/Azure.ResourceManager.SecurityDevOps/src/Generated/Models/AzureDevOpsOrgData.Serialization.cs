@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         internal static AzureDevOpsOrgData DeserializeAzureDevOpsOrgData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureDevOpsOrgProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

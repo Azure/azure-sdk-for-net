@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The move operation mode. </summary>
+    /// <summary> Operation mode. </summary>
     public readonly partial struct ManagedDatabaseMoveOperationMode : IEquatable<ManagedDatabaseMoveOperationMode>
     {
         private readonly string _value;

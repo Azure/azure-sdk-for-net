@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static WebApplicationFirewallCustomRule DeserializeWebApplicationFirewallCustomRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ETag> etag = default;
             int priority = default;

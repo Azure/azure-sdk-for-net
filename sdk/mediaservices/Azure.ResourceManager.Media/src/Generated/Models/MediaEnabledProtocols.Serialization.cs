@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaEnabledProtocols DeserializeMediaEnabledProtocols(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool download = default;
             bool dash = default;
             bool hls = default;

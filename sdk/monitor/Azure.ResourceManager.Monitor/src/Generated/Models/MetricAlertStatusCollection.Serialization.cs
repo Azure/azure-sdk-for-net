@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static MetricAlertStatusCollection DeserializeMetricAlertStatusCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MetricAlertStatus>> value = default;
             foreach (var property in element.EnumerateObject())
             {

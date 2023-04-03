@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static Authentication DeserializeAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeSymmetricKey> symmetricKey = default;
             foreach (var property in element.EnumerateObject())
             {

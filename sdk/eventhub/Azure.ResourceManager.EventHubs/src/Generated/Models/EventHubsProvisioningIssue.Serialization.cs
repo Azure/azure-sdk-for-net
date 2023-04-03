@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsProvisioningIssue DeserializeEventHubsProvisioningIssue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<EventHubsProvisioningIssueProperties> properties = default;
             foreach (var property in element.EnumerateObject())

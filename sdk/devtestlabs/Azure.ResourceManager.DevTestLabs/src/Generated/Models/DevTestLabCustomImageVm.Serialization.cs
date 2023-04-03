@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabCustomImageVm DeserializeDevTestLabCustomImageVm(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sourceVmId = default;
             Optional<WindowsOSInfo> windowsOSInfo = default;
             Optional<LinuxOSInfo> linuxOSInfo = default;

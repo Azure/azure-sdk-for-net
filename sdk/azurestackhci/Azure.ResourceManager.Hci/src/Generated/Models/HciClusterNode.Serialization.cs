@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static HciClusterNode DeserializeHciClusterNode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<float> id = default;
             Optional<WindowsServerSubscription> windowsServerSubscription = default;

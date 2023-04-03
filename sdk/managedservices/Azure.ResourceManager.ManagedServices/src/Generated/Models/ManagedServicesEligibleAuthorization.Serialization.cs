@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
 
         internal static ManagedServicesEligibleAuthorization DeserializeManagedServicesEligibleAuthorization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid principalId = default;
             Optional<string> principalIdDisplayName = default;
             string roleDefinitionId = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VaultHealthDetails DeserializeVaultHealthDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VaultHealthProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

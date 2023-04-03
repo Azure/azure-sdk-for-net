@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlServicePrincipal DeserializeSqlServicePrincipal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> principalId = default;
             Optional<Guid> clientId = default;
             Optional<Guid> tenantId = default;

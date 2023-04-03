@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.ResourceMover
 
         internal static MoverResourceSetData DeserializeMoverResourceSetData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MoverResourceSetProperties> properties = default;

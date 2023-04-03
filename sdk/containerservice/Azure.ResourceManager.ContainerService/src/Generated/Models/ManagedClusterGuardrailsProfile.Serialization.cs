@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterGuardrailsProfile DeserializeManagedClusterGuardrailsProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> systemExcludedNamespaces = default;
             string version = default;
             ManagedClusterGuardrailsProfileLevel level = default;

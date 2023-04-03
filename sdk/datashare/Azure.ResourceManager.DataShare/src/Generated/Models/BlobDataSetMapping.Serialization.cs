@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static BlobDataSetMapping DeserializeBlobDataSetMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataSetMappingKind kind = default;
             ResourceIdentifier id = default;
             string name = default;

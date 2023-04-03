@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static NodeTypeVmssDataDisk DeserializeNodeTypeVmssDataDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int lun = default;
             int diskSizeGB = default;
             ServiceFabricManagedDataDiskType diskType = default;

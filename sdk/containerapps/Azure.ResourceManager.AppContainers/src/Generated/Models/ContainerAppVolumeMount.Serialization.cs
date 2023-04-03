@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppVolumeMount DeserializeContainerAppVolumeMount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> volumeName = default;
             Optional<string> mountPath = default;
             foreach (var property in element.EnumerateObject())

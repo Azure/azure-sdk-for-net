@@ -36,6 +36,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static DocumentResult DeserializeDocumentResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static DnsZone DeserializeDnsZone(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VaultSubResourceType> subResource = default;
             foreach (var property in element.EnumerateObject())
             {

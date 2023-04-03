@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static SimpleFilterParameters DeserializeSimpleFilterParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> zones = default;
             foreach (var property in element.EnumerateObject())
             {

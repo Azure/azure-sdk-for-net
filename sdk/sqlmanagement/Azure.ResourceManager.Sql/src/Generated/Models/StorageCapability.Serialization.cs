@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static StorageCapability DeserializeStorageCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageCapabilityStorageAccountType> storageAccountType = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;

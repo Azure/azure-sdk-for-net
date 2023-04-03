@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static ScheduledSourceSynchronizationSetting DeserializeScheduledSourceSynchronizationSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SourceShareSynchronizationSettingKind kind = default;
             Optional<DataShareSynchronizationRecurrenceInterval> recurrenceInterval = default;
             Optional<DateTimeOffset> synchronizationTime = default;

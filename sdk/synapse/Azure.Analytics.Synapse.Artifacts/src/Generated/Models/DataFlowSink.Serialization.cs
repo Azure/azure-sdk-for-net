@@ -55,6 +55,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DataFlowSink DeserializeDataFlowSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinkedServiceReference> schemaLinkedService = default;
             Optional<LinkedServiceReference> rejectedDataLinkedService = default;
             string name = default;

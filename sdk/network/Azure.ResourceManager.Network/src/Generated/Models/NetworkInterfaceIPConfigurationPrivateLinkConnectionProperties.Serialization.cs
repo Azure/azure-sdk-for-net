@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties DeserializeNetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupId = default;
             Optional<string> requiredMemberName = default;
             Optional<IReadOnlyList<string>> fqdns = default;

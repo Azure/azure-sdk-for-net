@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementUserInfo DeserializeRoleManagementUserInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RoleManagementUserType> userType = default;
             Optional<bool> isBackup = default;
             Optional<string> id = default;

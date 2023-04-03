@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabInboundNatRule DeserializeDevTestLabInboundNatRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DevTestLabTransportProtocol> transportProtocol = default;
             Optional<int> frontendPort = default;
             Optional<int> backendPort = default;

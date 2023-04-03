@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
     {
         internal static PostgreSqlServerPrivateEndpointConnection DeserializePostgreSqlServerPrivateEndpointConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<PostgreSqlServerPrivateEndpointConnectionProperties> properties = default;
             foreach (var property in element.EnumerateObject())

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.EnergyServices.Models
 
         internal static EnergyServiceProperties DeserializeEnergyServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dnsName = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> authAppId = default;

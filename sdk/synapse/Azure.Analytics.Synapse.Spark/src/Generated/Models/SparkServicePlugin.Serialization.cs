@@ -15,6 +15,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkServicePlugin DeserializeSparkServicePlugin(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> preparationStartedAt = default;
             Optional<DateTimeOffset?> resourceAcquisitionStartedAt = default;
             Optional<DateTimeOffset?> submissionStartedAt = default;

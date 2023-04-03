@@ -17,6 +17,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static HealthcareJobState DeserializeHealthcareJobState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthcareResult> results = default;
             Optional<IReadOnlyList<TextAnalyticsError>> errors = default;
             Optional<string> nextLink = default;

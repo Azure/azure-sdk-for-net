@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static GroupConnectivityInformation DeserializeGroupConnectivityInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupId = default;
             Optional<string> memberName = default;
             Optional<IList<string>> customerVisibleFqdns = default;

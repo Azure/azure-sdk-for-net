@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaTrackSelection DeserializeMediaTrackSelection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<TrackPropertyCondition>> trackSelections = default;
             foreach (var property in element.EnumerateObject())
             {

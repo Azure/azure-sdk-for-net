@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ObjectReplicationPolicyFilter DeserializeObjectReplicationPolicyFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> prefixMatch = default;
             Optional<string> minCreationTime = default;
             foreach (var property in element.EnumerateObject())

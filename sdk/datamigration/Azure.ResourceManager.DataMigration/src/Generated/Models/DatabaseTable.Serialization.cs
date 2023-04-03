@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static DatabaseTable DeserializeDatabaseTable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> hasRows = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())

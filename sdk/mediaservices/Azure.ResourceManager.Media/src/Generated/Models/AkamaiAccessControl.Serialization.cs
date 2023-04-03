@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static AkamaiAccessControl DeserializeAkamaiAccessControl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AkamaiSignatureHeaderAuthenticationKey>> akamaiSignatureHeaderAuthenticationKeyList = default;
             foreach (var property in element.EnumerateObject())
             {

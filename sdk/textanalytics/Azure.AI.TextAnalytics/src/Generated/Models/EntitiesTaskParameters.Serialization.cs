@@ -35,6 +35,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static EntitiesTaskParameters DeserializeEntitiesTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StringIndexType> stringIndexType = default;
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;

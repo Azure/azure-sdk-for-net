@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogAgreementProperties DeserializeDatadogAgreementProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> publisher = default;
             Optional<string> product = default;
             Optional<string> plan = default;

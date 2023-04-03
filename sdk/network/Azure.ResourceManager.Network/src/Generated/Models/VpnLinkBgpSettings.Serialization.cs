@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnLinkBgpSettings DeserializeVpnLinkBgpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> asn = default;
             Optional<string> bgpPeeringAddress = default;
             foreach (var property in element.EnumerateObject())

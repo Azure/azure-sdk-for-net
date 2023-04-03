@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static WorkloadNetworkSegmentSubnet DeserializeWorkloadNetworkSegmentSubnet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> dhcpRanges = default;
             Optional<string> gatewayAddress = default;
             foreach (var property in element.EnumerateObject())

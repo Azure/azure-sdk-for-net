@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ImmutabilitySettings DeserializeImmutabilitySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupVaultImmutabilityState> state = default;
             foreach (var property in element.EnumerateObject())
             {

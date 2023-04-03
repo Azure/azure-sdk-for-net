@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ProviderHub
 
         internal static NotificationRegistrationData DeserializeNotificationRegistrationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NotificationRegistrationProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

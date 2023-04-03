@@ -84,6 +84,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayProbe DeserializeApplicationGatewayProbe(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;

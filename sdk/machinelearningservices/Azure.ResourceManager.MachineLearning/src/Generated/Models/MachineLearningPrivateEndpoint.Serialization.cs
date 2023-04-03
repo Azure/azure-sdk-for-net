@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningPrivateEndpoint DeserializeMachineLearningPrivateEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<ResourceIdentifier> subnetArmId = default;
             foreach (var property in element.EnumerateObject())

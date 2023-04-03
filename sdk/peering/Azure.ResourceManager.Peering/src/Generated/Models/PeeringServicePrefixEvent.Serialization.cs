@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Peering.Models
     {
         internal static PeeringServicePrefixEvent DeserializePeeringServicePrefixEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> eventTimestamp = default;
             Optional<string> eventType = default;
             Optional<string> eventSummary = default;

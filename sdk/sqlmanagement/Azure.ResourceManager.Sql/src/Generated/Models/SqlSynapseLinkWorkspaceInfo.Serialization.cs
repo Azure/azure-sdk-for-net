@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlSynapseLinkWorkspaceInfo DeserializeSqlSynapseLinkWorkspaceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> workspaceId = default;
             Optional<string> linkConnectionName = default;
             foreach (var property in element.EnumerateObject())

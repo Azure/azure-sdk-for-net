@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Purview.Models
     {
         internal static PurviewAccountSku DeserializePurviewAccountSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> capacity = default;
             Optional<PurviewAccountSkuName> name = default;
             foreach (var property in element.EnumerateObject())

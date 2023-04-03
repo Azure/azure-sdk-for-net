@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CosmosDBSqlTriggerListResult DeserializeCosmosDBSqlTriggerListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CosmosDBSqlTriggerData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

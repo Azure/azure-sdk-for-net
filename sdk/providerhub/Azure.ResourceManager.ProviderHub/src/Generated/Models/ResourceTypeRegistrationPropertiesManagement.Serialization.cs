@@ -73,6 +73,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceAccessRoles)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
@@ -86,6 +91,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceTypeRegistrationPropertiesManagement DeserializeResourceTypeRegistrationPropertiesManagement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> schemaOwners = default;
             Optional<IList<string>> manifestOwners = default;
             Optional<string> incidentRoutingService = default;
@@ -176,7 +185,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     resourceAccessRoles = array;
                     continue;

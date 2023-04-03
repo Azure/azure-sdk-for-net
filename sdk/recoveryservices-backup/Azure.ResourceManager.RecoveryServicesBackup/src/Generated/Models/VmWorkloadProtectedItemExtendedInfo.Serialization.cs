@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmWorkloadProtectedItemExtendedInfo DeserializeVmWorkloadProtectedItemExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> oldestRecoveryPoint = default;
             Optional<DateTimeOffset> oldestRecoveryPointInVault = default;
             Optional<DateTimeOffset> oldestRecoveryPointInArchive = default;

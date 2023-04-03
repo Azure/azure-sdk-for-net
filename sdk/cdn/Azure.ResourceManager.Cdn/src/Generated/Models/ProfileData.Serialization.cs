@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Cdn
 
         internal static ProfileData DeserializeProfileData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CdnSku sku = default;
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;

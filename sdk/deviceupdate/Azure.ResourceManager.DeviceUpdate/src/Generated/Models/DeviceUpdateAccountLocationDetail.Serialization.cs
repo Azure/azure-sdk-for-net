@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     {
         internal static DeviceUpdateAccountLocationDetail DeserializeDeviceUpdateAccountLocationDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<DeviceUpdateAccountLocationRole> role = default;
             foreach (var property in element.EnumerateObject())

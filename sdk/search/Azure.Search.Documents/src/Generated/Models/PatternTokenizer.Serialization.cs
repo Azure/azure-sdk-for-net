@@ -39,6 +39,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static PatternTokenizer DeserializePatternTokenizer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> pattern = default;
             Optional<string> flags = default;
             Optional<int> group = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static RemediationDeployment DeserializeRemediationDeployment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> remediatedResourceId = default;
             Optional<ResourceIdentifier> deploymentId = default;
             Optional<string> status = default;

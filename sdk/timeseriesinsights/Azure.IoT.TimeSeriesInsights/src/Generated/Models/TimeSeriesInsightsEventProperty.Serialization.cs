@@ -30,6 +30,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static TimeSeriesInsightsEventProperty DeserializeTimeSeriesInsightsEventProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<TimeSeriesPropertyType> type = default;
             foreach (var property in element.EnumerateObject())

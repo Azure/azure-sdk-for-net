@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static LocationThresholdRuleCondition DeserializeLocationThresholdRuleCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> windowSize = default;
             int failedLocationCount = default;
             string odataType = default;

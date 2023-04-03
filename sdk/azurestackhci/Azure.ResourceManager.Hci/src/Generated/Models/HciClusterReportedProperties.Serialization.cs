@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static HciClusterReportedProperties DeserializeHciClusterReportedProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clusterName = default;
             Optional<Guid> clusterId = default;
             Optional<string> clusterVersion = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static FormulaList DeserializeFormulaList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DevTestLabFormulaData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

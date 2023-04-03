@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static MachineLearningComputeData DeserializeMachineLearningComputeData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MachineLearningSku> sku = default;
             Optional<MachineLearningComputeProperties> properties = default;

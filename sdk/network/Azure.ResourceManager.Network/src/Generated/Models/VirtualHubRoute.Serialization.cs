@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualHubRoute DeserializeVirtualHubRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> addressPrefixes = default;
             Optional<string> nextHopIPAddress = default;
             foreach (var property in element.EnumerateObject())

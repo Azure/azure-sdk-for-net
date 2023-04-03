@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EdgeOrderItemAddressDetails DeserializeEdgeOrderItemAddressDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EdgeOrderItemAddressProperties forwardAddress = default;
             Optional<EdgeOrderItemAddressProperties> returnAddress = default;
             foreach (var property in element.EnumerateObject())

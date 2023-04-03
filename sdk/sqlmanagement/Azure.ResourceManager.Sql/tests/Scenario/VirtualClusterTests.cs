@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         private ResourceGroupResource _resourceGroup;
 
         public VirtualClusterTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

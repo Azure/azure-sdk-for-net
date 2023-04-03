@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionBudgetFilter DeserializeConsumptionBudgetFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<BudgetFilterProperties>> and = default;
             Optional<BudgetComparisonExpression> dimensions = default;
             Optional<BudgetComparisonExpression> tags = default;

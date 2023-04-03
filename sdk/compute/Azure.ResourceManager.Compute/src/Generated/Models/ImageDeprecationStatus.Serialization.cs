@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImageDeprecationStatus DeserializeImageDeprecationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ImageState> imageState = default;
             Optional<DateTimeOffset> scheduledDeprecationTime = default;
             Optional<ImageAlternativeOption> alternativeOption = default;

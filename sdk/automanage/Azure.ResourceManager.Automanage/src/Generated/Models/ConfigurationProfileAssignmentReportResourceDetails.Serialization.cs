@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automanage.Models
     {
         internal static ConfigurationProfileAssignmentReportResourceDetails DeserializeConfigurationProfileAssignmentReportResourceDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<ResponseError> error = default;
             ResourceIdentifier id = default;

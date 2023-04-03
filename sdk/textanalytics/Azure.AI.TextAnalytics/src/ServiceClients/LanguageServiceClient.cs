@@ -710,7 +710,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomEntitiesTask(projectName, deploymentName, options) })
                 {
                     DisplayName = options.DisplayName,
-                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
@@ -740,7 +739,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomEntitiesTask(projectName, deploymentName, options) })
                 {
                     DisplayName = options.DisplayName,
-                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
@@ -1382,7 +1380,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) } )
                 {
                     DisplayName = options.DisplayName,
-                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
@@ -1412,7 +1409,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) })
                 {
                     DisplayName = options.DisplayName,
-                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
@@ -1719,7 +1715,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, CreateTasks(actions))
                 {
                     DisplayName = actions.DisplayName,
-                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
@@ -1749,7 +1744,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, CreateTasks(actions))
                 {
                     DisplayName = actions.DisplayName,
-                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
@@ -1932,7 +1926,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomSingleLabelClassificationTask(projectName, deploymentName, options) })
                 {
                     DisplayName = options.DisplayName,
-                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
@@ -1962,7 +1955,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomSingleLabelClassificationTask(projectName, deploymentName, options) })
                 {
                     DisplayName = options.DisplayName,
-                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
@@ -2039,7 +2031,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomMultiLabelClassificationTask(projectName, deploymentName, options) })
                 {
                     DisplayName = options.DisplayName,
-                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
@@ -2069,7 +2060,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateCustomMultiLabelClassificationTask(projectName, deploymentName, options) })
                 {
                     DisplayName = options.DisplayName,
-                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
@@ -2079,246 +2069,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(multiLanguageInput.Documents);
 
                 return new ClassifyDocumentOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        #endregion
-
-        #region Dynamic Classify
-
-        public override Response<ClassificationCategoryCollection> DynamicClassify(
-            string document,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            string language = default,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(document, nameof(document));
-            Argument.AssertNotNullOrEmpty(categories, nameof(categories));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DynamicClassify)}");
-            scope.AddAttribute("document", document);
-            scope.Start();
-
-            try
-            {
-                MultiLanguageAnalysisInput multiLanguageInput = new();
-                multiLanguageInput.Documents.Add(ConvertToMultiLanguageInput(document, language));
-
-                AnalyzeTextDynamicClassificationInput input = new()
-                {
-                    AnalysisInput = multiLanguageInput,
-                    Parameters = new DynamicClassificationTaskParameters(categories.ToList()) { ClassificationType = classificationType }
-                };
-
-                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
-                    input,
-                    cancellationToken: cancellationToken);
-
-                DynamicClassificationTaskResult taskResult = (DynamicClassificationTaskResult)result.Value;
-                Response response = result.GetRawResponse();
-
-                if (taskResult.Results.Errors.Count > 0)
-                {
-                    throw new RequestFailedException(response);
-                }
-
-                return Response.FromValue(Transforms.ConvertToClassificationCategoryCollection(taskResult.Results.Documents[0]), response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        public override Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
-            IEnumerable<string> documents,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            string language = default,
-            TextAnalyticsRequestOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            Argument.AssertNotNullOrEmpty(categories, nameof(categories));
-            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
-
-            return DynamicClassifyBatch(documentInputs, categories, classificationType, options, cancellationToken);
-        }
-
-        public override Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
-            IEnumerable<TextDocumentInput> documents,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            TextAnalyticsRequestOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            Argument.AssertNotNullOrEmpty(categories, nameof(categories));
-            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
-
-            return DynamicClassifyBatch(documentInputs, categories, classificationType, options, cancellationToken);
-        }
-
-        public override async Task<Response<ClassificationCategoryCollection>> DynamicClassifyAsync(
-            string document,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            string language = default,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(document, nameof(document));
-            Argument.AssertNotNullOrEmpty(categories, nameof(categories));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DynamicClassify)}");
-            scope.AddAttribute("document", document);
-            scope.Start();
-
-            try
-            {
-                MultiLanguageAnalysisInput multiLanguageInput = new();
-                multiLanguageInput.Documents.Add(ConvertToMultiLanguageInput(document, language));
-
-                AnalyzeTextDynamicClassificationInput input = new()
-                {
-                    AnalysisInput = multiLanguageInput,
-                    Parameters = new DynamicClassificationTaskParameters(categories.ToList()) { ClassificationType = classificationType }
-                };
-
-                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
-                    input,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                DynamicClassificationTaskResult taskResult = (DynamicClassificationTaskResult)result.Value;
-                Response response = result.GetRawResponse();
-
-                if (taskResult.Results.Errors.Count > 0)
-                {
-                    throw new RequestFailedException(response);
-                }
-
-                return Response.FromValue(Transforms.ConvertToClassificationCategoryCollection(taskResult.Results.Documents[0]), response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        public override async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
-            IEnumerable<string> documents,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            string language = default,
-            TextAnalyticsRequestOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            Argument.AssertNotNullOrEmpty(categories, nameof(categories));
-            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
-
-            return await DynamicClassifyBatchAsync(documentInputs, categories, classificationType, options, cancellationToken).ConfigureAwait(false);
-        }
-
-        public override async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
-            IEnumerable<TextDocumentInput> documents,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType = default,
-            TextAnalyticsRequestOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            Argument.AssertNotNullOrEmpty(categories, nameof(categories));
-            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
-
-            return await DynamicClassifyBatchAsync(documentInputs, categories, classificationType, options, cancellationToken).ConfigureAwait(false);
-        }
-
-        private Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
-            MultiLanguageAnalysisInput multiLanguageInput,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType,
-            TextAnalyticsRequestOptions options,
-            CancellationToken cancellationToken)
-        {
-            options ??= new TextAnalyticsRequestOptions();
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DynamicClassifyBatch)}");
-            scope.Start();
-
-            try
-            {
-                AnalyzeTextDynamicClassificationInput input = new()
-                {
-                    AnalysisInput = multiLanguageInput,
-                    Parameters = new DynamicClassificationTaskParameters(
-                        options.DisableServiceLogs,
-                        options.ModelVersion,
-                        classificationType,
-                        categories.ToList())
-                };
-
-                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
-                    input,
-                    options.IncludeStatistics,
-                    cancellationToken: cancellationToken);
-
-                DynamicClassificationTaskResult taskResult = (DynamicClassificationTaskResult)result.Value;
-                Response response = result.GetRawResponse();
-
-                IDictionary<string, int> map = CreateIdToIndexMap(multiLanguageInput.Documents);
-                DynamicClassifyDocumentResultCollection results = Transforms.ConvertToDynamicClassifyDocumentResultCollection(taskResult.Results, map);
-                return Response.FromValue(results, response);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
-            MultiLanguageAnalysisInput multiLanguageInput,
-            IEnumerable<string> categories,
-            ClassificationType? classificationType,
-            TextAnalyticsRequestOptions options,
-            CancellationToken cancellationToken)
-        {
-            options ??= new TextAnalyticsRequestOptions();
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DynamicClassifyBatch)}");
-            scope.Start();
-
-            try
-            {
-                AnalyzeTextDynamicClassificationInput input = new()
-                {
-                    AnalysisInput = multiLanguageInput,
-                    Parameters = new DynamicClassificationTaskParameters(
-                        options.DisableServiceLogs,
-                        options.ModelVersion,
-                        classificationType,
-                        categories.ToList())
-                };
-
-                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
-                    input,
-                    options.IncludeStatistics,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                DynamicClassificationTaskResult taskResult = (DynamicClassificationTaskResult)result.Value;
-                Response response = result.GetRawResponse();
-
-                IDictionary<string, int> map = CreateIdToIndexMap(multiLanguageInput.Documents);
-                DynamicClassifyDocumentResultCollection results = Transforms.ConvertToDynamicClassifyDocumentResultCollection(taskResult.Results, map);
-                return Response.FromValue(results, response);
             }
             catch (Exception e)
             {
@@ -2390,7 +2140,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateExtractiveSummarizationTask(options) })
                 {
                     DisplayName = options.DisplayName,
-                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
@@ -2418,7 +2167,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateExtractiveSummarizationTask(options) })
                 {
                     DisplayName = options.DisplayName,
-                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
@@ -2477,7 +2225,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 ModelVersion = options.ModelVersion,
                 StringIndexType = Constants.DefaultStringIndexType,
                 LoggingOptOut = options.DisableServiceLogs,
-                SentenceCount = options.MaxSentenceCount,
+                SentenceCount = options.SentenceCount,
             };
 
             return new AbstractiveSummarizationLROTask(parameters);
@@ -2495,7 +2243,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateAbstractiveSummarizationTask(options) })
                 {
                     DisplayName = options.DisplayName,
-                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
@@ -2523,7 +2270,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextJobsInput input = new(multiLanguageInput, new List<AnalyzeTextLROTask>() { CreateAbstractiveSummarizationTask(options) })
                 {
                     DisplayName = options.DisplayName,
-                    DefaultLanguage = options.AutoDetectionDefaultLanguage
                 };
 
                 var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);

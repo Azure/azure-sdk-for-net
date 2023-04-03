@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformBuildResultData DeserializeAppPlatformBuildResultData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformBuildResultProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
