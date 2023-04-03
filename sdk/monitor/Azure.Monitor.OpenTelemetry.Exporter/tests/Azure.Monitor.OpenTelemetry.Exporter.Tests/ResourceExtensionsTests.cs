@@ -80,6 +80,45 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("my-instance", azMonResource?.RoleInstance);
         }
 
+        [Fact]
+        public void SetsSdkVersionPrefixFromResource()
+        {
+            var testAttributes = new Dictionary<string, object>
+            {
+                { "ai.sdk.prefix", "pre_" }
+            };
+
+            var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
+            _ = resource.UpdateRoleNameAndInstance();
+
+            Assert.StartsWith("pre_", SdkVersionUtils.s_sdkVersion);
+        }
+
+        [Fact]
+        public void MissingPrefixResourceDoesNotSetSdkPrefix()
+        {
+            var resource = ResourceBuilder.CreateDefault().Build();
+            _ = resource.UpdateRoleNameAndInstance();
+
+            Assert.NotNull(SdkVersionUtils.s_sdkVersion);
+            Assert.DoesNotContain("_", SdkVersionUtils.s_sdkVersion);
+        }
+
+        [Fact]
+        public void EmptyPrefixResourceDoesNotSetSdkPrefix()
+        {
+            var testAttributes = new Dictionary<string, object>
+            {
+                { "ai.sdk.prefix", string.Empty }
+            };
+
+            var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
+            _ = resource.UpdateRoleNameAndInstance();
+
+            Assert.NotNull(SdkVersionUtils.s_sdkVersion);
+            Assert.DoesNotContain("_", SdkVersionUtils.s_sdkVersion);
+        }
+
         /// <summary>
         /// If SERVICE.NAME is not defined, it will fall-back to "unknown_service".
         /// (https://github.com/open-telemetry/opentelemetry-specification/tree/main/specification/resource/semantic_conventions#semantic-attributes-with-sdk-provided-default-value).
