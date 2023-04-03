@@ -4,6 +4,7 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
@@ -104,10 +105,10 @@ namespace Azure.Core.Samples
         {
             #region Snippet:SetGlobalTimeoutRetryPolicy
 
-            var strategy = Delay.CreateFixedDelay(TimeSpan.FromSeconds(2));
+            var delay = Delay.CreateFixedDelay(TimeSpan.FromSeconds(2));
             SecretClientOptions options = new SecretClientOptions()
             {
-                RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delay: strategy, timeout: TimeSpan.FromSeconds(30))
+                RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delay: delay, timeout: TimeSpan.FromSeconds(30))
             };
             #endregion
         }
@@ -116,12 +117,24 @@ namespace Azure.Core.Samples
         public void CustomizedJitterExponentialDelay()
         {
             #region Snippet:CustomizeExponentialDelay
-            var strategy = Delay.CreateExponentialDelay();
             SecretClientOptions options = new SecretClientOptions()
             {
-                RetryPolicy = new RetryPolicy(delay: strategy)
+                RetryPolicy = new RetryPolicy(delay: new MyCustomDelay())
             };
             #endregion
+        }
+
+        private class MyCustomDelay : Delay
+        {
+            protected override TimeSpan GetNextDelayCore(Response response, int retryNumber)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response response, int retryNumber)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
