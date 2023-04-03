@@ -9,9 +9,9 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "Ocp-Apim-Subscription-Region": "westus",
-        "traceparent": "00-dc613c93282e02448e733a203887b069-1f974f7f06f6e54e-00",
-        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230322.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
-        "x-ms-client-request-id": "33dd5181a14f98528a573619ce69e762",
+        "traceparent": "00-00a448cdac3c54c26789f9e33928af89-57d9d6d183f4486d-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22624)",
+        "x-ms-client-request-id": "be49b184c5e871028269011e2409b40f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022This is a test.\u0022}]",
@@ -23,18 +23,18 @@
         ],
         "Content-Length": "186",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 22 Mar 2023 21:22:14 GMT",
+        "Date": "Mon, 03 Apr 2023 21:50:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Metered-Usage": "45",
         "X-MT-System": "Microsoft,Microsoft,Microsoft",
-        "X-RequestId": "TRAN.MW1P.99BF.0322T2122.5C1E0CC"
+        "X-RequestId": "TRAN.MW1P.99BF.0403T2150.2F08705"
       },
       "ResponseBody": "[{\u0022detectedLanguage\u0022:{\u0022language\u0022:\u0022en\u0022,\u0022score\u0022:1.0},\u0022translations\u0022:[{\u0022text\u0022:\u0022Tohle je test.\u0022,\u0022to\u0022:\u0022cs\u0022},{\u0022text\u0022:\u0022Esto es una prueba.\u0022,\u0022to\u0022:\u0022es\u0022},{\u0022text\u0022:\u0022Dies ist ein Test.\u0022,\u0022to\u0022:\u0022de\u0022}]}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "309947000",
+    "RandomSeed": "1643775044",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
     "TEXT_TRANSLATION_REGION": "westus"

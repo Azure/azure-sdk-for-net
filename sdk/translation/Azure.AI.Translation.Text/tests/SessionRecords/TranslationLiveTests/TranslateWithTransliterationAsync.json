@@ -9,9 +9,9 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "Ocp-Apim-Subscription-Region": "westus",
-        "traceparent": "00-4a31708b44a38d42b40942dfe9f6a2a6-17139e87d9b3ac43-00",
-        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230322.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
-        "x-ms-client-request-id": "bd8d39b0e3cf983a25512bfe452263da",
+        "traceparent": "00-f1a95372009300c3534db32e513024da-dc0c1446ef3c2dc9-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22624)",
+        "x-ms-client-request-id": "00ab489d1ee08ed764cf544fca8a64c7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022hudha akhtabar.\u0022}]",
@@ -21,20 +21,20 @@
           "X-RequestId",
           "X-Metered-Usage"
         ],
-        "Content-Length": "181",
+        "Content-Length": "179",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 22 Mar 2023 21:18:36 GMT",
+        "Date": "Mon, 03 Apr 2023 21:50:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Metered-Usage": "15",
         "X-MT-System": "Microsoft",
-        "X-RequestId": "TRAN.MW1P.99BD.0322T2118.A2634AE"
+        "X-RequestId": "TRAN.MW1P.99BF.0403T2150.2F0892E"
       },
-      "ResponseBody": "[{\u0022sourceText\u0022:{\u0022text\u0022:\u0022\u0647\u0630\u0627 \u0627\u062E\u062A\u0628\u0627\u0631.\u0022},\u0022translations\u0022:[{\u0022text\u0022:\u0022\u8FD9\u662F\u4E2A\u6D4B\u8BD5\u3002\u0022,\u0022transliteration\u0022:{\u0022text\u0022:\u0022zh\u00E8 sh\u00EC g\u00E8 c\u00E8 sh\u00EC\u3002\u0022,\u0022script\u0022:\u0022Latn\u0022},\u0022to\u0022:\u0022zh-Hans\u0022}]}]"
+      "ResponseBody": "[{\u0022sourceText\u0022:{\u0022text\u0022:\u0022\u0647\u0630\u0627 \u0627\u062E\u062A\u0628\u0627\u0631.\u0022},\u0022translations\u0022:[{\u0022text\u0022:\u0022\u8FD9\u662F\u4E2A\u6D4B\u8BD5\u3002\u0022,\u0022transliteration\u0022:{\u0022text\u0022:\u0022zh\u00E8 sh\u00ECg\u00E8 c\u00E8sh\u00EC\u3002\u0022,\u0022script\u0022:\u0022Latn\u0022},\u0022to\u0022:\u0022zh-Hans\u0022}]}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "1977583607",
+    "RandomSeed": "408784969",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
     "TEXT_TRANSLATION_REGION": "westus"

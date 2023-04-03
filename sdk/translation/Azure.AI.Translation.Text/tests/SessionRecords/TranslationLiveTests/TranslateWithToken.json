@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "28",
         "Content-Type": "application/json",
-        "traceparent": "00-96330ff717959148a92f6b45e653ed82-51d71b08ddb82043-00",
-        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230322.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
-        "x-ms-client-request-id": "e6cff1376b7ac680002197b8950ea96c",
+        "traceparent": "00-ee41a750ebcb5646951503c49ef9ed86-0d109255d65f1a39-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22624)",
+        "x-ms-client-request-id": "de8fc3c0e3b3927cf86e57b6cd188c43",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022This is a test.\u0022}]",
@@ -22,18 +22,18 @@
         ],
         "Content-Length": "105",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 22 Mar 2023 21:22:15 GMT",
+        "Date": "Mon, 03 Apr 2023 21:50:15 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Metered-Usage": "15",
         "X-MT-System": "Microsoft",
-        "X-RequestId": "TRAN.MW1P.99BF.0322T2122.5C1E218"
+        "X-RequestId": "TRAN.MW1P.99BF.0403T2150.2F0882A"
       },
       "ResponseBody": "[{\u0022detectedLanguage\u0022:{\u0022language\u0022:\u0022en\u0022,\u0022score\u0022:1.0},\u0022translations\u0022:[{\u0022text\u0022:\u0022Tohle je test.\u0022,\u0022to\u0022:\u0022cs\u0022}]}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "909451971",
+    "RandomSeed": "374192827",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
     "TEXT_TRANSLATION_REGION": "westus"

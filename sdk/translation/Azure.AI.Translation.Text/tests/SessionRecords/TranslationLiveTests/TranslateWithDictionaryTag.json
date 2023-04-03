@@ -9,9 +9,9 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "Ocp-Apim-Subscription-Region": "westus",
-        "traceparent": "00-e1fae2b07b57d84bb9e94f75408bc4fe-3d3eb69c6f61464f-00",
-        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230322.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
-        "x-ms-client-request-id": "f12ae2e774aba543a82d8bf68ceb7a4e",
+        "traceparent": "00-6909de961e03f15e537150ba30b7b17b-474eef040a2eff45-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22624)",
+        "x-ms-client-request-id": "2b31619dbebd87ba0bca89440b30aa6d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022The word \\u003C mstrans:dictionary translation =\\u0022wordomatic\\u0022\\u003Ewordomatic\\u003C/mstrans:dictionary\\u003E is a dictionary entry.\u0022}]",
@@ -23,18 +23,18 @@
         ],
         "Content-Length": "164",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 22 Mar 2023 21:22:14 GMT",
+        "Date": "Mon, 03 Apr 2023 21:50:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Metered-Usage": "110",
         "X-MT-System": "Microsoft",
-        "X-RequestId": "TRAN.MW1P.99BF.0322T2122.5C1E166"
+        "X-RequestId": "TRAN.MW1P.99BF.0403T2150.2F08780"
       },
       "ResponseBody": "[{\u0022translations\u0022:[{\u0022text\u0022:\u0022La palabra \u003C mstrans:dictionary translation =\\\u0022wordomatic\\\u0022\u003Ewordomatic\u003C/mstrans:dictionary\u003E es una entrada de diccionario.\u0022,\u0022to\u0022:\u0022es\u0022}]}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "1485449099",
+    "RandomSeed": "925755453",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
     "TEXT_TRANSLATION_REGION": "westus"

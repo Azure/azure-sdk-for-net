@@ -9,9 +9,9 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "Ocp-Apim-Subscription-Region": "westus",
-        "traceparent": "00-14563058ae76234ba2cfc2f17bb4fdc8-9bee672e233fd840-00",
-        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230322.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
-        "x-ms-client-request-id": "ac446143b4ed77927030752e8ad8de74",
+        "traceparent": "00-fdf9beb15cc5d71e24dac2910475fe9e-a38c1d007397156c-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22624)",
+        "x-ms-client-request-id": "48a0486d0fb96d0f3826747f8b0bf1cf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022\\u8FD9\\u91CC\\u600E\\u4E48\\u4E00\\u56DE\\u4E8B?\u0022}]",
@@ -21,19 +21,19 @@
           "X-RequestId",
           "X-Metered-Usage"
         ],
-        "Content-Length": "60",
+        "Content-Length": "56",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 22 Mar 2023 21:04:58 GMT",
+        "Date": "Mon, 03 Apr 2023 21:50:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Metered-Usage": "8",
-        "X-RequestId": "TLIT.MW1P.99BD.0322T2104.A2340C1"
+        "X-RequestId": "TLIT.MW1P.99BF.0403T2150.2F08931"
       },
-      "ResponseBody": "[{\u0022text\u0022:\u0022zh\u00E8 l\u01D0 z\u011Bn me y\u00EC hu\u00ED sh\u00EC?\u0022,\u0022script\u0022:\u0022Latn\u0022}]"
+      "ResponseBody": "[{\u0022text\u0022:\u0022zh\u00E8l\u01D0 z\u011Bnme y\u00EChu\u00EDsh\u00EC?\u0022,\u0022script\u0022:\u0022Latn\u0022}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "657502118",
+    "RandomSeed": "1326958711",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
     "TEXT_TRANSLATION_REGION": "westus"

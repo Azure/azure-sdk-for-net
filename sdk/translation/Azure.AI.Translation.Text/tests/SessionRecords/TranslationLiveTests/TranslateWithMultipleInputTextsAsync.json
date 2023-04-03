@@ -9,9 +9,9 @@
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "Ocp-Apim-Subscription-Region": "westus",
-        "traceparent": "00-e7a6642dbd4a9c469321ea3f8a7a51a6-6de8b36cc094d349-00",
-        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230322.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22624 )",
-        "x-ms-client-request-id": "43610d864d4e401a38e839c67a6b3dc2",
+        "traceparent": "00-afbd31d7500ba1f0f6dfe04633d24ddf-8051c386196cfb01-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22624)",
+        "x-ms-client-request-id": "ac9dcd88ecc3aa7e36525177d747f028",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "[{\u0022Text\u0022:\u0022This is a test.\u0022},{\u0022Text\u0022:\u0022Esto es una prueba.\u0022},{\u0022Text\u0022:\u0022Dies ist ein Test.\u0022}]",
@@ -23,18 +23,18 @@
         ],
         "Content-Length": "313",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 22 Mar 2023 21:18:36 GMT",
+        "Date": "Mon, 03 Apr 2023 21:50:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Metered-Usage": "52",
         "X-MT-System": "Microsoft,Microsoft,Microsoft",
-        "X-RequestId": "TRAN.MW1P.99BD.0322T2118.A263444"
+        "X-RequestId": "TRAN.MW1P.99BF.0403T2150.2F088E8"
       },
       "ResponseBody": "[{\u0022detectedLanguage\u0022:{\u0022language\u0022:\u0022en\u0022,\u0022score\u0022:1.0},\u0022translations\u0022:[{\u0022text\u0022:\u0022Tohle je test.\u0022,\u0022to\u0022:\u0022cs\u0022}]},{\u0022detectedLanguage\u0022:{\u0022language\u0022:\u0022es\u0022,\u0022score\u0022:1.0},\u0022translations\u0022:[{\u0022text\u0022:\u0022Tohle je test.\u0022,\u0022to\u0022:\u0022cs\u0022}]},{\u0022detectedLanguage\u0022:{\u0022language\u0022:\u0022de\u0022,\u0022score\u0022:1.0},\u0022translations\u0022:[{\u0022text\u0022:\u0022Tohle je test.\u0022,\u0022to\u0022:\u0022cs\u0022}]}]"
     }
   ],
   "Variables": {
-    "RandomSeed": "1752790257",
+    "RandomSeed": "1621916574",
     "TEXT_TRANSLATION_API_KEY": "Sanitized",
     "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
     "TEXT_TRANSLATION_REGION": "westus"
