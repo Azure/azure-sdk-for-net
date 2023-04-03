@@ -108,8 +108,8 @@ namespace Azure.Core.TestFramework
             private bool ShouldRetry(TestExecutionContext context)
             {
                 return
-                    context.CurrentResult.ResultState.Status == TestStatus.Failed
-                    && context.CurrentResult.ResultState.Label == "Error"
+                    context?.CurrentResult?.ResultState?.Status == TestStatus.Failed
+                    && context?.CurrentResult?.ResultState?.Label == "Error"
                     && _shouldRetry(context);
             }
         }
