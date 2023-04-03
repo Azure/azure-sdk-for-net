@@ -27,7 +27,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal PersistentBlobProvider? _fileBlobProvider;
         private readonly AzureMonitorStatsbeat? _statsbeat;
         private readonly ConnectionVars _connectionVars;
-        private readonly IPlatform _platform;
         internal readonly TransmissionStateManager _transmissionStateManager;
         internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
         private bool _disposed;
@@ -40,8 +39,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             options.Retry.MaxRetries = 0;
-
-            _platform = platform;
 
             _connectionVars = InitializeConnectionVars(options, platform);
 
