@@ -29,7 +29,7 @@ internal class GlobalTimeoutRetryPolicy : RetryPolicy
 {
     private readonly TimeSpan _timeout;
 
-    public GlobalTimeoutRetryPolicy(int maxRetries, Delay delayStrategy, TimeSpan timeout) : base(maxRetries, delayStrategy)
+    public GlobalTimeoutRetryPolicy(int maxRetries, Delay delay, TimeSpan timeout) : base(maxRetries, delay)
     {
         _timeout = timeout;
     }
@@ -62,7 +62,7 @@ Here is how we would configure the client to use the policy we just created.
 var strategy = Delay.CreateFixedDelay(TimeSpan.FromSeconds(2));
 SecretClientOptions options = new SecretClientOptions()
 {
-    RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delayStrategy: strategy, timeout: TimeSpan.FromSeconds(30))
+    RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delay: strategy, timeout: TimeSpan.FromSeconds(30))
 };
 ```
 
@@ -71,7 +71,7 @@ Another scenario where it may be helpful to use a custom retry policy is when yo
 var strategy = Delay.CreateExponentialDelay();
 SecretClientOptions options = new SecretClientOptions()
 {
-    RetryPolicy = new RetryPolicy(delayStrategy: strategy)
+    RetryPolicy = new RetryPolicy(delay: strategy)
 };
 ```
 
