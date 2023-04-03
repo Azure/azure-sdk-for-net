@@ -19,7 +19,7 @@ This will return language metadata from all supported scopes.
 ```C#
 try
 {
-    Response<GetLanguagesResult> response = await client.GetLanguagesAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
+    Response<GetLanguagesResult> response = await client.GetLanguagesAsync().ConfigureAwait(false);
     GetLanguagesResult languages = response.Value;
 
     Console.WriteLine($"Number of supported languages for translate operation: {languages.Translation.Count}.");
@@ -58,7 +58,7 @@ You can limit the scope of the response of the languages API by providing the op
 try
 {
     string scope = "translation";
-    Response<GetLanguagesResult> response = await client.GetLanguagesAsync(scope: scope, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+    Response<GetLanguagesResult> response = await client.GetLanguagesAsync(scope: scope).ConfigureAwait(false);
     GetLanguagesResult languages = response.Value;
 
     Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
@@ -98,7 +98,7 @@ Names are provided in the English language when a target language is not specifi
 try
 {
     string acceptLanguage = "es";
-    Response<GetLanguagesResult> response = await client.GetLanguagesAsync(acceptLanguage: acceptLanguage, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+    Response<GetLanguagesResult> response = await client.GetLanguagesAsync(acceptLanguage: acceptLanguage).ConfigureAwait(false);
     GetLanguagesResult languages = response.Value;
 
     Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
 using Azure.AI.Translation.Text.Models;
-using static System.Net.Mime.MediaTypeNames;
 using System.Text.Json;
 
 namespace Azure.AI.Translation.Text

@@ -93,7 +93,7 @@ catch (RequestFailedException exception)
 ```
 
 ### Translate multiple input texts
-You can translate multiple text elements with a various length. Each input element can be in different language (source language parameter needs to be omitted and language auto-detection is used). Refer to [Request limits for Translator](https://learn.microsoft.com/azure/cognitive-services/translator/request-limits) for current limits.
+You can translate multiple text elements. Each input element can be in different language (source language parameter needs to be omitted and language auto-detection is used). Refer to [Request limits for Translator](https://learn.microsoft.com/azure/cognitive-services/translator/request-limits) for current limits.
 
 ```C#
 try
@@ -123,7 +123,7 @@ catch (RequestFailedException exception)
 ```
 
 ### Translate multiple target languages
-You can provide multiple target languages which results to each input element be translated to all target languages.
+You can provide multiple target languages which results in each input element being translated to all target languages.
 
 ```C#
 try
@@ -157,15 +157,13 @@ You can select whether the translated text is plain text or HTML text. Any HTML 
 ```C#
 try
 {
-    TextTypes textType = TextTypes.Html;
-
     IEnumerable<string> targetLanguages = new[] { "cs" };
     IEnumerable<string> inputTextElements = new[]
     {
         "<html><body>This <b>is</b> a test.</body></html>"
     };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: textType).ConfigureAwait(false);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: TextTypes.Html).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 
@@ -185,8 +183,6 @@ It's sometimes useful to exclude specific content from translation. You can use 
 ```C#
 try
 {
-    TextTypes textType = TextTypes.Html;
-
     string from = "en";
     IEnumerable<string> targetLanguages = new[] { "cs" };
     IEnumerable<string> inputTextElements = new[]
@@ -194,7 +190,7 @@ try
         "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>"
     };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: textType, from: from).ConfigureAwait(false);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: TextTypes.Html, from: from).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextElement translation = translations.FirstOrDefault();
 

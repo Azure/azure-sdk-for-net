@@ -3,7 +3,7 @@
     <Description>This is the TextTranslator client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation TextTranslator for Azure Data Plane</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Azure TextTranslator</PackageTags>
+    <PackageTags>Azure TextTranslator;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>

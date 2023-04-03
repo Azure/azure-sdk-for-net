@@ -28,7 +28,7 @@ namespace Azure.AI.Translation.Text.Tests
         {
             TextTranslationClient client = GetClient();
             Response<GetLanguagesResult> response =
-                await client.GetLanguagesAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                await client.GetLanguagesAsync().ConfigureAwait(false);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.Greater(response.Value.Translation.Count, 0);
