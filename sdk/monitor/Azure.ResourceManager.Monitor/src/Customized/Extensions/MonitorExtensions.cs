@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CreateNotificationsAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorSubscriptionResourceExtension(subscriptionResource).CreateNotificationsAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CreateNotifications(waitUntil, content, cancellationToken);
+            return GetMonitorSubscriptionResourceExtension(subscriptionResource).CreateNotifications(waitUntil, content, cancellationToken);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetNotificationStatusAsync(notificationId, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorSubscriptionResourceExtension(subscriptionResource).GetNotificationStatusAsync(notificationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNotificationStatus(notificationId, cancellationToken);
+            return GetMonitorSubscriptionResourceExtension(subscriptionResource).GetNotificationStatus(notificationId, cancellationToken);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateNotificationsAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorResourceGroupResourceExtension(resourceGroupResource).CreateNotificationsAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateNotifications(waitUntil, content, cancellationToken);
+            return GetMonitorResourceGroupResourceExtension(resourceGroupResource).CreateNotifications(waitUntil, content, cancellationToken);
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNotificationStatusAsync(notificationId, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorResourceGroupResourceExtension(resourceGroupResource).GetNotificationStatusAsync(notificationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNotificationStatus(notificationId, cancellationToken);
+            return GetMonitorResourceGroupResourceExtension(resourceGroupResource).GetNotificationStatus(notificationId, cancellationToken);
         }
     }
 }

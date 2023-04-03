@@ -391,6 +391,55 @@ namespace Azure.ResourceManager.ArcScVmm
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ArcScVmm.Models.ResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ArcScVmm.Mock
+{
+    public partial class ArcScVmmResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ArcScVmmResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetCollection GetScVmmAvailabilitySets() { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmCloudCollection GetScVmmClouds() { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmServerCollection GetScVmmServers() { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineCollection GetScVmmVirtualMachines() { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateCollection GetScVmmVirtualMachineTemplates() { throw null; }
+        public virtual Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkCollection GetScVmmVirtualNetworks() { throw null; }
+    }
+    public partial class ScVmmAvailabilitySetResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ScVmmAvailabilitySetResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource> GetScVmmAvailabilitySets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource> GetScVmmAvailabilitySetsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ScVmmCloudResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ScVmmCloudResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource> GetScVmmClouds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource> GetScVmmCloudsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ScVmmServerResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ScVmmServerResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmServerResource> GetScVmmServers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmServerResource> GetScVmmServersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ScVmmVirtualMachineResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ScVmmVirtualMachineResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource> GetScVmmVirtualMachines(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineResource> GetScVmmVirtualMachinesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ScVmmVirtualMachineTemplateResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ScVmmVirtualMachineTemplateResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ScVmmVirtualNetworkResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ScVmmVirtualNetworkResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource> GetScVmmVirtualNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource> GetScVmmVirtualNetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

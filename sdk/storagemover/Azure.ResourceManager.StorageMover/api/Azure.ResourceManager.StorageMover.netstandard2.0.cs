@@ -291,6 +291,20 @@ namespace Azure.ResourceManager.StorageMover
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverResource>> UpdateAsync(Azure.ResourceManager.StorageMover.Models.StorageMoverPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.StorageMover.Mock
+{
+    public partial class StorageMoverResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected StorageMoverResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.StorageMover.StorageMoverResource> GetStorageMovers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageMover.StorageMoverResource> GetStorageMoversAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StorageMoverResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected StorageMoverResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.StorageMover.StorageMoverCollection GetStorageMovers() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.StorageMover.Models
 {
     public partial class AzureStorageBlobContainerEndpointProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseProperties

@@ -100,6 +100,20 @@ namespace Azure.ResourceManager.NetworkFunction
         public static Azure.ResourceManager.NetworkFunction.CollectorPolicyResource GetCollectorPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
 }
+namespace Azure.ResourceManager.NetworkFunction.Mock
+{
+    public partial class NetworkFunctionResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NetworkFunctionResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorCollection GetAzureTrafficCollectors() { throw null; }
+    }
+    public partial class NetworkFunctionSubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NetworkFunctionSubscriptionResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource> GetAzureTrafficCollectors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource> GetAzureTrafficCollectorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

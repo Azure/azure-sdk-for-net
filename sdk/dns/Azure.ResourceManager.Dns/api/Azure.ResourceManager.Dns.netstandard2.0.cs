@@ -463,6 +463,26 @@ namespace Azure.ResourceManager.Dns
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsZoneResource>> UpdateAsync(Azure.ResourceManager.Dns.Models.DnsZonePatch patch, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Dns.Mock
+{
+    public partial class DnsResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DnsResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.Dns.DnsZoneCollection GetDnsZones() { throw null; }
+    }
+    public partial class DnsSubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DnsSubscriptionResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.Models.DnsResourceReferenceResult> GetDnsResourceReferencesByTargetResources(Azure.ResourceManager.Dns.Models.DnsResourceReferenceContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.Models.DnsResourceReferenceResult>> GetDnsResourceReferencesByTargetResourcesAsync(Azure.ResourceManager.Dns.Models.DnsResourceReferenceContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DnsZoneResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DnsZoneResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dns.DnsZoneResource> GetDnsZones(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dns.DnsZoneResource> GetDnsZonesAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Dns.Models
 {
     public partial class DnsAaaaRecordInfo

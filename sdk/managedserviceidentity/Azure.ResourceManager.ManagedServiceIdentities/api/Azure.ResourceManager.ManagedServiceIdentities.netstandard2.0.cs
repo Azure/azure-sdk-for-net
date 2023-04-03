@@ -139,6 +139,25 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource>> UpdateAsync(Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ManagedServiceIdentities.Mock
+{
+    public partial class ManagedServiceIdentitiesArmResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ManagedServiceIdentitiesArmResourceExtension() { }
+        public virtual Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentity() { throw null; }
+    }
+    public partial class ManagedServiceIdentitiesResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ManagedServiceIdentitiesResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityCollection GetUserAssignedIdentities() { throw null; }
+    }
+    public partial class UserAssignedIdentityResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected UserAssignedIdentityResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> GetUserAssignedIdentities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> GetUserAssignedIdentitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
     public partial class IdentityAssociatedResourceData : Azure.ResourceManager.Models.ResourceData

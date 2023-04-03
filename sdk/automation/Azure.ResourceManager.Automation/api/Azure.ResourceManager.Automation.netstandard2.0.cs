@@ -1175,6 +1175,26 @@ namespace Azure.ResourceManager.Automation
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automation.SoftwareUpdateConfigurationData data, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Automation.Mock
+{
+    public partial class AutomationAccountResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AutomationAccountResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationAccountResource> GetAutomationAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationAccountResource> GetAutomationAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AutomationResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AutomationResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.Automation.AutomationAccountCollection GetAutomationAccounts() { throw null; }
+    }
+    public partial class AutomationSubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AutomationSubscriptionResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscription(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscriptionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AgentRegistration

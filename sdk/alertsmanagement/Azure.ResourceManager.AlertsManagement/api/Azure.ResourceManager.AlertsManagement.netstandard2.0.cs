@@ -145,6 +145,34 @@ namespace Azure.ResourceManager.AlertsManagement
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.SmartGroupModification>> GetHistoryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.AlertsManagement.Mock
+{
+    public partial class AlertProcessingRuleResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AlertProcessingRuleResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource> GetAlertProcessingRules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource> GetAlertProcessingRulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AlertsManagementResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AlertsManagementResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.AlertsManagement.AlertProcessingRuleCollection GetAlertProcessingRules() { throw null; }
+    }
+    public partial class AlertsManagementSubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AlertsManagementSubscriptionResourceExtension() { }
+        public virtual Azure.ResourceManager.AlertsManagement.ServiceAlertCollection GetServiceAlerts() { throw null; }
+        public virtual Azure.ResourceManager.AlertsManagement.SmartGroupCollection GetSmartGroups() { throw null; }
+    }
+    public partial class ServiceAlertResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ServiceAlertResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata> GetServiceAlertMetadata(Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata>> GetServiceAlertMetadataAsync(Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary> GetServiceAlertSummary(Azure.ResourceManager.AlertsManagement.Models.SubscriptionResourceGetServiceAlertSummaryOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary>> GetServiceAlertSummaryAsync(Azure.ResourceManager.AlertsManagement.Models.SubscriptionResourceGetServiceAlertSummaryOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     public abstract partial class AlertProcessingRuleAction

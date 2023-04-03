@@ -157,6 +157,26 @@ namespace Azure.ResourceManager.ElasticSan
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ElasticSan.Models.ElasticSanVolumePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ElasticSan.Mock
+{
+    public partial class ElasticSanResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ElasticSanResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ElasticSan.ElasticSanResource> GetElasticSans(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ElasticSan.ElasticSanResource> GetElasticSansAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ElasticSanResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ElasticSanResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.ElasticSan.ElasticSanCollection GetElasticSans() { throw null; }
+    }
+    public partial class ElasticSanSubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ElasticSanSubscriptionResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuInformation> GetSkus(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuInformation> GetSkusAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

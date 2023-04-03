@@ -50,6 +50,20 @@ namespace Azure.ResourceManager.GraphServices
         public static Azure.AsyncPageable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetGraphServicesAccountResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.GraphServices.Mock
+{
+    public partial class GraphServicesAccountResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected GraphServicesAccountResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetGraphServicesAccountResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetGraphServicesAccountResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class GraphServicesResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected GraphServicesResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.GraphServices.GraphServicesAccountResourceCollection GetGraphServicesAccountResources() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.GraphServices.Models
 {
     public static partial class ArmGraphServicesModelFactory

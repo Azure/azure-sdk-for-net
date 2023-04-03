@@ -2147,6 +2147,35 @@ namespace Azure.ResourceManager.Synapse
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseWorkspaceSqlAdministratorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Synapse.Mock
+{
+    public partial class SynapseKustoPoolResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SynapseKustoPoolResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult> CheckKustoPoolNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult>> CheckKustoPoolNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription> GetSkusKustoPools(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription> GetSkusKustoPoolsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SynapsePrivateLinkHubResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SynapsePrivateLinkHubResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SynapseResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SynapseResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.Synapse.SynapsePrivateLinkHubCollection GetSynapsePrivateLinkHubs() { throw null; }
+        public virtual Azure.ResourceManager.Synapse.SynapseWorkspaceCollection GetSynapseWorkspaces() { throw null; }
+    }
+    public partial class SynapseWorkspaceResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SynapseWorkspaceResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Synapse.SynapseWorkspaceResource> GetSynapseWorkspaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.SynapseWorkspaceResource> GetSynapseWorkspacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Synapse.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

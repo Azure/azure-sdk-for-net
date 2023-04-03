@@ -325,6 +325,40 @@ namespace Azure.ResourceManager.Automanage
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Automanage.Mock
+{
+    public partial class AutomanageArmResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AutomanageArmResourceExtension() { }
+        public virtual Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentCollection GetAutomanageHciClusterConfigurationProfileAssignments() { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentCollection GetAutomanageHcrpConfigurationProfileAssignments() { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentCollection GetAutomanageVmConfigurationProfileAssignments() { throw null; }
+    }
+    public partial class AutomanageConfigurationProfileResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AutomanageConfigurationProfileResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfiles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfilesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AutomanageResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AutomanageResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.Automanage.AutomanageConfigurationProfileCollection GetAutomanageConfigurationProfiles() { throw null; }
+    }
+    public partial class AutomanageSubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AutomanageSubscriptionResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData> GetServicePrincipal(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData>> GetServicePrincipalAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData> GetServicePrincipals(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData> GetServicePrincipalsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AutomanageTenantResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AutomanageTenantResourceExtension() { }
+        public virtual Azure.ResourceManager.Automanage.AutomanageBestPracticeCollection GetAutomanageBestPractices() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Automanage.Models
 {
     public partial class AutomanageConfigurationProfileAssignmentProperties

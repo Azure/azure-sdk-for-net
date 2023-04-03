@@ -55,6 +55,14 @@ namespace Azure.ResourceManager.ServiceLinker
         public static Azure.ResourceManager.ServiceLinker.LinkerResourceCollection GetLinkerResources(this Azure.ResourceManager.ArmResource armResource) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ServiceLinker.Mock
+{
+    public partial class ServiceLinkerArmResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ServiceLinkerArmResourceExtension() { }
+        public virtual Azure.ResourceManager.ServiceLinker.LinkerResourceCollection GetLinkerResources() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     public abstract partial class AuthBaseInfo
