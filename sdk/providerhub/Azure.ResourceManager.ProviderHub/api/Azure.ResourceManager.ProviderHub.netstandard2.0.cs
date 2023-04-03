@@ -335,6 +335,14 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ResourceTypeSkuData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ProviderHub.Mock
+{
+    public partial class ProviderHubSubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ProviderHubSubscriptionResourceExtension() { }
+        public virtual Azure.ResourceManager.ProviderHub.ProviderRegistrationCollection GetProviderRegistrations() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class AuthorizationActionMapping

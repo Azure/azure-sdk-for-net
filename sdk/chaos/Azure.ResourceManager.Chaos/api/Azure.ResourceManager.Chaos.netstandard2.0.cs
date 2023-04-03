@@ -287,6 +287,26 @@ namespace Azure.ResourceManager.Chaos
         public virtual Azure.ResourceManager.Chaos.CapabilityTypeCollection GetCapabilityTypes() { throw null; }
     }
 }
+namespace Azure.ResourceManager.Chaos.Mock
+{
+    public partial class ChaosResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ChaosResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.Chaos.ExperimentCollection GetExperiments() { throw null; }
+        public virtual Azure.ResourceManager.Chaos.TargetCollection GetTargets(string parentProviderNamespace, string parentResourceType, string parentResourceName) { throw null; }
+    }
+    public partial class ChaosSubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ChaosSubscriptionResourceExtension() { }
+        public virtual Azure.ResourceManager.Chaos.TargetTypeCollection GetTargetTypes(string locationName) { throw null; }
+    }
+    public partial class ExperimentResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ExperimentResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Chaos.ExperimentResource> GetExperiments(bool? running = default(bool?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Chaos.ExperimentResource> GetExperimentsAsync(bool? running = default(bool?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Chaos.Models
 {
     public abstract partial class Action

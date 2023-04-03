@@ -76,6 +76,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         public Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotProperties Properties { get { throw null; } }
     }
 }
+namespace Azure.ResourceManager.AppComplianceAutomation.Mock
+{
+    public partial class AppComplianceAutomationTenantResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AppComplianceAutomationTenantResourceExtension() { }
+        public virtual Azure.ResourceManager.AppComplianceAutomation.ReportResourceCollection GetReportResources() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class Assessment

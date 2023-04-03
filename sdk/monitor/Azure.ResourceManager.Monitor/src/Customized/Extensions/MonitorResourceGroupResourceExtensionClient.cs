@@ -10,10 +10,9 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Monitor.Models;
 
-namespace Azure.ResourceManager.Monitor
+namespace Azure.ResourceManager.Monitor.Mock
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class MonitorResourceGroupResourceExtension : ArmResource
     {
         private ClientDiagnostics _deprecatedActionGroupClientDiagnostics;
         private DeprecatedActionGroupsRestOperations _deprecatedActionGroupRestClient;
@@ -26,11 +25,11 @@ namespace Azure.ResourceManager.Monitor
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/createNotifications</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/createNotifications</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ActionGroups_PostTestNotifications</description>
+        /// <description>ActionGroups_CreateNotificationsAtResourceGroupLevel</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -39,12 +38,12 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DeprecatedActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateNotifications");
+            using var scope = DeprecatedActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateNotifications");
             scope.Start();
             try
             {
-                var response = await DeprecatedActionGroupRestClient.PostTestNotificationsAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), DeprecatedActionGroupClientDiagnostics, Pipeline, DeprecatedActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, content).Request, response, OperationFinalStateVia.Location);
+                var response = await DeprecatedActionGroupRestClient.CreateNotificationsAtResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), DeprecatedActionGroupClientDiagnostics, Pipeline, DeprecatedActionGroupRestClient.CreateCreateNotificationsAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -61,11 +60,11 @@ namespace Azure.ResourceManager.Monitor
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/createNotifications</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/createNotifications</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ActionGroups_PostTestNotifications</description>
+        /// <description>ActionGroups_CreateNotificationsAtResourceGroupLevel</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -74,12 +73,12 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<NotificationStatus> CreateNotifications(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DeprecatedActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateNotifications");
+            using var scope = DeprecatedActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateNotifications");
             scope.Start();
             try
             {
-                var response = DeprecatedActionGroupRestClient.PostTestNotifications(Id.SubscriptionId, content, cancellationToken);
-                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), DeprecatedActionGroupClientDiagnostics, Pipeline, DeprecatedActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, content).Request, response, OperationFinalStateVia.Location);
+                var response = DeprecatedActionGroupRestClient.CreateNotificationsAtResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
+                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), DeprecatedActionGroupClientDiagnostics, Pipeline, DeprecatedActionGroupRestClient.CreateCreateNotificationsAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -96,11 +95,11 @@ namespace Azure.ResourceManager.Monitor
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/notificationStatus/{notificationId}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/notificationStatus/{notificationId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ActionGroups_GetTestNotifications</description>
+        /// <description>ActionGroups_GetTestNotificationsAtResourceGroupLevel</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,11 +107,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NotificationStatus>> GetNotificationStatusAsync(string notificationId, CancellationToken cancellationToken = default)
         {
-            using var scope = DeprecatedActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNotificationStatus");
+            using var scope = DeprecatedActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNotificationStatus");
             scope.Start();
             try
             {
-                var response = await DeprecatedActionGroupRestClient.GetTestNotificationsAsync(Id.SubscriptionId, notificationId, cancellationToken).ConfigureAwait(false);
+                var response = await DeprecatedActionGroupRestClient.GetTestNotificationsAtResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, notificationId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -127,11 +126,11 @@ namespace Azure.ResourceManager.Monitor
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/notificationStatus/{notificationId}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/notificationStatus/{notificationId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ActionGroups_GetTestNotifications</description>
+        /// <description>ActionGroups_GetTestNotificationsAtResourceGroupLevel</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,11 +138,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NotificationStatus> GetNotificationStatus(string notificationId, CancellationToken cancellationToken = default)
         {
-            using var scope = DeprecatedActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNotificationStatus");
+            using var scope = DeprecatedActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNotificationStatus");
             scope.Start();
             try
             {
-                var response = DeprecatedActionGroupRestClient.GetTestNotifications(Id.SubscriptionId, notificationId, cancellationToken);
+                var response = DeprecatedActionGroupRestClient.GetTestNotificationsAtResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, notificationId, cancellationToken);
                 return response;
             }
             catch (Exception e)

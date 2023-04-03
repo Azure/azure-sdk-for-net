@@ -60,6 +60,20 @@ namespace Azure.ResourceManager.Qumulo
         public string UserDetailsEmail { get { throw null; } set { } }
     }
 }
+namespace Azure.ResourceManager.Qumulo.Mock
+{
+    public partial class QumuloFileSystemResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected QumuloFileSystemResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Qumulo.QumuloFileSystemResource> GetQumuloFileSystemResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Qumulo.QumuloFileSystemResource> GetQumuloFileSystemResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class QumuloResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected QumuloResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.Qumulo.QumuloFileSystemResourceCollection GetQumuloFileSystemResources() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Qumulo.Models
 {
     public partial class FileSystemResourceUpdateProperties

@@ -97,6 +97,20 @@ namespace Azure.ResourceManager.FluidRelay
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayServerResource>> UpdateAsync(Azure.ResourceManager.FluidRelay.Models.FluidRelayServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.FluidRelay.Mock
+{
+    public partial class FluidRelayResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected FluidRelayResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.FluidRelay.FluidRelayServerCollection GetFluidRelayServers() { throw null; }
+    }
+    public partial class FluidRelayServerResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected FluidRelayServerResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.FluidRelay.FluidRelayServerResource> GetFluidRelayServers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.FluidRelay.FluidRelayServerResource> GetFluidRelayServersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.FluidRelay.Models
 {
     public partial class CmkEncryptionProperties

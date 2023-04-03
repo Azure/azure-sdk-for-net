@@ -134,6 +134,30 @@ namespace Azure.ResourceManager.Consumption
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult>> GetBalanceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Consumption.Mock
+{
+    public partial class ConsumptionArmResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ConsumptionArmResourceExtension() { }
+        public virtual Azure.ResourceManager.Consumption.ConsumptionBudgetCollection GetConsumptionBudgets() { throw null; }
+    }
+    public partial class ConsumptionManagementGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ConsumptionManagementGroupResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult> GetAggregatedCost(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ConsumptionSubscriptionResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ConsumptionSubscriptionResourceExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult> GetPriceSheet(string expand = null, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult>> GetPriceSheetAsync(string expand = null, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ConsumptionTenantResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ConsumptionTenantResourceExtension() { }
+    }
+}
 namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class BudgetAssociatedNotification

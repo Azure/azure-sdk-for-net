@@ -666,6 +666,69 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostResource>> UpdateAsync(Azure.ResourceManager.ConnectedVMwarevSphere.Models.ResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mock
+{
+    public partial class ConnectedVMwarevSphereResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ConnectedVMwarevSphereResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePoolCollection GetResourcePools() { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VCenterCollection GetVCenters() { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineCollection GetVirtualMachines() { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineTemplateCollection GetVirtualMachineTemplates() { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VirtualNetworkCollection GetVirtualNetworks() { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterCollection GetVMwareClusters() { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreCollection GetVMwareDatastores() { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostCollection GetVMwareHosts() { throw null; }
+    }
+    public partial class ResourcePoolResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ResourcePoolResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePoolResource> GetResourcePools(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePoolResource> GetResourcePoolsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VCenterResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected VCenterResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterResource> GetVCenters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterResource> GetVCentersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VirtualMachineResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected VirtualMachineResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineResource> GetVirtualMachines(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineResource> GetVirtualMachinesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VirtualMachineTemplateResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected VirtualMachineTemplateResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineTemplateResource> GetVirtualMachineTemplates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineTemplateResource> GetVirtualMachineTemplatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VirtualNetworkResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected VirtualNetworkResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualNetworkResource> GetVirtualNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualNetworkResource> GetVirtualNetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VMwareClusterResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected VMwareClusterResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterResource> GetVMwareClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterResource> GetVMwareClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VMwareDatastoreResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected VMwareDatastoreResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreResource> GetVMwareDatastores(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreResource> GetVMwareDatastoresAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VMwareHostResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected VMwareHostResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostResource> GetVMwareHosts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostResource> GetVMwareHostsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

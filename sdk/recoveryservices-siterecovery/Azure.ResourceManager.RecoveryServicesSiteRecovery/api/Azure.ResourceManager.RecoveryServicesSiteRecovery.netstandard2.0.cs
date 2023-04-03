@@ -952,6 +952,90 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.VCenterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VCenterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mock
+{
+    public partial class MigrationItemResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected MigrationItemResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource> GetMigrationItems(string resourceName, string skipToken = null, string takeToken = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationItemResource> GetMigrationItemsAsync(string resourceName, string skipToken = null, string takeToken = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkMappingResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NetworkMappingResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.NetworkMappingResource> GetNetworkMappings(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.NetworkMappingResource> GetNetworkMappingsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class NetworkResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NetworkResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.NetworkResource> GetNetworks(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.NetworkResource> GetNetworksAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ProtectionContainerMappingResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ProtectionContainerMappingResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectionContainerMappingResource> GetProtectionContainerMappings(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectionContainerMappingResource> GetProtectionContainerMappingsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ProtectionContainerResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ProtectionContainerResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectionContainerResource> GetProtectionContainers(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectionContainerResource> GetProtectionContainersAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class RecoveryServicesProviderResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected RecoveryServicesProviderResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.RecoveryServicesProviderResource> GetRecoveryServicesProviders(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.RecoveryServicesProviderResource> GetRecoveryServicesProvidersAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class RecoveryServicesSiteRecoveryResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected RecoveryServicesSiteRecoveryResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.AlertCollection GetAlerts(string resourceName) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.EventCollection GetEvents(string resourceName) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.FabricCollection GetFabrics(string resourceName) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.JobCollection GetJobs(string resourceName) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.PolicyCollection GetPolicies(string resourceName) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.RecoveryPlanCollection GetRecoveryPlans(string resourceName) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationAppliance> GetReplicationAppliances(string resourceName, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ReplicationAppliance> GetReplicationAppliancesAsync(string resourceName, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationEligibilityResultCollection GetReplicationEligibilityResults(string virtualMachineName) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationProtectionIntentCollection GetReplicationProtectionIntents(string resourceName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VaultHealthDetails> GetReplicationVaultHealth(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VaultHealthDetails>> GetReplicationVaultHealthAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SupportedOperatingSystems> GetSupportedOperatingSystem(string resourceName, string instanceType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SupportedOperatingSystems>> GetSupportedOperatingSystemAsync(string resourceName, string instanceType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.VaultSettingCollection GetVaultSettings(string resourceName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VaultHealthDetails> RefreshReplicationVaultHealth(Azure.WaitUntil waitUntil, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VaultHealthDetails>> RefreshReplicationVaultHealthAsync(Azure.WaitUntil waitUntil, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ReplicationProtectedItemResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ReplicationProtectedItemResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationProtectedItemResource> GetReplicationProtectedItems(string resourceName, string skipToken = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationProtectedItemResource> GetReplicationProtectedItemsAsync(string resourceName, string skipToken = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StorageClassificationMappingResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected StorageClassificationMappingResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.StorageClassificationMappingResource> GetStorageClassificationMappings(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.StorageClassificationMappingResource> GetStorageClassificationMappingsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StorageClassificationResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected StorageClassificationResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.StorageClassificationResource> GetStorageClassifications(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.StorageClassificationResource> GetStorageClassificationsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VCenterResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected VCenterResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.VCenterResource> GetVCenters(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.VCenterResource> GetVCentersAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2AAddDisksInput : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AddDisksProviderSpecificInput

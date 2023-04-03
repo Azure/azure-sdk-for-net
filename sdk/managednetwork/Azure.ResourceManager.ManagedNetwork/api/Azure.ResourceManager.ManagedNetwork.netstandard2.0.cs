@@ -178,6 +178,25 @@ namespace Azure.ResourceManager.ManagedNetwork
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ManagedNetwork.Mock
+{
+    public partial class ManagedNetworkArmResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ManagedNetworkArmResourceExtension() { }
+        public virtual Azure.ResourceManager.ManagedNetwork.ScopeAssignmentCollection GetScopeAssignments() { throw null; }
+    }
+    public partial class ManagedNetworkResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ManagedNetworkResourceExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource> GetManagedNetworks(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource> GetManagedNetworksAsync(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagedNetworkResourceGroupResourceExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ManagedNetworkResourceGroupResourceExtension() { }
+        public virtual Azure.ResourceManager.ManagedNetwork.ManagedNetworkCollection GetManagedNetworks() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ManagedNetwork.Models
 {
     public partial class ConnectivityCollection
