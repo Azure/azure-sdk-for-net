@@ -20,7 +20,6 @@ namespace Azure.Data.AppConfiguration
     public class CreateSnapshotOperation : Operation<ConfigurationSettingsSnapshot>
     {
         private ConfigurationSettingsSnapshot _snapshot;
-        private Operation<BinaryData> _operation;
         private readonly ClientDiagnostics _diagnostics;
         private Response _rawResponse;
         private readonly ConfigurationClient _client;
@@ -39,7 +38,7 @@ namespace Azure.Data.AppConfiguration
         public override bool HasValue => _hasValue;
 
         /// <inheritdoc/>
-        public override string Id => _operation.Id;
+        public override string Id => _snapshotName;
 
         private bool _hasCompleted;
 
@@ -57,7 +56,6 @@ namespace Azure.Data.AppConfiguration
         {
             _diagnostics = diagnostics;
             _rawResponse = operation.GetRawResponse();
-            _operation = operation;
         }
 
         /// <summary>
@@ -87,7 +85,6 @@ namespace Azure.Data.AppConfiguration
 
         private async ValueTask<Response> UpdateStatusAsync(bool async)
         {
-            // TODO: test
             if (!_hasCompleted)
             {
                 using DiagnosticScope? scope = _diagnostics?.CreateScope($"{nameof(CreateSnapshotOperation)}.{nameof(UpdateStatus)}");
@@ -108,8 +105,8 @@ namespace Azure.Data.AppConfiguration
                     if (_hasCompleted)
                     {
                         // Only want to set this if the operation has completed.
-
-                        // Get the latest snapshot - TODO is there a way to pull this from the operation details
+                        // The service does not include any snapshot information in its operation details, so
+                        // request them manually.
                         ConfigurationSettingsSnapshot updatedSnapshot = async
                             ? await _client.GetSnapshotAsync(_snapshotName).ConfigureAwait(false)
                             : _client.GetSnapshot(_snapshotName);
