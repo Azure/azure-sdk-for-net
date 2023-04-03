@@ -15,20 +15,20 @@ using Azure.ResourceManager.ServiceFabric;
 namespace Azure.ResourceManager.ServiceFabric.Mock
 {
     /// <summary> A class to add extension methods to ServiceFabricClusterResource. </summary>
-    public partial class ServiceFabricClusterResourceExtensionClient : ArmResource
+    public partial class ServiceFabricClusterResourceExtension : ArmResource
     {
         private ClientDiagnostics _serviceFabricClusterClustersClientDiagnostics;
         private ClustersRestOperations _serviceFabricClusterClustersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceFabricClusterResourceExtensionClient"/> class for mocking. </summary>
-        protected ServiceFabricClusterResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="ServiceFabricClusterResourceExtension"/> class for mocking. </summary>
+        protected ServiceFabricClusterResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceFabricClusterResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceFabricClusterResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServiceFabricClusterResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ServiceFabricClusterResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mock
         public virtual AsyncPageable<ServiceFabricClusterResource> GetServiceFabricClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceFabricClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceFabricClusterResource(Client, ServiceFabricClusterData.DeserializeServiceFabricClusterData(e)), ServiceFabricClusterClustersClientDiagnostics, Pipeline, "ServiceFabricClusterResourceExtensionClient.GetServiceFabricClusters", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceFabricClusterResource(Client, ServiceFabricClusterData.DeserializeServiceFabricClusterData(e)), ServiceFabricClusterClustersClientDiagnostics, Pipeline, "ServiceFabricClusterResourceExtension.GetServiceFabricClusters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mock
         public virtual Pageable<ServiceFabricClusterResource> GetServiceFabricClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceFabricClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceFabricClusterResource(Client, ServiceFabricClusterData.DeserializeServiceFabricClusterData(e)), ServiceFabricClusterClustersClientDiagnostics, Pipeline, "ServiceFabricClusterResourceExtensionClient.GetServiceFabricClusters", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceFabricClusterResource(Client, ServiceFabricClusterData.DeserializeServiceFabricClusterData(e)), ServiceFabricClusterClustersClientDiagnostics, Pipeline, "ServiceFabricClusterResourceExtension.GetServiceFabricClusters", "value", null, cancellationToken);
         }
     }
 }

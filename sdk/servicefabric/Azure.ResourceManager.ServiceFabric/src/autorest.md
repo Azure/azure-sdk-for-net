@@ -16,6 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+# csharpgen:
+#   attach: true
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
