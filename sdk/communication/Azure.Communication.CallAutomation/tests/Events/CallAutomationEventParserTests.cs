@@ -499,7 +499,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         public void RecognizeCompletedWithDtmfEventParsed_Test()
         {
             CollectTonesResult collectTonesResult = new CollectTonesResult(new DtmfTone[] { DtmfTone.Five, DtmfTone.Six, DtmfTone.Pound });
-            RecognizeDtmfCompleted @event = CallAutomationModelFactory.RecognizeDtmfCompleted(
+            RecognizeCompleted @event = CallAutomationModelFactory.RecognizeDtmfCompleted(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
@@ -539,7 +539,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         public void RecognizeCompletedWithChoiceEventParsed_Test()
         {
             ChoiceResult choiceResult = new ChoiceResult("testLabel", "testRecognizePhrase");
-            RecognizeChoiceCompleted @event = CallAutomationModelFactory.RecognizeChoiceCompleted(
+            RecognizeCompleted @event = CallAutomationModelFactory.RecognizeChoiceCompleted(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
