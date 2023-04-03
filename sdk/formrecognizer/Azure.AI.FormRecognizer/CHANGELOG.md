@@ -3,6 +3,7 @@
 ## 4.1.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added methods in `DocumentModelAdministrationClient` to support custom document classification: `BuildDocumentClassifier`, `GetDocumentClassifier`, `GetDocumentClassifiers`, and `DeleteDocumentClassifier`.
 
 ### Breaking Changes
 
