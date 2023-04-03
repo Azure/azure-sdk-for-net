@@ -22,7 +22,7 @@ namespace Azure.Core.Tests.DelayStrategies
 
             for (int i = 0; i < count; i++)
             {
-                total += strategy.GetNextDelay(_mockResponse, i + 1, null, null);
+                total += strategy.GetNextDelay(_mockResponse, i + 1, null);
             }
 
             Assert.That(total, Is.EqualTo(expected).Within(TimeSpan.FromSeconds(0.2 * count)));

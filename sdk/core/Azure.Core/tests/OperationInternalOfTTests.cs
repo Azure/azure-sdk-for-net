@@ -524,13 +524,13 @@ namespace Azure.Core.Tests
         {
             public int CallCount { get; private set; }
 
-            protected override TimeSpan GetNextDelayCore(Response response, int retryNumber, IDictionary<string, object> context)
+            protected override TimeSpan GetNextDelayCore(Response response, int retryNumber)
             {
                 CallCount++;
                 return TimeSpan.Zero;
             }
 
-            protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response response, int retryNumber, IDictionary<string, object> context)
+            protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response response, int retryNumber)
             {
                 CallCount++;
                 return new(TimeSpan.Zero);

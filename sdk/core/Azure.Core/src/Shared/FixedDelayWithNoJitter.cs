@@ -19,10 +19,10 @@ namespace Azure.Core.Shared
             _delay = suggestedDelay.HasValue ? Max(suggestedDelay.Value, DefaultDelay) : DefaultDelay;
         }
 
-        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber, IDictionary<string, object?> context) =>
+        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber) =>
             _delay;
 
-        protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response? response, int retryNumber, IDictionary<string, object?> context) =>
+        protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response? response, int retryNumber) =>
             new(_delay);
     }
 }

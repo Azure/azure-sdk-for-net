@@ -15,9 +15,8 @@ namespace Azure.Core
     /// </summary>
     internal class ZeroPollingStrategy : Delay
     {
-        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber, IDictionary<string, object?> context) => TimeSpan.Zero;
+        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber) => TimeSpan.Zero;
 
-        protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response? response, int retryNumber,
-            IDictionary<string, object?> context) => new(TimeSpan.Zero);
+        protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response? response, int retryNumber) => new(TimeSpan.Zero);
     }
 }

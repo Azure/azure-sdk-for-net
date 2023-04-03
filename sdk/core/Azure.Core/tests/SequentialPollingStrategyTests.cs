@@ -35,7 +35,7 @@ namespace Azure.Core.Tests.DelayStrategies
             TimeSpan actual = TimeSpan.Zero;
             for (int i = 0; i < retries; i++)
             {
-                actual += strategy.GetNextDelay(_mockResponse, i + 1, default, new Dictionary<string, object>());
+                actual += strategy.GetNextDelay(_mockResponse, i + 1, default);
             }
             Assert.AreEqual(expected, actual);
         }

@@ -122,12 +122,6 @@ namespace Azure.Core.Pipeline
 
                 if (shouldRetry)
                 {
-                    if (message.RetryNumber == 0)
-                    {
-                        message.SetProperty(typeof(RetryPolicyPropertiesKey), new Dictionary<string, object?>());
-                    }
-                    message.TryGetProperty(typeof(RetryPolicyPropertiesKey), out object? value);
-                    var context = (IDictionary<string, object?>)value!;
                     TimeSpan delay = async ? await GetNextDelayAsync(message).ConfigureAwait(false) : GetNextDelay(message);
                     if (delay > TimeSpan.Zero)
                     {
@@ -264,28 +258,12 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The message containing the request and response.</param>
         protected internal virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        protected static IDictionary<string, object?>? GetDelayContext(HttpMessage message)
-        {
-            message.TryGetProperty(typeof(RetryPolicyPropertiesKey), out object? context);
-            return (IDictionary<string, object?>?)context;
-        }
-
         private TimeSpan GetNextDelayInternal(HttpMessage message)
         {
             return _delayStrategy.GetNextDelay(
                 message.HasResponse ? message.Response : default,
                 message.RetryNumber,
-                message.HasResponse ? message.Response.Headers.RetryAfter : default,
-                GetDelayContext(message)!);
-        }
-
-        private class RetryPolicyPropertiesKey
-        {
+                message.HasResponse ? message.Response.Headers.RetryAfter : default);
         }
     }
 }

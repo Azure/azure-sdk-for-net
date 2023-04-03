@@ -64,18 +64,16 @@ namespace Azure.Core
         /// </summary>
         /// <param name="response"></param>
         /// <param name="retryNumber"></param>
-        /// <param name="context"></param>
         /// <returns></returns>
-        protected abstract TimeSpan GetNextDelayCore(Response? response, int retryNumber, IDictionary<string, object?> context);
+        protected abstract TimeSpan GetNextDelayCore(Response? response, int retryNumber);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="response"></param>
         /// <param name="retryNumber"></param>
-        /// <param name="context"></param>
         /// <returns></returns>
-        protected abstract ValueTask<TimeSpan> GetNextDelayCoreAsync(Response? response, int retryNumber, IDictionary<string, object?> context);
+        protected abstract ValueTask<TimeSpan> GetNextDelayCoreAsync(Response? response, int retryNumber);
 
         /// <summary>
         /// Get the interval of next delay iteration.
@@ -84,10 +82,9 @@ namespace Azure.Core
         /// <param name="response"> Server response. </param>
         /// <param name="retryNumber"></param>
         /// <param name="serverDelayHint"></param>
-        /// <param name="context"></param>
         /// <returns> Delay interval of next iteration. </returns>
-        public TimeSpan GetNextDelay(Response? response, int retryNumber, TimeSpan? serverDelayHint, IDictionary<string, object?> context)
-            => GetNextDelayInternalAsync(false, response, retryNumber, serverDelayHint, context).EnsureCompleted();
+        public TimeSpan GetNextDelay(Response? response, int retryNumber, TimeSpan? serverDelayHint)
+            => GetNextDelayInternalAsync(false, response, retryNumber, serverDelayHint).EnsureCompleted();
 
         /// <summary>
         /// Get the interval of next delay iteration.
@@ -96,16 +93,15 @@ namespace Azure.Core
         /// <param name="response"> Server response. </param>
         /// <param name="retryNumber"></param>
         /// <param name="serverDelayHint"></param>
-        /// <param name="context"></param>
         /// <returns> Delay interval of next iteration. </returns>
-        public async ValueTask<TimeSpan> GetNextDelayAsync(Response? response, int retryNumber, TimeSpan? serverDelayHint, IDictionary<string, object?> context)
-            => await GetNextDelayInternalAsync(true, response, retryNumber, serverDelayHint, context).ConfigureAwait(false);
+        public async ValueTask<TimeSpan> GetNextDelayAsync(Response? response, int retryNumber, TimeSpan? serverDelayHint)
+            => await GetNextDelayInternalAsync(true, response, retryNumber, serverDelayHint).ConfigureAwait(false);
 
-        private async ValueTask<TimeSpan> GetNextDelayInternalAsync(bool async, Response? response, int retryNumber, TimeSpan? serverDelayHint, IDictionary<string, object?> context) =>
+        private async ValueTask<TimeSpan> GetNextDelayInternalAsync(bool async, Response? response, int retryNumber, TimeSpan? serverDelayHint) =>
             Max(
                 serverDelayHint ?? TimeSpan.Zero,
                 Min(
-                    ApplyJitter(async ? await GetNextDelayCoreAsync(response, retryNumber, context).ConfigureAwait(false) : GetNextDelayCore(response, retryNumber, context)),
+                    ApplyJitter(async ? await GetNextDelayCoreAsync(response, retryNumber).ConfigureAwait(false) : GetNextDelayCore(response, retryNumber)),
                     _maxDelay));
 
         private TimeSpan ApplyJitter(TimeSpan delay)

@@ -72,13 +72,13 @@ namespace Azure.Core.Tests.DelayStrategies
                 _cts = cts;
             }
 
-            protected override TimeSpan GetNextDelayCore(Response response, int retryNumber, IDictionary<string, object> context)
+            protected override TimeSpan GetNextDelayCore(Response response, int retryNumber)
             {
                 _cts.CancelAfter(_cancelAfter);
                 return _delay;
             }
 
-            protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response response, int retryNumber, IDictionary<string, object> context)
+            protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response response, int retryNumber)
             {
                 _cts.CancelAfter(_cancelAfter);
                 return new(_delay);

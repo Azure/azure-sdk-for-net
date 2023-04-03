@@ -63,7 +63,6 @@ namespace Azure.Core
         private async ValueTask<Response> WaitForCompletionAsync(bool async, Operation operation, TimeSpan? delayHint, CancellationToken cancellationToken)
         {
             int retryNumber = 0;
-            var context = new Dictionary<string, object?>();
             while (true)
             {
                 Response response = async ? await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : operation.UpdateStatus(cancellationToken);
@@ -74,14 +73,13 @@ namespace Azure.Core
 
                 var strategy = delayHint.HasValue ? new FixedDelayWithNoJitter(delayHint.Value) : _delayStrategy;
 
-                await Delay(async, strategy.GetNextDelay(response, ++retryNumber, response.Headers.RetryAfter, context), cancellationToken).ConfigureAwait(false);
+                await Delay(async, strategy.GetNextDelay(response, ++retryNumber, response.Headers.RetryAfter), cancellationToken).ConfigureAwait(false);
             }
         }
 
         private async ValueTask<Response> WaitForCompletionAsync(bool async, OperationInternalBase operation, TimeSpan? delayHint, CancellationToken cancellationToken)
         {
             int retryNumber = 0;
-            var context = new Dictionary<string, object?>();
             while (true)
             {
                 Response response = async ? await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : operation.UpdateStatus(cancellationToken);
@@ -92,7 +90,7 @@ namespace Azure.Core
 
                 var strategy = delayHint.HasValue ? new FixedDelayWithNoJitter(delayHint.Value) : _delayStrategy;
 
-                await Delay(async, strategy.GetNextDelay(response, ++retryNumber, response.Headers.RetryAfter, context), cancellationToken).ConfigureAwait(false);
+                await Delay(async, strategy.GetNextDelay(response, ++retryNumber, response.Headers.RetryAfter), cancellationToken).ConfigureAwait(false);
             }
         }
 
