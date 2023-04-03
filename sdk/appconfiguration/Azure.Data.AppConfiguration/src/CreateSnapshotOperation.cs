@@ -19,43 +19,36 @@ namespace Azure.Data.AppConfiguration
     /// </summary>
     public class CreateSnapshotOperation : Operation<ConfigurationSettingsSnapshot>
     {
-        private ConfigurationSettingsSnapshot _snapshot;
         private readonly ClientDiagnostics _diagnostics;
-        private Response _rawResponse;
-        private readonly ConfigurationClient _client;
-        private readonly string _snapshotName;
+        private Operation<BinaryData> _operation;
+        private readonly string _id;
         private static readonly TimeSpan s_defaultPollingInterval = TimeSpan.FromSeconds(5);
 
         /// <summary>
         /// Gets the <see cref="ConfigurationSettingsSnapshot"/>. This snapshot will have a status of
         /// <see cref="SnapshotStatus.Provisioning"/> until the operation has completed.
         /// </summary>
-        public override ConfigurationSettingsSnapshot Value => OperationHelpers.GetValue(ref _snapshot);
-
-        private bool _hasValue;
+        public override ConfigurationSettingsSnapshot Value => ConfigurationSettingsSnapshot.FromResponse(_operation.GetRawResponse());
 
         /// <inheritdoc/>
-        public override bool HasValue => _hasValue;
+        public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc/>
-        public override string Id => _snapshotName;
-
-        private bool _hasCompleted;
+        public override string Id => _id;
 
         /// <inheritdoc/>
-        public override bool HasCompleted => _hasCompleted;
+        public override bool HasCompleted => _operation.HasCompleted;
 
-        internal CreateSnapshotOperation(string snapshot, ConfigurationClient client)
+        internal CreateSnapshotOperation(string id)
         {
-            _client = client;
-            _snapshotName = snapshot;
+            _id = id;
         }
 
-        internal CreateSnapshotOperation(ConfigurationClient client, string snapshot, ClientDiagnostics diagnostics, Operation<BinaryData> operation)
-            : this(snapshot, client)
+        internal CreateSnapshotOperation(string id, ClientDiagnostics diagnostics, Operation<BinaryData> operation)
+            : this(id)
         {
             _diagnostics = diagnostics;
-            _rawResponse = operation.GetRawResponse();
+            _operation = operation;
         }
 
         /// <summary>
@@ -66,14 +59,14 @@ namespace Azure.Data.AppConfiguration
         /// <inheritdoc/>
         public override Response GetRawResponse()
         {
-            return _rawResponse;
+            return _operation.GetRawResponse();
         }
 
         /// <inheritdoc/>
-        public override Response UpdateStatus(CancellationToken cancellationToken = default) => UpdateStatusAsync(false).EnsureCompleted();
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) => UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
 
         /// <inheritdoc/>
-        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => await UpdateStatusAsync(true).ConfigureAwait(false);
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
         public override ValueTask<Response<ConfigurationSettingsSnapshot>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
@@ -83,41 +76,24 @@ namespace Azure.Data.AppConfiguration
         public override ValueTask<Response<ConfigurationSettingsSnapshot>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        private async ValueTask<Response> UpdateStatusAsync(bool async)
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
-            if (!_hasCompleted)
+            if (!_operation.HasCompleted)
             {
                 using DiagnosticScope? scope = _diagnostics?.CreateScope($"{nameof(CreateSnapshotOperation)}.{nameof(UpdateStatus)}");
                 scope?.Start();
 
                 try
                 {
-                    // Get the latest status
-                    Response update = async
-                        ? await _client.GetOperationDetailsAsync(_snapshotName).ConfigureAwait(false)
-                        : _client.GetOperationDetails(_snapshotName);
-
-                    JsonElement result = JsonDocument.Parse(update.ContentStream).RootElement;
-                    var status = result.GetProperty("status");
-
-                    // Check if the operation is no longer running
-                    _hasCompleted = IsJobComplete(status.ToString());
-                    if (_hasCompleted)
+                    Response update;
+                    if (async)
                     {
-                        // Only want to set this if the operation has completed.
-                        // The service does not include any snapshot information in its operation details, so
-                        // request them manually.
-                        ConfigurationSettingsSnapshot updatedSnapshot = async
-                            ? await _client.GetSnapshotAsync(_snapshotName).ConfigureAwait(false)
-                            : _client.GetSnapshot(_snapshotName);
-
-                        _snapshot = updatedSnapshot;
-
-                        _hasValue = true;
+                        update = await _operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
                     }
-
-                    // Update raw response
-                    _rawResponse = update;
+                    else
+                    {
+                        update = _operation.UpdateStatus(cancellationToken);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -127,15 +103,6 @@ namespace Azure.Data.AppConfiguration
             }
 
             return GetRawResponse();
-        }
-
-        private static bool IsJobComplete(string status)
-        {
-            if (status == "Succeeded" || status == "Failed" || status == "Canceled")
-            {
-                return true;
-            }
-            return false;
         }
     }
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -915,16 +916,19 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                // TODO:
-                // needs to be tested and cleaned up once the service is no longer in dogfood
-
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
                 using RequestContent content = ConfigurationSettingsSnapshot.ToRequestContent(snapshot);
                 ContentType contentType = new(HttpHeader.Common.JsonContentType.Value.ToString());
 
+                // Start the operation
                 var operationT = await CreateSnapshotAsync(wait, name, content, contentType, context).ConfigureAwait(false);
 
-                var createSnapshotOperation = new CreateSnapshotOperation(this, name, ClientDiagnostics, operationT);
+                // Get the operation details so that we can pull the operation Id
+                var operationDetails = await GetOperationDetailsAsync(name, context).ConfigureAwait(false);
+                JsonElement result = JsonDocument.Parse(operationDetails.ContentStream).RootElement;
+                var id = result.GetProperty("id").ToString();
+
+                var createSnapshotOperation = new CreateSnapshotOperation(id, ClientDiagnostics, operationT);
 
                 if (wait == WaitUntil.Completed)
                 {
@@ -954,16 +958,19 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                // TODO:
-                // needs to be tested and cleaned up once the service is no longer in dogfood
-
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
                 using RequestContent content = ConfigurationSettingsSnapshot.ToRequestContent(snapshot);
                 ContentType contentType = new(HttpHeader.Common.JsonContentType.Value.ToString());
 
+                // Start the operation
                 var operationT = CreateSnapshot(wait, name, content, contentType, context);
 
-                var createSnapshotOperation = new CreateSnapshotOperation(this, name, ClientDiagnostics, operationT);
+                // Get the operation details so that we can pull the operation Id
+                var operationDetails = GetOperationDetails(name, context);
+                JsonElement result = JsonDocument.Parse(operationDetails.ContentStream).RootElement;
+                var id = result.GetProperty("id").ToString();
+
+                var createSnapshotOperation = new CreateSnapshotOperation(id, ClientDiagnostics, operationT);
 
                 if (wait == WaitUntil.Completed)
                 {
