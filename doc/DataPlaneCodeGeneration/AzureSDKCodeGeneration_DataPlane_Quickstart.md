@@ -39,7 +39,8 @@ Code review happens on 2 places.
 
 One is the usual GitHub pull request, for developers.
 
-Another is the [apiview](https://apiview.dev/), for architects. GitHub pull request (PR) should automatically trigger the apiview. If this does not happen, upload one manually:
+Another is the [apiview](https://apiview.dev/), for architects. GitHub pull request (PR) should automatically trigger the apiview. If this does not happen, please help to file an issue in [azure-sdk-tools](https://github.com/azure/azure-sdk-tools) to report the failure. 
+And you can upload one manually:
 
  - Build the SDK, Run `dotnet pack` to create SDK package.
  - Login apiview with GitHub account.
