@@ -22,12 +22,12 @@ namespace Azure.AI.Translation.Text
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string PlainValue = "plain";
-        private const string HtmlValue = "html";
+        private const string PlainValue = "Plain";
+        private const string HtmlValue = "Html";
 
-        /// <summary> plain. </summary>
+        /// <summary> Plain. </summary>
         public static TextType Plain { get; } = new TextType(PlainValue);
-        /// <summary> html. </summary>
+        /// <summary> Html. </summary>
         public static TextType Html { get; } = new TextType(HtmlValue);
         /// <summary> Determines if two <see cref="TextType"/> values are the same. </summary>
         public static bool operator ==(TextType left, TextType right) => left.Equals(right);

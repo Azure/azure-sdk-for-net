@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    /// <summary> Elemented containing break sentence result. </summary>
+    /// <summary> Item containing break sentence result. </summary>
     public partial class BreakSentenceItem
     {
         /// <summary> Initializes a new instance of BreakSentenceItem. </summary>
