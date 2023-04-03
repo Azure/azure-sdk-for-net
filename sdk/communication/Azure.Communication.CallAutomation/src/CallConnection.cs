@@ -469,7 +469,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="participantMri">The participant MRI.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// exception cref="ArgumentNullException"> <paramref name="participantMri"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="participantMri"/> is null. </exception>
         /// <returns>The <see cref="CallParticipant"/>.</returns>
         public virtual Response<CallParticipant> GetParticipant(string participantMri, CancellationToken cancellationToken = default)
         {
