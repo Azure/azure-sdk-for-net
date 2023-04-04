@@ -27,6 +27,7 @@ See the [README][README] of the Text Analytics client library for more informati
 
 ## Common scenarios samples
 
+* [Create a `TextTranslationClient`][create_client_sample]
 * [Get Languages][languages_sample]
 * [Translate][translate_sample]
 * [Transliterate][transliterate_sample]
@@ -37,6 +38,7 @@ See the [README][README] of the Text Analytics client library for more informati
 
 [README]: https://aka.ms/https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/README.md
 
+[create_client_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample0_CreateClient.md
 [languages_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample1_GetLanguages.md
 [translate_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample2_Translate.md
 [transliterate_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample3_Transliterate.md

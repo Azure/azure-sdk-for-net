@@ -1,17 +1,8 @@
 # Transliterate
 
-## Create a `TextTranslationClient`
+All samples are using `client` created in [Create a `TextTranslationClient`][create_client_sample] samples.
 
-To create a new `TextTranslationClient`, you will need the service endpoint and credentials of your Translator resource. In this sample, however, you will use an `AzureKeyCredential` and region, which you can create with an API key.
-
-```C#
-AzureKeyCredential credential = new("<apiKey>");
-TextTranslationClient client = new(credential, "<region>");
-```
-
-The values of the `apiKey` and `region` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
-
-### Transliterate
+## Transliterate
 Converts characters or letters of a source language to the corresponding characters or letters of a target language.
 
 ```C#
@@ -42,3 +33,4 @@ catch (RequestFailedException exception)
 See the [README] of the Text Translator client library for more information, including useful links and instructions.
 
 [README]: https://aka.ms/https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/README.md
+[create_client_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample0_CreateClient.md
