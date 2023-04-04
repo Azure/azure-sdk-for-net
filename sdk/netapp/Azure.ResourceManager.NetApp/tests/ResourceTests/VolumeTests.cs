@@ -611,11 +611,12 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task BreakFileLocksVolumeNoFiles()
         {
             //create volume
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold);
+            string volumeName = Recording.GenerateAssetName("volumeName-");
+            DefaultVirtualNetwork = await CreateVirtualNetwork();
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: volumeName);
             VerifyVolumeProperties(volumeResource1, true);
             volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
             //validate if created successfully
