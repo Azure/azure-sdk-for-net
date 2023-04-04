@@ -21,8 +21,8 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             Optional<IReadOnlyList<string>> tokens = default;
-            Optional<IReadOnlyList<float>> tokenLogprobs = default;
-            Optional<IReadOnlyList<IDictionary<string, float>>> topLogprobs = default;
+            Optional<IReadOnlyList<float?>> tokenLogprobs = default;
+            Optional<IReadOnlyList<IDictionary<string, float?>>> topLogprobs = default;
             Optional<IReadOnlyList<int>> textOffset = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,10 +48,17 @@ namespace Azure.AI.OpenAI
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<float> array = new List<float>();
+                    List<float?> array = new List<float?>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetSingle());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetSingle());
+                        }
                     }
                     tokenLogprobs = array;
                     continue;
@@ -63,7 +70,7 @@ namespace Azure.AI.OpenAI
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IDictionary<string, float>> array = new List<IDictionary<string, float>>();
+                    List<IDictionary<string, float?>> array = new List<IDictionary<string, float?>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -72,10 +79,17 @@ namespace Azure.AI.OpenAI
                         }
                         else
                         {
-                            Dictionary<string, float> dictionary = new Dictionary<string, float>();
+                            Dictionary<string, float?> dictionary = new Dictionary<string, float?>();
                             foreach (var property0 in item.EnumerateObject())
                             {
-                                dictionary.Add(property0.Name, property0.Value.GetSingle());
+                                if (property0.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property0.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property0.Name, property0.Value.GetSingle());
+                                }
                             }
                             array.Add(dictionary);
                         }

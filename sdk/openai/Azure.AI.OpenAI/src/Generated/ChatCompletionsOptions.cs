@@ -54,9 +54,9 @@ namespace Azure.AI.OpenAI
         /// An identifier for the caller or end user of the operation. This may be used for tracking
         /// or rate-limiting purposes.
         /// </param>
-        /// <param name="choicesPerPrompt">
-        /// The number of completions choices that should be generated per provided prompt as part of an
-        /// overall completions response.
+        /// <param name="choiceCount">
+        /// The number of chat completions choices that should be generated for a chat completions
+        /// response.
         /// Because this setting can generate many completions, it may quickly consume your token quota.
         /// Use carefully and ensure reasonable settings for max_tokens and stop.
         /// </param>
@@ -79,7 +79,7 @@ namespace Azure.AI.OpenAI
         /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
         /// resource URI that's connected to.
         /// </param>
-        internal ChatCompletionsOptions(IList<ChatMessage> messages, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choicesPerPrompt, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string internalNonAzureModelName)
+        internal ChatCompletionsOptions(IList<ChatMessage> messages, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string internalNonAzureModelName)
         {
             Messages = messages.ToList();
             MaxTokens = maxTokens;
@@ -87,7 +87,7 @@ namespace Azure.AI.OpenAI
             NucleusSamplingFactor = nucleusSamplingFactor;
             InternalStringKeyedTokenSelectionBiases = internalStringKeyedTokenSelectionBiases;
             User = user;
-            ChoicesPerPrompt = choicesPerPrompt;
+            ChoiceCount = choiceCount;
             StopSequences = stopSequences.ToList();
             PresencePenalty = presencePenalty;
             FrequencyPenalty = frequencyPenalty;

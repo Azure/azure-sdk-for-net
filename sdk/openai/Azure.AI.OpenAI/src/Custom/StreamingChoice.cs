@@ -88,8 +88,7 @@ namespace Azure.AI.OpenAI
                     lock (_baseChoicesLock)
                     {
                         Choice mostRecentChoice = _baseChoices.Last();
-                        bool choiceIsComplete = mostRecentChoice.FinishReason != CompletionsFinishReason.None
-                            || StreamingDoneSignalReceived;
+                        bool choiceIsComplete = mostRecentChoice.FinishReason != null || StreamingDoneSignalReceived;
 
                         doneWaiting = choiceIsComplete || i < _baseChoices.Count;
                         isFinalIndex = choiceIsComplete && i >= _baseChoices.Count - 1;

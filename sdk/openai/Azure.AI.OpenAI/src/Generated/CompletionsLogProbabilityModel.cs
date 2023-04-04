@@ -18,8 +18,8 @@ namespace Azure.AI.OpenAI
         internal CompletionsLogProbabilityModel()
         {
             Tokens = new ChangeTrackingList<string>();
-            TokenLogProbabilities = new ChangeTrackingList<float>();
-            TopLogProbabilities = new ChangeTrackingList<IDictionary<string, float>>();
+            TokenLogProbabilities = new ChangeTrackingList<float?>();
+            TopLogProbabilities = new ChangeTrackingList<IDictionary<string, float?>>();
             TextOffsets = new ChangeTrackingList<int>();
         }
 
@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI
         /// <param name="tokenLogProbabilities"> A collection of log probability values for the tokens in this completions data. </param>
         /// <param name="topLogProbabilities"> A mapping of tokens to maximum log probability values in this completions data. </param>
         /// <param name="textOffsets"> The text offsets associated with tokens in this completions data. </param>
-        internal CompletionsLogProbabilityModel(IReadOnlyList<string> tokens, IReadOnlyList<float> tokenLogProbabilities, IReadOnlyList<IDictionary<string, float>> topLogProbabilities, IReadOnlyList<int> textOffsets)
+        internal CompletionsLogProbabilityModel(IReadOnlyList<string> tokens, IReadOnlyList<float?> tokenLogProbabilities, IReadOnlyList<IDictionary<string, float?>> topLogProbabilities, IReadOnlyList<int> textOffsets)
         {
             Tokens = tokens.ToList();
             TokenLogProbabilities = tokenLogProbabilities.ToList();
@@ -39,9 +39,9 @@ namespace Azure.AI.OpenAI
         /// <summary> The textual forms of tokens evaluated in this probability model. </summary>
         public IReadOnlyList<string> Tokens { get; }
         /// <summary> A collection of log probability values for the tokens in this completions data. </summary>
-        public IReadOnlyList<float> TokenLogProbabilities { get; }
+        public IReadOnlyList<float?> TokenLogProbabilities { get; }
         /// <summary> A mapping of tokens to maximum log probability values in this completions data. </summary>
-        public IReadOnlyList<IDictionary<string, float>> TopLogProbabilities { get; }
+        public IReadOnlyList<IDictionary<string, float?>> TopLogProbabilities { get; }
         /// <summary> The text offsets associated with tokens in this completions data. </summary>
         public IReadOnlyList<int> TextOffsets { get; }
     }

@@ -150,20 +150,17 @@ namespace Azure.AI.OpenAI
         ///
         ///     <see cref="TokenSelectionBiases"/> is equivalent to 'logit_bias' in the REST request schema.
         /// </remarks>
-        public IDictionary<int, int> TokenSelectionBiases
-        {
-            get
-            {
-                var convertedDictionary = new Dictionary<int, int>();
-                foreach (KeyValuePair<string, int> pair in InternalStringKeyedTokenSelectionBiases)
-                {
-                    convertedDictionary.Add(int.Parse(pair.Key, CultureInfo.InvariantCulture.NumberFormat), pair.Value);
-                }
-                return convertedDictionary;
-            }
-        }
+        public IDictionary<int, int> TokenSelectionBiases { get; }
 
         internal bool? InternalShouldStreamResponse { get; set; }
         internal string InternalNonAzureModelName { get; set; }
+
+        /// <summary> Initializes a new instance of CompletionsOptions. </summary>
+        public CompletionsOptions()
+        {
+            Prompts = new ChangeTrackingList<string>();
+            TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
+            StopSequences = new ChangeTrackingList<string>();
+        }
     }
 }

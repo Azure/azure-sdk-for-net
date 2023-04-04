@@ -15,11 +15,6 @@ namespace Azure.AI.OpenAI
     {
         private readonly string _value;
 
-        /// <summary>
-        /// Completions are not yet finished. This generally indicates a streaming operation is still in
-        /// progress.
-        /// </summary>
-        public static CompletionsFinishReason None { get; } = new CompletionsFinishReason(NoneValue);
         /// <summary> Completions ended normally and reached its end of token generation. </summary>
         public static CompletionsFinishReason Stopped { get; } = new CompletionsFinishReason(StoppedValue);
         /// <summary> Completions exhausted available token limits before generation could complete. </summary>

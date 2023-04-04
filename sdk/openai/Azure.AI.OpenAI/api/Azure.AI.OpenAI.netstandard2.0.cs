@@ -18,7 +18,8 @@ namespace Azure.AI.OpenAI
     public partial class ChatCompletionsOptions
     {
         public ChatCompletionsOptions() { }
-        public int? ChoicesPerPrompt { get { throw null; } set { } }
+        public ChatCompletionsOptions(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatMessage> messages) { }
+        public int? ChoiceCount { get { throw null; } set { } }
         public float? FrequencyPenalty { get { throw null; } set { } }
         public int? MaxTokens { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatMessage> Messages { get { throw null; } }
@@ -77,7 +78,6 @@ namespace Azure.AI.OpenAI
         private readonly int _dummyPrimitive;
         public CompletionsFinishReason(string value) { throw null; }
         public static Azure.AI.OpenAI.CompletionsFinishReason ContentFiltered { get { throw null; } }
-        public static Azure.AI.OpenAI.CompletionsFinishReason None { get { throw null; } }
         public static Azure.AI.OpenAI.CompletionsFinishReason Stopped { get { throw null; } }
         public static Azure.AI.OpenAI.CompletionsFinishReason TokenLimitReached { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.CompletionsFinishReason other) { throw null; }
@@ -94,9 +94,9 @@ namespace Azure.AI.OpenAI
     {
         internal CompletionsLogProbabilityModel() { }
         public System.Collections.Generic.IReadOnlyList<int> TextOffsets { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<float> TokenLogProbabilities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<float?> TokenLogProbabilities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Tokens { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, float>> TopLogProbabilities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, float?>> TopLogProbabilities { get { throw null; } }
     }
     public partial class CompletionsOptions
     {
@@ -138,7 +138,6 @@ namespace Azure.AI.OpenAI
     {
         public EmbeddingsOptions(string input) { }
         public string Input { get { throw null; } set { } }
-        public string InputType { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
     }
     public partial class EmbeddingsUsage
@@ -182,7 +181,7 @@ namespace Azure.AI.OpenAI
     public partial class StreamingChatChoice
     {
         internal StreamingChatChoice() { }
-        public Azure.AI.OpenAI.CompletionsFinishReason FinishReason { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsFinishReason? FinishReason { get { throw null; } }
         public int? Index { get { throw null; } }
         public System.Collections.Generic.IAsyncEnumerable<Azure.AI.OpenAI.ChatMessage> GetMessageStreaming([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

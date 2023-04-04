@@ -205,7 +205,10 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(totalMessages, Is.GreaterThan(1));
         }
 
-        private async Task InternalAdvancedCompletionsOptions(OpenAIClientServiceTarget serviceTarget)
+        [RecordedTest]
+        [TestCase(OpenAIClientServiceTarget.Azure)]
+        [TestCase(OpenAIClientServiceTarget.NonAzure)]
+        public async Task AdvancedCompletionsOptions(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
             string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Completions);
@@ -218,8 +221,17 @@ namespace Azure.AI.OpenAI.Tests
                 User = "AzureSDKOpenAITests",
                 Echo = true,
                 LogProbabilityCount = 1,
+                MaxTokens = 512,
+                TokenSelectionBiases =
+                {
+                    [25996] = -100, // ' banana', with the leading space
+                    [35484] = -100, // ' bananas', with the leading space
+                    [40058] = -100, // ' Banana'
+                    [15991] = -100, // 'anas'
+                },
             };
             Response<Completions> response = await client.GetCompletionsAsync(deploymentOrModelName, requestOptions);
+
             Assert.That(response, Is.Not.Null);
             string rawResponse = response.GetRawResponse().Content.ToString();
             Assert.That(rawResponse, Is.Not.Null.Or.Empty);
@@ -227,10 +239,17 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
-            Assert.That(response.Value.Choices[0].Text.ToLower().StartsWith(promptText.ToLower()));
 
-            Assert.That(response.Value.Choices[0].LogProbabilityModel, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.Choices[0].LogProbabilityModel.Tokens, Is.Not.Null.Or.Empty);
+            Choice choice = response.Value.Choices[0];
+
+            string choiceText = choice.Text;
+            Assert.That(choiceText, Is.Not.Null.Or.Empty);
+            Assert.That(choiceText.Length, Is.GreaterThan(promptText.Length));
+            Assert.That(choiceText.ToLower().StartsWith(promptText.ToLower()));
+            Assert.That(choiceText.Substring(promptText.Length).Contains(" banana"), Is.False);
+
+            Assert.That(choice.LogProbabilityModel, Is.Not.Null.Or.Empty);
+            Assert.That(choice.LogProbabilityModel.Tokens, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Usage.TotalTokens, Is.GreaterThan(response.Value.Choices[0].LogProbabilityModel.Tokens.Count));
         }
 

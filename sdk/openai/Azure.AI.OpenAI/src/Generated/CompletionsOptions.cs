@@ -18,13 +18,6 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class CompletionsOptions
     {
-        /// <summary> Initializes a new instance of CompletionsOptions. </summary>
-        public CompletionsOptions()
-        {
-            Prompts = new ChangeTrackingList<string>();
-            InternalStringKeyedTokenSelectionBiases = new ChangeTrackingDictionary<string, int>();
-            StopSequences = new ChangeTrackingList<string>();
-        }
 
         /// <summary> Initializes a new instance of CompletionsOptions. </summary>
         /// <param name="prompts">

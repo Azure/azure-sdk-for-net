@@ -36,6 +36,7 @@ namespace Azure.AI.OpenAI
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        // CUSTOM: allow a null deserialization
                         logprobs = null;
                         continue;
                     }

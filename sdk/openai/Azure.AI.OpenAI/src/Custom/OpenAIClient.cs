@@ -22,6 +22,7 @@ namespace Azure.AI.OpenAI
     [CodeGenSuppress("GetEmbeddings", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("GetEmbeddingsAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateGetCompletionsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("CreateGetChatCompletionsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateGetEmbeddingsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     public partial class OpenAIClient
     {
