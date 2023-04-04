@@ -534,6 +534,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the VM scale set.
         /// </param>
+        /// <param name='hibernate'>
+        /// Optional parameter to hibernate a virtual machine from the VM scale set.
+        /// (This feature is available for VMSS with Flexible OrchestrationMode only)
+        /// </param>
         /// <param name='instanceIds'>
         /// The virtual machine scale set instance ids. Omitting the virtual machine
         /// scale set instance ids will result in the operation being performed on all
@@ -545,10 +549,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, bool? hibernate = default(bool?), IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeallocateWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, hibernate, instanceIds, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2819,6 +2823,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the VM scale set.
         /// </param>
+        /// <param name='hibernate'>
+        /// Optional parameter to hibernate a virtual machine from the VM scale set.
+        /// (This feature is available for VMSS with Flexible OrchestrationMode only)
+        /// </param>
         /// <param name='instanceIds'>
         /// The virtual machine scale set instance ids. Omitting the virtual machine
         /// scale set instance ids will result in the operation being performed on all
@@ -2842,7 +2850,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, bool? hibernate = default(bool?), IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2872,6 +2880,7 @@ namespace Microsoft.Azure.Management.Compute
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("vmScaleSetName", vmScaleSetName);
+                tracingParameters.Add("hibernate", hibernate);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("vmInstanceIDs", vmInstanceIDs);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -2884,6 +2893,10 @@ namespace Microsoft.Azure.Management.Compute
             _url = _url.Replace("{vmScaleSetName}", System.Uri.EscapeDataString(vmScaleSetName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (hibernate != null)
+            {
+                _queryParameters.Add(string.Format("hibernate={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hibernate, Client.SerializationSettings).Trim('"'))));
+            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));

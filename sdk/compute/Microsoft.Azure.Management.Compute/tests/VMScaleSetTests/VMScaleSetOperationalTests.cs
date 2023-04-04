@@ -157,6 +157,53 @@ namespace Compute.Tests
         /// Create Storage Account
         /// Create VMSS
         /// Start VMSS
+        /// Deallocate VMSS with hibernate = true
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetOperations_DeallocateWithHibernate()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+                string vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                bool passed = false;
+
+                try
+                {
+                    EnsureClientsInitialized(context);
+
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                    StorageAccount storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
+                        storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true);
+
+                    // Deallocate VM with hibernate = true
+                    m_CrpClient.VirtualMachineScaleSets.Deallocate(rgName, vmScaleSet.Name, hibernate: true);
+
+                    passed = true;
+                }
+                finally
+                {
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
+
+        /// <summary>
+        /// Covers following Operations:
+        /// Create RG
+        /// Create Storage Account
+        /// Create VMSS
+        /// Start VMSS
         /// Shutdown VMSS with skipShutdown = true
         /// Delete RG
         /// </summary>
@@ -310,7 +357,7 @@ namespace Compute.Tests
                     m_CrpClient.VirtualMachineScaleSets.UpdateInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     virtualMachineScaleSetInstanceIDs = new List<string>() { "1" };
                     m_CrpClient.VirtualMachineScaleSets.Restart(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
-                    m_CrpClient.VirtualMachineScaleSets.Deallocate(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
+                    m_CrpClient.VirtualMachineScaleSets.Deallocate(rgName, vmScaleSet.Name, null, virtualMachineScaleSetInstanceIDs);
                     m_CrpClient.VirtualMachineScaleSets.DeleteInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     passed = true;
                 }
