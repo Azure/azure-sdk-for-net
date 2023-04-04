@@ -2255,13 +2255,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="networkSecurityGroupId"> The ID of network security group that is applied. </param>
         /// <param name="association"> Associated resources. </param>
         /// <param name="effectiveSecurityRules"> A collection of effective security rules. </param>
-        /// <param name="tagMap"> Mapping of tags to list of IP Addresses included within the tag. </param>
+        /// <param name="tagToIPAddresses"> Mapping of tags to list of IP Addresses included within the tag. </param>
         /// <returns> A new <see cref="Models.EffectiveNetworkSecurityGroup"/> instance for mocking. </returns>
-        public static EffectiveNetworkSecurityGroup EffectiveNetworkSecurityGroup(ResourceIdentifier networkSecurityGroupId = null, EffectiveNetworkSecurityGroupAssociation association = null, IEnumerable<EffectiveNetworkSecurityRule> effectiveSecurityRules = null, string tagMap = null)
+        public static EffectiveNetworkSecurityGroup EffectiveNetworkSecurityGroup(ResourceIdentifier networkSecurityGroupId = null, EffectiveNetworkSecurityGroupAssociation association = null, IEnumerable<EffectiveNetworkSecurityRule> effectiveSecurityRules = null, IReadOnlyDictionary<string, IList<string>> tagToIPAddresses = null)
         {
             effectiveSecurityRules ??= new List<EffectiveNetworkSecurityRule>();
+            tagToIPAddresses ??= new Dictionary<string, IList<string>>();
 
-            return new EffectiveNetworkSecurityGroup(networkSecurityGroupId != null ? ResourceManagerModelFactory.WritableSubResource(networkSecurityGroupId) : null, association, effectiveSecurityRules?.ToList(), tagMap);
+            return new EffectiveNetworkSecurityGroup(networkSecurityGroupId != null ? ResourceManagerModelFactory.WritableSubResource(networkSecurityGroupId) : null, association, effectiveSecurityRules?.ToList(), tagToIPAddresses);
         }
 
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroupAssociation. </summary>
