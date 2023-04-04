@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Workloads.Models;
 using NUnit.Framework;
@@ -28,13 +29,120 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         {
             _rgName ??= Recording.GenerateAssetName("netSdkTest-");
             const string filePath = "./payload/acss/CreateSapVirtualInstancePayload_ThreeTier.json";
+            const string installFilePath = "./payload/acss/InstallSapVirtualInstancePayload.json";
 
             string resourceName = Recording.GenerateAssetName("A").Substring(0, 3);
-            SapVirtualInstanceResource resource = await createVis(filePath, resourceName);
+            SapVirtualInstanceResource resource = await createVis(filePath, installFilePath, resourceName);
+            try
+            {
+                ArmOperation<OperationStatusResult> result = await resource.StopAsync(WaitUntil.Completed);
+                Console.WriteLine("Stopped resource with Payload " + await getObjectAsString(result.Value.Status));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Stopping resource" + ex);
+            }
+
+            try
+            {
+                ArmOperation<OperationStatusResult> result =
+                    await resource.StartAsync(WaitUntil.Completed);
+                Console.WriteLine("Starting resource with Payload " +
+                    await getObjectAsString(result.Value.Status));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Stopping resource" + ex);
+            }
+
+            try
+            {
+                SapApplicationServerInstanceResource applicationServer =
+                    await resource.GetSapApplicationServerInstanceAsync("app0");
+                ArmOperation<OperationStatusResult> result =
+                    await applicationServer.StopInstanceAsync(WaitUntil.Completed);
+                Console.WriteLine("Stopped application server resource with Payload "
+                    + await getObjectAsString(result.Value.Status));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Stopping application resource" + ex);
+            }
+
+            try
+            {
+                SapCentralServerInstanceResource centralServer =
+                    await resource.GetSapCentralServerInstanceAsync("cs0");
+                ArmOperation<OperationStatusResult> result =
+                    await centralServer.StopInstanceAsync(WaitUntil.Completed);
+                Console.WriteLine("Stopped central server resource with Payload "
+                    + await getObjectAsString(result.Value.Status));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Stopping central server instance resource" + ex);
+            }
+
+            try
+            {
+                SapDatabaseInstanceResource databseServer =
+                    await resource.GetSapDatabaseInstanceAsync("db0");
+                ArmOperation<OperationStatusResult> result =
+                    await databseServer.StopInstanceAsync(WaitUntil.Completed);
+                Console.WriteLine("Stopped database server resource with Payload "
+                    + await getObjectAsString(result.Value.Status));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Stopping database server application resource" + ex);
+            }
+
+            try
+            {
+                SapApplicationServerInstanceResource applicationServer =
+                    await resource.GetSapApplicationServerInstanceAsync("app0");
+                ArmOperation<OperationStatusResult> result =
+                    await applicationServer.StartInstanceAsync(WaitUntil.Completed);
+                Console.WriteLine("Started application server resource with Payload "
+                    + await getObjectAsString(result.Value.Status));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Starting  application resource" + ex);
+            }
+
+            try
+            {
+                SapCentralServerInstanceResource centralServer =
+                    await resource.GetSapCentralServerInstanceAsync("cs0");
+                ArmOperation<OperationStatusResult> result =
+                    await centralServer.StartInstanceAsync(WaitUntil.Completed);
+                Console.WriteLine("Started central server resource with Payload "
+                    + await getObjectAsString(result.Value.Status));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Starting central server instance resource" + ex);
+            }
+
+            try
+            {
+                SapDatabaseInstanceResource databseServer =
+                    await resource.GetSapDatabaseInstanceAsync("db0");
+                ArmOperation<OperationStatusResult> result =
+                    await databseServer.StartInstanceAsync(WaitUntil.Completed);
+                Console.WriteLine("Started database server resource with Payload "
+                    + await getObjectAsString(result.Value.Status));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Starting database server application resource" + ex);
+            }
+
             await resource.DeleteAsync(WaitUntil.Completed);
         }
 
-        private async Task<SapVirtualInstanceResource> createVis(string filePath, string resourceName)
+        private async Task<SapVirtualInstanceResource> createVis(string filePath, String installfilePath, string resourceName)
         {
             Console.WriteLine("Starting VIS Resource tests for " + resourceName);
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -87,6 +195,36 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 Assert.AreEqual(resourceName, vis.Value.Data.Name);
                 Console.WriteLine("Patched resource with Payload " + await getObjectAsString(vis.Value.Data));
                 result = vis.Value;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Creating resource with Payload " + ex);
+            }
+
+            //Install SAP VIS.
+            JsonDocument installJsonElement = GetJsonElement(installfilePath);
+            var softwareConfiguration =
+                SapInstallWithoutOSConfigSoftwareConfiguration.
+                DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(
+                    installJsonElement.RootElement);
+            deploymentWithOSConfiguration.SoftwareConfiguration = softwareConfiguration;
+
+            Console.WriteLine("Installing resource with Payload " + await getObjectAsString(sviData));
+            try
+            {
+                ArmOperation<SapVirtualInstanceResource> resource = await rg.GetSapVirtualInstances()
+                    .CreateOrUpdateAsync(
+                        WaitUntil.Completed,
+                        resourceName,
+                        sviData);
+
+                Assert.AreEqual(resourceName, resource.Value.Data.Name);
+                Console.WriteLine("Install resource with Payload " + await getObjectAsString(resource.Value.Data));
+
+                // Get SAP VIS
+                Response<SapVirtualInstanceResource> vis = await rg.GetSapVirtualInstanceAsync(resourceName);
+                Assert.AreEqual(resourceName, vis.Value.Data.Name);
+                Console.WriteLine("Fetched resource with Payload " + await getObjectAsString(vis.Value.Data));
             }
             catch (Exception ex)
             {
