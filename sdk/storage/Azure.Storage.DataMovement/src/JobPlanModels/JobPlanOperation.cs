@@ -3,7 +3,7 @@
 
 namespace Azure.Storage.DataMovement.JobPlanModels
 {
-    internal enum JobPlanFromTo
+    internal enum JobPlanOperation
     {
         Upload = 0,
         Download = 1,

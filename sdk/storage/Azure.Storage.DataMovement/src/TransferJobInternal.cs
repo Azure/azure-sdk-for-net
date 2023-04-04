@@ -150,7 +150,7 @@ namespace Azure.Storage.DataMovement
             SyncAsyncEventHandler<SingleTransferCompletedEventArgs> singleTransferEventHandler)
         {
             _dataTransfer = dataTransfer ?? throw Errors.ArgumentNull(nameof(dataTransfer));
-            _dataTransfer._state.SetTransferStatus(StorageTransferStatus.Queued);
+            _dataTransfer._state.TrySetTransferStatus(StorageTransferStatus.Queued);
             _errorHandling = errorHandling;
             _createMode = createMode;
             _checkpointer = checkPointer;
@@ -296,7 +296,7 @@ namespace Azure.Storage.DataMovement
             bool statusChanged = false;
             lock (_statusLock)
             {
-                statusChanged = _dataTransfer._state.SetTransferStatus(status);
+                statusChanged = _dataTransfer._state.TrySetTransferStatus(status);
             }
             if (statusChanged)
             {

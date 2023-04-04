@@ -180,7 +180,7 @@ namespace Azure.Storage.DataMovement
             string schemaVersion = header.Version;
             if (!DataMovementConstants.PlanFile.SchemaVersion.Equals(schemaVersion))
             {
-                throw Errors.MismatchSchemaVersion(schemaVersion);
+                throw Errors.MismatchSchemaVersionHeader(schemaVersion);
             }
 
             if (!header.TransferId.Equals(transferId))

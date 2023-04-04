@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Azure.Storage.DataMovement.JobPlanModels;
 using NUnit.Framework;
 
@@ -69,7 +71,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsFalse(header.AutoDecompress);
             Assert.AreEqual(header.Priority, _testPriority);
             Assert.AreEqual(header.TTLAfterCompletion, _testTtlAfterCompletion);
-            Assert.AreEqual(header.FromTo, _testFromTo);
+            Assert.AreEqual(header.JobPlanOperation, _testJobPlanOperation);
             Assert.AreEqual(header.FolderPropertyMode, _testFolderPropertiesMode);
             Assert.AreEqual(header.NumberChunks, _testNumberChunks);
             Assert.AreEqual(header.DstBlobData.BlobType, _testBlobType);
@@ -222,7 +224,7 @@ namespace Azure.Storage.DataMovement.Tests
 
                 byte[] fromToBuffer = new byte[oneByte];
                 stream.ReadAsync(fromToBuffer, 0, oneByte);
-                Assert.AreEqual((byte)_testFromTo, fromToBuffer[0]);
+                Assert.AreEqual((byte)_testJobPlanOperation, fromToBuffer[0]);
 
                 byte[] folderPropertyModeBuffer = new byte[oneByte];
                 stream.ReadAsync(folderPropertyModeBuffer, 0, oneByte);
@@ -415,8 +417,9 @@ namespace Azure.Storage.DataMovement.Tests
             JobPartPlanHeader header = CreateDefaultJobPartHeader();
 
             // Act / Assert
-            Assert.Catch(
-                () => header.Serialize(default));
+            Assert.Catch<ArgumentNullException>(
+                () => header.Serialize(default),
+                "Stream cannot be null");
         }
 
         [Test]
@@ -456,7 +459,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.IsFalse(deserializedHeader.AutoDecompress);
                 Assert.AreEqual(deserializedHeader.Priority, _testPriority);
                 Assert.AreEqual(deserializedHeader.TTLAfterCompletion, _testTtlAfterCompletion);
-                Assert.AreEqual(deserializedHeader.FromTo, _testFromTo);
+                Assert.AreEqual(deserializedHeader.JobPlanOperation, _testJobPlanOperation);
                 Assert.AreEqual(deserializedHeader.FolderPropertyMode, _testFolderPropertiesMode);
                 Assert.AreEqual(deserializedHeader.NumberChunks, _testNumberChunks);
                 Assert.AreEqual(deserializedHeader.DstBlobData.BlobType, _testBlobType);
@@ -509,11 +512,8 @@ namespace Azure.Storage.DataMovement.Tests
             JobPartPlanHeader header = CreateDefaultJobPartHeader();
 
             // Act / Assert
-            using (MemoryStream stream = new MemoryStream())
-            {
-                Assert.Catch(
-                    () => JobPartPlanHeader.Deserialize(stream));
-            }
+            Assert.Catch<ArgumentNullException>(
+                () => JobPartPlanHeader.Deserialize(default));
         }
     }
 }

@@ -199,7 +199,7 @@ namespace Azure.Storage.DataMovement
                 autoDecompress: false, // TODO: revisit if we want to support this feature
                 priority: 0, // TODO: add priority feature
                 ttlAfterCompletion: DateTimeOffset.MinValue, // TODO: revisit for Azure Files
-                fromTo: 0, // TODO: revisit when we add this feature
+                jobPlanOperation: 0, // TODO: revisit when we add this feature
                 folderPropertyMode: FolderPropertiesMode.None, // TODO: revisit for Azure Files
                 numberChunks: 0, // TODO: revisit when added
                 dstBlobData: dstBlobData, // TODO: revisit when we add feature to cache this info

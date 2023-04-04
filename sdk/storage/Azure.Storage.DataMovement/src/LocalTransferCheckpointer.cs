@@ -34,7 +34,7 @@ namespace Azure.Storage.DataMovement
         {
             if (string.IsNullOrEmpty(folderPath))
             {
-                _pathToCheckpointer = Path.Combine(Environment.CurrentDirectory, "/", DataMovementConstants.DefaultCheckpointerPath);
+                _pathToCheckpointer = Path.Combine(Environment.CurrentDirectory, DataMovementConstants.DefaultCheckpointerPath);
                 if (!Directory.Exists(_pathToCheckpointer))
                 {
                     // If it does not already exist, create the default folder.

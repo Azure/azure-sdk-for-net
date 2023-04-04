@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.Storage.DataMovement
+namespace Azure.Storage.DataMovement.JobPlanModels
 {
     internal class JobPartPlanFile : IDisposable
     {

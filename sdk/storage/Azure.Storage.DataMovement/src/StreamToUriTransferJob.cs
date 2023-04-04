@@ -65,6 +65,9 @@ namespace Azure.Storage.DataMovement
             JobPartStatusEvents += JobPartEvent;
             await OnJobStatusChangedAsync(StorageTransferStatus.InProgress).ConfigureAwait(false);
             int partNumber = 0;
+
+            // Check to see if this is a job that was resumed. If it is we will have existing job parts
+            // stored in the _jobParts list already.
             if (_jobParts.Count == 0)
             {
                 if (_isSingleResource)

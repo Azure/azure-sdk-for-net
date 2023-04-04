@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using System.Runtime.InteropServices;
 
-namespace Azure.Storage.DataMovement
+namespace Azure.Storage.DataMovement.JobPlanModels
 {
     [StructLayout(LayoutKind.Sequential)]
     internal struct JobChunkPlanBody

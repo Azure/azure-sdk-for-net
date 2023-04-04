@@ -108,7 +108,7 @@ namespace Azure.Storage.DataMovement.Tests
         internal const string _testDestinationQuery = "destquery";
         internal const byte _testPriority = 0;
         internal static readonly DateTimeOffset _testTtlAfterCompletion = DateTimeOffset.MaxValue;
-        internal const JobPlanFromTo _testFromTo = JobPlanFromTo.Upload;
+        internal const JobPlanOperation _testJobPlanOperation = JobPlanOperation.Upload;
         internal const FolderPropertiesMode _testFolderPropertiesMode = FolderPropertiesMode.None;
         internal const long _testNumberChunks = 1;
         internal const JobPlanBlobType _testBlobType = JobPlanBlobType.BlockBlob;
@@ -145,7 +145,7 @@ namespace Azure.Storage.DataMovement.Tests
             bool autoDecompress = false,
             byte priority = _testPriority,
             DateTimeOffset ttlAfterCompletion = default,
-            JobPlanFromTo fromTo = _testFromTo,
+            JobPlanOperation fromTo = _testJobPlanOperation,
             FolderPropertiesMode folderPropertyMode = _testFolderPropertiesMode,
             long numberChunks = _testNumberChunks,
             JobPlanBlobType blobType = _testBlobType,
@@ -226,7 +226,7 @@ namespace Azure.Storage.DataMovement.Tests
                 autoDecompress: autoDecompress,
                 priority: priority,
                 ttlAfterCompletion: ttlAfterCompletion,
-                fromTo: fromTo,
+                jobPlanOperation: fromTo,
                 folderPropertyMode: folderPropertyMode,
                 numberChunks: numberChunks,
                 dstBlobData: dstBlobData,

@@ -4,6 +4,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Azure.Storage.DataMovement.JobPlanModels;
 
 namespace Azure.Storage.DataMovement.Tests
 {

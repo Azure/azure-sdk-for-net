@@ -124,7 +124,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="status"></param>
         /// <returns>Returns whether or not the status has been changed/set</returns>
-        public bool SetTransferStatus(StorageTransferStatus status)
+        public bool TrySetTransferStatus(StorageTransferStatus status)
         {
             lock (_statusLock)
             {
@@ -182,7 +182,7 @@ namespace Azure.Storage.DataMovement
             // Call the inner cancellation token to stop the transfer job
             if (TriggerCancellation())
             {
-                SetTransferStatus(StorageTransferStatus.Paused);
+                TrySetTransferStatus(StorageTransferStatus.Paused);
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);

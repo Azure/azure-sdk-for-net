@@ -246,7 +246,7 @@ namespace Azure.Storage.DataMovement
             }
             else
             {
-                throw Errors.InvalidTransferId(nameof(TryPauseAllTransfersAsync), transferId);
+                throw Errors.InvalidTransferId(nameof(TryPauseTransferAsync), transferId);
             }
         }
 
@@ -255,7 +255,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public virtual Task<bool> TryPauseAllTransfersAsync()
+        internal virtual Task<bool> TryPauseAllTransfersAsync()
         {
             throw new NotImplementedException();
         }
@@ -302,19 +302,19 @@ namespace Azure.Storage.DataMovement
             if (!string.IsNullOrEmpty(transferOptions.ResumeFromCheckpointId))
             {
                 resumeJob = true;
-                string resumeId = transferOptions.ResumeFromCheckpointId;
+                string transferId = transferOptions.ResumeFromCheckpointId;
                 // Attempt to add existing job to the checkpointer.
                 await _checkpointer.AddExistingJobAsync(
-                    transferId: resumeId,
+                    transferId: transferId,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Check if it's a single part transfer.
                 int partCount = await _checkpointer.CurrentJobPartCountAsync(
-                    transferId: resumeId,
+                    transferId: transferId,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
                 if (partCount > 1)
                 {
-                    throw Errors.MismatchIdSingleContainer(resumeId);
+                    throw Errors.MismatchIdSingleContainer(transferId);
                 }
 
                 dataTransfer = new DataTransfer(transferOptions.ResumeFromCheckpointId, 0);
@@ -368,7 +368,7 @@ namespace Azure.Storage.DataMovement
                     throw Errors.InvalidSourceDestinationParams();
                 }
             }
-            else // (sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
+            else
             {
                 // Source is remote
                 if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
@@ -482,9 +482,9 @@ namespace Azure.Storage.DataMovement
                 int partCount = await _checkpointer.CurrentJobPartCountAsync(
                     transferId: resumeId,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
-                if (partCount > 1)
+                if (partCount < 2)
                 {
-                    throw Errors.MismatchIdSingleContainer(resumeId);
+                    throw Errors.MismatchIdContainer(resumeId);
                 }
 
                 dataTransfer = new DataTransfer(transferOptions.ResumeFromCheckpointId, 0);
@@ -545,7 +545,7 @@ namespace Azure.Storage.DataMovement
                     throw Errors.InvalidSourceDestinationParams();
                 }
             }
-            else // (sourceResource.CanProduceUri == ProduceUriType.ProducesUri)
+            else
             {
                 // Source is remote
                 if (destinationResource.CanProduceUri == ProduceUriType.ProducesUri)
