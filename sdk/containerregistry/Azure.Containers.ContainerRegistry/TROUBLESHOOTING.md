@@ -186,6 +186,6 @@ try
 catch (RequestFailedException ex) when (ex.Status == 404 && ex.ErrorCode == "BLOB_UPLOAD_INVALID")
 {
     Console.WriteLine("Blob upload failed. Please retry.");
-    Console.WriteLine($"Service error: {ex.Message}.");
+    Console.WriteLine($"Service error: {ex.Message}");
 }
 ```
