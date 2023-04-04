@@ -4,12 +4,12 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Tests.Samples
 {
     #region Snippet:Sample_Header_Policy
-    public class AuxiliaryPoilcy : HttpPipelineSynchronousPolicy
+    internal class AuxiliaryPoilcy : HttpPipelineSynchronousPolicy
     {
         private static string AUTHORIZATION_AUXILIARY_HEADER = "x-ms-authorization-auxiliary";
         string _token;
 
-        public AuxiliaryPoilcy(string token)
+        internal AuxiliaryPoilcy(string token)
         {
             _token = token;
         }
