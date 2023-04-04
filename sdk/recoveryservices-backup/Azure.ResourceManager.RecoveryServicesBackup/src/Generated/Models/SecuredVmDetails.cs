@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Restore request parameters for Secured VMs. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of SecuredVmDetails. </summary>
         /// <param name="securedVmOSDiskEncryptionSetId"> Gets or Sets Disk Encryption Set Id for Secured VM OS Disk. </param>
-        internal SecuredVmDetails(string securedVmOSDiskEncryptionSetId)
+        internal SecuredVmDetails(ResourceIdentifier securedVmOSDiskEncryptionSetId)
         {
             SecuredVmOSDiskEncryptionSetId = securedVmOSDiskEncryptionSetId;
         }
 
         /// <summary> Gets or Sets Disk Encryption Set Id for Secured VM OS Disk. </summary>
-        public string SecuredVmOSDiskEncryptionSetId { get; set; }
+        public ResourceIdentifier SecuredVmOSDiskEncryptionSetId { get; set; }
     }
 }

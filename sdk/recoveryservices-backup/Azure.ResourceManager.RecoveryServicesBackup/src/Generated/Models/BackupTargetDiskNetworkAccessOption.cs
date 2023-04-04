@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Network access settings to be used for restored disks. </summary>
-    public enum TargetDiskNetworkAccessOption
+    public enum BackupTargetDiskNetworkAccessOption
     {
         /// <summary> SameAsOnSourceDisks. </summary>
         SameAsOnSourceDisks,

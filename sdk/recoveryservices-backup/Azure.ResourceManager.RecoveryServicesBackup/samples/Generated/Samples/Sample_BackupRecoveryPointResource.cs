@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                         IsSystemAssignedIdentity = false,
                         ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/asmaskarRG1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/asmaskartestmsi"),
                     },
-                    TargetDiskNetworkAccessSettings = new TargetDiskNetworkAccessSettings()
+                    TargetDiskNetworkAccessSettings = new BackupTargetDiskNetworkAccessSettings()
                     {
-                        TargetDiskNetworkAccessOption = TargetDiskNetworkAccessOption.EnablePrivateAccessForAllDisks,
-                        TargetDiskAccessId = "/subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/arpja/providers/Microsoft.Compute/diskAccesses/arpja-diskaccess-ccy",
+                        TargetDiskNetworkAccessOption = BackupTargetDiskNetworkAccessOption.EnablePrivateAccessForAllDisks,
+                        TargetDiskAccessId = new ResourceIdentifier("/subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/arpja/providers/Microsoft.Compute/diskAccesses/arpja-diskaccess-ccy"),
                     },
                 },
             };

@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IdentityBasedRestoreDetails> identityBasedRestoreDetails = default;
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<SecuredVmDetails> securedVmDetails = default;
-            Optional<TargetDiskNetworkAccessSettings> targetDiskNetworkAccessSettings = default;
+            Optional<BackupTargetDiskNetworkAccessSettings> targetDiskNetworkAccessSettings = default;
             string objectType = "IaasVMRestoreRequest";
             foreach (var property in element.EnumerateObject())
             {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    targetDiskNetworkAccessSettings = TargetDiskNetworkAccessSettings.DeserializeTargetDiskNetworkAccessSettings(property.Value);
+                    targetDiskNetworkAccessSettings = BackupTargetDiskNetworkAccessSettings.DeserializeBackupTargetDiskNetworkAccessSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

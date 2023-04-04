@@ -29,12 +29,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> securedVmOSDiskEncryptionSetId = default;
+            Optional<ResourceIdentifier> securedVmOSDiskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("securedVMOsDiskEncryptionSetId"u8))
                 {
-                    securedVmOSDiskEncryptionSetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    securedVmOSDiskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

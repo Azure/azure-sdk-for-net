@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class TargetDiskNetworkAccessSettings : IUtf8JsonSerializable
+    public partial class BackupTargetDiskNetworkAccessSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static TargetDiskNetworkAccessSettings DeserializeTargetDiskNetworkAccessSettings(JsonElement element)
+        internal static BackupTargetDiskNetworkAccessSettings DeserializeBackupTargetDiskNetworkAccessSettings(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<TargetDiskNetworkAccessOption> targetDiskNetworkAccessOption = default;
-            Optional<string> targetDiskAccessId = default;
+            Optional<BackupTargetDiskNetworkAccessOption> targetDiskNetworkAccessOption = default;
+            Optional<ResourceIdentifier> targetDiskAccessId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetDiskNetworkAccessOption"u8))
@@ -45,16 +45,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    targetDiskNetworkAccessOption = property.Value.GetString().ToTargetDiskNetworkAccessOption();
+                    targetDiskNetworkAccessOption = property.Value.GetString().ToBackupTargetDiskNetworkAccessOption();
                     continue;
                 }
                 if (property.NameEquals("targetDiskAccessId"u8))
                 {
-                    targetDiskAccessId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetDiskAccessId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
-            return new TargetDiskNetworkAccessSettings(Optional.ToNullable(targetDiskNetworkAccessOption), targetDiskAccessId.Value);
+            return new BackupTargetDiskNetworkAccessSettings(Optional.ToNullable(targetDiskNetworkAccessOption), targetDiskAccessId.Value);
         }
     }
 }

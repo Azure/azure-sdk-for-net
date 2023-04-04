@@ -283,6 +283,10 @@ rename-mapping:
   DpmJobExtendedInfo: DpmBackupJobExtendedInfo
   DpmJobTaskDetails: DpmBackupJobTaskDetails
   IdentityInfo: BackupIdentityInfo
+  SecuredVMDetails.securedVMOsDiskEncryptionSetId: -|arm-id
+  TargetDiskNetworkAccessOption: BackupTargetDiskNetworkAccessOption
+  TargetDiskNetworkAccessSettings: BackupTargetDiskNetworkAccessSettings
+  TargetDiskNetworkAccessSettings.targetDiskAccessId: -|arm-id
 
 format-by-name-rules:
   'tenantId': 'uuid'

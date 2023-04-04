@@ -1063,6 +1063,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageTypeState left, Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageTypeState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public enum BackupTargetDiskNetworkAccessOption
+    {
+        SameAsOnSourceDisks = 0,
+        EnablePrivateAccessForAllDisks = 1,
+        EnablePublicAccessForAllDisks = 2,
+    }
+    public partial class BackupTargetDiskNetworkAccessSettings
+    {
+        public BackupTargetDiskNetworkAccessSettings() { }
+        public Azure.Core.ResourceIdentifier TargetDiskAccessId { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupTargetDiskNetworkAccessOption? TargetDiskNetworkAccessOption { get { throw null; } set { } }
+    }
     public partial class BackupTieringPolicy
     {
         public BackupTieringPolicy() { }
@@ -1731,11 +1743,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public Azure.ResourceManager.RecoveryServicesBackup.Models.FileShareRecoveryType? RecoveryType { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Region { get { throw null; } set { } }
         public System.Collections.Generic.IList<int> RestoreDiskLunList { get { throw null; } }
-        public string SecuredVmOSDiskEncryptionSetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SecuredVmOSDiskEncryptionSetId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.TargetDiskNetworkAccessSettings TargetDiskNetworkAccessSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupTargetDiskNetworkAccessSettings TargetDiskNetworkAccessSettings { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetDomainNameId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetResourceGroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetVirtualMachineId { get { throw null; } set { } }
@@ -2593,18 +2605,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public TargetAfsRestoreInfo() { }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-    }
-    public enum TargetDiskNetworkAccessOption
-    {
-        SameAsOnSourceDisks = 0,
-        EnablePrivateAccessForAllDisks = 1,
-        EnablePublicAccessForAllDisks = 2,
-    }
-    public partial class TargetDiskNetworkAccessSettings
-    {
-        public TargetDiskNetworkAccessSettings() { }
-        public string TargetDiskAccessId { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.TargetDiskNetworkAccessOption? TargetDiskNetworkAccessOption { get { throw null; } set { } }
     }
     public partial class TargetRestoreInfo
     {
