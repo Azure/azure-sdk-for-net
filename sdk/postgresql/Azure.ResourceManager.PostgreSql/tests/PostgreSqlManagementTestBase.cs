@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 var privateDnsZoneCollection = rg.GetPrivateDnsZones();
                 var privateDnsZoneOperation = await privateDnsZoneCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneName, new PrivateDnsZoneData("global"));
                 var privateDnsZone = privateDnsZoneOperation.Value;
-
-                var virtualLinkNetworkName = $"{vnetID.ToString()}-link";
+                string vnetName = vnetID.Name;
+                var virtualLinkNetworkName = $"{vnetName}-link";
                 var virtualNetworkLinkCollection = privateDnsZone.GetVirtualNetworkLinks();
                 var virtualLinkNetworkOperation = await virtualNetworkLinkCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualLinkNetworkName, new VirtualNetworkLinkData("global")
                 {
