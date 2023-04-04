@@ -140,6 +140,78 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return ExportResult.Failure;
         }
 
+        internal static ExportResult HandleFailures(HttpMessage httpMessage, PersistentBlobProvider blobProvider)
+        {
+            ExportResult result = ExportResult.Failure;
+            int statusCode = 0;
+            byte[]? content;
+
+            if (!httpMessage.HasResponse)
+            {
+                // HttpRequestException
+                content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
+                if (content != null)
+                {
+                    result = blobProvider.SaveTelemetry(content);
+                }
+            }
+            else
+            {
+                statusCode = httpMessage.Response.Status;
+                switch (statusCode)
+                {
+                    case ResponseStatusCodes.PartialSuccess:
+                        // Parse retry-after header
+                        // Send Failed Messages To Storage
+                        TrackResponse trackResponse = HttpPipelineHelper.GetTrackResponse(httpMessage);
+                        content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
+                        if (content != null)
+                        {
+                            result = blobProvider.SaveTelemetry(content);
+                        }
+                        break;
+                    case ResponseStatusCodes.RequestTimeout:
+                    case ResponseStatusCodes.ResponseCodeTooManyRequests:
+                    case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
+                        // Parse retry-after header
+                        // Send Messages To Storage
+                        content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
+                        if (content != null)
+                        {
+                            result = blobProvider.SaveTelemetry(content);
+                        }
+                        break;
+                    case ResponseStatusCodes.Unauthorized:
+                    case ResponseStatusCodes.Forbidden:
+                    case ResponseStatusCodes.InternalServerError:
+                    case ResponseStatusCodes.BadGateway:
+                    case ResponseStatusCodes.ServiceUnavailable:
+                    case ResponseStatusCodes.GatewayTimeout:
+                        // Send Messages To Storage
+                        content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
+                        if (content != null)
+                        {
+                            result = blobProvider.SaveTelemetry(content);
+                        }
+                        break;
+                    default:
+                        // Log Non-Retriable Status and don't retry or store;
+                        break;
+                }
+            }
+
+            if (result == ExportResult.Success)
+            {
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is stored offline for retry");
+            }
+            else
+            {
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is dropped");
+            }
+
+            return result;
+        }
+
         internal static void HandleFailures(HttpMessage httpMessage, PersistentBlob blob, PersistentBlobProvider blobProvider)
         {
             int statusCode = 0;

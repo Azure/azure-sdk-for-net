@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -116,6 +117,81 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(100, operation.PercentCompleted);
+        }
+
+        [RecordedTest]
+        public async Task BuildClassifierOperationCanPollFromNewObject()
+        {
+            var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
+            var classifierId = Recording.GenerateId();
+
+            var trainingFilesUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
+            var sourceA = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
+
+            var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
+            {
+                { "IRS-1040-A", new ClassifierDocumentTypeDetails(sourceA) },
+                { "IRS-1040-B", new ClassifierDocumentTypeDetails(sourceB) }
+            };
+
+            BuildDocumentClassifierOperation operation = null;
+            BuildDocumentClassifierOperation sameOperation = null;
+
+            try
+            {
+                operation = await client.BuildDocumentClassifierAsync(WaitUntil.Started, documentTypes, classifierId);
+
+                sameOperation = InstrumentOperation(new BuildDocumentClassifierOperation(operation.Id, nonInstrumentedClient));
+                await sameOperation.WaitForCompletionAsync();
+            }
+            finally
+            {
+                if (sameOperation.HasValue)
+                {
+                    await client.DeleteDocumentClassifierAsync(classifierId);
+                }
+            }
+
+            Assert.IsTrue(sameOperation.HasValue);
+            Assert.AreEqual(classifierId, sameOperation.Value.ClassifierId);
+        }
+
+        [RecordedTest]
+        public async Task BuildClassifierOperationPercentageCompletedValue()
+        {
+            var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
+            var classifierId = Recording.GenerateId();
+
+            var trainingFilesUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
+            var sourceA = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
+
+            var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
+            {
+                { "IRS-1040-A", new ClassifierDocumentTypeDetails(sourceA) },
+                { "IRS-1040-B", new ClassifierDocumentTypeDetails(sourceB) }
+            };
+
+            BuildDocumentClassifierOperation operation = null;
+
+            try
+            {
+                operation = await client.BuildDocumentClassifierAsync(WaitUntil.Started, documentTypes, classifierId);
+
+                Assert.Throws<InvalidOperationException>(() => _ = operation.PercentCompleted);
+
+                await operation.WaitForCompletionAsync();
+            }
+            finally
+            {
+                if (operation.HasValue)
+                {
+                    await client.DeleteDocumentClassifierAsync(classifierId);
+                }
+            }
+
             Assert.AreEqual(100, operation.PercentCompleted);
         }
     }

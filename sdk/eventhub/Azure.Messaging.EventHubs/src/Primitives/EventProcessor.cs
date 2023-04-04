@@ -743,13 +743,13 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // was passed.  In the event that initialization is run and encounters an
                 // exception, it takes responsibility for firing the error handler.
 
-                var startingPosition = startingPositionOverride switch
+                var (startingPosition, checkpointUsed) = startingPositionOverride switch
                 {
-                    _ when startingPositionOverride.HasValue => startingPositionOverride.Value,
+                    _ when startingPositionOverride.HasValue => (startingPositionOverride.Value, false),
                     _ => await InitializePartitionForProcessingAsync(partition, cancellationSource.Token).ConfigureAwait(false)
                 };
 
-                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString());
+                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString(), checkpointUsed);
 
                 // Create the connection to be used for spawning consumers; if the creation
                 // fails, then consider the processing task to be failed.  The main processing
@@ -1795,15 +1795,15 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="partition">The partition to initialize.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The <see cref="EventPosition" /> to start processing from.</returns>
+        /// <returns>A tuple containing the <see cref="EventPosition" /> to start processing from and whether the position was based on a checkpoint or not.</returns>
         ///
         /// <remarks>
         ///   This method will invoke the error handler should an exception be encountered; the
         ///   exception will then be bubbled to callers.
         /// </remarks>
         ///
-        private async Task<EventPosition> InitializePartitionForProcessingAsync(TPartition partition,
-                                                                                CancellationToken cancellationToken)
+        private async Task<(EventPosition Position, bool CheckpointUsed)> InitializePartitionForProcessingAsync(TPartition partition,
+                                                                                                                CancellationToken cancellationToken)
         {
             var operationDescription = Resources.OperationClaimOwnership;
 
@@ -1824,10 +1824,10 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 if (checkpoint != null)
                 {
-                    return checkpoint.StartingPosition;
+                    return (checkpoint.StartingPosition, true);
                 }
 
-                return Options.DefaultStartingPosition;
+                return (Options.DefaultStartingPosition, false);
             }
             catch (Exception ex)
             {

@@ -136,40 +136,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, items.Count());
         }
 
-        // TODO: REWRITE THIS TEST FOR IDISPOSABLE
-        [Fact]
-        public void TransmitFromStorage()
-        {
-            using var activity = CreateActivity("TestActivity");
-            var telemetryItem = CreateTelemetryItem(activity);
-            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
-            telemetryItems.Add(telemetryItem);
-
-            //Even though we are using different transmitter instances
-            // we need to use the same instance of fileProvider for this test.
-            var mockFileProvider = new MockFileProvider();
-            // Transmit
-            var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
-            var transmitter = GetTransmitter(mockResponse);
-            transmitter._fileBlobProvider = mockFileProvider;
-            transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-
-            //Assert
-            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
-
-            // reset server logic to return 200
-            mockResponse = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
-            transmitter = GetTransmitter(new[] { mockResponse });
-            transmitter._fileBlobProvider = mockFileProvider;
-
-            transmitter.TransmitFromStorage(1, false, CancellationToken.None).EnsureCompleted();
-
-            // Assert
-            // Blob will be deleted on successful transmission
-            Assert.Empty(transmitter._fileBlobProvider.GetBlobs());
-        }
-
-        // TODO: Remove TransmitFromStorage() test after moving to new implementation
         [Fact]
         public void TelemetryIsTransmittedSuccessfullyFromStorage()
         {
@@ -189,8 +155,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(transmitter._fileBlobProvider);
             Assert.Single(transmitter._fileBlobProvider.GetBlobs());
 
-            var transmitFromStorageHandler = new TransmitFromStorageHandler(transmitter._applicationInsightsRestClient, transmitter._fileBlobProvider, new TransmissionStateManager());
-            transmitFromStorageHandler.TransmitFromStorage(null, null);
+            Assert.Equal(TransmissionState.Open, transmitter._transmissionStateManager.State);
+
+            // Reset transmission state
+            transmitter._transmissionStateManager.ResetConsecutiveErrors();
+            transmitter._transmissionStateManager.CloseTransmission();
+
+            transmitter._transmitFromStorageHandler?.TransmitFromStorage(null, null);
 
             // Assert
             // Blob will be deleted on successful transmission
@@ -218,18 +189,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(transmitter._fileBlobProvider);
             Assert.Single(transmitter._fileBlobProvider.GetBlobs());
 
-            var transmissionStateManager = new TransmissionStateManager(
-                 random: new(),
-                 minIntervalToUpdateConsecutiveErrors: TimeSpan.FromSeconds(20),
-                 nextMinTimeToUpdateConsecutiveErrors: DateTimeOffset.MinValue,
-                 backOffIntervalTimer: new System.Timers.Timer(),
-                 TransmissionState.Open
-                 );
+            Assert.Equal(TransmissionState.Open, transmitter._transmissionStateManager.State);
 
-            Assert.Equal(TransmissionState.Open, transmissionStateManager.State);
-
-            var transmitFromStorageHandler = new TransmitFromStorageHandler(transmitter._applicationInsightsRestClient, transmitter._fileBlobProvider, transmissionStateManager);
-            transmitFromStorageHandler.TransmitFromStorage(null, null);
+            transmitter._transmitFromStorageHandler?.TransmitFromStorage(null, null);
 
             // Assert
             // Blob will not be deleted as the transmission state is open.
@@ -255,16 +217,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(transmitter._fileBlobProvider);
             Assert.Single(transmitter._fileBlobProvider.GetBlobs());
 
-            var transmissionStateManager = new TransmissionStateManager();
-            var transmitFromStorageHandler = new TransmitFromStorageHandler(transmitter._applicationInsightsRestClient, transmitter._fileBlobProvider, transmissionStateManager);
+            Assert.Equal(TransmissionState.Open, transmitter._transmissionStateManager.State);
 
-            Assert.Equal(TransmissionState.Closed, transmissionStateManager.State);
+            // Reset transmission state
+            transmitter._transmissionStateManager.ResetConsecutiveErrors();
+            transmitter._transmissionStateManager.CloseTransmission();
 
-            transmitFromStorageHandler.TransmitFromStorage(null, null);
+            transmitter._transmitFromStorageHandler?.TransmitFromStorage(null, null);
 
             // Assert
             // Blob will not be deleted as the transmission state is open.
-            Assert.Equal(TransmissionState.Open, transmissionStateManager.State);
+            Assert.Equal(TransmissionState.Open, transmitter._transmissionStateManager.State);
             Assert.Single(transmitter._fileBlobProvider.GetBlobs());
 
             transmitter.Dispose();
@@ -284,6 +247,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Overwrite storage with mock
             transmitter._fileBlobProvider = new MockFileProvider();
+            if (transmitter._transmitFromStorageHandler != null)
+            {
+                transmitter._transmitFromStorageHandler._blobProvider = transmitter._fileBlobProvider;
+            }
 
             return transmitter;
         }
