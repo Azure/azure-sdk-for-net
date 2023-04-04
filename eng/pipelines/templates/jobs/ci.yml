@@ -162,6 +162,8 @@ jobs:
                 - "/*"
                 - "!SessionRecords"
 
+      - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml
+
       - template: /eng/common/pipelines/templates/steps/verify-samples.yml
         parameters:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
