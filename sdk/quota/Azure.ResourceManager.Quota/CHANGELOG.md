@@ -6,12 +6,6 @@
 
 - Add support for new version 2023-02-01
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.2 (2023-02-17)
 
 ### Other Changes
