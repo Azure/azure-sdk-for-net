@@ -1,6 +1,9 @@
-﻿using NUnit.Framework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-namespace Azure.Core.Expressions.DataFactory.Tests
+using NUnit.Framework;
+
+namespace Azure.Core.Expressions.DataFactory.Samples
 {
     public class DataFactoryElementSamples
     {
