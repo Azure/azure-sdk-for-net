@@ -13,7 +13,7 @@ namespace Azure.Communication.Chat.Notifications.Models
         }
         private string SenderId { get; }
         private string RecipientMri { get; }
-        public string RecipientId { get; }
+        private string RecipientId { get; }
         public CommunicationIdentifier Sender { get; }
         public CommunicationIdentifier Recipient { get; }
     }

@@ -31,10 +31,6 @@ namespace Azure.Communication.Chat.Notifications.Models
         /// <summary>
         /// Property
         /// </summary>
-        public string Priority { get; }
-        /// <summary>
-        /// Property
-        /// </summary>
         public string Id { get; }
 
         /// <summary>
