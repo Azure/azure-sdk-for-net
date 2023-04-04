@@ -8,7 +8,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 {
     internal interface IPlatform
     {
-        public string GetEnvironmentVariable(string name);
+        /// <summary>
+        /// Returns null if the key is not found.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public string? GetEnvironmentVariable(string name);
 
         public IDictionary GetEnvironmentVariables();
 
