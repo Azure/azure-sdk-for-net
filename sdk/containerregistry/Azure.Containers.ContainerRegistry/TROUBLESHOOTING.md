@@ -175,4 +175,17 @@ message containing additional information and [Docker error code](https://docs.d
 In rare cases, a transient error (such as connection reset) can happen during blob upload which may lead to a `RequestFailedException` with a 404 status code being thrown with message similar to
 `{"errors":[{"code":"BLOB_UPLOAD_INVALID","message":"blob upload invalid"}]}`, and resulting in a failed upload.  In this case, upload should to be restarted from the beginning.
 
-To display detailed error messages, please see the code sample in [General troubleshooting](#general-troubleshooting) above.
+The following code sample illustrates how you can catch this exception.
+
+```C# Snippet:ContainerRegistry_Samples_CanCatchUploadFailure
+try
+{
+    BinaryData blob = BinaryData.FromString("Sample blob.");
+    UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(blob);
+}
+catch (RequestFailedException ex) when (ex.Status == 404 && ex.ErrorCode == "BLOB_UPLOAD_INVALID")
+{
+    Console.WriteLine("Blob upload failed. Please retry.");
+    Console.WriteLine($"Service error: {ex.Message}.");
+}
+```

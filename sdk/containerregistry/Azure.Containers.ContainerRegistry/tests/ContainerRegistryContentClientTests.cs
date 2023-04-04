@@ -41,7 +41,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [Test]
         public void ConstructorValidatesArguments()
         {
-            Assert.That(() => new ContainerRegistryContentClient(null, "<repo>", GetCredential() ), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
+            Assert.That(() => new ContainerRegistryContentClient(null, "<repo>", GetCredential()), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
 
             Assert.That(() => new ContainerRegistryContentClient(_url, "<repo>", credential: null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept a null credential.");
 
