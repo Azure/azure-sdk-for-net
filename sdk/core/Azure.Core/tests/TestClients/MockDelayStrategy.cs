@@ -16,11 +16,5 @@ namespace Azure.Core.Tests.TestClients
             CallCount++;
             return TimeSpan.Zero;
         }
-
-        protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response response, int retryNumber)
-        {
-            CallCount++;
-            return new(TimeSpan.Zero);
-        }
     }
 }

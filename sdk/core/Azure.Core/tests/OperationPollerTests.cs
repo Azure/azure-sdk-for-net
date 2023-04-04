@@ -77,12 +77,6 @@ namespace Azure.Core.Tests.DelayStrategies
                 _cts.CancelAfter(_cancelAfter);
                 return _delay;
             }
-
-            protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response response, int retryNumber)
-            {
-                _cts.CancelAfter(_cancelAfter);
-                return new(_delay);
-            }
         }
     }
 }

@@ -24,7 +24,5 @@ namespace Azure.Core
         }
 
         protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber) => _delay;
-
-        protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response? response, int retryNumber) => new(_delay);
     }
 }

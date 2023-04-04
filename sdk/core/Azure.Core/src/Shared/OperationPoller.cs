@@ -73,7 +73,7 @@ namespace Azure.Core
 
                 var strategy = delayHint.HasValue ? new FixedDelayWithNoJitter(delayHint.Value) : _delayStrategy;
 
-                await Delay(async, strategy.GetNextDelay(response, ++retryNumber, response.Headers.RetryAfter), cancellationToken).ConfigureAwait(false);
+                await Delay(async, strategy.GetNextDelay(response, ++retryNumber), cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.Core
 
                 var strategy = delayHint.HasValue ? new FixedDelayWithNoJitter(delayHint.Value) : _delayStrategy;
 
-                await Delay(async, strategy.GetNextDelay(response, ++retryNumber, response.Headers.RetryAfter), cancellationToken).ConfigureAwait(false);
+                await Delay(async, strategy.GetNextDelay(response, ++retryNumber), cancellationToken).ConfigureAwait(false);
             }
         }
 

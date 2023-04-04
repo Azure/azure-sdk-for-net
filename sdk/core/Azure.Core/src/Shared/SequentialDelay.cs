@@ -33,13 +33,7 @@ namespace Azure.Core
         {
         }
 
-        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber) =>
-            GetNextDelayCoreInternal(retryNumber);
-
-        protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response? response, int retryNumber) =>
-            new(GetNextDelayCoreInternal(retryNumber));
-
-        private static TimeSpan GetNextDelayCoreInternal(int retryNumber)
+        protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber)
         {
             int index = retryNumber - 1;
             return index >= _pollingSequence.Length ? _maxDelay : _pollingSequence[index];

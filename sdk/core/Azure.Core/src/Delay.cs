@@ -68,40 +68,17 @@ namespace Azure.Core
         protected abstract TimeSpan GetNextDelayCore(Response? response, int retryNumber);
 
         /// <summary>
-        ///
-        /// </summary>
-        /// <param name="response"></param>
-        /// <param name="retryNumber"></param>
-        /// <returns></returns>
-        protected abstract ValueTask<TimeSpan> GetNextDelayCoreAsync(Response? response, int retryNumber);
-
-        /// <summary>
         /// Get the interval of next delay iteration.
         /// </summary>
         /// <remarks> Note that the value could change per call. </remarks>
         /// <param name="response"> Server response. </param>
         /// <param name="retryNumber"></param>
-        /// <param name="serverDelayHint"></param>
         /// <returns> Delay interval of next iteration. </returns>
-        public TimeSpan GetNextDelay(Response? response, int retryNumber, TimeSpan? serverDelayHint)
-            => GetNextDelayInternalAsync(false, response, retryNumber, serverDelayHint).EnsureCompleted();
-
-        /// <summary>
-        /// Get the interval of next delay iteration.
-        /// </summary>
-        /// <remarks> Note that the value could change per call. </remarks>
-        /// <param name="response"> Server response. </param>
-        /// <param name="retryNumber"></param>
-        /// <param name="serverDelayHint"></param>
-        /// <returns> Delay interval of next iteration. </returns>
-        public async ValueTask<TimeSpan> GetNextDelayAsync(Response? response, int retryNumber, TimeSpan? serverDelayHint)
-            => await GetNextDelayInternalAsync(true, response, retryNumber, serverDelayHint).ConfigureAwait(false);
-
-        private async ValueTask<TimeSpan> GetNextDelayInternalAsync(bool async, Response? response, int retryNumber, TimeSpan? serverDelayHint) =>
+        public TimeSpan GetNextDelay(Response? response, int retryNumber) =>
             Max(
-                serverDelayHint ?? TimeSpan.Zero,
+                response?.Headers.RetryAfter ?? TimeSpan.Zero,
                 Min(
-                    ApplyJitter(async ? await GetNextDelayCoreAsync(response, retryNumber).ConfigureAwait(false) : GetNextDelayCore(response, retryNumber)),
+                    ApplyJitter(GetNextDelayCore(response, retryNumber)),
                     _maxDelay));
 
         private TimeSpan ApplyJitter(TimeSpan delay)
@@ -112,17 +89,17 @@ namespace Azure.Core
         /// <summary>
         ///
         /// </summary>
-        /// <param name="t1"></param>
-        /// <param name="t2"></param>
+        /// <param name="val1"></param>
+        /// <param name="val2"></param>
         /// <returns></returns>
-        protected static TimeSpan Max(TimeSpan t1, TimeSpan t2) => t1 > t2 ? t1 : t2;
+        protected static TimeSpan Max(TimeSpan val1, TimeSpan val2) => val1 > val2 ? val1 : val2;
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="t1"></param>
-        /// <param name="t2"></param>
+        /// <param name="val1"></param>
+        /// <param name="val2"></param>
         /// <returns></returns>
-        protected static TimeSpan Min(TimeSpan t1, TimeSpan t2) => t1 < t2 ? t1 : t2;
+        protected static TimeSpan Min(TimeSpan val1, TimeSpan val2) => val1 < val2 ? val1 : val2;
     }
 }

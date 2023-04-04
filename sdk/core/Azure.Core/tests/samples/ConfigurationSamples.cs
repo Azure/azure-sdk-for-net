@@ -130,11 +130,6 @@ namespace Azure.Core.Samples
             {
                 throw new NotImplementedException();
             }
-
-            protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response response, int retryNumber)
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 }

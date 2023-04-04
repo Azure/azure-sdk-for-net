@@ -29,8 +29,5 @@ namespace Azure.Core
 
         protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber) =>
             TimeSpan.FromMilliseconds((1 << retryNumber) * _delay.TotalMilliseconds);
-
-        protected override ValueTask<TimeSpan> GetNextDelayCoreAsync(Response? response, int retryNumber) =>
-            new(TimeSpan.FromMilliseconds((1 << retryNumber) * _delay.TotalMilliseconds));
     }
 }

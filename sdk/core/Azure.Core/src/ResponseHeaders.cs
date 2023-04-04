@@ -57,7 +57,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets the value of the retry after header, one of "Retry-After", "retry-after-ms", or "x-ms-retry-after-ms".
         /// </summary>
-        public TimeSpan? RetryAfter
+        internal TimeSpan? RetryAfter
         {
             get
             {
