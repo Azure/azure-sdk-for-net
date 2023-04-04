@@ -238,7 +238,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             ContainerRegistryClientOptions options = new()
             {
-                Transport = new MockTransport(new MockResponse(404).SetContent(uploadError).AddHeader("MockDigest", "MockDigest"))
+                Transport = new MockTransport(new MockResponse(404).SetContent(uploadError).AddHeader("Content-Type", "text/plain; charset=utf-8"))
             };
 
             ContainerRegistryContentClient client = new(endpoint, repository, new MockCredential(), options);

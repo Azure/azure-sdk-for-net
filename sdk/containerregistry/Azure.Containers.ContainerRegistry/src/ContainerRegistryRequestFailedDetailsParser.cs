@@ -22,16 +22,22 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             BinaryData content = BinaryData.FromStream(response.ContentStream);
+            if (content.ToMemory().Length == 0)
+            {
+                return false;
+            }
+
+            // Buffer the stream to log the content in the message
+            // See: https://github.com/Azure/azure-sdk-for-net/issues/35355
+            MemoryStream stream = new(content.ToArray());
+            response.ContentStream = stream;
+
             try
             {
                 // Optimistic check for JSON error object
                 if (content.ToMemory().Span[0] != (byte)'{')
                 {
-                    // Buffer the stream to log the content in the message
-                    // See: https://github.com/Azure/azure-sdk-for-net/issues/35355
-                    MemoryStream stream = new(content.ToArray());
-                    response.ContentStream = stream;
-                    return true;
+                    return false;
                 }
 
                 JsonDocument doc = JsonDocument.Parse(content);

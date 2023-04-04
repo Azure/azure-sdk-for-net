@@ -157,6 +157,44 @@ namespace Azure.Containers.ContainerRegistry.Tests
             });
         }
 
+        [Test]
+        public async Task CanParseMultipleErrors()
+        {
+            Uri endpoint = new("https://example.acr.io");
+            string repository = "TestRepository";
+            string errorContent = """
+                {
+                    "errors": [
+                        {"code":"FIRST_ERROR_CODE","message":"first error message"},
+                        {"code":"SECOND_ERROR_CODE","message":"second error message"}
+                    ]
+                }
+                """;
+
+            ContainerRegistryClientOptions options = new()
+            {
+                Transport = new MockTransport(new MockResponse(404).SetContent(errorContent).AddHeader("Content-Type", "text/plain; charset=utf-8"))
+            };
+
+            ContainerRegistryContentClient client = new(endpoint, repository, new MockCredential(), options);
+            bool caught = false;
+
+            try
+            {
+                BinaryData blob = BinaryData.FromString("Sample blob.");
+                UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(blob);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404 && ex.ErrorCode == "FIRST_ERROR_CODE")
+            {
+                Console.WriteLine($"Service error: {ex.Message}");
+                caught = true;
+                Assert.IsTrue(ex.Message.Contains("first error message"), "Exception message does not contain first error message.");
+                Assert.IsTrue(ex.Message.Contains("second error message"), "Exception message does not contain second error message.");
+            }
+
+            Assert.IsTrue(caught);
+        }
+
         private class MockReadOnlyStream : Stream
         {
             private readonly Func<int, byte> _contentFactory;
