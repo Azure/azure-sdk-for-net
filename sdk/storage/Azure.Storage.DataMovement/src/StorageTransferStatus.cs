@@ -14,16 +14,19 @@ namespace Azure.Storage.DataMovement
     {
         /// <summary>
         /// Default value.
+        /// Equivalent to <see cref="StorageTransferStatus.None"/>.
         /// </summary>
         None = 0,
 
         /// <summary>
         /// The Job has been queued up but has not yet begun any transfers.
+        /// Equivalent to <see cref="StorageTransferStatus.Queued"/>.
         /// </summary>
         Queued = 1,
 
         /// <summary>
         /// The Job has started, but has not yet completed.
+        /// Equivalent to <see cref="StorageTransferStatus.InProgress"/>.
         /// </summary>
         InProgress = 2,
 
@@ -51,5 +54,15 @@ namespace Azure.Storage.DataMovement
         /// The Job has been completed with at least one failed transfer.
         /// </summary>
         CompletedWithFailedTransfers = 6,
+
+        /// <summary>
+        /// A pause was called on the transfer job and is in progress.
+        /// </summary>
+        PauseInProgress = 7,
+
+        /// <summary>
+        /// A pause was called on the transfer job and is in progress.
+        /// </summary>
+        CancellationInProgress = 8,
     };
 }

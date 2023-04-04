@@ -17,7 +17,7 @@ namespace Azure.Storage.DataMovement
     /// Creates a checkpointer which uses a locally stored file to obtain
     /// the information in order to resume transfers in the future.
     /// </summary>
-    public class LocalTransferCheckpointer : TransferCheckpointer
+    internal class LocalTransferCheckpointer : TransferCheckpointer
     {
         internal string _pathToCheckpointer;
 
@@ -282,7 +282,7 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        internal override async Task WriteToCheckpointAsync(
+        public override async Task WriteToCheckpointAsync(
             string transferId,
             int partNumber,
             long chunkIndex,

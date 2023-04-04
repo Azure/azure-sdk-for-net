@@ -270,7 +270,9 @@ namespace Azure.Storage.DataMovement
         public async Task JobPartEvent(TransferStatusEventArgs args)
         {
             StorageTransferStatus status = _dataTransfer._state.GetTransferStatus();
-            if (args.StorageTransferStatus == StorageTransferStatus.Completed
+            if ((args.StorageTransferStatus == StorageTransferStatus.Completed ||
+                 args.StorageTransferStatus == StorageTransferStatus.CompletedWithSkippedTransfers ||
+                 args.StorageTransferStatus == StorageTransferStatus.CompletedWithFailedTransfers)
                 && status < StorageTransferStatus.Completed)
             {
                 if (_enumerationComplete)

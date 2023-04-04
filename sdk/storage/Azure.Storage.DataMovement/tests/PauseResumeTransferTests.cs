@@ -81,10 +81,9 @@ namespace Azure.Storage.DataMovement.Tests
             DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
             DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
             DisposingBlobContainer blobContainer = await GetTestContainerAsync();
-            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(checkpointerDirectory.DirectoryPath);
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                Checkpointer = transferCheckpointer,
+                CheckpointerMethod = new TransferCheckpointerMethod(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
             TransferManager transferManager = new TransferManager(options);
@@ -119,10 +118,9 @@ namespace Azure.Storage.DataMovement.Tests
             DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
             DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
             DisposingBlobContainer blobContainer = await GetTestContainerAsync();
-            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(checkpointerDirectory.DirectoryPath);
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                Checkpointer = transferCheckpointer,
+                CheckpointerMethod = new TransferCheckpointerMethod(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
             TransferManager transferManager = new TransferManager(options);
@@ -155,10 +153,9 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
-            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(checkpointerDirectory.DirectoryPath);
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                Checkpointer = transferCheckpointer,
+                CheckpointerMethod = new TransferCheckpointerMethod(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
             TransferManager transferManager = new TransferManager(options);
@@ -174,10 +171,9 @@ namespace Azure.Storage.DataMovement.Tests
             DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
             DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
             DisposingBlobContainer blobContainer = await GetTestContainerAsync();
-            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(checkpointerDirectory.DirectoryPath);
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                Checkpointer = transferCheckpointer,
+                CheckpointerMethod = new TransferCheckpointerMethod(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
             TransferManager transferManager = new TransferManager(options);
@@ -216,10 +212,9 @@ namespace Azure.Storage.DataMovement.Tests
             DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
             DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
             DisposingBlobContainer blobContainer = await GetTestContainerAsync();
-            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(checkpointerDirectory.DirectoryPath);
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                Checkpointer = transferCheckpointer,
+                CheckpointerMethod = new TransferCheckpointerMethod(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
             TransferManager transferManager = new TransferManager(options);

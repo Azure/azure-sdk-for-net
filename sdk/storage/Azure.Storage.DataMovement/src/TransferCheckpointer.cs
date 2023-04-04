@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement
     /// Base Checkpointer class to create the checkpointing logic
     /// to resume from.
     /// </summary>
-    public abstract class TransferCheckpointer
+    internal abstract class TransferCheckpointer
     {
         /// <summary>
         /// The protected constructor for the abstract TransferCheckpointer class (to allow for mocking).
@@ -117,7 +117,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        internal abstract Task WriteToCheckpointAsync(
+        public abstract Task WriteToCheckpointAsync(
             string transferId,
             int partNumber,
             long offset,
@@ -173,7 +173,7 @@ namespace Azure.Storage.DataMovement
         /// Compares the job plan header with the inputted source and destination to
         /// ensure the source and destination are the same, or else throw.
         /// </summary>
-        internal static void CheckInputWithHeader(
+        public static void CheckInputWithHeader(
             string transferId,
             JobPartPlanHeader header)
         {

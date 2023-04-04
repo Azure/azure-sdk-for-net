@@ -34,6 +34,6 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Optional. Defines the checkpoint ID that the transfer should continue from.
         /// </summary>
-        public TransferCheckpointer Checkpointer { get; set; }
+        public TransferCheckpointerMethod CheckpointerMethod { get; set; }
     }
 }

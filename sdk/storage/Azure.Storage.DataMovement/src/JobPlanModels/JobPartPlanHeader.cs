@@ -18,9 +18,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
         /// The version of data schema format of header
         /// This will seem weird because we will have a schema for how we store the data
         /// when the schema changes this version will increment
-        /// Index: 0
         ///
-        /// Set to a size of 3
         /// TODO: Consider changing to an int when GA comes.
         /// TODO: In public preview we should
         /// leave the version as "b1", instead of complete ints.
@@ -29,13 +27,11 @@ namespace Azure.Storage.DataMovement.JobPlanModels
 
         /// <summary>
         /// The start time of the job part.
-        /// Index: 4
         /// </summary>
         public DateTimeOffset StartTime;
 
         /// <summary>
         /// The Transfer/Job Id
-        /// Index: 12
         ///
         /// Size of a GUID.
         /// </summary>
@@ -43,38 +39,26 @@ namespace Azure.Storage.DataMovement.JobPlanModels
 
         /// <summary>
         /// Job Part's part number (0+)
-        /// Index: 84
-        ///
-        /// We don't expect there to be more than 50,000 job parts
-        /// So reaching int.MAX is extremely unlikely
         /// </summary>
         public long PartNumber;
 
         /// <summary>
         /// The length of the source root path
-        /// Index: 92
         /// </summary>
         public long SourcePathLength;
 
         /// <summary>
         /// The source path
-        /// Index: 100
-        ///
-        /// Size of byte[] in azcopy is 1000 bytes.
-        /// TODO: consider a different number, the max name of a blob cannot exceed 254
-        /// however the max length of a path in linux is 4096.
         /// </summary>
         public string SourcePath;
 
         /// <summary>
         /// The length of the source path query
-        /// Index: 8282
         /// </summary>
         public long SourceExtraQueryLength;
 
         /// <summary>
         /// Extra query params applicable to the source
-        /// Index: 8290
         ///
         /// Size of byte array in azcopy is 1000 bytes.
         /// </summary>
@@ -82,13 +66,11 @@ namespace Azure.Storage.DataMovement.JobPlanModels
 
         /// <summary>
         /// The length of the destination root path
-        /// Index: 10,290
         /// </summary>
         public long DestinationPathLength;
 
         /// <summary>
         /// The destination path
-        /// Index: 10,298
         ///
         /// Size of byte array in azcopy is 1000 bytes
         /// </summary>
@@ -96,13 +78,11 @@ namespace Azure.Storage.DataMovement.JobPlanModels
 
         /// <summary>
         /// The length of the destination path query
-        /// Index: 18,480
         /// </summary>
         public long DestinationExtraQueryLength;
 
         /// <summary>
         /// Extra query params applicable to the dest
-        /// Index: 18,488
         ///
         /// Size of byte array in azcopy is 1000 bytes
         /// </summary>
@@ -110,67 +90,52 @@ namespace Azure.Storage.DataMovement.JobPlanModels
 
         /// <summary>
         /// True if this is the Job's last part; else false
-        /// Index: 20,488
         /// </summary>
         public bool IsFinalPart;
 
         /// <summary>
         /// True if the existing blobs needs to be overwritten.
-        /// Index: 20,489
         /// </summary>
         public bool ForceWrite;
 
         /// <summary>
         /// Supplements ForceWrite with an additional setting for Azure Files. If true, the read-only attribute will be cleared before we overwrite
-        /// Index: 20,490
         /// </summary>
         public bool ForceIfReadOnly;
 
         /// <summary>
         /// if true, source data with encodings that represent compression are automatically decompressed when downloading
-        /// Index: 20,491
         /// </summary>
         public bool AutoDecompress;
 
         /// <summary>
         /// The Job Part's priority
-        /// Index: 20,492
         /// </summary>
         public byte Priority;
 
         /// <summary>
         /// Time to live after completion is used to persists the file on disk of specified time after the completion of JobPartOrder
-        ///
-        /// Index: 20,493
         /// </summary>
         public DateTimeOffset TTLAfterCompletion;
 
         /// <summary>
         /// The location of the transfer's source and destination
-        ///
-        /// Index: 20,501
         /// </summary>
         public JobPlanFromTo FromTo;
 
         /// <summary>
         /// option specifying how folders will be handled
-        ///
-        /// Index: 20,502
         /// </summary>
         public FolderPropertiesMode FolderPropertyMode;
 
         /// <summary>
         /// The number of transfers in the Job part
-        ///
-        /// Index: 20,503
         /// </summary>
         public long NumberChunks;
 
         /// <summary>
         /// Additional data for blob destinations
         /// Holds the additional information about the blob
-        ///
-        /// Index: 20,511
         /// </summary>
         public JobPartPlanDestinationBlob DstBlobData;
 
