@@ -799,7 +799,8 @@ namespace Compute.Tests
 
         /// <summary>
         /// This test creates a VMSS with PIR image and securityPostureReference defined.
-        /// Once the VMSS is created, it verifies whether the response contains securityPostureReference or not
+        /// Once the VMSS is created, it verifies whether the response contains 
+        /// securityPostureReference or not
         /// </summary>
         [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperation_SecurityPostureReferenceId")]
