@@ -90,7 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             Interlocked.Exchange(ref _consecutiveErrors, 0);
         }
 
-        internal void ResetTransmission(object source, System.Timers.ElapsedEventArgs e)
+        internal void ResetTransmission(object? source, System.Timers.ElapsedEventArgs e)
         {
             CloseTransmission();
         }

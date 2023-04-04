@@ -12,6 +12,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
 using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -23,15 +24,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static int GetItemsAccepted(HttpMessage message)
         {
-            return GetTrackResponse(message).ItemsAccepted.GetValueOrDefault();
+            return TryGetTrackResponse(message, out var trackResponse)
+                ? trackResponse.ItemsAccepted.GetValueOrDefault()
+                : default;
         }
 
-        internal static TrackResponse GetTrackResponse(HttpMessage message)
+        internal static bool TryGetTrackResponse(HttpMessage message, [NotNullWhen(true)] out TrackResponse? trackResponse)
         {
+            if (message.Response.ContentStream == null)
+            {
+                trackResponse = null;
+                return false;
+            }
+
             using (JsonDocument document = JsonDocument.Parse(message.Response.ContentStream, default))
             {
                 var value = TrackResponse.DeserializeTrackResponse(document.RootElement);
-                return Response.FromValue(value, message.Response);
+                trackResponse = Response.FromValue(value, message.Response);
+                return true;
             }
         }
 
@@ -68,21 +78,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
+            retryAfter = default;
             return false;
         }
 
-        internal static byte[]? GetRequestContent(RequestContent? content)
+        internal static bool TryGetRequestContent(RequestContent? content, [NotNullWhen(true)] out byte[]? requestContent)
         {
             if (content == null)
             {
-                return null;
+                requestContent = null;
+                return false;
             }
 
             using MemoryStream st = new MemoryStream();
 
             content.WriteTo(st, CancellationToken.None);
 
-            return st.ToArray();
+            requestContent = st.ToArray();
+            return true;
         }
 
         internal static byte[]? GetPartialContentForRetry(TrackResponse trackResponse, RequestContent? content)
@@ -93,41 +106,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             string? partialContent = null;
-            var fullContent = Encoding.UTF8.GetString(GetRequestContent(content)).Split('\n');
-            foreach (var error in trackResponse.Errors)
+            if (TryGetRequestContent(content, out var requestContent))
             {
-                if (error != null && error.Index != null)
+                var fullContent = Encoding.UTF8.GetString(requestContent).Split('\n');
+                foreach (var error in trackResponse.Errors)
                 {
-                    if (error.Index >= fullContent.Length || error.Index < 0)
+                    if (error != null && error.Index != null)
                     {
-                        // TODO: log
-                        continue;
-                    }
-
-                    if (error.StatusCode == ResponseStatusCodes.RequestTimeout
-                        || error.StatusCode == ResponseStatusCodes.ServiceUnavailable
-                        || error.StatusCode == ResponseStatusCodes.InternalServerError
-                        || error.StatusCode == ResponseStatusCodes.ResponseCodeTooManyRequests
-                        || error.StatusCode == ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache)
-                    {
-                        if (string.IsNullOrEmpty(partialContent))
+                        if (error.Index >= fullContent.Length || error.Index < 0)
                         {
-                            partialContent = fullContent[(int)error.Index];
+                            // TODO: log
+                            continue;
                         }
-                        else
+
+                        if (error.StatusCode == ResponseStatusCodes.RequestTimeout
+                            || error.StatusCode == ResponseStatusCodes.ServiceUnavailable
+                            || error.StatusCode == ResponseStatusCodes.InternalServerError
+                            || error.StatusCode == ResponseStatusCodes.ResponseCodeTooManyRequests
+                            || error.StatusCode == ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache)
                         {
-                            partialContent += '\n' + fullContent[(int)error.Index];
+                            if (string.IsNullOrEmpty(partialContent))
+                            {
+                                partialContent = fullContent[(int)error.Index];
+                            }
+                            else
+                            {
+                                partialContent += '\n' + fullContent[(int)error.Index];
+                            }
                         }
                     }
                 }
             }
 
-            if (partialContent == null)
-            {
-                return null;
-            }
-
-            return Encoding.UTF8.GetBytes(partialContent);
+            return partialContent == null
+                ? null
+                : Encoding.UTF8.GetBytes(partialContent);
         }
 
         internal static ExportResult IsSuccess(HttpMessage httpMessage)
@@ -149,8 +162,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             if (!httpMessage.HasResponse)
             {
                 // HttpRequestException
-                content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                if (content != null)
+                if (TryGetRequestContent(httpMessage.Request.Content, out content))
                 {
                     result = blobProvider.SaveTelemetry(content);
                 }
@@ -163,11 +175,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case ResponseStatusCodes.PartialSuccess:
                         // Parse retry-after header
                         // Send Failed Messages To Storage
-                        TrackResponse trackResponse = HttpPipelineHelper.GetTrackResponse(httpMessage);
-                        content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
-                        if (content != null)
+                        if (TryGetTrackResponse(httpMessage, out TrackResponse? trackResponse))
                         {
-                            result = blobProvider.SaveTelemetry(content);
+                            content = HttpPipelineHelper.GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
+                            if (content != null)
+                            {
+                                result = blobProvider.SaveTelemetry(content);
+                            }
                         }
                         break;
                     case ResponseStatusCodes.RequestTimeout:
@@ -175,8 +189,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
                         // Parse retry-after header
                         // Send Messages To Storage
-                        content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                        if (content != null)
+                        if (TryGetRequestContent(httpMessage.Request.Content, out content))
                         {
                             result = blobProvider.SaveTelemetry(content);
                         }
@@ -188,8 +201,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case ResponseStatusCodes.ServiceUnavailable:
                     case ResponseStatusCodes.GatewayTimeout:
                         // Send Messages To Storage
-                        content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
-                        if (content != null)
+                        if (TryGetRequestContent(httpMessage.Request.Content, out content))
                         {
                             result = blobProvider.SaveTelemetry(content);
                         }
@@ -226,12 +238,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         // Parse retry-after header
                         // Send Failed Messages To Storage
                         // Delete existing file
-                        TrackResponse trackResponse = GetTrackResponse(httpMessage);
-                        var content = GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
-                        if (content != null)
+                        if (TryGetTrackResponse(httpMessage, out TrackResponse? trackResponse))
                         {
-                            blob.TryDelete();
-                            blobProvider.SaveTelemetry(content);
+                            var content = GetPartialContentForRetry(trackResponse, httpMessage.Request.Content);
+                            if (content != null)
+                            {
+                                blob.TryDelete();
+                                blobProvider.SaveTelemetry(content);
+                            }
                         }
                         break;
                     case ResponseStatusCodes.RequestTimeout:
