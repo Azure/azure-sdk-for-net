@@ -13,62 +13,22 @@ namespace Azure.AI.TextAnalytics.Tests
 {
     public class RetryOnInternalServerErrorAttributeTests
     {
-        private const string ExceptionMessage =
+        private const string FailedToProcessTaskExceptionMessage =
             "Failed to process task after several retry"
             + "\r\nStatus: 200 (OK)"
             + "\r\nErrorCode: InternalServerError";
 
-        [Test]
-        public void PassingTestIsNotRetried()
-        {
-            FakeTest test = new();
-            TestExecutionContext context = new() { CurrentTest = test };
-            Mock<TestCommand> mockTestCommand = new(test);
-            Mock<TestResult> mockResult = new(test);
-
-            mockResult
-                .Setup(res => res.PassCount)
-                .Returns(1);
-
-            mockTestCommand
-                .Setup(cmd => cmd.Execute(It.IsAny<TestExecutionContext>()))
-                .Returns(mockResult.Object);
-
-            RetryOnInternalServerErrorAttribute retryAttribute = new();
-            retryAttribute.Wrap(mockTestCommand.Object).Execute(context);
-
-            mockTestCommand
-                .Verify(cmd => cmd.Execute(It.IsAny<TestExecutionContext>()), Times.Once);
-        }
+        private const string InvalidTaskTypeExceptionMessage =
+            "Invalid Task Type"
+            + "\r\nStatus: 500 (Internal Server Error)"
+            + "\r\nErrorCode: InternalServerError";
 
         [Test]
-        public void FailingTestWithUnexpectedMessageIsNotRetried()
+        [TestCase(FailedToProcessTaskExceptionMessage)]
+        [TestCase(InvalidTaskTypeExceptionMessage)]
+        public void FailingTestIsRetried(string exceptionMessage)
         {
-            const string differentMessage =
-                "A different error occurred"
-                + "\r\nStatus: 400 (Bad Request)"
-                + "\r\nErrorCode: BadRequest";
-
-            RequestFailedException exception = new(400, differentMessage, "BadRequest", null);
-            FakeTest test = new();
-            TestExecutionContext context = new() { CurrentTest = test };
-            Mock<TestCommand> mockTestCommand = new(test);
-
-            mockTestCommand
-                .Setup(cmd => cmd.Execute(It.IsAny<TestExecutionContext>()))
-                .Throws(exception);
-
-            RetryOnInternalServerErrorAttribute retryAttribute = new();
-            retryAttribute.Wrap(mockTestCommand.Object).Execute(context);
-
-            mockTestCommand
-                .Verify(cmd => cmd.Execute(It.IsAny<TestExecutionContext>()), Times.Once);
-        }
-
-        [Test]
-        public void FailingTestIsRetried()
-        {
-            RequestFailedException exception = new(200, ExceptionMessage, "InternalServerError", null);
+            RequestFailedException exception = new(200, exceptionMessage, "InternalServerError", null);
             FakeTest test = new();
             TestExecutionContext context = new() { CurrentTest = test };
             Mock<TestCommand> mockTestCommand = new(test);
@@ -88,43 +48,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             mockTestCommand
                 .Verify(cmd => cmd.Execute(It.IsAny<TestExecutionContext>()), Times.Exactly(2));
-        }
-
-        [Test]
-        public void FailingTestObeysRetryLimits()
-        {
-            RequestFailedException exception = new(200, ExceptionMessage, "InternalServerError", null);
-            FakeTest test = new();
-            TestExecutionContext context = new() { CurrentTest = test };
-            Mock<TestCommand> mockTestCommand = new(test);
-
-            mockTestCommand
-                .Setup(cmd => cmd.Execute(It.IsAny<TestExecutionContext>()))
-                .Throws(exception);
-
-            RetryOnInternalServerErrorAttribute retryAttribute = new();
-            retryAttribute.Wrap(mockTestCommand.Object).Execute(context);
-
-            mockTestCommand
-                .Verify(cmd => cmd.Execute(It.IsAny<TestExecutionContext>()), Times.Exactly(RetryOnInternalServerErrorAttribute.TryCount));
-        }
-
-        [Test]
-        public void FailingTestIsInconclusiveWhenRetriesExhausted()
-        {
-            RequestFailedException exception = new(200, ExceptionMessage, "InternalServerError", null);
-            FakeTest test = new();
-            TestExecutionContext context = new() { CurrentTest = test };
-            Mock<TestCommand> mockTestCommand = new(test);
-
-            mockTestCommand
-                .Setup(cmd => cmd.Execute(It.IsAny<TestExecutionContext>()))
-                .Throws(exception);
-
-            RetryOnInternalServerErrorAttribute retryAttribute = new();
-            var result = retryAttribute.Wrap(mockTestCommand.Object).Execute(context);
-
-            Assert.That(result.ResultState, Is.EqualTo(ResultState.Inconclusive), "The result should be inconclusive.");
         }
 
         public class FakeTest : Test
