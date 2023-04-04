@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ThirdPartyProviderAuthorization. </summary>
+    /// <summary>
+    /// The ThirdPartyProviderAuthorization.
+    /// Serialized Name: ThirdPartyProviderAuthorization
+    /// </summary>
     public partial class ThirdPartyProviderAuthorization
     {
         /// <summary> Initializes a new instance of ThirdPartyProviderAuthorization. </summary>
@@ -20,17 +23,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ThirdPartyProviderAuthorization. </summary>
-        /// <param name="authorizations"></param>
-        /// <param name="managedByTenantId"></param>
+        /// <param name="authorizations"> Serialized Name: ThirdPartyProviderAuthorization.authorizations. </param>
+        /// <param name="managedByTenantId"> Serialized Name: ThirdPartyProviderAuthorization.managedByTenantId. </param>
         internal ThirdPartyProviderAuthorization(IList<LightHouseAuthorization> authorizations, string managedByTenantId)
         {
             Authorizations = authorizations;
             ManagedByTenantId = managedByTenantId;
         }
 
-        /// <summary> Gets the authorizations. </summary>
+        /// <summary> Serialized Name: ThirdPartyProviderAuthorization.authorizations. </summary>
         public IList<LightHouseAuthorization> Authorizations { get; }
-        /// <summary> Gets or sets the managed by tenant id. </summary>
+        /// <summary> Serialized Name: ThirdPartyProviderAuthorization.managedByTenantId. </summary>
         public string ManagedByTenantId { get; set; }
     }
 }

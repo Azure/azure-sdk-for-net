@@ -11,11 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The SkuResourceProperties. </summary>
+    /// <summary>
+    /// The SkuResourceProperties.
+    /// Serialized Name: SkuResourceProperties
+    /// </summary>
     public partial class SkuResourceProperties : ResourceTypeSkuInfo
     {
         /// <summary> Initializes a new instance of SkuResourceProperties. </summary>
-        /// <param name="skuSettings"></param>
+        /// <param name="skuSettings"> Serialized Name: ResourceTypeSkuInfo.skuSettings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuSettings"/> is null. </exception>
         public SkuResourceProperties(IEnumerable<SkuSetting> skuSettings) : base(skuSettings)
         {
@@ -23,8 +26,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of SkuResourceProperties. </summary>
-        /// <param name="skuSettings"></param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="skuSettings"> Serialized Name: ResourceTypeSkuInfo.skuSettings. </param>
+        /// <param name="provisioningState">
+        /// The provisioned state of the resource.
+        /// Serialized Name: ResourceTypeSkuInfo.provisioningState
+        /// </param>
         internal SkuResourceProperties(IList<SkuSetting> skuSettings, ProvisioningState? provisioningState) : base(skuSettings, provisioningState)
         {
         }

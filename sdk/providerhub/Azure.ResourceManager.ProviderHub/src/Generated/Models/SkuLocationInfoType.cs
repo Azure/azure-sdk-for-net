@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The SkuLocationInfoType. </summary>
+    /// <summary>
+    /// The SkuLocationInfoType.
+    /// Serialized Name: SkuLocationInfoType
+    /// </summary>
     public readonly partial struct SkuLocationInfoType : IEquatable<SkuLocationInfoType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string EdgeZoneValue = "EdgeZone";
         private const string ArcZoneValue = "ArcZone";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: SkuLocationInfoType.NotSpecified
+        /// </summary>
         public static SkuLocationInfoType NotSpecified { get; } = new SkuLocationInfoType(NotSpecifiedValue);
-        /// <summary> EdgeZone. </summary>
+        /// <summary>
+        /// EdgeZone
+        /// Serialized Name: SkuLocationInfoType.EdgeZone
+        /// </summary>
         public static SkuLocationInfoType EdgeZone { get; } = new SkuLocationInfoType(EdgeZoneValue);
-        /// <summary> ArcZone. </summary>
+        /// <summary>
+        /// ArcZone
+        /// Serialized Name: SkuLocationInfoType.ArcZone
+        /// </summary>
         public static SkuLocationInfoType ArcZone { get; } = new SkuLocationInfoType(ArcZoneValue);
         /// <summary> Determines if two <see cref="SkuLocationInfoType"/> values are the same. </summary>
         public static bool operator ==(SkuLocationInfoType left, SkuLocationInfoType right) => left.Equals(right);

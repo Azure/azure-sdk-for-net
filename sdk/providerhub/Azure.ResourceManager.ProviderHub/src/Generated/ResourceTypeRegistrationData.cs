@@ -11,7 +11,11 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    /// <summary> A class representing the ResourceTypeRegistration data model. </summary>
+    /// <summary>
+    /// A class representing the ResourceTypeRegistration data model.
+    /// The ResourceTypeRegistration.
+    /// Serialized Name: ResourceTypeRegistration
+    /// </summary>
     public partial class ResourceTypeRegistrationData : ResourceData
     {
         /// <summary> Initializes a new instance of ResourceTypeRegistrationData. </summary>
@@ -24,13 +28,13 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Serialized Name: ResourceTypeRegistration.properties. </param>
         internal ResourceTypeRegistrationData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ResourceTypeRegistrationProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Serialized Name: ResourceTypeRegistration.properties. </summary>
         public ResourceTypeRegistrationProperties Properties { get; set; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceProviderEndpoint. </summary>
+    /// <summary>
+    /// The ResourceProviderEndpoint.
+    /// Serialized Name: ResourceProviderEndpoint
+    /// </summary>
     public partial class ResourceProviderEndpoint
     {
         /// <summary> Initializes a new instance of ResourceProviderEndpoint. </summary>
@@ -23,14 +26,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceProviderEndpoint. </summary>
-        /// <param name="enabled"></param>
-        /// <param name="apiVersions"></param>
-        /// <param name="endpointUri"></param>
-        /// <param name="locations"></param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="featuresRule"></param>
-        /// <param name="timeout"></param>
-        /// <param name="endpointType"></param>
+        /// <param name="enabled"> Serialized Name: ResourceProviderEndpoint.enabled. </param>
+        /// <param name="apiVersions"> Serialized Name: ResourceProviderEndpoint.apiVersions. </param>
+        /// <param name="endpointUri"> Serialized Name: ResourceProviderEndpoint.endpointUri. </param>
+        /// <param name="locations"> Serialized Name: ResourceProviderEndpoint.locations. </param>
+        /// <param name="requiredFeatures"> Serialized Name: ResourceProviderEndpoint.requiredFeatures. </param>
+        /// <param name="featuresRule"> Serialized Name: ResourceProviderEndpoint.featuresRule. </param>
+        /// <param name="timeout"> Serialized Name: ResourceProviderEndpoint.timeout. </param>
+        /// <param name="endpointType"> Serialized Name: ResourceProviderEndpoint.endpointType. </param>
         internal ResourceProviderEndpoint(bool? enabled, IReadOnlyList<string> apiVersions, Uri endpointUri, IReadOnlyList<string> locations, IReadOnlyList<string> requiredFeatures, ResourceProviderEndpointFeaturesRule featuresRule, TimeSpan? timeout, EndpointType? endpointType)
         {
             Enabled = enabled;
@@ -43,27 +46,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
             EndpointType = endpointType;
         }
 
-        /// <summary> Gets the enabled. </summary>
+        /// <summary> Serialized Name: ResourceProviderEndpoint.enabled. </summary>
         public bool? Enabled { get; }
-        /// <summary> Gets the api versions. </summary>
+        /// <summary> Serialized Name: ResourceProviderEndpoint.apiVersions. </summary>
         public IReadOnlyList<string> ApiVersions { get; }
-        /// <summary> Gets the endpoint uri. </summary>
+        /// <summary> Serialized Name: ResourceProviderEndpoint.endpointUri. </summary>
         public Uri EndpointUri { get; }
-        /// <summary> Gets the locations. </summary>
+        /// <summary> Serialized Name: ResourceProviderEndpoint.locations. </summary>
         public IReadOnlyList<string> Locations { get; }
-        /// <summary> Gets the required features. </summary>
+        /// <summary> Serialized Name: ResourceProviderEndpoint.requiredFeatures. </summary>
         public IReadOnlyList<string> RequiredFeatures { get; }
-        /// <summary> Gets the features rule. </summary>
+        /// <summary> Serialized Name: ResourceProviderEndpoint.featuresRule. </summary>
         internal ResourceProviderEndpointFeaturesRule FeaturesRule { get; }
-        /// <summary> Gets the required features policy. </summary>
+        /// <summary> Serialized Name: FeaturesRule.requiredFeaturesPolicy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule?.RequiredFeaturesPolicy;
         }
 
-        /// <summary> Gets the timeout. </summary>
+        /// <summary> Serialized Name: ResourceProviderEndpoint.timeout. </summary>
         public TimeSpan? Timeout { get; }
-        /// <summary> Gets the endpoint type. </summary>
+        /// <summary> Serialized Name: ResourceProviderEndpoint.endpointType. </summary>
         public EndpointType? EndpointType { get; }
     }
 }

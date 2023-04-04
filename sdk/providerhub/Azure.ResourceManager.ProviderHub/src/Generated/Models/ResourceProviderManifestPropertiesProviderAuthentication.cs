@@ -11,11 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceProviderManifestPropertiesProviderAuthentication. </summary>
+    /// <summary>
+    /// The ResourceProviderManifestPropertiesProviderAuthentication.
+    /// Serialized Name: ResourceProviderManifestPropertiesProviderAuthentication
+    /// </summary>
     internal partial class ResourceProviderManifestPropertiesProviderAuthentication : ResourceProviderAuthentication
     {
         /// <summary> Initializes a new instance of ResourceProviderManifestPropertiesProviderAuthentication. </summary>
-        /// <param name="allowedAudiences"></param>
+        /// <param name="allowedAudiences"> Serialized Name: ResourceProviderAuthentication.allowedAudiences. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allowedAudiences"/> is null. </exception>
         public ResourceProviderManifestPropertiesProviderAuthentication(IEnumerable<string> allowedAudiences) : base(allowedAudiences)
         {
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceProviderManifestPropertiesProviderAuthentication. </summary>
-        /// <param name="allowedAudiences"></param>
+        /// <param name="allowedAudiences"> Serialized Name: ResourceProviderAuthentication.allowedAudiences. </param>
         internal ResourceProviderManifestPropertiesProviderAuthentication(IList<string> allowedAudiences) : base(allowedAudiences)
         {
         }

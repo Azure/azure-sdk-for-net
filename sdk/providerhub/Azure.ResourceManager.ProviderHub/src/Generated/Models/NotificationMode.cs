@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The NotificationMode. </summary>
+    /// <summary>
+    /// The NotificationMode.
+    /// Serialized Name: NotificationMode
+    /// </summary>
     public readonly partial struct NotificationMode : IEquatable<NotificationMode>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string EventHubValue = "EventHub";
         private const string WebHookValue = "WebHook";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: NotificationMode.NotSpecified
+        /// </summary>
         public static NotificationMode NotSpecified { get; } = new NotificationMode(NotSpecifiedValue);
-        /// <summary> EventHub. </summary>
+        /// <summary>
+        /// EventHub
+        /// Serialized Name: NotificationMode.EventHub
+        /// </summary>
         public static NotificationMode EventHub { get; } = new NotificationMode(EventHubValue);
-        /// <summary> WebHook. </summary>
+        /// <summary>
+        /// WebHook
+        /// Serialized Name: NotificationMode.WebHook
+        /// </summary>
         public static NotificationMode WebHook { get; } = new NotificationMode(WebHookValue);
         /// <summary> Determines if two <see cref="NotificationMode"/> values are the same. </summary>
         public static bool operator ==(NotificationMode left, NotificationMode right) => left.Equals(right);

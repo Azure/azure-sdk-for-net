@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ExtendedErrorInfo. </summary>
+    /// <summary>
+    /// The ExtendedErrorInfo.
+    /// Serialized Name: ExtendedErrorInfo
+    /// </summary>
     public partial class ExtendedErrorInfo
     {
         /// <summary> Initializes a new instance of ExtendedErrorInfo. </summary>
@@ -21,11 +24,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ExtendedErrorInfo. </summary>
-        /// <param name="code"></param>
-        /// <param name="target"></param>
-        /// <param name="message"></param>
-        /// <param name="details"></param>
-        /// <param name="additionalInfo"></param>
+        /// <param name="code"> Serialized Name: ExtendedErrorInfo.code. </param>
+        /// <param name="target"> Serialized Name: ExtendedErrorInfo.target. </param>
+        /// <param name="message"> Serialized Name: ExtendedErrorInfo.message. </param>
+        /// <param name="details"> Serialized Name: ExtendedErrorInfo.details. </param>
+        /// <param name="additionalInfo"> Serialized Name: ExtendedErrorInfo.additionalInfo. </param>
         internal ExtendedErrorInfo(string code, string target, string message, IList<ExtendedErrorInfo> details, IList<TypedErrorInfo> additionalInfo)
         {
             Code = code;
@@ -35,15 +38,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             AdditionalInfo = additionalInfo;
         }
 
-        /// <summary> Gets or sets the code. </summary>
+        /// <summary> Serialized Name: ExtendedErrorInfo.code. </summary>
         public string Code { get; set; }
-        /// <summary> Gets or sets the target. </summary>
+        /// <summary> Serialized Name: ExtendedErrorInfo.target. </summary>
         public string Target { get; set; }
-        /// <summary> Gets or sets the message. </summary>
+        /// <summary> Serialized Name: ExtendedErrorInfo.message. </summary>
         public string Message { get; set; }
-        /// <summary> Gets the details. </summary>
+        /// <summary> Serialized Name: ExtendedErrorInfo.details. </summary>
         public IList<ExtendedErrorInfo> Details { get; }
-        /// <summary> Gets the additional info. </summary>
+        /// <summary> Serialized Name: ExtendedErrorInfo.additionalInfo. </summary>
         public IList<TypedErrorInfo> AdditionalInfo { get; }
     }
 }

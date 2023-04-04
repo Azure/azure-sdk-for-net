@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The TemplateDeploymentCapability. </summary>
+    /// <summary>
+    /// The TemplateDeploymentCapability.
+    /// Serialized Name: TemplateDeploymentCapabilities
+    /// </summary>
     public readonly partial struct TemplateDeploymentCapability : IEquatable<TemplateDeploymentCapability>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string DefaultValue = "Default";
         private const string PreflightValue = "Preflight";
 
-        /// <summary> Default. </summary>
+        /// <summary>
+        /// Default
+        /// Serialized Name: TemplateDeploymentCapabilities.Default
+        /// </summary>
         public static TemplateDeploymentCapability Default { get; } = new TemplateDeploymentCapability(DefaultValue);
-        /// <summary> Preflight. </summary>
+        /// <summary>
+        /// Preflight
+        /// Serialized Name: TemplateDeploymentCapabilities.Preflight
+        /// </summary>
         public static TemplateDeploymentCapability Preflight { get; } = new TemplateDeploymentCapability(PreflightValue);
         /// <summary> Determines if two <see cref="TemplateDeploymentCapability"/> values are the same. </summary>
         public static bool operator ==(TemplateDeploymentCapability left, TemplateDeploymentCapability right) => left.Equals(right);

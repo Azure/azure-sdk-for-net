@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The DefaultRolloutSpecificationMediumTraffic. </summary>
+    /// <summary>
+    /// The DefaultRolloutSpecificationMediumTraffic.
+    /// Serialized Name: DefaultRolloutSpecificationMediumTraffic
+    /// </summary>
     public partial class DefaultRolloutSpecificationMediumTraffic : TrafficRegionRolloutConfiguration
     {
         /// <summary> Initializes a new instance of DefaultRolloutSpecificationMediumTraffic. </summary>
@@ -19,8 +22,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutSpecificationMediumTraffic. </summary>
-        /// <param name="regions"></param>
-        /// <param name="waitDuration"></param>
+        /// <param name="regions"> Serialized Name: TrafficRegions.regions. </param>
+        /// <param name="waitDuration"> Serialized Name: TrafficRegionRolloutConfiguration.waitDuration. </param>
         internal DefaultRolloutSpecificationMediumTraffic(IList<string> regions, TimeSpan? waitDuration) : base(regions, waitDuration)
         {
         }

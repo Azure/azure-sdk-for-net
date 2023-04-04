@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The PreflightOption. </summary>
+    /// <summary>
+    /// The PreflightOption.
+    /// Serialized Name: PreflightOption
+    /// </summary>
     public readonly partial struct PreflightOption : IEquatable<PreflightOption>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string ContinueDeploymentOnFailureValue = "ContinueDeploymentOnFailure";
         private const string DefaultValidationOnlyValue = "DefaultValidationOnly";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: PreflightOption.None
+        /// </summary>
         public static PreflightOption None { get; } = new PreflightOption(NoneValue);
-        /// <summary> ContinueDeploymentOnFailure. </summary>
+        /// <summary>
+        /// ContinueDeploymentOnFailure
+        /// Serialized Name: PreflightOption.ContinueDeploymentOnFailure
+        /// </summary>
         public static PreflightOption ContinueDeploymentOnFailure { get; } = new PreflightOption(ContinueDeploymentOnFailureValue);
-        /// <summary> DefaultValidationOnly. </summary>
+        /// <summary>
+        /// DefaultValidationOnly
+        /// Serialized Name: PreflightOption.DefaultValidationOnly
+        /// </summary>
         public static PreflightOption DefaultValidationOnly { get; } = new PreflightOption(DefaultValidationOnlyValue);
         /// <summary> Determines if two <see cref="PreflightOption"/> values are the same. </summary>
         public static bool operator ==(PreflightOption left, PreflightOption right) => left.Equals(right);

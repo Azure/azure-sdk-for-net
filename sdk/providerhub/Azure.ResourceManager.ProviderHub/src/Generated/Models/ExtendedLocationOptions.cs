@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ExtendedLocationOptions. </summary>
+    /// <summary>
+    /// The ExtendedLocationOptions.
+    /// Serialized Name: ExtendedLocationOptions
+    /// </summary>
     public partial class ExtendedLocationOptions
     {
         /// <summary> Initializes a new instance of ExtendedLocationOptions. </summary>
@@ -16,17 +19,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ExtendedLocationOptions. </summary>
-        /// <param name="extendedLocationOptionsType"></param>
-        /// <param name="supportedPolicy"></param>
+        /// <param name="extendedLocationOptionsType"> Serialized Name: ExtendedLocationOptions.type. </param>
+        /// <param name="supportedPolicy"> Serialized Name: ExtendedLocationOptions.supportedPolicy. </param>
         internal ExtendedLocationOptions(string extendedLocationOptionsType, string supportedPolicy)
         {
             ExtendedLocationOptionsType = extendedLocationOptionsType;
             SupportedPolicy = supportedPolicy;
         }
 
-        /// <summary> Gets or sets the extended location options type. </summary>
+        /// <summary> Serialized Name: ExtendedLocationOptions.type. </summary>
         public string ExtendedLocationOptionsType { get; set; }
-        /// <summary> Gets or sets the supported policy. </summary>
+        /// <summary> Serialized Name: ExtendedLocationOptions.supportedPolicy. </summary>
         public string SupportedPolicy { get; set; }
     }
 }

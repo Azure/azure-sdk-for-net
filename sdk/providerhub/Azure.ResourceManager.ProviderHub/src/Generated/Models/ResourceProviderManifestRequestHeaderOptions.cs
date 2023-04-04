@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceProviderManifestRequestHeaderOptions. </summary>
+    /// <summary>
+    /// The ResourceProviderManifestRequestHeaderOptions.
+    /// Serialized Name: ResourceProviderManifestRequestHeaderOptions
+    /// </summary>
     internal partial class ResourceProviderManifestRequestHeaderOptions : RequestHeaderOptions
     {
         /// <summary> Initializes a new instance of ResourceProviderManifestRequestHeaderOptions. </summary>
@@ -16,7 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceProviderManifestRequestHeaderOptions. </summary>
-        /// <param name="optInHeaders"></param>
+        /// <param name="optInHeaders"> Serialized Name: RequestHeaderOptions.optInHeaders. </param>
         internal ResourceProviderManifestRequestHeaderOptions(OptInHeaderType? optInHeaders) : base(optInHeaders)
         {
         }

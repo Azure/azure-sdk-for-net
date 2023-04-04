@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeMarketplaceType. </summary>
+    /// <summary>
+    /// The ResourceTypeMarketplaceType.
+    /// Serialized Name: ResourceTypeMarketplaceType
+    /// </summary>
     public readonly partial struct ResourceTypeMarketplaceType : IEquatable<ResourceTypeMarketplaceType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string BypassValue = "Bypass";
         private const string StoreValue = "Store";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ResourceTypeMarketplaceType.NotSpecified
+        /// </summary>
         public static ResourceTypeMarketplaceType NotSpecified { get; } = new ResourceTypeMarketplaceType(NotSpecifiedValue);
-        /// <summary> AddOn. </summary>
+        /// <summary>
+        /// AddOn
+        /// Serialized Name: ResourceTypeMarketplaceType.AddOn
+        /// </summary>
         public static ResourceTypeMarketplaceType AddOn { get; } = new ResourceTypeMarketplaceType(AddOnValue);
-        /// <summary> Bypass. </summary>
+        /// <summary>
+        /// Bypass
+        /// Serialized Name: ResourceTypeMarketplaceType.Bypass
+        /// </summary>
         public static ResourceTypeMarketplaceType Bypass { get; } = new ResourceTypeMarketplaceType(BypassValue);
-        /// <summary> Store. </summary>
+        /// <summary>
+        /// Store
+        /// Serialized Name: ResourceTypeMarketplaceType.Store
+        /// </summary>
         public static ResourceTypeMarketplaceType Store { get; } = new ResourceTypeMarketplaceType(StoreValue);
         /// <summary> Determines if two <see cref="ResourceTypeMarketplaceType"/> values are the same. </summary>
         public static bool operator ==(ResourceTypeMarketplaceType left, ResourceTypeMarketplaceType right) => left.Equals(right);

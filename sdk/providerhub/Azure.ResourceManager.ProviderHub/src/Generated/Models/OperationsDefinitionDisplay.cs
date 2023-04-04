@@ -10,14 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> Display information of the operation. </summary>
+    /// <summary>
+    /// Display information of the operation.
+    /// Serialized Name: OperationsDefinitionDisplay
+    /// </summary>
     public partial class OperationsDefinitionDisplay : OperationsDisplayDefinition
     {
         /// <summary> Initializes a new instance of OperationsDefinitionDisplay. </summary>
-        /// <param name="provider"></param>
-        /// <param name="resource"></param>
-        /// <param name="operation"></param>
-        /// <param name="description"></param>
+        /// <param name="provider"> Serialized Name: OperationsDisplayDefinition.provider. </param>
+        /// <param name="resource"> Serialized Name: OperationsDisplayDefinition.resource. </param>
+        /// <param name="operation"> Serialized Name: OperationsDisplayDefinition.operation. </param>
+        /// <param name="description"> Serialized Name: OperationsDisplayDefinition.description. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="resource"/>, <paramref name="operation"/> or <paramref name="description"/> is null. </exception>
         public OperationsDefinitionDisplay(string provider, string resource, string operation, string description) : base(provider, resource, operation, description)
         {

@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ProviderHubMetadataThirdPartyProviderAuthorization. </summary>
+    /// <summary>
+    /// The ProviderHubMetadataThirdPartyProviderAuthorization.
+    /// Serialized Name: ProviderHubMetadataThirdPartyProviderAuthorization
+    /// </summary>
     public partial class ProviderHubMetadataThirdPartyProviderAuthorization : ThirdPartyProviderAuthorization
     {
         /// <summary> Initializes a new instance of ProviderHubMetadataThirdPartyProviderAuthorization. </summary>
@@ -18,8 +21,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ProviderHubMetadataThirdPartyProviderAuthorization. </summary>
-        /// <param name="authorizations"></param>
-        /// <param name="managedByTenantId"></param>
+        /// <param name="authorizations"> Serialized Name: ThirdPartyProviderAuthorization.authorizations. </param>
+        /// <param name="managedByTenantId"> Serialized Name: ThirdPartyProviderAuthorization.managedByTenantId. </param>
         internal ProviderHubMetadataThirdPartyProviderAuthorization(IList<LightHouseAuthorization> authorizations, string managedByTenantId) : base(authorizations, managedByTenantId)
         {
         }

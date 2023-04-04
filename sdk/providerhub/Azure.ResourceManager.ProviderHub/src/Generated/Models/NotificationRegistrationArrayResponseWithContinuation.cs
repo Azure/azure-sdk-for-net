@@ -11,7 +11,10 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The NotificationRegistrationArrayResponseWithContinuation. </summary>
+    /// <summary>
+    /// The NotificationRegistrationArrayResponseWithContinuation.
+    /// Serialized Name: NotificationRegistrationArrayResponseWithContinuation
+    /// </summary>
     internal partial class NotificationRegistrationArrayResponseWithContinuation
     {
         /// <summary> Initializes a new instance of NotificationRegistrationArrayResponseWithContinuation. </summary>
@@ -21,17 +24,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of NotificationRegistrationArrayResponseWithContinuation. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
+        /// <param name="value"> Serialized Name: NotificationRegistrationArrayResponseWithContinuation.value. </param>
+        /// <param name="nextLink">
+        /// The URL to get to the next set of results, if there are any.
+        /// Serialized Name: NotificationRegistrationArrayResponseWithContinuation.nextLink
+        /// </param>
         internal NotificationRegistrationArrayResponseWithContinuation(IReadOnlyList<NotificationRegistrationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Serialized Name: NotificationRegistrationArrayResponseWithContinuation.value. </summary>
         public IReadOnlyList<NotificationRegistrationData> Value { get; }
-        /// <summary> The URL to get to the next set of results, if there are any. </summary>
+        /// <summary>
+        /// The URL to get to the next set of results, if there are any.
+        /// Serialized Name: NotificationRegistrationArrayResponseWithContinuation.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

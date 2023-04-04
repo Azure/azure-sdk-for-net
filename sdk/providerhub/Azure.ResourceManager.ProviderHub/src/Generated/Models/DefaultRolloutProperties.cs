@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The DefaultRolloutProperties. </summary>
+    /// <summary>
+    /// The DefaultRolloutProperties.
+    /// Serialized Name: DefaultRolloutProperties
+    /// </summary>
     public partial class DefaultRolloutProperties
     {
         /// <summary> Initializes a new instance of DefaultRolloutProperties. </summary>
@@ -16,9 +19,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutProperties. </summary>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="specification"></param>
-        /// <param name="status"></param>
+        /// <param name="provisioningState">
+        /// The provisioned state of the resource.
+        /// Serialized Name: DefaultRolloutProperties.provisioningState
+        /// </param>
+        /// <param name="specification"> Serialized Name: DefaultRolloutProperties.specification. </param>
+        /// <param name="status"> Serialized Name: DefaultRolloutProperties.status. </param>
         internal DefaultRolloutProperties(ProvisioningState? provisioningState, DefaultRolloutPropertiesSpecification specification, DefaultRolloutPropertiesStatus status)
         {
             ProvisioningState = provisioningState;
@@ -26,11 +32,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Status = status;
         }
 
-        /// <summary> The provisioned state of the resource. </summary>
+        /// <summary>
+        /// The provisioned state of the resource.
+        /// Serialized Name: DefaultRolloutProperties.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; set; }
-        /// <summary> Gets or sets the specification. </summary>
+        /// <summary> Serialized Name: DefaultRolloutProperties.specification. </summary>
         public DefaultRolloutPropertiesSpecification Specification { get; set; }
-        /// <summary> Gets or sets the status. </summary>
+        /// <summary> Serialized Name: DefaultRolloutProperties.status. </summary>
         public DefaultRolloutPropertiesStatus Status { get; set; }
     }
 }

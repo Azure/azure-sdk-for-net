@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.ProviderHub
     /// <summary>
     /// A class representing the DefaultRollout data model.
     /// Default rollout definition.
+    /// Serialized Name: DefaultRollout
     /// </summary>
     public partial class DefaultRolloutData : ResourceData
     {
@@ -27,13 +28,19 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of the rollout. </param>
+        /// <param name="properties">
+        /// Properties of the rollout.
+        /// Serialized Name: DefaultRollout.properties
+        /// </param>
         internal DefaultRolloutData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DefaultRolloutProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Properties of the rollout. </summary>
+        /// <summary>
+        /// Properties of the rollout.
+        /// Serialized Name: DefaultRollout.properties
+        /// </summary>
         public DefaultRolloutProperties Properties { get; set; }
     }
 }

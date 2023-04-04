@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The NotificationEndpoint. </summary>
+    /// <summary>
+    /// The NotificationEndpoint.
+    /// Serialized Name: NotificationEndpoint
+    /// </summary>
     public partial class NotificationEndpoint
     {
         /// <summary> Initializes a new instance of NotificationEndpoint. </summary>
@@ -20,17 +23,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of NotificationEndpoint. </summary>
-        /// <param name="notificationDestination"></param>
-        /// <param name="locations"></param>
+        /// <param name="notificationDestination"> Serialized Name: NotificationEndpoint.notificationDestination. </param>
+        /// <param name="locations"> Serialized Name: NotificationEndpoint.locations. </param>
         internal NotificationEndpoint(string notificationDestination, IList<string> locations)
         {
             NotificationDestination = notificationDestination;
             Locations = locations;
         }
 
-        /// <summary> Gets or sets the notification destination. </summary>
+        /// <summary> Serialized Name: NotificationEndpoint.notificationDestination. </summary>
         public string NotificationDestination { get; set; }
-        /// <summary> Gets the locations. </summary>
+        /// <summary> Serialized Name: NotificationEndpoint.locations. </summary>
         public IList<string> Locations { get; }
     }
 }

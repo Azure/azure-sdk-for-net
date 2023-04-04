@@ -11,7 +11,11 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    /// <summary> A class representing the SkuResource data model. </summary>
+    /// <summary>
+    /// A class representing the SkuResource data model.
+    /// The SkuResource.
+    /// Serialized Name: SkuResource
+    /// </summary>
     public partial class SkuResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of SkuResourceData. </summary>
@@ -24,13 +28,13 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Serialized Name: SkuResource.properties. </param>
         internal SkuResourceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, SkuResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Serialized Name: SkuResource.properties. </summary>
         public SkuResourceProperties Properties { get; set; }
     }
 }

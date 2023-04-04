@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> Properties of an Operation. </summary>
+    /// <summary>
+    /// Properties of an Operation.
+    /// Serialized Name: OperationsDefinition
+    /// </summary>
     public partial class OperationsDefinition
     {
         /// <summary> Initializes a new instance of OperationsDefinition. </summary>
-        /// <param name="name"> Name of the operation. </param>
-        /// <param name="display"> Display information of the operation. </param>
+        /// <param name="name">
+        /// Name of the operation.
+        /// Serialized Name: OperationsDefinition.name
+        /// </param>
+        /// <param name="display">
+        /// Display information of the operation.
+        /// Serialized Name: OperationsDefinition.display
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="display"/> is null. </exception>
         internal OperationsDefinition(string name, OperationsDefinitionDisplay display)
         {
@@ -27,12 +36,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of OperationsDefinition. </summary>
-        /// <param name="name"> Name of the operation. </param>
-        /// <param name="isDataAction"> Indicates whether the operation applies to data-plane. </param>
-        /// <param name="origin"></param>
-        /// <param name="display"> Display information of the operation. </param>
-        /// <param name="actionType"></param>
-        /// <param name="properties"> Anything. </param>
+        /// <param name="name">
+        /// Name of the operation.
+        /// Serialized Name: OperationsDefinition.name
+        /// </param>
+        /// <param name="isDataAction">
+        /// Indicates whether the operation applies to data-plane.
+        /// Serialized Name: OperationsDefinition.isDataAction
+        /// </param>
+        /// <param name="origin"> Serialized Name: OperationsDefinition.origin. </param>
+        /// <param name="display">
+        /// Display information of the operation.
+        /// Serialized Name: OperationsDefinition.display
+        /// </param>
+        /// <param name="actionType"> Serialized Name: OperationsDefinition.actionType. </param>
+        /// <param name="properties">
+        /// Anything
+        /// Serialized Name: OperationsDefinition.properties
+        /// </param>
         internal OperationsDefinition(string name, bool? isDataAction, OperationsDefinitionOrigin? origin, OperationsDefinitionDisplay display, OperationsDefinitionActionType? actionType, BinaryData properties)
         {
             Name = name;
@@ -43,18 +64,28 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Properties = properties;
         }
 
-        /// <summary> Name of the operation. </summary>
+        /// <summary>
+        /// Name of the operation.
+        /// Serialized Name: OperationsDefinition.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Indicates whether the operation applies to data-plane. </summary>
+        /// <summary>
+        /// Indicates whether the operation applies to data-plane.
+        /// Serialized Name: OperationsDefinition.isDataAction
+        /// </summary>
         public bool? IsDataAction { get; }
-        /// <summary> Gets the origin. </summary>
+        /// <summary> Serialized Name: OperationsDefinition.origin. </summary>
         public OperationsDefinitionOrigin? Origin { get; }
-        /// <summary> Display information of the operation. </summary>
+        /// <summary>
+        /// Display information of the operation.
+        /// Serialized Name: OperationsDefinition.display
+        /// </summary>
         public OperationsDefinitionDisplay Display { get; }
-        /// <summary> Gets the action type. </summary>
+        /// <summary> Serialized Name: OperationsDefinition.actionType. </summary>
         public OperationsDefinitionActionType? ActionType { get; }
         /// <summary>
         /// Anything
+        /// Serialized Name: OperationsDefinition.properties
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

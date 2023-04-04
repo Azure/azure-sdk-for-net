@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The DefaultRolloutSpecificationExpeditedRollout. </summary>
+    /// <summary>
+    /// The DefaultRolloutSpecificationExpeditedRollout.
+    /// Serialized Name: DefaultRolloutSpecificationExpeditedRollout
+    /// </summary>
     internal partial class DefaultRolloutSpecificationExpeditedRollout : ExpeditedRolloutDefinition
     {
         /// <summary> Initializes a new instance of DefaultRolloutSpecificationExpeditedRollout. </summary>
@@ -16,7 +19,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutSpecificationExpeditedRollout. </summary>
-        /// <param name="enabled"> Indicates whether expedited rollout is enabled/disabled. </param>
+        /// <param name="enabled">
+        /// Indicates whether expedited rollout is enabled/disabled
+        /// Serialized Name: ExpeditedRolloutDefinition.enabled
+        /// </param>
         internal DefaultRolloutSpecificationExpeditedRollout(bool? enabled) : base(enabled)
         {
         }

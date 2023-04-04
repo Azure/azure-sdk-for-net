@@ -10,11 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The TypedErrorInfo. </summary>
+    /// <summary>
+    /// The TypedErrorInfo.
+    /// Serialized Name: TypedErrorInfo
+    /// </summary>
     public partial class TypedErrorInfo
     {
         /// <summary> Initializes a new instance of TypedErrorInfo. </summary>
-        /// <param name="typedErrorInfoType"></param>
+        /// <param name="typedErrorInfoType"> Serialized Name: TypedErrorInfo.type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typedErrorInfoType"/> is null. </exception>
         public TypedErrorInfo(string typedErrorInfoType)
         {
@@ -24,18 +27,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of TypedErrorInfo. </summary>
-        /// <param name="typedErrorInfoType"></param>
-        /// <param name="info"> Any object. </param>
+        /// <param name="typedErrorInfoType"> Serialized Name: TypedErrorInfo.type. </param>
+        /// <param name="info">
+        /// Any object
+        /// Serialized Name: TypedErrorInfo.info
+        /// </param>
         internal TypedErrorInfo(string typedErrorInfoType, BinaryData info)
         {
             TypedErrorInfoType = typedErrorInfoType;
             Info = info;
         }
 
-        /// <summary> Gets or sets the typed error info type. </summary>
+        /// <summary> Serialized Name: TypedErrorInfo.type. </summary>
         public string TypedErrorInfoType { get; set; }
         /// <summary>
         /// Any object
+        /// Serialized Name: TypedErrorInfo.info
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

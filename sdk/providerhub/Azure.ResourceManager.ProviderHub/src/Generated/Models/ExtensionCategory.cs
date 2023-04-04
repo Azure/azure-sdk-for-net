@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ExtensionCategory. </summary>
+    /// <summary>
+    /// The ExtensionCategory.
+    /// Serialized Name: ExtensionCategory
+    /// </summary>
     public readonly partial struct ExtensionCategory : IEquatable<ExtensionCategory>
     {
         private readonly string _value;
@@ -39,37 +42,85 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string ResourceMoveBeginValue = "ResourceMoveBegin";
         private const string ResourceMoveCompletedValue = "ResourceMoveCompleted";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ExtensionCategory.NotSpecified
+        /// </summary>
         public static ExtensionCategory NotSpecified { get; } = new ExtensionCategory(NotSpecifiedValue);
-        /// <summary> ResourceCreationValidate. </summary>
+        /// <summary>
+        /// ResourceCreationValidate
+        /// Serialized Name: ExtensionCategory.ResourceCreationValidate
+        /// </summary>
         public static ExtensionCategory ResourceCreationValidate { get; } = new ExtensionCategory(ResourceCreationValidateValue);
-        /// <summary> ResourceCreationBegin. </summary>
+        /// <summary>
+        /// ResourceCreationBegin
+        /// Serialized Name: ExtensionCategory.ResourceCreationBegin
+        /// </summary>
         public static ExtensionCategory ResourceCreationBegin { get; } = new ExtensionCategory(ResourceCreationBeginValue);
-        /// <summary> ResourceCreationCompleted. </summary>
+        /// <summary>
+        /// ResourceCreationCompleted
+        /// Serialized Name: ExtensionCategory.ResourceCreationCompleted
+        /// </summary>
         public static ExtensionCategory ResourceCreationCompleted { get; } = new ExtensionCategory(ResourceCreationCompletedValue);
-        /// <summary> ResourceReadValidate. </summary>
+        /// <summary>
+        /// ResourceReadValidate
+        /// Serialized Name: ExtensionCategory.ResourceReadValidate
+        /// </summary>
         public static ExtensionCategory ResourceReadValidate { get; } = new ExtensionCategory(ResourceReadValidateValue);
-        /// <summary> ResourceReadBegin. </summary>
+        /// <summary>
+        /// ResourceReadBegin
+        /// Serialized Name: ExtensionCategory.ResourceReadBegin
+        /// </summary>
         public static ExtensionCategory ResourceReadBegin { get; } = new ExtensionCategory(ResourceReadBeginValue);
-        /// <summary> ResourcePatchValidate. </summary>
+        /// <summary>
+        /// ResourcePatchValidate
+        /// Serialized Name: ExtensionCategory.ResourcePatchValidate
+        /// </summary>
         public static ExtensionCategory ResourcePatchValidate { get; } = new ExtensionCategory(ResourcePatchValidateValue);
-        /// <summary> ResourcePatchCompleted. </summary>
+        /// <summary>
+        /// ResourcePatchCompleted
+        /// Serialized Name: ExtensionCategory.ResourcePatchCompleted
+        /// </summary>
         public static ExtensionCategory ResourcePatchCompleted { get; } = new ExtensionCategory(ResourcePatchCompletedValue);
-        /// <summary> ResourceDeletionValidate. </summary>
+        /// <summary>
+        /// ResourceDeletionValidate
+        /// Serialized Name: ExtensionCategory.ResourceDeletionValidate
+        /// </summary>
         public static ExtensionCategory ResourceDeletionValidate { get; } = new ExtensionCategory(ResourceDeletionValidateValue);
-        /// <summary> ResourceDeletionBegin. </summary>
+        /// <summary>
+        /// ResourceDeletionBegin
+        /// Serialized Name: ExtensionCategory.ResourceDeletionBegin
+        /// </summary>
         public static ExtensionCategory ResourceDeletionBegin { get; } = new ExtensionCategory(ResourceDeletionBeginValue);
-        /// <summary> ResourceDeletionCompleted. </summary>
+        /// <summary>
+        /// ResourceDeletionCompleted
+        /// Serialized Name: ExtensionCategory.ResourceDeletionCompleted
+        /// </summary>
         public static ExtensionCategory ResourceDeletionCompleted { get; } = new ExtensionCategory(ResourceDeletionCompletedValue);
-        /// <summary> ResourcePostAction. </summary>
+        /// <summary>
+        /// ResourcePostAction
+        /// Serialized Name: ExtensionCategory.ResourcePostAction
+        /// </summary>
         public static ExtensionCategory ResourcePostAction { get; } = new ExtensionCategory(ResourcePostActionValue);
-        /// <summary> SubscriptionLifecycleNotification. </summary>
+        /// <summary>
+        /// SubscriptionLifecycleNotification
+        /// Serialized Name: ExtensionCategory.SubscriptionLifecycleNotification
+        /// </summary>
         public static ExtensionCategory SubscriptionLifecycleNotification { get; } = new ExtensionCategory(SubscriptionLifecycleNotificationValue);
-        /// <summary> ResourcePatchBegin. </summary>
+        /// <summary>
+        /// ResourcePatchBegin
+        /// Serialized Name: ExtensionCategory.ResourcePatchBegin
+        /// </summary>
         public static ExtensionCategory ResourcePatchBegin { get; } = new ExtensionCategory(ResourcePatchBeginValue);
-        /// <summary> ResourceMoveBegin. </summary>
+        /// <summary>
+        /// ResourceMoveBegin
+        /// Serialized Name: ExtensionCategory.ResourceMoveBegin
+        /// </summary>
         public static ExtensionCategory ResourceMoveBegin { get; } = new ExtensionCategory(ResourceMoveBeginValue);
-        /// <summary> ResourceMoveCompleted. </summary>
+        /// <summary>
+        /// ResourceMoveCompleted
+        /// Serialized Name: ExtensionCategory.ResourceMoveCompleted
+        /// </summary>
         public static ExtensionCategory ResourceMoveCompleted { get; } = new ExtensionCategory(ResourceMoveCompletedValue);
         /// <summary> Determines if two <see cref="ExtensionCategory"/> values are the same. </summary>
         public static bool operator ==(ExtensionCategory left, ExtensionCategory right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceDeletionPolicy. </summary>
+    /// <summary>
+    /// The ResourceDeletionPolicy.
+    /// Serialized Name: ResourceDeletionPolicy
+    /// </summary>
     public readonly partial struct ResourceDeletionPolicy : IEquatable<ResourceDeletionPolicy>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string CascadeDeleteAllValue = "CascadeDeleteAll";
         private const string CascadeDeleteProxyOnlyChildrenValue = "CascadeDeleteProxyOnlyChildren";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ResourceDeletionPolicy.NotSpecified
+        /// </summary>
         public static ResourceDeletionPolicy NotSpecified { get; } = new ResourceDeletionPolicy(NotSpecifiedValue);
-        /// <summary> CascadeDeleteAll. </summary>
+        /// <summary>
+        /// CascadeDeleteAll
+        /// Serialized Name: ResourceDeletionPolicy.CascadeDeleteAll
+        /// </summary>
         public static ResourceDeletionPolicy CascadeDeleteAll { get; } = new ResourceDeletionPolicy(CascadeDeleteAllValue);
-        /// <summary> CascadeDeleteProxyOnlyChildren. </summary>
+        /// <summary>
+        /// CascadeDeleteProxyOnlyChildren
+        /// Serialized Name: ResourceDeletionPolicy.CascadeDeleteProxyOnlyChildren
+        /// </summary>
         public static ResourceDeletionPolicy CascadeDeleteProxyOnlyChildren { get; } = new ResourceDeletionPolicy(CascadeDeleteProxyOnlyChildrenValue);
         /// <summary> Determines if two <see cref="ResourceDeletionPolicy"/> values are the same. </summary>
         public static bool operator ==(ResourceDeletionPolicy left, ResourceDeletionPolicy right) => left.Equals(right);

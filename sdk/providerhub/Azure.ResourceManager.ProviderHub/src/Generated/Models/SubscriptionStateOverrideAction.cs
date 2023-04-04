@@ -7,21 +7,24 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The SubscriptionStateOverrideAction. </summary>
+    /// <summary>
+    /// The SubscriptionStateOverrideAction.
+    /// Serialized Name: SubscriptionStateOverrideAction
+    /// </summary>
     public partial class SubscriptionStateOverrideAction
     {
         /// <summary> Initializes a new instance of SubscriptionStateOverrideAction. </summary>
-        /// <param name="state"></param>
-        /// <param name="action"></param>
+        /// <param name="state"> Serialized Name: SubscriptionStateOverrideAction.state. </param>
+        /// <param name="action"> Serialized Name: SubscriptionStateOverrideAction.action. </param>
         public SubscriptionStateOverrideAction(SubscriptionTransitioningState state, SubscriptionNotificationOperation action)
         {
             State = state;
             Action = action;
         }
 
-        /// <summary> Gets or sets the state. </summary>
+        /// <summary> Serialized Name: SubscriptionStateOverrideAction.state. </summary>
         public SubscriptionTransitioningState State { get; set; }
-        /// <summary> Gets or sets the action. </summary>
+        /// <summary> Serialized Name: SubscriptionStateOverrideAction.action. </summary>
         public SubscriptionNotificationOperation Action { get; set; }
     }
 }

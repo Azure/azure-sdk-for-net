@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeRegistrationPropertiesTemplateDeploymentOptions. </summary>
+    /// <summary>
+    /// The ResourceTypeRegistrationPropertiesTemplateDeploymentOptions.
+    /// Serialized Name: ResourceTypeRegistrationPropertiesTemplateDeploymentOptions
+    /// </summary>
     public partial class ResourceTypeRegistrationPropertiesTemplateDeploymentOptions : TemplateDeploymentOptions
     {
         /// <summary> Initializes a new instance of ResourceTypeRegistrationPropertiesTemplateDeploymentOptions. </summary>
@@ -18,8 +21,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeRegistrationPropertiesTemplateDeploymentOptions. </summary>
-        /// <param name="preflightSupported"></param>
-        /// <param name="preflightOptions"></param>
+        /// <param name="preflightSupported"> Serialized Name: TemplateDeploymentOptions.preflightSupported. </param>
+        /// <param name="preflightOptions"> Serialized Name: TemplateDeploymentOptions.preflightOptions. </param>
         internal ResourceTypeRegistrationPropertiesTemplateDeploymentOptions(bool? preflightSupported, IList<PreflightOption> preflightOptions) : base(preflightSupported, preflightOptions)
         {
         }

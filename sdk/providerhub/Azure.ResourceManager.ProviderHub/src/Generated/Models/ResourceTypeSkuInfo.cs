@@ -12,11 +12,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeSkuInfo. </summary>
+    /// <summary>
+    /// The ResourceTypeSkuInfo.
+    /// Serialized Name: ResourceTypeSkuInfo
+    /// </summary>
     public partial class ResourceTypeSkuInfo
     {
         /// <summary> Initializes a new instance of ResourceTypeSkuInfo. </summary>
-        /// <param name="skuSettings"></param>
+        /// <param name="skuSettings"> Serialized Name: ResourceTypeSkuInfo.skuSettings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuSettings"/> is null. </exception>
         public ResourceTypeSkuInfo(IEnumerable<SkuSetting> skuSettings)
         {
@@ -26,17 +29,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeSkuInfo. </summary>
-        /// <param name="skuSettings"></param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="skuSettings"> Serialized Name: ResourceTypeSkuInfo.skuSettings. </param>
+        /// <param name="provisioningState">
+        /// The provisioned state of the resource.
+        /// Serialized Name: ResourceTypeSkuInfo.provisioningState
+        /// </param>
         internal ResourceTypeSkuInfo(IList<SkuSetting> skuSettings, ProvisioningState? provisioningState)
         {
             SkuSettings = skuSettings;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Gets the sku settings. </summary>
+        /// <summary> Serialized Name: ResourceTypeSkuInfo.skuSettings. </summary>
         public IList<SkuSetting> SkuSettings { get; }
-        /// <summary> The provisioned state of the resource. </summary>
+        /// <summary>
+        /// The provisioned state of the resource.
+        /// Serialized Name: ResourceTypeSkuInfo.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; set; }
     }
 }

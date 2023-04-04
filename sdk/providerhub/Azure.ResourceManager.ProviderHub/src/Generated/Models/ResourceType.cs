@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceType. </summary>
+    /// <summary>
+    /// The ResourceType.
+    /// Serialized Name: ResourceType
+    /// </summary>
     public partial class ResourceType
     {
         /// <summary> Initializes a new instance of ResourceType. </summary>
@@ -32,30 +35,33 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceType. </summary>
-        /// <param name="name"></param>
-        /// <param name="routingType"></param>
-        /// <param name="resourceValidation"></param>
-        /// <param name="allowedUnauthorizedActions"></param>
-        /// <param name="authorizationActionMappings"></param>
-        /// <param name="linkedAccessChecks"></param>
-        /// <param name="defaultApiVersion"></param>
-        /// <param name="loggingRules"></param>
-        /// <param name="throttlingRules"></param>
-        /// <param name="endpoints"></param>
-        /// <param name="marketplaceType"></param>
-        /// <param name="identityManagement"></param>
-        /// <param name="metadata"> Anything. </param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="featuresRule"></param>
-        /// <param name="subscriptionStateRules"></param>
-        /// <param name="serviceTreeInfos"></param>
-        /// <param name="requestHeaderOptions"></param>
-        /// <param name="skuLink"></param>
-        /// <param name="disallowedActionVerbs"></param>
-        /// <param name="templateDeploymentPolicy"></param>
-        /// <param name="extendedLocations"></param>
-        /// <param name="linkedOperationRules"></param>
-        /// <param name="resourceDeletionPolicy"></param>
+        /// <param name="name"> Serialized Name: ResourceType.name. </param>
+        /// <param name="routingType"> Serialized Name: ResourceType.routingType. </param>
+        /// <param name="resourceValidation"> Serialized Name: ResourceType.resourceValidation. </param>
+        /// <param name="allowedUnauthorizedActions"> Serialized Name: ResourceType.allowedUnauthorizedActions. </param>
+        /// <param name="authorizationActionMappings"> Serialized Name: ResourceType.authorizationActionMappings. </param>
+        /// <param name="linkedAccessChecks"> Serialized Name: ResourceType.linkedAccessChecks. </param>
+        /// <param name="defaultApiVersion"> Serialized Name: ResourceType.defaultApiVersion. </param>
+        /// <param name="loggingRules"> Serialized Name: ResourceType.loggingRules. </param>
+        /// <param name="throttlingRules"> Serialized Name: ResourceType.throttlingRules. </param>
+        /// <param name="endpoints"> Serialized Name: ResourceType.endpoints. </param>
+        /// <param name="marketplaceType"> Serialized Name: ResourceType.marketplaceType. </param>
+        /// <param name="identityManagement"> Serialized Name: ResourceType.identityManagement. </param>
+        /// <param name="metadata">
+        /// Anything
+        /// Serialized Name: ResourceType.metadata
+        /// </param>
+        /// <param name="requiredFeatures"> Serialized Name: ResourceType.requiredFeatures. </param>
+        /// <param name="featuresRule"> Serialized Name: ResourceType.featuresRule. </param>
+        /// <param name="subscriptionStateRules"> Serialized Name: ResourceType.subscriptionStateRules. </param>
+        /// <param name="serviceTreeInfos"> Serialized Name: ResourceType.serviceTreeInfos. </param>
+        /// <param name="requestHeaderOptions"> Serialized Name: ResourceType.requestHeaderOptions. </param>
+        /// <param name="skuLink"> Serialized Name: ResourceType.skuLink. </param>
+        /// <param name="disallowedActionVerbs"> Serialized Name: ResourceType.disallowedActionVerbs. </param>
+        /// <param name="templateDeploymentPolicy"> Serialized Name: ResourceType.templateDeploymentPolicy. </param>
+        /// <param name="extendedLocations"> Serialized Name: ResourceType.extendedLocations. </param>
+        /// <param name="linkedOperationRules"> Serialized Name: ResourceType.linkedOperationRules. </param>
+        /// <param name="resourceDeletionPolicy"> Serialized Name: ResourceType.resourceDeletionPolicy. </param>
         internal ResourceType(string name, RoutingType? routingType, ResourceValidation? resourceValidation, IReadOnlyList<string> allowedUnauthorizedActions, IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings, IReadOnlyList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IReadOnlyList<LoggingRule> loggingRules, IReadOnlyList<ThrottlingRule> throttlingRules, IReadOnlyList<ResourceProviderEndpoint> endpoints, ResourceTypeMarketplaceType? marketplaceType, ResourceTypeIdentityManagement identityManagement, BinaryData metadata, IReadOnlyList<string> requiredFeatures, ResourceTypeFeaturesRule featuresRule, IReadOnlyList<SubscriptionStateRule> subscriptionStateRules, IReadOnlyList<ServiceTreeInfo> serviceTreeInfos, ResourceTypeRequestHeaderOptions requestHeaderOptions, string skuLink, IReadOnlyList<string> disallowedActionVerbs, ResourceTypeTemplateDeploymentPolicy templateDeploymentPolicy, IReadOnlyList<ExtendedLocationOptions> extendedLocations, IReadOnlyList<LinkedOperationRule> linkedOperationRules, ManifestResourceDeletionPolicy? resourceDeletionPolicy)
         {
             Name = name;
@@ -84,31 +90,31 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ResourceDeletionPolicy = resourceDeletionPolicy;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> Serialized Name: ResourceType.name. </summary>
         public string Name { get; }
-        /// <summary> Gets the routing type. </summary>
+        /// <summary> Serialized Name: ResourceType.routingType. </summary>
         public RoutingType? RoutingType { get; }
-        /// <summary> Gets the resource validation. </summary>
+        /// <summary> Serialized Name: ResourceType.resourceValidation. </summary>
         public ResourceValidation? ResourceValidation { get; }
-        /// <summary> Gets the allowed unauthorized actions. </summary>
+        /// <summary> Serialized Name: ResourceType.allowedUnauthorizedActions. </summary>
         public IReadOnlyList<string> AllowedUnauthorizedActions { get; }
-        /// <summary> Gets the authorization action mappings. </summary>
+        /// <summary> Serialized Name: ResourceType.authorizationActionMappings. </summary>
         public IReadOnlyList<AuthorizationActionMapping> AuthorizationActionMappings { get; }
-        /// <summary> Gets the linked access checks. </summary>
+        /// <summary> Serialized Name: ResourceType.linkedAccessChecks. </summary>
         public IReadOnlyList<LinkedAccessCheck> LinkedAccessChecks { get; }
-        /// <summary> Gets the default api version. </summary>
+        /// <summary> Serialized Name: ResourceType.defaultApiVersion. </summary>
         public string DefaultApiVersion { get; }
-        /// <summary> Gets the logging rules. </summary>
+        /// <summary> Serialized Name: ResourceType.loggingRules. </summary>
         public IReadOnlyList<LoggingRule> LoggingRules { get; }
-        /// <summary> Gets the throttling rules. </summary>
+        /// <summary> Serialized Name: ResourceType.throttlingRules. </summary>
         public IReadOnlyList<ThrottlingRule> ThrottlingRules { get; }
-        /// <summary> Gets the endpoints. </summary>
+        /// <summary> Serialized Name: ResourceType.endpoints. </summary>
         public IReadOnlyList<ResourceProviderEndpoint> Endpoints { get; }
-        /// <summary> Gets the marketplace type. </summary>
+        /// <summary> Serialized Name: ResourceType.marketplaceType. </summary>
         public ResourceTypeMarketplaceType? MarketplaceType { get; }
-        /// <summary> Gets the identity management. </summary>
+        /// <summary> Serialized Name: ResourceType.identityManagement. </summary>
         internal ResourceTypeIdentityManagement IdentityManagement { get; }
-        /// <summary> Gets the management type. </summary>
+        /// <summary> Serialized Name: IdentityManagement.type. </summary>
         public IdentityManagementType? ManagementType
         {
             get => IdentityManagement?.ManagementType;
@@ -116,6 +122,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary>
         /// Anything
+        /// Serialized Name: ResourceType.metadata
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -145,39 +152,39 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// </para>
         /// </summary>
         public BinaryData Metadata { get; }
-        /// <summary> Gets the required features. </summary>
+        /// <summary> Serialized Name: ResourceType.requiredFeatures. </summary>
         public IReadOnlyList<string> RequiredFeatures { get; }
-        /// <summary> Gets the features rule. </summary>
+        /// <summary> Serialized Name: ResourceType.featuresRule. </summary>
         internal ResourceTypeFeaturesRule FeaturesRule { get; }
-        /// <summary> Gets the required features policy. </summary>
+        /// <summary> Serialized Name: FeaturesRule.requiredFeaturesPolicy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule?.RequiredFeaturesPolicy;
         }
 
-        /// <summary> Gets the subscription state rules. </summary>
+        /// <summary> Serialized Name: ResourceType.subscriptionStateRules. </summary>
         public IReadOnlyList<SubscriptionStateRule> SubscriptionStateRules { get; }
-        /// <summary> Gets the service tree infos. </summary>
+        /// <summary> Serialized Name: ResourceType.serviceTreeInfos. </summary>
         public IReadOnlyList<ServiceTreeInfo> ServiceTreeInfos { get; }
-        /// <summary> Gets the request header options. </summary>
+        /// <summary> Serialized Name: ResourceType.requestHeaderOptions. </summary>
         internal ResourceTypeRequestHeaderOptions RequestHeaderOptions { get; }
-        /// <summary> Gets the opt in headers. </summary>
+        /// <summary> Serialized Name: RequestHeaderOptions.optInHeaders. </summary>
         public OptInHeaderType? OptInHeaders
         {
             get => RequestHeaderOptions?.OptInHeaders;
         }
 
-        /// <summary> Gets the sku link. </summary>
+        /// <summary> Serialized Name: ResourceType.skuLink. </summary>
         public string SkuLink { get; }
-        /// <summary> Gets the disallowed action verbs. </summary>
+        /// <summary> Serialized Name: ResourceType.disallowedActionVerbs. </summary>
         public IReadOnlyList<string> DisallowedActionVerbs { get; }
-        /// <summary> Gets the template deployment policy. </summary>
+        /// <summary> Serialized Name: ResourceType.templateDeploymentPolicy. </summary>
         public ResourceTypeTemplateDeploymentPolicy TemplateDeploymentPolicy { get; }
-        /// <summary> Gets the extended locations. </summary>
+        /// <summary> Serialized Name: ResourceType.extendedLocations. </summary>
         public IReadOnlyList<ExtendedLocationOptions> ExtendedLocations { get; }
-        /// <summary> Gets the linked operation rules. </summary>
+        /// <summary> Serialized Name: ResourceType.linkedOperationRules. </summary>
         public IReadOnlyList<LinkedOperationRule> LinkedOperationRules { get; }
-        /// <summary> Gets the resource deletion policy. </summary>
+        /// <summary> Serialized Name: ResourceType.resourceDeletionPolicy. </summary>
         public ManifestResourceDeletionPolicy? ResourceDeletionPolicy { get; }
     }
 }

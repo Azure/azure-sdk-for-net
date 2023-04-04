@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The LoggingRuleHiddenPropertyPaths. </summary>
+    /// <summary>
+    /// The LoggingRuleHiddenPropertyPaths.
+    /// Serialized Name: LoggingRuleHiddenPropertyPaths
+    /// </summary>
     public partial class LoggingRuleHiddenPropertyPaths : LoggingHiddenPropertyPath
     {
         /// <summary> Initializes a new instance of LoggingRuleHiddenPropertyPaths. </summary>
@@ -18,8 +21,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of LoggingRuleHiddenPropertyPaths. </summary>
-        /// <param name="hiddenPathsOnRequest"></param>
-        /// <param name="hiddenPathsOnResponse"></param>
+        /// <param name="hiddenPathsOnRequest"> Serialized Name: LoggingHiddenPropertyPath.hiddenPathsOnRequest. </param>
+        /// <param name="hiddenPathsOnResponse"> Serialized Name: LoggingHiddenPropertyPath.hiddenPathsOnResponse. </param>
         internal LoggingRuleHiddenPropertyPaths(IList<string> hiddenPathsOnRequest, IList<string> hiddenPathsOnResponse) : base(hiddenPathsOnRequest, hiddenPathsOnResponse)
         {
         }

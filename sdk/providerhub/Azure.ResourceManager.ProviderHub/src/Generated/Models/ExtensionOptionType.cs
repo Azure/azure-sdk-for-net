@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ExtensionOptionType. </summary>
+    /// <summary>
+    /// The ExtensionOptionType.
+    /// Serialized Name: ExtensionOptionType
+    /// </summary>
     public readonly partial struct ExtensionOptionType : IEquatable<ExtensionOptionType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string DoNotMergeExistingReadOnlyAndSecretPropertiesValue = "DoNotMergeExistingReadOnlyAndSecretProperties";
         private const string IncludeInternalMetadataValue = "IncludeInternalMetadata";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ExtensionOptionType.NotSpecified
+        /// </summary>
         public static ExtensionOptionType NotSpecified { get; } = new ExtensionOptionType(NotSpecifiedValue);
-        /// <summary> DoNotMergeExistingReadOnlyAndSecretProperties. </summary>
+        /// <summary>
+        /// DoNotMergeExistingReadOnlyAndSecretProperties
+        /// Serialized Name: ExtensionOptionType.DoNotMergeExistingReadOnlyAndSecretProperties
+        /// </summary>
         public static ExtensionOptionType DoNotMergeExistingReadOnlyAndSecretProperties { get; } = new ExtensionOptionType(DoNotMergeExistingReadOnlyAndSecretPropertiesValue);
-        /// <summary> IncludeInternalMetadata. </summary>
+        /// <summary>
+        /// IncludeInternalMetadata
+        /// Serialized Name: ExtensionOptionType.IncludeInternalMetadata
+        /// </summary>
         public static ExtensionOptionType IncludeInternalMetadata { get; } = new ExtensionOptionType(IncludeInternalMetadataValue);
         /// <summary> Determines if two <see cref="ExtensionOptionType"/> values are the same. </summary>
         public static bool operator ==(ExtensionOptionType left, ExtensionOptionType right) => left.Equals(right);

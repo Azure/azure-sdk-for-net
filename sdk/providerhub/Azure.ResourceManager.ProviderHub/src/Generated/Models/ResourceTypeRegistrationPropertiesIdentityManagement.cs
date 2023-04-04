@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeRegistrationPropertiesIdentityManagement. </summary>
+    /// <summary>
+    /// The ResourceTypeRegistrationPropertiesIdentityManagement.
+    /// Serialized Name: ResourceTypeRegistrationPropertiesIdentityManagement
+    /// </summary>
     public partial class ResourceTypeRegistrationPropertiesIdentityManagement : IdentityManagementProperties
     {
         /// <summary> Initializes a new instance of ResourceTypeRegistrationPropertiesIdentityManagement. </summary>
@@ -16,8 +19,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeRegistrationPropertiesIdentityManagement. </summary>
-        /// <param name="managementType"></param>
-        /// <param name="applicationId"></param>
+        /// <param name="managementType"> Serialized Name: IdentityManagementProperties.type. </param>
+        /// <param name="applicationId"> Serialized Name: IdentityManagementProperties.applicationId. </param>
         internal ResourceTypeRegistrationPropertiesIdentityManagement(IdentityManagementType? managementType, string applicationId) : base(managementType, applicationId)
         {
         }

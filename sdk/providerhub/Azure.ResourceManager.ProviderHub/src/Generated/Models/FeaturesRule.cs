@@ -7,17 +7,20 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The FeaturesRule. </summary>
+    /// <summary>
+    /// The FeaturesRule.
+    /// Serialized Name: FeaturesRule
+    /// </summary>
     internal partial class FeaturesRule
     {
         /// <summary> Initializes a new instance of FeaturesRule. </summary>
-        /// <param name="requiredFeaturesPolicy"></param>
+        /// <param name="requiredFeaturesPolicy"> Serialized Name: FeaturesRule.requiredFeaturesPolicy. </param>
         public FeaturesRule(FeaturesPolicy requiredFeaturesPolicy)
         {
             RequiredFeaturesPolicy = requiredFeaturesPolicy;
         }
 
-        /// <summary> Gets or sets the required features policy. </summary>
+        /// <summary> Serialized Name: FeaturesRule.requiredFeaturesPolicy. </summary>
         public FeaturesPolicy RequiredFeaturesPolicy { get; set; }
     }
 }

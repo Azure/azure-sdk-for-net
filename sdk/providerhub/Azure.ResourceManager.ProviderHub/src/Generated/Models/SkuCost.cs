@@ -10,11 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The SkuCost. </summary>
+    /// <summary>
+    /// The SkuCost.
+    /// Serialized Name: SkuCost
+    /// </summary>
     public partial class SkuCost
     {
         /// <summary> Initializes a new instance of SkuCost. </summary>
-        /// <param name="meterId"></param>
+        /// <param name="meterId"> Serialized Name: SkuCost.meterId. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="meterId"/> is null. </exception>
         public SkuCost(string meterId)
         {
@@ -24,9 +27,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of SkuCost. </summary>
-        /// <param name="meterId"></param>
-        /// <param name="quantity"></param>
-        /// <param name="extendedUnit"></param>
+        /// <param name="meterId"> Serialized Name: SkuCost.meterId. </param>
+        /// <param name="quantity"> Serialized Name: SkuCost.quantity. </param>
+        /// <param name="extendedUnit"> Serialized Name: SkuCost.extendedUnit. </param>
         internal SkuCost(string meterId, int? quantity, string extendedUnit)
         {
             MeterId = meterId;
@@ -34,11 +37,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ExtendedUnit = extendedUnit;
         }
 
-        /// <summary> Gets or sets the meter id. </summary>
+        /// <summary> Serialized Name: SkuCost.meterId. </summary>
         public string MeterId { get; set; }
-        /// <summary> Gets or sets the quantity. </summary>
+        /// <summary> Serialized Name: SkuCost.quantity. </summary>
         public int? Quantity { get; set; }
-        /// <summary> Gets or sets the extended unit. </summary>
+        /// <summary> Serialized Name: SkuCost.extendedUnit. </summary>
         public string ExtendedUnit { get; set; }
     }
 }

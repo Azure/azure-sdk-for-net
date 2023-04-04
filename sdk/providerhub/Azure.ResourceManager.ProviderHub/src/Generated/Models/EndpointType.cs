@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The EndpointType. </summary>
+    /// <summary>
+    /// The EndpointType.
+    /// Serialized Name: EndpointType
+    /// </summary>
     public readonly partial struct EndpointType : IEquatable<EndpointType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string ProductionValue = "Production";
         private const string TestInProductionValue = "TestInProduction";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: EndpointType.NotSpecified
+        /// </summary>
         public static EndpointType NotSpecified { get; } = new EndpointType(NotSpecifiedValue);
-        /// <summary> Canary. </summary>
+        /// <summary>
+        /// Canary
+        /// Serialized Name: EndpointType.Canary
+        /// </summary>
         public static EndpointType Canary { get; } = new EndpointType(CanaryValue);
-        /// <summary> Production. </summary>
+        /// <summary>
+        /// Production
+        /// Serialized Name: EndpointType.Production
+        /// </summary>
         public static EndpointType Production { get; } = new EndpointType(ProductionValue);
-        /// <summary> TestInProduction. </summary>
+        /// <summary>
+        /// TestInProduction
+        /// Serialized Name: EndpointType.TestInProduction
+        /// </summary>
         public static EndpointType TestInProduction { get; } = new EndpointType(TestInProductionValue);
         /// <summary> Determines if two <see cref="EndpointType"/> values are the same. </summary>
         public static bool operator ==(EndpointType left, EndpointType right) => left.Equals(right);

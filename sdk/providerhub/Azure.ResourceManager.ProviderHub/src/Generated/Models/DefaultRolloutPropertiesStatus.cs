@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The DefaultRolloutPropertiesStatus. </summary>
+    /// <summary>
+    /// The DefaultRolloutPropertiesStatus.
+    /// Serialized Name: DefaultRolloutPropertiesStatus
+    /// </summary>
     public partial class DefaultRolloutPropertiesStatus : DefaultRolloutStatus
     {
         /// <summary> Initializes a new instance of DefaultRolloutPropertiesStatus. </summary>
@@ -19,11 +22,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutPropertiesStatus. </summary>
-        /// <param name="completedRegions"></param>
-        /// <param name="failedOrSkippedRegions"> Dictionary of &lt;ExtendedErrorInfo&gt;. </param>
-        /// <param name="nextTrafficRegion"></param>
-        /// <param name="nextTrafficRegionScheduledOn"></param>
-        /// <param name="subscriptionReregistrationResult"></param>
+        /// <param name="completedRegions"> Serialized Name: RolloutStatusBase.completedRegions. </param>
+        /// <param name="failedOrSkippedRegions">
+        /// Dictionary of &lt;ExtendedErrorInfo&gt;
+        /// Serialized Name: RolloutStatusBase.failedOrSkippedRegions
+        /// </param>
+        /// <param name="nextTrafficRegion"> Serialized Name: DefaultRolloutStatus.nextTrafficRegion. </param>
+        /// <param name="nextTrafficRegionScheduledOn"> Serialized Name: DefaultRolloutStatus.nextTrafficRegionScheduledTime. </param>
+        /// <param name="subscriptionReregistrationResult"> Serialized Name: DefaultRolloutStatus.subscriptionReregistrationResult. </param>
         internal DefaultRolloutPropertiesStatus(IList<string> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, TrafficRegionCategory? nextTrafficRegion, DateTimeOffset? nextTrafficRegionScheduledOn, SubscriptionReregistrationResult? subscriptionReregistrationResult) : base(completedRegions, failedOrSkippedRegions, nextTrafficRegion, nextTrafficRegionScheduledOn, subscriptionReregistrationResult)
         {
         }

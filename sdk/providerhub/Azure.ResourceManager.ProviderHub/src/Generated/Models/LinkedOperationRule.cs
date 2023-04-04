@@ -7,21 +7,24 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The LinkedOperationRule. </summary>
+    /// <summary>
+    /// The LinkedOperationRule.
+    /// Serialized Name: LinkedOperationRule
+    /// </summary>
     public partial class LinkedOperationRule
     {
         /// <summary> Initializes a new instance of LinkedOperationRule. </summary>
-        /// <param name="linkedOperation"></param>
-        /// <param name="linkedAction"></param>
+        /// <param name="linkedOperation"> Serialized Name: LinkedOperationRule.linkedOperation. </param>
+        /// <param name="linkedAction"> Serialized Name: LinkedOperationRule.linkedAction. </param>
         internal LinkedOperationRule(LinkedOperation linkedOperation, LinkedAction linkedAction)
         {
             LinkedOperation = linkedOperation;
             LinkedAction = linkedAction;
         }
 
-        /// <summary> Gets the linked operation. </summary>
+        /// <summary> Serialized Name: LinkedOperationRule.linkedOperation. </summary>
         public LinkedOperation LinkedOperation { get; }
-        /// <summary> Gets the linked action. </summary>
+        /// <summary> Serialized Name: LinkedOperationRule.linkedAction. </summary>
         public LinkedAction LinkedAction { get; }
     }
 }

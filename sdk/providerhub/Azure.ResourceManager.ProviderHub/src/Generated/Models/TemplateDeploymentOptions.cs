@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The TemplateDeploymentOptions. </summary>
+    /// <summary>
+    /// The TemplateDeploymentOptions.
+    /// Serialized Name: TemplateDeploymentOptions
+    /// </summary>
     public partial class TemplateDeploymentOptions
     {
         /// <summary> Initializes a new instance of TemplateDeploymentOptions. </summary>
@@ -20,17 +23,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of TemplateDeploymentOptions. </summary>
-        /// <param name="preflightSupported"></param>
-        /// <param name="preflightOptions"></param>
+        /// <param name="preflightSupported"> Serialized Name: TemplateDeploymentOptions.preflightSupported. </param>
+        /// <param name="preflightOptions"> Serialized Name: TemplateDeploymentOptions.preflightOptions. </param>
         internal TemplateDeploymentOptions(bool? preflightSupported, IList<PreflightOption> preflightOptions)
         {
             PreflightSupported = preflightSupported;
             PreflightOptions = preflightOptions;
         }
 
-        /// <summary> Gets or sets the preflight supported. </summary>
+        /// <summary> Serialized Name: TemplateDeploymentOptions.preflightSupported. </summary>
         public bool? PreflightSupported { get; set; }
-        /// <summary> Gets the preflight options. </summary>
+        /// <summary> Serialized Name: TemplateDeploymentOptions.preflightOptions. </summary>
         public IList<PreflightOption> PreflightOptions { get; }
     }
 }

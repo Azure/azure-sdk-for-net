@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The LinkedAccessCheck. </summary>
+    /// <summary>
+    /// The LinkedAccessCheck.
+    /// Serialized Name: LinkedAccessCheck
+    /// </summary>
     public partial class LinkedAccessCheck
     {
         /// <summary> Initializes a new instance of LinkedAccessCheck. </summary>
@@ -16,11 +19,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of LinkedAccessCheck. </summary>
-        /// <param name="actionName"></param>
-        /// <param name="linkedProperty"></param>
-        /// <param name="linkedAction"></param>
-        /// <param name="linkedActionVerb"></param>
-        /// <param name="linkedType"></param>
+        /// <param name="actionName"> Serialized Name: LinkedAccessCheck.actionName. </param>
+        /// <param name="linkedProperty"> Serialized Name: LinkedAccessCheck.linkedProperty. </param>
+        /// <param name="linkedAction"> Serialized Name: LinkedAccessCheck.linkedAction. </param>
+        /// <param name="linkedActionVerb"> Serialized Name: LinkedAccessCheck.linkedActionVerb. </param>
+        /// <param name="linkedType"> Serialized Name: LinkedAccessCheck.linkedType. </param>
         internal LinkedAccessCheck(string actionName, string linkedProperty, string linkedAction, string linkedActionVerb, string linkedType)
         {
             ActionName = actionName;
@@ -30,15 +33,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             LinkedType = linkedType;
         }
 
-        /// <summary> Gets or sets the action name. </summary>
+        /// <summary> Serialized Name: LinkedAccessCheck.actionName. </summary>
         public string ActionName { get; set; }
-        /// <summary> Gets or sets the linked property. </summary>
+        /// <summary> Serialized Name: LinkedAccessCheck.linkedProperty. </summary>
         public string LinkedProperty { get; set; }
-        /// <summary> Gets or sets the linked action. </summary>
+        /// <summary> Serialized Name: LinkedAccessCheck.linkedAction. </summary>
         public string LinkedAction { get; set; }
-        /// <summary> Gets or sets the linked action verb. </summary>
+        /// <summary> Serialized Name: LinkedAccessCheck.linkedActionVerb. </summary>
         public string LinkedActionVerb { get; set; }
-        /// <summary> Gets or sets the linked type. </summary>
+        /// <summary> Serialized Name: LinkedAccessCheck.linkedType. </summary>
         public string LinkedType { get; set; }
     }
 }

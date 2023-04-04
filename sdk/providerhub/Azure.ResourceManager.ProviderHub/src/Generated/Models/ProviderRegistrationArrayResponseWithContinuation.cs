@@ -11,7 +11,10 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ProviderRegistrationArrayResponseWithContinuation. </summary>
+    /// <summary>
+    /// The ProviderRegistrationArrayResponseWithContinuation.
+    /// Serialized Name: ProviderRegistrationArrayResponseWithContinuation
+    /// </summary>
     internal partial class ProviderRegistrationArrayResponseWithContinuation
     {
         /// <summary> Initializes a new instance of ProviderRegistrationArrayResponseWithContinuation. </summary>
@@ -21,17 +24,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ProviderRegistrationArrayResponseWithContinuation. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
+        /// <param name="value"> Serialized Name: ProviderRegistrationArrayResponseWithContinuation.value. </param>
+        /// <param name="nextLink">
+        /// The URL to get to the next set of results, if there are any.
+        /// Serialized Name: ProviderRegistrationArrayResponseWithContinuation.nextLink
+        /// </param>
         internal ProviderRegistrationArrayResponseWithContinuation(IReadOnlyList<ProviderRegistrationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Serialized Name: ProviderRegistrationArrayResponseWithContinuation.value. </summary>
         public IReadOnlyList<ProviderRegistrationData> Value { get; }
-        /// <summary> The URL to get to the next set of results, if there are any. </summary>
+        /// <summary>
+        /// The URL to get to the next set of results, if there are any.
+        /// Serialized Name: ProviderRegistrationArrayResponseWithContinuation.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceMovePolicy. </summary>
+    /// <summary>
+    /// The ResourceMovePolicy.
+    /// Serialized Name: ResourceMovePolicy
+    /// </summary>
     public partial class ResourceMovePolicy
     {
         /// <summary> Initializes a new instance of ResourceMovePolicy. </summary>
@@ -16,9 +19,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceMovePolicy. </summary>
-        /// <param name="validationRequired"></param>
-        /// <param name="crossResourceGroupMoveEnabled"></param>
-        /// <param name="crossSubscriptionMoveEnabled"></param>
+        /// <param name="validationRequired"> Serialized Name: ResourceMovePolicy.validationRequired. </param>
+        /// <param name="crossResourceGroupMoveEnabled"> Serialized Name: ResourceMovePolicy.crossResourceGroupMoveEnabled. </param>
+        /// <param name="crossSubscriptionMoveEnabled"> Serialized Name: ResourceMovePolicy.crossSubscriptionMoveEnabled. </param>
         internal ResourceMovePolicy(bool? validationRequired, bool? crossResourceGroupMoveEnabled, bool? crossSubscriptionMoveEnabled)
         {
             ValidationRequired = validationRequired;
@@ -26,11 +29,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             CrossSubscriptionMoveEnabled = crossSubscriptionMoveEnabled;
         }
 
-        /// <summary> Gets or sets the validation required. </summary>
+        /// <summary> Serialized Name: ResourceMovePolicy.validationRequired. </summary>
         public bool? ValidationRequired { get; set; }
-        /// <summary> Gets or sets the cross resource group move enabled. </summary>
+        /// <summary> Serialized Name: ResourceMovePolicy.crossResourceGroupMoveEnabled. </summary>
         public bool? CrossResourceGroupMoveEnabled { get; set; }
-        /// <summary> Gets or sets the cross subscription move enabled. </summary>
+        /// <summary> Serialized Name: ResourceMovePolicy.crossSubscriptionMoveEnabled. </summary>
         public bool? CrossSubscriptionMoveEnabled { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The LinkedOperation. </summary>
+    /// <summary>
+    /// The LinkedOperation.
+    /// Serialized Name: LinkedOperation
+    /// </summary>
     public readonly partial struct LinkedOperation : IEquatable<LinkedOperation>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string CrossResourceGroupResourceMoveValue = "CrossResourceGroupResourceMove";
         private const string CrossSubscriptionResourceMoveValue = "CrossSubscriptionResourceMove";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: LinkedOperation.None
+        /// </summary>
         public static LinkedOperation None { get; } = new LinkedOperation(NoneValue);
-        /// <summary> CrossResourceGroupResourceMove. </summary>
+        /// <summary>
+        /// CrossResourceGroupResourceMove
+        /// Serialized Name: LinkedOperation.CrossResourceGroupResourceMove
+        /// </summary>
         public static LinkedOperation CrossResourceGroupResourceMove { get; } = new LinkedOperation(CrossResourceGroupResourceMoveValue);
-        /// <summary> CrossSubscriptionResourceMove. </summary>
+        /// <summary>
+        /// CrossSubscriptionResourceMove
+        /// Serialized Name: LinkedOperation.CrossSubscriptionResourceMove
+        /// </summary>
         public static LinkedOperation CrossSubscriptionResourceMove { get; } = new LinkedOperation(CrossSubscriptionResourceMoveValue);
         /// <summary> Determines if two <see cref="LinkedOperation"/> values are the same. </summary>
         public static bool operator ==(LinkedOperation left, LinkedOperation right) => left.Equals(right);

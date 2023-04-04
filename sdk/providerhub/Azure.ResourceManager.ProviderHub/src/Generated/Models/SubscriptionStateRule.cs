@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The SubscriptionStateRule. </summary>
+    /// <summary>
+    /// The SubscriptionStateRule.
+    /// Serialized Name: SubscriptionStateRule
+    /// </summary>
     public partial class SubscriptionStateRule
     {
         /// <summary> Initializes a new instance of SubscriptionStateRule. </summary>
@@ -20,17 +23,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of SubscriptionStateRule. </summary>
-        /// <param name="state"></param>
-        /// <param name="allowedActions"></param>
+        /// <param name="state"> Serialized Name: SubscriptionStateRule.state. </param>
+        /// <param name="allowedActions"> Serialized Name: SubscriptionStateRule.allowedActions. </param>
         internal SubscriptionStateRule(SubscriptionState? state, IList<string> allowedActions)
         {
             State = state;
             AllowedActions = allowedActions;
         }
 
-        /// <summary> Gets or sets the state. </summary>
+        /// <summary> Serialized Name: SubscriptionStateRule.state. </summary>
         public SubscriptionState? State { get; set; }
-        /// <summary> Gets the allowed actions. </summary>
+        /// <summary> Serialized Name: SubscriptionStateRule.allowedActions. </summary>
         public IList<string> AllowedActions { get; }
     }
 }

@@ -7,11 +7,14 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceProviderManifestPropertiesFeaturesRule. </summary>
+    /// <summary>
+    /// The ResourceProviderManifestPropertiesFeaturesRule.
+    /// Serialized Name: ResourceProviderManifestPropertiesFeaturesRule
+    /// </summary>
     internal partial class ResourceProviderManifestPropertiesFeaturesRule : FeaturesRule
     {
         /// <summary> Initializes a new instance of ResourceProviderManifestPropertiesFeaturesRule. </summary>
-        /// <param name="requiredFeaturesPolicy"></param>
+        /// <param name="requiredFeaturesPolicy"> Serialized Name: FeaturesRule.requiredFeaturesPolicy. </param>
         public ResourceProviderManifestPropertiesFeaturesRule(FeaturesPolicy requiredFeaturesPolicy) : base(requiredFeaturesPolicy)
         {
         }

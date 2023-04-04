@@ -11,7 +11,10 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The SkuResourceArrayResponseWithContinuation. </summary>
+    /// <summary>
+    /// The SkuResourceArrayResponseWithContinuation.
+    /// Serialized Name: SkuResourceArrayResponseWithContinuation
+    /// </summary>
     internal partial class SkuResourceArrayResponseWithContinuation
     {
         /// <summary> Initializes a new instance of SkuResourceArrayResponseWithContinuation. </summary>
@@ -21,17 +24,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of SkuResourceArrayResponseWithContinuation. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
+        /// <param name="value"> Serialized Name: SkuResourceArrayResponseWithContinuation.value. </param>
+        /// <param name="nextLink">
+        /// The URL to get to the next set of results, if there are any.
+        /// Serialized Name: SkuResourceArrayResponseWithContinuation.nextLink
+        /// </param>
         internal SkuResourceArrayResponseWithContinuation(IReadOnlyList<SkuResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Serialized Name: SkuResourceArrayResponseWithContinuation.value. </summary>
         public IReadOnlyList<SkuResourceData> Value { get; }
-        /// <summary> The URL to get to the next set of results, if there are any. </summary>
+        /// <summary>
+        /// The URL to get to the next set of results, if there are any.
+        /// Serialized Name: SkuResourceArrayResponseWithContinuation.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

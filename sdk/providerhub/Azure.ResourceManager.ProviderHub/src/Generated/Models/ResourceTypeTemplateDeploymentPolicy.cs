@@ -7,12 +7,15 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeTemplateDeploymentPolicy. </summary>
+    /// <summary>
+    /// The ResourceTypeTemplateDeploymentPolicy.
+    /// Serialized Name: ResourceTypeTemplateDeploymentPolicy
+    /// </summary>
     public partial class ResourceTypeTemplateDeploymentPolicy : TemplateDeploymentPolicy
     {
         /// <summary> Initializes a new instance of ResourceTypeTemplateDeploymentPolicy. </summary>
-        /// <param name="capabilities"></param>
-        /// <param name="preflightOptions"></param>
+        /// <param name="capabilities"> Serialized Name: TemplateDeploymentPolicy.capabilities. </param>
+        /// <param name="preflightOptions"> Serialized Name: TemplateDeploymentPolicy.preflightOptions. </param>
         internal ResourceTypeTemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions) : base(capabilities, preflightOptions)
         {
         }

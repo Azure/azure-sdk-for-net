@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The CustomRolloutSpecificationCanary. </summary>
+    /// <summary>
+    /// The CustomRolloutSpecificationCanary.
+    /// Serialized Name: CustomRolloutSpecificationCanary
+    /// </summary>
     public partial class CustomRolloutSpecificationCanary : TrafficRegions
     {
         /// <summary> Initializes a new instance of CustomRolloutSpecificationCanary. </summary>
@@ -18,7 +21,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of CustomRolloutSpecificationCanary. </summary>
-        /// <param name="regions"></param>
+        /// <param name="regions"> Serialized Name: TrafficRegions.regions. </param>
         internal CustomRolloutSpecificationCanary(IList<string> regions) : base(regions)
         {
         }

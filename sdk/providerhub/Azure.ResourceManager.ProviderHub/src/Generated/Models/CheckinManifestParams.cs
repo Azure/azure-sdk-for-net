@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The CheckinManifestParams. </summary>
+    /// <summary>
+    /// The CheckinManifestParams.
+    /// Serialized Name: CheckinManifestParams
+    /// </summary>
     public partial class CheckinManifestParams
     {
         /// <summary> Initializes a new instance of CheckinManifestParams. </summary>
-        /// <param name="environment"> The environment supplied to the checkin manifest operation. </param>
-        /// <param name="baselineArmManifestLocation"> The baseline ARM manifest location supplied to the checkin manifest operation. </param>
+        /// <param name="environment">
+        /// The environment supplied to the checkin manifest operation.
+        /// Serialized Name: CheckinManifestParams.environment
+        /// </param>
+        /// <param name="baselineArmManifestLocation">
+        /// The baseline ARM manifest location supplied to the checkin manifest operation.
+        /// Serialized Name: CheckinManifestParams.baselineArmManifestLocation
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environment"/> or <paramref name="baselineArmManifestLocation"/> is null. </exception>
         public CheckinManifestParams(string environment, string baselineArmManifestLocation)
         {
@@ -26,9 +35,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             BaselineArmManifestLocation = baselineArmManifestLocation;
         }
 
-        /// <summary> The environment supplied to the checkin manifest operation. </summary>
+        /// <summary>
+        /// The environment supplied to the checkin manifest operation.
+        /// Serialized Name: CheckinManifestParams.environment
+        /// </summary>
         public string Environment { get; }
-        /// <summary> The baseline ARM manifest location supplied to the checkin manifest operation. </summary>
+        /// <summary>
+        /// The baseline ARM manifest location supplied to the checkin manifest operation.
+        /// Serialized Name: CheckinManifestParams.baselineArmManifestLocation
+        /// </summary>
         public string BaselineArmManifestLocation { get; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceProviderManifest. </summary>
+    /// <summary>
+    /// The ResourceProviderManifest.
+    /// Serialized Name: ResourceProviderManifest
+    /// </summary>
     public partial class ResourceProviderManifest
     {
         /// <summary> Initializes a new instance of ResourceProviderManifest. </summary>
@@ -25,20 +28,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceProviderManifest. </summary>
-        /// <param name="providerAuthentication"></param>
-        /// <param name="providerAuthorizations"></param>
-        /// <param name="namespace"></param>
-        /// <param name="providerVersion"></param>
-        /// <param name="providerType"></param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="featuresRule"></param>
-        /// <param name="requestHeaderOptions"></param>
-        /// <param name="resourceTypes"></param>
-        /// <param name="management"></param>
-        /// <param name="capabilities"></param>
-        /// <param name="metadata"> Anything. </param>
-        /// <param name="globalNotificationEndpoints"></param>
-        /// <param name="reRegisterSubscriptionMetadata"></param>
+        /// <param name="providerAuthentication"> Serialized Name: ResourceProviderManifest.providerAuthentication. </param>
+        /// <param name="providerAuthorizations"> Serialized Name: ResourceProviderManifest.providerAuthorizations. </param>
+        /// <param name="namespace"> Serialized Name: ResourceProviderManifest.namespace. </param>
+        /// <param name="providerVersion"> Serialized Name: ResourceProviderManifest.providerVersion. </param>
+        /// <param name="providerType"> Serialized Name: ResourceProviderManifest.providerType. </param>
+        /// <param name="requiredFeatures"> Serialized Name: ResourceProviderManifest.requiredFeatures. </param>
+        /// <param name="featuresRule"> Serialized Name: ResourceProviderManifest.featuresRule. </param>
+        /// <param name="requestHeaderOptions"> Serialized Name: ResourceProviderManifest.requestHeaderOptions. </param>
+        /// <param name="resourceTypes"> Serialized Name: ResourceProviderManifest.resourceTypes. </param>
+        /// <param name="management"> Serialized Name: ResourceProviderManifest.management. </param>
+        /// <param name="capabilities"> Serialized Name: ResourceProviderManifest.capabilities. </param>
+        /// <param name="metadata">
+        /// Anything
+        /// Serialized Name: ResourceProviderManifest.metadata
+        /// </param>
+        /// <param name="globalNotificationEndpoints"> Serialized Name: ResourceProviderManifest.globalNotificationEndpoints. </param>
+        /// <param name="reRegisterSubscriptionMetadata"> Serialized Name: ResourceProviderManifest.reRegisterSubscriptionMetadata. </param>
         internal ResourceProviderManifest(ResourceProviderManifestProviderAuthentication providerAuthentication, IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IReadOnlyList<string> requiredFeatures, ResourceProviderManifestFeaturesRule featuresRule, ResourceProviderManifestRequestHeaderOptions requestHeaderOptions, IReadOnlyList<ResourceType> resourceTypes, ResourceProviderManifestManagement management, IReadOnlyList<ResourceProviderCapabilities> capabilities, BinaryData metadata, IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints, ResourceProviderManifestReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata)
         {
             ProviderAuthentication = providerAuthentication;
@@ -57,48 +63,49 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ReRegisterSubscriptionMetadata = reRegisterSubscriptionMetadata;
         }
 
-        /// <summary> Gets the provider authentication. </summary>
+        /// <summary> Serialized Name: ResourceProviderManifest.providerAuthentication. </summary>
         internal ResourceProviderManifestProviderAuthentication ProviderAuthentication { get; }
-        /// <summary> Gets the provider authentication allowed audiences. </summary>
+        /// <summary> Serialized Name: ResourceProviderAuthentication.allowedAudiences. </summary>
         public IList<string> ProviderAuthenticationAllowedAudiences
         {
             get => ProviderAuthentication?.AllowedAudiences;
         }
 
-        /// <summary> Gets the provider authorizations. </summary>
+        /// <summary> Serialized Name: ResourceProviderManifest.providerAuthorizations. </summary>
         public IReadOnlyList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
-        /// <summary> Gets the namespace. </summary>
+        /// <summary> Serialized Name: ResourceProviderManifest.namespace. </summary>
         public string Namespace { get; }
-        /// <summary> Gets the provider version. </summary>
+        /// <summary> Serialized Name: ResourceProviderManifest.providerVersion. </summary>
         public string ProviderVersion { get; }
-        /// <summary> Gets the provider type. </summary>
+        /// <summary> Serialized Name: ResourceProviderManifest.providerType. </summary>
         public ResourceProviderType? ProviderType { get; }
-        /// <summary> Gets the required features. </summary>
+        /// <summary> Serialized Name: ResourceProviderManifest.requiredFeatures. </summary>
         public IReadOnlyList<string> RequiredFeatures { get; }
-        /// <summary> Gets the features rule. </summary>
+        /// <summary> Serialized Name: ResourceProviderManifest.featuresRule. </summary>
         internal ResourceProviderManifestFeaturesRule FeaturesRule { get; }
-        /// <summary> Gets the required features policy. </summary>
+        /// <summary> Serialized Name: FeaturesRule.requiredFeaturesPolicy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule?.RequiredFeaturesPolicy;
         }
 
-        /// <summary> Gets the request header options. </summary>
+        /// <summary> Serialized Name: ResourceProviderManifest.requestHeaderOptions. </summary>
         internal ResourceProviderManifestRequestHeaderOptions RequestHeaderOptions { get; }
-        /// <summary> Gets the opt in headers. </summary>
+        /// <summary> Serialized Name: RequestHeaderOptions.optInHeaders. </summary>
         public OptInHeaderType? OptInHeaders
         {
             get => RequestHeaderOptions?.OptInHeaders;
         }
 
-        /// <summary> Gets the resource types. </summary>
+        /// <summary> Serialized Name: ResourceProviderManifest.resourceTypes. </summary>
         public IReadOnlyList<ResourceType> ResourceTypes { get; }
-        /// <summary> Gets the management. </summary>
+        /// <summary> Serialized Name: ResourceProviderManifest.management. </summary>
         public ResourceProviderManifestManagement Management { get; }
-        /// <summary> Gets the capabilities. </summary>
+        /// <summary> Serialized Name: ResourceProviderManifest.capabilities. </summary>
         public IReadOnlyList<ResourceProviderCapabilities> Capabilities { get; }
         /// <summary>
         /// Anything
+        /// Serialized Name: ResourceProviderManifest.metadata
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -128,9 +135,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// </para>
         /// </summary>
         public BinaryData Metadata { get; }
-        /// <summary> Gets the global notification endpoints. </summary>
+        /// <summary> Serialized Name: ResourceProviderManifest.globalNotificationEndpoints. </summary>
         public IReadOnlyList<ResourceProviderEndpoint> GlobalNotificationEndpoints { get; }
-        /// <summary> Gets the re register subscription metadata. </summary>
+        /// <summary> Serialized Name: ResourceProviderManifest.reRegisterSubscriptionMetadata. </summary>
         public ResourceProviderManifestReRegisterSubscriptionMetadata ReRegisterSubscriptionMetadata { get; }
     }
 }

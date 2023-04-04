@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The OperationsDefinitionOrigin. </summary>
+    /// <summary>
+    /// The OperationsDefinitionOrigin.
+    /// Serialized Name: OperationsDefinitionOrigin
+    /// </summary>
     public readonly partial struct OperationsDefinitionOrigin : IEquatable<OperationsDefinitionOrigin>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string UserValue = "User";
         private const string SystemValue = "System";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: OperationsDefinitionOrigin.NotSpecified
+        /// </summary>
         public static OperationsDefinitionOrigin NotSpecified { get; } = new OperationsDefinitionOrigin(NotSpecifiedValue);
-        /// <summary> User. </summary>
+        /// <summary>
+        /// User
+        /// Serialized Name: OperationsDefinitionOrigin.User
+        /// </summary>
         public static OperationsDefinitionOrigin User { get; } = new OperationsDefinitionOrigin(UserValue);
-        /// <summary> System. </summary>
+        /// <summary>
+        /// System
+        /// Serialized Name: OperationsDefinitionOrigin.System
+        /// </summary>
         public static OperationsDefinitionOrigin System { get; } = new OperationsDefinitionOrigin(SystemValue);
         /// <summary> Determines if two <see cref="OperationsDefinitionOrigin"/> values are the same. </summary>
         public static bool operator ==(OperationsDefinitionOrigin left, OperationsDefinitionOrigin right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The OperationsDefinitionActionType. </summary>
+    /// <summary>
+    /// The OperationsDefinitionActionType.
+    /// Serialized Name: OperationsDefinitionActionType
+    /// </summary>
     public readonly partial struct OperationsDefinitionActionType : IEquatable<OperationsDefinitionActionType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string NotSpecifiedValue = "NotSpecified";
         private const string InternalValue = "Internal";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: OperationsDefinitionActionType.NotSpecified
+        /// </summary>
         public static OperationsDefinitionActionType NotSpecified { get; } = new OperationsDefinitionActionType(NotSpecifiedValue);
-        /// <summary> Internal. </summary>
+        /// <summary>
+        /// Internal
+        /// Serialized Name: OperationsDefinitionActionType.Internal
+        /// </summary>
         public static OperationsDefinitionActionType Internal { get; } = new OperationsDefinitionActionType(InternalValue);
         /// <summary> Determines if two <see cref="OperationsDefinitionActionType"/> values are the same. </summary>
         public static bool operator ==(OperationsDefinitionActionType left, OperationsDefinitionActionType right) => left.Equals(right);

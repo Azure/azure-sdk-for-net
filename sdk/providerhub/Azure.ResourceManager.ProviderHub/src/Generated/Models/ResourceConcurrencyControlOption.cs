@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceConcurrencyControlOption. </summary>
+    /// <summary>
+    /// The ResourceConcurrencyControlOption.
+    /// Serialized Name: ResourceConcurrencyControlOption
+    /// </summary>
     public partial class ResourceConcurrencyControlOption
     {
         /// <summary> Initializes a new instance of ResourceConcurrencyControlOption. </summary>
@@ -16,13 +19,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceConcurrencyControlOption. </summary>
-        /// <param name="policy"></param>
+        /// <param name="policy"> Serialized Name: ResourceConcurrencyControlOption.policy. </param>
         internal ResourceConcurrencyControlOption(Policy? policy)
         {
             Policy = policy;
         }
 
-        /// <summary> Gets or sets the policy. </summary>
+        /// <summary> Serialized Name: ResourceConcurrencyControlOption.policy. </summary>
         public Policy? Policy { get; set; }
     }
 }

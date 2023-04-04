@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceManagementAction. </summary>
+    /// <summary>
+    /// The ResourceManagementAction.
+    /// Serialized Name: ResourceManagementAction
+    /// </summary>
     public partial class ResourceManagementAction
     {
         /// <summary> Initializes a new instance of ResourceManagementAction. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceManagementAction. </summary>
-        /// <param name="resources"> resource management action content. </param>
+        /// <param name="resources">
+        /// resource management action content.
+        /// Serialized Name: ResourceManagementAction.resources
+        /// </param>
         internal ResourceManagementAction(IList<ResourceManagementEntity> resources)
         {
             Resources = resources;
         }
 
-        /// <summary> resource management action content. </summary>
+        /// <summary>
+        /// resource management action content.
+        /// Serialized Name: ResourceManagementAction.resources
+        /// </summary>
         public IList<ResourceManagementEntity> Resources { get; }
     }
 }

@@ -7,21 +7,24 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The SkuCapacity. </summary>
+    /// <summary>
+    /// The SkuCapacity.
+    /// Serialized Name: SkuCapacity
+    /// </summary>
     public partial class SkuCapacity
     {
         /// <summary> Initializes a new instance of SkuCapacity. </summary>
-        /// <param name="minimum"></param>
+        /// <param name="minimum"> Serialized Name: SkuCapacity.minimum. </param>
         public SkuCapacity(int minimum)
         {
             Minimum = minimum;
         }
 
         /// <summary> Initializes a new instance of SkuCapacity. </summary>
-        /// <param name="minimum"></param>
-        /// <param name="maximum"></param>
-        /// <param name="default"></param>
-        /// <param name="scaleType"></param>
+        /// <param name="minimum"> Serialized Name: SkuCapacity.minimum. </param>
+        /// <param name="maximum"> Serialized Name: SkuCapacity.maximum. </param>
+        /// <param name="default"> Serialized Name: SkuCapacity.default. </param>
+        /// <param name="scaleType"> Serialized Name: SkuCapacity.scaleType. </param>
         internal SkuCapacity(int minimum, int? maximum, int? @default, SkuScaleType? scaleType)
         {
             Minimum = minimum;
@@ -30,13 +33,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ScaleType = scaleType;
         }
 
-        /// <summary> Gets or sets the minimum. </summary>
+        /// <summary> Serialized Name: SkuCapacity.minimum. </summary>
         public int Minimum { get; set; }
-        /// <summary> Gets or sets the maximum. </summary>
+        /// <summary> Serialized Name: SkuCapacity.maximum. </summary>
         public int? Maximum { get; set; }
-        /// <summary> Gets or sets the default. </summary>
+        /// <summary> Serialized Name: SkuCapacity.default. </summary>
         public int? Default { get; set; }
-        /// <summary> Gets or sets the scale type. </summary>
+        /// <summary> Serialized Name: SkuCapacity.scaleType. </summary>
         public SkuScaleType? ScaleType { get; set; }
     }
 }

@@ -12,12 +12,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ThrottlingRule. </summary>
+    /// <summary>
+    /// The ThrottlingRule.
+    /// Serialized Name: ThrottlingRule
+    /// </summary>
     public partial class ThrottlingRule
     {
         /// <summary> Initializes a new instance of ThrottlingRule. </summary>
-        /// <param name="action"></param>
-        /// <param name="metrics"></param>
+        /// <param name="action"> Serialized Name: ThrottlingRule.action. </param>
+        /// <param name="metrics"> Serialized Name: ThrottlingRule.metrics. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="metrics"/> is null. </exception>
         public ThrottlingRule(string action, IEnumerable<ThrottlingMetric> metrics)
         {
@@ -30,9 +33,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ThrottlingRule. </summary>
-        /// <param name="action"></param>
-        /// <param name="metrics"></param>
-        /// <param name="requiredFeatures"></param>
+        /// <param name="action"> Serialized Name: ThrottlingRule.action. </param>
+        /// <param name="metrics"> Serialized Name: ThrottlingRule.metrics. </param>
+        /// <param name="requiredFeatures"> Serialized Name: ThrottlingRule.requiredFeatures. </param>
         internal ThrottlingRule(string action, IList<ThrottlingMetric> metrics, IList<string> requiredFeatures)
         {
             Action = action;
@@ -40,11 +43,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RequiredFeatures = requiredFeatures;
         }
 
-        /// <summary> Gets or sets the action. </summary>
+        /// <summary> Serialized Name: ThrottlingRule.action. </summary>
         public string Action { get; set; }
-        /// <summary> Gets the metrics. </summary>
+        /// <summary> Serialized Name: ThrottlingRule.metrics. </summary>
         public IList<ThrottlingMetric> Metrics { get; }
-        /// <summary> Gets the required features. </summary>
+        /// <summary> Serialized Name: ThrottlingRule.requiredFeatures. </summary>
         public IList<string> RequiredFeatures { get; }
     }
 }

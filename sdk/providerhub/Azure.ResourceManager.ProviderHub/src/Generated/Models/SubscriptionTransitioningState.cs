@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The SubscriptionTransitioningState. </summary>
+    /// <summary>
+    /// The SubscriptionTransitioningState.
+    /// Serialized Name: SubscriptionTransitioningState
+    /// </summary>
     public readonly partial struct SubscriptionTransitioningState : IEquatable<SubscriptionTransitioningState>
     {
         private readonly string _value;
@@ -36,31 +39,70 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string SuspendedToDeletedValue = "SuspendedToDeleted";
         private const string SuspendedToUnregisteredValue = "SuspendedToUnregistered";
 
-        /// <summary> Registered. </summary>
+        /// <summary>
+        /// Registered
+        /// Serialized Name: SubscriptionTransitioningState.Registered
+        /// </summary>
         public static SubscriptionTransitioningState Registered { get; } = new SubscriptionTransitioningState(RegisteredValue);
-        /// <summary> Unregistered. </summary>
+        /// <summary>
+        /// Unregistered
+        /// Serialized Name: SubscriptionTransitioningState.Unregistered
+        /// </summary>
         public static SubscriptionTransitioningState Unregistered { get; } = new SubscriptionTransitioningState(UnregisteredValue);
-        /// <summary> Warned. </summary>
+        /// <summary>
+        /// Warned
+        /// Serialized Name: SubscriptionTransitioningState.Warned
+        /// </summary>
         public static SubscriptionTransitioningState Warned { get; } = new SubscriptionTransitioningState(WarnedValue);
-        /// <summary> Suspended. </summary>
+        /// <summary>
+        /// Suspended
+        /// Serialized Name: SubscriptionTransitioningState.Suspended
+        /// </summary>
         public static SubscriptionTransitioningState Suspended { get; } = new SubscriptionTransitioningState(SuspendedValue);
-        /// <summary> Deleted. </summary>
+        /// <summary>
+        /// Deleted
+        /// Serialized Name: SubscriptionTransitioningState.Deleted
+        /// </summary>
         public static SubscriptionTransitioningState Deleted { get; } = new SubscriptionTransitioningState(DeletedValue);
-        /// <summary> WarnedToRegistered. </summary>
+        /// <summary>
+        /// WarnedToRegistered
+        /// Serialized Name: SubscriptionTransitioningState.WarnedToRegistered
+        /// </summary>
         public static SubscriptionTransitioningState WarnedToRegistered { get; } = new SubscriptionTransitioningState(WarnedToRegisteredValue);
-        /// <summary> WarnedToSuspended. </summary>
+        /// <summary>
+        /// WarnedToSuspended
+        /// Serialized Name: SubscriptionTransitioningState.WarnedToSuspended
+        /// </summary>
         public static SubscriptionTransitioningState WarnedToSuspended { get; } = new SubscriptionTransitioningState(WarnedToSuspendedValue);
-        /// <summary> WarnedToDeleted. </summary>
+        /// <summary>
+        /// WarnedToDeleted
+        /// Serialized Name: SubscriptionTransitioningState.WarnedToDeleted
+        /// </summary>
         public static SubscriptionTransitioningState WarnedToDeleted { get; } = new SubscriptionTransitioningState(WarnedToDeletedValue);
-        /// <summary> WarnedToUnregistered. </summary>
+        /// <summary>
+        /// WarnedToUnregistered
+        /// Serialized Name: SubscriptionTransitioningState.WarnedToUnregistered
+        /// </summary>
         public static SubscriptionTransitioningState WarnedToUnregistered { get; } = new SubscriptionTransitioningState(WarnedToUnregisteredValue);
-        /// <summary> SuspendedToRegistered. </summary>
+        /// <summary>
+        /// SuspendedToRegistered
+        /// Serialized Name: SubscriptionTransitioningState.SuspendedToRegistered
+        /// </summary>
         public static SubscriptionTransitioningState SuspendedToRegistered { get; } = new SubscriptionTransitioningState(SuspendedToRegisteredValue);
-        /// <summary> SuspendedToWarned. </summary>
+        /// <summary>
+        /// SuspendedToWarned
+        /// Serialized Name: SubscriptionTransitioningState.SuspendedToWarned
+        /// </summary>
         public static SubscriptionTransitioningState SuspendedToWarned { get; } = new SubscriptionTransitioningState(SuspendedToWarnedValue);
-        /// <summary> SuspendedToDeleted. </summary>
+        /// <summary>
+        /// SuspendedToDeleted
+        /// Serialized Name: SubscriptionTransitioningState.SuspendedToDeleted
+        /// </summary>
         public static SubscriptionTransitioningState SuspendedToDeleted { get; } = new SubscriptionTransitioningState(SuspendedToDeletedValue);
-        /// <summary> SuspendedToUnregistered. </summary>
+        /// <summary>
+        /// SuspendedToUnregistered
+        /// Serialized Name: SubscriptionTransitioningState.SuspendedToUnregistered
+        /// </summary>
         public static SubscriptionTransitioningState SuspendedToUnregistered { get; } = new SubscriptionTransitioningState(SuspendedToUnregisteredValue);
         /// <summary> Determines if two <see cref="SubscriptionTransitioningState"/> values are the same. </summary>
         public static bool operator ==(SubscriptionTransitioningState left, SubscriptionTransitioningState right) => left.Equals(right);

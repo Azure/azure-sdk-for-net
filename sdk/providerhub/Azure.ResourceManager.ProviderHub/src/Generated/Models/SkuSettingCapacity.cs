@@ -7,20 +7,23 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The SkuSettingCapacity. </summary>
+    /// <summary>
+    /// The SkuSettingCapacity.
+    /// Serialized Name: SkuSettingCapacity
+    /// </summary>
     public partial class SkuSettingCapacity : SkuCapacity
     {
         /// <summary> Initializes a new instance of SkuSettingCapacity. </summary>
-        /// <param name="minimum"></param>
+        /// <param name="minimum"> Serialized Name: SkuCapacity.minimum. </param>
         public SkuSettingCapacity(int minimum) : base(minimum)
         {
         }
 
         /// <summary> Initializes a new instance of SkuSettingCapacity. </summary>
-        /// <param name="minimum"></param>
-        /// <param name="maximum"></param>
-        /// <param name="default"></param>
-        /// <param name="scaleType"></param>
+        /// <param name="minimum"> Serialized Name: SkuCapacity.minimum. </param>
+        /// <param name="maximum"> Serialized Name: SkuCapacity.maximum. </param>
+        /// <param name="default"> Serialized Name: SkuCapacity.default. </param>
+        /// <param name="scaleType"> Serialized Name: SkuCapacity.scaleType. </param>
         internal SkuSettingCapacity(int minimum, int? maximum, int? @default, SkuScaleType? scaleType) : base(minimum, maximum, @default, scaleType)
         {
         }

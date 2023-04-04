@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeRegistrationPropertiesResourceGraphConfiguration. </summary>
+    /// <summary>
+    /// The ResourceTypeRegistrationPropertiesResourceGraphConfiguration.
+    /// Serialized Name: ResourceTypeRegistrationPropertiesResourceGraphConfiguration
+    /// </summary>
     public partial class ResourceTypeRegistrationPropertiesResourceGraphConfiguration : ResourceGraphConfiguration
     {
         /// <summary> Initializes a new instance of ResourceTypeRegistrationPropertiesResourceGraphConfiguration. </summary>
@@ -16,8 +19,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeRegistrationPropertiesResourceGraphConfiguration. </summary>
-        /// <param name="enabled"></param>
-        /// <param name="apiVersion"></param>
+        /// <param name="enabled"> Serialized Name: ResourceGraphConfiguration.enabled. </param>
+        /// <param name="apiVersion"> Serialized Name: ResourceGraphConfiguration.apiVersion. </param>
         internal ResourceTypeRegistrationPropertiesResourceGraphConfiguration(bool? enabled, string apiVersion) : base(enabled, apiVersion)
         {
         }

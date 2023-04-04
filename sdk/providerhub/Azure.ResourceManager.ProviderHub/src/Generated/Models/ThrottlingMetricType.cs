@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ThrottlingMetricType. </summary>
+    /// <summary>
+    /// The ThrottlingMetricType.
+    /// Serialized Name: ThrottlingMetricType
+    /// </summary>
     public readonly partial struct ThrottlingMetricType : IEquatable<ThrottlingMetricType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string NumberOfRequestsValue = "NumberOfRequests";
         private const string NumberOfResourcesValue = "NumberOfResources";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ThrottlingMetricType.NotSpecified
+        /// </summary>
         public static ThrottlingMetricType NotSpecified { get; } = new ThrottlingMetricType(NotSpecifiedValue);
-        /// <summary> NumberOfRequests. </summary>
+        /// <summary>
+        /// NumberOfRequests
+        /// Serialized Name: ThrottlingMetricType.NumberOfRequests
+        /// </summary>
         public static ThrottlingMetricType NumberOfRequests { get; } = new ThrottlingMetricType(NumberOfRequestsValue);
-        /// <summary> NumberOfResources. </summary>
+        /// <summary>
+        /// NumberOfResources
+        /// Serialized Name: ThrottlingMetricType.NumberOfResources
+        /// </summary>
         public static ThrottlingMetricType NumberOfResources { get; } = new ThrottlingMetricType(NumberOfResourcesValue);
         /// <summary> Determines if two <see cref="ThrottlingMetricType"/> values are the same. </summary>
         public static bool operator ==(ThrottlingMetricType left, ThrottlingMetricType right) => left.Equals(right);

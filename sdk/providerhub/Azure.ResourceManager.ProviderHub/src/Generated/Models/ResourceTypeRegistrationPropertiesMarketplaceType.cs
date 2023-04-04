@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeRegistrationPropertiesMarketplaceType. </summary>
+    /// <summary>
+    /// The ResourceTypeRegistrationPropertiesMarketplaceType.
+    /// Serialized Name: ResourceTypeRegistrationPropertiesMarketplaceType
+    /// </summary>
     public readonly partial struct ResourceTypeRegistrationPropertiesMarketplaceType : IEquatable<ResourceTypeRegistrationPropertiesMarketplaceType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string BypassValue = "Bypass";
         private const string StoreValue = "Store";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ResourceTypeRegistrationPropertiesMarketplaceType.NotSpecified
+        /// </summary>
         public static ResourceTypeRegistrationPropertiesMarketplaceType NotSpecified { get; } = new ResourceTypeRegistrationPropertiesMarketplaceType(NotSpecifiedValue);
-        /// <summary> AddOn. </summary>
+        /// <summary>
+        /// AddOn
+        /// Serialized Name: ResourceTypeRegistrationPropertiesMarketplaceType.AddOn
+        /// </summary>
         public static ResourceTypeRegistrationPropertiesMarketplaceType AddOn { get; } = new ResourceTypeRegistrationPropertiesMarketplaceType(AddOnValue);
-        /// <summary> Bypass. </summary>
+        /// <summary>
+        /// Bypass
+        /// Serialized Name: ResourceTypeRegistrationPropertiesMarketplaceType.Bypass
+        /// </summary>
         public static ResourceTypeRegistrationPropertiesMarketplaceType Bypass { get; } = new ResourceTypeRegistrationPropertiesMarketplaceType(BypassValue);
-        /// <summary> Store. </summary>
+        /// <summary>
+        /// Store
+        /// Serialized Name: ResourceTypeRegistrationPropertiesMarketplaceType.Store
+        /// </summary>
         public static ResourceTypeRegistrationPropertiesMarketplaceType Store { get; } = new ResourceTypeRegistrationPropertiesMarketplaceType(StoreValue);
         /// <summary> Determines if two <see cref="ResourceTypeRegistrationPropertiesMarketplaceType"/> values are the same. </summary>
         public static bool operator ==(ResourceTypeRegistrationPropertiesMarketplaceType left, ResourceTypeRegistrationPropertiesMarketplaceType right) => left.Equals(right);

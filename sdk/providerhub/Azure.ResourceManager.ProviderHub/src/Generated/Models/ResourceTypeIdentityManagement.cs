@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeIdentityManagement. </summary>
+    /// <summary>
+    /// The ResourceTypeIdentityManagement.
+    /// Serialized Name: ResourceTypeIdentityManagement
+    /// </summary>
     internal partial class ResourceTypeIdentityManagement : IdentityManagement
     {
         /// <summary> Initializes a new instance of ResourceTypeIdentityManagement. </summary>
@@ -16,7 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeIdentityManagement. </summary>
-        /// <param name="managementType"></param>
+        /// <param name="managementType"> Serialized Name: IdentityManagement.type. </param>
         internal ResourceTypeIdentityManagement(IdentityManagementType? managementType) : base(managementType)
         {
         }

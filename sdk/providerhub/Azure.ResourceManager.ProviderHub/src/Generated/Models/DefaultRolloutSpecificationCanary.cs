@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The DefaultRolloutSpecificationCanary. </summary>
+    /// <summary>
+    /// The DefaultRolloutSpecificationCanary.
+    /// Serialized Name: DefaultRolloutSpecificationCanary
+    /// </summary>
     public partial class DefaultRolloutSpecificationCanary : CanaryTrafficRegionRolloutConfiguration
     {
         /// <summary> Initializes a new instance of DefaultRolloutSpecificationCanary. </summary>
@@ -18,8 +21,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutSpecificationCanary. </summary>
-        /// <param name="skipRegions"></param>
-        /// <param name="regions"></param>
+        /// <param name="skipRegions"> Serialized Name: CanaryTrafficRegionRolloutConfiguration.skipRegions. </param>
+        /// <param name="regions"> Serialized Name: CanaryTrafficRegionRolloutConfiguration.regions. </param>
         internal DefaultRolloutSpecificationCanary(IList<string> skipRegions, IList<string> regions) : base(skipRegions, regions)
         {
         }

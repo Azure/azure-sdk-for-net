@@ -9,12 +9,15 @@ using System;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ThrottlingMetric. </summary>
+    /// <summary>
+    /// The ThrottlingMetric.
+    /// Serialized Name: ThrottlingMetric
+    /// </summary>
     public partial class ThrottlingMetric
     {
         /// <summary> Initializes a new instance of ThrottlingMetric. </summary>
-        /// <param name="metricType"></param>
-        /// <param name="limit"></param>
+        /// <param name="metricType"> Serialized Name: ThrottlingMetric.type. </param>
+        /// <param name="limit"> Serialized Name: ThrottlingMetric.limit. </param>
         public ThrottlingMetric(ThrottlingMetricType metricType, long limit)
         {
             MetricType = metricType;
@@ -22,9 +25,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ThrottlingMetric. </summary>
-        /// <param name="metricType"></param>
-        /// <param name="limit"></param>
-        /// <param name="interval"></param>
+        /// <param name="metricType"> Serialized Name: ThrottlingMetric.type. </param>
+        /// <param name="limit"> Serialized Name: ThrottlingMetric.limit. </param>
+        /// <param name="interval"> Serialized Name: ThrottlingMetric.interval. </param>
         internal ThrottlingMetric(ThrottlingMetricType metricType, long limit, TimeSpan? interval)
         {
             MetricType = metricType;
@@ -32,11 +35,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Interval = interval;
         }
 
-        /// <summary> Gets or sets the metric type. </summary>
+        /// <summary> Serialized Name: ThrottlingMetric.type. </summary>
         public ThrottlingMetricType MetricType { get; set; }
-        /// <summary> Gets or sets the limit. </summary>
+        /// <summary> Serialized Name: ThrottlingMetric.limit. </summary>
         public long Limit { get; set; }
-        /// <summary> Gets or sets the interval. </summary>
+        /// <summary> Serialized Name: ThrottlingMetric.interval. </summary>
         public TimeSpan? Interval { get; set; }
     }
 }

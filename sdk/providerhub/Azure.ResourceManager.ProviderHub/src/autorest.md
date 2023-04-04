@@ -17,6 +17,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+mgmt-debug: 
+  show-serialized-names: true
+
 rename-mappting:
   Origin: OperationOriginType
 

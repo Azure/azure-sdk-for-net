@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceProviderAuthorization. </summary>
+    /// <summary>
+    /// The ResourceProviderAuthorization.
+    /// Serialized Name: ResourceProviderAuthorization
+    /// </summary>
     public partial class ResourceProviderAuthorization
     {
         /// <summary> Initializes a new instance of ResourceProviderAuthorization. </summary>
@@ -16,9 +19,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceProviderAuthorization. </summary>
-        /// <param name="applicationId"></param>
-        /// <param name="roleDefinitionId"></param>
-        /// <param name="managedByRoleDefinitionId"></param>
+        /// <param name="applicationId"> Serialized Name: ResourceProviderAuthorization.applicationId. </param>
+        /// <param name="roleDefinitionId"> Serialized Name: ResourceProviderAuthorization.roleDefinitionId. </param>
+        /// <param name="managedByRoleDefinitionId"> Serialized Name: ResourceProviderAuthorization.managedByRoleDefinitionId. </param>
         internal ResourceProviderAuthorization(string applicationId, string roleDefinitionId, string managedByRoleDefinitionId)
         {
             ApplicationId = applicationId;
@@ -26,11 +29,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ManagedByRoleDefinitionId = managedByRoleDefinitionId;
         }
 
-        /// <summary> Gets or sets the application id. </summary>
+        /// <summary> Serialized Name: ResourceProviderAuthorization.applicationId. </summary>
         public string ApplicationId { get; set; }
-        /// <summary> Gets or sets the role definition id. </summary>
+        /// <summary> Serialized Name: ResourceProviderAuthorization.roleDefinitionId. </summary>
         public string RoleDefinitionId { get; set; }
-        /// <summary> Gets or sets the managed by role definition id. </summary>
+        /// <summary> Serialized Name: ResourceProviderAuthorization.managedByRoleDefinitionId. </summary>
         public string ManagedByRoleDefinitionId { get; set; }
     }
 }

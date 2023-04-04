@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeEndpoint. </summary>
+    /// <summary>
+    /// The ResourceTypeEndpoint.
+    /// Serialized Name: ResourceTypeEndpoint
+    /// </summary>
     public partial class ResourceTypeEndpoint
     {
         /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
@@ -24,14 +27,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
-        /// <param name="enabled"></param>
-        /// <param name="apiVersions"></param>
-        /// <param name="locations"></param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="featuresRule"></param>
-        /// <param name="extensions"></param>
-        /// <param name="timeout"></param>
-        /// <param name="endpointType"></param>
+        /// <param name="enabled"> Serialized Name: ResourceTypeEndpoint.enabled. </param>
+        /// <param name="apiVersions"> Serialized Name: ResourceTypeEndpoint.apiVersions. </param>
+        /// <param name="locations"> Serialized Name: ResourceTypeEndpoint.locations. </param>
+        /// <param name="requiredFeatures"> Serialized Name: ResourceTypeEndpoint.requiredFeatures. </param>
+        /// <param name="featuresRule"> Serialized Name: ResourceTypeEndpoint.featuresRule. </param>
+        /// <param name="extensions"> Serialized Name: ResourceTypeEndpoint.extensions. </param>
+        /// <param name="timeout"> Serialized Name: ResourceTypeEndpoint.timeout. </param>
+        /// <param name="endpointType"> Serialized Name: ResourceTypeEndpoint.endpointType. </param>
         internal ResourceTypeEndpoint(bool? enabled, IList<string> apiVersions, IList<string> locations, IList<string> requiredFeatures, ResourceTypeEndpointFeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, EndpointType? endpointType)
         {
             Enabled = enabled;
@@ -44,17 +47,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             EndpointType = endpointType;
         }
 
-        /// <summary> Gets or sets the enabled. </summary>
+        /// <summary> Serialized Name: ResourceTypeEndpoint.enabled. </summary>
         public bool? Enabled { get; set; }
-        /// <summary> Gets the api versions. </summary>
+        /// <summary> Serialized Name: ResourceTypeEndpoint.apiVersions. </summary>
         public IList<string> ApiVersions { get; }
-        /// <summary> Gets the locations. </summary>
+        /// <summary> Serialized Name: ResourceTypeEndpoint.locations. </summary>
         public IList<string> Locations { get; }
-        /// <summary> Gets the required features. </summary>
+        /// <summary> Serialized Name: ResourceTypeEndpoint.requiredFeatures. </summary>
         public IList<string> RequiredFeatures { get; }
-        /// <summary> Gets or sets the features rule. </summary>
+        /// <summary> Serialized Name: ResourceTypeEndpoint.featuresRule. </summary>
         internal ResourceTypeEndpointFeaturesRule FeaturesRule { get; set; }
-        /// <summary> Gets or sets the required features policy. </summary>
+        /// <summary> Serialized Name: FeaturesRule.requiredFeaturesPolicy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule is null ? default(FeaturesPolicy?) : FeaturesRule.RequiredFeaturesPolicy;
@@ -64,11 +67,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <summary> Gets the extensions. </summary>
+        /// <summary> Serialized Name: ResourceTypeEndpoint.extensions. </summary>
         public IList<ResourceTypeExtension> Extensions { get; }
-        /// <summary> Gets or sets the timeout. </summary>
+        /// <summary> Serialized Name: ResourceTypeEndpoint.timeout. </summary>
         public TimeSpan? Timeout { get; set; }
-        /// <summary> Gets or sets the endpoint type. </summary>
+        /// <summary> Serialized Name: ResourceTypeEndpoint.endpointType. </summary>
         public EndpointType? EndpointType { get; set; }
     }
 }

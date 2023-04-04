@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications. </summary>
+    /// <summary>
+    /// The ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications.
+    /// Serialized Name: ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications
+    /// </summary>
     public partial class ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications : CheckNameAvailabilitySpecifications
     {
         /// <summary> Initializes a new instance of ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications. </summary>
@@ -18,8 +21,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications. </summary>
-        /// <param name="enableDefaultValidation"></param>
-        /// <param name="resourceTypesWithCustomValidation"></param>
+        /// <param name="enableDefaultValidation"> Serialized Name: CheckNameAvailabilitySpecifications.enableDefaultValidation. </param>
+        /// <param name="resourceTypesWithCustomValidation"> Serialized Name: CheckNameAvailabilitySpecifications.resourceTypesWithCustomValidation. </param>
         internal ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications(bool? enableDefaultValidation, IList<string> resourceTypesWithCustomValidation) : base(enableDefaultValidation, resourceTypesWithCustomValidation)
         {
         }

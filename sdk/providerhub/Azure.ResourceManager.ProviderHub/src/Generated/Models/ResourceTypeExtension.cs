@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeExtension. </summary>
+    /// <summary>
+    /// The ResourceTypeExtension.
+    /// Serialized Name: ResourceTypeExtension
+    /// </summary>
     public partial class ResourceTypeExtension
     {
         /// <summary> Initializes a new instance of ResourceTypeExtension. </summary>
@@ -21,9 +24,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeExtension. </summary>
-        /// <param name="endpointUri"></param>
-        /// <param name="extensionCategories"></param>
-        /// <param name="timeout"></param>
+        /// <param name="endpointUri"> Serialized Name: ResourceTypeExtension.endpointUri. </param>
+        /// <param name="extensionCategories"> Serialized Name: ResourceTypeExtension.extensionCategories. </param>
+        /// <param name="timeout"> Serialized Name: ResourceTypeExtension.timeout. </param>
         internal ResourceTypeExtension(Uri endpointUri, IList<ExtensionCategory> extensionCategories, TimeSpan? timeout)
         {
             EndpointUri = endpointUri;
@@ -31,11 +34,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Timeout = timeout;
         }
 
-        /// <summary> Gets or sets the endpoint uri. </summary>
+        /// <summary> Serialized Name: ResourceTypeExtension.endpointUri. </summary>
         public Uri EndpointUri { get; set; }
-        /// <summary> Gets the extension categories. </summary>
+        /// <summary> Serialized Name: ResourceTypeExtension.extensionCategories. </summary>
         public IList<ExtensionCategory> ExtensionCategories { get; }
-        /// <summary> Gets or sets the timeout. </summary>
+        /// <summary> Serialized Name: ResourceTypeExtension.timeout. </summary>
         public TimeSpan? Timeout { get; set; }
     }
 }

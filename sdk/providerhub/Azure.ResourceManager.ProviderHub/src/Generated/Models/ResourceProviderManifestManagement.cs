@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceProviderManifestManagement. </summary>
+    /// <summary>
+    /// The ResourceProviderManifestManagement.
+    /// Serialized Name: ResourceProviderManifestManagement
+    /// </summary>
     public partial class ResourceProviderManifestManagement : ResourceProviderManagement
     {
         /// <summary> Initializes a new instance of ResourceProviderManifestManagement. </summary>
@@ -19,14 +22,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceProviderManifestManagement. </summary>
-        /// <param name="schemaOwners"></param>
-        /// <param name="manifestOwners"></param>
-        /// <param name="incidentRoutingService"></param>
-        /// <param name="incidentRoutingTeam"></param>
-        /// <param name="incidentContactEmail"></param>
-        /// <param name="serviceTreeInfos"></param>
-        /// <param name="resourceAccessPolicy"></param>
-        /// <param name="resourceAccessRoles"></param>
+        /// <param name="schemaOwners"> Serialized Name: ResourceProviderManagement.schemaOwners. </param>
+        /// <param name="manifestOwners"> Serialized Name: ResourceProviderManagement.manifestOwners. </param>
+        /// <param name="incidentRoutingService"> Serialized Name: ResourceProviderManagement.incidentRoutingService. </param>
+        /// <param name="incidentRoutingTeam"> Serialized Name: ResourceProviderManagement.incidentRoutingTeam. </param>
+        /// <param name="incidentContactEmail"> Serialized Name: ResourceProviderManagement.incidentContactEmail. </param>
+        /// <param name="serviceTreeInfos"> Serialized Name: ResourceProviderManagement.serviceTreeInfos. </param>
+        /// <param name="resourceAccessPolicy"> Serialized Name: ResourceProviderManagement.resourceAccessPolicy. </param>
+        /// <param name="resourceAccessRoles"> Serialized Name: ResourceProviderManagement.resourceAccessRoles. </param>
         internal ResourceProviderManifestManagement(IList<string> schemaOwners, IList<string> manifestOwners, string incidentRoutingService, string incidentRoutingTeam, string incidentContactEmail, IList<ServiceTreeInfo> serviceTreeInfos, ResourceProviderManagementResourceAccessPolicy? resourceAccessPolicy, IList<BinaryData> resourceAccessRoles) : base(schemaOwners, manifestOwners, incidentRoutingService, incidentRoutingTeam, incidentContactEmail, serviceTreeInfos, resourceAccessPolicy, resourceAccessRoles)
         {
         }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The DefaultRolloutStatus. </summary>
+    /// <summary>
+    /// The DefaultRolloutStatus.
+    /// Serialized Name: DefaultRolloutStatus
+    /// </summary>
     public partial class DefaultRolloutStatus : RolloutStatusBase
     {
         /// <summary> Initializes a new instance of DefaultRolloutStatus. </summary>
@@ -19,11 +22,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutStatus. </summary>
-        /// <param name="completedRegions"></param>
-        /// <param name="failedOrSkippedRegions"> Dictionary of &lt;ExtendedErrorInfo&gt;. </param>
-        /// <param name="nextTrafficRegion"></param>
-        /// <param name="nextTrafficRegionScheduledOn"></param>
-        /// <param name="subscriptionReregistrationResult"></param>
+        /// <param name="completedRegions"> Serialized Name: RolloutStatusBase.completedRegions. </param>
+        /// <param name="failedOrSkippedRegions">
+        /// Dictionary of &lt;ExtendedErrorInfo&gt;
+        /// Serialized Name: RolloutStatusBase.failedOrSkippedRegions
+        /// </param>
+        /// <param name="nextTrafficRegion"> Serialized Name: DefaultRolloutStatus.nextTrafficRegion. </param>
+        /// <param name="nextTrafficRegionScheduledOn"> Serialized Name: DefaultRolloutStatus.nextTrafficRegionScheduledTime. </param>
+        /// <param name="subscriptionReregistrationResult"> Serialized Name: DefaultRolloutStatus.subscriptionReregistrationResult. </param>
         internal DefaultRolloutStatus(IList<string> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, TrafficRegionCategory? nextTrafficRegion, DateTimeOffset? nextTrafficRegionScheduledOn, SubscriptionReregistrationResult? subscriptionReregistrationResult) : base(completedRegions, failedOrSkippedRegions)
         {
             NextTrafficRegion = nextTrafficRegion;
@@ -31,11 +37,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             SubscriptionReregistrationResult = subscriptionReregistrationResult;
         }
 
-        /// <summary> Gets or sets the next traffic region. </summary>
+        /// <summary> Serialized Name: DefaultRolloutStatus.nextTrafficRegion. </summary>
         public TrafficRegionCategory? NextTrafficRegion { get; set; }
-        /// <summary> Gets or sets the next traffic region scheduled on. </summary>
+        /// <summary> Serialized Name: DefaultRolloutStatus.nextTrafficRegionScheduledTime. </summary>
         public DateTimeOffset? NextTrafficRegionScheduledOn { get; set; }
-        /// <summary> Gets or sets the subscription reregistration result. </summary>
+        /// <summary> Serialized Name: DefaultRolloutStatus.subscriptionReregistrationResult. </summary>
         public SubscriptionReregistrationResult? SubscriptionReregistrationResult { get; set; }
     }
 }

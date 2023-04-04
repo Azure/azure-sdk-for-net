@@ -11,7 +11,10 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The DefaultRolloutArrayResponseWithContinuation. </summary>
+    /// <summary>
+    /// The DefaultRolloutArrayResponseWithContinuation.
+    /// Serialized Name: DefaultRolloutArrayResponseWithContinuation
+    /// </summary>
     internal partial class DefaultRolloutArrayResponseWithContinuation
     {
         /// <summary> Initializes a new instance of DefaultRolloutArrayResponseWithContinuation. </summary>
@@ -21,17 +24,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutArrayResponseWithContinuation. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
+        /// <param name="value"> Serialized Name: DefaultRolloutArrayResponseWithContinuation.value. </param>
+        /// <param name="nextLink">
+        /// The URL to get to the next set of results, if there are any.
+        /// Serialized Name: DefaultRolloutArrayResponseWithContinuation.nextLink
+        /// </param>
         internal DefaultRolloutArrayResponseWithContinuation(IReadOnlyList<DefaultRolloutData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Serialized Name: DefaultRolloutArrayResponseWithContinuation.value. </summary>
         public IReadOnlyList<DefaultRolloutData> Value { get; }
-        /// <summary> The URL to get to the next set of results, if there are any. </summary>
+        /// <summary>
+        /// The URL to get to the next set of results, if there are any.
+        /// Serialized Name: DefaultRolloutArrayResponseWithContinuation.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

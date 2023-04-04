@@ -11,7 +11,10 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The CustomRolloutArrayResponseWithContinuation. </summary>
+    /// <summary>
+    /// The CustomRolloutArrayResponseWithContinuation.
+    /// Serialized Name: CustomRolloutArrayResponseWithContinuation
+    /// </summary>
     internal partial class CustomRolloutArrayResponseWithContinuation
     {
         /// <summary> Initializes a new instance of CustomRolloutArrayResponseWithContinuation. </summary>
@@ -21,17 +24,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of CustomRolloutArrayResponseWithContinuation. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
+        /// <param name="value"> Serialized Name: CustomRolloutArrayResponseWithContinuation.value. </param>
+        /// <param name="nextLink">
+        /// The URL to get to the next set of results, if there are any.
+        /// Serialized Name: CustomRolloutArrayResponseWithContinuation.nextLink
+        /// </param>
         internal CustomRolloutArrayResponseWithContinuation(IReadOnlyList<CustomRolloutData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Serialized Name: CustomRolloutArrayResponseWithContinuation.value. </summary>
         public IReadOnlyList<CustomRolloutData> Value { get; }
-        /// <summary> The URL to get to the next set of results, if there are any. </summary>
+        /// <summary>
+        /// The URL to get to the next set of results, if there are any.
+        /// Serialized Name: CustomRolloutArrayResponseWithContinuation.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The TrafficRegions. </summary>
+    /// <summary>
+    /// The TrafficRegions.
+    /// Serialized Name: TrafficRegions
+    /// </summary>
     public partial class TrafficRegions
     {
         /// <summary> Initializes a new instance of TrafficRegions. </summary>
@@ -20,13 +23,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of TrafficRegions. </summary>
-        /// <param name="regions"></param>
+        /// <param name="regions"> Serialized Name: TrafficRegions.regions. </param>
         internal TrafficRegions(IList<string> regions)
         {
             Regions = regions;
         }
 
-        /// <summary> Gets the regions. </summary>
+        /// <summary> Serialized Name: TrafficRegions.regions. </summary>
         public IList<string> Regions { get; }
     }
 }

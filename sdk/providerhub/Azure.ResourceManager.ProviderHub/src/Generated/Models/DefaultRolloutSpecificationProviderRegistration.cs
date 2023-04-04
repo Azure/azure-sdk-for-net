@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The DefaultRolloutSpecificationProviderRegistration. </summary>
+    /// <summary>
+    /// The DefaultRolloutSpecificationProviderRegistration.
+    /// Serialized Name: DefaultRolloutSpecificationProviderRegistration
+    /// </summary>
     public partial class DefaultRolloutSpecificationProviderRegistration : ResourceData
     {
         /// <summary> Initializes a new instance of DefaultRolloutSpecificationProviderRegistration. </summary>
@@ -23,13 +26,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Serialized Name: ProviderRegistration.properties. </param>
         internal DefaultRolloutSpecificationProviderRegistration(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ProviderRegistrationProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Gets or sets the properties. </summary>
+        /// <summary> Serialized Name: ProviderRegistration.properties. </summary>
         public ProviderRegistrationProperties Properties { get; set; }
     }
 }

@@ -12,11 +12,14 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The CustomRolloutPropertiesSpecification. </summary>
+    /// <summary>
+    /// The CustomRolloutPropertiesSpecification.
+    /// Serialized Name: CustomRolloutPropertiesSpecification
+    /// </summary>
     public partial class CustomRolloutPropertiesSpecification : CustomRolloutSpecification
     {
         /// <summary> Initializes a new instance of CustomRolloutPropertiesSpecification. </summary>
-        /// <param name="canary"></param>
+        /// <param name="canary"> Serialized Name: CustomRolloutSpecification.canary. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="canary"/> is null. </exception>
         public CustomRolloutPropertiesSpecification(CustomRolloutSpecificationCanary canary) : base(canary)
         {
@@ -24,9 +27,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of CustomRolloutPropertiesSpecification. </summary>
-        /// <param name="canary"></param>
-        /// <param name="providerRegistration"></param>
-        /// <param name="resourceTypeRegistrations"></param>
+        /// <param name="canary"> Serialized Name: CustomRolloutSpecification.canary. </param>
+        /// <param name="providerRegistration"> Serialized Name: CustomRolloutSpecification.providerRegistration. </param>
+        /// <param name="resourceTypeRegistrations"> Serialized Name: CustomRolloutSpecification.resourceTypeRegistrations. </param>
         internal CustomRolloutPropertiesSpecification(CustomRolloutSpecificationCanary canary, CustomRolloutSpecificationProviderRegistration providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations) : base(canary, providerRegistration, resourceTypeRegistrations)
         {
         }

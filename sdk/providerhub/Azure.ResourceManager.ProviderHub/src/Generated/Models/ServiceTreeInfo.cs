@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ServiceTreeInfo. </summary>
+    /// <summary>
+    /// The ServiceTreeInfo.
+    /// Serialized Name: ServiceTreeInfo
+    /// </summary>
     public partial class ServiceTreeInfo
     {
         /// <summary> Initializes a new instance of ServiceTreeInfo. </summary>
@@ -16,9 +19,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ServiceTreeInfo. </summary>
-        /// <param name="serviceId"></param>
-        /// <param name="componentId"></param>
-        /// <param name="readiness"></param>
+        /// <param name="serviceId"> Serialized Name: ServiceTreeInfo.serviceId. </param>
+        /// <param name="componentId"> Serialized Name: ServiceTreeInfo.componentId. </param>
+        /// <param name="readiness"> Serialized Name: ServiceTreeInfo.readiness. </param>
         internal ServiceTreeInfo(string serviceId, string componentId, Readiness? readiness)
         {
             ServiceId = serviceId;
@@ -26,11 +29,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Readiness = readiness;
         }
 
-        /// <summary> Gets or sets the service id. </summary>
+        /// <summary> Serialized Name: ServiceTreeInfo.serviceId. </summary>
         public string ServiceId { get; set; }
-        /// <summary> Gets or sets the component id. </summary>
+        /// <summary> Serialized Name: ServiceTreeInfo.componentId. </summary>
         public string ComponentId { get; set; }
-        /// <summary> Gets or sets the readiness. </summary>
+        /// <summary> Serialized Name: ServiceTreeInfo.readiness. </summary>
         public Readiness? Readiness { get; set; }
     }
 }

@@ -11,11 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ProviderHubMetadataProviderAuthentication. </summary>
+    /// <summary>
+    /// The ProviderHubMetadataProviderAuthentication.
+    /// Serialized Name: ProviderHubMetadataProviderAuthentication
+    /// </summary>
     internal partial class ProviderHubMetadataProviderAuthentication : ResourceProviderAuthentication
     {
         /// <summary> Initializes a new instance of ProviderHubMetadataProviderAuthentication. </summary>
-        /// <param name="allowedAudiences"></param>
+        /// <param name="allowedAudiences"> Serialized Name: ResourceProviderAuthentication.allowedAudiences. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allowedAudiences"/> is null. </exception>
         public ProviderHubMetadataProviderAuthentication(IEnumerable<string> allowedAudiences) : base(allowedAudiences)
         {
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ProviderHubMetadataProviderAuthentication. </summary>
-        /// <param name="allowedAudiences"></param>
+        /// <param name="allowedAudiences"> Serialized Name: ResourceProviderAuthentication.allowedAudiences. </param>
         internal ProviderHubMetadataProviderAuthentication(IList<string> allowedAudiences) : base(allowedAudiences)
         {
         }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The OpenApiConfiguration. </summary>
+    /// <summary>
+    /// The OpenApiConfiguration.
+    /// Serialized Name: OpenApiConfiguration
+    /// </summary>
     internal partial class OpenApiConfiguration
     {
         /// <summary> Initializes a new instance of OpenApiConfiguration. </summary>
@@ -16,15 +19,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of OpenApiConfiguration. </summary>
-        /// <param name="validation"></param>
+        /// <param name="validation"> Serialized Name: OpenApiConfiguration.validation. </param>
         internal OpenApiConfiguration(OpenApiValidation validation)
         {
             Validation = validation;
         }
 
-        /// <summary> Gets or sets the validation. </summary>
+        /// <summary> Serialized Name: OpenApiConfiguration.validation. </summary>
         internal OpenApiValidation Validation { get; set; }
-        /// <summary> Indicates whether a non compliance response is allowed for a LIST call. </summary>
+        /// <summary>
+        /// Indicates whether a non compliance response is allowed for a LIST call
+        /// Serialized Name: OpenApiValidation.allowNoncompliantCollectionResponse
+        /// </summary>
         public bool? AllowNoncompliantCollectionResponse
         {
             get => Validation is null ? default : Validation.AllowNoncompliantCollectionResponse;

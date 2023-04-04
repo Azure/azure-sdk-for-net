@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The CheckNameAvailabilitySpecifications. </summary>
+    /// <summary>
+    /// The CheckNameAvailabilitySpecifications.
+    /// Serialized Name: CheckNameAvailabilitySpecifications
+    /// </summary>
     public partial class CheckNameAvailabilitySpecifications
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilitySpecifications. </summary>
@@ -20,17 +23,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of CheckNameAvailabilitySpecifications. </summary>
-        /// <param name="enableDefaultValidation"></param>
-        /// <param name="resourceTypesWithCustomValidation"></param>
+        /// <param name="enableDefaultValidation"> Serialized Name: CheckNameAvailabilitySpecifications.enableDefaultValidation. </param>
+        /// <param name="resourceTypesWithCustomValidation"> Serialized Name: CheckNameAvailabilitySpecifications.resourceTypesWithCustomValidation. </param>
         internal CheckNameAvailabilitySpecifications(bool? enableDefaultValidation, IList<string> resourceTypesWithCustomValidation)
         {
             EnableDefaultValidation = enableDefaultValidation;
             ResourceTypesWithCustomValidation = resourceTypesWithCustomValidation;
         }
 
-        /// <summary> Gets or sets the enable default validation. </summary>
+        /// <summary> Serialized Name: CheckNameAvailabilitySpecifications.enableDefaultValidation. </summary>
         public bool? EnableDefaultValidation { get; set; }
-        /// <summary> Gets the resource types with custom validation. </summary>
+        /// <summary> Serialized Name: CheckNameAvailabilitySpecifications.resourceTypesWithCustomValidation. </summary>
         public IList<string> ResourceTypesWithCustomValidation { get; }
     }
 }

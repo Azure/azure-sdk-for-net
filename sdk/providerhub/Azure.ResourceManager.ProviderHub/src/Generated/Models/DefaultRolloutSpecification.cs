@@ -11,7 +11,10 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The DefaultRolloutSpecification. </summary>
+    /// <summary>
+    /// The DefaultRolloutSpecification.
+    /// Serialized Name: DefaultRolloutSpecification
+    /// </summary>
     public partial class DefaultRolloutSpecification
     {
         /// <summary> Initializes a new instance of DefaultRolloutSpecification. </summary>
@@ -21,15 +24,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutSpecification. </summary>
-        /// <param name="expeditedRollout"></param>
-        /// <param name="canary"></param>
-        /// <param name="lowTraffic"></param>
-        /// <param name="mediumTraffic"></param>
-        /// <param name="highTraffic"></param>
-        /// <param name="restOfTheWorldGroupOne"></param>
-        /// <param name="restOfTheWorldGroupTwo"></param>
-        /// <param name="providerRegistration"></param>
-        /// <param name="resourceTypeRegistrations"></param>
+        /// <param name="expeditedRollout"> Serialized Name: DefaultRolloutSpecification.expeditedRollout. </param>
+        /// <param name="canary"> Serialized Name: DefaultRolloutSpecification.canary. </param>
+        /// <param name="lowTraffic"> Serialized Name: DefaultRolloutSpecification.lowTraffic. </param>
+        /// <param name="mediumTraffic"> Serialized Name: DefaultRolloutSpecification.mediumTraffic. </param>
+        /// <param name="highTraffic"> Serialized Name: DefaultRolloutSpecification.highTraffic. </param>
+        /// <param name="restOfTheWorldGroupOne"> Serialized Name: DefaultRolloutSpecification.restOfTheWorldGroupOne. </param>
+        /// <param name="restOfTheWorldGroupTwo"> Serialized Name: DefaultRolloutSpecification.restOfTheWorldGroupTwo. </param>
+        /// <param name="providerRegistration"> Serialized Name: DefaultRolloutSpecification.providerRegistration. </param>
+        /// <param name="resourceTypeRegistrations"> Serialized Name: DefaultRolloutSpecification.resourceTypeRegistrations. </param>
         internal DefaultRolloutSpecification(DefaultRolloutSpecificationExpeditedRollout expeditedRollout, DefaultRolloutSpecificationCanary canary, DefaultRolloutSpecificationLowTraffic lowTraffic, DefaultRolloutSpecificationMediumTraffic mediumTraffic, DefaultRolloutSpecificationHighTraffic highTraffic, DefaultRolloutSpecificationRestOfTheWorldGroupOne restOfTheWorldGroupOne, DefaultRolloutSpecificationRestOfTheWorldGroupTwo restOfTheWorldGroupTwo, DefaultRolloutSpecificationProviderRegistration providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations)
         {
             ExpeditedRollout = expeditedRollout;
@@ -43,9 +46,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ResourceTypeRegistrations = resourceTypeRegistrations;
         }
 
-        /// <summary> Gets or sets the expedited rollout. </summary>
+        /// <summary> Serialized Name: DefaultRolloutSpecification.expeditedRollout. </summary>
         internal DefaultRolloutSpecificationExpeditedRollout ExpeditedRollout { get; set; }
-        /// <summary> Indicates whether expedited rollout is enabled/disabled. </summary>
+        /// <summary>
+        /// Indicates whether expedited rollout is enabled/disabled
+        /// Serialized Name: ExpeditedRolloutDefinition.enabled
+        /// </summary>
         public bool? ExpeditedRolloutEnabled
         {
             get => ExpeditedRollout is null ? default : ExpeditedRollout.Enabled;
@@ -57,21 +63,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <summary> Gets or sets the canary. </summary>
+        /// <summary> Serialized Name: DefaultRolloutSpecification.canary. </summary>
         public DefaultRolloutSpecificationCanary Canary { get; set; }
-        /// <summary> Gets or sets the low traffic. </summary>
+        /// <summary> Serialized Name: DefaultRolloutSpecification.lowTraffic. </summary>
         public DefaultRolloutSpecificationLowTraffic LowTraffic { get; set; }
-        /// <summary> Gets or sets the medium traffic. </summary>
+        /// <summary> Serialized Name: DefaultRolloutSpecification.mediumTraffic. </summary>
         public DefaultRolloutSpecificationMediumTraffic MediumTraffic { get; set; }
-        /// <summary> Gets or sets the high traffic. </summary>
+        /// <summary> Serialized Name: DefaultRolloutSpecification.highTraffic. </summary>
         public DefaultRolloutSpecificationHighTraffic HighTraffic { get; set; }
-        /// <summary> Gets or sets the rest of the world group one. </summary>
+        /// <summary> Serialized Name: DefaultRolloutSpecification.restOfTheWorldGroupOne. </summary>
         public DefaultRolloutSpecificationRestOfTheWorldGroupOne RestOfTheWorldGroupOne { get; set; }
-        /// <summary> Gets or sets the rest of the world group two. </summary>
+        /// <summary> Serialized Name: DefaultRolloutSpecification.restOfTheWorldGroupTwo. </summary>
         public DefaultRolloutSpecificationRestOfTheWorldGroupTwo RestOfTheWorldGroupTwo { get; set; }
-        /// <summary> Gets or sets the provider registration. </summary>
+        /// <summary> Serialized Name: DefaultRolloutSpecification.providerRegistration. </summary>
         public DefaultRolloutSpecificationProviderRegistration ProviderRegistration { get; set; }
-        /// <summary> Gets the resource type registrations. </summary>
+        /// <summary> Serialized Name: DefaultRolloutSpecification.resourceTypeRegistrations. </summary>
         public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The SubscriptionNotificationOperation. </summary>
+    /// <summary>
+    /// The SubscriptionNotificationOperation.
+    /// Serialized Name: SubscriptionNotificationOperation
+    /// </summary>
     public readonly partial struct SubscriptionNotificationOperation : IEquatable<SubscriptionNotificationOperation>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string BillingCancellationValue = "BillingCancellation";
         private const string UndoSoftDeleteValue = "UndoSoftDelete";
 
-        /// <summary> NotDefined. </summary>
+        /// <summary>
+        /// NotDefined
+        /// Serialized Name: SubscriptionNotificationOperation.NotDefined
+        /// </summary>
         public static SubscriptionNotificationOperation NotDefined { get; } = new SubscriptionNotificationOperation(NotDefinedValue);
-        /// <summary> DeleteAllResources. </summary>
+        /// <summary>
+        /// DeleteAllResources
+        /// Serialized Name: SubscriptionNotificationOperation.DeleteAllResources
+        /// </summary>
         public static SubscriptionNotificationOperation DeleteAllResources { get; } = new SubscriptionNotificationOperation(DeleteAllResourcesValue);
-        /// <summary> SoftDeleteAllResources. </summary>
+        /// <summary>
+        /// SoftDeleteAllResources
+        /// Serialized Name: SubscriptionNotificationOperation.SoftDeleteAllResources
+        /// </summary>
         public static SubscriptionNotificationOperation SoftDeleteAllResources { get; } = new SubscriptionNotificationOperation(SoftDeleteAllResourcesValue);
-        /// <summary> NoOp. </summary>
+        /// <summary>
+        /// NoOp
+        /// Serialized Name: SubscriptionNotificationOperation.NoOp
+        /// </summary>
         public static SubscriptionNotificationOperation NoOp { get; } = new SubscriptionNotificationOperation(NoOpValue);
-        /// <summary> BillingCancellation. </summary>
+        /// <summary>
+        /// BillingCancellation
+        /// Serialized Name: SubscriptionNotificationOperation.BillingCancellation
+        /// </summary>
         public static SubscriptionNotificationOperation BillingCancellation { get; } = new SubscriptionNotificationOperation(BillingCancellationValue);
-        /// <summary> UndoSoftDelete. </summary>
+        /// <summary>
+        /// UndoSoftDelete
+        /// Serialized Name: SubscriptionNotificationOperation.UndoSoftDelete
+        /// </summary>
         public static SubscriptionNotificationOperation UndoSoftDelete { get; } = new SubscriptionNotificationOperation(UndoSoftDeleteValue);
         /// <summary> Determines if two <see cref="SubscriptionNotificationOperation"/> values are the same. </summary>
         public static bool operator ==(SubscriptionNotificationOperation left, SubscriptionNotificationOperation right) => left.Equals(right);

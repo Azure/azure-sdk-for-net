@@ -7,11 +7,14 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeEndpointFeaturesRule. </summary>
+    /// <summary>
+    /// The ResourceTypeEndpointFeaturesRule.
+    /// Serialized Name: ResourceTypeEndpointFeaturesRule
+    /// </summary>
     internal partial class ResourceTypeEndpointFeaturesRule : FeaturesRule
     {
         /// <summary> Initializes a new instance of ResourceTypeEndpointFeaturesRule. </summary>
-        /// <param name="requiredFeaturesPolicy"></param>
+        /// <param name="requiredFeaturesPolicy"> Serialized Name: FeaturesRule.requiredFeaturesPolicy. </param>
         public ResourceTypeEndpointFeaturesRule(FeaturesPolicy requiredFeaturesPolicy) : base(requiredFeaturesPolicy)
         {
         }

@@ -10,12 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The SkuCapability. </summary>
+    /// <summary>
+    /// The SkuCapability.
+    /// Serialized Name: SkuCapability
+    /// </summary>
     public partial class SkuCapability
     {
         /// <summary> Initializes a new instance of SkuCapability. </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
+        /// <param name="name"> Serialized Name: SkuCapability.name. </param>
+        /// <param name="value"> Serialized Name: SkuCapability.value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public SkuCapability(string name, string value)
         {
@@ -26,9 +29,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Value = value;
         }
 
-        /// <summary> Gets or sets the name. </summary>
+        /// <summary> Serialized Name: SkuCapability.name. </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the value. </summary>
+        /// <summary> Serialized Name: SkuCapability.value. </summary>
         public string Value { get; set; }
     }
 }

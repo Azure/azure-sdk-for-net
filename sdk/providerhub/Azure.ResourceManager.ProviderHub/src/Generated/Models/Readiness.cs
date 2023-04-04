@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The Readiness. </summary>
+    /// <summary>
+    /// The Readiness.
+    /// Serialized Name: Readiness
+    /// </summary>
     public readonly partial struct Readiness : IEquatable<Readiness>
     {
         private readonly string _value;
@@ -32,23 +35,50 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string RemovedFromARMValue = "RemovedFromARM";
         private const string RetiredValue = "Retired";
 
-        /// <summary> ClosingDown. </summary>
+        /// <summary>
+        /// ClosingDown
+        /// Serialized Name: Readiness.ClosingDown
+        /// </summary>
         public static Readiness ClosingDown { get; } = new Readiness(ClosingDownValue);
-        /// <summary> Deprecated. </summary>
+        /// <summary>
+        /// Deprecated
+        /// Serialized Name: Readiness.Deprecated
+        /// </summary>
         public static Readiness Deprecated { get; } = new Readiness(DeprecatedValue);
-        /// <summary> GA. </summary>
+        /// <summary>
+        /// GA
+        /// Serialized Name: Readiness.GA
+        /// </summary>
         public static Readiness GA { get; } = new Readiness(GAValue);
-        /// <summary> InDevelopment. </summary>
+        /// <summary>
+        /// InDevelopment
+        /// Serialized Name: Readiness.InDevelopment
+        /// </summary>
         public static Readiness InDevelopment { get; } = new Readiness(InDevelopmentValue);
-        /// <summary> InternalOnly. </summary>
+        /// <summary>
+        /// InternalOnly
+        /// Serialized Name: Readiness.InternalOnly
+        /// </summary>
         public static Readiness InternalOnly { get; } = new Readiness(InternalOnlyValue);
-        /// <summary> PrivatePreview. </summary>
+        /// <summary>
+        /// PrivatePreview
+        /// Serialized Name: Readiness.PrivatePreview
+        /// </summary>
         public static Readiness PrivatePreview { get; } = new Readiness(PrivatePreviewValue);
-        /// <summary> PublicPreview. </summary>
+        /// <summary>
+        /// PublicPreview
+        /// Serialized Name: Readiness.PublicPreview
+        /// </summary>
         public static Readiness PublicPreview { get; } = new Readiness(PublicPreviewValue);
-        /// <summary> RemovedFromARM. </summary>
+        /// <summary>
+        /// RemovedFromARM
+        /// Serialized Name: Readiness.RemovedFromARM
+        /// </summary>
         public static Readiness RemovedFromARM { get; } = new Readiness(RemovedFromARMValue);
-        /// <summary> Retired. </summary>
+        /// <summary>
+        /// Retired
+        /// Serialized Name: Readiness.Retired
+        /// </summary>
         public static Readiness Retired { get; } = new Readiness(RetiredValue);
         /// <summary> Determines if two <see cref="Readiness"/> values are the same. </summary>
         public static bool operator ==(Readiness left, Readiness right) => left.Equals(right);

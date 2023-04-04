@@ -10,7 +10,10 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The DefaultRolloutPropertiesSpecification. </summary>
+    /// <summary>
+    /// The DefaultRolloutPropertiesSpecification.
+    /// Serialized Name: DefaultRolloutPropertiesSpecification
+    /// </summary>
     public partial class DefaultRolloutPropertiesSpecification : DefaultRolloutSpecification
     {
         /// <summary> Initializes a new instance of DefaultRolloutPropertiesSpecification. </summary>
@@ -19,15 +22,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutPropertiesSpecification. </summary>
-        /// <param name="expeditedRollout"></param>
-        /// <param name="canary"></param>
-        /// <param name="lowTraffic"></param>
-        /// <param name="mediumTraffic"></param>
-        /// <param name="highTraffic"></param>
-        /// <param name="restOfTheWorldGroupOne"></param>
-        /// <param name="restOfTheWorldGroupTwo"></param>
-        /// <param name="providerRegistration"></param>
-        /// <param name="resourceTypeRegistrations"></param>
+        /// <param name="expeditedRollout"> Serialized Name: DefaultRolloutSpecification.expeditedRollout. </param>
+        /// <param name="canary"> Serialized Name: DefaultRolloutSpecification.canary. </param>
+        /// <param name="lowTraffic"> Serialized Name: DefaultRolloutSpecification.lowTraffic. </param>
+        /// <param name="mediumTraffic"> Serialized Name: DefaultRolloutSpecification.mediumTraffic. </param>
+        /// <param name="highTraffic"> Serialized Name: DefaultRolloutSpecification.highTraffic. </param>
+        /// <param name="restOfTheWorldGroupOne"> Serialized Name: DefaultRolloutSpecification.restOfTheWorldGroupOne. </param>
+        /// <param name="restOfTheWorldGroupTwo"> Serialized Name: DefaultRolloutSpecification.restOfTheWorldGroupTwo. </param>
+        /// <param name="providerRegistration"> Serialized Name: DefaultRolloutSpecification.providerRegistration. </param>
+        /// <param name="resourceTypeRegistrations"> Serialized Name: DefaultRolloutSpecification.resourceTypeRegistrations. </param>
         internal DefaultRolloutPropertiesSpecification(DefaultRolloutSpecificationExpeditedRollout expeditedRollout, DefaultRolloutSpecificationCanary canary, DefaultRolloutSpecificationLowTraffic lowTraffic, DefaultRolloutSpecificationMediumTraffic mediumTraffic, DefaultRolloutSpecificationHighTraffic highTraffic, DefaultRolloutSpecificationRestOfTheWorldGroupOne restOfTheWorldGroupOne, DefaultRolloutSpecificationRestOfTheWorldGroupTwo restOfTheWorldGroupTwo, DefaultRolloutSpecificationProviderRegistration providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations) : base(expeditedRollout, canary, lowTraffic, mediumTraffic, highTraffic, restOfTheWorldGroupOne, restOfTheWorldGroupTwo, providerRegistration, resourceTypeRegistrations)
         {
         }

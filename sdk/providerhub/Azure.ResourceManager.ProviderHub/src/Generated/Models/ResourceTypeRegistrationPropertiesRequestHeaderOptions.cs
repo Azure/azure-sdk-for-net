@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeRegistrationPropertiesRequestHeaderOptions. </summary>
+    /// <summary>
+    /// The ResourceTypeRegistrationPropertiesRequestHeaderOptions.
+    /// Serialized Name: ResourceTypeRegistrationPropertiesRequestHeaderOptions
+    /// </summary>
     internal partial class ResourceTypeRegistrationPropertiesRequestHeaderOptions : RequestHeaderOptions
     {
         /// <summary> Initializes a new instance of ResourceTypeRegistrationPropertiesRequestHeaderOptions. </summary>
@@ -16,7 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeRegistrationPropertiesRequestHeaderOptions. </summary>
-        /// <param name="optInHeaders"></param>
+        /// <param name="optInHeaders"> Serialized Name: RequestHeaderOptions.optInHeaders. </param>
         internal ResourceTypeRegistrationPropertiesRequestHeaderOptions(OptInHeaderType? optInHeaders) : base(optInHeaders)
         {
         }

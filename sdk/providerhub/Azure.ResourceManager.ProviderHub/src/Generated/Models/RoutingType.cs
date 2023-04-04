@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The RoutingType. </summary>
+    /// <summary>
+    /// The RoutingType.
+    /// Serialized Name: RoutingType
+    /// </summary>
     public readonly partial struct RoutingType : IEquatable<RoutingType>
     {
         private readonly string _value;
@@ -32,23 +35,50 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string FailoverValue = "Failover";
         private const string CascadeExtensionValue = "CascadeExtension";
 
-        /// <summary> Default. </summary>
+        /// <summary>
+        /// Default
+        /// Serialized Name: RoutingType.Default
+        /// </summary>
         public static RoutingType Default { get; } = new RoutingType(DefaultValue);
-        /// <summary> ProxyOnly. </summary>
+        /// <summary>
+        /// ProxyOnly
+        /// Serialized Name: RoutingType.ProxyOnly
+        /// </summary>
         public static RoutingType ProxyOnly { get; } = new RoutingType(ProxyOnlyValue);
-        /// <summary> HostBased. </summary>
+        /// <summary>
+        /// HostBased
+        /// Serialized Name: RoutingType.HostBased
+        /// </summary>
         public static RoutingType HostBased { get; } = new RoutingType(HostBasedValue);
-        /// <summary> Extension. </summary>
+        /// <summary>
+        /// Extension
+        /// Serialized Name: RoutingType.Extension
+        /// </summary>
         public static RoutingType Extension { get; } = new RoutingType(ExtensionValue);
-        /// <summary> Tenant. </summary>
+        /// <summary>
+        /// Tenant
+        /// Serialized Name: RoutingType.Tenant
+        /// </summary>
         public static RoutingType Tenant { get; } = new RoutingType(TenantValue);
-        /// <summary> Fanout. </summary>
+        /// <summary>
+        /// Fanout
+        /// Serialized Name: RoutingType.Fanout
+        /// </summary>
         public static RoutingType Fanout { get; } = new RoutingType(FanoutValue);
-        /// <summary> LocationBased. </summary>
+        /// <summary>
+        /// LocationBased
+        /// Serialized Name: RoutingType.LocationBased
+        /// </summary>
         public static RoutingType LocationBased { get; } = new RoutingType(LocationBasedValue);
-        /// <summary> Failover. </summary>
+        /// <summary>
+        /// Failover
+        /// Serialized Name: RoutingType.Failover
+        /// </summary>
         public static RoutingType Failover { get; } = new RoutingType(FailoverValue);
-        /// <summary> CascadeExtension. </summary>
+        /// <summary>
+        /// CascadeExtension
+        /// Serialized Name: RoutingType.CascadeExtension
+        /// </summary>
         public static RoutingType CascadeExtension { get; } = new RoutingType(CascadeExtensionValue);
         /// <summary> Determines if two <see cref="RoutingType"/> values are the same. </summary>
         public static bool operator ==(RoutingType left, RoutingType right) => left.Equals(right);

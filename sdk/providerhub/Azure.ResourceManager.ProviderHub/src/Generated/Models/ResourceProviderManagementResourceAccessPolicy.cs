@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceProviderManagementResourceAccessPolicy. </summary>
+    /// <summary>
+    /// The ResourceProviderManagementResourceAccessPolicy.
+    /// Serialized Name: ResourceProviderManagementResourceAccessPolicy
+    /// </summary>
     public readonly partial struct ResourceProviderManagementResourceAccessPolicy : IEquatable<ResourceProviderManagementResourceAccessPolicy>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string AcisReadAllowedValue = "AcisReadAllowed";
         private const string AcisActionAllowedValue = "AcisActionAllowed";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ResourceProviderManagementResourceAccessPolicy.NotSpecified
+        /// </summary>
         public static ResourceProviderManagementResourceAccessPolicy NotSpecified { get; } = new ResourceProviderManagementResourceAccessPolicy(NotSpecifiedValue);
-        /// <summary> AcisReadAllowed. </summary>
+        /// <summary>
+        /// AcisReadAllowed
+        /// Serialized Name: ResourceProviderManagementResourceAccessPolicy.AcisReadAllowed
+        /// </summary>
         public static ResourceProviderManagementResourceAccessPolicy AcisReadAllowed { get; } = new ResourceProviderManagementResourceAccessPolicy(AcisReadAllowedValue);
-        /// <summary> AcisActionAllowed. </summary>
+        /// <summary>
+        /// AcisActionAllowed
+        /// Serialized Name: ResourceProviderManagementResourceAccessPolicy.AcisActionAllowed
+        /// </summary>
         public static ResourceProviderManagementResourceAccessPolicy AcisActionAllowed { get; } = new ResourceProviderManagementResourceAccessPolicy(AcisActionAllowedValue);
         /// <summary> Determines if two <see cref="ResourceProviderManagementResourceAccessPolicy"/> values are the same. </summary>
         public static bool operator ==(ResourceProviderManagementResourceAccessPolicy left, ResourceProviderManagementResourceAccessPolicy right) => left.Equals(right);

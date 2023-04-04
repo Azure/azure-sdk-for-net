@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The CustomRolloutPropertiesStatus. </summary>
+    /// <summary>
+    /// The CustomRolloutPropertiesStatus.
+    /// Serialized Name: CustomRolloutPropertiesStatus
+    /// </summary>
     public partial class CustomRolloutPropertiesStatus : CustomRolloutStatus
     {
         /// <summary> Initializes a new instance of CustomRolloutPropertiesStatus. </summary>
@@ -18,8 +21,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of CustomRolloutPropertiesStatus. </summary>
-        /// <param name="completedRegions"></param>
-        /// <param name="failedOrSkippedRegions"> Dictionary of &lt;ExtendedErrorInfo&gt;. </param>
+        /// <param name="completedRegions"> Serialized Name: CustomRolloutStatus.completedRegions. </param>
+        /// <param name="failedOrSkippedRegions">
+        /// Dictionary of &lt;ExtendedErrorInfo&gt;
+        /// Serialized Name: CustomRolloutStatus.failedOrSkippedRegions
+        /// </param>
         internal CustomRolloutPropertiesStatus(IList<string> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions) : base(completedRegions, failedOrSkippedRegions)
         {
         }

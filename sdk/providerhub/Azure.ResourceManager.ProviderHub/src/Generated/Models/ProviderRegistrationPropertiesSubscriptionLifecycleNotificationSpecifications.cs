@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications. </summary>
+    /// <summary>
+    /// The ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications.
+    /// Serialized Name: ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications
+    /// </summary>
     public partial class ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications : SubscriptionLifecycleNotificationSpecifications
     {
         /// <summary> Initializes a new instance of ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications. </summary>
@@ -19,8 +22,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications. </summary>
-        /// <param name="subscriptionStateOverrideActions"></param>
-        /// <param name="softDeleteTTL"></param>
+        /// <param name="subscriptionStateOverrideActions"> Serialized Name: SubscriptionLifecycleNotificationSpecifications.subscriptionStateOverrideActions. </param>
+        /// <param name="softDeleteTTL"> Serialized Name: SubscriptionLifecycleNotificationSpecifications.softDeleteTTL. </param>
         internal ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications(IList<SubscriptionStateOverrideAction> subscriptionStateOverrideActions, TimeSpan? softDeleteTTL) : base(subscriptionStateOverrideActions, softDeleteTTL)
         {
         }

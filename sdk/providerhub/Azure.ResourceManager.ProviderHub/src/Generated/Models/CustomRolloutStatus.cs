@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The CustomRolloutStatus. </summary>
+    /// <summary>
+    /// The CustomRolloutStatus.
+    /// Serialized Name: CustomRolloutStatus
+    /// </summary>
     public partial class CustomRolloutStatus
     {
         /// <summary> Initializes a new instance of CustomRolloutStatus. </summary>
@@ -21,17 +24,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of CustomRolloutStatus. </summary>
-        /// <param name="completedRegions"></param>
-        /// <param name="failedOrSkippedRegions"> Dictionary of &lt;ExtendedErrorInfo&gt;. </param>
+        /// <param name="completedRegions"> Serialized Name: CustomRolloutStatus.completedRegions. </param>
+        /// <param name="failedOrSkippedRegions">
+        /// Dictionary of &lt;ExtendedErrorInfo&gt;
+        /// Serialized Name: CustomRolloutStatus.failedOrSkippedRegions
+        /// </param>
         internal CustomRolloutStatus(IList<string> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions)
         {
             CompletedRegions = completedRegions;
             FailedOrSkippedRegions = failedOrSkippedRegions;
         }
 
-        /// <summary> Gets the completed regions. </summary>
+        /// <summary> Serialized Name: CustomRolloutStatus.completedRegions. </summary>
         public IList<string> CompletedRegions { get; }
-        /// <summary> Dictionary of &lt;ExtendedErrorInfo&gt;. </summary>
+        /// <summary>
+        /// Dictionary of &lt;ExtendedErrorInfo&gt;
+        /// Serialized Name: CustomRolloutStatus.failedOrSkippedRegions
+        /// </summary>
         public IDictionary<string, ExtendedErrorInfo> FailedOrSkippedRegions { get; }
     }
 }

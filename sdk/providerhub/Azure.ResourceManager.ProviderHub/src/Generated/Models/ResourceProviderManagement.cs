@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceProviderManagement. </summary>
+    /// <summary>
+    /// The ResourceProviderManagement.
+    /// Serialized Name: ResourceProviderManagement
+    /// </summary>
     public partial class ResourceProviderManagement
     {
         /// <summary> Initializes a new instance of ResourceProviderManagement. </summary>
@@ -24,14 +27,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceProviderManagement. </summary>
-        /// <param name="schemaOwners"></param>
-        /// <param name="manifestOwners"></param>
-        /// <param name="incidentRoutingService"></param>
-        /// <param name="incidentRoutingTeam"></param>
-        /// <param name="incidentContactEmail"></param>
-        /// <param name="serviceTreeInfos"></param>
-        /// <param name="resourceAccessPolicy"></param>
-        /// <param name="resourceAccessRoles"></param>
+        /// <param name="schemaOwners"> Serialized Name: ResourceProviderManagement.schemaOwners. </param>
+        /// <param name="manifestOwners"> Serialized Name: ResourceProviderManagement.manifestOwners. </param>
+        /// <param name="incidentRoutingService"> Serialized Name: ResourceProviderManagement.incidentRoutingService. </param>
+        /// <param name="incidentRoutingTeam"> Serialized Name: ResourceProviderManagement.incidentRoutingTeam. </param>
+        /// <param name="incidentContactEmail"> Serialized Name: ResourceProviderManagement.incidentContactEmail. </param>
+        /// <param name="serviceTreeInfos"> Serialized Name: ResourceProviderManagement.serviceTreeInfos. </param>
+        /// <param name="resourceAccessPolicy"> Serialized Name: ResourceProviderManagement.resourceAccessPolicy. </param>
+        /// <param name="resourceAccessRoles"> Serialized Name: ResourceProviderManagement.resourceAccessRoles. </param>
         internal ResourceProviderManagement(IList<string> schemaOwners, IList<string> manifestOwners, string incidentRoutingService, string incidentRoutingTeam, string incidentContactEmail, IList<ServiceTreeInfo> serviceTreeInfos, ResourceProviderManagementResourceAccessPolicy? resourceAccessPolicy, IList<BinaryData> resourceAccessRoles)
         {
             SchemaOwners = schemaOwners;
@@ -44,22 +47,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ResourceAccessRoles = resourceAccessRoles;
         }
 
-        /// <summary> Gets the schema owners. </summary>
+        /// <summary> Serialized Name: ResourceProviderManagement.schemaOwners. </summary>
         public IList<string> SchemaOwners { get; }
-        /// <summary> Gets the manifest owners. </summary>
+        /// <summary> Serialized Name: ResourceProviderManagement.manifestOwners. </summary>
         public IList<string> ManifestOwners { get; }
-        /// <summary> Gets or sets the incident routing service. </summary>
+        /// <summary> Serialized Name: ResourceProviderManagement.incidentRoutingService. </summary>
         public string IncidentRoutingService { get; set; }
-        /// <summary> Gets or sets the incident routing team. </summary>
+        /// <summary> Serialized Name: ResourceProviderManagement.incidentRoutingTeam. </summary>
         public string IncidentRoutingTeam { get; set; }
-        /// <summary> Gets or sets the incident contact email. </summary>
+        /// <summary> Serialized Name: ResourceProviderManagement.incidentContactEmail. </summary>
         public string IncidentContactEmail { get; set; }
-        /// <summary> Gets the service tree infos. </summary>
+        /// <summary> Serialized Name: ResourceProviderManagement.serviceTreeInfos. </summary>
         public IList<ServiceTreeInfo> ServiceTreeInfos { get; }
-        /// <summary> Gets or sets the resource access policy. </summary>
+        /// <summary> Serialized Name: ResourceProviderManagement.resourceAccessPolicy. </summary>
         public ResourceProviderManagementResourceAccessPolicy? ResourceAccessPolicy { get; set; }
         /// <summary>
-        /// Gets the resource access roles
+        /// Serialized Name: ResourceProviderManagement.resourceAccessRoles
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

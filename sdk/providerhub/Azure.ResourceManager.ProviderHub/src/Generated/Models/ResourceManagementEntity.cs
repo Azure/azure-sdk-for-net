@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceManagementEntity. </summary>
+    /// <summary>
+    /// The ResourceManagementEntity.
+    /// Serialized Name: ResourceManagementEntity
+    /// </summary>
     public partial class ResourceManagementEntity
     {
         /// <summary> Initializes a new instance of ResourceManagementEntity. </summary>
-        /// <param name="resourceId"> The resource id. </param>
+        /// <param name="resourceId">
+        /// The resource id.
+        /// Serialized Name: ResourceManagementEntity.resourceId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public ResourceManagementEntity(string resourceId)
         {
@@ -24,10 +30,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceManagementEntity. </summary>
-        /// <param name="resourceId"> The resource id. </param>
-        /// <param name="homeTenantId"> The home tenant id. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="status"> The operation status. </param>
+        /// <param name="resourceId">
+        /// The resource id.
+        /// Serialized Name: ResourceManagementEntity.resourceId
+        /// </param>
+        /// <param name="homeTenantId">
+        /// The home tenant id.
+        /// Serialized Name: ResourceManagementEntity.homeTenantId
+        /// </param>
+        /// <param name="location">
+        /// The location.
+        /// Serialized Name: ResourceManagementEntity.location
+        /// </param>
+        /// <param name="status">
+        /// The operation status.
+        /// Serialized Name: ResourceManagementEntity.status
+        /// </param>
         internal ResourceManagementEntity(string resourceId, string homeTenantId, AzureLocation? location, string status)
         {
             ResourceId = resourceId;
@@ -36,13 +54,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Status = status;
         }
 
-        /// <summary> The resource id. </summary>
+        /// <summary>
+        /// The resource id.
+        /// Serialized Name: ResourceManagementEntity.resourceId
+        /// </summary>
         public string ResourceId { get; set; }
-        /// <summary> The home tenant id. </summary>
+        /// <summary>
+        /// The home tenant id.
+        /// Serialized Name: ResourceManagementEntity.homeTenantId
+        /// </summary>
         public string HomeTenantId { get; set; }
-        /// <summary> The location. </summary>
+        /// <summary>
+        /// The location.
+        /// Serialized Name: ResourceManagementEntity.location
+        /// </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary> The operation status. </summary>
+        /// <summary>
+        /// The operation status.
+        /// Serialized Name: ResourceManagementEntity.status
+        /// </summary>
         public string Status { get; }
     }
 }

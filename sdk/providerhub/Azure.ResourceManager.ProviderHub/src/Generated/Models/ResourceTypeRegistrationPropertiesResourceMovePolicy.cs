@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeRegistrationPropertiesResourceMovePolicy. </summary>
+    /// <summary>
+    /// The ResourceTypeRegistrationPropertiesResourceMovePolicy.
+    /// Serialized Name: ResourceTypeRegistrationPropertiesResourceMovePolicy
+    /// </summary>
     public partial class ResourceTypeRegistrationPropertiesResourceMovePolicy : ResourceMovePolicy
     {
         /// <summary> Initializes a new instance of ResourceTypeRegistrationPropertiesResourceMovePolicy. </summary>
@@ -16,9 +19,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeRegistrationPropertiesResourceMovePolicy. </summary>
-        /// <param name="validationRequired"></param>
-        /// <param name="crossResourceGroupMoveEnabled"></param>
-        /// <param name="crossSubscriptionMoveEnabled"></param>
+        /// <param name="validationRequired"> Serialized Name: ResourceMovePolicy.validationRequired. </param>
+        /// <param name="crossResourceGroupMoveEnabled"> Serialized Name: ResourceMovePolicy.crossResourceGroupMoveEnabled. </param>
+        /// <param name="crossSubscriptionMoveEnabled"> Serialized Name: ResourceMovePolicy.crossSubscriptionMoveEnabled. </param>
         internal ResourceTypeRegistrationPropertiesResourceMovePolicy(bool? validationRequired, bool? crossResourceGroupMoveEnabled, bool? crossSubscriptionMoveEnabled) : base(validationRequired, crossResourceGroupMoveEnabled, crossSubscriptionMoveEnabled)
         {
         }

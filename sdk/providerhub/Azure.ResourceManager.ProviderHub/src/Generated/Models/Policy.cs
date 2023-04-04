@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The Policy. </summary>
+    /// <summary>
+    /// The Policy.
+    /// Serialized Name: Policy
+    /// </summary>
     public readonly partial struct Policy : IEquatable<Policy>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string NotSpecifiedValue = "NotSpecified";
         private const string SynchronizeBeginExtensionValue = "SynchronizeBeginExtension";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: Policy.NotSpecified
+        /// </summary>
         public static Policy NotSpecified { get; } = new Policy(NotSpecifiedValue);
-        /// <summary> SynchronizeBeginExtension. </summary>
+        /// <summary>
+        /// SynchronizeBeginExtension
+        /// Serialized Name: Policy.SynchronizeBeginExtension
+        /// </summary>
         public static Policy SynchronizeBeginExtension { get; } = new Policy(SynchronizeBeginExtensionValue);
         /// <summary> Determines if two <see cref="Policy"/> values are the same. </summary>
         public static bool operator ==(Policy left, Policy right) => left.Equals(right);

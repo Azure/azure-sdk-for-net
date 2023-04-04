@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ProviderRegistrationPropertiesProviderHubMetadata. </summary>
+    /// <summary>
+    /// The ProviderRegistrationPropertiesProviderHubMetadata.
+    /// Serialized Name: ProviderRegistrationPropertiesProviderHubMetadata
+    /// </summary>
     public partial class ProviderRegistrationPropertiesProviderHubMetadata : ProviderHubMetadata
     {
         /// <summary> Initializes a new instance of ProviderRegistrationPropertiesProviderHubMetadata. </summary>
@@ -18,9 +21,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ProviderRegistrationPropertiesProviderHubMetadata. </summary>
-        /// <param name="providerAuthorizations"></param>
-        /// <param name="providerAuthentication"></param>
-        /// <param name="thirdPartyProviderAuthorization"></param>
+        /// <param name="providerAuthorizations"> Serialized Name: ProviderHubMetadata.providerAuthorizations. </param>
+        /// <param name="providerAuthentication"> Serialized Name: ProviderHubMetadata.providerAuthentication. </param>
+        /// <param name="thirdPartyProviderAuthorization"> Serialized Name: ProviderHubMetadata.thirdPartyProviderAuthorization. </param>
         internal ProviderRegistrationPropertiesProviderHubMetadata(IList<ResourceProviderAuthorization> providerAuthorizations, ProviderHubMetadataProviderAuthentication providerAuthentication, ProviderHubMetadataThirdPartyProviderAuthorization thirdPartyProviderAuthorization) : base(providerAuthorizations, providerAuthentication, thirdPartyProviderAuthorization)
         {
         }

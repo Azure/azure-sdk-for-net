@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ProvisioningState. </summary>
+    /// <summary>
+    /// The ProvisioningState.
+    /// Serialized Name: ProvisioningState
+    /// </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
     {
         private readonly string _value;
@@ -36,31 +39,70 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string TransientFailureValue = "TransientFailure";
         private const string RolloutInProgressValue = "RolloutInProgress";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ProvisioningState.NotSpecified
+        /// </summary>
         public static ProvisioningState NotSpecified { get; } = new ProvisioningState(NotSpecifiedValue);
-        /// <summary> Accepted. </summary>
+        /// <summary>
+        /// Accepted
+        /// Serialized Name: ProvisioningState.Accepted
+        /// </summary>
         public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
-        /// <summary> Running. </summary>
+        /// <summary>
+        /// Running
+        /// Serialized Name: ProvisioningState.Running
+        /// </summary>
         public static ProvisioningState Running { get; } = new ProvisioningState(RunningValue);
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: ProvisioningState.Creating
+        /// </summary>
         public static ProvisioningState Creating { get; } = new ProvisioningState(CreatingValue);
-        /// <summary> Created. </summary>
+        /// <summary>
+        /// Created
+        /// Serialized Name: ProvisioningState.Created
+        /// </summary>
         public static ProvisioningState Created { get; } = new ProvisioningState(CreatedValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ProvisioningState.Deleting
+        /// </summary>
         public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
-        /// <summary> Deleted. </summary>
+        /// <summary>
+        /// Deleted
+        /// Serialized Name: ProvisioningState.Deleted
+        /// </summary>
         public static ProvisioningState Deleted { get; } = new ProvisioningState(DeletedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: ProvisioningState.Canceled
+        /// </summary>
         public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ProvisioningState.Failed
+        /// </summary>
         public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ProvisioningState.Succeeded
+        /// </summary>
         public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
-        /// <summary> MovingResources. </summary>
+        /// <summary>
+        /// MovingResources
+        /// Serialized Name: ProvisioningState.MovingResources
+        /// </summary>
         public static ProvisioningState MovingResources { get; } = new ProvisioningState(MovingResourcesValue);
-        /// <summary> TransientFailure. </summary>
+        /// <summary>
+        /// TransientFailure
+        /// Serialized Name: ProvisioningState.TransientFailure
+        /// </summary>
         public static ProvisioningState TransientFailure { get; } = new ProvisioningState(TransientFailureValue);
-        /// <summary> RolloutInProgress. </summary>
+        /// <summary>
+        /// RolloutInProgress
+        /// Serialized Name: ProvisioningState.RolloutInProgress
+        /// </summary>
         public static ProvisioningState RolloutInProgress { get; } = new ProvisioningState(RolloutInProgressValue);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);

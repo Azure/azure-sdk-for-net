@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceValidation. </summary>
+    /// <summary>
+    /// The ResourceValidation.
+    /// Serialized Name: ResourceValidation
+    /// </summary>
     public readonly partial struct ResourceValidation : IEquatable<ResourceValidation>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string ReservedWordsValue = "ReservedWords";
         private const string ProfaneWordsValue = "ProfaneWords";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ResourceValidation.NotSpecified
+        /// </summary>
         public static ResourceValidation NotSpecified { get; } = new ResourceValidation(NotSpecifiedValue);
-        /// <summary> ReservedWords. </summary>
+        /// <summary>
+        /// ReservedWords
+        /// Serialized Name: ResourceValidation.ReservedWords
+        /// </summary>
         public static ResourceValidation ReservedWords { get; } = new ResourceValidation(ReservedWordsValue);
-        /// <summary> ProfaneWords. </summary>
+        /// <summary>
+        /// ProfaneWords
+        /// Serialized Name: ResourceValidation.ProfaneWords
+        /// </summary>
         public static ResourceValidation ProfaneWords { get; } = new ResourceValidation(ProfaneWordsValue);
         /// <summary> Determines if two <see cref="ResourceValidation"/> values are the same. </summary>
         public static bool operator ==(ResourceValidation left, ResourceValidation right) => left.Equals(right);

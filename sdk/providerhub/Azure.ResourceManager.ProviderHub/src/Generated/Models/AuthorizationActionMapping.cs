@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The AuthorizationActionMapping. </summary>
+    /// <summary>
+    /// The AuthorizationActionMapping.
+    /// Serialized Name: AuthorizationActionMapping
+    /// </summary>
     public partial class AuthorizationActionMapping
     {
         /// <summary> Initializes a new instance of AuthorizationActionMapping. </summary>
@@ -16,17 +19,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of AuthorizationActionMapping. </summary>
-        /// <param name="original"></param>
-        /// <param name="desired"></param>
+        /// <param name="original"> Serialized Name: AuthorizationActionMapping.original. </param>
+        /// <param name="desired"> Serialized Name: AuthorizationActionMapping.desired. </param>
         internal AuthorizationActionMapping(string original, string desired)
         {
             Original = original;
             Desired = desired;
         }
 
-        /// <summary> Gets or sets the original. </summary>
+        /// <summary> Serialized Name: AuthorizationActionMapping.original. </summary>
         public string Original { get; set; }
-        /// <summary> Gets or sets the desired. </summary>
+        /// <summary> Serialized Name: AuthorizationActionMapping.desired. </summary>
         public string Desired { get; set; }
     }
 }

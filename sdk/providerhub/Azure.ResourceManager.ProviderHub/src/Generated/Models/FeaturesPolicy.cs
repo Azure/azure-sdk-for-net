@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The FeaturesPolicy. </summary>
+    /// <summary>
+    /// The FeaturesPolicy.
+    /// Serialized Name: FeaturesPolicy
+    /// </summary>
     public readonly partial struct FeaturesPolicy : IEquatable<FeaturesPolicy>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string AnyValue = "Any";
         private const string AllValue = "All";
 
-        /// <summary> Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: FeaturesPolicy.Any
+        /// </summary>
         public static FeaturesPolicy Any { get; } = new FeaturesPolicy(AnyValue);
-        /// <summary> All. </summary>
+        /// <summary>
+        /// All
+        /// Serialized Name: FeaturesPolicy.All
+        /// </summary>
         public static FeaturesPolicy All { get; } = new FeaturesPolicy(AllValue);
         /// <summary> Determines if two <see cref="FeaturesPolicy"/> values are the same. </summary>
         public static bool operator ==(FeaturesPolicy left, FeaturesPolicy right) => left.Equals(right);

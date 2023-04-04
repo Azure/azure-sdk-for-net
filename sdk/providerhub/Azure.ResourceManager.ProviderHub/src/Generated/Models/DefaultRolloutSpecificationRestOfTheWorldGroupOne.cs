@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The DefaultRolloutSpecificationRestOfTheWorldGroupOne. </summary>
+    /// <summary>
+    /// The DefaultRolloutSpecificationRestOfTheWorldGroupOne.
+    /// Serialized Name: DefaultRolloutSpecificationRestOfTheWorldGroupOne
+    /// </summary>
     public partial class DefaultRolloutSpecificationRestOfTheWorldGroupOne : TrafficRegionRolloutConfiguration
     {
         /// <summary> Initializes a new instance of DefaultRolloutSpecificationRestOfTheWorldGroupOne. </summary>
@@ -19,8 +22,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutSpecificationRestOfTheWorldGroupOne. </summary>
-        /// <param name="regions"></param>
-        /// <param name="waitDuration"></param>
+        /// <param name="regions"> Serialized Name: TrafficRegions.regions. </param>
+        /// <param name="waitDuration"> Serialized Name: TrafficRegionRolloutConfiguration.waitDuration. </param>
         internal DefaultRolloutSpecificationRestOfTheWorldGroupOne(IList<string> regions, TimeSpan? waitDuration) : base(regions, waitDuration)
         {
         }

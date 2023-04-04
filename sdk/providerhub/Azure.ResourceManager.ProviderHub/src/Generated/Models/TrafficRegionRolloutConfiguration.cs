@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The TrafficRegionRolloutConfiguration. </summary>
+    /// <summary>
+    /// The TrafficRegionRolloutConfiguration.
+    /// Serialized Name: TrafficRegionRolloutConfiguration
+    /// </summary>
     public partial class TrafficRegionRolloutConfiguration : TrafficRegions
     {
         /// <summary> Initializes a new instance of TrafficRegionRolloutConfiguration. </summary>
@@ -19,14 +22,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of TrafficRegionRolloutConfiguration. </summary>
-        /// <param name="regions"></param>
-        /// <param name="waitDuration"></param>
+        /// <param name="regions"> Serialized Name: TrafficRegions.regions. </param>
+        /// <param name="waitDuration"> Serialized Name: TrafficRegionRolloutConfiguration.waitDuration. </param>
         internal TrafficRegionRolloutConfiguration(IList<string> regions, TimeSpan? waitDuration) : base(regions)
         {
             WaitDuration = waitDuration;
         }
 
-        /// <summary> Gets or sets the wait duration. </summary>
+        /// <summary> Serialized Name: TrafficRegionRolloutConfiguration.waitDuration. </summary>
         public TimeSpan? WaitDuration { get; set; }
     }
 }
