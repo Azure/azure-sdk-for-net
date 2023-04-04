@@ -271,7 +271,7 @@ namespace Azure.Storage
 
             _validationOptions = transferValidation ?? new UploadTransferValidationOptions
             {
-                ChecksumAlgorithm = StorageChecksumAlgorithm.Auto,
+                ChecksumAlgorithm = StorageChecksumAlgorithm.None,
                 PrecalculatedChecksum = ReadOnlyMemory<byte>.Empty
             };
             //partitioned uploads don't support pre-calculated hashes
