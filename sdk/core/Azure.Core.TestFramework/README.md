@@ -82,7 +82,7 @@ public class AppConfigurationTestEnvironment : TestEnvironment
 }
 ```
 
-__NOTE:__ Make sure that variables containing secret values are not recorded or are sanitized. If you accidentally leak a secret, follow the guidance [here](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/101/Leaked-secret-procedure). 
+__NOTE:__ Make sure that variables containing secret values are not recorded or are sanitized. If you accidentally leak a secret, follow the guidance [here](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/101/Leaked-secret-procedure).
 
 To sanitize variables use the `options` parameter of `GetRecordedVariable`:
 
@@ -321,8 +321,7 @@ public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
 
 If your live tests are impacted by temporary or intermittent services errors, be sure the service team is aware and has a plan to address the issues.
 If these issues cannot be resolved, you can attribute test classes or test methods with `[IgnoreServiceError]` which takes a required HTTP status code, Azure service error, and optional error message substring.
-This attribute, when used with `RecordedTestBase`-derived test fixtures and methods attributed with `[RecordedTest]`, which mark tests that failed with that specific error as "inconclusive", along with an optional
-reason you specify and the original error information.
+This attribute, when used with `RecordedTestBase`-derived test fixtures`, will mark tests that failed with that specific error as "inconclusive", along with an optional reason you specify and the original error information.
 
 ### Debugging Test Proxy
 
@@ -344,7 +343,7 @@ Once you have cloned the repo, open the [Test Proxy solution](https://github.com
 
 If you are attempting to debug `Playback` mode, set a breakpoint in the HandlePlaybackRequest method of [RecordingHandler](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/RecordingHandler.cs). If you are attempting to debug `Record` mode, set a breakpoint in the `HandleRecordRequestAsync` method of [RecordingHandler](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/RecordingHandler.cs). It may also be helpful to put breakpoints in [Admin.cs](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/Admin.cs) to verify that your sanitizers are being added as expected.
 
-With your breakpoints set, run the Test Proxy project, and then run your test that you are trying to debug. You should see your breakpoints hit. 
+With your breakpoints set, run the Test Proxy project, and then run your test that you are trying to debug. You should see your breakpoints hit.
 
 The key integration points between the Test Framework and the Test Proxy are:
  - InstrumentClientOptions method of `RecordedTestBase` - calling this on your client options will set the [ClientOptions.Transport property](https://learn.microsoft.com/dotnet/api/azure.core.clientoptions.transport?view=azure-dotnet) to be [ProxyTransport](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/ProxyTransport.cs) to your client options when in `Playback` or `Record` mode. The ProxyTransport will send all requests to the Test Proxy.
@@ -370,8 +369,8 @@ public async Task AuthorizationHeadersAddedOnceWithRetries()
         Value = "test-value"
     };
     finalResponse.SetContent(JsonSerializer.Serialize(setting));
-    
-    // The MockTransport allows us to specify the set of responses that will be returned 
+
+    // The MockTransport allows us to specify the set of responses that will be returned
     // by the transport. In this case, we are specifying that the first request will
     // return a 503 - which is retriable, and the second request will return a 200.
     var mockTransport = new MockTransport(new MockResponse(503), finalResponse);
@@ -385,10 +384,10 @@ public async Task AuthorizationHeadersAddedOnceWithRetries()
 
     // act
     await client.GetConfigurationSettingAsync(setting.Key, setting.Label);
-    
+
     // We can access the requests that were sent by the client using the Requests property
     var retriedRequest = mockTransport.Requests[1];
-  
+
     // assert
     Assert.True(retriedRequest.Headers.TryGetValues("Authorization", out var authorizationHeaders));
     Assert.AreEqual(1, authorizationHeaders.Count());

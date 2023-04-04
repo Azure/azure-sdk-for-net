@@ -48,6 +48,11 @@ namespace Azure.Data.AppConfiguration
         public DateTimeOffset? AcceptDateTime { get; set; }
 
         /// <summary>
+        /// A filter used to get key-values for a snapshot. The value should be the name of the snapshot. Not valid when used with 'key' and 'label' filters.
+        /// </summary>
+        public string SnapshotName { get; set; }
+
+        /// <summary>
         /// Creates a default <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/> entities in the configuration store.
         /// </summary>
         public SettingSelector() { }
