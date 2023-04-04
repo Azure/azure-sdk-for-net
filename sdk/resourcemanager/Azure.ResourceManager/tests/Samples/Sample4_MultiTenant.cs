@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Tests.Samples
             TokenCredential credForTenant02 = new ClientSecretCredential(tenantId02, clientId, clientSecret);
 
             string token = (await credForTenant02.GetTokenAsync(new TokenRequestContext(
-                    new[] { ArmEnvironment.AzurePublicCloud.Endpoint+"/.default" }), CancellationToken.None)).Token;
+                    new[] { ArmEnvironment.AzurePublicCloud.DefaultScope }), CancellationToken.None)).Token;
             ArmClientOptions options = new ArmClientOptions();
             AuxiliaryPoilcy headerPolicy = new AuxiliaryPoilcy(token);
             options.AddPolicy(headerPolicy, HttpPipelinePosition.PerCall);
