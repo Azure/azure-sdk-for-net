@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.Chat
 {
     /// <summary> Retention Policy Type. </summary>
-    public readonly partial struct PolicyType : IEquatable<PolicyType>
+    internal readonly partial struct PolicyType : IEquatable<PolicyType>
     {
         private readonly string _value;
 
