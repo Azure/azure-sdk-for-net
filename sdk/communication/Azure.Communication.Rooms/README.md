@@ -9,7 +9,6 @@ With the preview release of ACS Rooms, Contoso will be able to:
     - Join voice/video calls within that meeting space using the ACS web calling SDK or native mobile calling SDKs
     - Add participants to a room
     - Assign pre-defined roles to room participants
-    - Consume Event Grid notifications for calling events
 
 The main scenarios where Rooms can best be used:
 
