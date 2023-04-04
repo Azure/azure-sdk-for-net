@@ -15,13 +15,27 @@ namespace Azure.Containers.ContainerRegistry
             error = null;
             data = null;
 
-            BinaryData content = response.Content ?? BinaryData.FromStream(response.ContentStream);
-            JsonDocument doc = JsonDocument.Parse(content);
-            AcrErrors errors = AcrErrors.DeserializeAcrErrors(doc.RootElement);
-            if (errors?.Errors?.Count > 0)
+            if (response.ContentStream == null)
             {
-                AcrErrorInfo first = errors.Errors[0];
-                error = new ResponseError(first.Code, first.Message);
+                return false;
+            }
+
+            BinaryData content = BinaryData.FromStream(response.ContentStream);
+            try
+            {
+                JsonDocument doc = JsonDocument.Parse(content);
+                AcrErrors errors = AcrErrors.DeserializeAcrErrors(doc.RootElement);
+                if (errors?.Errors?.Count > 0)
+                {
+                    AcrErrorInfo first = errors.Errors[0];
+                    error = new ResponseError(first.Code, first.Message);
+                }
+            }
+            catch
+            {
+                // We won't get default logging of content since stream is unbuffered,
+                // so provide the message as an error message to surface it in the exception.
+                error = new(code: null, message: content.ToString());
             }
 
             return error != null;

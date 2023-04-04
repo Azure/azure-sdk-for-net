@@ -658,6 +658,32 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.DeleteBlobAsync(digest);
         }
 
+        [RecordedTest]
+        public async Task CanCatchDownloadFailure()
+        {
+            // Arrange
+            string repositoryId = Recording.Random.NewGuid().ToString();
+            ContainerRegistryContentClient client = CreateBlobClient(repositoryId);
+
+            // Act
+
+            // We don't upload a blob, so we expect 404.
+            bool caught = false;
+
+            try
+            {
+                using var downloadStream = new MemoryStream();
+                await client.DownloadBlobToAsync("BadDigest", downloadStream);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+                Console.WriteLine($"Service error: {ex.Message}");
+                caught = true;
+            }
+
+            Assert.IsTrue(caught);
+        }
+
         #endregion
 
         [RecordedTest]

@@ -259,6 +259,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 #endif
             }
             #endregion
+
             Assert.IsTrue(caught);
         }
     }
