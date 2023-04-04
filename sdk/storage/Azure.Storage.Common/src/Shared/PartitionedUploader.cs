@@ -269,11 +269,7 @@ namespace Azure.Storage
                     transferOptions.MaximumTransferSize.Value);
             }
 
-            _validationOptions = transferValidation ?? new UploadTransferValidationOptions
-            {
-                ChecksumAlgorithm = StorageChecksumAlgorithm.None,
-                PrecalculatedChecksum = ReadOnlyMemory<byte>.Empty
-            };
+            _validationOptions = Argument.CheckNotNull(transferValidation, nameof(transferValidation));
             //partitioned uploads don't support pre-calculated hashes
             if (!(_validationOptions.PrecalculatedChecksum.IsEmpty))
             {
