@@ -83,10 +83,10 @@ namespace Azure.Core.Expressions.DataFactory
         /// </summary>
         /// <param name="keyVaultSecretReference"> The key vault secret reference value. </param>
 #pragma warning disable CA1000 // Do not declare static members on generic types
-        public static DataFactoryElement<T> FromKeyVaultSecretReference(string keyVaultSecretReference)
+        public static DataFactoryElement<string?> FromKeyVaultSecretReference(string keyVaultSecretReference)
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
-            return new DataFactoryElement<T>(keyVaultSecretReference, DataFactoryElementKind.KeyVaultSecretReference);
+            return new DataFactoryElement<string?>(keyVaultSecretReference, DataFactoryElementKind.KeyVaultSecretReference);
         }
 
         /// <summary>

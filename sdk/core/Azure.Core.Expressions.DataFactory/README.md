@@ -1,19 +1,19 @@
 # Azure Core Expressions DataFactory shared client library for .NET
 
-Azure.Core.Expressions.DataFactory provides shared classes that represent [Expression](https://learn.microsoft.com/azure/data-factory/control-flow-expression-language-functions#expressions). 
+Azure.Core.Expressions.DataFactory provides classes that represent [Expressions](https://learn.microsoft.com/azure/data-factory/control-flow-expression-language-functions#expressions). 
 
 ## Getting started
 
-Typically, you will not need to install Azure.Core.Expressions.DataFActory; 
+Typically, you will not need to install Azure.Core.Expressions.DataFactory; 
 it will be installed for you when you install one of the client libraries using it. 
 In case you want to install it explicitly (to implement your own client library, for example), 
 you can find the NuGet package.
 
 ## Key concepts
 
-In the datafactory API many of the properties have the ability to either be a constant value or an expression which will be evaluated at runtime.
-The structure of an expression is different than a constant value for example the [FolderPath](https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/entityTypes/Dataset.json#L1353)
-property of an AzureBlobDataset can either be a "string (or Expression with resultType string)".
+In the datafactory API many of the properties have the ability to either be a constant value, an expression which will be evaluated at runtime, a secure string, or a reference to a key vault secret.
+The structure of the JSON payload is different depending on which of these concepts the value maps to. As an example, the [FolderPath](https://github.com/Azure/azure-rest-api-specs/blob/main/specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/entityTypes/Dataset.json#L1353)
+property of an AzureBlobDataset can either be a "string (or Expression with resultType string)". Implicit in this definition is the fact that it can also be a secure string or a key vault secret reference. This is true for any property that can be expressed as a string or an expression with a result type of string.
 
 ### Json representation
 
@@ -45,11 +45,11 @@ In this example when the pipeline is run in the first case the folder is always 
 
 When a secure string is used, the value is return masked with '*' characters when the resource is retrieved from the service.
 
-#### Key Vault Reference
+#### Key Vault Secret Reference
 
 ```json
 "folderpath": {
-  "type": "KeyVaultReference",
+  "type": "AzureKeyVaultSecretReference",
   "value": "@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)"
 }
 ```
@@ -66,26 +66,26 @@ With the FolderPath example above we could set the property using either case be
 
 #### Literal
 
-```c#
-  azureBlobDataset.FolderPath = "foo/bar";
+```C# Snippet:DataFactoryElementLiteral
+blobDataSet.FolderPath = "foo/bar";
 ```
 
 #### Expression
 
-```c#
-  azureBlobDataset.FolderPath = DataFactoryExpression<string>.FromExpression("foo/bar-@{pipeline().TriggerTime}");
+```C# Snippet:DataFactoryElementFromExpression
+blobDataSet.FolderPath = DataFactoryElement<string>.FromExpression("foo/bar-@{pipeline().TriggerTime}");
 ```
 
 #### Secure String
 
-```c#
-  azureBlobDataset.FolderPath = DataFactoryExpression<string>.FromLiteral("some/secret/path", asSecureString: true);
+```C# Snippet:DataFactoryElementSecureString
+blobDataSet.FolderPath = DataFactoryElement<string>.FromLiteral("some/secret/path", asSecureString: true);
 ```
 
-#### Key Vault Reference
+#### Key Vault Secret Reference
 
-```c#
-  azureBlobDataset.FolderPath = DataFactoryExpression<string>.FromKeyVaultReference("@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)");
+```C# Snippet:DataFactoryElementKeyVaultSecretReference
+blobDataSet.FolderPath = DataFactoryElement<string>.FromKeyVaultSecretReference("@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)");
 ```
 
 In each case the library will be able to serialize and deserialize all scenarios appropriately allowing you to seamlessly use either according to your application's needs.
