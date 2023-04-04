@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2023-04-04)
 
 ### Features Added
 - Updated to support ANF api-version 2022-09-01
@@ -16,10 +16,6 @@
 ### Breaking Changes
 - `NetAppVault` is no longer needed scheduled for deprecation
 - `VaultId` is not longer needed it has been deprecated from `NetAppVolumeBackupConfiguration` in api-version 2022-09-01, but will continue to be supported in pervious api-verisons, 2022-05-01 and older
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.1 (2023-02-15)
 
 ### Other Changes

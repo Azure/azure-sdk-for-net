@@ -8,13 +8,13 @@ using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
 {
-    public partial class DynamicJson
+    public partial class DynamicData
     {
         /// <summary>
         /// An enumerable and enumerator for the contents of a mutable JSON array.
         /// </summary>
         [DebuggerDisplay("{Current,nq}")]
-        public struct ArrayEnumerator : IEnumerable<DynamicJson>, IEnumerator<DynamicJson>
+        internal struct ArrayEnumerator : IEnumerable<DynamicData>, IEnumerator<DynamicData>
         {
             private MutableJsonElement.ArrayEnumerator _enumerator;
             private readonly DynamicJsonOptions _options;
@@ -30,13 +30,13 @@ namespace Azure.Core.Dynamic
             public ArrayEnumerator GetEnumerator() => new(_enumerator.GetEnumerator(), _options);
 
             /// <inheritdoc />
-            public DynamicJson Current => new(_enumerator.Current, _options);
+            public DynamicData Current => new(_enumerator.Current, _options);
 
             /// <inheritdoc />
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />
-            IEnumerator<DynamicJson> IEnumerable<DynamicJson>.GetEnumerator() => GetEnumerator();
+            IEnumerator<DynamicData> IEnumerable<DynamicData>.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />
             public void Reset() => _enumerator.Reset();
