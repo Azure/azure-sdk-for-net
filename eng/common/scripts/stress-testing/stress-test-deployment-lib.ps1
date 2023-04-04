@@ -386,8 +386,15 @@ function generateRetryTestsHelmValues ($pkg, $releaseName, $generatedHelmValues)
     $podOutput = RunOrExitOnFailure kubectl get pods -n $pkg.namespace -o json
     $pods = $podOutput | ConvertFrom-Json
 
+    # helm version example: v3.11.2+g912ebc1
+    $helmVer = (helm version --short).substring(1) -replace '\+.*',''
+    $helmVer = [AzureEngSemanticVersion]::new($helmVer)
+    $minHelmVer =[AzureEngSemanticVersion]::new("3.11.0")
+    Write-Host $helmVer.CompareTo($minHelmVer)
+    if ($helmVer.CompareTo($minHelmVer) -le 0) {
+        throw "Please update helm to version >= 3.11.0`nAdditional information for updating helm version can be found here: https://helm.sh/docs/intro/install/"
+    }
     # Get all jobs within this helm release
-    
     $helmStatusOutput = RunOrExitOnFailure helm status -n $pkg.Namespace $pkg.ReleaseName --show-resources
     # -----Example output-----
     # NAME: <Release Name>
