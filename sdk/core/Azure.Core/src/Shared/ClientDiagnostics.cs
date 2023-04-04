@@ -86,7 +86,7 @@ namespace Azure.Core.Pipeline
 
         public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, ResponseError? error = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
-            if (GetType() == typeof(ClientDiagnostics) && response.ContentStream is null && error is null && additionalInfo is null)
+            if (GetType() == typeof(ClientDiagnostics) && error is null && additionalInfo is null)
             {
                 return new RequestFailedException(response, innerException);
             }
@@ -97,7 +97,7 @@ namespace Azure.Core.Pipeline
 
         public RequestFailedException CreateRequestFailedException(Response response, ResponseError? error = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
-            if (GetType() == typeof(ClientDiagnostics) && response.ContentStream is null && error is null && additionalInfo is null)
+            if (GetType() == typeof(ClientDiagnostics) && error is null && additionalInfo is null)
             {
                 return new RequestFailedException(response, innerException);
             }

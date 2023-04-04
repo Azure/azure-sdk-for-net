@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,6 +24,16 @@ namespace Azure.Containers.ContainerRegistry
             BinaryData content = BinaryData.FromStream(response.ContentStream);
             try
             {
+                // Optimistic check for JSON error object
+                if (content.ToMemory().Span[0] != (byte)'{')
+                {
+                    // Buffer the stream to log the content in the message
+                    // See: https://github.com/Azure/azure-sdk-for-net/issues/35355
+                    MemoryStream stream = new(content.ToArray());
+                    response.ContentStream = stream;
+                    return true;
+                }
+
                 JsonDocument doc = JsonDocument.Parse(content);
                 AcrErrors errors = AcrErrors.DeserializeAcrErrors(doc.RootElement);
                 if (errors?.Errors?.Count > 0)

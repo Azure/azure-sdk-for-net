@@ -677,8 +677,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
-                Console.WriteLine($"Service error: {ex.Message}");
                 caught = true;
+                Assert.IsTrue(ex.Message.Contains("Content:\r\n404 page not found"));
             }
 
             Assert.IsTrue(caught);

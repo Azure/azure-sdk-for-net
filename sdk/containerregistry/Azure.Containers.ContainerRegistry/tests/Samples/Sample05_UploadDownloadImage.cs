@@ -238,7 +238,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             ContainerRegistryClientOptions options = new()
             {
-                Transport = new MockTransport(new MockResponse(404).SetContent(uploadError))
+                Transport = new MockTransport(new MockResponse(404).SetContent(uploadError).AddHeader("MockDigest", "MockDigest"))
             };
 
             ContainerRegistryContentClient client = new(endpoint, repository, new MockCredential(), options);
@@ -253,7 +253,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             catch (RequestFailedException ex) when (ex.Status == 404 && ex.ErrorCode == "BLOB_UPLOAD_INVALID")
             {
                 Console.WriteLine("Blob upload failed. Please retry.");
-                Console.WriteLine($"Service error: {ex.Message}.");
+                Console.WriteLine($"Service error: {ex.Message}");
 #if !SNIPPET
                 caught = true;
 #endif
