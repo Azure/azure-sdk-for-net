@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         public SapVirtualInstanceCRUDTests(bool isAsync) : base(isAsync)
         {
             JsonPathSanitizers.Add("$..privateKey");
+            JsonPathSanitizers.Add("$..fencingClientPassword");
         }
 
         private string _rgName;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
             const string filePath = "./payload/acss/CreateSapVirtualInstancePayload_ThreeTier.json";
             const string installFilePath = "./payload/acss/InstallSapVirtualInstancePayload.json";
 
-            string resourceName = Recording.GenerateAssetName("A").Substring(0, 3);
+            string resourceName = "ZW9";//Recording.GenerateAssetName("A").Substring(0, 3);
             SapVirtualInstanceResource resource = await createVis(filePath, installFilePath, resourceName);
             try
             {

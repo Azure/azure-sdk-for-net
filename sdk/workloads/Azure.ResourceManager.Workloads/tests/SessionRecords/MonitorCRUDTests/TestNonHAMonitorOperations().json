@@ -47,7 +47,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/netSdkTest-4673?api-version=**",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/netSdkTest-7688?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -78,8 +78,8 @@
         "x-ms-routing-request-id": "JIOINDIAWEST:20230329T185344Z:fedea2d8-8f73-46e9-98ce-830b2dc7a143"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673",
-        "name": "netSdkTest-4673",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688",
+        "name": "netSdkTest-7688",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus2",
         "tags": {
@@ -91,7 +91,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673?api-version=2023-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -110,7 +110,7 @@
           "routingPreference": "RouteAll",
           "zoneRedundancyPreference": "Disabled",
           "managedResourceGroupConfiguration": {
-            "name": "nonHaMonitor-5188mrg-5449"
+            "name": "nonHaMonitor-4673mrg-6183"
           },
           "monitorSubnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/e2e-portal-wlmonitor-do-not-delete/providers/Microsoft.Network/virtualNetworks/vnetpeeringtest/subnets/dotNetSdkTest4"
         }
@@ -135,8 +135,8 @@
         "x-ms-routing-request-id": "JIOINDIAWEST:20230329T185351Z:20c6aaf7-434a-41ee-b9e7-c2cc89d4330a"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
-        "name": "nonHaMonitor-5188",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
+        "name": "nonHaMonitor-4673",
         "type": "microsoft.workloads/monitors",
         "location": "eastus2",
         "systemData": {
@@ -152,7 +152,7 @@
           "routingPreference": "RouteAll",
           "zoneRedundancyPreference": "Disabled",
           "managedResourceGroupConfiguration": {
-            "name": "nonHaMonitor-5188mrg-5449"
+            "name": "nonHaMonitor-4673mrg-6183"
           },
           "monitorSubnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/e2e-portal-wlmonitor-do-not-delete/providers/Microsoft.Network/virtualNetworks/vnetpeeringtest/subnets/dotNetSdkTest4",
           "provisioningState": "Accepted"
@@ -190,7 +190,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Accepted",
         "startTime": "2023-03-29T18:53:49.6510578Z"
       }
@@ -226,7 +226,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Accepted",
         "startTime": "2023-03-29T18:53:49.6510578Z"
       }
@@ -262,7 +262,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Accepted",
         "startTime": "2023-03-29T18:53:49.6510578Z"
       }
@@ -298,7 +298,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Accepted",
         "startTime": "2023-03-29T18:53:49.6510578Z"
       }
@@ -334,7 +334,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Accepted",
         "startTime": "2023-03-29T18:53:49.6510578Z"
       }
@@ -370,7 +370,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Accepted",
         "startTime": "2023-03-29T18:53:49.6510578Z"
       }
@@ -406,7 +406,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Accepted",
         "startTime": "2023-03-29T18:53:49.6510578Z"
       }
@@ -442,7 +442,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Accepted",
         "startTime": "2023-03-29T18:53:49.6510578Z"
       }
@@ -478,7 +478,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Accepted",
         "startTime": "2023-03-29T18:53:49.6510578Z"
       }
@@ -514,7 +514,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Accepted",
         "startTime": "2023-03-29T18:53:49.6510578Z"
       }
@@ -550,7 +550,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Accepted",
         "startTime": "2023-03-29T18:53:49.6510578Z"
       }
@@ -586,7 +586,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Accepted",
         "startTime": "2023-03-29T18:53:49.6510578Z"
       }
@@ -622,14 +622,14 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "71366463-3b54-4166-9d3b-a9ad314d9b33*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Succeeded",
         "startTime": "2023-03-29T18:53:49.6510578Z",
         "properties": null
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -658,8 +658,8 @@
         "x-ms-routing-request-id": "JIOINDIAWEST:20230329T185708Z:44d9385e-94a0-4b74-891e-91f5f6fdd214"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
-        "name": "nonHaMonitor-5188",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
+        "name": "nonHaMonitor-4673",
         "type": "microsoft.workloads/monitors",
         "location": "eastus2",
         "systemData": {
@@ -675,18 +675,18 @@
           "routingPreference": "RouteAll",
           "zoneRedundancyPreference": "Disabled",
           "managedResourceGroupConfiguration": {
-            "name": "nonHaMonitor-5188mrg-5449"
+            "name": "nonHaMonitor-4673mrg-6183"
           },
           "monitorSubnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/e2e-portal-wlmonitor-do-not-delete/providers/Microsoft.Network/virtualNetworks/vnetpeeringtest/subnets/dotNetSdkTest4",
           "provisioningState": "Succeeded",
-          "logAnalyticsWorkspaceArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-5188mrg-5449/providers/microsoft.operationalinsights/workspaces/sapmon-laws-658cb29280fff2",
-          "msiArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-5188mrg-5449/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sapmon-msi-658cb29280fff2",
-          "storageAccountArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-5188mrg-5449/providers/Microsoft.Storage/storageAccounts/sapsto658cb29280fff2"
+          "logAnalyticsWorkspaceArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-4673mrg-6183/providers/microsoft.operationalinsights/workspaces/sapmon-laws-658cb29280fff2",
+          "msiArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-4673mrg-6183/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sapmon-msi-658cb29280fff2",
+          "storageAccountArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-4673mrg-6183/providers/Microsoft.Storage/storageAccounts/sapsto658cb29280fff2"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -716,8 +716,8 @@
         "x-ms-routing-request-id": "JIOINDIAWEST:20230329T185709Z:8ffc1677-7600-4839-936d-fa21dd4da7ad"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
-        "name": "nonHaMonitor-5188",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
+        "name": "nonHaMonitor-4673",
         "type": "microsoft.workloads/monitors",
         "location": "eastus2",
         "systemData": {
@@ -733,18 +733,18 @@
           "routingPreference": "RouteAll",
           "zoneRedundancyPreference": "Disabled",
           "managedResourceGroupConfiguration": {
-            "name": "nonHaMonitor-5188mrg-5449"
+            "name": "nonHaMonitor-4673mrg-6183"
           },
           "monitorSubnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/e2e-portal-wlmonitor-do-not-delete/providers/Microsoft.Network/virtualNetworks/vnetpeeringtest/subnets/dotNetSdkTest4",
           "provisioningState": "Succeeded",
-          "logAnalyticsWorkspaceArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-5188mrg-5449/providers/microsoft.operationalinsights/workspaces/sapmon-laws-658cb29280fff2",
-          "msiArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-5188mrg-5449/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sapmon-msi-658cb29280fff2",
-          "storageAccountArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-5188mrg-5449/providers/Microsoft.Storage/storageAccounts/sapsto658cb29280fff2"
+          "logAnalyticsWorkspaceArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-4673mrg-6183/providers/microsoft.operationalinsights/workspaces/sapmon-laws-658cb29280fff2",
+          "msiArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-4673mrg-6183/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sapmon-msi-658cb29280fff2",
+          "storageAccountArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-4673mrg-6183/providers/Microsoft.Storage/storageAccounts/sapsto658cb29280fff2"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673?api-version=2023-04-01",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -780,8 +780,8 @@
         "x-ms-routing-request-id": "JIOINDIAWEST:20230329T185712Z:d359b3f5-8e90-4e28-b930-8caf9006fd7f"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
-        "name": "nonHaMonitor-5188",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
+        "name": "nonHaMonitor-4673",
         "type": "microsoft.workloads/monitors",
         "location": "eastus2",
         "tags": {
@@ -800,18 +800,18 @@
           "routingPreference": "RouteAll",
           "zoneRedundancyPreference": "Disabled",
           "managedResourceGroupConfiguration": {
-            "name": "nonHaMonitor-5188mrg-5449"
+            "name": "nonHaMonitor-4673mrg-6183"
           },
           "monitorSubnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/e2e-portal-wlmonitor-do-not-delete/providers/Microsoft.Network/virtualNetworks/vnetpeeringtest/subnets/dotNetSdkTest4",
           "provisioningState": "Succeeded",
-          "logAnalyticsWorkspaceArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-5188mrg-5449/providers/microsoft.operationalinsights/workspaces/sapmon-laws-658cb29280fff2",
-          "msiArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-5188mrg-5449/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sapmon-msi-658cb29280fff2",
-          "storageAccountArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-5188mrg-5449/providers/Microsoft.Storage/storageAccounts/sapsto658cb29280fff2"
+          "logAnalyticsWorkspaceArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-4673mrg-6183/providers/microsoft.operationalinsights/workspaces/sapmon-laws-658cb29280fff2",
+          "msiArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-4673mrg-6183/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sapmon-msi-658cb29280fff2",
+          "storageAccountArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-4673mrg-6183/providers/Microsoft.Storage/storageAccounts/sapsto658cb29280fff2"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -855,8 +855,8 @@
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
-            "name": "nonHaMonitor-5188",
+            "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
+            "name": "nonHaMonitor-4673",
             "type": "microsoft.workloads/monitors",
             "location": "eastus2",
             "tags": {
@@ -875,20 +875,20 @@
               "routingPreference": "RouteAll",
               "zoneRedundancyPreference": "Disabled",
               "managedResourceGroupConfiguration": {
-                "name": "nonHaMonitor-5188mrg-5449"
+                "name": "nonHaMonitor-4673mrg-6183"
               },
               "monitorSubnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/e2e-portal-wlmonitor-do-not-delete/providers/Microsoft.Network/virtualNetworks/vnetpeeringtest/subnets/dotNetSdkTest4",
               "provisioningState": "Succeeded",
-              "logAnalyticsWorkspaceArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-5188mrg-5449/providers/microsoft.operationalinsights/workspaces/sapmon-laws-658cb29280fff2",
-              "msiArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-5188mrg-5449/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sapmon-msi-658cb29280fff2",
-              "storageAccountArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-5188mrg-5449/providers/Microsoft.Storage/storageAccounts/sapsto658cb29280fff2"
+              "logAnalyticsWorkspaceArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-4673mrg-6183/providers/microsoft.operationalinsights/workspaces/sapmon-laws-658cb29280fff2",
+              "msiArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-4673mrg-6183/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sapmon-msi-658cb29280fff2",
+              "storageAccountArmId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourcegroups/nonHaMonitor-4673mrg-6183/providers/Microsoft.Storage/storageAccounts/sapsto658cb29280fff2"
             }
           }
         ]
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896?api-version=2023-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -934,8 +934,8 @@
         "x-ms-routing-request-id": "JIOINDIAWEST:20230329T185716Z:dfd74217-d8fa-4d82-a651-0740ab67ff20"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
-        "name": "db26266",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
+        "name": "db24896",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -990,7 +990,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Accepted",
         "startTime": "2023-03-29T18:57:15.6373793Z"
       }
@@ -1026,7 +1026,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Accepted",
         "startTime": "2023-03-29T18:57:15.6373793Z"
       }
@@ -1062,7 +1062,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Accepted",
         "startTime": "2023-03-29T18:57:15.6373793Z"
       }
@@ -1098,7 +1098,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Accepted",
         "startTime": "2023-03-29T18:57:15.6373793Z"
       }
@@ -1134,7 +1134,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Accepted",
         "startTime": "2023-03-29T18:57:15.6373793Z"
       }
@@ -1170,7 +1170,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Accepted",
         "startTime": "2023-03-29T18:57:15.6373793Z"
       }
@@ -1206,7 +1206,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Accepted",
         "startTime": "2023-03-29T18:57:15.6373793Z"
       }
@@ -1242,7 +1242,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Accepted",
         "startTime": "2023-03-29T18:57:15.6373793Z"
       }
@@ -1278,7 +1278,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Accepted",
         "startTime": "2023-03-29T18:57:15.6373793Z"
       }
@@ -1316,7 +1316,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Accepted",
         "startTime": "2023-03-29T18:57:15.6373793Z"
       }
@@ -1352,7 +1352,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Accepted",
         "startTime": "2023-03-29T18:57:15.6373793Z"
       }
@@ -1388,7 +1388,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Accepted",
         "startTime": "2023-03-29T18:57:15.6373793Z"
       }
@@ -1424,14 +1424,14 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "2ddbff06-3083-4a99-b55b-3140199067bc*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Succeeded",
         "startTime": "2023-03-29T18:57:15.6373793Z",
         "properties": null
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1460,8 +1460,8 @@
         "x-ms-routing-request-id": "WESTINDIA:20230329T190035Z:072eb2ad-6e10-474b-aef1-9c3f285cb261"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
-        "name": "db26266",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
+        "name": "db24896",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -1486,7 +1486,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1516,8 +1516,8 @@
         "x-ms-routing-request-id": "WESTINDIA:20230329T190036Z:a903cc65-ec88-4fd9-af18-c64a0b5abc30"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
-        "name": "db26266",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
+        "name": "db24896",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -1542,7 +1542,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023?api-version=2023-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1588,8 +1588,8 @@
         "x-ms-routing-request-id": "WESTINDIA:20230329T190037Z:551ec663-c213-4f16-9fa1-ce2081280664"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
-        "name": "hana7764",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
+        "name": "hana4023",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -1644,7 +1644,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -1680,7 +1680,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -1716,7 +1716,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -1752,7 +1752,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -1788,7 +1788,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -1824,7 +1824,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -1860,7 +1860,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -1896,7 +1896,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -1932,7 +1932,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -1968,7 +1968,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -2004,7 +2004,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -2040,7 +2040,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -2076,7 +2076,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -2112,7 +2112,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -2150,7 +2150,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -2186,7 +2186,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Accepted",
         "startTime": "2023-03-29T19:00:36.699901Z"
       }
@@ -2222,7 +2222,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "8a90772a-6f1a-41e7-b488-bca7320560d4*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Failed",
         "startTime": "2023-03-29T19:00:36.699901Z",
         "error": {
@@ -2232,7 +2232,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041?api-version=2023-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2274,8 +2274,8 @@
         "x-ms-routing-request-id": "WESTINDIA:20230329T190608Z:8b06e018-4854-4b38-a1e9-31302c3d2d94"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
-        "name": "promethueusos650",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
+        "name": "promethueusos5041",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -2327,7 +2327,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Accepted",
         "startTime": "2023-03-29T19:06:07.8038376Z"
       }
@@ -2363,7 +2363,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Accepted",
         "startTime": "2023-03-29T19:06:07.8038376Z"
       }
@@ -2399,7 +2399,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Accepted",
         "startTime": "2023-03-29T19:06:07.8038376Z"
       }
@@ -2435,7 +2435,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Accepted",
         "startTime": "2023-03-29T19:06:07.8038376Z"
       }
@@ -2471,7 +2471,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Accepted",
         "startTime": "2023-03-29T19:06:07.8038376Z"
       }
@@ -2507,7 +2507,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Accepted",
         "startTime": "2023-03-29T19:06:07.8038376Z"
       }
@@ -2543,7 +2543,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Accepted",
         "startTime": "2023-03-29T19:06:07.8038376Z"
       }
@@ -2579,7 +2579,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Accepted",
         "startTime": "2023-03-29T19:06:07.8038376Z"
       }
@@ -2615,7 +2615,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Accepted",
         "startTime": "2023-03-29T19:06:07.8038376Z"
       }
@@ -2651,7 +2651,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Accepted",
         "startTime": "2023-03-29T19:06:07.8038376Z"
       }
@@ -2687,7 +2687,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Accepted",
         "startTime": "2023-03-29T19:06:07.8038376Z"
       }
@@ -2723,7 +2723,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Accepted",
         "startTime": "2023-03-29T19:06:07.8038376Z"
       }
@@ -2759,14 +2759,14 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "42ce1997-8a77-4faa-ba5f-171692dece41*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Succeeded",
         "startTime": "2023-03-29T19:06:07.8038376Z",
         "properties": null
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -2795,8 +2795,8 @@
         "x-ms-routing-request-id": "WESTINDIA:20230329T190929Z:8be4a8ce-bd81-4a87-b1cf-64c9817765d8"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
-        "name": "promethueusos650",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
+        "name": "promethueusos5041",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -2818,7 +2818,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2848,8 +2848,8 @@
         "x-ms-routing-request-id": "WESTINDIA:20230329T190929Z:101f6caf-634a-411e-8d88-fe6cb519183a"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
-        "name": "promethueusos650",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
+        "name": "promethueusos5041",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -2871,7 +2871,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916?api-version=2023-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -2922,8 +2922,8 @@
         "x-ms-routing-request-id": "WESTINDIA:20230329T190930Z:5abaae33-16c3-4392-a75f-b732a061f69d"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
-        "name": "netweaver3940",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
+        "name": "netweaver1916",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -2983,7 +2983,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3019,7 +3019,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3055,7 +3055,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3091,7 +3091,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3127,7 +3127,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3163,7 +3163,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3199,7 +3199,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3235,7 +3235,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3273,7 +3273,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3309,7 +3309,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3345,7 +3345,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3381,7 +3381,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3417,7 +3417,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3453,7 +3453,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3489,7 +3489,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3525,7 +3525,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Accepted",
         "startTime": "2023-03-29T19:09:30.0908256Z"
       }
@@ -3561,7 +3561,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "369ea359-1ca9-4b3e-9bbb-c73e36e83c22*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Failed",
         "startTime": "2023-03-29T19:09:30.0908256Z",
         "error": {
@@ -3571,7 +3571,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515?api-version=2023-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -3616,8 +3616,8 @@
         "x-ms-routing-request-id": "JIOINDIAWEST:20230329T191503Z:f48ff592-ffed-4146-9b48-95ce00a71f4f"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
-        "name": "sql3589",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
+        "name": "sql4515",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -3671,7 +3671,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -3707,7 +3707,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -3743,7 +3743,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -3779,7 +3779,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -3815,7 +3815,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -3851,7 +3851,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -3887,7 +3887,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -3923,7 +3923,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -3959,7 +3959,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -3997,7 +3997,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -4033,7 +4033,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -4069,7 +4069,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -4105,7 +4105,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -4141,7 +4141,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -4177,7 +4177,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -4213,7 +4213,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Accepted",
         "startTime": "2023-03-29T19:15:02.898748Z"
       }
@@ -4249,14 +4249,14 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "3c006507-876e-4a1f-99e8-e46d1875c704*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Succeeded",
         "startTime": "2023-03-29T19:15:02.898748Z",
         "properties": null
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -4285,8 +4285,8 @@
         "x-ms-routing-request-id": "WESTINDIA:20230329T192035Z:4ab51d1a-35c6-42ec-b106-637243335df8"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
-        "name": "sql3589",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
+        "name": "sql4515",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -4310,7 +4310,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -4340,8 +4340,8 @@
         "x-ms-routing-request-id": "WESTINDIA:20230329T192035Z:b4d56d99-d3b1-499c-be8b-01ad7860f766"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
-        "name": "sql3589",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
+        "name": "sql4515",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -4365,7 +4365,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -4396,8 +4396,8 @@
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
-            "name": "db26266",
+            "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
+            "name": "db24896",
             "type": "microsoft.workloads/monitors/providerinstances",
             "systemData": {
               "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -4421,8 +4421,8 @@
             }
           },
           {
-            "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
-            "name": "hana7764",
+            "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
+            "name": "hana4023",
             "type": "microsoft.workloads/monitors/providerinstances",
             "systemData": {
               "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -4451,8 +4451,8 @@
             }
           },
           {
-            "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
-            "name": "promethueusos650",
+            "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
+            "name": "promethueusos5041",
             "type": "microsoft.workloads/monitors/providerinstances",
             "systemData": {
               "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -4473,8 +4473,8 @@
             }
           },
           {
-            "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
-            "name": "netweaver3940",
+            "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
+            "name": "netweaver1916",
             "type": "microsoft.workloads/monitors/providerinstances",
             "systemData": {
               "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -4508,8 +4508,8 @@
             }
           },
           {
-            "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
-            "name": "sql3589",
+            "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
+            "name": "sql4515",
             "type": "microsoft.workloads/monitors/providerinstances",
             "systemData": {
               "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -4535,7 +4535,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -4565,8 +4565,8 @@
         "x-ms-routing-request-id": "WESTINDIA:20230329T192036Z:6d40cfff-b6ca-4bbc-be2e-1c0a9d7fde0a"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
-        "name": "db26266",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
+        "name": "db24896",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -4591,7 +4591,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896?api-version=2023-04-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -4657,7 +4657,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8962c7e8-3dbb-413a-9fad-28eeebaebaa5*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "8962c7e8-3dbb-413a-9fad-28eeebaebaa5*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:37.4433413Z"
       }
@@ -4693,7 +4693,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/8962c7e8-3dbb-413a-9fad-28eeebaebaa5*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
         "name": "8962c7e8-3dbb-413a-9fad-28eeebaebaa5*5988826A5FDA1774444F99FFEFC12718FE27F86E00B2255FE32E71DDB6619C09",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/db26266",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/db24896",
         "status": "Succeeded",
         "startTime": "2023-03-29T19:20:37.4433413Z",
         "endTime": "2023-03-29T19:20:38.7866011Z",
@@ -4701,7 +4701,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -4731,8 +4731,8 @@
         "x-ms-routing-request-id": "WESTINDIA:20230329T192039Z:91c5f26b-a36d-41c6-9964-fbca0aa1c1b1"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
-        "name": "hana7764",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
+        "name": "hana4023",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -4762,7 +4762,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023?api-version=2023-04-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -4828,7 +4828,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/65879b0a-13e5-40f5-92a2-08934732cf8d*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "65879b0a-13e5-40f5-92a2-08934732cf8d*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:40.4647167Z"
       }
@@ -4864,7 +4864,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/65879b0a-13e5-40f5-92a2-08934732cf8d*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
         "name": "65879b0a-13e5-40f5-92a2-08934732cf8d*04D7A06905B9DD1E4F1A31B0E8257EBBB858DD7A3B03ED26CF8E2E5EBBBAC880",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/hana7764",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/hana4023",
         "status": "Succeeded",
         "startTime": "2023-03-29T19:20:40.4647167Z",
         "endTime": "2023-03-29T19:20:41.7453785Z",
@@ -4872,7 +4872,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -4902,8 +4902,8 @@
         "x-ms-routing-request-id": "WESTINDIA:20230329T192042Z:5e9c30a4-cfe2-499b-8415-3e87eec104bb"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
-        "name": "promethueusos650",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
+        "name": "promethueusos5041",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -4925,7 +4925,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041?api-version=2023-04-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -4991,7 +4991,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/07f26b47-752b-4fe8-844a-601980780a57*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "07f26b47-752b-4fe8-844a-601980780a57*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:43.1866513Z"
       }
@@ -5027,7 +5027,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/07f26b47-752b-4fe8-844a-601980780a57*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
         "name": "07f26b47-752b-4fe8-844a-601980780a57*FD00E4FB62CAF04A99690C300AA27E3D1635C135E30552759854AC6A2C8B288D",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/promethueusos650",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/promethueusos5041",
         "status": "Succeeded",
         "startTime": "2023-03-29T19:20:43.1866513Z",
         "endTime": "2023-03-29T19:20:44.3579825Z",
@@ -5035,7 +5035,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -5065,8 +5065,8 @@
         "x-ms-routing-request-id": "WESTINDIA:20230329T192045Z:2d1cdfb5-b986-4861-bcf0-8e7726374171"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
-        "name": "netweaver3940",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
+        "name": "netweaver1916",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -5101,7 +5101,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916?api-version=2023-04-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -5167,7 +5167,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/c78677bd-7e70-4c90-be15-9df7d680f921*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "c78677bd-7e70-4c90-be15-9df7d680f921*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:45.8286848Z"
       }
@@ -5203,7 +5203,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/c78677bd-7e70-4c90-be15-9df7d680f921*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
         "name": "c78677bd-7e70-4c90-be15-9df7d680f921*28126EAA7D8CB475860D359B59CF51B28A5998FC4F86AE8D7365948AD3D66D24",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/netweaver3940",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/netweaver1916",
         "status": "Succeeded",
         "startTime": "2023-03-29T19:20:45.8286848Z",
         "endTime": "2023-03-29T19:20:46.8346082Z",
@@ -5211,7 +5211,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515?api-version=2023-04-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -5241,8 +5241,8 @@
         "x-ms-routing-request-id": "WESTINDIA:20230329T192048Z:18250857-6d24-4a40-a74d-00d30bd00785"
       },
       "ResponseBody": {
-        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
-        "name": "sql3589",
+        "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
+        "name": "sql4515",
         "type": "microsoft.workloads/monitors/providerinstances",
         "systemData": {
           "createdBy": "5b779ad2-8f27-4bdb-81da-b24b24e449da",
@@ -5266,7 +5266,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515?api-version=2023-04-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -5332,7 +5332,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/4c54a066-5c13-439d-a3a0-478bac4e1754*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "4c54a066-5c13-439d-a3a0-478bac4e1754*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:48.7714575Z"
       }
@@ -5368,7 +5368,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/4c54a066-5c13-439d-a3a0-478bac4e1754*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
         "name": "4c54a066-5c13-439d-a3a0-478bac4e1754*E8789F8AA66FD7CF6542E123ABC7DC9CA2BB870786D5B0F05243FBB19391C233",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188/providerInstances/sql3589",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673/providerInstances/sql4515",
         "status": "Succeeded",
         "startTime": "2023-03-29T19:20:48.7714575Z",
         "endTime": "2023-03-29T19:20:49.9299811Z",
@@ -5376,7 +5376,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188?api-version=2023-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673?api-version=2023-04-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -5440,7 +5440,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5476,7 +5476,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5512,7 +5512,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5548,7 +5548,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5584,7 +5584,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5620,7 +5620,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5656,7 +5656,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5692,7 +5692,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5728,7 +5728,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5766,7 +5766,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5802,7 +5802,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5838,7 +5838,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5874,7 +5874,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5910,7 +5910,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5946,7 +5946,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -5982,7 +5982,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -6018,7 +6018,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -6054,7 +6054,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -6090,7 +6090,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -6126,7 +6126,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -6164,7 +6164,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Deleting",
         "startTime": "2023-03-29T19:20:51.261805Z"
       }
@@ -6200,7 +6200,7 @@
       "ResponseBody": {
         "id": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/providers/Microsoft.Workloads/locations/EASTUS2/operationStatuses/d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
         "name": "d6eebc15-1017-4097-be84-e7174c426b82*4CAC7205D450D4C5271390CA616795678469280ECDC4A27BE63F36493FCF5FD3",
-        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-4673/providers/Microsoft.Workloads/monitors/nonHaMonitor-5188",
+        "resourceId": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/netSdkTest-7688/providers/Microsoft.Workloads/monitors/nonHaMonitor-4673",
         "status": "Succeeded",
         "startTime": "2023-03-29T19:20:51.261805Z",
         "properties": null
