@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static RetentionDescription DeserializeRetentionDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CleanupPolicyRetentionDescription> cleanupPolicy = default;
             Optional<long> retentionTimeInHours = default;
             Optional<int> tombstoneRetentionTimeInHours = default;
