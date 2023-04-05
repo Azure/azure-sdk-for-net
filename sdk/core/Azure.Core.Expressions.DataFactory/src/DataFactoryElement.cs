@@ -102,6 +102,17 @@ namespace Azure.Core.Expressions.DataFactory
         {
             if (asSecureString)
             {
+                if (typeof(T) != typeof(string) &&
+                    typeof(T) != typeof(bool) && typeof(T) != typeof(bool?) &&
+                    typeof(T) != typeof(int) && typeof(T) != typeof(int?) &&
+                    typeof(T) != typeof(double) && typeof(T) != typeof(double?) &&
+                    typeof(T) != typeof(TimeSpan) && typeof(T) != typeof(TimeSpan?) &&
+                    typeof(T) != typeof(DateTimeOffset) && typeof(T) != typeof(DateTimeOffset?) &&
+                    typeof(T) != typeof(Uri))
+                {
+                    throw new ArgumentException("asSecureString can only be set to `true` for primitive types.", nameof(literal));
+                }
+
                 var literalString = literal?.ToString() ?? string.Empty;
                 return new DataFactoryElement<T>(literalString, DataFactoryElementKind.SecureString);
             }

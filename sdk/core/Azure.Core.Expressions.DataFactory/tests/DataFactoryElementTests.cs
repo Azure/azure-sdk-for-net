@@ -297,7 +297,126 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = DataFactoryElement<string?>.FromLiteral(SecureStringValue, true);
             AssertStringDfe(dfe, SecureStringValue, DataFactoryElementKind.SecureString);;
-            Assert.AreEqual(SecureStringValue, dfe.StringValue);
+            Assert.AreEqual(SecureStringValue, dfe.ToString());
+        }
+
+        [Test]
+        public void CreateAsSecureStringBool()
+        {
+            var dfe = DataFactoryElement<bool>.FromLiteral(false, true);
+            Assert.AreEqual(DataFactoryElementKind.SecureString, dfe.Kind);
+            Assert.AreEqual("False", dfe.ToString());
+        }
+
+        [Test]
+        public void CreateAsSecureStringBoolNullable()
+        {
+            var dfe = DataFactoryElement<bool?>.FromLiteral(false, true);
+            Assert.AreEqual(DataFactoryElementKind.SecureString, dfe.Kind);
+            Assert.AreEqual("False", dfe.ToString());
+        }
+
+        [Test]
+        public void CreateAsSecureStringInt()
+        {
+            var dfe = DataFactoryElement<int>.FromLiteral(4, true);
+            Assert.AreEqual(DataFactoryElementKind.SecureString, dfe.Kind);
+            Assert.AreEqual("4", dfe.ToString());
+        }
+
+        [Test]
+        public void CreateAsSecureStringIntNullable()
+        {
+            var dfe = DataFactoryElement<int?>.FromLiteral(4, true);
+            Assert.AreEqual(DataFactoryElementKind.SecureString, dfe.Kind);
+            Assert.AreEqual("4", dfe.ToString());
+        }
+
+        [Test]
+        public void CreateAsSecureStringDouble()
+        {
+            var dfe = DataFactoryElement<double>.FromLiteral(4.1, true);
+            Assert.AreEqual(DataFactoryElementKind.SecureString, dfe.Kind);
+            Assert.AreEqual("4.1", dfe.ToString());
+        }
+
+        [Test]
+        public void CreateAsSecureStringDoubleNullable()
+        {
+            var dfe = DataFactoryElement<double?>.FromLiteral(4.1, true);
+            Assert.AreEqual(DataFactoryElementKind.SecureString, dfe.Kind);
+            Assert.AreEqual("4.1", dfe.ToString());
+        }
+
+        [Test]
+        public void CreateAsSecureStringTimeSpan()
+        {
+            var dfe = DataFactoryElement<TimeSpan>.FromLiteral(TimeSpan.FromSeconds(1), true);
+            Assert.AreEqual(DataFactoryElementKind.SecureString, dfe.Kind);
+            Assert.AreEqual(TimeSpan.FromSeconds(1).ToString(), dfe.ToString());
+        }
+
+        [Test]
+        public void CreateAsSecureStringTimeSpanNullable()
+        {
+            var dfe = DataFactoryElement<TimeSpan?>.FromLiteral(TimeSpan.FromSeconds(1), true);
+            Assert.AreEqual(DataFactoryElementKind.SecureString, dfe.Kind);
+            Assert.AreEqual(TimeSpan.FromSeconds(1).ToString(), dfe.ToString());
+        }
+
+        [Test]
+        public void CreateAsSecureStringDateTimeOffset()
+        {
+            var now = DateTimeOffset.UtcNow;
+            var dfe = DataFactoryElement<DateTimeOffset>.FromLiteral(now, true);
+            Assert.AreEqual(DataFactoryElementKind.SecureString, dfe.Kind);
+            Assert.AreEqual(now.ToString(), dfe.ToString());
+        }
+
+        [Test]
+        public void CreateAsSecureStringDateTimeOffsetNullable()
+        {
+            var now = DateTimeOffset.UtcNow;
+            var dfe = DataFactoryElement<DateTimeOffset?>.FromLiteral(now, true);
+            Assert.AreEqual(DataFactoryElementKind.SecureString, dfe.Kind);
+            Assert.AreEqual(now.ToString(), dfe.ToString());
+        }
+
+        [Test]
+        public void CreateAsSecureStringUri()
+        {
+            var dfe = DataFactoryElement<Uri>.FromLiteral(UriValue, true);
+            Assert.AreEqual(DataFactoryElementKind.SecureString, dfe.Kind);
+            Assert.AreEqual(UriValue.AbsoluteUri, dfe.ToString());
+        }
+
+        [Test]
+        public void CreateAsSecureStringThrowsForDictionary()
+        {
+            Assert.That(
+                () => DataFactoryElement<Dictionary<string, string>>.FromLiteral(DictionaryValue, true),
+                Throws.InstanceOf<ArgumentException>());
+        }
+
+        [Test]
+        public void CreateAsSecureStringThrowsForListOfString()
+        {
+            Assert.That(
+                () => DataFactoryElement<IList<string>>.FromLiteral(ListOfStringValue, true),
+                Throws.InstanceOf<ArgumentException>());
+        }
+
+        [Test]
+        public void CreateAsSecureStringThrowsForListOfT()
+        {
+            var literal = new List<TestModel>
+            {
+                new TestModel { A = 1, B = true },
+                new TestModel { A = 2, B = false }
+            };
+            Assert.That(
+                () => DataFactoryElement<IList<TestModel>>.FromLiteral(literal, true),
+                Throws.InstanceOf<ArgumentException>());
         }
 
         [Test]
