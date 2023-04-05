@@ -543,7 +543,7 @@ namespace Azure.Communication.JobRouter
     }
     public partial class WorkerSelector
     {
-        public WorkerSelector(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, Azure.Communication.JobRouter.LabelValue value, System.TimeSpan? ttl = default(System.TimeSpan?), bool? expedite = default(bool?)) { }
+        public WorkerSelector(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, Azure.Communication.JobRouter.LabelValue value) { }
         public bool? Expedite { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireTime { get { throw null; } }
         public string Key { get { throw null; } set { } }
