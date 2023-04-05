@@ -106,7 +106,7 @@ namespace Compute.Tests
         }
 
         /// <summary>
-        /// To record this test case, you need to run it in region which support encryption at host 
+        /// To record this test case, you need to run it in region which support encryption at host
         /// </summary>
         [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperations_EncryptionAtHost")]
@@ -187,10 +187,10 @@ namespace Compute.Tests
                 using (MockContext context = MockContext.Start(this.GetType()))
                 {
                     TestScaleSetOperationsInternal(
-                        context, 
-                        hasManagedDisks: true, 
-                        useVmssExtension: false, 
-                        zones: new List<string> { "1", "3" }, 
+                        context,
+                        hasManagedDisks: true,
+                        useVmssExtension: false,
+                        zones: new List<string> { "1", "3" },
                         osDiskSizeInGB: 175);
                 }
             }
@@ -404,7 +404,7 @@ namespace Compute.Tests
 
                     VirtualMachineScaleSet getVmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
                     ValidateVMScaleSet(inputVMScaleSet, getVmss, true);
-                    
+
                     Assert.NotNull(getVmss);
                     Assert.NotNull(getVmss.PriorityMixPolicy);
                     Assert.Equal(2, getVmss.PriorityMixPolicy.BaseRegularPriorityCount);
@@ -510,7 +510,7 @@ namespace Compute.Tests
 
                         ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
 
-                        // Set Automatic Repairs to true 
+                        // Set Automatic Repairs to true
                         inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
                         {
                             Enabled = true
@@ -521,7 +521,7 @@ namespace Compute.Tests
                         Assert.NotNull(getResponse.AutomaticRepairsPolicy);
                         ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
 
-                        // Update Automatic Repairs default values 
+                        // Update Automatic Repairs default values
                         inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
                         {
                             Enabled = true,
@@ -534,7 +534,7 @@ namespace Compute.Tests
                         Assert.NotNull(getResponse.AutomaticRepairsPolicy);
                         ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
 
-                        // Set automatic repairs to null 
+                        // Set automatic repairs to null
                         inputVMScaleSet.AutomaticRepairsPolicy = null;
                         UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
 
@@ -797,8 +797,8 @@ namespace Compute.Tests
             }
         }
 
-        private void TestScaleSetOperationsInternal(MockContext context, string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true, 
-            bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false, 
+        private void TestScaleSetOperationsInternal(MockContext context, string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true,
+            bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false,
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null, Action<VirtualMachineScaleSet> vmScaleSetValidator = null, string diskEncryptionSetId = null,
             bool? encryptionAtHostEnabled = null, bool isAutomaticPlacementOnDedicatedHostGroupScenario = false,
             int? faultDomainCount = null, int? capacity = null, bool shouldOverProvision = true, bool validateVmssVMInstanceView = false,
@@ -930,7 +930,7 @@ namespace Compute.Tests
 
                 if (encryptionAtHostEnabled != null)
                 {
-                    Assert.True(getResponse.VirtualMachineProfile.SecurityProfile.EncryptionAtHost == encryptionAtHostEnabled.Value, 
+                    Assert.True(getResponse.VirtualMachineProfile.SecurityProfile.EncryptionAtHost == encryptionAtHostEnabled.Value,
                         "SecurityProfile.EncryptionAtHost is not same as expected");
                 }
 
@@ -997,6 +997,184 @@ namespace Compute.Tests
                 {
                     // Fire and forget. No need to wait for RG deletion completion
                     m_ResourcesClient.ResourceGroups.BeginDelete(rgName);
+                }
+            }
+        }
+
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_PriorityMixPolicy")]
+        public void TestVMScaleSetScenarioOperations_UpdatePriorityMixPolicy()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                // create a resource group
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
+                    EnsureClientsInitialized(context);
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+
+                    var publicIPConfiguration = new VirtualMachineScaleSetPublicIPAddressConfiguration();
+                    publicIPConfiguration.Name = "pip1";
+                    publicIPConfiguration.IdleTimeoutInMinutes = 10;
+
+                    PriorityMixPolicy priorityMixPolicy = new PriorityMixPolicy(baseRegularPriorityCount: 2, regularPriorityPercentageAboveBase: 50);
+
+                    var createVmssResponse = CreateVMScaleSet_NoAsyncTracking(
+                        rgName,
+                        vmssName,
+                        storageAccountOutput,
+                        imageRef,
+                        out inputVMScaleSet,
+                        null,
+                        (vmScaleSet) =>
+                        {
+                            vmScaleSet.VirtualMachineProfile.Priority = VirtualMachinePriorityTypes.Spot;
+                            vmScaleSet.VirtualMachineProfile.EvictionPolicy = VirtualMachineEvictionPolicyTypes.Deallocate;
+                            vmScaleSet.OrchestrationMode = OrchestrationMode.Flexible.ToString();
+                            vmScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardA1V2;
+                            vmScaleSet.Sku.Tier = "Standard";
+                            vmScaleSet.Sku.Capacity = 4;
+                            vmScaleSet.PriorityMixPolicy = priorityMixPolicy;
+                            vmScaleSet.PlatformFaultDomainCount = 1;
+                            vmScaleSet.UpgradePolicy = null;
+                            vmScaleSet.Overprovision = null;
+                            vmScaleSet.SinglePlacementGroup = false;
+                            vmScaleSet.VirtualMachineProfile.NetworkProfile.NetworkApiVersion = NetworkApiVersion.TwoZeroTwoZeroHyphenMinusOneOneHyphenMinusZeroOne;
+                            vmScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration = publicIPConfiguration;
+                        },
+                        createWithManagedDisks: true,
+                        createWithPublicIpAddress: false);
+
+                    ValidateVMScaleSet(inputVMScaleSet, createVmssResponse, true);
+
+                    VirtualMachineScaleSet getVmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                    ValidateVMScaleSet(inputVMScaleSet, getVmss, true);
+
+                    Assert.NotNull(getVmss);
+                    Assert.NotNull(getVmss.PriorityMixPolicy);
+                    Assert.Equal(2, getVmss.PriorityMixPolicy.BaseRegularPriorityCount);
+                    Assert.Equal(50, getVmss.PriorityMixPolicy.RegularPriorityPercentageAboveBase);
+
+                    // update the property
+                    VirtualMachineScaleSetUpdate patchVMScaleSet = new VirtualMachineScaleSetUpdate()
+                    {
+                        PriorityMixPolicy = new PriorityMixPolicy(
+                            baseRegularPriorityCount: 5,
+                            regularPriorityPercentageAboveBase: 25)
+                    };
+
+                    PatchVMScaleSet(rgName, vmssName, patchVMScaleSet);
+
+                    // validate
+                    getVmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                    getVmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                    ValidateVMScaleSet(inputVMScaleSet, getVmss, true);
+                    Assert.Equal(5, getVmss.PriorityMixPolicy.BaseRegularPriorityCount);
+                    Assert.Equal(25, getVmss.PriorityMixPolicy.RegularPriorityPercentageAboveBase);
+
+                    // delete the resource
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+
+                    // clean up the created resources
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_SpotTryRestorePolicy")]
+        public void TestVMScaleSetScenarioOperations_UpdateSpotTryRestorePolicy()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                // Create resource group
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
+                    EnsureClientsInitialized(context);
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+
+                    SpotRestorePolicy spotRestorePolicy = new SpotRestorePolicy(enabled: true, restoreTimeout: "PT1H");
+                    var createVmssResponse = CreateVMScaleSet_NoAsyncTracking(
+                        rgName,
+                        vmssName,
+                        storageAccountOutput,
+                        imageRef,
+                        out inputVMScaleSet,
+                        null,
+                        (vmScaleSet) =>
+                        {
+                            vmScaleSet.Overprovision = true;
+                            vmScaleSet.VirtualMachineProfile.Priority = VirtualMachinePriorityTypes.Spot;
+                            vmScaleSet.VirtualMachineProfile.EvictionPolicy = VirtualMachineEvictionPolicyTypes.Deallocate;
+                            vmScaleSet.SpotRestorePolicy = spotRestorePolicy;
+                            vmScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardA1V2;
+                            vmScaleSet.Sku.Tier = "Standard";
+                            vmScaleSet.Sku.Capacity = 2;
+                        },
+                        createWithManagedDisks: true);
+
+                    ValidateVMScaleSet(inputVMScaleSet, createVmssResponse, true);
+
+                    VirtualMachineScaleSet getVmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                    ValidateVMScaleSet(inputVMScaleSet, getVmss, true);
+
+                    Assert.NotNull(getVmss);
+                    Assert.NotNull(getVmss.SpotRestorePolicy);
+                    Assert.True(getVmss.SpotRestorePolicy.Enabled);
+                    Assert.Equal(spotRestorePolicy.RestoreTimeout, getVmss.SpotRestorePolicy.RestoreTimeout);
+
+                    // now update the property
+                    // update the property
+                    VirtualMachineScaleSetUpdate patchVMScaleSet = new VirtualMachineScaleSetUpdate()
+                    {
+                        SpotRestorePolicy = new SpotRestorePolicy(enabled: false, restoreTimeout: "PT2H")
+                    };
+
+                    PatchVMScaleSet(rgName, vmssName, patchVMScaleSet);
+
+                    // get and validate
+                    getVmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                    ValidateVMScaleSet(inputVMScaleSet, getVmss, true);
+
+                    Assert.NotNull(getVmss);
+                    Assert.NotNull(getVmss.SpotRestorePolicy);
+                    Assert.False(getVmss.SpotRestorePolicy.Enabled);
+                    Assert.Equal("PT2H", getVmss.SpotRestorePolicy.RestoreTimeout);
+
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    //of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
         }
