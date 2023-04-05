@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             #region Snippet:SecretsSample4GetSecretIfExists
             // Do not treat HTTP 404 responses as errors.
             RequestContext context = new RequestContext();
-            context.AddClassifier(404, false);
+            context.AddClassifier(404, isError: false);
 
             // Try getting the latest application connection string using the context above.
             NullableResponse<KeyVaultSecret> response = client.GetSecret("appConnectionString", null, context);
@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             #region Snippet:SecretsSample4GetSecretIfExistsAsync
             // Do not treat HTTP 404 responses as errors.
             RequestContext context = new RequestContext();
-            context.AddClassifier(404, false);
+            context.AddClassifier(404, isError: false);
 
             // Try getting the latest application connection string using the context above.
             NullableResponse<KeyVaultSecret> response = await client.GetSecretAsync("appConnectionString", null, context);

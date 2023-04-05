@@ -1,4 +1,4 @@
-# Get a secret without throwing if it is not defined
+# Get a secret without throwing if it is not found
 
 This sample demonstrates how to get a secret without throwing an exception if it is not defined.
 This may be useful in some application configuration managers that attempt to fetch key/value pairs from a collection of providers and when exceptions may break startup or are otherwise costly.
@@ -23,7 +23,7 @@ To prevent throwing a `RequestFailedException` when a secret does not exist, or 
 ```C# Snippet:SecretsSample4GetSecretIfExists
 // Do not treat HTTP 404 responses as errors.
 RequestContext context = new RequestContext();
-context.AddClassifier(404, false);
+context.AddClassifier(404, isError: false);
 
 // Try getting the latest application connection string using the context above.
 NullableResponse<KeyVaultSecret> response = client.GetSecret("appConnectionString", null, context);
@@ -39,7 +39,7 @@ You can also do this asynchronously:
 ```C# Snippet:SecretsSample4GetSecretIfExistsAsync
 // Do not treat HTTP 404 responses as errors.
 RequestContext context = new RequestContext();
-context.AddClassifier(404, false);
+context.AddClassifier(404, isError: false);
 
 // Try getting the latest application connection string using the context above.
 NullableResponse<KeyVaultSecret> response = await client.GetSecretAsync("appConnectionString", null, context);
