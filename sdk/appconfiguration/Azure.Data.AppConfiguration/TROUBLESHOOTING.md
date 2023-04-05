@@ -113,7 +113,7 @@ For more detail on capturing Azure SDK logs and additional examples, please see 
 
 ### Limit Issues
 
-The error thrown by the App Configuration client library includes a detailed response error object that provides specific useful insights into what went wrong and includes corrective actions to fix common issues. A common error encountered is HTTP status code 429 for exceeding the limit. Refer to the body of the 429 response for the specific reason why the request failed. The failures often happen under these circumstances:
+The error thrown by the App Configuration client library includes a detailed response error object that provides specific useful insights into what went wrong and includes corrective actions to fix common issues. Refer to [the limits on the number of requests made to App Configuration](https://learn.microsoft.com/azure/azure-app-configuration/faq#are-there-any-limits-on-the-number-of-requests-made-to-app-configuration). A common error encountered is [HTTP status code 429](https://learn.microsoft.com/azure/azure-app-configuration/rest-api-throttling) for exceeding the limit. Refer to the body of the 429 response for the specific reason why the request failed. The failures often happen under these circumstances:
 
 * Exceeding the daily request limit for a store in the Free tier.
 * Exceeding the hourly request limit for a store in the standard tier.
