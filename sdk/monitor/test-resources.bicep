@@ -11,7 +11,7 @@ param utc string = utcNow()
 param baseName string = resourceGroup().name
 
 resource baseName_resource 'Microsoft.Insights/components@2020-02-02-preview' = {
-  name: '${resourceGroup().name} - ${uniqueString(utc)}'
+  name: baseName
   kind: 'other'
   location: location
   properties: {
