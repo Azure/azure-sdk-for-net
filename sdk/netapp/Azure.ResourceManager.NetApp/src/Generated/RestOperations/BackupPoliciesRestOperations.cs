@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-05-01";
+            _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> List backup policies for Netapp Account. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> List backup policies for Netapp Account. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get a particular backup Policy. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="backupPolicyName"> Backup policy Name which uniquely identify backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get a particular backup Policy. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="backupPolicyName"> Backup policy Name which uniquely identify backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -231,8 +231,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Create a backup policy for Netapp Account. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="backupPolicyName"> Backup policy Name which uniquely identify backup policy. </param>
         /// <param name="data"> Backup policy object supplied in the body of the operation. </param>
@@ -261,8 +261,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Create a backup policy for Netapp Account. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="backupPolicyName"> Backup policy Name which uniquely identify backup policy. </param>
         /// <param name="data"> Backup policy object supplied in the body of the operation. </param>
@@ -317,8 +317,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Patch a backup policy for Netapp Account. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="backupPolicyName"> Backup policy Name which uniquely identify backup policy. </param>
         /// <param name="patch"> Backup policy object supplied in the body of the operation. </param>
@@ -346,8 +346,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Patch a backup policy for Netapp Account. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="backupPolicyName"> Backup policy Name which uniquely identify backup policy. </param>
         /// <param name="patch"> Backup policy object supplied in the body of the operation. </param>
@@ -396,8 +396,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Delete backup policy. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="backupPolicyName"> Backup policy Name which uniquely identify backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -424,8 +424,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Delete backup policy. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="backupPolicyName"> Backup policy Name which uniquely identify backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

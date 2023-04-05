@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
@@ -22,8 +21,8 @@ namespace Azure.Containers.ContainerRegistry
             }
             Optional<string> mediaType = default;
             Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
-            Optional<OciBlobDescriptor> config = default;
-            Optional<IReadOnlyList<OciBlobDescriptor>> layers = default;
+            Optional<OciDescriptor> config = default;
+            Optional<IReadOnlyList<OciDescriptor>> layers = default;
             Optional<OciAnnotations> annotations = default;
             Optional<string> architecture = default;
             Optional<string> name = default;
@@ -61,7 +60,7 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    config = OciBlobDescriptor.DeserializeOciBlobDescriptor(property.Value);
+                    config = OciDescriptor.DeserializeOciDescriptor(property.Value);
                     continue;
                 }
                 if (property.NameEquals("layers"u8))
@@ -71,10 +70,10 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OciBlobDescriptor> array = new List<OciBlobDescriptor>();
+                    List<OciDescriptor> array = new List<OciDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OciBlobDescriptor.DeserializeOciBlobDescriptor(item));
+                        array.Add(OciDescriptor.DeserializeOciDescriptor(item));
                     }
                     layers = array;
                     continue;

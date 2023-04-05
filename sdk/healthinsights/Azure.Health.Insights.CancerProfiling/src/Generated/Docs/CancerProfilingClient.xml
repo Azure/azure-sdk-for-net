@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="InferCancerProfileAsync(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)">
+<example>
+This sample shows how to call InferCancerProfileAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new CancerProfilingClient(endpoint, credential);
+
+var data = new {
+    patients = new[] {
+        new {
+            id = "<id>",
+        }
+    },
+};
+
+var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call InferCancerProfileAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new CancerProfilingClient(endpoint, credential);
+
+var data = new {
+    patients = new[] {
+        new {
+            id = "<id>",
+            info = new {
+                sex = "female",
+                birthDate = "2022-05-10",
+                clinicalInfo = new[] {
+                    new {
+                        system = "<system>",
+                        code = "<code>",
+                        name = "<name>",
+                        value = "<value>",
+                    }
+                },
+            },
+            data = new[] {
+                new {
+                    type = "note",
+                    clinicalType = "consultation",
+                    id = "<id>",
+                    language = "<language>",
+                    createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                    content = new {
+                        sourceType = "inline",
+                        value = "<value>",
+                    },
+                }
+            },
+        }
+    },
+    configuration = new {
+        verbose = true,
+        includeEvidence = true,
+        inferenceTypes = new[] {
+            "tumorSite"
+        },
+        checkForCancerCase = true,
+    },
+};
+
+var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("confidenceScore").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("importance").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("caseId").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("modelVersion").ToString());
+]]></code>
+</example>
+<remarks>
+Creates an Onco Phenotype job with the given request body.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>OncoPhenotypeData</c>:
+<code>{
+  patients: [
+    {
+      id: string, # Required. A given identifier for the patient. Has to be unique across all patients in a single request.
+      info: {
+        sex: &quot;female&quot; | &quot;male&quot; | &quot;unspecified&quot;, # Optional. The patient&apos;s sex.
+        birthDate: string (date), # Optional. The patient&apos;s date of birth.
+        clinicalInfo: [ClinicalCodedElement], # Optional. Known clinical information for the patient, structured.
+      }, # Optional. Patient structured information, including demographics and known structured clinical information.
+      data: [PatientDocument], # Optional. Patient unstructured clinical data, given as documents.
+    }
+  ], # Required. The list of patients, including their clinical information and data.
+  configuration: {
+    verbose: boolean, # Optional. An indication whether the model should produce verbose output.
+    includeEvidence: boolean, # Optional. An indication whether the model&apos;s output should include evidence for the inferences.
+    inferenceTypes: [&quot;tumorSite&quot; | &quot;histology&quot; | &quot;clinicalStageT&quot; | &quot;clinicalStageN&quot; | &quot;clinicalStageM&quot; | &quot;pathologicStageT&quot; | &quot;pathologicStageN&quot; | &quot;pathologicStageM&quot;], # Optional. A list of inference types to be inferred for the current request.
+This could be used if only part of the Onco Phenotype inferences are required.
+If this list is omitted or empty, the model will return all the inference types.
+    checkForCancerCase: boolean, # Optional. An indication whether to perform a preliminary step on the patient&apos;s documents to determine whether they relate to a Cancer case.
+  }, # Optional. Configuration affecting the Onco Phenotype model&apos;s inference.
+}
+</code>
+
+Response Body:
+
+Schema for <c>OncoPhenotypeResult</c>:
+<code>{
+  jobId: string, # Required. A processing job identifier.
+  createdDateTime: string (date &amp; time), # Required. The date and time when the processing job was created.
+  expirationDateTime: string (date &amp; time), # Required. The date and time when the processing job is set to expire.
+  lastUpdateDateTime: string (date &amp; time), # Required. The date and time when the processing job was last updated.
+  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;partiallyCompleted&quot;, # Required. The status of the processing job.
+  errors: [
+    {
+      code: string, # Required. One of a server-defined set of error codes.
+      message: string, # Required. A human-readable representation of the error.
+      target: string, # Optional. The target of the error.
+      details: [Error], # Required. An array of details about specific errors that led to this reported error.
+      innererror: {
+        code: string, # Required. One of a server-defined set of error codes.
+        innererror: InnerError, # Optional. Inner error.
+      }, # Optional. An object containing more specific information than the current object about the error.
+    }
+  ], # Optional. An array of errors, if any errors occurred during the processing job.
+  results: {
+    patients: [OncoPhenotypePatientResult], # Required. Results for the patients given in the request.
+    modelVersion: string, # Required. The version of the model used for inference, expressed as the model date.
+  }, # Optional. The inference results for the Onco Phenotype request.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="InferCancerProfile(WaitUntil,RequestContent,String,DateTimeOffset,RequestContext)">
+<example>
+This sample shows how to call InferCancerProfile with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new CancerProfilingClient(endpoint, credential);
+
+var data = new {
+    patients = new[] {
+        new {
+            id = "<id>",
+        }
+    },
+};
+
+var operation = client.InferCancerProfile(WaitUntil.Completed, RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call InferCancerProfile with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new CancerProfilingClient(endpoint, credential);
+
+var data = new {
+    patients = new[] {
+        new {
+            id = "<id>",
+            info = new {
+                sex = "female",
+                birthDate = "2022-05-10",
+                clinicalInfo = new[] {
+                    new {
+                        system = "<system>",
+                        code = "<code>",
+                        name = "<name>",
+                        value = "<value>",
+                    }
+                },
+            },
+            data = new[] {
+                new {
+                    type = "note",
+                    clinicalType = "consultation",
+                    id = "<id>",
+                    language = "<language>",
+                    createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                    content = new {
+                        sourceType = "inline",
+                        value = "<value>",
+                    },
+                }
+            },
+        }
+    },
+    configuration = new {
+        verbose = true,
+        includeEvidence = true,
+        inferenceTypes = new[] {
+            "tumorSite"
+        },
+        checkForCancerCase = true,
+    },
+};
+
+var operation = client.InferCancerProfile(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdateDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("confidenceScore").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("text").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("offset").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientDataEvidence").GetProperty("length").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("system").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("patientInfoEvidence").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("evidence")[0].GetProperty("importance").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("caseId").ToString());
+Console.WriteLine(result.GetProperty("results").GetProperty("modelVersion").ToString());
+]]></code>
+</example>
+<remarks>
+Creates an Onco Phenotype job with the given request body.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>OncoPhenotypeData</c>:
+<code>{
+  patients: [
+    {
+      id: string, # Required. A given identifier for the patient. Has to be unique across all patients in a single request.
+      info: {
+        sex: &quot;female&quot; | &quot;male&quot; | &quot;unspecified&quot;, # Optional. The patient&apos;s sex.
+        birthDate: string (date), # Optional. The patient&apos;s date of birth.
+        clinicalInfo: [ClinicalCodedElement], # Optional. Known clinical information for the patient, structured.
+      }, # Optional. Patient structured information, including demographics and known structured clinical information.
+      data: [PatientDocument], # Optional. Patient unstructured clinical data, given as documents.
+    }
+  ], # Required. The list of patients, including their clinical information and data.
+  configuration: {
+    verbose: boolean, # Optional. An indication whether the model should produce verbose output.
+    includeEvidence: boolean, # Optional. An indication whether the model&apos;s output should include evidence for the inferences.
+    inferenceTypes: [&quot;tumorSite&quot; | &quot;histology&quot; | &quot;clinicalStageT&quot; | &quot;clinicalStageN&quot; | &quot;clinicalStageM&quot; | &quot;pathologicStageT&quot; | &quot;pathologicStageN&quot; | &quot;pathologicStageM&quot;], # Optional. A list of inference types to be inferred for the current request.
+This could be used if only part of the Onco Phenotype inferences are required.
+If this list is omitted or empty, the model will return all the inference types.
+    checkForCancerCase: boolean, # Optional. An indication whether to perform a preliminary step on the patient&apos;s documents to determine whether they relate to a Cancer case.
+  }, # Optional. Configuration affecting the Onco Phenotype model&apos;s inference.
+}
+</code>
+
+Response Body:
+
+Schema for <c>OncoPhenotypeResult</c>:
+<code>{
+  jobId: string, # Required. A processing job identifier.
+  createdDateTime: string (date &amp; time), # Required. The date and time when the processing job was created.
+  expirationDateTime: string (date &amp; time), # Required. The date and time when the processing job is set to expire.
+  lastUpdateDateTime: string (date &amp; time), # Required. The date and time when the processing job was last updated.
+  status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;partiallyCompleted&quot;, # Required. The status of the processing job.
+  errors: [
+    {
+      code: string, # Required. One of a server-defined set of error codes.
+      message: string, # Required. A human-readable representation of the error.
+      target: string, # Optional. The target of the error.
+      details: [Error], # Required. An array of details about specific errors that led to this reported error.
+      innererror: {
+        code: string, # Required. One of a server-defined set of error codes.
+        innererror: InnerError, # Optional. Inner error.
+      }, # Optional. An object containing more specific information than the current object about the error.
+    }
+  ], # Optional. An array of errors, if any errors occurred during the processing job.
+  results: {
+    patients: [OncoPhenotypePatientResult], # Required. Results for the patients given in the request.
+    modelVersion: string, # Required. The version of the model used for inference, expressed as the model date.
+  }, # Optional. The inference results for the Onco Phenotype request.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

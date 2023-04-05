@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             CollectionAssert.Contains(logs, $"PocoValues(foo,data)");
 
             var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
-            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.EventProcessor");
+            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.PartitionProcessor");
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 CollectionAssert.Contains(logs, $"Input(data)");
 
                 var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
-                CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.EventProcessor");
+                CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.EventHubs.Listeners.EventHubListener.PartitionProcessor");
             }
         }
 
@@ -327,6 +327,61 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
 
             AssertMultipleDispatchLogs(host);
+        }
+
+        [Test]
+        public async Task EventHub_MultipleDispatch_MinBatchSize()
+        {
+            const int minEventBatchSize = 5;
+            TimeSpan maxWaitTime = TimeSpan.FromSeconds(10);
+
+            var (jobHost, host) = BuildHost<EventHubTestMultipleDispatchMinBatchSizeJobs>(
+                builder =>
+                {
+                    builder.ConfigureServices(services =>
+                    {
+                        services.Configure<EventHubOptions>(options =>
+                        {
+                            options.MinEventBatchSize = minEventBatchSize; // Increase from 1 to 5
+                            options.MaxWaitTime = maxWaitTime; // Decrease from 60 seconds to 10 seconds
+                        });
+                    });
+                    ConfigureTestEventHub(builder);
+                });
+            using (jobHost)
+            {
+                int numEvents = 5;
+                await jobHost.CallAsync(nameof(EventHubTestMultipleDispatchMinBatchSizeJobs.SendEvents_TestHub), new { numEvents = numEvents, input = "data" });
+
+                bool result = _eventWait.WaitOne(Timeout);
+                Assert.True(result);
+            }
+
+            AssertMultipleDispatchLogsMinBatch(host);
+        }
+
+        private static void AssertMultipleDispatchLogsMinBatch(IHost host)
+        {
+            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
+                .GetAllLogMessages();
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("Trigger Details:")
+                && x.FormattedMessage.Contains("Offset:")).Any());
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("OpenAsync")).Any());
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("CheckpointAsync")
+                && x.FormattedMessage.Contains("lease")
+                && x.FormattedMessage.Contains("offset")
+                && x.FormattedMessage.Contains("sequenceNumber")).Any());
+
+            // Events are being sent in the EventHubTestMultipleDispatchMinBatchSizeJobs
+            // class directly for this test
+
+            AssertAzureSdkLogs(logMessages);
         }
 
         private static void AssertMultipleDispatchLogs(IHost host)
@@ -697,6 +752,50 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual(events.Length, enqueuedTimeUtcArray.Length);
                 Assert.AreEqual(events.Length, propertiesArray.Length);
                 Assert.AreEqual(events.Length, systemPropertiesArray.Length);
+
+                s_processedEventCount += events.Length;
+
+                // filter for the ID the current test is using
+                if (s_processedEventCount == s_eventCount)
+                {
+                    _eventWait.Set();
+                }
+            }
+        }
+
+        public class EventHubTestMultipleDispatchMinBatchSizeJobs
+        {
+            private static int s_eventCount;
+            private static int s_processedEventCount;
+            public static async Task SendEvents_TestHub(int numEvents, string input, [EventHub(TestHubName, Connection = TestHubName)] EventHubProducerClient client)
+            {
+                // Send all of the events to the same partition so the test is deterministic
+                s_eventCount = numEvents;
+                var options = new SendEventOptions()
+                {
+                    PartitionKey = "key1"
+                };
+
+                // send one event at a time with a short time gap in between
+                for (int i = 0; i < numEvents; i++)
+                {
+                    var evt = new EventData(Encoding.UTF8.GetBytes(input));
+                    await client.SendAsync(new[] { evt }, options).ConfigureAwait(false);
+                    await Task.Delay(1000);
+                }
+            }
+
+            public static void ProcessMultipleEvents([EventHubTrigger(TestHubName, Connection = TestHubName)] string[] events,
+                string[] partitionKeyArray, DateTime[] enqueuedTimeUtcArray, IDictionary<string, object>[] propertiesArray,
+                IDictionary<string, object>[] systemPropertiesArray, PartitionContext partitionContext, TriggerPartitionContext triggerPartitionContext)
+            {
+                Assert.AreEqual(events.Length, partitionKeyArray.Length);
+                Assert.AreEqual(events.Length, enqueuedTimeUtcArray.Length);
+                Assert.AreEqual(events.Length, propertiesArray.Length);
+                Assert.AreEqual(events.Length, systemPropertiesArray.Length);
+
+                // We are expecting to have all of the events sent processed in one batch
+                Assert.AreEqual(events.Length, s_eventCount);
 
                 s_processedEventCount += events.Length;
 

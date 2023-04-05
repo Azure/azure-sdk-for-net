@@ -177,7 +177,6 @@ namespace Azure.Security.KeyVault.Keys
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public KeyCurveName(string value) { throw null; }
-        public static Azure.Security.KeyVault.Keys.KeyCurveName Ed25519 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyCurveName P256 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyCurveName P256K { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.KeyCurveName P384 { get { throw null; } }

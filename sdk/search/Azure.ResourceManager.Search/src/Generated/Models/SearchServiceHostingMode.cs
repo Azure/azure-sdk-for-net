@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either &apos;default&apos; or &apos;highDensity&apos;. For all other SKUs, this value must be &apos;default&apos;. </summary>
     public enum SearchServiceHostingMode
     {
-        /// <summary> default. </summary>
+        /// <summary> The limit on number of indexes is determined by the default limits for the SKU. </summary>
         Default,
-        /// <summary> highDensity. </summary>
+        /// <summary> Only application for standard3 SKU, where the search service can have up to 1000 indexes. </summary>
         HighDensity
     }
 }

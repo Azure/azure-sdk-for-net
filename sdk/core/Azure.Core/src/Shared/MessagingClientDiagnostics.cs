@@ -156,12 +156,10 @@ namespace Azure.Core.Shared
         /// </summary>
         /// <param name="properties">The dictionary of application message properties.</param>
         /// <param name="activityName">The activity name to use for the diagnostic scope.</param>
-        /// <param name="scopeCreated">Whether or not a new scope was created while instrumenting the message.</param>
         /// <param name="traceparent">The traceparent that was either added, or that already existed in the message properties.</param>
         /// <param name="tracestate">The tracestate that was either added, or that already existed in the message properties.</param>
-        public void InstrumentMessage(IDictionary<string, object> properties, string activityName, out bool scopeCreated, out string? traceparent, out string? tracestate)
+        public void InstrumentMessage(IDictionary<string, object> properties, string activityName, out string? traceparent, out string? tracestate)
         {
-            scopeCreated = false;
             traceparent = null;
             tracestate = null;
 
@@ -171,7 +169,6 @@ namespace Azure.Core.Shared
                     activityName,
                     DiagnosticScope.ActivityKind.Producer);
                 messageScope.Start();
-                scopeCreated = true;
 
                 Activity activity = Activity.Current;
                 if (activity != null)
@@ -192,21 +189,6 @@ namespace Azure.Core.Shared
             else
             {
                 TryExtractTraceContext(properties, out traceparent, out tracestate);
-            }
-        }
-
-        /// <summary>
-        ///   Resets the instrumentation associated with a properties bag.
-        /// </summary>
-        ///
-        /// <param name="properties">The properties to reset.</param>
-        public static void ResetEvent(IDictionary<string, object> properties)
-        {
-            properties.Remove(DiagnosticIdAttribute);
-            if (ActivityExtensions.SupportsActivitySource())
-            {
-                properties.Remove(TraceParent);
-                properties.Remove(TraceState);
             }
         }
     }
