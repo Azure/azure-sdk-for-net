@@ -264,15 +264,8 @@ namespace Azure.Core.Pipeline
             return input;
         }
 
-        private static bool AllowAutoRedirect(HttpMessage message)
-        {
-            if (message.TryGetProperty(typeof(AllowRedirectsValueKey), out object? value))
-            {
-                return (bool)value!;
-            }
-
-            return false;
-        }
+        private static bool AllowAutoRedirect(HttpMessage message) =>
+            message.TryGetProperty(typeof(AllowRedirectsValueKey), out object? value) && (bool)value!;
 
         private class AllowRedirectsValueKey { }
     }
