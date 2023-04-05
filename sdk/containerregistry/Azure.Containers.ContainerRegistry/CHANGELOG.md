@@ -6,6 +6,7 @@
 
 - Added a `DownloadStreaming()` method to `ContainerRegistryContentClient`.  This method returns a network stream in the returned result that the caller must dispose after use.
 - Added overloads to the `DownloadBlobTo()` method that take a file path instead of a Stream.
+- Exceptions returned from service methods will now have the ErrorCode value populated when it is available in the service's error response.
 
 ### Breaking Changes
 
