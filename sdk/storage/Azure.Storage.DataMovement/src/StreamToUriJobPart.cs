@@ -128,6 +128,10 @@ namespace Azure.Storage.DataMovement
                 StorageResourceProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
                 fileLength = properties.ContentLength;
             }
+            catch (OperationCanceledException exc)
+            {
+
+            }
             catch (Exception ex)
             {
                 // TODO: logging when given the event handler
@@ -141,7 +145,11 @@ namespace Azure.Storage.DataMovement
                 if (_initialTransferSize >= length)
                 {
                     // If we can create the destination in one call
-                    await CreateDestinationResource(length, length, true).ConfigureAwait(false);
+                    await QueueChunk(async () =>
+                        await CreateDestinationResource(
+                            blockSize: length,
+                            length: length,
+                            singleCall: true).ConfigureAwait(false)).ConfigureAwait(false);
                     return;
                 }
                 long blockSize = CalculateBlockSize(length);

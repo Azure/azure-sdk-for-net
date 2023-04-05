@@ -78,7 +78,8 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerMethod = new TransferCheckpointerMethod(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+                MaximumConcurrency = 4
             };
             TransferManager transferManager = new TransferManager(options);
 
@@ -88,10 +89,11 @@ namespace Azure.Storage.DataMovement.Tests
                 manager: transferManager,
                 sourceDirectory: sourceDirectory.DirectoryPath,
                 destinationContainer: blobContainer.Container,
-                size: Constants.MB * 4);
+                size: Constants.MB * 20);
 
             // Act
-            bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer.Id);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
             Assert.IsTrue(pauseSuccess);

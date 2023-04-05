@@ -88,11 +88,9 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns>
-        /// Will return false if the data transfer has already been completed or paused, or if a pause
-        /// is already being attempted.
+        /// Will return false if the data transfer has already been completed.
         ///
-        /// Will return true if the pause is currently processing. It does not mean the transfer has fully
-        /// reached a state of being paused/completed.
+        /// Will return true if the pause has taken place.
         /// </returns>
         public Task<bool> TryPauseAsync(CancellationToken cancellationToken = default)
         {

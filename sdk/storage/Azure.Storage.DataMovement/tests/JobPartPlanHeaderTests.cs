@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Azure.Storage.DataMovement.JobPlanModels;
 using NUnit.Framework;
 
@@ -12,22 +11,6 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class JobPartPlanHeaderTests : DataMovementTestBase
     {
-        private static IDictionary<string, string> StringToDictionary(string str, string elementName)
-        {
-            IDictionary<string, string> dictionary = new Dictionary<string, string>();
-            string[] splitSemiColon = str.Split(';');
-            foreach (string value in splitSemiColon)
-            {
-                string[] splitEqual = value.Split('=');
-                if (splitEqual.Length != 2)
-                {
-                    throw Errors.InvalidStringToDictionary(elementName, str);
-                }
-                dictionary.Add(splitEqual[0], splitEqual[1]);
-            }
-            return dictionary;
-        }
-
         private static string DictionaryToString(IDictionary<string, string> dict)
         {
             string concatStr = "";
