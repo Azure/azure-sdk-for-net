@@ -7,7 +7,6 @@ The Microsoft Graph Services API operations enable you to programmatically set u
 - [Overview of metered APIs and services in Microsoft Graph](https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Flearn.microsoft.com%2Fgraph%2Fmetered-api-overview&data=05%7C01%7Cfernandoc%40microsoft.com%7C4ecf207b39154b800c3008db3240ae6a%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C638159025684439740%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=jbGvrN3ikLGe2qXs0ACcQXubnJbLSbhcLvAZkOXLcMw%3D&reserved=0)
 - [Enable metered APIs and services in Microsoft Graph](https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Flearn.microsoft.com%2Fgraph%2Fmetered-api-setup&data=05%7C01%7Cfernandoc%40microsoft.com%7C4ecf207b39154b800c3008db3240ae6a%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C638159025684439740%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=Jjc6zCRy5TOZFmLZZrOieibyXIwcSLf%2BwjmCwD2WNek%3D&reserved=0)
 
-
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
@@ -83,4 +82,8 @@ more information, see the [Code of Conduct FAQ][coc_faq] or contact
 <!-- LINKS -->
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
 [coc]: https://opensource.microsoft.com/codeofconduct/
+<<<<<<< HEAD
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+=======
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+>>>>>>> b418af46e8019bfa923d80640f31eedf08834cfb
