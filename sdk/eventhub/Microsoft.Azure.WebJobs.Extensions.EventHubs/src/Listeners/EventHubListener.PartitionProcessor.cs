@@ -321,10 +321,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
                 var timeSinceLastCheckpoint = DateTimeOffset.UtcNow.Subtract(lastCheckpointTime.Value);
 
-                // If the checkpoint was last recorded more than the 1.5 times configured wait time ago, ownership
+                // If the checkpoint was last recorded less that the configured wait time ago, then we can
+                // assume that was when a batch was last dispatched.  Adjust the wait time to reduce the configured
+                // wait time and try to honor the configured interval.  In the worst case where checkpoints are written
+                // infrequently, we'll dispatch a partial batch more quickly for the first iteration.
+                if (timeSinceLastCheckpoint < configuredMaxWaitTime)
+                {
+                    return configuredMaxWaitTime.Subtract(timeSinceLastCheckpoint);
+                }
+
+                // If the checkpoint was last recorded longer than the configured wait time ago, ownership
                 // of the partition likely migrated and the function was not invoked on the expected schedule.
                 // Dispatch any available events immediately, as the wait time is presumed to have already elapsed.
-                if (timeSinceLastCheckpoint.TotalMilliseconds >= (configuredMaxWaitTime.TotalMilliseconds * 1.5))
+                if (timeSinceLastCheckpoint >= configuredMaxWaitTime)
                 {
                     return TimeSpan.Zero;
                 }
