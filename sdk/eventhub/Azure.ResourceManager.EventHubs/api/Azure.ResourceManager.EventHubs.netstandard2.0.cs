@@ -54,6 +54,8 @@ namespace Azure.ResourceManager.EventHubs
         public Azure.ResourceManager.EventHubs.Models.CaptureDescription CaptureDescription { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public long? MessageRetentionInDays { get { throw null; } set { } }
         public long? PartitionCount { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> PartitionIds { get { throw null; } }
