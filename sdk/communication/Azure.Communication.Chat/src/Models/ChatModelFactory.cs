@@ -4,12 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
     /// <summary>
     /// Model factory that enables mocking for the Chat library.
     /// </summary>
+    [CodeGenSuppress("ChatThreadItem", typeof(string), typeof(string))]
     public static partial class ChatModelFactory
     {
         /// <summary>
@@ -58,8 +60,12 @@ namespace Azure.Communication.Chat
         /// <param name="lastMessageReceivedOn"> The timestamp when the last message arrived at the server. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <returns>A new <see cref="ChatModelFactory.ChatThreadItem"/> instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CA1801 // Review unused parameters
+#pragma warning disable CS1573 // Parameter has no matching param tag in the XML comment (but other parameters do)
+#pragma warning disable CS1591
         public static ChatThreadItem ChatThreadItem(string id, string topic, DateTimeOffset? deletedOn, DateTimeOffset? lastMessageReceivedOn)
-            => ChatModelFactory.ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn,  null);
+
+            => new ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn,  null);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatMessageReadReceipt"/> class.
@@ -71,5 +77,10 @@ namespace Azure.Communication.Chat
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ChatMessageReadReceipt ChatMessageReadReceipt(CommunicationIdentifier sender, string chatMessageId, DateTimeOffset readOn)
             => new ChatMessageReadReceipt(sender, chatMessageId, readOn);
+
+        public static ChatThreadItem ChatThreadItem(string id = null, string topic = null, DateTimeOffset? deletedOn = null, DateTimeOffset? lastMessageReceivedOn = null, RetentionPolicy retentionPolicy = null)
+        {
+            return new ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn, retentionPolicy);
+        }
     }
 }
