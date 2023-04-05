@@ -369,7 +369,14 @@ namespace Azure.Containers.ContainerRegistry
             catch (Exception e)
             {
                 scope.Failed(e);
-                throw;
+
+                Exception exception = e;
+                if (e is RequestFailedException rfe)
+                {
+                    exception = CreateUploadBlobRequestFailedException(rfe);
+                }
+
+                throw exception;
             }
         }
 
@@ -419,7 +426,15 @@ namespace Azure.Containers.ContainerRegistry
             catch (Exception e)
             {
                 scope.Failed(e);
-                throw;
+
+                Exception exception = e;
+
+                if (e is RequestFailedException rfe)
+                {
+                    exception = CreateUploadBlobRequestFailedException(rfe);
+                }
+
+                throw exception;
             }
         }
 
@@ -488,6 +503,19 @@ namespace Azure.Containers.ContainerRegistry
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
+        }
+
+        private const string UploadBlobTroubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/containerregistry/uploadblob/troubleshoot";
+        private static RequestFailedException CreateUploadBlobRequestFailedException(RequestFailedException rfe)
+        {
+            StringBuilder sb = new(rfe.Message);
+            sb.AppendLine();
+            sb.AppendLine(UploadBlobTroubleshooting);
+
+            return new RequestFailedException(rfe.Status,
+                sb.ToString(),
+                rfe.ErrorCode,
+                rfe.InnerException);
         }
 
         /// <summary>

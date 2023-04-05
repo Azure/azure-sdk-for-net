@@ -187,9 +187,40 @@ namespace Azure.Containers.ContainerRegistry.Tests
             catch (RequestFailedException ex) when (ex.Status == 404 && ex.ErrorCode == "FIRST_ERROR_CODE")
             {
                 Console.WriteLine($"Service error: {ex.Message}");
+
                 caught = true;
                 Assert.IsTrue(ex.Message.Contains("first error message"), "Exception message does not contain first error message.");
                 Assert.IsTrue(ex.Message.Contains("second error message"), "Exception message does not contain second error message.");
+            }
+
+            Assert.IsTrue(caught);
+        }
+
+        [Test]
+        public async Task UploadBlobExceptionHasTsgLink()
+        {
+            Uri endpoint = new("https://example.acr.io");
+            string repository = "TestRepository";
+            string errorContent = """{"errors":[{"code":"BLOB_UPLOAD_INVALID","message":"blob upload invalid"}]}""";
+
+            ContainerRegistryClientOptions options = new()
+            {
+                Transport = new MockTransport(new MockResponse(404).SetContent(errorContent).AddHeader("Content-Type", ContentType.TextPlain.ToString()))
+            };
+            ContainerRegistryContentClient client = new(endpoint, repository, new MockCredential(), options);
+            bool caught = false;
+
+            try
+            {
+                BinaryData blob = BinaryData.FromString("Sample blob.");
+                UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(blob);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Service error: {ex.Message}");
+
+                caught = true;
+                Assert.IsTrue(ex.Message.Contains("https://aka.ms/azsdk/net/containerregistry/uploadblob/troubleshoot"), "Exception message does not contain troubleshooting guide link.");
             }
 
             Assert.IsTrue(caught);
