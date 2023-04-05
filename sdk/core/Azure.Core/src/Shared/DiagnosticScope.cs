@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -21,15 +20,9 @@ namespace Azure.Core.Pipeline
         internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
         internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.17.0";
         private static readonly object AzureSdkScopeValue = bool.TrueString;
-        private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
 
         private readonly ActivityAdapter? _activityAdapter;
         private readonly bool _suppressNestedClientActivities;
-
-        internal DiagnosticScope(string ns, string scopeName, DiagnosticListener source, ActivityKind kind, bool suppressNestedClientActivities) :
-            this(scopeName, source, null, GetActivitySource(ns, scopeName), kind, suppressNestedClientActivities)
-        {
-        }
 
         internal DiagnosticScope(string scopeName, DiagnosticListener source, object? diagnosticSourceArgs, object? activitySource, ActivityKind kind, bool suppressNestedClientActivities)
         {
@@ -44,34 +37,15 @@ namespace Azure.Core.Pipeline
                 IsEnabled &= !AzureSdkScopeValue.Equals(Activity.Current?.GetCustomProperty(AzureSdkScopeLabel));
             }
 
-            _activityAdapter = IsEnabled ? new ActivityAdapter(activitySource, source, scopeName, kind, diagnosticSourceArgs) : null;
+            _activityAdapter = IsEnabled ? new ActivityAdapter(
+                                                    activitySource: activitySource,
+                                                    diagnosticSource: source,
+                                                    activityName: scopeName,
+                                                    kind: kind,
+                                                    diagnosticSourceArgs: diagnosticSourceArgs) : null;
         }
 
         public bool IsEnabled { get; }
-
-        /// <summary>
-        /// This method combines client namespace and operation name into an ActivitySource name and creates the activity source.
-        /// For example:
-        ///     ns: Azure.Storage.Blobs
-        ///     name: BlobClient.DownloadTo
-        ///     result Azure.Storage.Blobs.BlobClient
-        /// </summary>
-        private static object? GetActivitySource(string ns, string name)
-        {
-            if (!ActivityExtensions.SupportsActivitySource())
-            {
-                return null;
-            }
-
-            string clientName = ns;
-            int indexOfDot = name.IndexOf(".", StringComparison.OrdinalIgnoreCase);
-            if (indexOfDot != -1)
-            {
-                clientName += "." + name.Substring(0, indexOfDot);
-            }
-
-            return ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
-        }
 
         public void AddAttribute(string name, string value)
         {
@@ -355,7 +329,7 @@ namespace Azure.Core.Pipeline
 
             private Activity? StartActivitySourceActivity()
             {
-                return ActivityExtensions.ActivitySourceStartActivity(
+                Activity? activity = ActivityExtensions.ActivitySourceStartActivity(
                     _activitySource,
                     _activityName,
                     (int)_kind,
@@ -364,6 +338,13 @@ namespace Azure.Core.Pipeline
                     links: GetActivitySourceLinkCollection(),
                     traceparent: _traceparent,
                     tracestate: _tracestate);
+
+                if (activity == null || ((bool?)ActivityExtensions.GetCustomProperty(activity, "IsAllDataRequested") ?? false))
+                {
+                    return null;
+                }
+
+                return activity;
             }
 
             public void SetStartTime(DateTime startTime)
