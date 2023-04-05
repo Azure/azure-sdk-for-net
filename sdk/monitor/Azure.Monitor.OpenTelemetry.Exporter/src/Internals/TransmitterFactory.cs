@@ -14,8 +14,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// </summary>
     internal class TransmitterFactory
     {
-        public static TransmitterFactory Instance = new();
-        public static IPlatform platform = new DefaultPlatform();
+        public static readonly TransmitterFactory Instance = new();
+        public static readonly IPlatform platform = new DefaultPlatform();
 
         internal readonly Dictionary<string, AzureMonitorTransmitter> _transmitters = new();
         private readonly object _lockObj = new();
