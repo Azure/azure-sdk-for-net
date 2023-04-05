@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// for mocking.
         /// </summary>
         internal DocumentClassifierBuildOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, ResponseError error, DocumentClassifierDetails result)
-            : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, DocumentOperationKind.DocumentModelBuild, resourceLocation, apiVersion, tags, error)
+            : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, DocumentOperationKind.DocumentClassifierBuild, resourceLocation, apiVersion, tags, error)
         {
             Result = result;
         }
