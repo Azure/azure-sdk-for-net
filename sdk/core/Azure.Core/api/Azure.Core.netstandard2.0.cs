@@ -380,6 +380,7 @@ namespace Azure.Core
         protected ClientOptions() { }
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
+        public Azure.Core.DefaultTransportOptions? DefaultTransportOptions { get { throw null; } set { } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
@@ -410,6 +411,7 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
+<<<<<<< HEAD
     public abstract partial class DelayStrategy
     {
         protected DelayStrategy(System.TimeSpan? maxDelay = default(System.TimeSpan?), double jitterFactor = 0.2) { }
@@ -419,6 +421,12 @@ namespace Azure.Core
         protected abstract System.TimeSpan GetNextDelayCore(Azure.Response? response, int retryNumber);
         protected static System.TimeSpan Max(System.TimeSpan val1, System.TimeSpan val2) { throw null; }
         protected static System.TimeSpan Min(System.TimeSpan val1, System.TimeSpan val2) { throw null; }
+=======
+    public partial class DefaultTransportOptions
+    {
+        public DefaultTransportOptions() { }
+        public bool AllowAutoRedirect { get { throw null; } set { } }
+>>>>>>> 22b828774b (export)
     }
     public static partial class DelegatedTokenCredential
     {

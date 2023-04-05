@@ -9,7 +9,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Core
 {
     /// <summary>
-    /// Configures behaviors for the default <see cref="Transport"/>.
+    /// Configures behaviors for the default Transport.
     /// </summary>
     public class DefaultTransportOptions
     {
