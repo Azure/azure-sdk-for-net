@@ -24,6 +24,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
     /// </summary>
     public class Sample01b_HelloWorldAsync : SampleTest
     {
+        public Random _rand = new Random();
+
         /// <summary>
         /// Use a connection string to connect to a Storage account and upload two single blobs.
         /// </summary>
@@ -659,6 +661,164 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             finally
             {
                 await container.DeleteIfExistsAsync();
+            }
+        }
+
+        /// <summary>
+        /// Use the <see cref="BlobContainerClient.UploadDirectory"/> extention method to upload an entire directory.
+        /// </summary>
+        [Test]
+        public async Task UploadDirectory()
+        {
+            string localPath = CreateLocalTestDirectory();
+
+            string accountName = StorageAccountName;
+            string accountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+            string containerName = Randomize("sample-container");
+
+            // Create a SharedKeyCredential that we can use to authenticate
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
+
+            #region Snippet:ExtensionMethodCreateContainerClient
+            BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
+
+            BlobContainerClient container = service.GetBlobContainerClient(containerName);
+            #endregion
+
+            try
+            {
+                // Make a service request to verify we've successfully authenticated
+                await container.CreateIfNotExistsAsync();
+
+                // upload files to the root of the container
+                #region Snippet:ExtensionMethodSimpleUploadToRoot
+                DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath);
+
+                await transfer.AwaitCompletion();
+                #endregion
+
+                // upload files with to a specific directory prefix
+                #region Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
+                DataTransfer transfer2 = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix: Path.GetDirectoryName(localPath));
+
+                await transfer2.AwaitCompletion();
+                #endregion
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        /// <summary>
+        /// Use the <see cref="BlobContainerClient.UploadDirectory"/> extention method to upload an entire directory.
+        /// </summary>
+        [Test]
+        public async Task DownloadDirectory()
+        {
+            string localDirectoryPath = CreateTempDirectoryPath();
+            string localDirectoryPath2 = CreateTempDirectoryPath();
+            string accountName = StorageAccountName;
+            string accountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+            string containerName = Randomize("sample-container");
+
+            // Create a SharedKeyCredential that we can use to authenticate
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential(accountName, accountKey);
+
+            // Create a client that can authenticate with a connection string
+            BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
+            BlobContainerClient container = service.GetBlobContainerClient(containerName);
+
+            try
+            {
+                await CreateBlobTestFiles(container, count: 5);
+
+                string blobDirectoryPrefix = await CreateBlobContainerTestDirectory(container);
+
+                // Make a service request to verify we've successfully authenticated
+                await container.CreateIfNotExistsAsync();
+
+                // download the entire container to the local directory
+                #region Snippet:ExtensionMethodSimpleDownloadContainer
+                DataTransfer transfer = await container.StartDownloadDirectoryAsync(localDirectoryPath);
+
+                await transfer.AwaitCompletion();
+                #endregion
+
+                // download 'subdirectories' with a specific prefix
+                #region Snippet:ExtensionMethodSimpleDownloadContainerDirectory
+                DataTransfer tranfer2 = await container.StartDownloadDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
+
+                await tranfer2.AwaitCompletion();
+                #endregion
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        public async Task<string> CreateBlobContainerTestDirectory(BlobContainerClient client, int depth = 0, string basePath = default)
+        {
+            basePath = basePath ?? Path.GetTempFileName();
+
+            var dirPath = string.IsNullOrEmpty(basePath) ? Path.GetTempFileName() : $"{basePath}/{Path.GetTempFileName()}";
+
+            await CreateBlobTestFiles(client, dirPath, 5);
+
+            if (depth > 0)
+            {
+                await CreateBlobContainerTestDirectory(client, --depth, dirPath);
+            }
+
+            return dirPath;
+        }
+
+        public async Task CreateBlobTestFiles(BlobContainerClient client, string dirPath = default, int count = 1)
+        {
+            var buff = new byte[1000];
+
+            for (int i = 0; i < count; i++)
+            {
+                var blobPath = string.IsNullOrEmpty(dirPath) ? $"{Path.GetTempFileName()}.txt" : $"{dirPath}/{Path.GetTempFileName()}.txt";
+
+                _rand.NextBytes(buff);
+
+                await client.UploadBlobAsync(blobPath, new MemoryStream(buff));
+            }
+        }
+
+        public string CreateLocalTestDirectory(int depth = 0, string basePath = default)
+        {
+            basePath = basePath ?? Path.GetTempPath();
+
+            var dirPath = Path.Combine(basePath, Path.GetTempFileName());
+
+            Directory.CreateDirectory(dirPath);
+
+            CreateLocalTestFiles(dirPath, 5);
+
+            if (depth > 0)
+            {
+                CreateLocalTestDirectory(--depth, dirPath);
+            }
+
+            return dirPath;
+        }
+
+        public void CreateLocalTestFiles(string dirPath, int count = 1)
+        {
+            var buff = new byte[1000];
+
+            for (int i = 0; i < count; i++)
+            {
+                var filePath = Path.Combine(dirPath, Path.GetTempFileName() + ".txt");
+
+                _rand.NextBytes(buff);
+
+                File.WriteAllText(filePath, Convert.ToBase64String(buff));
             }
         }
 
