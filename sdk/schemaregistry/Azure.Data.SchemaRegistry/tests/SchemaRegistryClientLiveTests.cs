@@ -194,8 +194,8 @@ namespace Azure.Data.SchemaRegistry.Tests
             var format = new SchemaFormat("UnknownType");
             Assert.That(
                 async () => await client.RegisterSchemaAsync(groupName, schemaName, "Hello", format),
-                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(403)
-                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("NotAvaliable"));
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415)
+                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("InvalidSchemaType"));
         }
 
         [RecordedTest]

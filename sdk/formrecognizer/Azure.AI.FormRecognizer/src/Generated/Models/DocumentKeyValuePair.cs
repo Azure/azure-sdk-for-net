@@ -28,11 +28,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentKeyValuePair. </summary>
         /// <param name="key"> Field label of the key-value pair. </param>
         /// <param name="value"> Field value of the key-value pair. </param>
+        /// <param name="commonName"> Common name of the key-value pair. </param>
         /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>
-        internal DocumentKeyValuePair(DocumentKeyValueElement key, DocumentKeyValueElement value, float confidence)
+        internal DocumentKeyValuePair(DocumentKeyValueElement key, DocumentKeyValueElement value, string commonName, float confidence)
         {
             Key = key;
             Value = value;
+            CommonName = commonName;
             Confidence = confidence;
         }
 
