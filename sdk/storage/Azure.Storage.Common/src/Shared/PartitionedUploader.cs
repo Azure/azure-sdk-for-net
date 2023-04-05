@@ -367,7 +367,7 @@ namespace Azure.Storage
 
             if (content.CanSeek && content.Position > 0)
             {
-                content = WindowStream.GetWindow(content, content.Length - content.Position, content.Position);
+                content = WindowStream.GetWindow(content, content.Length - content.Position);
             }
 
             await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
@@ -390,8 +390,6 @@ namespace Azure.Storage
                         // we've passed a comparison on length; we know there is a value
                         length.Value,
                         length.Value,
-                        // for the purposes of a one-shot, absolutePosition is always zero
-                        absolutePosition: 0,
                         _arrayPool,
                         maxArrayPoolRentalSize: default,
                         async,
@@ -827,17 +825,17 @@ namespace Azure.Storage
                     absolutePosition,
                     async,
                     cancellationToken).ConfigureAwait(false);
-                read = partition.Length;
+                read = partition.Slice.Length;
                 absolutePosition += read;
 
                 // If we read anything, turn it into a StreamPartition and
                 // return it for staging
-                if (partition.Length != 0)
+                if (partition.Slice.Length != 0)
                 {
                     // The StreamParitition is disposable and it'll be the
                     // user's responsibility to return the bytes used to our
                     // ArrayPool
-                    yield return new ContentPartition<Stream>(partition.AbsolutePosition, partition.Length, partition);
+                    yield return new ContentPartition<Stream>(partition.AbsolutePosition, partition.Slice.Length, partition.Slice);
                 }
 
                 // Continue reading blocks until we've exhausted the stream
@@ -877,15 +875,16 @@ namespace Azure.Storage
             long absolutePosition,
             bool async,
             CancellationToken cancellationToken)
-            => await PooledMemoryStream.BufferStreamPartitionInternal(
-                stream,
-                minCount,
-                maxCount,
-                absolutePosition,
-                _arrayPool,
-                maxArrayPoolRentalSize: default,
-                async,
-                cancellationToken).ConfigureAwait(false);
+            => new SlicedStream(
+                await PooledMemoryStream.BufferStreamPartitionInternal(
+                    stream,
+                    minCount,
+                    maxCount,
+                    _arrayPool,
+                    maxArrayPoolRentalSize: default,
+                    async,
+                    cancellationToken).ConfigureAwait(false),
+                absolutePosition);
 
         /// <summary>
         /// Implementation of <see cref="GetNextStreamPartition"/> for a slicing strategy.
@@ -919,7 +918,7 @@ namespace Azure.Storage
             long absolutePosition,
             bool async,
             CancellationToken cancellationToken)
-            => Task.FromResult((SlicedStream)WindowStream.GetWindow(stream, maxCount, absolutePosition));
+            => Task.FromResult(new SlicedStream(WindowStream.GetWindow(stream, maxCount), absolutePosition));
         #endregion
     }
 
