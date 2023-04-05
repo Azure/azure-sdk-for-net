@@ -345,13 +345,15 @@ namespace Azure.Monitor.Query
         /// <returns>The logs matching the query.</returns>
         public virtual Response<LogsQueryResult> QueryResource(string resourceId, string query, QueryTimeRange timeRange, CancellationToken cancellationToken = default)
         {
-            //remove all / preceding
-            //resourceId = resourceId.Remove("\\");
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
             scope.Start();
             try
             {
-                return QueryResource(resourceId, query, timeRange, cancellationToken);
+                while (resourceId.StartsWith("/"))
+                {
+                    resourceId = resourceId.Substring(1);
+                }
+                return _queryClient.ResourceGet(resourceId, query, timeRange.Duration, cancellationToken);
             }
             catch (Exception e)
             {
@@ -391,7 +393,11 @@ namespace Azure.Monitor.Query
             scope.Start();
             try
             {
-                return await QueryResourceAsync(resourceId, query, timeRange, cancellationToken).ConfigureAwait(false);
+                while (resourceId.StartsWith("/"))
+                {
+                    resourceId = resourceId.Substring(1);
+                }
+                return await _queryClient.ResourceGetAsync(resourceId, query, timeRange.Duration, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -18,6 +18,8 @@ namespace Azure.Monitor.Query.Tests
         public string MetricsIngestionEndpoint => GetOptionalVariable("METRICS_INGEST_SUFFIX") ?? "monitoring.azure.com";
         public Uri LogsEndpoint => new(GetRecordedVariable("LOGS_ENDPOINT"));
         public Uri MetricsEndpoint => new(ResourceManagerUrl);
-        public string ResourceId => GetRecordedVariable("QUERY_RESOURCE_GROUP_ID");
+        public string ResourceId => GetRecordedVariable("RESOURCE_ID");
+        public string StorageAccountName => GetRecordedVariable("STORAGE_ACCOUNT_NAME");
+        public string StorageAccountId => GetRecordedVariable("STORAGE_ID");
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private LogsTestData _logsTestData;
 
-        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -680,26 +680,40 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryResourceAsync("/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-query8/providers/Microsoft.Storage/storageAccounts/nibhatitest",
-                "StorageBlobLogs | summarize count() by OperationName | top 10 by count_ desc",
+            var results = await client.QueryResourceAsync(TestEnvironment.StorageAccountId,
+                "search *",
                 _logsTestData.DataTimeRange);
 
+            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
             var resultTable = results.Value.Table;
+            CollectionAssert.IsNotEmpty(resultTable.Rows);
             CollectionAssert.IsNotEmpty(resultTable.Columns);
 
-            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
+            bool verifyRow = false;
+            bool verifyColumn1 = false;
+            bool verifyColumn2 = false;
+            foreach (LogsTableRow rows in resultTable.Rows)
+            {
+                foreach (var row in rows)
+                {
+                    if ((row != null) && row.ToString().Contains("Create/Update Storage Account"))
+                    {
+                        verifyRow = true;
+                    }
+                }
+            }
 
-            Assert.AreEqual("a", resultTable.Rows[0].GetString(0));
-            Assert.AreEqual("a", resultTable.Rows[0].GetString(LogsTestData.StringColumnName));
+            foreach (LogsTableColumn columns in resultTable.Columns)
+            {
+                if (columns.Name == "SubscriptionId" && columns.Type == LogsColumnType.StringTypeValue)
+                    verifyColumn1 = true;
 
-            Assert.AreEqual(1, resultTable.Rows[0].GetInt32(1));
-            Assert.AreEqual(1, resultTable.Rows[0].GetInt32(LogsTestData.IntColumnName));
+                if (columns.Name == "TimeGenerated" && columns.Type == LogsColumnType.DatetimeTypeValue)
+                    verifyColumn2 = true;
+            }
 
-            Assert.AreEqual(false, resultTable.Rows[0].GetBoolean(2));
-            Assert.AreEqual(false, resultTable.Rows[0].GetBoolean(LogsTestData.BoolColumnName));
-
-            Assert.AreEqual(0d, resultTable.Rows[0].GetDouble(3));
-            Assert.AreEqual(0d, resultTable.Rows[0].GetDouble(LogsTestData.FloatColumnName));
+            Assert.IsTrue(verifyRow);
+            Assert.IsTrue(verifyColumn1 && verifyColumn2);
         }
 
         public static IEnumerable<FormattableStringWrapper> Queries
