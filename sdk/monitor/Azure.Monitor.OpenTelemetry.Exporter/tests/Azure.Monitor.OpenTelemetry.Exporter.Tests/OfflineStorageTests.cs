@@ -13,7 +13,7 @@ using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
 
 using Xunit;
@@ -239,11 +239,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzureMonitorExporterOptions options = new AzureMonitorExporterOptions
             {
                 ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}",
-                StorageDirectory = StorageHelper.GetDefaultStorageDirectory() + "\\test",
+                StorageDirectory = "C:\\test",
                 Transport = mockTransport,
                 EnableStatsbeat = false, // disabled in tests.
             };
-            AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
+            AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options, new MockPlatform());
 
             // Overwrite storage with mock
             transmitter._fileBlobProvider = new MockFileProvider();
