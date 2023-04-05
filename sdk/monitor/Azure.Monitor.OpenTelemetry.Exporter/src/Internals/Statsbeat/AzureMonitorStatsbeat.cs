@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.Net.Http;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
@@ -21,19 +20,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal string? _statsbeat_ConnectionString;
 
-        private string? _resourceProviderId;
-
-        private string? _resourceProvider;
-
         private static string? s_runtimeVersion => SdkVersionUtils.GetVersion(typeof(object));
 
         private static string? s_sdkVersion => SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter));
 
-        private static string? s_operatingSystem;
-
         private readonly string? _customer_Ikey;
 
-        private readonly IPlatform _platform;
+        private readonly ResourceProviderDetails _resourceProviderDetails;
 
         internal MeterProvider? _attachStatsbeatMeterProvider;
 
@@ -41,10 +34,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal AzureMonitorStatsbeat(ConnectionVars connectionStringVars, IPlatform platform)
         {
-            _platform = platform;
-
-            s_operatingSystem = platform.GetOSPlatformName();
-
             _statsbeat_ConnectionString = GetStatsbeatConnectionString(connectionStringVars?.IngestionEndpoint);
 
             // Initialize only if we are able to determine the correct region to send the data to.
@@ -54,6 +43,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             }
 
             _customer_Ikey = connectionStringVars?.InstrumentationKey;
+
+            _resourceProviderDetails = GetResourceProviderDetails(platform);
 
             s_myMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatMetricName, () => GetAttachStatsbeat());
 
@@ -97,29 +88,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private Measurement<int> GetAttachStatsbeat()
         {
-            try
-            {
-                if (_resourceProvider == null)
-                {
-                    SetResourceProviderDetails(_platform);
-                }
-
-                return
-                    new Measurement<int>(1,
-                        new("rp", _resourceProvider),
-                        new("rpId", _resourceProviderId),
+            return new Measurement<int>(1,
+                        new("rp", _resourceProviderDetails.ResourceProvider),
+                        new("rpId", _resourceProviderDetails.ResourceProviderId),
                         new("attach", "sdk"),
                         new("cikey", _customer_Ikey),
                         new("runtimeVersion", s_runtimeVersion),
                         new("language", "dotnet"),
                         new("version", s_sdkVersion),
-                        new("os", s_operatingSystem));
-            }
-            catch (Exception ex)
-            {
-                AzureMonitorExporterEventSource.Log.WriteWarning("ErrorGettingStatsbeatData", ex);
-                return new Measurement<int>();
-            }
+                        new("os", _resourceProviderDetails.OperatingSystem));
         }
 
         private static VmMetadataResponse? GetVmMetadataResponse()
@@ -142,51 +119,72 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             }
         }
 
-        private void SetResourceProviderDetails(IPlatform platform)
+        internal static ResourceProviderDetails GetResourceProviderDetails(IPlatform platform)
         {
-            var appSvcWebsiteName = platform.GetEnvironmentVariable("WEBSITE_SITE_NAME");
-            if (appSvcWebsiteName != null)
+            try
             {
-                _resourceProvider = "appsvc";
-                _resourceProviderId = appSvcWebsiteName;
-                var appSvcWebsiteHostName = platform.GetEnvironmentVariable("WEBSITE_HOME_STAMPNAME");
-                if (!string.IsNullOrEmpty(appSvcWebsiteHostName))
+                var appSvcWebsiteName = platform.GetEnvironmentVariable("WEBSITE_SITE_NAME");
+                if (appSvcWebsiteName != null)
                 {
-                    _resourceProviderId += "/" + appSvcWebsiteHostName;
+                    var appSvcWebsiteHostName = platform.GetEnvironmentVariable("WEBSITE_HOME_STAMPNAME");
+
+                    return new ResourceProviderDetails
+                    {
+                        ResourceProvider = "appsvc",
+                        ResourceProviderId = string.IsNullOrEmpty(appSvcWebsiteHostName)
+                                                ? appSvcWebsiteName
+                                                : appSvcWebsiteName + "/" + appSvcWebsiteHostName,
+                        OperatingSystem = platform.GetOSPlatformName(),
+                    };
                 }
 
-                return;
-            }
+                var functionsWorkerRuntime = platform.GetEnvironmentVariable("FUNCTIONS_WORKER_RUNTIME");
+                if (functionsWorkerRuntime != null)
+                {
+                    return new ResourceProviderDetails
+                    {
+                        ResourceProvider = "functions",
+                        ResourceProviderId = platform.GetEnvironmentVariable("WEBSITE_HOSTNAME"),
+                        OperatingSystem = platform.GetOSPlatformName(),
+                    };
+                }
 
-            var functionsWorkerRuntime = platform.GetEnvironmentVariable("FUNCTIONS_WORKER_RUNTIME");
-            if (functionsWorkerRuntime != null)
+                var vmMetadata = GetVmMetadataResponse();
+                if (vmMetadata != null)
+                {
+                    return new ResourceProviderDetails
+                    {
+                        ResourceProvider = "vm",
+                        ResourceProviderId = vmMetadata.vmId + "/" + vmMetadata.subscriptionId,
+                        OperatingSystem = vmMetadata.osType?.ToLower(CultureInfo.InvariantCulture),
+                    };
+                }
+            }
+            catch (Exception ex)
             {
-                _resourceProvider = "functions";
-                _resourceProviderId = platform.GetEnvironmentVariable("WEBSITE_HOSTNAME");
-
-                return;
+                AzureMonitorExporterEventSource.Log.WriteWarning("ErrorGettingStatsbeatData", ex);
             }
 
-            var vmMetadata = GetVmMetadataResponse();
-
-            if (vmMetadata != null)
+            return new ResourceProviderDetails
             {
-                _resourceProvider = "vm";
-                _resourceProviderId = _resourceProviderId = vmMetadata.vmId + "/" + vmMetadata.subscriptionId;
-
-                // osType takes precedence.
-                s_operatingSystem = vmMetadata.osType?.ToLower(CultureInfo.InvariantCulture);
-
-                return;
-            }
-
-            _resourceProvider = "unknown";
-            _resourceProviderId = "unknown";
+                ResourceProvider = "unknown",
+                ResourceProviderId = "unknown",
+                OperatingSystem = platform.GetOSPlatformName(),
+            };
         }
 
         public void Dispose()
         {
             _attachStatsbeatMeterProvider?.Dispose();
+        }
+
+        internal struct ResourceProviderDetails
+        {
+            public string? ResourceProvider;
+
+            public string? ResourceProviderId;
+
+            public string? OperatingSystem;
         }
     }
 }

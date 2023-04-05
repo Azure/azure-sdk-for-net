@@ -68,5 +68,67 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
             Assert.Throws<InvalidOperationException>(() => new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform()));
         }
+
+        [Fact]
+        public void Verify_GetResourceProviderDetails_Default()
+        {
+            var platform = new MockPlatform();
+            platform.OSPlatformName = "UnitTest";
+
+            var resourceProviderDetails = AzureMonitorStatsbeat.GetResourceProviderDetails(platform);
+
+            Assert.Equal("unknown", resourceProviderDetails.ResourceProvider);
+            Assert.Equal("unknown", resourceProviderDetails.ResourceProviderId);
+            Assert.Equal("UnitTest", resourceProviderDetails.OperatingSystem);
+        }
+
+        [Fact]
+        public void Verify_GetResourceProviderDetails_AppService1()
+        {
+            var platform = new MockPlatform();
+            platform.OSPlatformName = "UnitTest";
+            platform.SetEnvironmentVariable("WEBSITE_SITE_NAME", "testWebSite");
+
+            var resourceProviderDetails = AzureMonitorStatsbeat.GetResourceProviderDetails(platform);
+
+            Assert.Equal("appsvc", resourceProviderDetails.ResourceProvider);
+            Assert.Equal("testWebSite", resourceProviderDetails.ResourceProviderId);
+            Assert.Equal("UnitTest", resourceProviderDetails.OperatingSystem);
+        }
+
+        [Fact]
+        public void Verify_GetResourceProviderDetails_AppService2()
+        {
+            var platform = new MockPlatform();
+            platform.OSPlatformName = "UnitTest";
+            platform.SetEnvironmentVariable("WEBSITE_SITE_NAME", "testWebSite");
+            platform.SetEnvironmentVariable("WEBSITE_HOME_STAMPNAME", "testStampName");
+
+            var resourceProviderDetails = AzureMonitorStatsbeat.GetResourceProviderDetails(platform);
+
+            Assert.Equal("appsvc", resourceProviderDetails.ResourceProvider);
+            Assert.Equal("testWebSite/testStampName", resourceProviderDetails.ResourceProviderId);
+            Assert.Equal("UnitTest", resourceProviderDetails.OperatingSystem);
+        }
+
+        [Fact]
+        public void Verify_GetResourceProviderDetails_Functions()
+        {
+            var platform = new MockPlatform();
+            platform.OSPlatformName = "UnitTest";
+            platform.SetEnvironmentVariable("FUNCTIONS_WORKER_RUNTIME", "test");
+            platform.SetEnvironmentVariable("WEBSITE_HOSTNAME", "testHostName");
+
+            var resourceProviderDetails = AzureMonitorStatsbeat.GetResourceProviderDetails(platform);
+
+            Assert.Equal("functions", resourceProviderDetails.ResourceProvider);
+            Assert.Equal("testHostName", resourceProviderDetails.ResourceProviderId);
+            Assert.Equal("UnitTest", resourceProviderDetails.OperatingSystem);
+        }
+
+        [Fact(Skip = "TODO: NEED A TEST FOR THIS SCENARIO")]
+        public void Verify_GetResourceProviderDetails_AzureVM()
+        {
+        }
     }
 }
