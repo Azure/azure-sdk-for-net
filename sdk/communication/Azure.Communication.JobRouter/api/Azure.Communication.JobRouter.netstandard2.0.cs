@@ -25,6 +25,7 @@ namespace Azure.Communication.JobRouter
     {
         public ChannelConfiguration(int capacityCostPerJob) { }
         public int CapacityCostPerJob { get { throw null; } set { } }
+        public int? MaxNumberOfJobs { get { throw null; } set { } }
     }
     public partial class CloseJobOptions
     {
@@ -246,6 +247,12 @@ namespace Azure.Communication.JobRouter
         public int? Priority { get { throw null; } set { } }
         public string QueueId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.JobRouter.WorkerSelector> WorkerSelectors { get { throw null; } }
+    }
+    public partial class Oauth2ClientCredential
+    {
+        public Oauth2ClientCredential() { }
+        public string ClientId { get { throw null; } set { } }
+        public string ClientSecret { get { throw null; } set { } }
     }
     public partial class PassThroughQueueSelectorAttachment : Azure.Communication.JobRouter.QueueSelectorAttachment
     {
@@ -516,6 +523,13 @@ namespace Azure.Communication.JobRouter
     {
         public WaitTimeExceptionTrigger(System.TimeSpan threshold) { }
         public System.TimeSpan Threshold { get { throw null; } set { } }
+    }
+    public partial class WebhookRule : Azure.Communication.JobRouter.RouterRule
+    {
+        public WebhookRule() { }
+        public System.Uri AuthorizationServerUri { get { throw null; } set { } }
+        public Azure.Communication.JobRouter.Oauth2ClientCredential ClientCredential { get { throw null; } set { } }
+        public System.Uri WebhookUri { get { throw null; } set { } }
     }
     public partial class WeightedAllocationQueueSelectorAttachment : Azure.Communication.JobRouter.QueueSelectorAttachment
     {
