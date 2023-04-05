@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3431da7e4bf81a1d86e8843b446f25a7-fb4d59f820123b34-00",
+        "traceparent": "00-f8f46c01d6865a6cf21a9125230bc4c7-d9cbc7c5562b8f50-00",
         "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "d243c7d68b8eeb8fdbe337381f9c2e86",
+        "x-ms-client-request-id": "bdfbae3c7159d31d4efb9a2ff32eabbd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "448",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 25 Mar 2023 02:12:17 GMT",
+        "Date": "Fri, 31 Mar 2023 19:56:40 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e8aaa2cc-a497-44c7-80be-a16b49c23c75",
-        "x-ms-ratelimit-remaining-subscription-reads": "11782",
-        "x-ms-request-id": "e8aaa2cc-a497-44c7-80be-a16b49c23c75",
-        "x-ms-routing-request-id": "EASTUS:20230325T021218Z:e8aaa2cc-a497-44c7-80be-a16b49c23c75"
+        "x-ms-correlation-request-id": "7b7e23d0-8d1e-4270-bdb6-0a1e3ec6dec6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11791",
+        "x-ms-request-id": "7b7e23d0-8d1e-4270-bdb6-0a1e3ec6dec6",
+        "x-ms-routing-request-id": "EASTUS:20230331T195641Z:7b7e23d0-8d1e-4270-bdb6-0a1e3ec6dec6"
       },
       "ResponseBody": {
         "id": "/subscriptions/710e347c-9ac8-408c-90fe-f8cfc44bf967",
@@ -47,16 +47,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/710e347c-9ac8-408c-90fe-f8cfc44bf967/resourcegroups/dbaccount-3661?api-version=**",
+      "RequestUri": "https://management.azure.com/subscriptions/710e347c-9ac8-408c-90fe-f8cfc44bf967/resourcegroups/dbaccount-3178?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/json",
-        "traceparent": "00-75d0fab8228bb6b5c205ec3bc896f4f7-3041b3d09fcea202-00",
+        "traceparent": "00-0aec692bc5404e12452f3cbe6712fea5-f0423f71962b50da-00",
         "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "2e068b4e35acd795781dc23b3aa91eaa",
+        "x-ms-client-request-id": "baae9268a7e30673fc8550a938168f89",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -67,19 +67,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "226",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 25 Mar 2023 02:12:18 GMT",
+        "Date": "Fri, 31 Mar 2023 19:56:41 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e574f3ec-1db4-4698-8c95-ff55c15d6467",
-        "x-ms-ratelimit-remaining-subscription-writes": "1195",
-        "x-ms-request-id": "e574f3ec-1db4-4698-8c95-ff55c15d6467",
-        "x-ms-routing-request-id": "EASTUS:20230325T021219Z:e574f3ec-1db4-4698-8c95-ff55c15d6467"
+        "x-ms-correlation-request-id": "1c502a53-831b-44c8-b48e-75085d7fd8b3",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "1c502a53-831b-44c8-b48e-75085d7fd8b3",
+        "x-ms-routing-request-id": "EASTUS:20230331T195642Z:1c502a53-831b-44c8-b48e-75085d7fd8b3"
       },
       "ResponseBody": {
-        "id": "/subscriptions/710e347c-9ac8-408c-90fe-f8cfc44bf967/resourceGroups/dbaccount-3661",
-        "name": "dbaccount-3661",
+        "id": "/subscriptions/710e347c-9ac8-408c-90fe-f8cfc44bf967/resourceGroups/dbaccount-3178",
+        "name": "dbaccount-3178",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "properties": {
@@ -90,7 +90,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
-    "RandomSeed": "1288519285",
+    "RandomSeed": "1640517618",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "710e347c-9ac8-408c-90fe-f8cfc44bf967"
   }
