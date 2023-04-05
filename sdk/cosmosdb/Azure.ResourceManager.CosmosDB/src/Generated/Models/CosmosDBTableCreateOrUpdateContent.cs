@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resource"> The standard JSON format of a Table. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal CosmosDBTableCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBTableResourceInfo resource, CosmosDBCreateUpdateConfig options, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal CosmosDBTableCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBTableResourceInfo resource, CosmosDBCreateUpdateConfig options, ManagedServiceIdentity identity = default(ManagedServiceIdentity)) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The standard JSON format of a Table. </summary>
-        public CosmosDBTableResourceInfo Resource { get; set; }
+        internal CosmosDBTableResourceInfo Resource { get; set; }
+        /// <summary> Name of the Cosmos DB table. </summary>
+        public string ResourceTableName
+        {
+            get => Resource is null ? default : Resource.TableName;
+            set => Resource = new CosmosDBTableResourceInfo(value);
+        }
+
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
         public CosmosDBCreateUpdateConfig Options { get; set; }
         /// <summary> Identity for the resource. </summary>
