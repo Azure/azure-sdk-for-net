@@ -1374,7 +1374,7 @@ namespace Azure.ResourceManager.Compute
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ExcludeDisks { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RestorePointInstanceView InstanceView { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.RestorePointSourceMetadata SourceMetadata { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.RestorePointSourceMetadata SourceMetadata { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceRestorePointId { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } set { } }
     }
@@ -2357,6 +2357,11 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.AggregatedReplicationState left, Azure.ResourceManager.Compute.Models.AggregatedReplicationState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ApiEntityReference
+    {
+        public ApiEntityReference() { }
+        public string Id { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ArchitectureType : System.IEquatable<Azure.ResourceManager.Compute.Models.ArchitectureType>
     {
@@ -3335,6 +3340,12 @@ namespace Azure.ResourceManager.Compute.Models
         public string Product { get { throw null; } set { } }
         public string PromotionCode { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
+    }
+    public partial class DiskRestorePointAttributes : Azure.ResourceManager.Compute.Models.ApiEntityReference
+    {
+        public DiskRestorePointAttributes() { }
+        public Azure.ResourceManager.Compute.Models.RestorePointEncryption Encryption { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceDiskRestorePointId { get { throw null; } set { } }
     }
     public partial class DiskRestorePointInstanceView
     {
@@ -4644,6 +4655,12 @@ namespace Azure.ResourceManager.Compute.Models
         public string MeterId { get { throw null; } }
         public long? Quantity { get { throw null; } }
     }
+    public partial class RestorePointEncryption
+    {
+        public RestorePointEncryption() { }
+        public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeEncryptionType? EncryptionType { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RestorePointExpand : System.IEquatable<Azure.ResourceManager.Compute.Models.RestorePointExpand>
     {
@@ -4700,43 +4717,43 @@ namespace Azure.ResourceManager.Compute.Models
     }
     public partial class RestorePointSourceMetadata
     {
-        internal RestorePointSourceMetadata() { }
+        public RestorePointSourceMetadata() { }
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineHardwareProfile HardwareProfile { get { throw null; } }
         public string LicenseType { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineOSProfile OSProfile { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SecurityProfile SecurityProfile { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.RestorePointSourceVmStorageProfile StorageProfile { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.RestorePointSourceVmStorageProfile StorageProfile { get { throw null; } set { } }
         public string UserData { get { throw null; } }
         public string VmId { get { throw null; } }
     }
     public partial class RestorePointSourceVmDataDisk
     {
-        internal RestorePointSourceVmDataDisk() { }
+        public RestorePointSourceVmDataDisk() { }
         public Azure.ResourceManager.Compute.Models.CachingType? Caching { get { throw null; } }
-        public Azure.Core.ResourceIdentifier DiskRestorePointId { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.DiskRestorePointAttributes DiskRestorePoint { get { throw null; } set { } }
         public int? DiskSizeGB { get { throw null; } }
         public int? Lun { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachineManagedDisk ManagedDisk { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineManagedDisk ManagedDisk { get { throw null; } set { } }
         public string Name { get { throw null; } }
     }
     public partial class RestorePointSourceVmOSDisk
     {
-        internal RestorePointSourceVmOSDisk() { }
+        public RestorePointSourceVmOSDisk() { }
         public Azure.ResourceManager.Compute.Models.CachingType? Caching { get { throw null; } }
-        public Azure.Core.ResourceIdentifier DiskRestorePointId { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.DiskRestorePointAttributes DiskRestorePoint { get { throw null; } set { } }
         public int? DiskSizeGB { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskEncryptionSettings EncryptionSettings { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.VirtualMachineManagedDisk ManagedDisk { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineManagedDisk ManagedDisk { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemType? OSType { get { throw null; } }
     }
     public partial class RestorePointSourceVmStorageProfile
     {
-        internal RestorePointSourceVmStorageProfile() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.RestorePointSourceVmDataDisk> DataDisks { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.RestorePointSourceVmOSDisk OSDisk { get { throw null; } }
+        public RestorePointSourceVmStorageProfile() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.RestorePointSourceVmDataDisk> DataDisks { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.RestorePointSourceVmOSDisk OSDisk { get { throw null; } set { } }
     }
     public partial class RetrieveBootDiagnosticsDataResult
     {
