@@ -6,6 +6,7 @@ This troubleshooting guide contains instructions to diagnose issues encountered 
 
 * [General troubleshooting](#general-troubleshooting)
   * [Enable client logging](#enable-client-logging)
+  * [Limit issues](#limit-issues)
 * [Troubleshooting authentication issues](#troubleshooting-authentication-issues)
   * [AuthenticationFailedException](#authenticationfailedexception)
   * [CredentialUnavailableException](#credentialunavailableexception)
@@ -109,6 +110,19 @@ ConfigurationClientOptions options = new ConfigurationClientOptions()
 ```
 
 For more detail on capturing Azure SDK logs and additional examples, please see the [Azure SDK diagnostics sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+### Limit Issues
+
+The error thrown by the App Configuration client library includes a detailed response error object that provides specific useful insights into what went wrong and includes corrective actions to fix common issues. A common error encountered is HTTP status code 429 for exceeding the limit. Refer to the body of the 429 response for the specific reason why the request failed. The failures often happen under these circumstances:
+
+* Exceeding the daily request limit for a store in the Free tier.
+* Exceeding the hourly request limit for a store in the standard tier.
+* Momentary throttling due to a large burst of requests.
+* Excessive bandwidth usage.
+* Attempting to create or modify a key when the storage quota is exceeded.
+
+To reduce number of requests made to App Configuration service, please check out [this guide](https://learn.microsoft.com/azure/azure-app-configuration/howto-best-practices#reduce-requests-made-to-app-configuration).
+
 ## Troubleshooting authentication issues
 
 In addition to connection strings, Azure App Configuration supports [role-based access control](https://learn.microsoft.com/azure/role-based-access-control/overview) (RBAC) using Azure Active Directory authentication. The `Azure.Identity` package is used to obtain credentials for RBAC. For more information on getting started, see the [Azure App Configuration library's README](https://learn.microsoft.com/dotnet/api/overview/azure/data.appconfiguration-readme?view=azure-dotnet#authenticate-the-client). For details on the credential types supported in `Azure.Identity`, see the [Azure Identity documentation](https://docs.microsoft.com/dotnet/api/overview/azure/Identity-readme).
