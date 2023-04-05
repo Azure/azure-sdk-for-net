@@ -21,9 +21,9 @@ namespace Azure.Storage.Files.Shares.Models
 
         public static AccessRight ToAccessRight(this string value)
         {
-            if (string.Equals(value, "Read", StringComparison.InvariantCultureIgnoreCase)) return AccessRight.Read;
-            if (string.Equals(value, "Write", StringComparison.InvariantCultureIgnoreCase)) return AccessRight.Write;
-            if (string.Equals(value, "Delete", StringComparison.InvariantCultureIgnoreCase)) return AccessRight.Delete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Read")) return AccessRight.Read;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Write")) return AccessRight.Write;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Delete")) return AccessRight.Delete;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccessRight value.");
         }
     }
