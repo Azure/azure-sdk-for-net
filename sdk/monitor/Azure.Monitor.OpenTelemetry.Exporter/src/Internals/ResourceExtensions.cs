@@ -9,6 +9,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal static class ResourceExtensions
     {
+        private const string s_AiSdkPrefixKey = "ai.sdk.prefix";
+
         internal static AzureMonitorResource? UpdateRoleNameAndInstance(this Resource resource)
         {
             if (resource == null)
@@ -22,17 +24,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             foreach (var attribute in resource.Attributes)
             {
-                if (attribute.Key == SemanticConventions.AttributeServiceName && attribute.Value is string)
+                switch (attribute.Key)
                 {
-                    serviceName = attribute.Value.ToString();
-                }
-                else if (attribute.Key == SemanticConventions.AttributeServiceNamespace && attribute.Value is string)
-                {
-                    serviceNamespace = "[" + attribute.Value.ToString() + "]";
-                }
-                else if (attribute.Key == SemanticConventions.AttributeServiceInstance && attribute.Value is string)
-                {
-                    resourceParser.RoleInstance = attribute.Value.ToString();
+                    case SemanticConventions.AttributeServiceName when attribute.Value is string _serviceName:
+                        serviceName = _serviceName;
+                        break;
+                    case SemanticConventions.AttributeServiceNamespace when attribute.Value is string _serviceNamespace:
+                        serviceNamespace = $"[{_serviceNamespace}]";
+                        break;
+                    case SemanticConventions.AttributeServiceInstance when attribute.Value is string _serviceInstance:
+                        resourceParser.RoleInstance = _serviceInstance;
+                        break;
+                    case s_AiSdkPrefixKey:
+                        SdkVersionUtils.SdkVersionPrefix = attribute.Value.ToString();
+                        break;
                 }
             }
 

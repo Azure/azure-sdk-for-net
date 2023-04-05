@@ -187,13 +187,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case ResponseStatusCodes.RequestTimeout:
                     case ResponseStatusCodes.ResponseCodeTooManyRequests:
                     case ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache:
-                        // Parse retry-after header
-                        // Send Messages To Storage
-                        if (TryGetRequestContent(httpMessage.Request.Content, out content))
-                        {
-                            result = blobProvider.SaveTelemetry(content);
-                        }
-                        break;
                     case ResponseStatusCodes.Unauthorized:
                     case ResponseStatusCodes.Forbidden:
                     case ResponseStatusCodes.InternalServerError:
