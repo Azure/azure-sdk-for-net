@@ -32,6 +32,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static LivePipeline DeserializeLivePipeline(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<SystemData> systemData = default;
             Optional<LivePipelineProperties> properties = default;

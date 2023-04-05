@@ -45,6 +45,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static UnknownHookInfo DeserializeUnknownHookInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NotificationHookKind hookType = "Unknown";
             Optional<string> hookId = default;
             string hookName = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     {
         internal static AzureDevOpsConnectorStatsListResponse DeserializeAzureDevOpsConnectorStatsListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AzureDevOpsConnectorStats>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

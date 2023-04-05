@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static OpenAuthenticationAccessPolicies DeserializeOpenAuthenticationAccessPolicies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, OpenAuthenticationAccessPolicy>> policies = default;
             foreach (var property in element.EnumerateObject())
             {

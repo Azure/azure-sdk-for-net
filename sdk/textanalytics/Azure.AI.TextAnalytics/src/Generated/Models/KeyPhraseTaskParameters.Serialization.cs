@@ -30,6 +30,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static KeyPhraseTaskParameters DeserializeKeyPhraseTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())

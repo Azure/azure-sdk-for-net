@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static WorkflowArray DeserializeWorkflowArray(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StorageSyncWorkflowData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

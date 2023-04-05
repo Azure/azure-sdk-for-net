@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         internal static ElasticSanSkuInformation DeserializeElasticSanSkuInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ElasticSanSkuName name = default;
             Optional<ElasticSanSkuTier> tier = default;
             Optional<string> resourceType = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         internal static StoragePoolSkuRestrictions DeserializeStoragePoolSkuRestrictions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoragePoolSkuRestrictionsType> type = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<StoragePoolSkuRestrictionInfo> restrictionInfo = default;

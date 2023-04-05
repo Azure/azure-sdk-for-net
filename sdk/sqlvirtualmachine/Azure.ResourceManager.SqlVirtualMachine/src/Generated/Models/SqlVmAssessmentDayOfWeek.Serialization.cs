@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         public static SqlVmAssessmentDayOfWeek ToSqlVmAssessmentDayOfWeek(this string value)
         {
-            if (string.Equals(value, "Monday", StringComparison.InvariantCultureIgnoreCase)) return SqlVmAssessmentDayOfWeek.Monday;
-            if (string.Equals(value, "Tuesday", StringComparison.InvariantCultureIgnoreCase)) return SqlVmAssessmentDayOfWeek.Tuesday;
-            if (string.Equals(value, "Wednesday", StringComparison.InvariantCultureIgnoreCase)) return SqlVmAssessmentDayOfWeek.Wednesday;
-            if (string.Equals(value, "Thursday", StringComparison.InvariantCultureIgnoreCase)) return SqlVmAssessmentDayOfWeek.Thursday;
-            if (string.Equals(value, "Friday", StringComparison.InvariantCultureIgnoreCase)) return SqlVmAssessmentDayOfWeek.Friday;
-            if (string.Equals(value, "Saturday", StringComparison.InvariantCultureIgnoreCase)) return SqlVmAssessmentDayOfWeek.Saturday;
-            if (string.Equals(value, "Sunday", StringComparison.InvariantCultureIgnoreCase)) return SqlVmAssessmentDayOfWeek.Sunday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday")) return SqlVmAssessmentDayOfWeek.Monday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday")) return SqlVmAssessmentDayOfWeek.Tuesday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday")) return SqlVmAssessmentDayOfWeek.Wednesday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday")) return SqlVmAssessmentDayOfWeek.Thursday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday")) return SqlVmAssessmentDayOfWeek.Friday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday")) return SqlVmAssessmentDayOfWeek.Saturday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday")) return SqlVmAssessmentDayOfWeek.Sunday;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlVmAssessmentDayOfWeek value.");
         }
     }

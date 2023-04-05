@@ -19,6 +19,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public EventHubOptions()
         {
             MaxEventBatchSize = 10;
+            MinEventBatchSize = 1;
+            MaxWaitTime = TimeSpan.FromSeconds(60);
             ConnectionOptions = new EventHubConnectionOptions()
             {
                 TransportType = EventHubsTransportType.AmqpTcp
@@ -132,6 +134,53 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
         }
 
+        private int _minEventBatchSize;
+
+        /// <summary>
+        /// Gets or sets the minimum number of events desired for a batch. This setting applies only to functions that
+        /// receive multiple events. This value must be less than <see cref="MaxEventBatchSize"/> and is used in
+        /// conjunction with <see cref="MaxWaitTime"/>. Default 1.
+        /// </summary>
+        public int MinEventBatchSize
+        {
+            get => _minEventBatchSize;
+
+            set
+            {
+                if (value < 1)
+                {
+                    throw new ArgumentException("Batch size must be larger than or equal to 1.");
+                }
+                _minEventBatchSize = value;
+            }
+        }
+
+        private TimeSpan _maxWaitTime;
+
+        /// <summary>
+        /// Gets or sets the maximum time that the trigger should wait to fill a batch before invoking the function.
+        /// This is only considered when <see cref="MinEventBatchSize"/> is set to larger than 1 and is otherwise unused.
+        /// If less than <see cref="MinEventBatchSize" /> events were available before the wait time elapses, the function
+        /// will be invoked with a partial batch.  Default is 60 seconds.  The longest allowed wait time is 10 minutes.
+        /// </summary>
+        public TimeSpan MaxWaitTime
+        {
+            get => _maxWaitTime;
+
+            set
+            {
+                if (value < TimeSpan.Zero)
+                {
+                    throw new ArgumentException("Max Wait Time must be larger than or equal to 0.");
+                }
+                if (value > TimeSpan.FromMinutes(10))
+                {
+                    throw new ArgumentException("Max Wait Time must be less than or equal to 10 minutes.");
+                }
+                _maxWaitTime = value;
+            }
+        }
+
         private int? _targetUnprocessedEventThreshold;
 
         /// <summary>
@@ -211,6 +260,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 {
                     { nameof(TargetUnprocessedEventThreshold), TargetUnprocessedEventThreshold },
                     { nameof(MaxEventBatchSize), MaxEventBatchSize },
+                    { nameof(MinEventBatchSize), MinEventBatchSize },
+                    { nameof(MaxWaitTime), MaxWaitTime },
                     { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                     { nameof(TransportType),  TransportType.ToString()},
                     { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.AbsoluteUri : string.Empty },

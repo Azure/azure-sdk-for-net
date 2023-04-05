@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HybridData.Models
 
         public static JobCancellationSetting ToJobCancellationSetting(this string value)
         {
-            if (string.Equals(value, "NotCancellable", StringComparison.InvariantCultureIgnoreCase)) return JobCancellationSetting.NotCancellable;
-            if (string.Equals(value, "Cancellable", StringComparison.InvariantCultureIgnoreCase)) return JobCancellationSetting.Cancellable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotCancellable")) return JobCancellationSetting.NotCancellable;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancellable")) return JobCancellationSetting.Cancellable;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown JobCancellationSetting value.");
         }
     }

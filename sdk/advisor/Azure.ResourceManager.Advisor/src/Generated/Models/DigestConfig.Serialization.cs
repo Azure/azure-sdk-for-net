@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Advisor.Models
 
         internal static DigestConfig DeserializeDigestConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> actionGroupResourceId = default;
             Optional<int> frequency = default;

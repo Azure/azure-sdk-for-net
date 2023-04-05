@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AppendVariableActivity DeserializeAppendVariableActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string type = default;
             Optional<string> description = default;

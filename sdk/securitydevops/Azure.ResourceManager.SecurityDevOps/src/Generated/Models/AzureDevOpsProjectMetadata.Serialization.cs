@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static AzureDevOpsProjectMetadata DeserializeAzureDevOpsProjectMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AutoDiscovery> autoDiscovery = default;
             Optional<IList<string>> repos = default;

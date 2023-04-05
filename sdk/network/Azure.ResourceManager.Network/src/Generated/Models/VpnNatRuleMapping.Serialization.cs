@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnNatRuleMapping DeserializeVpnNatRuleMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> addressSpace = default;
             foreach (var property in element.EnumerateObject())
             {

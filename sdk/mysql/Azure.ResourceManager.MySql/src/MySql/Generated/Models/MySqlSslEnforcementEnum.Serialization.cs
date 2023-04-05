@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MySql.Models
 
         public static MySqlSslEnforcementEnum ToMySqlSslEnforcementEnum(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return MySqlSslEnforcementEnum.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return MySqlSslEnforcementEnum.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return MySqlSslEnforcementEnum.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return MySqlSslEnforcementEnum.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MySqlSslEnforcementEnum value.");
         }
     }

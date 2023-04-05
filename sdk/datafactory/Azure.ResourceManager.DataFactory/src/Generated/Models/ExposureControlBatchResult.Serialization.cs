@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static ExposureControlBatchResult DeserializeExposureControlBatchResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ExposureControlResult> exposureControlResponses = default;
             foreach (var property in element.EnumerateObject())
             {

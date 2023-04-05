@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebSource DeserializeWebSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> additionalColumns = default;
             string type = default;
             Optional<BinaryData> sourceRetryCount = default;

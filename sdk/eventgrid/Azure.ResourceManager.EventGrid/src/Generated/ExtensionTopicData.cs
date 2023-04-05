@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> A class representing the ExtensionTopic data model. </summary>
+    /// <summary>
+    /// A class representing the ExtensionTopic data model.
+    /// Event grid Extension Topic. This is used for getting Event Grid related metrics for Azure resources.
+    /// </summary>
     public partial class ExtensionTopicData : ResourceData
     {
         /// <summary> Initializes a new instance of ExtensionTopicData. </summary>

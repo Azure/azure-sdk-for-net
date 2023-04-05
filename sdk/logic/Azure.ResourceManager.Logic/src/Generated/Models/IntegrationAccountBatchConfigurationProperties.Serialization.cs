@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountBatchConfigurationProperties DeserializeIntegrationAccountBatchConfigurationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string batchGroupName = default;
             IntegrationAccountBatchReleaseCriteria releaseCriteria = default;
             Optional<DateTimeOffset> createdTime = default;

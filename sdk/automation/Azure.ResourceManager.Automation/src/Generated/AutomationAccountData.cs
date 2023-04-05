@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationAccount data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationAccount data model.
+    /// Definition of the automation account type.
+    /// </summary>
     public partial class AutomationAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AutomationAccountData. </summary>

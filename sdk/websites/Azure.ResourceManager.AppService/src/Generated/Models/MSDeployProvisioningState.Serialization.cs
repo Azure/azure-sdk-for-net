@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static MSDeployProvisioningState ToMSDeployProvisioningState(this string value)
         {
-            if (string.Equals(value, "accepted", StringComparison.InvariantCultureIgnoreCase)) return MSDeployProvisioningState.Accepted;
-            if (string.Equals(value, "running", StringComparison.InvariantCultureIgnoreCase)) return MSDeployProvisioningState.Running;
-            if (string.Equals(value, "succeeded", StringComparison.InvariantCultureIgnoreCase)) return MSDeployProvisioningState.Succeeded;
-            if (string.Equals(value, "failed", StringComparison.InvariantCultureIgnoreCase)) return MSDeployProvisioningState.Failed;
-            if (string.Equals(value, "canceled", StringComparison.InvariantCultureIgnoreCase)) return MSDeployProvisioningState.Canceled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "accepted")) return MSDeployProvisioningState.Accepted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running")) return MSDeployProvisioningState.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "succeeded")) return MSDeployProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return MSDeployProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "canceled")) return MSDeployProvisioningState.Canceled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MSDeployProvisioningState value.");
         }
     }

@@ -29,6 +29,10 @@ namespace Azure.AI.MetricsAdvisor
 
         internal static FeedbackFilter DeserializeFeedbackFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IDictionary<string, string> dimension = default;
             foreach (var property in element.EnumerateObject())
             {

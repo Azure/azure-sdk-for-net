@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static CommunicationIdentifierModel DeserializeCommunicationIdentifierModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> rawId = default;
             Optional<CommunicationUserIdentifierModel> communicationUser = default;
             Optional<PhoneNumberIdentifierModel> phoneNumber = default;

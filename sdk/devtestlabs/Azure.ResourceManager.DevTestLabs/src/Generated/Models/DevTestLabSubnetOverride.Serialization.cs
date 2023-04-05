@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabSubnetOverride DeserializeDevTestLabSubnetOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> labSubnetName = default;
             Optional<DevTestLabUsagePermissionType> useInVmCreationPermission = default;

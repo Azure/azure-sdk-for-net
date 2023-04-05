@@ -22,10 +22,10 @@ namespace Azure.Storage.Blobs.Models
 
         public static CopyStatus ToCopyStatus(this string value)
         {
-            if (string.Equals(value, "pending", StringComparison.InvariantCultureIgnoreCase)) return CopyStatus.Pending;
-            if (string.Equals(value, "success", StringComparison.InvariantCultureIgnoreCase)) return CopyStatus.Success;
-            if (string.Equals(value, "aborted", StringComparison.InvariantCultureIgnoreCase)) return CopyStatus.Aborted;
-            if (string.Equals(value, "failed", StringComparison.InvariantCultureIgnoreCase)) return CopyStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "pending")) return CopyStatus.Pending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "success")) return CopyStatus.Success;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "aborted")) return CopyStatus.Aborted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return CopyStatus.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CopyStatus value.");
         }
     }

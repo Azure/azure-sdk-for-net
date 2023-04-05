@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterMonitorProfileKubeStateMetrics DeserializeManagedClusterMonitorProfileKubeStateMetrics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> metricLabelsAllowlist = default;
             Optional<string> metricAnnotationsAllowList = default;
             foreach (var property in element.EnumerateObject())

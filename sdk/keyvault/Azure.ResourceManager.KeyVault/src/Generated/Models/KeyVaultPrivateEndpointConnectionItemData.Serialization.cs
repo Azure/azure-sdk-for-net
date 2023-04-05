@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static KeyVaultPrivateEndpointConnectionItemData DeserializeKeyVaultPrivateEndpointConnectionItemData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<ETag> etag = default;
             Optional<SubResource> privateEndpoint = default;

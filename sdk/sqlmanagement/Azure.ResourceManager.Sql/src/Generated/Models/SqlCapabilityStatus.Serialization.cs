@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static SqlCapabilityStatus ToSqlCapabilityStatus(this string value)
         {
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return SqlCapabilityStatus.Default;
-            if (string.Equals(value, "Visible", StringComparison.InvariantCultureIgnoreCase)) return SqlCapabilityStatus.Visible;
-            if (string.Equals(value, "Available", StringComparison.InvariantCultureIgnoreCase)) return SqlCapabilityStatus.Available;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return SqlCapabilityStatus.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return SqlCapabilityStatus.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Visible")) return SqlCapabilityStatus.Visible;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Available")) return SqlCapabilityStatus.Available;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SqlCapabilityStatus.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlCapabilityStatus value.");
         }
     }

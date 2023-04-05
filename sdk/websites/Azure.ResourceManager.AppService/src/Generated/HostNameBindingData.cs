@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the HostNameBinding data model. </summary>
+    /// <summary>
+    /// A class representing the HostNameBinding data model.
+    /// A hostname binding object.
+    /// </summary>
     public partial class HostNameBindingData : ResourceData
     {
         /// <summary> Initializes a new instance of HostNameBindingData. </summary>

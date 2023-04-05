@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PrivateLinkServicePropertiesAutoApproval DeserializePrivateLinkServicePropertiesAutoApproval(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> subscriptions = default;
             foreach (var property in element.EnumerateObject())
             {

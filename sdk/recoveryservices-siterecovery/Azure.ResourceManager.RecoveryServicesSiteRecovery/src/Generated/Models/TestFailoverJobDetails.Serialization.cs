@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static TestFailoverJobDetails DeserializeTestFailoverJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> testFailoverStatus = default;
             Optional<string> comments = default;
             Optional<string> networkName = default;

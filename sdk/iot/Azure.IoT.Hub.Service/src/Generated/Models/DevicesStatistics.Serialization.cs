@@ -14,6 +14,10 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static DevicesStatistics DeserializeDevicesStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> totalDeviceCount = default;
             Optional<long> enabledDeviceCount = default;
             Optional<long> disabledDeviceCount = default;

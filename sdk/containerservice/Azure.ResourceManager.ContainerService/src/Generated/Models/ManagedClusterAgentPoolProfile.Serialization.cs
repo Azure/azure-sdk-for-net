@@ -260,6 +260,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterAgentPoolProfile DeserializeManagedClusterAgentPoolProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<int> count = default;
             Optional<string> vmSize = default;

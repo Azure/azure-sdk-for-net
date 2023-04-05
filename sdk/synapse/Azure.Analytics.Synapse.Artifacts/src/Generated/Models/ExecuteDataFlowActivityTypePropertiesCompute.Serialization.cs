@@ -30,6 +30,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ExecuteDataFlowActivityTypePropertiesCompute DeserializeExecuteDataFlowActivityTypePropertiesCompute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataFlowComputeType> computeType = default;
             Optional<int> coreCount = default;
             foreach (var property in element.EnumerateObject())

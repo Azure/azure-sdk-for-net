@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the WebAppDeployment data model. </summary>
+    /// <summary>
+    /// A class representing the WebAppDeployment data model.
+    /// User credentials used for publishing activity.
+    /// </summary>
     public partial class WebAppDeploymentData : ResourceData
     {
         /// <summary> Initializes a new instance of WebAppDeploymentData. </summary>

@@ -104,6 +104,10 @@ namespace Azure.ResourceManager.FrontDoor
 
         internal static FrontDoorData DeserializeFrontDoorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;

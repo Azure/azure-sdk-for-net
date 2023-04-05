@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAzureActiveDirectoryLoginConfiguration DeserializeContainerAppAzureActiveDirectoryLoginConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> loginParameters = default;
             Optional<bool> disableWWWAuthenticate = default;
             foreach (var property in element.EnumerateObject())

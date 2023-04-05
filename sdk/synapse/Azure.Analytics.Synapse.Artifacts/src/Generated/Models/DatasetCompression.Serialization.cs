@@ -36,6 +36,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatasetCompression DeserializeDatasetCompression(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             object type = default;
             Optional<object> level = default;
             IDictionary<string, object> additionalProperties = default;

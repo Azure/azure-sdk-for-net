@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CassandraClusterDataCenterNodeItem DeserializeCassandraClusterDataCenterNodeItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> address = default;
             Optional<CassandraNodeState> state = default;
             Optional<string> status = default;

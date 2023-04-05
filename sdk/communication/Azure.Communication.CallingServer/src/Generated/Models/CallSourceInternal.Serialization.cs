@@ -33,6 +33,10 @@ namespace Azure.Communication.CallingServer
 
         internal static CallSourceInternal DeserializeCallSourceInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PhoneNumberIdentifierModel> callerId = default;
             Optional<string> displayName = default;
             CommunicationIdentifierModel identifier = default;

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementGlobalSchema data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementGlobalSchema data model.
+    /// Global Schema Contract details.
+    /// </summary>
     public partial class ApiManagementGlobalSchemaData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementGlobalSchemaData. </summary>

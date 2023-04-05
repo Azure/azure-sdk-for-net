@@ -14,6 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ArtifactManifestPlatform DeserializeArtifactManifestPlatform(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string digest = default;
             Optional<ArtifactArchitecture> architecture = default;
             Optional<ArtifactOperatingSystem> os = default;

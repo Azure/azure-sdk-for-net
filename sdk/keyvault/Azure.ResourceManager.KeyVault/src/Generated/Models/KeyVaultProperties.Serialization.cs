@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultProperties DeserializeKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid tenantId = default;
             KeyVaultSku sku = default;
             Optional<IList<KeyVaultAccessPolicy>> accessPolicies = default;

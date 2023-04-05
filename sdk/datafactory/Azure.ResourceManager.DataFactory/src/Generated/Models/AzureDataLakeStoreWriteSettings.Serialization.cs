@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureDataLakeStoreWriteSettings DeserializeAzureDataLakeStoreWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> expiryDateTime = default;
             string type = default;
             Optional<BinaryData> maxConcurrentConnections = default;

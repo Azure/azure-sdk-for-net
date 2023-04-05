@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VmmVirtualMachineDetails DeserializeVmmVirtualMachineDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sourceItemId = default;
             Optional<string> generation = default;
             Optional<OSDetails> osDetails = default;

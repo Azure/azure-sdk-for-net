@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppGoogleConfiguration DeserializeContainerAppGoogleConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<ContainerAppClientRegistration> registration = default;
             Optional<LoginScopes> login = default;

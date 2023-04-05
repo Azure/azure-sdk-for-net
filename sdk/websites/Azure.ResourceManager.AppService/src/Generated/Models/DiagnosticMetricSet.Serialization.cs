@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DiagnosticMetricSet DeserializeDiagnosticMetricSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> unit = default;
             Optional<DateTimeOffset> startTime = default;

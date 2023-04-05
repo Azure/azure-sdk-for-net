@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static TargetRegion DeserializeTargetRegion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<int> regionalReplicaCount = default;
             Optional<ImageStorageAccountType> storageAccountType = default;

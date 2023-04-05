@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-12-01-preview";
+            _apiVersion = apiVersion ?? "2022-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Get SAP sizing recommendations. </summary>
+        /// <summary> Get SAP sizing recommendations by providing input SAPS for application tier and memory required for database tier. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Sizing Recommendation Request body. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Get SAP sizing recommendations. </summary>
+        /// <summary> Get SAP sizing recommendations by providing input SAPS for application tier and memory required for database tier. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Sizing Recommendation Request body. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Get SAP supported SKUs. </summary>
+        /// <summary> Get a list of SAP supported SKUs for ASCS, Application and Database tier. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Supported SKU Request body. </param>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Get SAP supported SKUs. </summary>
+        /// <summary> Get a list of SAP supported SKUs for ASCS, Application and Database tier. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Supported SKU Request body. </param>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Get SAP Disk Configurations. </summary>
+        /// <summary> Get the SAP Disk Configuration Layout prod/non-prod SAP System. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Disk Configurations Request body. </param>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Get SAP Disk Configurations. </summary>
+        /// <summary> Get the SAP Disk Configuration Layout prod/non-prod SAP System. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Disk Configurations Request body. </param>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Workloads
             return message;
         }
 
-        /// <summary> Get SAP Availability Zone Details. </summary>
+        /// <summary> Get the recommended SAP Availability Zone Pair Details for your region. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Availability Zone Details Request body. </param>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
-        /// <summary> Get SAP Availability Zone Details. </summary>
+        /// <summary> Get the recommended SAP Availability Zone Pair Details for your region. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Availability Zone Details Request body. </param>

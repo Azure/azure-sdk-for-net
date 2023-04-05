@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceEnvironmentProperties DeserializeDynatraceEnvironmentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userId = default;
             Optional<DynatraceAccountInfo> accountInfo = default;
             Optional<DynatraceEnvironmentInfo> environmentInfo = default;

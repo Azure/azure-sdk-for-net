@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppGitHubActionConfiguration DeserializeContainerAppGitHubActionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppRegistryInfo> registryInfo = default;
             Optional<ContainerAppCredentials> azureCredentials = default;
             Optional<string> contextPath = default;

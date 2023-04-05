@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryImageUpdateTrigger DeserializeContainerRegistryImageUpdateTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> id = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<IList<ContainerRegistryImageDescriptor>> images = default;

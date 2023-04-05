@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicApiDeploymentParameterMetadataSet DeserializeLogicApiDeploymentParameterMetadataSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogicApiDeploymentParameterMetadata> packageContentLink = default;
             Optional<LogicApiDeploymentParameterMetadata> redisCacheConnectionString = default;
             foreach (var property in element.EnumerateObject())

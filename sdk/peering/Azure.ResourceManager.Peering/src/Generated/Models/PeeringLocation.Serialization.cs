@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringLocation DeserializePeeringLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PeeringKind> kind = default;
             ResourceIdentifier id = default;
             string name = default;

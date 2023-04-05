@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         internal static ReplicationEligibilityResultData DeserializeReplicationEligibilityResultData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReplicationEligibilityResultsProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

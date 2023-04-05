@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static SavedSearchesListResult DeserializeSavedSearchesListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<OperationalInsightsSavedSearchData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

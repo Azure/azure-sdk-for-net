@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         public static CoreNetworkType ToCoreNetworkType(this string value)
         {
-            if (string.Equals(value, "5GC", StringComparison.InvariantCultureIgnoreCase)) return CoreNetworkType.FiveGC;
-            if (string.Equals(value, "EPC", StringComparison.InvariantCultureIgnoreCase)) return CoreNetworkType.EPC;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "5GC")) return CoreNetworkType.FiveGC;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "EPC")) return CoreNetworkType.EPC;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CoreNetworkType value.");
         }
     }

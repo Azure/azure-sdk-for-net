@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DigitalTwins
 {
-    /// <summary> A class representing the TimeSeriesDatabaseConnection data model. </summary>
+    /// <summary>
+    /// A class representing the TimeSeriesDatabaseConnection data model.
+    /// Describes a time series database connection resource.
+    /// </summary>
     public partial class TimeSeriesDatabaseConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionData. </summary>

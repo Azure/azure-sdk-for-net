@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.FluidRelay.Models
 
         internal static EncryptionProperties DeserializeEncryptionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CmkEncryptionProperties> customerManagedKeyEncryption = default;
             foreach (var property in element.EnumerateObject())
             {

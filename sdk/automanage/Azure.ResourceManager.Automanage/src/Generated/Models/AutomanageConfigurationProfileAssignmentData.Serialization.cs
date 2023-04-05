@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Automanage
 
         internal static AutomanageConfigurationProfileAssignmentData DeserializeAutomanageConfigurationProfileAssignmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomanageConfigurationProfileAssignmentProperties> properties = default;
             Optional<string> managedBy = default;
             ResourceIdentifier id = default;

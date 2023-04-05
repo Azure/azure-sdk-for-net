@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static UnknownJobDetails DeserializeUnknownJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataBoxJobStage>> jobStages = default;
             DataBoxContactDetails contactDetails = default;
             Optional<DataBoxShippingAddress> shippingAddress = default;

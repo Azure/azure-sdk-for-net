@@ -45,7 +45,7 @@ namespace Azure.Communication.Rooms.Models
                 {
                     RawId = u.Id
                 },
-                _ => throw new NotSupportedException("Unsupported communication identifer received: Supported identifier is CommunicationUserIdentifier"),
+                _ => throw new NotSupportedException("Unsupported communication identifier received: Supported identifier is CommunicationUserIdentifier"),
             };
 
         private static T AssertNotNull<T>(T value, string name, string type) where T : class

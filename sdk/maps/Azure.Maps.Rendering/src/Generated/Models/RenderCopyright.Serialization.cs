@@ -15,6 +15,10 @@ namespace Azure.Maps.Rendering
     {
         internal static RenderCopyright DeserializeRenderCopyright(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> formatVersion = default;
             Optional<IReadOnlyList<string>> generalCopyrights = default;
             Optional<IReadOnlyList<RegionalCopyright>> regions = default;

@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformServiceRegistryProperties DeserializeAppPlatformServiceRegistryProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformServiceRegistryProvisioningState> provisioningState = default;
             Optional<AppPlatformServiceRegistryResourceRequirements> resourceRequests = default;
             Optional<IReadOnlyList<AppPlatformServiceRegistryInstance>> instances = default;

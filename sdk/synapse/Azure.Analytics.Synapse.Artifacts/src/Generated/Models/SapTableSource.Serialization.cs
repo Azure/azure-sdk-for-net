@@ -101,6 +101,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SapTableSource DeserializeSapTableSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> rowCount = default;
             Optional<object> rowSkips = default;
             Optional<object> rfcTableFields = default;

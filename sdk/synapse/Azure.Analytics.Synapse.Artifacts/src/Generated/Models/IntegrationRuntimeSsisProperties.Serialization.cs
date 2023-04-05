@@ -64,6 +64,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static IntegrationRuntimeSsisProperties DeserializeIntegrationRuntimeSsisProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationRuntimeSsisCatalogInfo> catalogInfo = default;
             Optional<IntegrationRuntimeLicenseType> licenseType = default;
             Optional<IntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;

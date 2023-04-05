@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static LocationListResult DeserializeLocationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LocationExpanded>> value = default;
             foreach (var property in element.EnumerateObject())
             {

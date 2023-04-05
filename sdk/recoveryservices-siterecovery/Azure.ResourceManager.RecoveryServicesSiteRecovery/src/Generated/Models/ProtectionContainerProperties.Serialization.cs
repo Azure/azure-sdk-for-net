@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ProtectionContainerProperties DeserializeProtectionContainerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fabricFriendlyName = default;
             Optional<string> friendlyName = default;
             Optional<string> fabricType = default;

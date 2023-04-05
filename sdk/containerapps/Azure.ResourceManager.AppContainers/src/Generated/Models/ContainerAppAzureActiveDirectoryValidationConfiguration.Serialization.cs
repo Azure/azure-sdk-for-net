@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAzureActiveDirectoryValidationConfiguration DeserializeContainerAppAzureActiveDirectoryValidationConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppJwtClaimChecks> jwtClaimChecks = default;
             Optional<IList<string>> allowedAudiences = default;
             Optional<ContainerAppDefaultAuthorizationPolicy> defaultAuthorizationPolicy = default;

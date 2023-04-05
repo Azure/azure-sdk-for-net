@@ -66,6 +66,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static JsonSink DeserializeJsonSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoreWriteSettings> storeSettings = default;
             Optional<JsonWriteSettings> formatSettings = default;
             string type = default;

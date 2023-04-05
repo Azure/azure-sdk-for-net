@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateMISyncCompleteCommandInput DeserializeMigrateMISyncCompleteCommandInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string sourceDatabaseName = default;
             foreach (var property in element.EnumerateObject())
             {

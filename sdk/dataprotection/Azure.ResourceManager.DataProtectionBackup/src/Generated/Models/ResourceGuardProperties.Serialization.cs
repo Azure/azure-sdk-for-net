@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ResourceGuardProperties DeserializeResourceGuardProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataProtectionBackupProvisioningState> provisioningState = default;
             Optional<bool> allowAutoApprovals = default;
             Optional<IReadOnlyList<ResourceGuardOperationDetails>> resourceGuardOperations = default;

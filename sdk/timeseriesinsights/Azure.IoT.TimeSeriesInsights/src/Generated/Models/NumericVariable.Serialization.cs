@@ -36,6 +36,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static NumericVariable DeserializeNumericVariable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSeriesExpression value = default;
             Optional<TimeSeriesInterpolation> interpolation = default;
             TimeSeriesExpression aggregation = default;

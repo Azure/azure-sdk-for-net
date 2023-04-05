@@ -31,6 +31,10 @@ namespace Azure.Communication.JobRouter
 
         internal static RoundRobinMode DeserializeRoundRobinMode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string kind = default;
             int minConcurrentOffers = default;
             int maxConcurrentOffers = default;

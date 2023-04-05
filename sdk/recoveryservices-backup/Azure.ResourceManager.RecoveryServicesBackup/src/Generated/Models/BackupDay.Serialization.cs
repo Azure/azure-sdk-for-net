@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupDay DeserializeBackupDay(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> date = default;
             Optional<bool> isLast = default;
             foreach (var property in element.EnumerateObject())

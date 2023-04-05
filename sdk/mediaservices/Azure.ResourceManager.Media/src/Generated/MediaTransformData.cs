@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaTransform data model. </summary>
+    /// <summary>
+    /// A class representing the MediaTransform data model.
+    /// A Transform encapsulates the rules or instructions for generating desired outputs from input media, such as by transcoding or by extracting insights. After the Transform is created, it can be applied to input media by creating Jobs.
+    /// </summary>
     public partial class MediaTransformData : ResourceData
     {
         /// <summary> Initializes a new instance of MediaTransformData. </summary>

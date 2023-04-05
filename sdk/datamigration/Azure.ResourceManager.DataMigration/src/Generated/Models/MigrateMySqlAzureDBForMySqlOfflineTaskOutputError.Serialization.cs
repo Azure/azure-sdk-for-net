@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateMySqlAzureDBForMySqlOfflineTaskOutputError DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ReportableException> error = default;
             Optional<string> id = default;
             string resultType = default;

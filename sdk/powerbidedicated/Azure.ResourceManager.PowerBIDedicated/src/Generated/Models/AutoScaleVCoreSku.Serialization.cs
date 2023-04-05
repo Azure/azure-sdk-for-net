@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         internal static AutoScaleVCoreSku DeserializeAutoScaleVCoreSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<VCoreSkuTier> tier = default;
             Optional<int> capacity = default;

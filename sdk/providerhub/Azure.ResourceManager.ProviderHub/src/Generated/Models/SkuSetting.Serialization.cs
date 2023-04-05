@@ -108,6 +108,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static SkuSetting DeserializeSkuSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> tier = default;
             Optional<string> size = default;

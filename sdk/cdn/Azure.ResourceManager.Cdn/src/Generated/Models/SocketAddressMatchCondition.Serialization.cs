@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static SocketAddressMatchCondition DeserializeSocketAddressMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SocketAddressMatchConditionType typeName = default;
             SocketAddressOperator @operator = default;
             Optional<bool> negateCondition = default;

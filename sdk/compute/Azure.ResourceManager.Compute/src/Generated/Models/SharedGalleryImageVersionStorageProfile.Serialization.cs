@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static SharedGalleryImageVersionStorageProfile DeserializeSharedGalleryImageVersionStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SharedGalleryOSDiskImage> osDiskImage = default;
             Optional<IReadOnlyList<SharedGalleryDataDiskImage>> dataDiskImages = default;
             foreach (var property in element.EnumerateObject())

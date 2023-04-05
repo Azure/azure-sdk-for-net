@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static NetworkSecurityPerimeterConfigurationList DeserializeNetworkSecurityPerimeterConfigurationList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EventHubsNetworkSecurityPerimeterConfiguration>> value = default;
             foreach (var property in element.EnumerateObject())
             {

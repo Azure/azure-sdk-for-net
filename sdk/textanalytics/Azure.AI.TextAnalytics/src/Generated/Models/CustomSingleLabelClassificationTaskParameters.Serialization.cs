@@ -29,6 +29,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomSingleLabelClassificationTaskParameters DeserializeCustomSingleLabelClassificationTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string projectName = default;
             string deploymentName = default;
             Optional<bool> loggingOptOut = default;

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static GitHubActionContainerConfiguration DeserializeGitHubActionContainerConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> serverUrl = default;
             Optional<string> imageName = default;
             Optional<string> username = default;

@@ -15,6 +15,10 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
     {
         internal static ManagedPrivateEndpointListResponse DeserializeManagedPrivateEndpointListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManagedPrivateEndpoint>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

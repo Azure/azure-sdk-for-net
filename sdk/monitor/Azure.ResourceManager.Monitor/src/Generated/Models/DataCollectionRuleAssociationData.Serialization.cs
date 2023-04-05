@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Monitor
 
         internal static DataCollectionRuleAssociationData DeserializeDataCollectionRuleAssociationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;

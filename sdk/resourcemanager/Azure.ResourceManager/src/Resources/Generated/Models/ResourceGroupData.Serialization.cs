@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Resources
 
         internal static ResourceGroupData DeserializeResourceGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceGroupProperties> properties = default;
             Optional<string> managedBy = default;
             Optional<IDictionary<string, string>> tags = default;

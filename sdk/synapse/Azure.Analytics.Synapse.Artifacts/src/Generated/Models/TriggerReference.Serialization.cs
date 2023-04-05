@@ -27,6 +27,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static TriggerReference DeserializeTriggerReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TriggerReferenceType type = default;
             string referenceName = default;
             foreach (var property in element.EnumerateObject())

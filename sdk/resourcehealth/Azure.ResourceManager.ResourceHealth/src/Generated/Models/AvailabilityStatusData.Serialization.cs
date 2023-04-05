@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ResourceHealth
     {
         internal static AvailabilityStatusData DeserializeAvailabilityStatusData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<AvailabilityStatusProperties> properties = default;
             ResourceIdentifier id = default;

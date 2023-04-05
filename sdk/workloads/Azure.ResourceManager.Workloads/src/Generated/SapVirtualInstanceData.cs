@@ -13,7 +13,10 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    /// <summary> A class representing the SapVirtualInstance data model. </summary>
+    /// <summary>
+    /// A class representing the SapVirtualInstance data model.
+    /// Define the Virtual Instance for SAP solutions resource.
+    /// </summary>
     public partial class SapVirtualInstanceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SapVirtualInstanceData. </summary>
@@ -21,7 +24,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
         /// <param name="configuration">
-        /// Defines if an existing SAP system is being registered or a new SAP system is being created
+        /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
         /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
         /// </param>
@@ -46,16 +49,16 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
         /// <param name="configuration">
-        /// Defines if an existing SAP system is being registered or a new SAP system is being created
+        /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
         /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
         /// </param>
         /// <param name="managedResourceGroupConfiguration"> Managed resource group configuration. </param>
         /// <param name="status"> Defines the SAP Instance status. </param>
-        /// <param name="health"> Defines the SAP Instance health. </param>
+        /// <param name="health"> Defines the health of SAP Instances. </param>
         /// <param name="state"> Defines the Virtual Instance for SAP state. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
-        /// <param name="errors"> Defines the Virtual Instance for SAP errors. </param>
+        /// <param name="errors"> Indicates any errors on the Virtual Instance for SAP solutions resource. </param>
         internal SapVirtualInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, UserAssignedServiceIdentity identity, SapEnvironmentType environment, SapProductType sapProduct, SapConfiguration configuration, ManagedRGConfiguration managedResourceGroupConfiguration, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceState? state, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
@@ -77,7 +80,7 @@ namespace Azure.ResourceManager.Workloads
         /// <summary> Defines the SAP Product type. </summary>
         public SapProductType SapProduct { get; set; }
         /// <summary>
-        /// Defines if an existing SAP system is being registered or a new SAP system is being created
+        /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
         /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
         /// </summary>
@@ -98,13 +101,13 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary> Defines the SAP Instance status. </summary>
         public SapVirtualInstanceStatus? Status { get; }
-        /// <summary> Defines the SAP Instance health. </summary>
+        /// <summary> Defines the health of SAP Instances. </summary>
         public SapHealthState? Health { get; }
         /// <summary> Defines the Virtual Instance for SAP state. </summary>
         public SapVirtualInstanceState? State { get; }
         /// <summary> Defines the provisioning states. </summary>
         public SapVirtualInstanceProvisioningState? ProvisioningState { get; }
-        /// <summary> Defines the Virtual Instance for SAP errors. </summary>
+        /// <summary> Indicates any errors on the Virtual Instance for SAP solutions resource. </summary>
         internal SapVirtualInstanceError Errors { get; }
         /// <summary> The Virtual Instance for SAP error body. </summary>
         public SapVirtualInstanceErrorDetail ErrorsProperties

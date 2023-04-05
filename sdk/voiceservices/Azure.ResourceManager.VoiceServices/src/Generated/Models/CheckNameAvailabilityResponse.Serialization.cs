@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.VoiceServices.Models
     {
         internal static CheckNameAvailabilityResponse DeserializeCheckNameAvailabilityResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<CheckNameAvailabilityReason> reason = default;
             Optional<string> message = default;

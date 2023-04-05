@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static VirtualMachineScaleSetUpgradeMode ToVirtualMachineScaleSetUpgradeMode(this string value)
         {
-            if (string.Equals(value, "Automatic", StringComparison.InvariantCultureIgnoreCase)) return VirtualMachineScaleSetUpgradeMode.Automatic;
-            if (string.Equals(value, "Manual", StringComparison.InvariantCultureIgnoreCase)) return VirtualMachineScaleSetUpgradeMode.Manual;
-            if (string.Equals(value, "Rolling", StringComparison.InvariantCultureIgnoreCase)) return VirtualMachineScaleSetUpgradeMode.Rolling;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic")) return VirtualMachineScaleSetUpgradeMode.Automatic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual")) return VirtualMachineScaleSetUpgradeMode.Manual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rolling")) return VirtualMachineScaleSetUpgradeMode.Rolling;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown VirtualMachineScaleSetUpgradeMode value.");
         }
     }

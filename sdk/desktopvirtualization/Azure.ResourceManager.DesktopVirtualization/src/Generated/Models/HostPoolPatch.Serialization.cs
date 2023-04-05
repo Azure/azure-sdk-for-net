@@ -116,6 +116,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static HostPoolPatch DeserializeHostPoolPatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;

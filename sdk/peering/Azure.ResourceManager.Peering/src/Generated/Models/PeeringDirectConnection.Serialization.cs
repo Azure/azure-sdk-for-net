@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringDirectConnection DeserializePeeringDirectConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> bandwidthInMbps = default;
             Optional<int> provisionedBandwidthInMbps = default;
             Optional<PeeringSessionAddressProvider> sessionAddressProvider = default;

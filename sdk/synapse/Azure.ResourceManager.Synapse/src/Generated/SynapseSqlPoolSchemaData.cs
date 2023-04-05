@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseSqlPoolSchema data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseSqlPoolSchema data model.
+    /// A Sql pool schema resource.
+    /// </summary>
     public partial class SynapseSqlPoolSchemaData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseSqlPoolSchemaData. </summary>

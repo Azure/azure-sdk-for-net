@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static VirtualNetworksProperties DeserializeVirtualNetworksProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualNetworksPropertiesInfraVnetProfile> infraVnetProfile = default;
             Optional<IList<VirtualNetworksPropertiesVipPoolItem>> vipPool = default;
             Optional<IList<VirtualNetworksPropertiesVmipPoolItem>> vmipPool = default;

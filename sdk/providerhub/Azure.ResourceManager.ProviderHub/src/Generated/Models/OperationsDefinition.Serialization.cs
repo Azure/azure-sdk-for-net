@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static OperationsDefinition DeserializeOperationsDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<bool> isDataAction = default;
             Optional<OperationsDefinitionOrigin> origin = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ElasticPoolPerDatabaseMinPerformanceLevelCapability DeserializeElasticPoolPerDatabaseMinPerformanceLevelCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> limit = default;
             Optional<PerformanceLevelUnit> unit = default;
             Optional<SqlCapabilityStatus> status = default;

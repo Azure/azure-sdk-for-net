@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     {
         internal static DataLakeStoreAccountNameAvailabilityResult DeserializeDataLakeStoreAccountNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
             Optional<string> message = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static DatabaseFileInfo DeserializeDatabaseFileInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> databaseName = default;
             Optional<string> id = default;
             Optional<string> logicalName = default;

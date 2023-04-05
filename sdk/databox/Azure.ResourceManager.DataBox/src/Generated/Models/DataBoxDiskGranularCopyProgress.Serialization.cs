@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxDiskGranularCopyProgress DeserializeDataBoxDiskGranularCopyProgress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serialNumber = default;
             Optional<DataBoxCopyStatus> copyStatus = default;
             Optional<string> storageAccountName = default;

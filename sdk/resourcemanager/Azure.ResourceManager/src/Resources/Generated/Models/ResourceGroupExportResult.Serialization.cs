@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ResourceGroupExportResult DeserializeResourceGroupExportResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> template = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())

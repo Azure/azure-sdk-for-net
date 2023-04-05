@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ReportRecordContract DeserializeReportRecordContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> interval = default;

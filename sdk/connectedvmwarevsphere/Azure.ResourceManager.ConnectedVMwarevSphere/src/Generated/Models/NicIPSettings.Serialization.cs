@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static NicIPSettings DeserializeNicIPSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddressAllocationMethod> allocationMethod = default;
             Optional<IList<string>> dnsServers = default;
             Optional<IList<string>> gateway = default;

@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static NetworkSecurityGroupResourceSettings DeserializeNetworkSecurityGroupResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<NetworkSecurityGroupSecurityRule>> securityRules = default;
             string resourceType = default;

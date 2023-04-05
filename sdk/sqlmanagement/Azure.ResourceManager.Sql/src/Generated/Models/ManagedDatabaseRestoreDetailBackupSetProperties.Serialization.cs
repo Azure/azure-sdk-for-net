@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ManagedDatabaseRestoreDetailBackupSetProperties DeserializeManagedDatabaseRestoreDetailBackupSetProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> firstStripeName = default;
             Optional<int> numberOfStripes = default;

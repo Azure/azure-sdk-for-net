@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     {
         internal static ClusterCodeVersionsResult DeserializeClusterCodeVersionsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

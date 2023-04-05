@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SqlPoolUsageListResult DeserializeSqlPoolUsageListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SqlPoolUsage> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

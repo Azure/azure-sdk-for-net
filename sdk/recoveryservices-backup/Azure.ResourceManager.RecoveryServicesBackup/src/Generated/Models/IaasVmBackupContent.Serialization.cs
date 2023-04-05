@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static IaasVmBackupContent DeserializeIaasVmBackupContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> recoveryPointExpiryTimeInUTC = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())

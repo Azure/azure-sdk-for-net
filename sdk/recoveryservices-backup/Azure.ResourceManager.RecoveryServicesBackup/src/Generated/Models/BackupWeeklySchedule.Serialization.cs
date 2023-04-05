@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupWeeklySchedule DeserializeBackupWeeklySchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<BackupDayOfWeek>> scheduleRunDays = default;
             Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
             foreach (var property in element.EnumerateObject())

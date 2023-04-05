@@ -15,6 +15,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkBatchJobCollection DeserializeSparkBatchJobCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int @from = default;
             int total = default;
             Optional<IReadOnlyList<SparkBatchJob>> sessions = default;

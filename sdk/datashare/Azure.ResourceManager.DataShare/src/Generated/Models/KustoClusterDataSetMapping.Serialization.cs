@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static KustoClusterDataSetMapping DeserializeKustoClusterDataSetMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataSetMappingKind kind = default;
             ResourceIdentifier id = default;
             string name = default;

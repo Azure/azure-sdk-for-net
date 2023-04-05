@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.IotCentral.Models
     {
         internal static IotCentralAppTemplate DeserializeIotCentralAppTemplate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> manifestId = default;
             Optional<string> manifestVersion = default;
             Optional<string> name = default;

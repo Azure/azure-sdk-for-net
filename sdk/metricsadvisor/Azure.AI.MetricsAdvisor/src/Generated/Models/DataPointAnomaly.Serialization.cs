@@ -16,6 +16,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static DataPointAnomaly DeserializeDataPointAnomaly(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataFeedId = default;
             Optional<string> metricId = default;
             Optional<string> anomalyDetectionConfigurationId = default;

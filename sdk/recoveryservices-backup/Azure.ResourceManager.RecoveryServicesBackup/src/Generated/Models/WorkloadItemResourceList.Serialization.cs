@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static WorkloadItemResourceList DeserializeWorkloadItemResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<WorkloadItemResource>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

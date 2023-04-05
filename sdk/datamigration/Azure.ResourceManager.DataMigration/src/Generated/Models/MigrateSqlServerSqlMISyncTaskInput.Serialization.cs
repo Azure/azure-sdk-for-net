@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlMISyncTaskInput DeserializeMigrateSqlServerSqlMISyncTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> numberOfParallelDatabaseMigrations = default;
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
             Optional<FileShare> backupFileShare = default;

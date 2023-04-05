@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppTemplate DeserializeContainerAppTemplate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> revisionSuffix = default;
             Optional<IList<ContainerAppInitContainer>> initContainers = default;
             Optional<IList<ContainerAppContainer>> containers = default;

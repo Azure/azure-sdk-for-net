@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static VmRecommendation DeserializeVmRecommendation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
             Optional<RecommendationAction> recommendationAction = default;
             Optional<ResourceIdentifier> resourceId = default;

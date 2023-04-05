@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static DataSourceListResult DeserializeDataSourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<OperationalInsightsDataSourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

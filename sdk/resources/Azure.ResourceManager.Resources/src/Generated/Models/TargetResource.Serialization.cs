@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static TargetResource DeserializeTargetResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> resourceName = default;
             Optional<ResourceType> resourceType = default;

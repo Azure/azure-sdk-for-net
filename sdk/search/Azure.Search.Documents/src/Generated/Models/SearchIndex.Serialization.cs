@@ -151,6 +151,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchIndex DeserializeSearchIndex(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             IList<SearchField> fields = default;
             Optional<IList<ScoringProfile>> scoringProfiles = default;

@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlMIDatabaseInput DeserializeMigrateSqlServerSqlMIDatabaseInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string restoreDatabaseName = default;
             Optional<FileShare> backupFileShare = default;

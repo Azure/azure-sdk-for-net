@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal static DatadogHostListResponse DeserializeDatadogHostListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DatadogHost>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

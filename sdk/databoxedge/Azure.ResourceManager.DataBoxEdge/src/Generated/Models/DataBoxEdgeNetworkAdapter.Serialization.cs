@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static DataBoxEdgeNetworkAdapter DeserializeDataBoxEdgeNetworkAdapter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> adapterId = default;
             Optional<DataBoxEdgeNetworkAdapterPosition> adapterPosition = default;
             Optional<int> index = default;

@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
 
         internal static ManagedNetworkPeeringPolicyProperties DeserializeManagedNetworkPeeringPolicyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ConnectivityType type = default;
             Optional<WritableSubResource> hub = default;
             Optional<IList<WritableSubResource>> spokes = default;

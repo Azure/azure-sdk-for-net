@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageAzureV2ReplicationDetails DeserializeInMageAzureV2ReplicationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> infrastructureVmId = default;
             Optional<string> vCenterInfrastructureId = default;
             Optional<string> protectionStage = default;

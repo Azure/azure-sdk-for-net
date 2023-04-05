@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         public static MachineLearningSkuTier ToMachineLearningSkuTier(this string value)
         {
-            if (string.Equals(value, "Free", StringComparison.InvariantCultureIgnoreCase)) return MachineLearningSkuTier.Free;
-            if (string.Equals(value, "Basic", StringComparison.InvariantCultureIgnoreCase)) return MachineLearningSkuTier.Basic;
-            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return MachineLearningSkuTier.Standard;
-            if (string.Equals(value, "Premium", StringComparison.InvariantCultureIgnoreCase)) return MachineLearningSkuTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return MachineLearningSkuTier.Free;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return MachineLearningSkuTier.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return MachineLearningSkuTier.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return MachineLearningSkuTier.Premium;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MachineLearningSkuTier value.");
         }
     }

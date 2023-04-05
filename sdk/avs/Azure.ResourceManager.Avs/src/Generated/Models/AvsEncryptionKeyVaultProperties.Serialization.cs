@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AvsEncryptionKeyVaultProperties DeserializeAvsEncryptionKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyName = default;
             Optional<string> keyVersion = default;
             Optional<string> autoDetectedKeyVersion = default;

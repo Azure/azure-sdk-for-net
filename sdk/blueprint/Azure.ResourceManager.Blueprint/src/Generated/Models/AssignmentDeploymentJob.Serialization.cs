@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static AssignmentDeploymentJob DeserializeAssignmentDeploymentJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<string> action = default;
             Optional<string> jobId = default;

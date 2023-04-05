@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VmNicDetails DeserializeVmNicDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nicId = default;
             Optional<string> replicaNicId = default;
             Optional<string> sourceNicArmId = default;

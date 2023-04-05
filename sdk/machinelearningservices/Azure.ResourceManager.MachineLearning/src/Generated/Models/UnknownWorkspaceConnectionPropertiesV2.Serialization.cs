@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownWorkspaceConnectionPropertiesV2 DeserializeUnknownWorkspaceConnectionPropertiesV2(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningConnectionAuthType authType = "Unknown";
             Optional<MachineLearningConnectionCategory> category = default;
             Optional<string> target = default;

@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AmlCompute DeserializeAmlCompute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AmlComputeProperties> properties = default;
             ComputeType computeType = default;
             Optional<string> computeLocation = default;

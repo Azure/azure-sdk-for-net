@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeploymentManager
 {
-    /// <summary> A class representing the ServiceResource data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceResource data model.
+    /// The resource representation of a service in a service topology.
+    /// </summary>
     public partial class ServiceResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceResourceData. </summary>

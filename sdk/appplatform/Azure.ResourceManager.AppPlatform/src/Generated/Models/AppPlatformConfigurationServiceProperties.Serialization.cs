@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformConfigurationServiceProperties DeserializeAppPlatformConfigurationServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformConfigurationServiceProvisioningState> provisioningState = default;
             Optional<AppPlatformConfigurationServiceRequirements> resourceRequests = default;
             Optional<IReadOnlyList<AppPlatformConfigurationServiceInstance>> instances = default;

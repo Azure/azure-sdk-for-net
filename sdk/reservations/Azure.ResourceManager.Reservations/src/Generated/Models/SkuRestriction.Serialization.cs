@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static SkuRestriction DeserializeSkuRestriction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<string> reasonCode = default;

@@ -17,15 +17,10 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
-            if (Optional.IsDefined(TransfereeCallerId))
+            if (Optional.IsDefined(CustomContext))
             {
-                writer.WritePropertyName("transfereeCallerId"u8);
-                writer.WriteObjectValue(TransfereeCallerId);
-            }
-            if (Optional.IsDefined(UserToUserInformation))
-            {
-                writer.WritePropertyName("userToUserInformation"u8);
-                writer.WriteStringValue(UserToUserInformation);
+                writer.WritePropertyName("customContext"u8);
+                writer.WriteObjectValue(CustomContext);
             }
             if (Optional.IsDefined(OperationContext))
             {

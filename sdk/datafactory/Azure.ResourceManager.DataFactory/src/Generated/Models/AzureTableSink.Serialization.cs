@@ -123,6 +123,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureTableSink DeserializeAzureTableSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> azureTableDefaultPartitionKeyValue = default;
             Optional<BinaryData> azureTablePartitionKeyName = default;
             Optional<BinaryData> azureTableRowKeyName = default;

@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AutomationRuleModifyPropertiesAction DeserializeAutomationRuleModifyPropertiesAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SecurityInsightsIncidentActionConfiguration> actionConfiguration = default;
             int order = default;
             ActionType actionType = default;

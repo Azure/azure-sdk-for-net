@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static StepOperationInfo DeserializeStepOperationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deploymentName = default;
             Optional<string> correlationId = default;
             Optional<DateTimeOffset> startTime = default;

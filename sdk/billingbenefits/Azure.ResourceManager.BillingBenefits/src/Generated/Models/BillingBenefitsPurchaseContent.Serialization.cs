@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static BillingBenefitsPurchaseContent DeserializeBillingBenefitsPurchaseContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BillingBenefitsSku> sku = default;
             Optional<string> displayName = default;
             Optional<ResourceIdentifier> billingScopeId = default;

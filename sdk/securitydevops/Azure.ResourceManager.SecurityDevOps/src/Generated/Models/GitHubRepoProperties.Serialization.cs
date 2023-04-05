@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static GitHubRepoProperties DeserializeGitHubRepoProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<long> accountId = default;
             Optional<Uri> repoUrl = default;

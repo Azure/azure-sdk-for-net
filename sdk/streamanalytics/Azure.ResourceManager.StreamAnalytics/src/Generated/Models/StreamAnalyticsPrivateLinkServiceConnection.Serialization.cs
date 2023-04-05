@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamAnalyticsPrivateLinkServiceConnection DeserializeStreamAnalyticsPrivateLinkServiceConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> privateLinkServiceId = default;
             Optional<IList<string>> groupIds = default;
             Optional<string> requestMessage = default;

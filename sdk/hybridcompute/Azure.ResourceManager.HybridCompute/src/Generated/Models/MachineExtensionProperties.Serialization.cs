@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 foreach (var item in Settings)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
@@ -69,6 +74,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 foreach (var item in ProtectedSettings)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
@@ -87,6 +97,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static MachineExtensionProperties DeserializeMachineExtensionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> forceUpdateTag = default;
             Optional<string> publisher = default;
             Optional<string> type = default;
@@ -149,7 +163,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     settings = dictionary;
                     continue;
@@ -164,7 +185,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     protectedSettings = dictionary;
                     continue;

@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static SimpleSchedulePolicy DeserializeSimpleSchedulePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ScheduleRunType> scheduleRunFrequency = default;
             Optional<IList<BackupDayOfWeek>> scheduleRunDays = default;
             Optional<IList<DateTimeOffset>> scheduleRunTimes = default;

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore
 {
-    /// <summary> A class representing the DataLakeStoreVirtualNetworkRule data model. </summary>
+    /// <summary>
+    /// A class representing the DataLakeStoreVirtualNetworkRule data model.
+    /// Data Lake Store virtual network rule information.
+    /// </summary>
     public partial class DataLakeStoreVirtualNetworkRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleData. </summary>

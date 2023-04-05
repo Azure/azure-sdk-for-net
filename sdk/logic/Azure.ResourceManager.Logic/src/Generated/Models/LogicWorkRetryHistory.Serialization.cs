@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkRetryHistory DeserializeLogicWorkRetryHistory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<string> code = default;

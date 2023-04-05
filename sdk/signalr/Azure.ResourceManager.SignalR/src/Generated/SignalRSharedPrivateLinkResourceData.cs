@@ -11,7 +11,10 @@ using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    /// <summary> A class representing the SignalRSharedPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the SignalRSharedPrivateLinkResource data model.
+    /// Describes a Shared Private Link Resource
+    /// </summary>
     public partial class SignalRSharedPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of SignalRSharedPrivateLinkResourceData. </summary>

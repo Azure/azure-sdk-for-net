@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the MonitorPrivateLinkScopedResource data model. </summary>
+    /// <summary>
+    /// A class representing the MonitorPrivateLinkScopedResource data model.
+    /// A private link scoped resource
+    /// </summary>
     public partial class MonitorPrivateLinkScopedResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of MonitorPrivateLinkScopedResourceData. </summary>

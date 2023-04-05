@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the ContainerServiceAgentPool data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerServiceAgentPool data model.
+    /// Agent Pool.
+    /// </summary>
     public partial class ContainerServiceAgentPoolData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerServiceAgentPoolData. </summary>

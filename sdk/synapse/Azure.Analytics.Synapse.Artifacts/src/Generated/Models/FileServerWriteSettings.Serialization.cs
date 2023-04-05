@@ -41,6 +41,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static FileServerWriteSettings DeserializeFileServerWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<object> maxConcurrentConnections = default;
             Optional<object> copyBehavior = default;

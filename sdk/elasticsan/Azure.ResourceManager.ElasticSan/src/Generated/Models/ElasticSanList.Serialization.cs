@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         internal static ElasticSanList DeserializeElasticSanList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ElasticSanData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

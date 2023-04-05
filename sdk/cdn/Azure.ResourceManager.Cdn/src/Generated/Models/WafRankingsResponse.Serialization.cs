@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static WafRankingsResponse DeserializeWafRankingsResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> dateTimeBegin = default;
             Optional<DateTimeOffset> dateTimeEnd = default;
             Optional<IReadOnlyList<string>> groups = default;

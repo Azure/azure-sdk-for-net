@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static CurrentJobDetails DeserializeCurrentJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> jobName = default;
             Optional<string> jobId = default;
             Optional<DateTimeOffset> startTime = default;

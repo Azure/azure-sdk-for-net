@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static IntegrationRuntimeStatusResult DeserializeIntegrationRuntimeStatusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             IntegrationRuntimeStatus properties = default;
             foreach (var property in element.EnumerateObject())

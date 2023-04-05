@@ -15,6 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchServiceError DeserializeSearchServiceError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             string message = default;
             Optional<IReadOnlyList<SearchServiceError>> details = default;

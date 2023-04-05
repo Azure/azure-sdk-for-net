@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     {
         internal static DataLakeAnalyticsCapabilityInformation DeserializeDataLakeAnalyticsCapabilityInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> subscriptionId = default;
             Optional<DataLakeAnalyticsSubscriptionState> state = default;
             Optional<int> maxAccountCount = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static SchemaComparisonValidationResult DeserializeSchemaComparisonValidationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SchemaComparisonValidationResultType> schemaDifferences = default;
             Optional<ValidationError> validationErrors = default;
             Optional<IReadOnlyDictionary<string, long>> sourceDatabaseObjectCount = default;

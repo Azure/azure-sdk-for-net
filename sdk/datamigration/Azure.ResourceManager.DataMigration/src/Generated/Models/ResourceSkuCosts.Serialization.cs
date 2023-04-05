@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static ResourceSkuCosts DeserializeResourceSkuCosts(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> meterId = default;
             Optional<long> quantity = default;
             Optional<string> extendedUnit = default;

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAutomationSource DeserializeSecurityAutomationSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SecurityEventSource> eventSource = default;
             Optional<IList<SecurityAutomationRuleSet>> ruleSets = default;
             foreach (var property in element.EnumerateObject())

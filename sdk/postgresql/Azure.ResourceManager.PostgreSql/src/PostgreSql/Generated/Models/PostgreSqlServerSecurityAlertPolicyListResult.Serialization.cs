@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
     {
         internal static PostgreSqlServerSecurityAlertPolicyListResult DeserializePostgreSqlServerSecurityAlertPolicyListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PostgreSqlServerSecurityAlertPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

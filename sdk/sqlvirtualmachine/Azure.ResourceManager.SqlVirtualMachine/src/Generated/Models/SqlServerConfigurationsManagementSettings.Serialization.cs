@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlServerConfigurationsManagementSettings DeserializeSqlServerConfigurationsManagementSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlConnectivityUpdateSettings> sqlConnectivityUpdateSettings = default;
             Optional<SqlWorkloadTypeUpdateSettings> sqlWorkloadTypeUpdateSettings = default;
             Optional<SqlStorageUpdateSettings> sqlStorageUpdateSettings = default;

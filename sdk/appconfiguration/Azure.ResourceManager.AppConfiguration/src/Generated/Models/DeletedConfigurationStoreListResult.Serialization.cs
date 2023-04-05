@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static DeletedConfigurationStoreListResult DeserializeDeletedConfigurationStoreListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DeletedAppConfigurationStoreData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

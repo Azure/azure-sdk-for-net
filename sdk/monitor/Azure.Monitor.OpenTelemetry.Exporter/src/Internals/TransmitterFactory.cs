@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal readonly Dictionary<string, AzureMonitorTransmitter> _transmitters = new();
         private readonly object _lockObj = new();
 
-        public AzureMonitorTransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions, TokenCredential? tokenCredential = null)
+        public AzureMonitorTransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions)
         {
             var key = azureMonitorExporterOptions.ConnectionString ?? string.Empty;
 
@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     if (!_transmitters.TryGetValue(key, out transmitter))
                     {
-                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, tokenCredential);
+                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions);
 
                         _transmitters.Add(key, transmitter);
                     }

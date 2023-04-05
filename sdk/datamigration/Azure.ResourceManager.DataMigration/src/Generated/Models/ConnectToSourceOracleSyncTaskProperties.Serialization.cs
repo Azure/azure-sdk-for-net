@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToSourceOracleSyncTaskProperties DeserializeConnectToSourceOracleSyncTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConnectToSourceOracleSyncTaskInput> input = default;
             Optional<IReadOnlyList<ConnectToSourceOracleSyncTaskOutput>> output = default;
             TaskType taskType = default;

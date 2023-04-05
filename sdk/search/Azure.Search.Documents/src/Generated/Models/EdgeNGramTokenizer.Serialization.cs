@@ -45,6 +45,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static EdgeNGramTokenizer DeserializeEdgeNGramTokenizer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minGram = default;
             Optional<int> maxGram = default;
             Optional<IList<TokenCharacterKind>> tokenChars = default;

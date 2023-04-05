@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceFleetHubProfile DeserializeContainerServiceFleetHubProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dnsPrefix = default;
             Optional<string> fqdn = default;
             Optional<string> kubernetesVersion = default;

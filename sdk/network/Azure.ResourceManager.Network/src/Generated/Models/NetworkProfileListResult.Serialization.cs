@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkProfileListResult DeserializeNetworkProfileListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NetworkProfileData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

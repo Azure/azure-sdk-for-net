@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static A2AProtectionIntentManagedDiskInputDetails DeserializeA2AProtectionIntentManagedDiskInputDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string diskId = default;
             Optional<StorageAccountCustomDetails> primaryStagingStorageAccountCustomInput = default;
             Optional<RecoveryResourceGroupCustomDetails> recoveryResourceGroupCustomInput = default;

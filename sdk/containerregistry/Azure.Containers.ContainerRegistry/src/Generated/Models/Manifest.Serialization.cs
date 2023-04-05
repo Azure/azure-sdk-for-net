@@ -14,6 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static Manifest DeserializeManifest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {

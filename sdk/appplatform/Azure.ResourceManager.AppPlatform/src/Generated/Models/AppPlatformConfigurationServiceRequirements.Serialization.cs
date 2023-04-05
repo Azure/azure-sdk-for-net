@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformConfigurationServiceRequirements DeserializeAppPlatformConfigurationServiceRequirements(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cpu = default;
             Optional<string> memory = default;
             Optional<int> instanceCount = default;

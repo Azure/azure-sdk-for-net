@@ -29,6 +29,10 @@ namespace Azure.Communication.JobRouter
 
         internal static QueueSelector DeserializeQueueSelector(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             LabelOperator labelOperator = default;
             Optional<object> value = default;

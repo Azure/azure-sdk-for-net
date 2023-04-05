@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         public static BackupWeekOfMonth ToBackupWeekOfMonth(this string value)
         {
-            if (string.Equals(value, "First", StringComparison.InvariantCultureIgnoreCase)) return BackupWeekOfMonth.First;
-            if (string.Equals(value, "Second", StringComparison.InvariantCultureIgnoreCase)) return BackupWeekOfMonth.Second;
-            if (string.Equals(value, "Third", StringComparison.InvariantCultureIgnoreCase)) return BackupWeekOfMonth.Third;
-            if (string.Equals(value, "Fourth", StringComparison.InvariantCultureIgnoreCase)) return BackupWeekOfMonth.Fourth;
-            if (string.Equals(value, "Last", StringComparison.InvariantCultureIgnoreCase)) return BackupWeekOfMonth.Last;
-            if (string.Equals(value, "Invalid", StringComparison.InvariantCultureIgnoreCase)) return BackupWeekOfMonth.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "First")) return BackupWeekOfMonth.First;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Second")) return BackupWeekOfMonth.Second;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Third")) return BackupWeekOfMonth.Third;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Fourth")) return BackupWeekOfMonth.Fourth;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Last")) return BackupWeekOfMonth.Last;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return BackupWeekOfMonth.Invalid;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BackupWeekOfMonth value.");
         }
     }

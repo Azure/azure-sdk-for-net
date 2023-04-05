@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal static HealthcareApisServiceData DeserializeHealthcareApisServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthcareApisServiceProperties> properties = default;
             HealthcareApisKind kind = default;
             Optional<ETag> etag = default;

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static RedisEnterpriseSku DeserializeRedisEnterpriseSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RedisEnterpriseSkuName name = default;
             Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())

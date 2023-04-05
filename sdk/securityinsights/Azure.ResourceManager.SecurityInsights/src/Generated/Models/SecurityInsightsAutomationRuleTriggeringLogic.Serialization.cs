@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsAutomationRuleTriggeringLogic DeserializeSecurityInsightsAutomationRuleTriggeringLogic(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool isEnabled = default;
             Optional<DateTimeOffset> expirationTimeUtc = default;
             TriggersOn triggersOn = default;

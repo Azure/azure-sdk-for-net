@@ -71,6 +71,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
@@ -91,6 +96,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DiagnosticDetectorResponse DeserializeDiagnosticDetectorResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -225,12 +234,19 @@ namespace Azure.ResourceManager.AppService.Models
                             List<IList<AppServiceNameValuePair>> array = new List<IList<AppServiceNameValuePair>>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
-                                foreach (var item0 in item.EnumerateArray())
+                                if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                    array.Add(null);
                                 }
-                                array.Add(array0);
+                                else
+                                {
+                                    List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
+                                    foreach (var item0 in item.EnumerateArray())
+                                    {
+                                        array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                    }
+                                    array.Add(array0);
+                                }
                             }
                             data = array;
                             continue;

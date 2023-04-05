@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseIntegrationRuntimeComputeProperties DeserializeSynapseIntegrationRuntimeComputeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<string> nodeSize = default;
             Optional<int> numberOfNodes = default;

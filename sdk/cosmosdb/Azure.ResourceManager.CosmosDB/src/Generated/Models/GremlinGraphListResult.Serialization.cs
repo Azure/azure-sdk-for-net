@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static GremlinGraphListResult DeserializeGremlinGraphListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<GremlinGraphData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

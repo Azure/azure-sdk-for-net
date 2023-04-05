@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationModuleListResult DeserializeAutomationModuleListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AutomationModuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

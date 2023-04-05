@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DiagnosticDataRendering DeserializeDiagnosticDataRendering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DiagnosticDataRenderingType> type = default;
             Optional<string> title = default;
             Optional<string> description = default;

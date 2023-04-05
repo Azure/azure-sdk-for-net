@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         internal static ExperimentExecutionActionTargetDetailsProperties DeserializeExperimentExecutionActionTargetDetailsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> target = default;
             Optional<DateTimeOffset?> targetFailedTime = default;

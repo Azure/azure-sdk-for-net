@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static DefaultRolloutArrayResponseWithContinuation DeserializeDefaultRolloutArrayResponseWithContinuation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DefaultRolloutData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

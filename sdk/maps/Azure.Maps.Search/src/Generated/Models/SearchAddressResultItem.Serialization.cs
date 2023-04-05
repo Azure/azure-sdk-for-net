@@ -16,6 +16,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static SearchAddressResultItem DeserializeSearchAddressResultItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchAddressResultType> type = default;
             Optional<string> id = default;
             Optional<double> score = default;

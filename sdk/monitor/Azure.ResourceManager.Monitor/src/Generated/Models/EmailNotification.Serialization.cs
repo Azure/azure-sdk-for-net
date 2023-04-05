@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static EmailNotification DeserializeEmailNotification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> sendToSubscriptionAdministrator = default;
             Optional<bool> sendToSubscriptionCoAdministrators = default;
             Optional<IList<string>> customEmails = default;

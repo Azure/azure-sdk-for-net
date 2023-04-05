@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxDiskJobDetails DeserializeDataBoxDiskJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, int>> preferredDisks = default;
             Optional<IReadOnlyList<DataBoxDiskCopyProgress>> copyProgress = default;
             Optional<IReadOnlyList<DataBoxDiskGranularCopyProgress>> granularCopyProgress = default;

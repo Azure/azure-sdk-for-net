@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicApiReference DeserializeLogicApiReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<Uri> iconUri = default;

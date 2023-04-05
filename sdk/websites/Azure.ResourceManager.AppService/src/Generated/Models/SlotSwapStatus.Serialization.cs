@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static SlotSwapStatus DeserializeSlotSwapStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestampUtc = default;
             Optional<string> sourceSlotName = default;
             Optional<string> destinationSlotName = default;

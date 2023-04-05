@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppInstanceProbe DeserializeAppInstanceProbe(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppInstanceProbeAction> probeAction = default;
             bool disableProbe = default;
             Optional<int> initialDelaySeconds = default;

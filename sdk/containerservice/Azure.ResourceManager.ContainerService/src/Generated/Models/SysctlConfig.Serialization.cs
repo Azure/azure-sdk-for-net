@@ -160,6 +160,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static SysctlConfig DeserializeSysctlConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> netCoreSomaxconn = default;
             Optional<int> netCoreNetdevMaxBacklog = default;
             Optional<int> netCoreRmemDefault = default;

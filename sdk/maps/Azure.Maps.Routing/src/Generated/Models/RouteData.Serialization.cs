@@ -15,6 +15,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteData DeserializeRouteData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RouteSummary> summary = default;
             Optional<IReadOnlyList<RouteLeg>> legs = default;
             Optional<IReadOnlyList<RouteSection>> sections = default;

@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountAssemblyProperties DeserializeIntegrationAccountAssemblyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string assemblyName = default;
             Optional<string> assemblyVersion = default;
             Optional<string> assemblyCulture = default;

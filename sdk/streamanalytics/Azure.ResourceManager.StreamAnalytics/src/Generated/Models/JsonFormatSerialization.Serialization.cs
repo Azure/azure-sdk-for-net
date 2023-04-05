@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static JsonFormatSerialization DeserializeJsonFormatSerialization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EventSerializationType type = default;
             Optional<StreamAnalyticsDataSerializationEncoding> encoding = default;
             Optional<JsonOutputSerializationFormat> format = default;

@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForServersAwsOfferingVmScannersConfiguration DeserializeDefenderForServersAwsOfferingVmScannersConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cloudRoleArn = default;
             Optional<DefenderForServersScanningMode> scanningMode = default;
             Optional<IDictionary<string, string>> exclusionTags = default;

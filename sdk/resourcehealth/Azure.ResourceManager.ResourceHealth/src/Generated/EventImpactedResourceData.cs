@@ -12,7 +12,10 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    /// <summary> A class representing the EventImpactedResource data model. </summary>
+    /// <summary>
+    /// A class representing the EventImpactedResource data model.
+    /// Impacted resource for an event.
+    /// </summary>
     public partial class EventImpactedResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of EventImpactedResourceData. </summary>

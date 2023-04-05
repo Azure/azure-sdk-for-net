@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static StatusBanner DeserializeStatusBanner(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> title = default;
             Optional<string> message = default;
             Optional<string> cloud = default;

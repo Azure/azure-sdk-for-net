@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyIntrusionDetection DeserializeFirewallPolicyIntrusionDetection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FirewallPolicyIntrusionDetectionStateType> mode = default;
             Optional<FirewallPolicyIntrusionDetectionConfiguration> configuration = default;
             foreach (var property in element.EnumerateObject())

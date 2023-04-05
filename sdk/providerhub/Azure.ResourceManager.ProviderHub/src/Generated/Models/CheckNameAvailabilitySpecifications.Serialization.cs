@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CheckNameAvailabilitySpecifications DeserializeCheckNameAvailabilitySpecifications(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableDefaultValidation = default;
             Optional<IList<string>> resourceTypesWithCustomValidation = default;
             foreach (var property in element.EnumerateObject())

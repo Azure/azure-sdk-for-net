@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static FilesNotTieringError DeserializeFilesNotTieringError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> errorCode = default;
             Optional<long> fileCount = default;
             foreach (var property in element.EnumerateObject())

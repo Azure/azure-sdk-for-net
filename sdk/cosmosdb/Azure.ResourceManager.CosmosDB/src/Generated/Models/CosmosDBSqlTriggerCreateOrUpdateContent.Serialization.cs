@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBSqlTriggerCreateOrUpdateContent DeserializeCosmosDBSqlTriggerCreateOrUpdateContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;

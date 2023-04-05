@@ -14,6 +14,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteSectionTecCause DeserializeRouteSectionTecCause(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> mainCauseCode = default;
             Optional<int> subCauseCode = default;
             foreach (var property in element.EnumerateObject())

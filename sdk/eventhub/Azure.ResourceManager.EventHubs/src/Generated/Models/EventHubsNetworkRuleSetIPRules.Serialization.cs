@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsNetworkRuleSetIPRules DeserializeEventHubsNetworkRuleSetIPRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ipMask = default;
             Optional<EventHubsNetworkRuleIPAction> action = default;
             foreach (var property in element.EnumerateObject())

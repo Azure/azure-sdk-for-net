@@ -29,6 +29,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static UnsecuredEndpoint DeserializeUnsecuredEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<CredentialsBase> credentials = default;
             string url = default;

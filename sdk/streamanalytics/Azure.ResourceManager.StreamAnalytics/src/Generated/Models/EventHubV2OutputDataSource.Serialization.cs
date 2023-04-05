@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static EventHubV2OutputDataSource DeserializeEventHubV2OutputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> serviceBusNamespace = default;
             Optional<string> sharedAccessPolicyName = default;

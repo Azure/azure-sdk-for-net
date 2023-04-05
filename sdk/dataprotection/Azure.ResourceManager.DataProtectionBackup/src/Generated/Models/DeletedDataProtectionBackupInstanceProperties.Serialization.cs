@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DeletedDataProtectionBackupInstanceProperties DeserializeDeletedDataProtectionBackupInstanceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupInstanceDeletionInfo> deletionInfo = default;
             Optional<string> friendlyName = default;
             DataSourceInfo dataSourceInfo = default;

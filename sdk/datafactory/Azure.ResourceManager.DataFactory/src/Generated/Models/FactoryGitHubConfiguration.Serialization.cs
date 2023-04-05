@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryGitHubConfiguration DeserializeFactoryGitHubConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostName = default;
             Optional<string> clientId = default;
             Optional<GitHubClientSecret> clientSecret = default;

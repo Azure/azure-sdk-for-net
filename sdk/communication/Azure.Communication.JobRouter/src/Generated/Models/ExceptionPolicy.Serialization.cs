@@ -38,6 +38,10 @@ namespace Azure.Communication.JobRouter.Models
 
         internal static ExceptionPolicy DeserializeExceptionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<IDictionary<string, ExceptionRule>> exceptionRules = default;

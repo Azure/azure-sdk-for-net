@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static DefaultRolloutSpecificationMediumTraffic DeserializeDefaultRolloutSpecificationMediumTraffic(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> waitDuration = default;
             Optional<IList<string>> regions = default;
             foreach (var property in element.EnumerateObject())

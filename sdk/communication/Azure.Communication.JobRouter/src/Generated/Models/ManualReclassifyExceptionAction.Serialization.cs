@@ -43,6 +43,10 @@ namespace Azure.Communication.JobRouter
 
         internal static ManualReclassifyExceptionAction DeserializeManualReclassifyExceptionAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> queueId = default;
             Optional<int> priority = default;
             Optional<IList<WorkerSelector>> workerSelectors = default;

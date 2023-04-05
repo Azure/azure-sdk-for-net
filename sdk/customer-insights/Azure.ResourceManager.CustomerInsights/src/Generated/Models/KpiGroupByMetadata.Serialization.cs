@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static KpiGroupByMetadata DeserializeKpiGroupByMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, string>> displayName = default;
             Optional<string> fieldName = default;
             Optional<string> fieldType = default;

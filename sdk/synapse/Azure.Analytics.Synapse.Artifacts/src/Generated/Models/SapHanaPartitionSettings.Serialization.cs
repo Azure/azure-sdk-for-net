@@ -28,6 +28,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SapHanaPartitionSettings DeserializeSapHanaPartitionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> partitionColumnName = default;
             foreach (var property in element.EnumerateObject())
             {

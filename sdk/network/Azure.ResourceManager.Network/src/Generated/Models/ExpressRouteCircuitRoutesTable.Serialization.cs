@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRouteCircuitRoutesTable DeserializeExpressRouteCircuitRoutesTable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> network = default;
             Optional<string> nextHop = default;
             Optional<string> locPrf = default;

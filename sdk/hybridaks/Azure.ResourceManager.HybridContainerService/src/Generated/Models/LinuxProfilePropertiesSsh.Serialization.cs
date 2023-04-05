@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static LinuxProfilePropertiesSsh DeserializeLinuxProfilePropertiesSsh(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<LinuxProfilePropertiesSshPublicKeysItem>> publicKeys = default;
             foreach (var property in element.EnumerateObject())
             {

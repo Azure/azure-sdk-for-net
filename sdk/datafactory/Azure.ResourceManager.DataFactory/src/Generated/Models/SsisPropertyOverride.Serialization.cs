@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisPropertyOverride DeserializeSsisPropertyOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData value = default;
             Optional<bool> isSensitive = default;
             foreach (var property in element.EnumerateObject())

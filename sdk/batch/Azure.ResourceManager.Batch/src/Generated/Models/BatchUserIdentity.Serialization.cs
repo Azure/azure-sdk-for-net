@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchUserIdentity DeserializeBatchUserIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userName = default;
             Optional<BatchAutoUserSpecification> autoUser = default;
             foreach (var property in element.EnumerateObject())

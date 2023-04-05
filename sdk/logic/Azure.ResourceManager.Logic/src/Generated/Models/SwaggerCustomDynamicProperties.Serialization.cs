@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static SwaggerCustomDynamicProperties DeserializeSwaggerCustomDynamicProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> operationId = default;
             Optional<string> valuePath = default;
             Optional<IDictionary<string, SwaggerCustomDynamicProperties>> parameters = default;

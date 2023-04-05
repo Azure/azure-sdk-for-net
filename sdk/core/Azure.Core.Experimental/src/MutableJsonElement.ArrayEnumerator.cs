@@ -22,7 +22,7 @@ namespace Azure.Core.Json
 
             internal ArrayEnumerator(MutableJsonElement element)
             {
-                Debug.Assert(element.ValueKind == JsonValueKind.Array);
+                element.EnsureArray();
 
                 _element = element;
                 _length = element._element.GetArrayLength();

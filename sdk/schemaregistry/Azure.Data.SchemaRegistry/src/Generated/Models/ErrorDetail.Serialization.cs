@@ -15,6 +15,10 @@ namespace Azure.Data.SchemaRegistry.Models
     {
         internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string code = default;
             string message = default;
             Optional<IReadOnlyList<ErrorDetail>> details = default;

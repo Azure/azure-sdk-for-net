@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchServicePrivateLinkServiceConnectionState DeserializeSearchServicePrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchServicePrivateLinkServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;

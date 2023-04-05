@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the FrontDoorRule data model. </summary>
+    /// <summary>
+    /// A class representing the FrontDoorRule data model.
+    /// Friendly Rules name mapping to the any Rules or secret related information.
+    /// </summary>
     public partial class FrontDoorRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of FrontDoorRuleData. </summary>

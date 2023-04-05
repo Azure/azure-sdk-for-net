@@ -66,6 +66,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureTableSource DeserializeAzureTableSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> azureTableSourceQuery = default;
             Optional<object> azureTableSourceIgnoreTableNotFound = default;
             Optional<object> queryTimeout = default;

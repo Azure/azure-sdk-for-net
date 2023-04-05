@@ -123,6 +123,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static Office365Source DeserializeOffice365Source(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> allowedGroups = default;
             Optional<BinaryData> userScopeFilterUri = default;
             Optional<BinaryData> dateFilterColumn = default;

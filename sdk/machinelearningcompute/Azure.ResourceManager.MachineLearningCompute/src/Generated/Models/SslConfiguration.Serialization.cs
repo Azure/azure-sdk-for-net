@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static SslConfiguration DeserializeSslConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Status> status = default;
             Optional<string> cert = default;
             Optional<string> key = default;

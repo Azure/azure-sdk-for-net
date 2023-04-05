@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsClusterAssociatedWorkspace DeserializeOperationalInsightsClusterAssociatedWorkspace(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> workspaceId = default;
             Optional<string> workspaceName = default;
             Optional<ResourceIdentifier> resourceId = default;

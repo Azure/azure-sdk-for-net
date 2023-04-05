@@ -85,6 +85,10 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static OperationalInsightsClusterData DeserializeOperationalInsightsClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<OperationalInsightsClusterSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;

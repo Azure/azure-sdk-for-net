@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlPerformanceTierServiceLevelObjectives DeserializeMySqlPerformanceTierServiceLevelObjectives(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> edition = default;
             Optional<int> vCore = default;

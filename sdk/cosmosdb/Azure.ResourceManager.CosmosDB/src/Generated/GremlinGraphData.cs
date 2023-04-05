@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the GremlinGraph data model. </summary>
+    /// <summary>
+    /// A class representing the GremlinGraph data model.
+    /// An Azure Cosmos DB Gremlin graph.
+    /// </summary>
     public partial class GremlinGraphData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of GremlinGraphData. </summary>

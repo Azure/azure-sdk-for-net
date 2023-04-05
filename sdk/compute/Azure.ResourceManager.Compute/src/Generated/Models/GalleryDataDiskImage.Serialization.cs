@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryDataDiskImage DeserializeGalleryDataDiskImage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int lun = default;
             Optional<int> sizeInGB = default;
             Optional<HostCaching> hostCaching = default;

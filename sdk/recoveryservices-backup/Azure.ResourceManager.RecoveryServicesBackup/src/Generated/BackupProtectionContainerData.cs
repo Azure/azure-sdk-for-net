@@ -13,7 +13,10 @@ using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    /// <summary> A class representing the BackupProtectionContainer data model. </summary>
+    /// <summary>
+    /// A class representing the BackupProtectionContainer data model.
+    /// Base class for container with backup items. Containers with specific workloads are derived from this class.
+    /// </summary>
     public partial class BackupProtectionContainerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of BackupProtectionContainerData. </summary>

@@ -12,7 +12,10 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    /// <summary> A class representing the StorageSyncRegisteredServer data model. </summary>
+    /// <summary>
+    /// A class representing the StorageSyncRegisteredServer data model.
+    /// Registered Server resource.
+    /// </summary>
     public partial class StorageSyncRegisteredServerData : ResourceData
     {
         /// <summary> Initializes a new instance of StorageSyncRegisteredServerData. </summary>

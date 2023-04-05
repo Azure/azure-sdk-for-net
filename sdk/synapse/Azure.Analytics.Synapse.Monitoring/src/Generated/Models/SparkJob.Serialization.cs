@@ -16,6 +16,10 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
     {
         internal static SparkJob DeserializeSparkJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> state = default;
             Optional<string> name = default;
             Optional<string> submitter = default;

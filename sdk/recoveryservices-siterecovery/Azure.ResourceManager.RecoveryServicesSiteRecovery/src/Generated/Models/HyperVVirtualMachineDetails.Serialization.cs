@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static HyperVVirtualMachineDetails DeserializeHyperVVirtualMachineDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("instanceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

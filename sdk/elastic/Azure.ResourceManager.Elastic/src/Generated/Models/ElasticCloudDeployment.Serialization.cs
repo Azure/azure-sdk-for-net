@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static ElasticCloudDeployment DeserializeElasticCloudDeployment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> deploymentId = default;
             Optional<string> azureSubscriptionId = default;

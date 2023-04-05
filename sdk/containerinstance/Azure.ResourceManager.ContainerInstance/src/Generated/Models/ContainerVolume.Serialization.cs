@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerVolume DeserializeContainerVolume(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<ContainerInstanceAzureFileVolume> azureFile = default;
             Optional<BinaryData> emptyDir = default;

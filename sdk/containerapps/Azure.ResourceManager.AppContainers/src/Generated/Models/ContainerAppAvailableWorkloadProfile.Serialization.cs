@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAvailableWorkloadProfile DeserializeContainerAppAvailableWorkloadProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<ContainerAppAvailableWorkloadProfileProperties> properties = default;
             ResourceIdentifier id = default;

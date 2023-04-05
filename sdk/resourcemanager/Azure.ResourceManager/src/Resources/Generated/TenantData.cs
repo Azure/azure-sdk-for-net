@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the Tenant data model. </summary>
+    /// <summary>
+    /// A class representing the Tenant data model.
+    /// Tenant Id information.
+    /// </summary>
     public partial class TenantData
     {
         /// <summary> Initializes a new instance of TenantData. </summary>

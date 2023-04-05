@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IntegrationRuntimeSsisCatalogInfo DeserializeIntegrationRuntimeSsisCatalogInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> catalogServerEndpoint = default;
             Optional<string> catalogAdminUserName = default;
             Optional<FactorySecretString> catalogAdminPassword = default;

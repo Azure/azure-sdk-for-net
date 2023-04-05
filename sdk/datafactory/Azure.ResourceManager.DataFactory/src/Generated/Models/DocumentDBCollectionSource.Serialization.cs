@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DocumentDBCollectionSource DeserializeDocumentDBCollectionSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> query = default;
             Optional<BinaryData> nestingSeparator = default;
             Optional<BinaryData> queryTimeout = default;

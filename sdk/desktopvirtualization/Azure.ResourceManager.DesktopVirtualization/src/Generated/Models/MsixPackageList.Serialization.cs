@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal static MsixPackageList DeserializeMsixPackageList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MsixPackageData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

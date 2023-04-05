@@ -41,6 +41,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static HdfsLocation DeserializeHdfsLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<object> folderPath = default;
             Optional<object> fileName = default;

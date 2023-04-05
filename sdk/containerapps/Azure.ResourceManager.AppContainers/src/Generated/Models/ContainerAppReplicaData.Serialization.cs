@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppReplicaData DeserializeContainerAppReplicaData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static CbcsDrmConfiguration DeserializeCbcsDrmConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamingPolicyFairPlayConfiguration> fairPlay = default;
             Optional<StreamingPolicyPlayReadyConfiguration> playReady = default;
             Optional<StreamingPolicyWidevineConfiguration> widevine = default;

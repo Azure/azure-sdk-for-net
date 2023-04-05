@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxDiskCopyProgress DeserializeDataBoxDiskCopyProgress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serialNumber = default;
             Optional<long> bytesCopied = default;
             Optional<int> percentComplete = default;

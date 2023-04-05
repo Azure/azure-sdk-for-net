@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static VaultCertificateResult DeserializeVaultCertificateResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceCertificateDetails> properties = default;
             ResourceIdentifier id = default;
             string name = default;

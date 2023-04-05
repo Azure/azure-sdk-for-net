@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeFileEventTrigger DeserializeEdgeFileEventTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TriggerEventType kind = default;
             ResourceIdentifier id = default;
             string name = default;

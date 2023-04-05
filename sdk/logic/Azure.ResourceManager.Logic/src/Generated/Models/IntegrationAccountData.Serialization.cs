@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Logic
 
         internal static IntegrationAccountData DeserializeIntegrationAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationAccountSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

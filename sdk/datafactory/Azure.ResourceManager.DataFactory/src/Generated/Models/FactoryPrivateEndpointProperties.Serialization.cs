@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryPrivateEndpointProperties DeserializeFactoryPrivateEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> provisioningState = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;

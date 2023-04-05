@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ConsistencyPolicy DeserializeConsistencyPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DefaultConsistencyLevel defaultConsistencyLevel = default;
             Optional<long> maxStalenessPrefix = default;
             Optional<int> maxIntervalInSeconds = default;

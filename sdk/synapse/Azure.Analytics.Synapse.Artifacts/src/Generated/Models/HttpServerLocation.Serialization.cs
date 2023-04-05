@@ -46,6 +46,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static HttpServerLocation DeserializeHttpServerLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> relativeUrl = default;
             string type = default;
             Optional<object> folderPath = default;

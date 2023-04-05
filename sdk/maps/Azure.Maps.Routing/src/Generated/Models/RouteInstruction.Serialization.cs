@@ -15,6 +15,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteInstruction DeserializeRouteInstruction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> routeOffsetInMeters = default;
             Optional<int> travelTimeInSeconds = default;
             Optional<LatLongPair> point = default;

@@ -1,55 +1,53 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "78",
+        "Content-Length": "79",
         "Content-Type": "application/json",
-        "traceparent": "00-57075b0cc77c7845b57af45945fbb9f0-99a2ff0443384240-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "7da29de1d51011d7e4aff1b3c9c32a3e",
+        "traceparent": "00-ee1cd29efcc4a542a443c5ff0923e4a3-24da5614b2e4d14f-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "145984b46bffedada638fe5f17346f2a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "this won\u0027t work",
-        "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 400,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
         "Connection": "keep-alive",
-        "Content-Length": "423",
+        "Content-Length": "310",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 May 2021 21:58:12 GMT",
+        "Date": "Tue, 14 Mar 2023 21:53:44 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6b5d48d5bb-f8pjt",
+        "Via": "1.1 draft-oms-85c67bc895-ffnqn",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
         "error": {
           "message": "The request had some invalid properties",
           "code": "BadArgumentError",
-          "correlationId": "67204e2e-e5f3-4a3b-ab1e-e99218fb0deb",
+          "correlationId": "90eef8e7-8660-49a1-b8f0-dd1f9bff46bb",
           "innererror": {
             "code": "SyntaxError",
-            "message": "Request is invalid and cannot be processed: Syntax error: SYN0001: I could not parse that, sorry. [line:position=0:0]. Query: \u0027let [\u0027emptyTable\u0027] = view () { datatable(column:string)[] };restrict access to (*);\r\nthis won\u0027t work\u0027"
+            "message": "Request is invalid and cannot be processed: Syntax error: SYN0001: I could not parse that, sorry. [line:position=0:0]"
           }
         }
       }
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-05-13T14:58:10.9355363-07:00",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DateTimeOffsetNow": "2023-03-14T14:53:40.8568800-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "1125575113",
-    "WORKSPACE_ID": "50e32c19-2b4b-4152-b97e-0e02441cae60"
+    "RandomSeed": "1388313364",
+    "WORKSPACE_ID": "314be15c-6065-462b-a0dc-8fe1213796f2"
   }
 }

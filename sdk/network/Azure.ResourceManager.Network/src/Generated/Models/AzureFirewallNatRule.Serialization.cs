@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureFirewallNatRule DeserializeAzureFirewallNatRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> description = default;
             Optional<IList<string>> sourceAddresses = default;

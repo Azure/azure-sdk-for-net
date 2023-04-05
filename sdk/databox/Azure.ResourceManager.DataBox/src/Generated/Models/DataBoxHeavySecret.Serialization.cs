@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxHeavySecret DeserializeDataBoxHeavySecret(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deviceSerialNumber = default;
             Optional<string> devicePassword = default;
             Optional<IReadOnlyList<ApplianceNetworkConfiguration>> networkConfigurations = default;

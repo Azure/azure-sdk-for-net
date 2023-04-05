@@ -62,6 +62,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static NotebookCell DeserializeNotebookCell(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string cellType = default;
             object metadata = default;
             IList<string> source = default;

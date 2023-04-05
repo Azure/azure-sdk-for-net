@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static WindowsEventLogDataSource DeserializeWindowsEventLogDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WindowsEventLogDataSourceStream>> streams = default;
             Optional<IList<string>> xPathQueries = default;
             Optional<string> name = default;

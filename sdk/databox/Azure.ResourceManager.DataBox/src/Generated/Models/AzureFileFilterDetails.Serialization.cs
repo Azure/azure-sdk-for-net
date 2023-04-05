@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static AzureFileFilterDetails DeserializeAzureFileFilterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> filePrefixList = default;
             Optional<IList<string>> filePathList = default;
             Optional<IList<string>> fileShareList = default;

@@ -13,7 +13,10 @@ using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    /// <summary> A class representing the BackupProtectionPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the BackupProtectionPolicy data model.
+    /// Base class for backup policy. Workload-specific backup policies are derived from this class.
+    /// </summary>
     public partial class BackupProtectionPolicyData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of BackupProtectionPolicyData. </summary>

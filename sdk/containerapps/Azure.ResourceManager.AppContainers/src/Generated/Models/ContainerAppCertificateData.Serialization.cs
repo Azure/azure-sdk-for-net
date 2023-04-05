@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppCertificateData DeserializeContainerAppCertificateData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppCertificateProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

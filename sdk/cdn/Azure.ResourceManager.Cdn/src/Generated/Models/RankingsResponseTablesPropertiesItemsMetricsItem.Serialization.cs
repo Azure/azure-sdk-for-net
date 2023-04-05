@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static RankingsResponseTablesPropertiesItemsMetricsItem DeserializeRankingsResponseTablesPropertiesItemsMetricsItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> metric = default;
             Optional<long> value = default;
             Optional<float> percentage = default;

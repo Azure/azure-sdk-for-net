@@ -12,7 +12,10 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    /// <summary> A class representing the SapProviderInstance data model. </summary>
+    /// <summary>
+    /// A class representing the SapProviderInstance data model.
+    /// A provider instance associated with SAP monitor.
+    /// </summary>
     public partial class SapProviderInstanceData : ResourceData
     {
         /// <summary> Initializes a new instance of SapProviderInstanceData. </summary>
@@ -25,6 +28,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="identity"> Managed service identity (user assigned identities). </param>
         /// <param name="provisioningState"> State of provisioning of the provider instance. </param>
         /// <param name="errors"> Defines the provider instance errors. </param>
         /// <param name="providerSettings">
@@ -32,13 +36,16 @@ namespace Azure.ResourceManager.Workloads
         /// Please note <see cref="ProviderSpecificProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DB2ProviderInstanceProperties"/>, <see cref="MsSqlServerProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="HanaDBProviderInstanceProperties"/> and <see cref="SapNetWeaverProviderInstanceProperties"/>.
         /// </param>
-        internal SapProviderInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, ProviderSpecificProperties providerSettings) : base(id, name, resourceType, systemData)
+        internal SapProviderInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UserAssignedServiceIdentity identity, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, ProviderSpecificProperties providerSettings) : base(id, name, resourceType, systemData)
         {
+            Identity = identity;
             ProvisioningState = provisioningState;
             Errors = errors;
             ProviderSettings = providerSettings;
         }
 
+        /// <summary> Managed service identity (user assigned identities). </summary>
+        public UserAssignedServiceIdentity Identity { get; set; }
         /// <summary> State of provisioning of the provider instance. </summary>
         public WorkloadMonitorProvisioningState? ProvisioningState { get; }
         /// <summary> Defines the provider instance errors. </summary>

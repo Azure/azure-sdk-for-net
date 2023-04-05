@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static Platform DeserializePlatform(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PlatformType> platformType = default;
             Optional<VersionState> versionState = default;
             Optional<string> minimumPlatformSoftwareVersion = default;

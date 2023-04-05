@@ -15,6 +15,10 @@ namespace Azure.MixedReality.RemoteRendering
     {
         internal static RemoteRenderingServiceError DeserializeRemoteRenderingServiceError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string code = default;
             string message = default;
             Optional<IReadOnlyList<RemoteRenderingServiceError>> details = default;

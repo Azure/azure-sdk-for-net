@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertSummary DeserializeServiceAlertSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceAlertSummaryGroup> properties = default;
             ResourceIdentifier id = default;
             string name = default;

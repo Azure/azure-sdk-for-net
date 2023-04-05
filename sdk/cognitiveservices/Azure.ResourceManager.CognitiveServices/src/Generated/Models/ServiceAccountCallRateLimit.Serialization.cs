@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static ServiceAccountCallRateLimit DeserializeServiceAccountCallRateLimit(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> count = default;
             Optional<float> renewalPeriod = default;
             Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rules = default;

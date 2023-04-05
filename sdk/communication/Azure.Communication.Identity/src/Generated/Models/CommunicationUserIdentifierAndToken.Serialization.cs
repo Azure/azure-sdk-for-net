@@ -15,6 +15,10 @@ namespace Azure.Communication.Identity
     {
         internal static CommunicationUserIdentifierAndToken DeserializeCommunicationUserIdentifierAndToken(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CommunicationIdentity identity = default;
             Optional<CommunicationIdentityAccessToken> accessToken = default;
             foreach (var property in element.EnumerateObject())

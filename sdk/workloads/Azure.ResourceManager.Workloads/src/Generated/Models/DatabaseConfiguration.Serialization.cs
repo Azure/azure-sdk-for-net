@@ -26,15 +26,25 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteObjectValue(VirtualMachineConfiguration);
             writer.WritePropertyName("instanceCount"u8);
             writer.WriteNumberValue(InstanceCount);
+            if (Optional.IsDefined(DiskConfiguration))
+            {
+                writer.WritePropertyName("diskConfiguration"u8);
+                writer.WriteObjectValue(DiskConfiguration);
+            }
             writer.WriteEndObject();
         }
 
         internal static DatabaseConfiguration DeserializeDatabaseConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SapDatabaseType> databaseType = default;
             ResourceIdentifier subnetId = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
             long instanceCount = default;
+            Optional<DiskConfiguration> diskConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseType"u8))
@@ -62,8 +72,18 @@ namespace Azure.ResourceManager.Workloads.Models
                     instanceCount = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("diskConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    diskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(property.Value);
+                    continue;
+                }
             }
-            return new DatabaseConfiguration(Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration, instanceCount);
+            return new DatabaseConfiguration(Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration, instanceCount, diskConfiguration.Value);
         }
     }
 }

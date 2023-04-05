@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> accessRulesVersion = default;
             Optional<IReadOnlyList<EventHubsNspAccessRule>> accessRules = default;

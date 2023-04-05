@@ -12,7 +12,10 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing the ServiceBusNetworkRuleSet data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceBusNetworkRuleSet data model.
+    /// Description of NetworkRuleSet resource.
+    /// </summary>
     public partial class ServiceBusNetworkRuleSetData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusNetworkRuleSetData. </summary>

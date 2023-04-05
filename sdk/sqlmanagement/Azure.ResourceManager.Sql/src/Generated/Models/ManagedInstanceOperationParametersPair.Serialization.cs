@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ManagedInstanceOperationParametersPair DeserializeManagedInstanceOperationParametersPair(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<UpsertManagedServerOperationParameters> currentParameters = default;
             Optional<UpsertManagedServerOperationParameters> requestedParameters = default;
             foreach (var property in element.EnumerateObject())

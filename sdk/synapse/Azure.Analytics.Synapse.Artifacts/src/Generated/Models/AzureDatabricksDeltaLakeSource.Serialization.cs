@@ -56,6 +56,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureDatabricksDeltaLakeSource DeserializeAzureDatabricksDeltaLakeSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> query = default;
             Optional<AzureDatabricksDeltaLakeExportCommand> exportSettings = default;
             string type = default;

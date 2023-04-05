@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in ApplicationSecurityGroups)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -51,6 +56,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static AgentPoolNetworkProfile DeserializeAgentPoolNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ContainerServiceIPTag>> nodePublicIPTags = default;
             Optional<IList<AgentPoolNetworkPortRange>> allowedHostPorts = default;
             Optional<IList<ResourceIdentifier>> applicationSecurityGroups = default;
@@ -96,7 +105,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ResourceIdentifier(item.GetString()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     applicationSecurityGroups = array;
                     continue;

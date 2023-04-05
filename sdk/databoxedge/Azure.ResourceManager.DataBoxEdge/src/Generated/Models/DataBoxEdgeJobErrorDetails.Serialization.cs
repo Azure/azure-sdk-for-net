@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static DataBoxEdgeJobErrorDetails DeserializeDataBoxEdgeJobErrorDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataBoxEdgeJobErrorItem>> errorDetails = default;
             Optional<string> code = default;
             Optional<string> message = default;

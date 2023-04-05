@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static ContainerRegistryArtifactEventTarget DeserializeContainerRegistryArtifactEventTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;

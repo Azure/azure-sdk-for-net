@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static StoredProcedureParameter DeserializeStoredProcedureParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> value = default;
             Optional<StoredProcedureParameterType> type = default;
             foreach (var property in element.EnumerateObject())

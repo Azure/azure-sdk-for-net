@@ -162,11 +162,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppBackupPolicyResource backupPolicyResource1 = await CreateBackupPolicy(DefaultLocation, backupPolicyName);
             Assert.AreEqual(backupPolicyName, backupPolicyResource1.Id.Name);
 
-            //getVault id
-            var vaults = await _netAppAccount.GetVaultsAsync().ToEnumerableAsync();
-            vaults.Should().HaveCount(1);
-            NetAppVault vault = vaults.FirstOrDefault();
-            Assert.IsNotNull(vault);
             //create capacity pool
             _capacityPool = await CreateCapacityPool(DefaultLocation, NetAppFileServiceLevel.Premium, _poolSize);
             _volumeCollection = _capacityPool.GetNetAppVolumes();
@@ -176,8 +171,15 @@ namespace Azure.ResourceManager.NetApp.Tests
             {
                 DefaultVirtualNetwork = await CreateVirtualNetwork();
             }
-            NetAppVolumeBackupConfiguration backupPolicyProperties = new(backupPolicyResource1.Id, false, vault.Id, true);
-            NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection(backup: backupPolicyProperties, null,null);
+            //backupPolicyResource1.Id, false, true
+            //NetAppVolumeBackupConfiguration backupPolicyProperties = new(backupPolicyResource1.Id, false, true);
+            //NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection(backup: backupPolicyProperties, null, null);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(5000);
+            }
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new() { BackupPolicyId = backupPolicyResource1.Id, IsPolicyEnforced = false, IsBackupEnabled = true };
+            NetAppVolumeDataProtection dataProtectionProperties = new() { Backup = backupPolicyProperties};
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId:DefaultSubnetId, dataProtection: dataProtectionProperties);
 
             //Validate if created properly

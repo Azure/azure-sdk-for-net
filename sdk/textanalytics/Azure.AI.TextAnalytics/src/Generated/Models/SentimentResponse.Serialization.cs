@@ -43,6 +43,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static SentimentResponse DeserializeSentimentResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<SentimentResponseDocumentsItem> documents = default;
             IList<InputError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;

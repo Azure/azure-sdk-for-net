@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static GranularCopyProgress DeserializeGranularCopyProgress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> storageAccountName = default;
             Optional<DataBoxJobTransferType> transferType = default;
             Optional<DataAccountType> dataAccountType = default;

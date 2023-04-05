@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlServerDatabaseReplicationLinkData DeserializeSqlServerDatabaseReplicationLinkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedCertificateProperties DeserializeManagedCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subject = default;
             Optional<DateTimeOffset> expirationDate = default;
             SecretType type = default;

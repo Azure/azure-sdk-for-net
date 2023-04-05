@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabWeekDetails DeserializeDevTestLabWeekDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> weekdays = default;
             Optional<string> time = default;
             foreach (var property in element.EnumerateObject())

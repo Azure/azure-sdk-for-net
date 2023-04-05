@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Quota.Models
     {
         internal static OperationResponse DeserializeOperationResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<OperationDisplay> display = default;
             Optional<string> origin = default;

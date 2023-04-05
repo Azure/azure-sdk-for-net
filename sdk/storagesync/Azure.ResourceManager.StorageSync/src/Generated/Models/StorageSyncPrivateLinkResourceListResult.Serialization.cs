@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static StorageSyncPrivateLinkResourceListResult DeserializeStorageSyncPrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StorageSyncPrivateLinkResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {

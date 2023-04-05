@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Peering.Models
     {
         internal static RoutingPreferenceUnbilledPrefix DeserializeRoutingPreferenceUnbilledPrefix(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> prefix = default;
             Optional<AzureLocation> azureRegion = default;
             Optional<int> peerAsn = default;

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static SourceLifeCycle DeserializeSourceLifeCycle(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataProtectionBackupDeleteSetting deleteAfter = default;
             DataStoreInfoBase sourceDataStore = default;
             Optional<IList<TargetCopySetting>> targetDataStoreCopySettings = default;

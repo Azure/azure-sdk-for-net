@@ -132,6 +132,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DatasetTextFormat DeserializeDatasetTextFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> columnDelimiter = default;
             Optional<BinaryData> rowDelimiter = default;
             Optional<BinaryData> escapeChar = default;

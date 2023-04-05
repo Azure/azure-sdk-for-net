@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeRemoteSupportSettings DeserializeEdgeRemoteSupportSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EdgeRemoteApplicationType> remoteApplicationType = default;
             Optional<EdgeRemoteApplicationAccessLevel> accessLevel = default;
             Optional<DateTimeOffset> expirationTimeStampInUtc = default;

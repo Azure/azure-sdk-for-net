@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         public static ResponseBasedDetectedErrorType ToResponseBasedDetectedErrorType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return ResponseBasedDetectedErrorType.None;
-            if (string.Equals(value, "TcpErrorsOnly", StringComparison.InvariantCultureIgnoreCase)) return ResponseBasedDetectedErrorType.TcpErrorsOnly;
-            if (string.Equals(value, "TcpAndHttpErrors", StringComparison.InvariantCultureIgnoreCase)) return ResponseBasedDetectedErrorType.TcpAndHttpErrors;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return ResponseBasedDetectedErrorType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TcpErrorsOnly")) return ResponseBasedDetectedErrorType.TcpErrorsOnly;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TcpAndHttpErrors")) return ResponseBasedDetectedErrorType.TcpAndHttpErrors;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseBasedDetectedErrorType value.");
         }
     }

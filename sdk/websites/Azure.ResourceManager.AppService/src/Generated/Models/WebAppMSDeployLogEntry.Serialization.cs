@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static WebAppMSDeployLogEntry DeserializeWebAppMSDeployLogEntry(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> time = default;
             Optional<WebAppMSDeployLogEntryType> type = default;
             Optional<string> message = default;

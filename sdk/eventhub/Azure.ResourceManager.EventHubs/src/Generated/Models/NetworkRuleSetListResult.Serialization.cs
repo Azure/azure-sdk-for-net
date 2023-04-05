@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static NetworkRuleSetListResult DeserializeNetworkRuleSetListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EventHubsNetworkRuleSetData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

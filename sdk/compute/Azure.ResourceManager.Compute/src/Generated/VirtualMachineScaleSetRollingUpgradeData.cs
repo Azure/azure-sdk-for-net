@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the VirtualMachineScaleSetRollingUpgrade data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualMachineScaleSetRollingUpgrade data model.
+    /// The status of the latest virtual machine scale set rolling upgrade.
+    /// </summary>
     public partial class VirtualMachineScaleSetRollingUpgradeData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetRollingUpgradeData. </summary>

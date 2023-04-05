@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static SlowRequestsBasedTrigger DeserializeSlowRequestsBasedTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> timeTaken = default;
             Optional<string> path = default;
             Optional<int> count = default;

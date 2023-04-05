@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ProductConfigurations DeserializeProductConfigurations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ProductConfiguration>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

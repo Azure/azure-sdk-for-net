@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static BatchNameAvailabilityResult DeserializeBatchNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<BatchNameUnavailableReason> reason = default;
             Optional<string> message = default;

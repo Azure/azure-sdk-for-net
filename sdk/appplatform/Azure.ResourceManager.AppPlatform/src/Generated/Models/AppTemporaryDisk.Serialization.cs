@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppTemporaryDisk DeserializeAppTemporaryDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> sizeInGB = default;
             Optional<string> mountPath = default;
             foreach (var property in element.EnumerateObject())

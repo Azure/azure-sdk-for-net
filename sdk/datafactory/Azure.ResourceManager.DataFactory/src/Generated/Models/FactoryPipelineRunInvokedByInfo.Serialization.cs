@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryPipelineRunInvokedByInfo DeserializeFactoryPipelineRunInvokedByInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<string> invokedByType = default;

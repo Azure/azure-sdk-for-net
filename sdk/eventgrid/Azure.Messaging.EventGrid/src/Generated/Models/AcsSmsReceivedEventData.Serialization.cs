@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsSmsReceivedEventData DeserializeAcsSmsReceivedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<DateTimeOffset> receivedTimestamp = default;
             Optional<string> messageId = default;

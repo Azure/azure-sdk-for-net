@@ -207,6 +207,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         internal static ServiceFabricManagedClusterData DeserializeServiceFabricManagedClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceFabricManagedClustersSku> sku = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -372,7 +376,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<BinaryData> array = new List<BinaryData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BinaryData.FromString(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BinaryData.FromString(item.GetRawText()));
+                                }
                             }
                             clusterCertificateThumbprints = array;
                             continue;

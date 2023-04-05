@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningContainerRegistryCredentials DeserializeMachineLearningContainerRegistryCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<string> username = default;
             Optional<IReadOnlyList<MachineLearningPasswordDetail>> passwords = default;

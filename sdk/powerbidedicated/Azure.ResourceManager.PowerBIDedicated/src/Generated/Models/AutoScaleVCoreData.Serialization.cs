@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         internal static AutoScaleVCoreData DeserializeAutoScaleVCoreData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AutoScaleVCoreSku sku = default;
             Optional<string> id = default;
             Optional<string> name = default;

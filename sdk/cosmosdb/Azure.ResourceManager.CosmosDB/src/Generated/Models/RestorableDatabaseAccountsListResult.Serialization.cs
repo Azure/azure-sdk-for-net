@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static RestorableDatabaseAccountsListResult DeserializeRestorableDatabaseAccountsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RestorableCosmosDBAccountData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

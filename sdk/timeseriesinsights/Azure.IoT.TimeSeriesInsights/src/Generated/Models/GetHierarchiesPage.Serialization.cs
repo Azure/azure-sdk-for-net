@@ -15,6 +15,10 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static GetHierarchiesPage DeserializeGetHierarchiesPage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TimeSeriesHierarchy>> hierarchies = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())

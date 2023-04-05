@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static WindowsGmsaProfile DeserializeWindowsGmsaProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<string> dnsServer = default;
             Optional<string> rootDomainName = default;

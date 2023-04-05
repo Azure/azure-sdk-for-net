@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static ParameterValue DeserializeParameterValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> value = default;
             Optional<SecretValueReference> reference = default;
             foreach (var property in element.EnumerateObject())

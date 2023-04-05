@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static PagedLabServicesSkus DeserializePagedLabServicesSkus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AvailableLabServicesSku>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

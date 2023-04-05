@@ -14,6 +14,10 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Error> error = default;
             foreach (var property in element.EnumerateObject())
             {

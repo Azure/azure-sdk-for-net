@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Analysis.Models
     {
         internal static AnalysisExistingSku DeserializeAnalysisExistingSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AnalysisResourceSku> sku = default;
             Optional<ResourceType> resourceType = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static PortalRevisionListResult DeserializePortalRevisionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ApiManagementPortalRevisionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

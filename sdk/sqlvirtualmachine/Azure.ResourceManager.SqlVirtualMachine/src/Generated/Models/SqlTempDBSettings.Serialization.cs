@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlTempDBSettings DeserializeSqlTempDBSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> dataFileSize = default;
             Optional<int> dataGrowth = default;
             Optional<int> logFileSize = default;

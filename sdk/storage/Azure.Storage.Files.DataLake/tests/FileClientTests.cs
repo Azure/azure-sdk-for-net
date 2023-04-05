@@ -1865,13 +1865,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             await file.CreateAsync();
 
             // Act
-            PathPermissions permissionsStickyBit = PathPermissions.ParseOctalPermissions("1610");
+            string octalPermissions = "1610";
+            PathPermissions permissionsStickyBit = PathPermissions.ParseOctalPermissions(octalPermissions);
             Response<PathInfo> response = await file.SetPermissionsAsync(permissions: permissionsStickyBit);
 
             // Assert
             AssertValidStoragePathInfo(response);
 
             Response<PathAccessControl> response2 = await file.GetAccessControlAsync();
+            Assert.AreEqual(octalPermissions, response2.Value.Permissions.ToOctalPermissions());
             Assert.AreEqual(permissionsStickyBit.Owner, response2.Value.Permissions.Owner);
             Assert.AreEqual(permissionsStickyBit.Group, response2.Value.Permissions.Group);
             Assert.AreEqual(permissionsStickyBit.Other, response2.Value.Permissions.Other);
@@ -1886,13 +1888,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             await file.CreateAsync();
 
             // Act
-            PathPermissions permissionsStickyBit = PathPermissions.ParseSymbolicPermissions("rwxrwxrwT");
+            string symbolicPermissions = "rwxrwxrwT";
+            PathPermissions permissionsStickyBit = PathPermissions.ParseSymbolicPermissions(symbolicPermissions);
             Response<PathInfo> response = await file.SetPermissionsAsync(permissions: permissionsStickyBit);
 
             // Assert
             AssertValidStoragePathInfo(response);
 
             Response<PathAccessControl> response2 = await file.GetAccessControlAsync();
+            Assert.AreEqual(symbolicPermissions, response2.Value.Permissions.ToSymbolicPermissions());
             Assert.AreEqual(permissionsStickyBit.Owner, response2.Value.Permissions.Owner);
             Assert.AreEqual(permissionsStickyBit.Group, response2.Value.Permissions.Group);
             Assert.AreEqual(permissionsStickyBit.Other, response2.Value.Permissions.Other);
@@ -1907,13 +1911,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             await file.CreateAsync();
 
             // Act
-            PathPermissions permissionsStickyBit = PathPermissions.ParseSymbolicPermissions("rwxrwxrwt");
+            string symbolicPermissions = "rwxrwxrwt";
+            PathPermissions permissionsStickyBit = PathPermissions.ParseSymbolicPermissions(symbolicPermissions);
             Response<PathInfo> response = await file.SetPermissionsAsync(permissions: permissionsStickyBit);
 
             // Assert
             AssertValidStoragePathInfo(response);
 
             Response<PathAccessControl> response2 = await file.GetAccessControlAsync();
+            Assert.AreEqual(symbolicPermissions, response2.Value.Permissions.ToSymbolicPermissions());
             Assert.AreEqual(permissionsStickyBit.Owner, response2.Value.Permissions.Owner);
             Assert.AreEqual(permissionsStickyBit.Group, response2.Value.Permissions.Group);
             Assert.AreEqual(permissionsStickyBit.Other, response2.Value.Permissions.Other);

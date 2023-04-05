@@ -16,6 +16,10 @@ namespace Azure.AI.OpenAI
     {
         internal static Completions DeserializeCompletions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<int?> created = default;
             Optional<string> model = default;

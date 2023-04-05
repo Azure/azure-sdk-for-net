@@ -84,6 +84,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SqlConnectionInfo DeserializeSqlConnectionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string dataSource = default;
             Optional<string> serverName = default;
             Optional<int> port = default;

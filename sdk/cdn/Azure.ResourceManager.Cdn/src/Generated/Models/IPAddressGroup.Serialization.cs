@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static IPAddressGroup DeserializeIPAddressGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deliveryRegion = default;
             Optional<IList<CidrIPAddress>> ipv4Addresses = default;
             Optional<IList<CidrIPAddress>> ipv6Addresses = default;

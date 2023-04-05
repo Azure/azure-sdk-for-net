@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchVmConfiguration DeserializeBatchVmConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BatchImageReference imageReference = default;
             string nodeAgentSkuId = default;
             Optional<WindowsConfiguration> windowsConfiguration = default;

@@ -12,7 +12,10 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    /// <summary> A class representing the MetadataEntity data model. </summary>
+    /// <summary>
+    /// A class representing the MetadataEntity data model.
+    /// The metadata entity contract.
+    /// </summary>
     public partial class MetadataEntityData : ResourceData
     {
         /// <summary> Initializes a new instance of MetadataEntityData. </summary>

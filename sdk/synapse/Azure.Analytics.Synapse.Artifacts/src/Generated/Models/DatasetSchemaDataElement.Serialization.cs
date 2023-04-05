@@ -39,6 +39,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatasetSchemaDataElement DeserializeDatasetSchemaDataElement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> name = default;
             Optional<object> type = default;
             IDictionary<string, object> additionalProperties = default;

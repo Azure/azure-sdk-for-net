@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2APolicyDetails DeserializeA2APolicyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> recoveryPointThresholdInMinutes = default;
             Optional<int> recoveryPointHistory = default;
             Optional<int> appConsistentFrequencyInMinutes = default;

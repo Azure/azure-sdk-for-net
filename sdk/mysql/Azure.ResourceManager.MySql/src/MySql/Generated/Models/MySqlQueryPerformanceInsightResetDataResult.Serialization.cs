@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlQueryPerformanceInsightResetDataResult DeserializeMySqlQueryPerformanceInsightResetDataResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MySqlQueryPerformanceInsightResetDataResultState> status = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())

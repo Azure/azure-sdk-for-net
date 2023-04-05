@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static RestorePolicy DeserializeRestorePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             Optional<int> days = default;
             Optional<DateTimeOffset> lastEnabledTime = default;

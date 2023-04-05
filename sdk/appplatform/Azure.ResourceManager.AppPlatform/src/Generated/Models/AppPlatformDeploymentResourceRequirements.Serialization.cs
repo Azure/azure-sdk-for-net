@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformDeploymentResourceRequirements DeserializeAppPlatformDeploymentResourceRequirements(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cpu = default;
             Optional<string> memory = default;
             foreach (var property in element.EnumerateObject())

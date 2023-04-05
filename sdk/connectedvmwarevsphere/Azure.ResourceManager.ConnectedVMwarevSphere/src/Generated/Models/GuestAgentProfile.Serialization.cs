@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static GuestAgentProfile DeserializeGuestAgentProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmUuid = default;
             Optional<StatusType> status = default;
             Optional<DateTimeOffset> lastStatusChange = default;

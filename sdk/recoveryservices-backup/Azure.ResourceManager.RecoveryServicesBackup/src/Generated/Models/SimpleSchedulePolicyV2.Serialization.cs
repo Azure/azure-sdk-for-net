@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static SimpleSchedulePolicyV2 DeserializeSimpleSchedulePolicyV2(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ScheduleRunType> scheduleRunFrequency = default;
             Optional<BackupHourlySchedule> hourlySchedule = default;
             Optional<BackupDailySchedule> dailySchedule = default;

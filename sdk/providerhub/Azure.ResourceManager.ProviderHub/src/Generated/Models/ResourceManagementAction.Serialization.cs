@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceManagementAction DeserializeResourceManagementAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ResourceManagementEntity>> resources = default;
             foreach (var property in element.EnumerateObject())
             {

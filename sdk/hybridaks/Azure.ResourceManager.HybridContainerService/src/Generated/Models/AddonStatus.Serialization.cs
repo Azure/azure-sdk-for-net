@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static AddonStatus DeserializeAddonStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> errorMessage = default;
             Optional<string> phase = default;
             Optional<bool> ready = default;

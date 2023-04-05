@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ProviderHub
 
         internal static CustomRolloutData DeserializeCustomRolloutData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CustomRolloutProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;

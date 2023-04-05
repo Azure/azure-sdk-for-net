@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Communication.Models
     {
         internal static DomainResourceList DeserializeDomainResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CommunicationDomainResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

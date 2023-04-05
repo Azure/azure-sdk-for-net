@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServiceVirtualNetworkProperties DeserializeAppServiceVirtualNetworkProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> vnetResourceId = default;
             Optional<BinaryData> certThumbprint = default;
             Optional<string> certBlob = default;

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static KeyVaultResourceSettings DeserializeKeyVaultResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string resourceType = default;
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())

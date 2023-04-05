@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the ContainerServiceMaintenanceConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerServiceMaintenanceConfiguration data model.
+    /// See [planned maintenance](https://docs.microsoft.com/azure/aks/planned-maintenance) for more information about planned maintenance.
+    /// </summary>
     public partial class ContainerServiceMaintenanceConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerServiceMaintenanceConfigurationData. </summary>

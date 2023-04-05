@@ -14,7 +14,10 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing the CapacityPool data model. </summary>
+    /// <summary>
+    /// A class representing the CapacityPool data model.
+    /// Capacity pool resource
+    /// </summary>
     public partial class CapacityPoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CapacityPoolData. </summary>

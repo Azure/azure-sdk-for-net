@@ -133,6 +133,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static IaasVmRestoreContent DeserializeIaasVmRestoreContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("objectType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

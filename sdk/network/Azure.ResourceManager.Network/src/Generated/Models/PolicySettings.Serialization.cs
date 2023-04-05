@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PolicySettings DeserializePolicySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WebApplicationFirewallEnabledState> state = default;
             Optional<WebApplicationFirewallMode> mode = default;
             Optional<bool> requestBodyCheck = default;

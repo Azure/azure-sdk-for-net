@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppInstanceHttpGetAction DeserializeAppInstanceHttpGetAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> path = default;
             Optional<AppInstanceHttpSchemeType> scheme = default;
             ProbeActionType type = default;

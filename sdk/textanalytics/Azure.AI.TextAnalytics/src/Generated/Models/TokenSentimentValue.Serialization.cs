@@ -21,9 +21,9 @@ namespace Azure.AI.TextAnalytics.Models
 
         public static TokenSentimentValue ToTokenSentimentValue(this string value)
         {
-            if (string.Equals(value, "positive", StringComparison.InvariantCultureIgnoreCase)) return TokenSentimentValue.Positive;
-            if (string.Equals(value, "mixed", StringComparison.InvariantCultureIgnoreCase)) return TokenSentimentValue.Mixed;
-            if (string.Equals(value, "negative", StringComparison.InvariantCultureIgnoreCase)) return TokenSentimentValue.Negative;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "positive")) return TokenSentimentValue.Positive;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "mixed")) return TokenSentimentValue.Mixed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "negative")) return TokenSentimentValue.Negative;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TokenSentimentValue value.");
         }
     }

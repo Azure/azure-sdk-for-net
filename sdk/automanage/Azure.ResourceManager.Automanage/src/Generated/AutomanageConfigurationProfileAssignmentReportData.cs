@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
-    /// <summary> A class representing the AutomanageConfigurationProfileAssignmentReport data model. </summary>
+    /// <summary>
+    /// A class representing the AutomanageConfigurationProfileAssignmentReport data model.
+    /// Definition of the report.
+    /// </summary>
     public partial class AutomanageConfigurationProfileAssignmentReportData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentReportData. </summary>

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ContainerServiceNetworkProfileForSnapshot DeserializeContainerServiceNetworkProfileForSnapshot(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerServiceNetworkPlugin> networkPlugin = default;
             Optional<ContainerServiceNetworkPluginMode> networkPluginMode = default;
             Optional<ContainerServiceNetworkPolicy> networkPolicy = default;

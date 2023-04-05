@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
-    /// <summary> A class representing the AutomanageConfigurationProfileAssignment data model. </summary>
+    /// <summary>
+    /// A class representing the AutomanageConfigurationProfileAssignment data model.
+    /// Configuration profile assignment is an association between a VM and automanage profile configuration.
+    /// </summary>
     public partial class AutomanageConfigurationProfileAssignmentData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentData. </summary>

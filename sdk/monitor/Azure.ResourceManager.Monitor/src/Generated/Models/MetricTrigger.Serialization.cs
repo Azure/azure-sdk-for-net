@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricTrigger DeserializeMetricTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string metricName = default;
             Optional<string> metricNamespace = default;
             ResourceIdentifier metricResourceUri = default;

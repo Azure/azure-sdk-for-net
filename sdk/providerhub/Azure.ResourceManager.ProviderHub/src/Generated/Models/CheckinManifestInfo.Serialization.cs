@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static CheckinManifestInfo DeserializeCheckinManifestInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool isCheckedIn = default;
             string statusMessage = default;
             Optional<string> pullRequest = default;

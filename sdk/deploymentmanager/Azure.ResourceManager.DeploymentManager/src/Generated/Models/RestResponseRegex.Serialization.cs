@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static RestResponseRegex DeserializeRestResponseRegex(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> matches = default;
             Optional<RestMatchQuantifier> matchQuantifier = default;
             foreach (var property in element.EnumerateObject())

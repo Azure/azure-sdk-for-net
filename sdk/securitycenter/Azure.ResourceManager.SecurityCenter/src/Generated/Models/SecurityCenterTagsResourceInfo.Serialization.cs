@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityCenterTagsResourceInfo DeserializeSecurityCenterTagsResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {

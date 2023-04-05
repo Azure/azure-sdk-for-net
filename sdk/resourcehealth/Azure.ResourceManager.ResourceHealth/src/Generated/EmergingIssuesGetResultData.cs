@@ -13,7 +13,10 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    /// <summary> A class representing the EmergingIssuesGetResult data model. </summary>
+    /// <summary>
+    /// A class representing the EmergingIssuesGetResult data model.
+    /// The Get EmergingIssues operation response.
+    /// </summary>
     public partial class EmergingIssuesGetResultData : ResourceData
     {
         /// <summary> Initializes a new instance of EmergingIssuesGetResultData. </summary>

@@ -14,6 +14,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static SearchSummary DeserializeSearchSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> query = default;
             Optional<MapsQueryType> queryType = default;
             Optional<int> queryTime = default;

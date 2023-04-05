@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.Relay.Models
 
         internal static RelayNamespacePatch DeserializeRelayNamespacePatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RelaySku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;

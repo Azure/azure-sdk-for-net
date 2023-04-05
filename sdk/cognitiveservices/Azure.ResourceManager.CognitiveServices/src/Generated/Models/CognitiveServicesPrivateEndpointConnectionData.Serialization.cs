@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.CognitiveServices
 
         internal static CognitiveServicesPrivateEndpointConnectionData DeserializeCognitiveServicesPrivateEndpointConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

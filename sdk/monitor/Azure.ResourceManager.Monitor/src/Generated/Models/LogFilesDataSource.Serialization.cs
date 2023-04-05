@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static LogFilesDataSource DeserializeLogFilesDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> streams = default;
             IList<string> filePatterns = default;
             LogFilesDataSourceFormat format = default;

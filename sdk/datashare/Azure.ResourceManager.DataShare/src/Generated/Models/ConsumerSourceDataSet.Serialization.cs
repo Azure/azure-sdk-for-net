@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ConsumerSourceDataSet DeserializeConsumerSourceDataSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

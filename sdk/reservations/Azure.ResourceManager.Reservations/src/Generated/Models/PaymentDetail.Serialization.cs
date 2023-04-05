@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static PaymentDetail DeserializePaymentDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> dueDate = default;
             Optional<DateTimeOffset> paymentDate = default;
             Optional<PurchasePrice> pricingCurrencyTotal = default;

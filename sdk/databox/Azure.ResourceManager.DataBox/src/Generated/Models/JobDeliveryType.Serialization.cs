@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static JobDeliveryType ToJobDeliveryType(this string value)
         {
-            if (string.Equals(value, "NonScheduled", StringComparison.InvariantCultureIgnoreCase)) return JobDeliveryType.NonScheduled;
-            if (string.Equals(value, "Scheduled", StringComparison.InvariantCultureIgnoreCase)) return JobDeliveryType.Scheduled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NonScheduled")) return JobDeliveryType.NonScheduled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Scheduled")) return JobDeliveryType.Scheduled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown JobDeliveryType value.");
         }
     }

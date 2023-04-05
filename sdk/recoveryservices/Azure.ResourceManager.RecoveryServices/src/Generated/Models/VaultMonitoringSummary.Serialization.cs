@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static VaultMonitoringSummary DeserializeVaultMonitoringSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> unHealthyVmCount = default;
             Optional<int> unHealthyProviderCount = default;
             Optional<int> eventsCount = default;

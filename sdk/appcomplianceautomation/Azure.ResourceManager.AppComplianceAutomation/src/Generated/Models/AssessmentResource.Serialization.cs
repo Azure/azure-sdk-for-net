@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static AssessmentResource DeserializeAssessmentResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceId = default;
             Optional<ResourceStatus> resourceStatus = default;
             Optional<string> reason = default;

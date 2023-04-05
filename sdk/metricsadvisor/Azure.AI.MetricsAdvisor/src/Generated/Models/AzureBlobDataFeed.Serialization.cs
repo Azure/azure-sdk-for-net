@@ -166,6 +166,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static AzureBlobDataFeed DeserializeAzureBlobDataFeed(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AzureBlobParameter dataSourceParameter = default;
             DataFeedSourceKind dataSourceType = default;
             Optional<string> dataFeedId = default;

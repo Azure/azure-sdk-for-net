@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ManagedClusterListResult DeserializeManagedClusterListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ContainerServiceManagedClusterData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

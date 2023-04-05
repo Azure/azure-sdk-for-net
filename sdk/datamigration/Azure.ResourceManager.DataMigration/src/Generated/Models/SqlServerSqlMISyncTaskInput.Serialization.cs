@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SqlServerSqlMISyncTaskInput DeserializeSqlServerSqlMISyncTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
             Optional<FileShare> backupFileShare = default;
             string storageResourceId = default;

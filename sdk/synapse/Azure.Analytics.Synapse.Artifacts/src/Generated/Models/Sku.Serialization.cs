@@ -38,6 +38,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static Sku DeserializeSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tier = default;
             Optional<string> name = default;
             Optional<int> capacity = default;

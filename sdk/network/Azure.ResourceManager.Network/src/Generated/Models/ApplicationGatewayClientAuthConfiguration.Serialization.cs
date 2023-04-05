@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayClientAuthConfiguration DeserializeApplicationGatewayClientAuthConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> verifyClientCertIssuerDN = default;
             foreach (var property in element.EnumerateObject())
             {

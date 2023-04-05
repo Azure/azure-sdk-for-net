@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformGateway data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformGateway data model.
+    /// Spring Cloud Gateway resource
+    /// </summary>
     public partial class AppPlatformGatewayData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformGatewayData. </summary>

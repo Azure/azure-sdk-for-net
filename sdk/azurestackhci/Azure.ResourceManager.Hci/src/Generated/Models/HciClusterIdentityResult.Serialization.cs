@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static HciClusterIdentityResult DeserializeHciClusterIdentityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> aadClientId = default;
             Optional<Guid> aadTenantId = default;
             Optional<Guid> aadServicePrincipalObjectId = default;

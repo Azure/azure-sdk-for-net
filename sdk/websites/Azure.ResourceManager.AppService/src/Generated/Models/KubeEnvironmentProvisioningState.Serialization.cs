@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static KubeEnvironmentProvisioningState ToKubeEnvironmentProvisioningState(this string value)
         {
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return KubeEnvironmentProvisioningState.Succeeded;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return KubeEnvironmentProvisioningState.Failed;
-            if (string.Equals(value, "Canceled", StringComparison.InvariantCultureIgnoreCase)) return KubeEnvironmentProvisioningState.Canceled;
-            if (string.Equals(value, "Waiting", StringComparison.InvariantCultureIgnoreCase)) return KubeEnvironmentProvisioningState.Waiting;
-            if (string.Equals(value, "InitializationInProgress", StringComparison.InvariantCultureIgnoreCase)) return KubeEnvironmentProvisioningState.InitializationInProgress;
-            if (string.Equals(value, "InfrastructureSetupInProgress", StringComparison.InvariantCultureIgnoreCase)) return KubeEnvironmentProvisioningState.InfrastructureSetupInProgress;
-            if (string.Equals(value, "InfrastructureSetupComplete", StringComparison.InvariantCultureIgnoreCase)) return KubeEnvironmentProvisioningState.InfrastructureSetupComplete;
-            if (string.Equals(value, "ScheduledForDelete", StringComparison.InvariantCultureIgnoreCase)) return KubeEnvironmentProvisioningState.ScheduledForDelete;
-            if (string.Equals(value, "UpgradeRequested", StringComparison.InvariantCultureIgnoreCase)) return KubeEnvironmentProvisioningState.UpgradeRequested;
-            if (string.Equals(value, "UpgradeFailed", StringComparison.InvariantCultureIgnoreCase)) return KubeEnvironmentProvisioningState.UpgradeFailed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return KubeEnvironmentProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return KubeEnvironmentProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled")) return KubeEnvironmentProvisioningState.Canceled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Waiting")) return KubeEnvironmentProvisioningState.Waiting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InitializationInProgress")) return KubeEnvironmentProvisioningState.InitializationInProgress;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InfrastructureSetupInProgress")) return KubeEnvironmentProvisioningState.InfrastructureSetupInProgress;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InfrastructureSetupComplete")) return KubeEnvironmentProvisioningState.InfrastructureSetupComplete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ScheduledForDelete")) return KubeEnvironmentProvisioningState.ScheduledForDelete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UpgradeRequested")) return KubeEnvironmentProvisioningState.UpgradeRequested;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UpgradeFailed")) return KubeEnvironmentProvisioningState.UpgradeFailed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KubeEnvironmentProvisioningState value.");
         }
     }

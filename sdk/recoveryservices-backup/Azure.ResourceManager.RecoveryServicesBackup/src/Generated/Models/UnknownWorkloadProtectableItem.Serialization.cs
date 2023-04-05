@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static UnknownWorkloadProtectableItem DeserializeUnknownWorkloadProtectableItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> backupManagementType = default;
             Optional<string> workloadType = default;
             string protectableItemType = "Unknown";

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static CencDrmConfiguration DeserializeCencDrmConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamingPolicyPlayReadyConfiguration> playReady = default;
             Optional<StreamingPolicyWidevineConfiguration> widevine = default;
             foreach (var property in element.EnumerateObject())

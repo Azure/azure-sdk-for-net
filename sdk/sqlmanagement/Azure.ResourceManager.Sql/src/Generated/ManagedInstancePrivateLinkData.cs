@@ -11,7 +11,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedInstancePrivateLink data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedInstancePrivateLink data model.
+    /// A private link resource
+    /// </summary>
     public partial class ManagedInstancePrivateLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstancePrivateLinkData. </summary>

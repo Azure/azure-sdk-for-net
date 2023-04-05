@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the SwiftVirtualNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the SwiftVirtualNetwork data model.
+    /// Swift Virtual Network Contract. This is used to enable the new Swift way of doing virtual network integration.
+    /// </summary>
     public partial class SwiftVirtualNetworkData : ResourceData
     {
         /// <summary> Initializes a new instance of SwiftVirtualNetworkData. </summary>

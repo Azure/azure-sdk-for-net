@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static DataTransferServiceProperties DeserializeDataTransferServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataTransferRegionalService>> locations = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<CosmosDBServiceSize> instanceSize = default;

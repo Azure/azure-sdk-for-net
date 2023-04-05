@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static LoadBalancerLoadBalancingRuleListResult DeserializeLoadBalancerLoadBalancingRuleListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LoadBalancingRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

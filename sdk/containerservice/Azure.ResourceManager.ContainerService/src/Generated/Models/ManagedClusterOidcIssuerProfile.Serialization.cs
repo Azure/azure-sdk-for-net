@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterOidcIssuerProfile DeserializeManagedClusterOidcIssuerProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> issuerUrl = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())

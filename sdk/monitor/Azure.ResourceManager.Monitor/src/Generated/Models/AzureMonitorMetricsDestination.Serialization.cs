@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static AzureMonitorMetricsDestination DeserializeAzureMonitorMetricsDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {

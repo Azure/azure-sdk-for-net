@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RegionalReplicationStatus DeserializeRegionalReplicationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> region = default;
             Optional<RegionalReplicationState> state = default;
             Optional<string> details = default;

@@ -38,17 +38,6 @@ namespace Azure.ResourceManager.Communication
                 writer.WritePropertyName("domainManagement"u8);
                 writer.WriteStringValue(DomainManagement.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ValidSenderUsernames))
-            {
-                writer.WritePropertyName("validSenderUsernames"u8);
-                writer.WriteStartObject();
-                foreach (var item in ValidSenderUsernames)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsDefined(UserEngagementTracking))
             {
                 writer.WritePropertyName("userEngagementTracking"u8);
@@ -60,6 +49,10 @@ namespace Azure.ResourceManager.Communication
 
         internal static CommunicationDomainResourceData DeserializeCommunicationDomainResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -73,7 +66,6 @@ namespace Azure.ResourceManager.Communication
             Optional<DomainManagement> domainManagement = default;
             Optional<DomainPropertiesVerificationStates> verificationStates = default;
             Optional<DomainPropertiesVerificationRecords> verificationRecords = default;
-            Optional<IDictionary<string, string>> validSenderUsernames = default;
             Optional<UserEngagementTracking> userEngagementTracking = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -186,21 +178,6 @@ namespace Azure.ResourceManager.Communication
                             verificationRecords = DomainPropertiesVerificationRecords.DeserializeDomainPropertiesVerificationRecords(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("validSenderUsernames"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            validSenderUsernames = dictionary;
-                            continue;
-                        }
                         if (property0.NameEquals("userEngagementTracking"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -215,7 +192,7 @@ namespace Azure.ResourceManager.Communication
                     continue;
                 }
             }
-            return new CommunicationDomainResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataLocation.Value, fromSenderDomain.Value, mailFromSenderDomain.Value, Optional.ToNullable(domainManagement), verificationStates.Value, verificationRecords.Value, Optional.ToDictionary(validSenderUsernames), Optional.ToNullable(userEngagementTracking));
+            return new CommunicationDomainResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataLocation.Value, fromSenderDomain.Value, mailFromSenderDomain.Value, Optional.ToNullable(domainManagement), verificationStates.Value, verificationRecords.Value, Optional.ToNullable(userEngagementTracking));
         }
     }
 }

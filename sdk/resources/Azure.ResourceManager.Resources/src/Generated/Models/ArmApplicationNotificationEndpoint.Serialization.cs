@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationNotificationEndpoint DeserializeArmApplicationNotificationEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri uri = default;
             foreach (var property in element.EnumerateObject())
             {

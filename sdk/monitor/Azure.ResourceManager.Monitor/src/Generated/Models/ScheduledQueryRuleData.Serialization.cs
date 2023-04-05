@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity.Value.ToString());
+                writer.WriteNumberValue(Severity.Value.ToSerialInt64());
             }
             if (Optional.IsDefined(IsEnabled))
             {
@@ -131,6 +131,10 @@ namespace Azure.ResourceManager.Monitor
 
         internal static ScheduledQueryRuleData DeserializeScheduledQueryRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ScheduledQueryRuleKind> kind = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;

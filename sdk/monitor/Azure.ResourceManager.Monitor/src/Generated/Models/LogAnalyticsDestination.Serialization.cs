@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static LogAnalyticsDestination DeserializeLogAnalyticsDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> workspaceResourceId = default;
             Optional<string> workspaceId = default;
             Optional<string> name = default;

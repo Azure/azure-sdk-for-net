@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static CloudEndpointChangeEnumerationStatus DeserializeCloudEndpointChangeEnumerationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<CloudEndpointLastChangeEnumerationStatus> lastEnumerationStatus = default;
             Optional<CloudEndpointChangeEnumerationActivity> activity = default;

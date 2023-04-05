@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static DataMasking DeserializeDataMasking(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DataMaskingEntity>> queryParams = default;
             Optional<IList<DataMaskingEntity>> headers = default;
             foreach (var property in element.EnumerateObject())

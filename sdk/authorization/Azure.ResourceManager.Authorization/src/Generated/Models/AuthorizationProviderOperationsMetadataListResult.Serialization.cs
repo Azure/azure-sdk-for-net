@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static AuthorizationProviderOperationsMetadataListResult DeserializeAuthorizationProviderOperationsMetadataListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AuthorizationProviderOperationsMetadataData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

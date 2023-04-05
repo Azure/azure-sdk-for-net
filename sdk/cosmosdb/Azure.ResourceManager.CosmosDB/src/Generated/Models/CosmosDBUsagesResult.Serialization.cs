@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CosmosDBUsagesResult DeserializeCosmosDBUsagesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<CosmosDBBaseUsage>> value = default;
             foreach (var property in element.EnumerateObject())
             {

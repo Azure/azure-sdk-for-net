@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal static PrivateEndpointConnectionDataModel DeserializePrivateEndpointConnectionDataModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PrivateEndpointConnectionProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

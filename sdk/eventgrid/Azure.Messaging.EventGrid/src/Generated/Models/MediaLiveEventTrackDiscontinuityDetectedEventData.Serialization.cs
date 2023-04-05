@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaLiveEventTrackDiscontinuityDetectedEventData DeserializeMediaLiveEventTrackDiscontinuityDetectedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> trackType = default;
             Optional<string> trackName = default;
             Optional<long> bitrate = default;

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AwsEnvironment DeserializeAwsEnvironment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AwsOrganizationalInfo> organizationalData = default;
             EnvironmentType environmentType = default;
             foreach (var property in element.EnumerateObject())

@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static OracleConnectionInfo DeserializeOracleConnectionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string dataSource = default;
             Optional<string> serverName = default;
             Optional<string> serverVersion = default;

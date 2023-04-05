@@ -132,6 +132,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static RestSink DeserializeRestSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> requestMethod = default;
             Optional<BinaryData> additionalHeaders = default;
             Optional<BinaryData> httpRequestTimeout = default;

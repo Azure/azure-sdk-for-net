@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     {
         internal static MySqlFlexibleServerCapabilityProperties DeserializeMySqlFlexibleServerCapabilityProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> zone = default;
             Optional<IReadOnlyList<string>> supportedHAMode = default;
             Optional<IReadOnlyList<string>> supportedGeoBackupRegions = default;

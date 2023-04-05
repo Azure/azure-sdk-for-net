@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static NotificationRegistrationArrayResponseWithContinuation DeserializeNotificationRegistrationArrayResponseWithContinuation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NotificationRegistrationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

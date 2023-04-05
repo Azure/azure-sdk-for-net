@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static DataProviderKeyValuePair DeserializeDataProviderKeyValuePair(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> key = default;
             Optional<BinaryData> value = default;
             foreach (var property in element.EnumerateObject())

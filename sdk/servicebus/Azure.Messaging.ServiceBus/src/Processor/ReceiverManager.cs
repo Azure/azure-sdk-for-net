@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus
@@ -25,13 +26,13 @@ namespace Azure.Messaging.ServiceBus
         protected readonly TimeSpan? _maxReceiveWaitTime;
         private readonly ServiceBusReceiverOptions _receiverOptions;
         protected readonly ServiceBusProcessorOptions ProcessorOptions;
-        private readonly EntityScopeFactory _scopeFactory;
+        private readonly MessagingClientDiagnostics _clientDiagnostics;
 
         protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
         public ReceiverManager(
             ServiceBusProcessor processor,
-            EntityScopeFactory scopeFactory,
+            MessagingClientDiagnostics clientDiagnostics,
             bool isSession)
         {
             Processor = processor;
@@ -56,7 +57,7 @@ namespace Azure.Messaging.ServiceBus
                     options: _receiverOptions);
             }
 
-            _scopeFactory = scopeFactory;
+            _clientDiagnostics = clientDiagnostics;
         }
 
         public virtual async Task CloseReceiverIfNeeded(CancellationToken cancellationToken)
@@ -125,15 +126,19 @@ namespace Azure.Messaging.ServiceBus
 
         public virtual void UpdatePrefetchCount(int prefetchCount)
         {
-            if (Receiver != null && Receiver.PrefetchCount != prefetchCount)
+            var capturedReceiver = Receiver;
+
+            // If the Receiver property is set to null after we have captured a non-null instance, the Prefetch setter will essentially
+            // no-op as the underlying link has been closed.
+            if (capturedReceiver != null && capturedReceiver.PrefetchCount != prefetchCount)
             {
-                Receiver.PrefetchCount = prefetchCount;
+                capturedReceiver.PrefetchCount = prefetchCount;
             }
         }
 
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _scopeFactory.CreateScope(activityName, DiagnosticScope.ActivityKind.Consumer);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(activityName, DiagnosticScope.ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
             scope.SetMessageAsParent(message);
             scope.Start();
 

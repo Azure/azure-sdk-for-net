@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     {
         internal static ScopeAssignmentListResult DeserializeScopeAssignmentListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ScopeAssignmentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

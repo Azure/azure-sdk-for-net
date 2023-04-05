@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static MetadataSupportedValueDetail DeserializeMetadataSupportedValueDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> displayName = default;
             Optional<IReadOnlyList<string>> resourceTypes = default;

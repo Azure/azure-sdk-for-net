@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static OperationStatus DeserializeOperationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> status = default;

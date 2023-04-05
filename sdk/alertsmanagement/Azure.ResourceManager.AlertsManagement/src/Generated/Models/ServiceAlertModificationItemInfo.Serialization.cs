@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertModificationItemInfo DeserializeServiceAlertModificationItemInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceAlertModificationEvent> modificationEvent = default;
             Optional<string> oldValue = default;
             Optional<string> newValue = default;

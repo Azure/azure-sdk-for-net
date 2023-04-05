@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ExtendedLocationOptions DeserializeExtendedLocationOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<string> supportedPolicy = default;
             foreach (var property in element.EnumerateObject())

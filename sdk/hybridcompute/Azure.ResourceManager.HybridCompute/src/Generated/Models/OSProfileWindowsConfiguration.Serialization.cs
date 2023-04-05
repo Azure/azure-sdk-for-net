@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static OSProfileWindowsConfiguration DeserializeOSProfileWindowsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AssessmentModeType> assessmentMode = default;
             Optional<PatchModeType> patchMode = default;
             foreach (var property in element.EnumerateObject())

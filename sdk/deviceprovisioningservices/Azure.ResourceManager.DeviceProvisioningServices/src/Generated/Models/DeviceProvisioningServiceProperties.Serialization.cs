@@ -87,6 +87,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static DeviceProvisioningServiceProperties DeserializeDeviceProvisioningServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeviceProvisioningServicesState> state = default;
             Optional<DeviceProvisioningServicesPublicNetworkAccess> publicNetworkAccess = default;
             Optional<IList<DeviceProvisioningServicesIPFilterRule>> ipFilterRules = default;

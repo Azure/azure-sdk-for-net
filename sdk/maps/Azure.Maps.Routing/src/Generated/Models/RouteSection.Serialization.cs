@@ -14,6 +14,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteSection DeserializeRouteSection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> startPointIndex = default;
             Optional<int> endPointIndex = default;
             Optional<ResponseSectionType> sectionType = default;

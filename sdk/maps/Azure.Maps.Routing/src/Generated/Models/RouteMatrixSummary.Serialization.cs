@@ -14,6 +14,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteMatrixSummary DeserializeRouteMatrixSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> successfulRoutes = default;
             Optional<int> totalRoutes = default;
             foreach (var property in element.EnumerateObject())

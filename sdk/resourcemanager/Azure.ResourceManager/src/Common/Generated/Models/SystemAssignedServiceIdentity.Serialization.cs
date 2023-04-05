@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Models
 
         internal static SystemAssignedServiceIdentity DeserializeSystemAssignedServiceIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
             SystemAssignedServiceIdentityType type = default;

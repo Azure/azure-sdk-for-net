@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningPrivateLinkResourceListResult DeserializeMachineLearningPrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MachineLearningPrivateLinkResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {

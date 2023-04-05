@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     {
         internal static GuestConfigurationAssignmentReportDetails DeserializeGuestConfigurationAssignmentReportDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;

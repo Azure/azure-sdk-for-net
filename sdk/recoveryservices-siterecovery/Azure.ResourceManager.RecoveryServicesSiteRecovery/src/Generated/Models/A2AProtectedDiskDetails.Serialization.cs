@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2AProtectedDiskDetails DeserializeA2AProtectedDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> diskUri = default;
             Optional<string> recoveryAzureStorageAccountId = default;
             Optional<string> primaryDiskAzureStorageAccountId = default;

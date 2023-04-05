@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static MsixPackageApplications DeserializeMsixPackageApplications(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> appId = default;
             Optional<string> description = default;
             Optional<string> appUserModelId = default;

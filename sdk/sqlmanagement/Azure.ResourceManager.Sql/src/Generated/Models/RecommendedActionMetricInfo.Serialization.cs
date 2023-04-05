@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static RecommendedActionMetricInfo DeserializeRecommendedActionMetricInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> metricName = default;
             Optional<string> unit = default;
             Optional<string> timeGrain = default;

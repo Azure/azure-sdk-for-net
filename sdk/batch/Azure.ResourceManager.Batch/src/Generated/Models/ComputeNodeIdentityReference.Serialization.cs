@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static ComputeNodeIdentityReference DeserializeComputeNodeIdentityReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {

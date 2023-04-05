@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorEndpointScope DeserializeConnectionMonitorEndpointScope(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ConnectionMonitorEndpointScopeItem>> include = default;
             Optional<IList<ConnectionMonitorEndpointScopeItem>> exclude = default;
             foreach (var property in element.EnumerateObject())

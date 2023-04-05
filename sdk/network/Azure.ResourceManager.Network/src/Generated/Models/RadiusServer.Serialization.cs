@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static RadiusServer DeserializeRadiusServer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string radiusServerAddress = default;
             Optional<long> radiusServerScore = default;
             Optional<string> radiusServerSecret = default;

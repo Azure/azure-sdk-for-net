@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static ReportResourceList DeserializeReportResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ReportResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

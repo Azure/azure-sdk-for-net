@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerInstanceUsageListResult DeserializeContainerInstanceUsageListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ContainerInstanceUsage>> value = default;
             foreach (var property in element.EnumerateObject())
             {

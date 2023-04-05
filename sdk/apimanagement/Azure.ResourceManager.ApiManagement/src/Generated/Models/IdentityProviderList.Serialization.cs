@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static IdentityProviderList DeserializeIdentityProviderList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ApiManagementIdentityProviderData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;

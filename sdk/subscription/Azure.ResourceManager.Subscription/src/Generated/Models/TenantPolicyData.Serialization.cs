@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Subscription
     {
         internal static TenantPolicyData DeserializeTenantPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TenantPolicyProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

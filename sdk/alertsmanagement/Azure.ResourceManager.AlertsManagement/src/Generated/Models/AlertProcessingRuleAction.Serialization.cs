@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static AlertProcessingRuleAction DeserializeAlertProcessingRuleAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("actionType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

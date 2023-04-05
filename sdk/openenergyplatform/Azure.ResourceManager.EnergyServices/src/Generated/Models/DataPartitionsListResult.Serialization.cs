@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EnergyServices.Models
     {
         internal static DataPartitionsListResult DeserializeDataPartitionsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataPartition>> dataPartitionInfo = default;
             foreach (var property in element.EnumerateObject())
             {

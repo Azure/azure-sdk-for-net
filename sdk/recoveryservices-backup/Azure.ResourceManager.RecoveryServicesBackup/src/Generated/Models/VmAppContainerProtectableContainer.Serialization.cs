@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmAppContainerProtectableContainer DeserializeVmAppContainerProtectableContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<BackupManagementType> backupManagementType = default;
             ProtectableContainerType protectableContainerType = default;

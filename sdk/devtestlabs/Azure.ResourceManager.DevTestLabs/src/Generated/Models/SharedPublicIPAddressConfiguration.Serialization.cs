@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static SharedPublicIPAddressConfiguration DeserializeSharedPublicIPAddressConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DevTestLabInboundNatRule>> inboundNatRules = default;
             foreach (var property in element.EnumerateObject())
             {

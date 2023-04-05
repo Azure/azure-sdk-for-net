@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ConnectorMappingErrorManagement DeserializeConnectorMappingErrorManagement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ErrorManagementType errorManagementType = default;
             Optional<int> errorLimit = default;
             foreach (var property in element.EnumerateObject())

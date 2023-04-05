@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static VnetSolution DeserializeVnetSolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VnetSolutionType?> type = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAutomationTriggeringRule DeserializeSecurityAutomationTriggeringRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> propertyJPath = default;
             Optional<AutomationTriggeringRulePropertyType> propertyType = default;
             Optional<string> expectedValue = default;

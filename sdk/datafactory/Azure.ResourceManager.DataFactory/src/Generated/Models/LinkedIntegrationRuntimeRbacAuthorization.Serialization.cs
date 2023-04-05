@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static LinkedIntegrationRuntimeRbacAuthorization DeserializeLinkedIntegrationRuntimeRbacAuthorization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string resourceId = default;
             Optional<FactoryCredentialReference> credential = default;
             string authorizationType = default;

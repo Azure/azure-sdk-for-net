@@ -55,6 +55,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareEntitiesDocumentResultInternal DeserializeHealthcareEntitiesDocumentResultInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<HealthcareEntityInternal> entities = default;
             IList<HealthcareRelationInternal> relations = default;
             Optional<JsonElement> fhirBundle = default;

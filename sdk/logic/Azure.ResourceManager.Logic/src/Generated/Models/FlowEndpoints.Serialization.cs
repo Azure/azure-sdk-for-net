@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowEndpoints DeserializeFlowEndpoints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<FlowEndpointIPAddress>> outgoingIPAddresses = default;
             Optional<IList<FlowEndpointIPAddress>> accessEndpointIPAddresses = default;
             foreach (var property in element.EnumerateObject())

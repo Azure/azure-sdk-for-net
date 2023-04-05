@@ -164,6 +164,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SapTableSource DeserializeSapTableSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> rowCount = default;
             Optional<BinaryData> rowSkips = default;
             Optional<BinaryData> rfcTableFields = default;

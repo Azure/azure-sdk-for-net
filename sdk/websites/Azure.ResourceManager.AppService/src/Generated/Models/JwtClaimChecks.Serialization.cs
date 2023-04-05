@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static JwtClaimChecks DeserializeJwtClaimChecks(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> allowedGroups = default;
             Optional<IList<string>> allowedClientApplications = default;
             foreach (var property in element.EnumerateObject())

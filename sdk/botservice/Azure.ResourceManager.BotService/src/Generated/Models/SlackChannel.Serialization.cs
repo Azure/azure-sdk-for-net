@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static SlackChannel DeserializeSlackChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SlackChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;

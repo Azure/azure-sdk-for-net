@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static NotificationStatus DeserializeNotificationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NotificationContext> context = default;
             string state = default;
             Optional<DateTimeOffset> completedTime = default;

@@ -122,6 +122,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchIndexer DeserializeSearchIndexer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> description = default;
             string dataSourceName = default;

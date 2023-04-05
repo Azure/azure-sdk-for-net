@@ -25,6 +25,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static DataSourceCredentials DeserializeDataSourceCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> connectionString = default;
             foreach (var property in element.EnumerateObject())
             {

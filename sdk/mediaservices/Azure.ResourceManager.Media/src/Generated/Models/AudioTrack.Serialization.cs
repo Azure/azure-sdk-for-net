@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static AudioTrack DeserializeAudioTrack(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fileName = default;
             Optional<string> displayName = default;
             Optional<string> languageCode = default;

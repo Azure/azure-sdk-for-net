@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     {
         internal static GuestConfigurationAssignmentReport DeserializeGuestConfigurationAssignmentReport(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<GuestConfigurationAssignmentReportProperties> properties = default;

@@ -79,6 +79,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static DataMaskingRule DeserializeDataMaskingRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;

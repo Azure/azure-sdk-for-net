@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static ServiceInitiatedSoftwareConfiguration DeserializeServiceInitiatedSoftwareConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri bomUrl = default;
             string softwareVersion = default;
             string sapBitsStorageAccountId = default;

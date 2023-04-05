@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightApplicationEndpoint DeserializeHDInsightApplicationEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> location = default;
             Optional<int> destinationPort = default;
             Optional<int> publicPort = default;

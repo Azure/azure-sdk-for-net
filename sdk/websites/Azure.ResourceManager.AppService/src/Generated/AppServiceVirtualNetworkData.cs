@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AppServiceVirtualNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the AppServiceVirtualNetwork data model.
+    /// Virtual Network information ARM resource.
+    /// </summary>
     public partial class AppServiceVirtualNetworkData : ResourceData
     {
         /// <summary> Initializes a new instance of AppServiceVirtualNetworkData. </summary>

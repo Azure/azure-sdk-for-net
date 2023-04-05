@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Automation.Models
 
         public static EncryptionKeySourceType ToEncryptionKeySourceType(this string value)
         {
-            if (string.Equals(value, "Microsoft.Automation", StringComparison.InvariantCultureIgnoreCase)) return EncryptionKeySourceType.MicrosoftAutomation;
-            if (string.Equals(value, "Microsoft.Keyvault", StringComparison.InvariantCultureIgnoreCase)) return EncryptionKeySourceType.MicrosoftKeyvault;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Automation")) return EncryptionKeySourceType.MicrosoftAutomation;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Keyvault")) return EncryptionKeySourceType.MicrosoftKeyvault;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EncryptionKeySourceType value.");
         }
     }

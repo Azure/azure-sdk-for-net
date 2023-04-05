@@ -13,7 +13,10 @@ using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    /// <summary> A class representing the BackupJob data model. </summary>
+    /// <summary>
+    /// A class representing the BackupJob data model.
+    /// Defines workload agnostic properties for a job.
+    /// </summary>
     public partial class BackupJobData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of BackupJobData. </summary>

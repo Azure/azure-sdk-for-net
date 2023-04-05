@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     {
         internal static ResourceOperation DeserializeResourceOperation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceName = default;
             Optional<string> operationId = default;
             Optional<string> resourceType = default;

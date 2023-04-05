@@ -34,6 +34,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static HardThresholdCondition DeserializeHardThresholdCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> lowerBound = default;
             Optional<double> upperBound = default;
             AnomalyDetectorDirection anomalyDetectorDirection = default;

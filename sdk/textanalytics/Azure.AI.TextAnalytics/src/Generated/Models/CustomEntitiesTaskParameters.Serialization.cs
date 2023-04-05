@@ -34,6 +34,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomEntitiesTaskParameters DeserializeCustomEntitiesTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StringIndexType> stringIndexType = default;
             string projectName = default;
             string deploymentName = default;

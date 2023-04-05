@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchNetworkSecurityGroupRule DeserializeBatchNetworkSecurityGroupRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int priority = default;
             BatchNetworkSecurityGroupRuleAccess access = default;
             string sourceAddressPrefix = default;

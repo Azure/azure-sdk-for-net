@@ -32,7 +32,7 @@ namespace Azure.Identity
         public WorkloadIdentityCredential() : this(default) { }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="WorkloadIdentityCredential"/> with the specfied options.
+        /// Creates a new instance of the <see cref="WorkloadIdentityCredential"/> with the specified options.
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public WorkloadIdentityCredential(WorkloadIdentityCredentialOptions options)

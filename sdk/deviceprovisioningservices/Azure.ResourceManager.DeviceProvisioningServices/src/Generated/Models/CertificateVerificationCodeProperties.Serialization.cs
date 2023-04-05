@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     {
         internal static CertificateVerificationCodeProperties DeserializeCertificateVerificationCodeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> verificationCode = default;
             Optional<string> subject = default;
             Optional<DateTimeOffset> expiry = default;

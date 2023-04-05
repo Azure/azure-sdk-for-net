@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.KeyVault
 
         internal static ManagedHsmPrivateEndpointConnectionData DeserializeManagedHsmPrivateEndpointConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ManagedHsmSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;

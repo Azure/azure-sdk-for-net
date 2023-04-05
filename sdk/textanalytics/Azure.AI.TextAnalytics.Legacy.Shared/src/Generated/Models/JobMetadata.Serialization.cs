@@ -16,6 +16,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static JobMetadata DeserializeJobMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset createdDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
             Guid jobId = default;

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         internal static PrivateDnsARecordInfo DeserializePrivateDnsARecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> ipv4Address = default;
             foreach (var property in element.EnumerateObject())
             {

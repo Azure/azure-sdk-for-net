@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static GetUserTablesOracleTaskOutput DeserializeGetUserTablesOracleTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> schemaName = default;
             Optional<IReadOnlyList<DatabaseTable>> tables = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;

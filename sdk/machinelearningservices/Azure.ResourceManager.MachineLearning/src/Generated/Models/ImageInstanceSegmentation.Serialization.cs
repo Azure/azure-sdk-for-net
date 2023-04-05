@@ -114,6 +114,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageInstanceSegmentation DeserializeImageInstanceSegmentation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<InstanceSegmentationPrimaryMetric> primaryMetric = default;
             Optional<ImageModelSettingsObjectDetection> modelSettings = default;
             Optional<IList<ImageModelDistributionSettingsObjectDetection>> searchSpace = default;

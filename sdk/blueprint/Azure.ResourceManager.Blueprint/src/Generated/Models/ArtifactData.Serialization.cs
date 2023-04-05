@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Blueprint
 
         internal static ArtifactData DeserializeArtifactData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

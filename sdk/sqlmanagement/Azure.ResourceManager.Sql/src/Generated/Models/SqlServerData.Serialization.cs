@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlServerData DeserializeSqlServerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -118,6 +122,7 @@ namespace Azure.ResourceManager.Sql
             Optional<Uri> keyId = default;
             Optional<ServerExternalAdministrator> administrators = default;
             Optional<ServerNetworkAccessFlag> restrictOutboundNetworkAccess = default;
+            Optional<ExternalGovernanceStatus> externalGovernanceStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -305,11 +310,21 @@ namespace Azure.ResourceManager.Sql
                             restrictOutboundNetworkAccess = new ServerNetworkAccessFlag(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("externalGovernanceStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            externalGovernanceStatus = new ExternalGovernanceStatus(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new SqlServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess));
+            return new SqlServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(externalGovernanceStatus));
         }
     }
 }

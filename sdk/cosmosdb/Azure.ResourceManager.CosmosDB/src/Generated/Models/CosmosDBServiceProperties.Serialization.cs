@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBServiceProperties DeserializeCosmosDBServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("serviceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

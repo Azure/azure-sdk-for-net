@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAutomationAction DeserializeSecurityAutomationAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("actionType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

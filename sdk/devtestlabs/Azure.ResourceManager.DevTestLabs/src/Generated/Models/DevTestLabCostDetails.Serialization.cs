@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static DevTestLabCostDetails DeserializeDevTestLabCostDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> date = default;
             Optional<double> cost = default;
             Optional<DevTestLabCostType> costType = default;

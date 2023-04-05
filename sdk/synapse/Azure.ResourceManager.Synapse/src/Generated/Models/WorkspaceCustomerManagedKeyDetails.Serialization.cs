@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static WorkspaceCustomerManagedKeyDetails DeserializeWorkspaceCustomerManagedKeyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<SynapseWorkspaceKeyDetails> key = default;
             Optional<KekIdentityProperties> kekIdentity = default;

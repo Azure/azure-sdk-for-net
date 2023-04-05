@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static EventCollection DeserializeEventCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EventData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

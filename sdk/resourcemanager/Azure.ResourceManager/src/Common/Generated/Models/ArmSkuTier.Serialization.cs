@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Models
 
         public static ArmSkuTier ToArmSkuTier(this string value)
         {
-            if (string.Equals(value, "Free", StringComparison.InvariantCultureIgnoreCase)) return ArmSkuTier.Free;
-            if (string.Equals(value, "Basic", StringComparison.InvariantCultureIgnoreCase)) return ArmSkuTier.Basic;
-            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return ArmSkuTier.Standard;
-            if (string.Equals(value, "Premium", StringComparison.InvariantCultureIgnoreCase)) return ArmSkuTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return ArmSkuTier.Free;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return ArmSkuTier.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return ArmSkuTier.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return ArmSkuTier.Premium;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArmSkuTier value.");
         }
     }

@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedValues)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
@@ -65,6 +70,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static ParameterDefinition DeserializeParameterDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TemplateParameterType type = default;
             Optional<BinaryData> defaultValue = default;
             Optional<IList<BinaryData>> allowedValues = default;
@@ -98,7 +107,14 @@ namespace Azure.ResourceManager.Blueprint.Models
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     allowedValues = array;
                     continue;

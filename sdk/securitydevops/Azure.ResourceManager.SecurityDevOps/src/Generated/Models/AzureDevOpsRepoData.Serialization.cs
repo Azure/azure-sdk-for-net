@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         internal static AzureDevOpsRepoData DeserializeAzureDevOpsRepoData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureDevOpsRepoProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

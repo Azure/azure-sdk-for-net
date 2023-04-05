@@ -86,6 +86,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static LookupActivity DeserializeLookupActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;

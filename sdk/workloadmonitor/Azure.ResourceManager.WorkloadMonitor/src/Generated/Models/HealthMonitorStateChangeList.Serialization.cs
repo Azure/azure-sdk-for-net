@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
     {
         internal static HealthMonitorStateChangeList DeserializeHealthMonitorStateChangeList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HealthMonitorStateChangeData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

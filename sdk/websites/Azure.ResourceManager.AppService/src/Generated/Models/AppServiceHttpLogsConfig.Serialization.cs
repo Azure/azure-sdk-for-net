@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceHttpLogsConfig DeserializeAppServiceHttpLogsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FileSystemHttpLogsConfig> fileSystem = default;
             Optional<AppServiceBlobStorageHttpLogsConfig> azureBlobStorage = default;
             foreach (var property in element.EnumerateObject())

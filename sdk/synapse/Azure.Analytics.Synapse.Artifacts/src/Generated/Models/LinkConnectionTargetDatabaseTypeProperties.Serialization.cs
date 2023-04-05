@@ -33,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkConnectionTargetDatabaseTypeProperties DeserializeLinkConnectionTargetDatabaseTypeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> crossTableTransaction = default;
             Optional<bool> dropExistingTargetTableOnStart = default;
             foreach (var property in element.EnumerateObject())

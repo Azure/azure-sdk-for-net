@@ -96,6 +96,10 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static JobProperties DeserializeJobProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> jobId = default;
             Optional<DateTimeOffset> startTimeUtc = default;
             Optional<DateTimeOffset> endTimeUtc = default;

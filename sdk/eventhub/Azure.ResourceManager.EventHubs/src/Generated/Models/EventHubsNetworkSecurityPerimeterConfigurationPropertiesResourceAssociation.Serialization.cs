@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<EventHubsResourceAssociationAccessMode> accessMode = default;
             foreach (var property in element.EnumerateObject())

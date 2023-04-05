@@ -29,6 +29,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static MagnitudeScoringParameters DeserializeMagnitudeScoringParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double boostingRangeStart = default;
             double boostingRangeEnd = default;
             Optional<bool> constantBoostBeyondRange = default;

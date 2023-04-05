@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseFollowerDatabaseListResult DeserializeSynapseFollowerDatabaseListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SynapseFollowerDatabaseDefinition>> value = default;
             foreach (var property in element.EnumerateObject())
             {

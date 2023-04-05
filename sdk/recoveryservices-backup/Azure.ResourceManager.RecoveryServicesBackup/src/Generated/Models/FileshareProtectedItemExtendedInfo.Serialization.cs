@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static FileshareProtectedItemExtendedInfo DeserializeFileshareProtectedItemExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> oldestRecoveryPoint = default;
             Optional<int> recoveryPointCount = default;
             Optional<string> policyState = default;

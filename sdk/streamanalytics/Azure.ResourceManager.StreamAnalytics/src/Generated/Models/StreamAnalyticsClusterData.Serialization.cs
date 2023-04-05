@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         internal static StreamAnalyticsClusterData DeserializeStreamAnalyticsClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamAnalyticsClusterSku> sku = default;
             Optional<ETag> etag = default;
             Optional<StreamAnalyticsClusterProperties> properties = default;

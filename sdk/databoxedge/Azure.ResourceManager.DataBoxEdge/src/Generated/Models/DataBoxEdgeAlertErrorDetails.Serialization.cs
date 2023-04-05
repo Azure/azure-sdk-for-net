@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static DataBoxEdgeAlertErrorDetails DeserializeDataBoxEdgeAlertErrorDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> errorCode = default;
             Optional<string> errorMessage = default;
             Optional<int> occurrences = default;

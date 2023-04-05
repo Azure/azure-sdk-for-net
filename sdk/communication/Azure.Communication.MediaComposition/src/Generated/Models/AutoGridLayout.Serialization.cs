@@ -51,6 +51,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static AutoGridLayout DeserializeAutoGridLayout(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> inputIds = default;
             Optional<bool> highlightDominantSpeaker = default;
             LayoutType kind = default;

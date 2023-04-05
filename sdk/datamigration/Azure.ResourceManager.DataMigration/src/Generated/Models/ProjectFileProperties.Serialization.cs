@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ProjectFileProperties DeserializeProjectFileProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> extension = default;
             Optional<string> filePath = default;
             Optional<DateTimeOffset> lastModified = default;

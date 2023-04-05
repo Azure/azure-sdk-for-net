@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateSchemaSqlServerSqlDBTaskOutputError DeserializeMigrateSchemaSqlServerSqlDBTaskOutputError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> commandText = default;
             Optional<string> errorText = default;
             Optional<string> id = default;

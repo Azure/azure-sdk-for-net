@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static JobStepExecutionOptions DeserializeJobStepExecutionOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> timeoutSeconds = default;
             Optional<int> retryAttempts = default;
             Optional<int> initialRetryIntervalSeconds = default;

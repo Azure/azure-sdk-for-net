@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static ListContainerItems DeserializeListContainerItems(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BlobContainerData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

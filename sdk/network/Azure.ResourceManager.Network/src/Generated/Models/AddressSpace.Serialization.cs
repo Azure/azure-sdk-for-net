@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AddressSpace DeserializeAddressSpace(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> addressPrefixes = default;
             foreach (var property in element.EnumerateObject())
             {

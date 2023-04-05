@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountAgreementContent DeserializeIntegrationAccountAgreementContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AS2AgreementContent> aS2 = default;
             Optional<X12AgreementContent> x12 = default;
             Optional<EdifactAgreementContent> edifact = default;

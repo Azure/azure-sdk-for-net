@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseWorkspaceListResult DeserializeSynapseWorkspaceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<SynapseWorkspaceData>> value = default;
             foreach (var property in element.EnumerateObject())

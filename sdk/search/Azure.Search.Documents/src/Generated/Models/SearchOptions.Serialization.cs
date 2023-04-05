@@ -157,6 +157,10 @@ namespace Azure.Search.Documents
 
         internal static SearchOptions DeserializeSearchOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> count = default;
             Optional<IList<string>> facets = default;
             Optional<string> filter = default;

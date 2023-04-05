@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static HostPoolRegistrationInfo DeserializeHostPoolRegistrationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> expirationTime = default;
             Optional<string> token = default;
             Optional<HostPoolRegistrationTokenOperation> registrationTokenOperation = default;

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the Probe data model. </summary>
+    /// <summary>
+    /// A class representing the Probe data model.
+    /// A load balancer probe.
+    /// </summary>
     public partial class ProbeData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ProbeData. </summary>

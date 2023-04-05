@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static TemplateSpecVersionInfo DeserializeTemplateSpecVersionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<DateTimeOffset> timeCreated = default;
             Optional<DateTimeOffset> timeModified = default;
