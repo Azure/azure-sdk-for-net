@@ -21,24 +21,52 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     public static class OpenTelemetryBuilderExtensions
     {
         /// <summary>
-        /// Adds Azure Monitor Defaults into <see cref="OpenTelemetryBuilder" />.
+        /// Configures Azure Monitor for logging, distributed tracing, and metrics.
         /// </summary>
         /// <param name="builder"><see cref="OpenTelemetryBuilder"/>.</param>
         /// <returns>The supplied <see cref="OpenTelemetryBuilder"/> for chaining calls.</returns>
-        public static OpenTelemetryBuilder WithAzureMonitor(this OpenTelemetryBuilder builder)
+        /// <remarks>
+        /// This method configures Azure Monitor for use with OpenTelemetry by adding the Azure Monitor exporter for logging,
+        /// distributed tracing, and metrics. It also configures the OpenTelemetry logger to include formatted messages and
+        /// parsed state values.
+        ///
+        /// The following instrumentation is added for distributed tracing:
+        /// - ASP.NET Core: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/"/>.
+        /// - HTTP Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http"/>.
+        /// - SQL Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.sqlclient"/>.
+        ///
+        /// The following instrumentation is added for metrics:
+        /// - ASP.NET Core: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/"/>.
+        /// - HTTP Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http"/>.
+        /// </remarks>
+        public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder)
         {
             builder.Services.TryAddSingleton<IConfigureOptions<AzureMonitorOptions>,
                         DefaultAzureMonitorOptions>();
-            return builder.WithAzureMonitor(o => o = new AzureMonitorOptions());
+            return builder.UseAzureMonitor(o => o = new AzureMonitorOptions());
         }
 
         /// <summary>
-        /// Adds Azure Monitor Defaults into <see cref="OpenTelemetryBuilder" />.
+        /// Configures Azure Monitor for logging, distributed tracing, and metrics.
         /// </summary>
         /// <param name="builder"><see cref="OpenTelemetryBuilder"/>.</param>
         /// <param name="configureAzureMonitor">Callback action for configuring <see cref="AzureMonitorOptions"/>.</param>
         /// <returns>The supplied <see cref="OpenTelemetryBuilder"/> for chaining calls.</returns>
-        public static OpenTelemetryBuilder WithAzureMonitor(this OpenTelemetryBuilder builder, Action<AzureMonitorOptions> configureAzureMonitor)
+        /// <remarks>
+        /// This method configures Azure Monitor for use with OpenTelemetry by adding the Azure Monitor exporter for logging,
+        /// distributed tracing, and metrics. It also configures the OpenTelemetry logger to include formatted messages and
+        /// parsed state values.
+        ///
+        /// The following instrumentation is added for distributed tracing:
+        /// - ASP.NET Core: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/"/>.
+        /// - HTTP Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http"/>.
+        /// - SQL Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.sqlclient"/>.
+        ///
+        /// The following instrumentation is added for metrics:
+        /// - ASP.NET Core: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/"/>.
+        /// - HTTP Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http"/>.
+        /// </remarks>
+        public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder, Action<AzureMonitorOptions> configureAzureMonitor)
         {
             if (builder.Services == null)
             {
