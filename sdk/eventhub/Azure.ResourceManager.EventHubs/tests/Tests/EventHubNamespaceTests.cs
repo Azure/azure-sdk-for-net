@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt3");
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt10");
             EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
 
             //add a tag
