@@ -175,7 +175,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 _resourceProviderId = _resourceProviderId = vmMetadata.vmId + "/" + vmMetadata.subscriptionId;
 
                 // osType takes precedence.
-                // TODO: If we get an OS Name from the Platform, should we override with a null?
                 s_operatingSystem = vmMetadata.osType?.ToLower(CultureInfo.InvariantCulture);
 
                 return;
