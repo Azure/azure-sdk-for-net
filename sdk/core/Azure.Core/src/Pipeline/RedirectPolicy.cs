@@ -15,6 +15,7 @@ namespace Azure.Core.Pipeline
     public sealed class RedirectPolicy : HttpPipelinePolicy
     {
         private readonly int _maxAutomaticRedirections;
+        internal bool AllowAutoRedirects { get; set; } = false;
 
         internal static RedirectPolicy Shared { get; } = new RedirectPolicy();
 
@@ -264,8 +265,15 @@ namespace Azure.Core.Pipeline
             return input;
         }
 
-        private static bool AllowAutoRedirect(HttpMessage message) =>
-            message.TryGetProperty(typeof(AllowRedirectsValueKey), out object? value) && (bool)value!;
+        private bool AllowAutoRedirect(HttpMessage message)
+        {
+            if (message.TryGetProperty(typeof(AllowRedirectsValueKey), out object? value))
+            {
+                return (bool)value!;
+            }
+
+            return AllowAutoRedirects;
+        }
 
         private class AllowRedirectsValueKey { }
     }

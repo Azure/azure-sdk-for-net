@@ -199,6 +199,11 @@ namespace Azure.Core.Pipeline
                     isTransportInternallyCreated = true;
                 }
             }
+            // configure the AllowAutoRedirect property on the transport if it is supported
+            // if (transport is SocketsHttpHandlerTransport socketsHttpHandlerTransport)
+            // {
+            //     socketsHttpHandlerTransport.AllowAutoRedirect = false;
+            // }
 
             policies.Add(new HttpPipelineTransportPolicy(transport, sanitizer, buildOptions.RequestFailedDetailsParser));
 
