@@ -40,7 +40,7 @@ namespace Azure.Containers.ContainerRegistry
                     return false;
                 }
 
-                JsonDocument doc = JsonDocument.Parse(content);
+                using JsonDocument doc = JsonDocument.Parse(content);
                 AcrErrors errors = AcrErrors.DeserializeAcrErrors(doc.RootElement);
                 if (errors?.Errors?.Count > 0)
                 {

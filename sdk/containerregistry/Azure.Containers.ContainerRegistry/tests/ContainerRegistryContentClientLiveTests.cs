@@ -679,10 +679,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 Console.WriteLine($"Service error: {ex.Message}");
                 caught = true;
-                Assert.IsTrue(ex.Message.Contains("Content:\r\n404 page not found"));
+                Assert.IsTrue(ex.Message.Contains("Content:"), "Download failed exception did not contain \"Content:\".");
+                Assert.IsTrue(ex.Message.Contains("404 page not found"), "Download failed exception did not contain error content \"404 page not found\".");
             }
 
-            Assert.IsTrue(caught);
+            Assert.IsTrue(caught, "Did not catch download failed exception.");
         }
 
         #endregion
