@@ -35,7 +35,7 @@ namespace Azure.Storage.Shared
             InnerStream = stream;
         }
 
-        public static WindowStream GetWindow(Stream stream, long maxWindowLength)
+        public static Stream GetWindow(Stream stream, long maxWindowLength)
         {
             if (stream.CanSeek)
             {

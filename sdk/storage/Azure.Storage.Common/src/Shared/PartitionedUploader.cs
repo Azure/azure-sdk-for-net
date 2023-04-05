@@ -109,7 +109,7 @@ namespace Azure.Storage
         /// <summary>
         /// Delegte for getting a partition from a stream based on the selected data management stragegy.
         /// </summary>
-        private delegate Task<SlicedStream> GetNextStreamPartition(
+        private delegate Task<Stream> GetNextStreamPartition(
             Stream stream,
             long minCount,
             long maxCount,
@@ -818,26 +818,26 @@ namespace Azure.Storage
             long absolutePosition = 0;
             do
             {
-                SlicedStream partition = await getNextPartition(
+                Stream partition = await getNextPartition(
                     stream,
                     acceptableBlockSize,
                     blockSize,
                     absolutePosition,
                     async,
                     cancellationToken).ConfigureAwait(false);
-                read = partition.Slice.Length;
-                absolutePosition += read;
+                read = partition.Length;
 
                 // If we read anything, turn it into a StreamPartition and
                 // return it for staging
-                if (partition.Slice.Length != 0)
+                if (partition.Length != 0)
                 {
                     // The StreamParitition is disposable and it'll be the
                     // user's responsibility to return the bytes used to our
                     // ArrayPool
-                    yield return new ContentPartition<Stream>(partition.AbsolutePosition, partition.Slice.Length, partition.Slice);
+                    yield return new ContentPartition<Stream>(absolutePosition, partition.Length, partition);
                 }
 
+                absolutePosition += read;
                 // Continue reading blocks until we've exhausted the stream
             } while (read != 0);
         }
@@ -868,23 +868,21 @@ namespace Azure.Storage
         /// <returns>
         /// Task containing the buffered stream partition.
         /// </returns>
-        private async Task<SlicedStream> GetBufferedPartitionInternal(
+        private async Task<Stream> GetBufferedPartitionInternal(
             Stream stream,
             long minCount,
             long maxCount,
             long absolutePosition,
             bool async,
             CancellationToken cancellationToken)
-            => new SlicedStream(
-                await PooledMemoryStream.BufferStreamPartitionInternal(
-                    stream,
-                    minCount,
-                    maxCount,
-                    _arrayPool,
-                    maxArrayPoolRentalSize: default,
-                    async,
-                    cancellationToken).ConfigureAwait(false),
-                absolutePosition);
+            => await PooledMemoryStream.BufferStreamPartitionInternal(
+                stream,
+                minCount,
+                maxCount,
+                _arrayPool,
+                maxArrayPoolRentalSize: default,
+                async,
+                cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Implementation of <see cref="GetNextStreamPartition"/> for a slicing strategy.
@@ -911,14 +909,14 @@ namespace Azure.Storage
         /// <returns>
         /// Task containing the stream facade.
         /// </returns>
-        private static Task<SlicedStream> GetStreamedPartitionInternal(
+        private static Task<Stream> GetStreamedPartitionInternal(
             Stream stream,
             long minCount,
             long maxCount,
             long absolutePosition,
             bool async,
             CancellationToken cancellationToken)
-            => Task.FromResult(new SlicedStream(WindowStream.GetWindow(stream, maxCount), absolutePosition));
+            => Task.FromResult(WindowStream.GetWindow(stream, maxCount));
         #endregion
     }
 
