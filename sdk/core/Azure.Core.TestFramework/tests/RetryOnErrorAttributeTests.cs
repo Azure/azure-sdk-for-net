@@ -12,10 +12,10 @@ namespace Azure.Core.TestFramework.Tests
 {
     public class RetryOnErrorAttributeTests
     {
-        private const string ExceptionMessage =
-            "The test failed"
-            + "\r\nStatus: 500 (Internal Server Error)"
-            + "\r\nErrorCode: InternalServerError";
+        private const string ExpectedExceptionMessage =
+            "The test failed,"
+            + " Status: 500 (Internal Server Error),"
+            + " ErrorCode: InternalServerError";
 
         [Test]
         public void PassingTestIsNotRetried()
@@ -44,9 +44,9 @@ namespace Azure.Core.TestFramework.Tests
         public void FailingTestWithUnexpectedMessageIsNotRetried()
         {
             const string differentMessage =
-                "A different error occurred"
-                + "\r\nStatus: 400 (Bad Request)"
-                + "\r\nErrorCode: BadRequest";
+                "A different error occurred,"
+                + " Status: 400 (Bad Request),"
+                + " ErrorCode: BadRequest";
 
             RequestFailedException exception = new(400, differentMessage, "BadRequest", null);
             FakeTest test = new();
@@ -67,7 +67,7 @@ namespace Azure.Core.TestFramework.Tests
         [Test]
         public void FailingTestIsRetried()
         {
-            RequestFailedException exception = new(200, ExceptionMessage, "InternalServerError", null);
+            RequestFailedException exception = new(200, ExpectedExceptionMessage, "InternalServerError", null);
             FakeTest test = new();
             TestExecutionContext context = new() { CurrentTest = test };
             Mock<TestCommand> mockTestCommand = new(test);
@@ -92,7 +92,7 @@ namespace Azure.Core.TestFramework.Tests
         [Test]
         public void FailingTestObeysRetryLimits()
         {
-            RequestFailedException exception = new(200, ExceptionMessage, "InternalServerError", null);
+            RequestFailedException exception = new(200, ExpectedExceptionMessage, "InternalServerError", null);
             FakeTest test = new();
             TestExecutionContext context = new() { CurrentTest = test };
             Mock<TestCommand> mockTestCommand = new(test);
@@ -111,7 +111,7 @@ namespace Azure.Core.TestFramework.Tests
         [Test]
         public void FailingTestIsInconclusiveWhenRetriesExhausted()
         {
-            RequestFailedException exception = new(200, ExceptionMessage, "InternalServerError", null);
+            RequestFailedException exception = new(200, ExpectedExceptionMessage, "InternalServerError", null);
             FakeTest test = new();
             TestExecutionContext context = new() { CurrentTest = test };
             Mock<TestCommand> mockTestCommand = new(test);
@@ -158,7 +158,7 @@ namespace Azure.Core.TestFramework.Tests
                     return false;
                 }
 
-                return message.Contains(ExceptionMessage);
+                return message.Contains(ExpectedExceptionMessage);
             }
         }
     }
