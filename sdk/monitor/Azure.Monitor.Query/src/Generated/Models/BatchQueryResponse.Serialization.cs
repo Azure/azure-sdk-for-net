@@ -20,7 +20,7 @@ namespace Azure.Monitor.Query.Models
                 return null;
             }
             Optional<string> id = default;
-            Optional<long> status = default;
+            Optional<int> status = default;
             Optional<LogsBatchQueryResult> body = default;
             Optional<IReadOnlyDictionary<string, string>> headers = default;
             foreach (var property in element.EnumerateObject())
@@ -37,7 +37,7 @@ namespace Azure.Monitor.Query.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = property.Value.GetInt64();
+                    status = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("body"u8))

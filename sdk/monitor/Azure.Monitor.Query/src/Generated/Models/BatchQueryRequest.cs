@@ -28,6 +28,8 @@ namespace Azure.Monitor.Query.Models
             Id = id;
             Headers = new ChangeTrackingDictionary<string, string>();
             Body = body;
+            Path = "/query";
+            Method = "POST";
             Workspace = workspace;
         }
 
@@ -38,9 +40,9 @@ namespace Azure.Monitor.Query.Models
         /// <summary> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </summary>
         public QueryBody Body { get; }
         /// <summary> Gets or sets the path. </summary>
-        public Path? Path { get; set; }
+        public string Path { get; set; }
         /// <summary> Gets or sets the method. </summary>
-        public MethodType? Method { get; set; }
+        public string Method { get; set; }
         /// <summary> Workspace Id to be included in the query. </summary>
         public string Workspace { get; }
     }
