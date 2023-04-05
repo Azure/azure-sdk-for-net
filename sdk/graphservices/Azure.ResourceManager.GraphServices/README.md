@@ -82,8 +82,4 @@ more information, see the [Code of Conduct FAQ][coc_faq] or contact
 <!-- LINKS -->
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
 [coc]: https://opensource.microsoft.com/codeofconduct/
-<<<<<<< HEAD
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-=======
-[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
->>>>>>> b418af46e8019bfa923d80640f31eedf08834cfb
