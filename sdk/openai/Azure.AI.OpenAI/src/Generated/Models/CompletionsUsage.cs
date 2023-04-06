@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.OpenAI
+namespace Azure.OpenAI.Models
 {
     /// <summary>
     /// Representation of the token counts processed for a completions request.

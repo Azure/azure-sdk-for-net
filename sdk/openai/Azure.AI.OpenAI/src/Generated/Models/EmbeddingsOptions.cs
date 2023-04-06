@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI
+namespace Azure.OpenAI.Models
 {
     /// <summary> Schema to create a prompt completion from a deployment. </summary>
     public partial class EmbeddingsOptions
