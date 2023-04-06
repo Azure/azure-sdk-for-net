@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
     {
         private ServiceFabricManagedApplicationCollection _appCollection;
         private string _appTypeId;
+        // VotingWebPkg.sfpkg from open source repo: https://github.com/Azure-Samples/service-fabric-dotnet-quickstart/tree/master/Voting
+        private const string _appPackageUri = "https://dummyaccount.blob.core.windows.net/blobcontainer/VotingWebPkg.sfpkg";
         public ServiceFabricManagedApplicationTests(bool isAsync) : base(isAsync)
         {
         }
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             string versionName = "1.0.0";
             var data = new ServiceFabricManagedApplicationTypeVersionData(DefaultLocation)
             {
-                AppPackageUri = new Uri("https://sfmcfortestapp.blob.core.windows.net/blobcontainer/VotingWebPkg.sfpkg")
+                AppPackageUri = new Uri(_appPackageUri)
             };
             var typeVersion = await appType.GetServiceFabricManagedApplicationTypeVersions().CreateOrUpdateAsync(WaitUntil.Completed, versionName, data);
             return typeVersion.Value;

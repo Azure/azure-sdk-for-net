@@ -2581,7 +2581,7 @@
         "tags": {},
         "location": "eastus",
         "properties": {
-          "appPackageUrl": "https://sfmcfortestapp.blob.core.windows.net/blobcontainer/VotingWebPkg.sfpkg"
+          "appPackageUrl": "https://dummyaccount.blob.core.windows.net/blobcontainer/VotingWebPkg.sfpkg"
         }
       },
       "StatusCode": 202,
@@ -2622,7 +2622,7 @@
         },
         "properties": {
           "provisioningState": "Creating",
-          "appPackageUrl": "https://sfmcfortestapp.blob.core.windows.net/blobcontainer/VotingWebPkg.sfpkg"
+          "appPackageUrl": "https://dummyaccount.blob.core.windows.net/blobcontainer/VotingWebPkg.sfpkg"
         }
       }
     },
@@ -3024,7 +3024,7 @@
         },
         "properties": {
           "provisioningState": "Succeeded",
-          "appPackageUrl": "https://sfmcfortestapp.blob.core.windows.net/blobcontainer/VotingWebPkg.sfpkg"
+          "appPackageUrl": "https://dummyaccount.blob.core.windows.net/blobcontainer/VotingWebPkg.sfpkg"
         }
       }
     },
