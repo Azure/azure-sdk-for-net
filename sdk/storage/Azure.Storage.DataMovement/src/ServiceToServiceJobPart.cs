@@ -176,11 +176,11 @@ namespace Azure.Storage.DataMovement
                     else // Sequential
                     {
                         // Queue paritioned block task
-                        await QueueChunk(async () =>
-                            await PutBlockFromUri(
+                        await QueueChunkToChannel(
+                            PutBlockFromUri(
                                 commitBlockList[0].Offset,
                                 commitBlockList[0].Length,
-                                length).ConfigureAwait(false)).ConfigureAwait(false);
+                                length)).ConfigureAwait(false);
                     }
                 }
             }
@@ -322,11 +322,10 @@ namespace Azure.Storage.DataMovement
             foreach ((long Offset, long Length) block in commitBlockList)
             {
                 // Queue paritioned block task
-                await QueueChunk(async () =>
-                    await PutBlockFromUri(
+                await QueueChunkToChannel(PutBlockFromUri(
                         block.Offset,
                         block.Length,
-                        expectedLength).ConfigureAwait(false)).ConfigureAwait(false);
+                        expectedLength)).ConfigureAwait(false);
             }
         }
 
@@ -421,7 +420,6 @@ namespace Azure.Storage.DataMovement
             catch (OperationCanceledException)
             {
                 // Job was cancelled
-                await TriggerCancellation(StorageTransferStatus.None).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             when (_createMode == StorageResourceCreateMode.Overwrite

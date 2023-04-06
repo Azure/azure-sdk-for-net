@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.JobPlanModels;
+using System.Linq;
 
 namespace Azure.Storage.DataMovement
 {
@@ -118,6 +119,9 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public SyncAsyncEventHandler<SingleTransferCompletedEventArgs> SingleTransferCompletedEventHandler { get; internal set; }
 
+        private List<Task<bool>> _chunkTasks;
+        private List<TaskCompletionSource<bool>> _chunkTaskSources;
+
         /// <summary>
         /// Array pools for reading from streams to upload
         /// </summary>
@@ -178,6 +182,8 @@ namespace Azure.Storage.DataMovement
             }
 
             Length = length;
+            _chunkTasks = new List<Task<bool>>();
+            _chunkTaskSources = new List<TaskCompletionSource<bool>>();
         }
 
         public void SetQueueChunkDelegate(QueueChunkDelegate chunkDelegate)
@@ -186,18 +192,65 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// Queues the task to the main chunk channel and also appends the tracking
+        /// completion source to the task. So we know the state of each chunk especially
+        /// when we're looking to stop/pause the job part.
+        /// </summary>
+        /// <returns></returns>
+        public async Task QueueChunkToChannel(Task chunkTask)
+        {
+            // Attach TaskCompletionSource
+            TaskCompletionSource<bool> chunkCompleted = new TaskCompletionSource<bool>(
+                false,
+                TaskCreationOptions.RunContinuationsAsynchronously);
+            _chunkTaskSources.Add(chunkCompleted);
+            _chunkTasks.Add(chunkCompleted.Task);
+
+            await QueueChunk(
+                async () =>
+                {
+                    await chunkTask.ConfigureAwait(false);
+                    chunkCompleted.SetResult(true);
+                    await CheckAndUpdateCancellationStatus().ConfigureAwait(false);
+                }).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Processes the job to job parts
         /// </summary>
         /// <returns>An IEnumerable that contains the job chunks</returns>
         public abstract Task ProcessPartToChunkAsync();
 
-        internal async Task TriggerCancellation(StorageTransferStatus status)
+        /// <summary>
+        /// Triggers the cancellation for the Job Part.
+        ///
+        /// If the status is set to <see cref="StorageTransferStatus.Paused"/>
+        /// and any chunks is still processing to be cancelled is will be set to <see cref="StorageTransferStatus.PauseInProgress"/>
+        /// until the chunks finish then it will be set to <see cref="StorageTransferStatus.Paused"/>.
+        ///
+        /// If the status is set to <see cref="StorageTransferStatus.CompletedWithFailedTransfers"/>
+        /// and any chunks is still processing to be cancelled is will be set to <see cref="StorageTransferStatus.CancellationInProgress"/>
+        /// until the chunks finish then it will be set to <see cref="StorageTransferStatus.CompletedWithFailedTransfers"/>.
+        /// </summary>
+        /// <returns></returns>
+        internal async Task TriggerCancellationAsync()
         {
             if (!_cancellationToken.IsCancellationRequested)
             {
                 _dataTransfer._state.TriggerCancellation();
             }
-            await OnTransferStatusChanged(status).ConfigureAwait(false);
+            // Set the status to Pause/CancellationInProgress
+            if (StorageTransferStatus.PauseInProgress == _dataTransfer.TransferStatus)
+            {
+                // It's possible that the status hasn't propagated down to the job part
+                // status yet here since we pause from the data transfer object.
+                await OnTransferStatusChanged(StorageTransferStatus.PauseInProgress).ConfigureAwait(false);
+            }
+            else
+            {
+                // It's a cancellation if a pause wasn't called.
+                await OnTransferStatusChanged(StorageTransferStatus.CancellationInProgress).ConfigureAwait(false);
+            }
             _dataTransfer._state.ResetTransferredBytes();
         }
 
@@ -293,7 +346,7 @@ namespace Azure.Storage.DataMovement
                     _cancellationToken)).ConfigureAwait(false);
             }
             // Trigger job cancellation if the failed handler is enabled
-            await TriggerCancellation(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
+            await TriggerCancellationAsync().ConfigureAwait(false);
         }
 
         public async virtual Task AddJobPartToCheckpointer(int chunksTotal)
@@ -316,8 +369,7 @@ namespace Azure.Storage.DataMovement
             await _checkpointer.SetJobPartTransferStatusAsync(
                 transferId: _dataTransfer.Id,
                 partNumber: PartNumber,
-                status: status,
-                cancellationToken: _cancellationToken).ConfigureAwait(false);
+                status: status).ConfigureAwait(false);
         }
 
         internal long CalculateBlockSize(long length)
@@ -406,6 +458,21 @@ namespace Azure.Storage.DataMovement
                     streamLength - absolutePosition;
                 yield return (absolutePosition, blockLength);
                 absolutePosition += blockLength;
+            }
+        }
+
+        private async Task CheckAndUpdateCancellationStatus()
+        {
+            if (_chunkTasks.All((Task task) => (task.IsCompleted)))
+            {
+                if (_dataTransfer.TransferStatus == StorageTransferStatus.PauseInProgress)
+                {
+                    await OnTransferStatusChanged(StorageTransferStatus.Paused).ConfigureAwait(false);
+                }
+                else if (_dataTransfer.TransferStatus == StorageTransferStatus.CancellationInProgress)
+                {
+                    await OnTransferStatusChanged(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
+                }
             }
         }
     }

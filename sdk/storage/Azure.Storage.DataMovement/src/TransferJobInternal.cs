@@ -332,8 +332,7 @@ namespace Azure.Storage.DataMovement
         {
             await _checkpointer.SetJobTransferStatusAsync(
                 transferId: _dataTransfer.Id,
-                status: status,
-                cancellationToken: _cancellationToken).ConfigureAwait(false);
+                status: status).ConfigureAwait(false);
         }
 
         internal async Task OnEnumerationComplete()

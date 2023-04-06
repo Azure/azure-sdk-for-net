@@ -128,10 +128,6 @@ namespace Azure.Storage.DataMovement
                 StorageResourceProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
                 fileLength = properties.ContentLength;
             }
-            catch (OperationCanceledException exc)
-            {
-
-            }
             catch (Exception ex)
             {
                 // TODO: logging when given the event handler
@@ -145,11 +141,10 @@ namespace Azure.Storage.DataMovement
                 if (_initialTransferSize >= length)
                 {
                     // If we can create the destination in one call
-                    await QueueChunk(async () =>
-                        await CreateDestinationResource(
+                    await QueueChunkToChannel(CreateDestinationResource(
                             blockSize: length,
                             length: length,
-                            singleCall: true).ConfigureAwait(false)).ConfigureAwait(false);
+                            singleCall: true)).ConfigureAwait(false);
                     return;
                 }
                 long blockSize = CalculateBlockSize(length);
@@ -172,11 +167,11 @@ namespace Azure.Storage.DataMovement
                     else // Sequential
                     {
                         // Queue paritioned block task
-                        await QueueChunk(async () =>
-                        await StageBlockInternal(
-                            rangeList[0].Offset,
-                            rangeList[0].Length,
-                            length).ConfigureAwait(false)).ConfigureAwait(false);
+                        await QueueChunkToChannel(
+                            StageBlockInternal(
+                                rangeList[0].Offset,
+                                rangeList[0].Length,
+                                length)).ConfigureAwait(false);
                     }
                 }
             }
@@ -269,6 +264,10 @@ namespace Azure.Storage.DataMovement
             {
                 await InvokeSkippedArg().ConfigureAwait(false);
             }
+            catch (OperationCanceledException)
+            {
+                // expected exception during job part cancellation or pause.
+            }
             catch (Exception ex)
             {
                 await InvokeFailedArg(ex).ConfigureAwait(false);
@@ -346,7 +345,6 @@ namespace Azure.Storage.DataMovement
             catch (OperationCanceledException)
             {
                 // Job was cancelled
-                await TriggerCancellation(StorageTransferStatus.None).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -380,11 +378,10 @@ namespace Azure.Storage.DataMovement
             foreach ((long Offset, long Length) block in rangeList)
             {
                 // Queue paritioned block task
-                await QueueChunk(async () =>
-                    await StageBlockInternal(
-                        block.Offset,
-                        block.Length,
-                        completeLength).ConfigureAwait(false)).ConfigureAwait(false);
+                await QueueChunkToChannel(StageBlockInternal(
+                    block.Offset,
+                    block.Length,
+                    completeLength)).ConfigureAwait(false);
             }
         }
 
