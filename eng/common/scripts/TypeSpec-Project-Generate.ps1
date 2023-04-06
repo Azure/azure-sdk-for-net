@@ -47,6 +47,7 @@ function NpmInstallAtRoot() {
         }
 
         $installedPath = Join-Path $root "node_modules" $emitterName "package.json"
+        Write-Host "Checking installed emitter at $installedPath"
         if (Test-Path $installedPath) {
             $installedVersion = GetNpmPackageVersion $installedPath
             Write-Host "Installed emitter version: $installedVersion"
