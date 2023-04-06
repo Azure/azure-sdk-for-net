@@ -19,27 +19,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutProperties. </summary>
-        /// <param name="provisioningState">
-        /// The provisioned state of the resource.
-        /// Serialized Name: DefaultRolloutProperties.provisioningState
-        /// </param>
+        /// <param name="provisioningState"> Serialized Name: DefaultRolloutProperties.provisioningState. </param>
         /// <param name="specification"> Serialized Name: DefaultRolloutProperties.specification. </param>
         /// <param name="status"> Serialized Name: DefaultRolloutProperties.status. </param>
-        internal DefaultRolloutProperties(ProvisioningState? provisioningState, DefaultRolloutPropertiesSpecification specification, DefaultRolloutPropertiesStatus status)
+        internal DefaultRolloutProperties(ProviderHubProvisioningState? provisioningState, DefaultRolloutSpecification specification, DefaultRolloutStatus status)
         {
             ProvisioningState = provisioningState;
             Specification = specification;
             Status = status;
         }
 
-        /// <summary>
-        /// The provisioned state of the resource.
-        /// Serialized Name: DefaultRolloutProperties.provisioningState
-        /// </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        /// <summary> Serialized Name: DefaultRolloutProperties.provisioningState. </summary>
+        public ProviderHubProvisioningState? ProvisioningState { get; set; }
         /// <summary> Serialized Name: DefaultRolloutProperties.specification. </summary>
-        public DefaultRolloutPropertiesSpecification Specification { get; set; }
+        public DefaultRolloutSpecification Specification { get; set; }
         /// <summary> Serialized Name: DefaultRolloutProperties.status. </summary>
-        public DefaultRolloutPropertiesStatus Status { get; set; }
+        public DefaultRolloutStatus Status { get; set; }
     }
 }

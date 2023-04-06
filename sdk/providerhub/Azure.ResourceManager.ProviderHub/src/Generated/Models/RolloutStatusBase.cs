@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of RolloutStatusBase. </summary>
         public RolloutStatusBase()
         {
-            CompletedRegions = new ChangeTrackingList<string>();
+            CompletedRegions = new ChangeTrackingList<AzureLocation>();
             FailedOrSkippedRegions = new ChangeTrackingDictionary<string, ExtendedErrorInfo>();
         }
 
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// Dictionary of &lt;ExtendedErrorInfo&gt;
         /// Serialized Name: RolloutStatusBase.failedOrSkippedRegions
         /// </param>
-        internal RolloutStatusBase(IList<string> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions)
+        internal RolloutStatusBase(IList<AzureLocation> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions)
         {
             CompletedRegions = completedRegions;
             FailedOrSkippedRegions = failedOrSkippedRegions;
         }
 
         /// <summary> Serialized Name: RolloutStatusBase.completedRegions. </summary>
-        public IList<string> CompletedRegions { get; }
+        public IList<AzureLocation> CompletedRegions { get; }
         /// <summary>
         /// Dictionary of &lt;ExtendedErrorInfo&gt;
         /// Serialized Name: RolloutStatusBase.failedOrSkippedRegions

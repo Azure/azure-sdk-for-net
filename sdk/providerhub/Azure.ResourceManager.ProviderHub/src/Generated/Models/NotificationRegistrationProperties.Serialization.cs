@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<MessageScope> messageScope = default;
             Optional<IList<string>> includedEvents = default;
             Optional<IList<NotificationEndpoint>> notificationEndpoints = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ProviderHubProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notificationMode"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ProviderHubProvisioningState(property.Value.GetString());
                     continue;
                 }
             }

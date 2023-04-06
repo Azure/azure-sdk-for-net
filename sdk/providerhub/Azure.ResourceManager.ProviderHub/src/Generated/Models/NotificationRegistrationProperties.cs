@@ -28,11 +28,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="messageScope"> Serialized Name: NotificationRegistrationProperties.messageScope. </param>
         /// <param name="includedEvents"> Serialized Name: NotificationRegistrationProperties.includedEvents. </param>
         /// <param name="notificationEndpoints"> Serialized Name: NotificationRegistrationProperties.notificationEndpoints. </param>
-        /// <param name="provisioningState">
-        /// The provisioned state of the resource.
-        /// Serialized Name: NotificationRegistrationProperties.provisioningState
-        /// </param>
-        internal NotificationRegistrationProperties(NotificationMode? notificationMode, MessageScope? messageScope, IList<string> includedEvents, IList<NotificationEndpoint> notificationEndpoints, ProvisioningState? provisioningState)
+        /// <param name="provisioningState"> Serialized Name: NotificationRegistrationProperties.provisioningState. </param>
+        internal NotificationRegistrationProperties(NotificationMode? notificationMode, MessageScope? messageScope, IList<string> includedEvents, IList<NotificationEndpoint> notificationEndpoints, ProviderHubProvisioningState? provisioningState)
         {
             NotificationMode = notificationMode;
             MessageScope = messageScope;
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<string> IncludedEvents { get; }
         /// <summary> Serialized Name: NotificationRegistrationProperties.notificationEndpoints. </summary>
         public IList<NotificationEndpoint> NotificationEndpoints { get; }
-        /// <summary>
-        /// The provisioned state of the resource.
-        /// Serialized Name: NotificationRegistrationProperties.provisioningState
-        /// </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        /// <summary> Serialized Name: NotificationRegistrationProperties.provisioningState. </summary>
+        public ProviderHubProvisioningState? ProvisioningState { get; set; }
     }
 }

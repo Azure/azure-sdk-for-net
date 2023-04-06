@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of CustomRolloutProperties. </summary>
         /// <param name="specification"> Serialized Name: CustomRolloutProperties.specification. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="specification"/> is null. </exception>
-        public CustomRolloutProperties(CustomRolloutPropertiesSpecification specification)
+        public CustomRolloutProperties(CustomRolloutSpecification specification)
         {
             Argument.AssertNotNull(specification, nameof(specification));
 
@@ -27,27 +27,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of CustomRolloutProperties. </summary>
-        /// <param name="provisioningState">
-        /// The provisioned state of the resource.
-        /// Serialized Name: CustomRolloutProperties.provisioningState
-        /// </param>
+        /// <param name="provisioningState"> Serialized Name: CustomRolloutProperties.provisioningState. </param>
         /// <param name="specification"> Serialized Name: CustomRolloutProperties.specification. </param>
         /// <param name="status"> Serialized Name: CustomRolloutProperties.status. </param>
-        internal CustomRolloutProperties(ProvisioningState? provisioningState, CustomRolloutPropertiesSpecification specification, CustomRolloutPropertiesStatus status)
+        internal CustomRolloutProperties(ProviderHubProvisioningState? provisioningState, CustomRolloutSpecification specification, CustomRolloutStatus status)
         {
             ProvisioningState = provisioningState;
             Specification = specification;
             Status = status;
         }
 
-        /// <summary>
-        /// The provisioned state of the resource.
-        /// Serialized Name: CustomRolloutProperties.provisioningState
-        /// </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        /// <summary> Serialized Name: CustomRolloutProperties.provisioningState. </summary>
+        public ProviderHubProvisioningState? ProvisioningState { get; set; }
         /// <summary> Serialized Name: CustomRolloutProperties.specification. </summary>
-        public CustomRolloutPropertiesSpecification Specification { get; set; }
+        public CustomRolloutSpecification Specification { get; set; }
         /// <summary> Serialized Name: CustomRolloutProperties.status. </summary>
-        public CustomRolloutPropertiesStatus Status { get; set; }
+        public CustomRolloutStatus Status { get; set; }
     }
 }

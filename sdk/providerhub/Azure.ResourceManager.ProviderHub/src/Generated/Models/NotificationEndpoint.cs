@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of NotificationEndpoint. </summary>
         public NotificationEndpoint()
         {
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of NotificationEndpoint. </summary>
         /// <param name="notificationDestination"> Serialized Name: NotificationEndpoint.notificationDestination. </param>
         /// <param name="locations"> Serialized Name: NotificationEndpoint.locations. </param>
-        internal NotificationEndpoint(string notificationDestination, IList<string> locations)
+        internal NotificationEndpoint(ResourceIdentifier notificationDestination, IList<AzureLocation> locations)
         {
             NotificationDestination = notificationDestination;
             Locations = locations;
         }
 
         /// <summary> Serialized Name: NotificationEndpoint.notificationDestination. </summary>
-        public string NotificationDestination { get; set; }
+        public ResourceIdentifier NotificationDestination { get; set; }
         /// <summary> Serialized Name: NotificationEndpoint.locations. </summary>
-        public IList<string> Locations { get; }
+        public IList<AzureLocation> Locations { get; }
     }
 }

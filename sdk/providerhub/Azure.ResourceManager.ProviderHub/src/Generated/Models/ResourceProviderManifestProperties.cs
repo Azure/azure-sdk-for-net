@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// Serialized Name: ResourceProviderManifestProperties.metadata
         /// </param>
         /// <param name="templateDeploymentOptions"> Serialized Name: ResourceProviderManifestProperties.templateDeploymentOptions. </param>
-        internal ResourceProviderManifestProperties(ResourceProviderManifestPropertiesProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, ResourceProviderManifestPropertiesFeaturesRule featuresRule, ResourceProviderManifestPropertiesRequestHeaderOptions requestHeaderOptions, ResourceProviderManifestPropertiesManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, ResourceProviderManifestPropertiesTemplateDeploymentOptions templateDeploymentOptions)
+        internal ResourceProviderManifestProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions)
         {
             ProviderAuthentication = providerAuthentication;
             ProviderAuthorizations = providerAuthorizations;
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Serialized Name: ResourceProviderManifestProperties.providerAuthentication. </summary>
-        internal ResourceProviderManifestPropertiesProviderAuthentication ProviderAuthentication { get; set; }
+        internal ResourceProviderAuthentication ProviderAuthentication { get; set; }
         /// <summary> Serialized Name: ResourceProviderAuthentication.allowedAudiences. </summary>
         public IList<string> ProviderAuthenticationAllowedAudiences
         {
             get => ProviderAuthentication is null ? default : ProviderAuthentication.AllowedAudiences;
-            set => ProviderAuthentication = new ResourceProviderManifestPropertiesProviderAuthentication(value);
+            set => ProviderAuthentication = new ResourceProviderAuthentication(value);
         }
 
         /// <summary> Serialized Name: ResourceProviderManifestProperties.providerAuthorizations. </summary>
@@ -77,19 +77,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Serialized Name: ResourceProviderManifestProperties.requiredFeatures. </summary>
         public IList<string> RequiredFeatures { get; }
         /// <summary> Serialized Name: ResourceProviderManifestProperties.featuresRule. </summary>
-        internal ResourceProviderManifestPropertiesFeaturesRule FeaturesRule { get; set; }
+        internal FeaturesRule FeaturesRule { get; set; }
         /// <summary> Serialized Name: FeaturesRule.requiredFeaturesPolicy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule is null ? default(FeaturesPolicy?) : FeaturesRule.RequiredFeaturesPolicy;
             set
             {
-                FeaturesRule = value.HasValue ? new ResourceProviderManifestPropertiesFeaturesRule(value.Value) : null;
+                FeaturesRule = value.HasValue ? new FeaturesRule(value.Value) : null;
             }
         }
 
         /// <summary> Serialized Name: ResourceProviderManifestProperties.requestHeaderOptions. </summary>
-        internal ResourceProviderManifestPropertiesRequestHeaderOptions RequestHeaderOptions { get; set; }
+        internal RequestHeaderOptions RequestHeaderOptions { get; set; }
         /// <summary> Serialized Name: RequestHeaderOptions.optInHeaders. </summary>
         public OptInHeaderType? OptInHeaders
         {
@@ -97,13 +97,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             set
             {
                 if (RequestHeaderOptions is null)
-                    RequestHeaderOptions = new ResourceProviderManifestPropertiesRequestHeaderOptions();
+                    RequestHeaderOptions = new RequestHeaderOptions();
                 RequestHeaderOptions.OptInHeaders = value;
             }
         }
 
         /// <summary> Serialized Name: ResourceProviderManifestProperties.management. </summary>
-        public ResourceProviderManifestPropertiesManagement Management { get; set; }
+        public ResourceProviderManagement Management { get; set; }
         /// <summary> Serialized Name: ResourceProviderManifestProperties.capabilities. </summary>
         public IList<ResourceProviderCapabilities> Capabilities { get; }
         /// <summary>
@@ -139,6 +139,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// </summary>
         public BinaryData Metadata { get; set; }
         /// <summary> Serialized Name: ResourceProviderManifestProperties.templateDeploymentOptions. </summary>
-        public ResourceProviderManifestPropertiesTemplateDeploymentOptions TemplateDeploymentOptions { get; set; }
+        public TemplateDeploymentOptions TemplateDeploymentOptions { get; set; }
     }
 }

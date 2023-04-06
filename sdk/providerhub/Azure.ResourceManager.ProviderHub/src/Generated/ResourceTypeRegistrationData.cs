@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Serialized Name: ResourceTypeRegistration.properties. </param>
-        internal ResourceTypeRegistrationData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ResourceTypeRegistrationProperties properties) : base(id, name, resourceType, systemData)
+        internal ResourceTypeRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceTypeRegistrationProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

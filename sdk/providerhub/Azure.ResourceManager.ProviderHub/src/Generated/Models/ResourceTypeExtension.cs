@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ResourceTypeExtension. </summary>
         public ResourceTypeExtension()
         {
-            ExtensionCategories = new ChangeTrackingList<ExtensionCategory>();
+            ExtensionCategories = new ChangeTrackingList<ResourceTypeExtensionCategory>();
         }
 
         /// <summary> Initializes a new instance of ResourceTypeExtension. </summary>
         /// <param name="endpointUri"> Serialized Name: ResourceTypeExtension.endpointUri. </param>
         /// <param name="extensionCategories"> Serialized Name: ResourceTypeExtension.extensionCategories. </param>
         /// <param name="timeout"> Serialized Name: ResourceTypeExtension.timeout. </param>
-        internal ResourceTypeExtension(Uri endpointUri, IList<ExtensionCategory> extensionCategories, TimeSpan? timeout)
+        internal ResourceTypeExtension(Uri endpointUri, IList<ResourceTypeExtensionCategory> extensionCategories, TimeSpan? timeout)
         {
             EndpointUri = endpointUri;
             ExtensionCategories = extensionCategories;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Serialized Name: ResourceTypeExtension.endpointUri. </summary>
         public Uri EndpointUri { get; set; }
         /// <summary> Serialized Name: ResourceTypeExtension.extensionCategories. </summary>
-        public IList<ExtensionCategory> ExtensionCategories { get; }
+        public IList<ResourceTypeExtensionCategory> ExtensionCategories { get; }
         /// <summary> Serialized Name: ResourceTypeExtension.timeout. </summary>
         public TimeSpan? Timeout { get; set; }
     }

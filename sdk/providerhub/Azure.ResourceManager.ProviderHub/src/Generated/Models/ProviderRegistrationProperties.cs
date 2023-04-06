@@ -38,12 +38,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// </param>
         /// <param name="templateDeploymentOptions"> Serialized Name: ResourceProviderManifestProperties.templateDeploymentOptions. </param>
         /// <param name="providerHubMetadata"> Serialized Name: ProviderRegistrationProperties.providerHubMetadata. </param>
-        /// <param name="provisioningState">
-        /// The provisioned state of the resource.
-        /// Serialized Name: ProviderRegistrationProperties.provisioningState
-        /// </param>
+        /// <param name="provisioningState"> Serialized Name: ProviderRegistrationProperties.provisioningState. </param>
         /// <param name="subscriptionLifecycleNotificationSpecifications"> Serialized Name: ProviderRegistrationProperties.subscriptionLifecycleNotificationSpecifications. </param>
-        internal ProviderRegistrationProperties(ResourceProviderManifestPropertiesProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, ResourceProviderManifestPropertiesFeaturesRule featuresRule, ResourceProviderManifestPropertiesRequestHeaderOptions requestHeaderOptions, ResourceProviderManifestPropertiesManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, ResourceProviderManifestPropertiesTemplateDeploymentOptions templateDeploymentOptions, ProviderRegistrationPropertiesProviderHubMetadata providerHubMetadata, ProvisioningState? provisioningState, ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications) : base(providerAuthentication, providerAuthorizations, @namespace, providerVersion, providerType, requiredFeatures, featuresRule, requestHeaderOptions, management, capabilities, metadata, templateDeploymentOptions)
+        internal ProviderRegistrationProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, ProviderHubMetadata providerHubMetadata, ProviderHubProvisioningState? provisioningState, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications) : base(providerAuthentication, providerAuthorizations, @namespace, providerVersion, providerType, requiredFeatures, featuresRule, requestHeaderOptions, management, capabilities, metadata, templateDeploymentOptions)
         {
             ProviderHubMetadata = providerHubMetadata;
             ProvisioningState = provisioningState;
@@ -51,13 +48,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Serialized Name: ProviderRegistrationProperties.providerHubMetadata. </summary>
-        public ProviderRegistrationPropertiesProviderHubMetadata ProviderHubMetadata { get; set; }
-        /// <summary>
-        /// The provisioned state of the resource.
-        /// Serialized Name: ProviderRegistrationProperties.provisioningState
-        /// </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        public ProviderHubMetadata ProviderHubMetadata { get; set; }
+        /// <summary> Serialized Name: ProviderRegistrationProperties.provisioningState. </summary>
+        public ProviderHubProvisioningState? ProvisioningState { get; set; }
         /// <summary> Serialized Name: ProviderRegistrationProperties.subscriptionLifecycleNotificationSpecifications. </summary>
-        public ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications SubscriptionLifecycleNotificationSpecifications { get; set; }
+        public SubscriptionLifecycleNotificationSpecifications SubscriptionLifecycleNotificationSpecifications { get; set; }
     }
 }

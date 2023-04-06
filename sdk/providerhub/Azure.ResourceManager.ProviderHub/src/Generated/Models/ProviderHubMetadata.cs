@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="providerAuthorizations"> Serialized Name: ProviderHubMetadata.providerAuthorizations. </param>
         /// <param name="providerAuthentication"> Serialized Name: ProviderHubMetadata.providerAuthentication. </param>
         /// <param name="thirdPartyProviderAuthorization"> Serialized Name: ProviderHubMetadata.thirdPartyProviderAuthorization. </param>
-        internal ProviderHubMetadata(IList<ResourceProviderAuthorization> providerAuthorizations, ProviderHubMetadataProviderAuthentication providerAuthentication, ProviderHubMetadataThirdPartyProviderAuthorization thirdPartyProviderAuthorization)
+        internal ProviderHubMetadata(IList<ResourceProviderAuthorization> providerAuthorizations, ResourceProviderAuthentication providerAuthentication, ThirdPartyProviderAuthorization thirdPartyProviderAuthorization)
         {
             ProviderAuthorizations = providerAuthorizations;
             ProviderAuthentication = providerAuthentication;
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Serialized Name: ProviderHubMetadata.providerAuthorizations. </summary>
         public IList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
         /// <summary> Serialized Name: ProviderHubMetadata.providerAuthentication. </summary>
-        internal ProviderHubMetadataProviderAuthentication ProviderAuthentication { get; set; }
+        internal ResourceProviderAuthentication ProviderAuthentication { get; set; }
         /// <summary> Serialized Name: ResourceProviderAuthentication.allowedAudiences. </summary>
         public IList<string> ProviderAuthenticationAllowedAudiences
         {
             get => ProviderAuthentication is null ? default : ProviderAuthentication.AllowedAudiences;
-            set => ProviderAuthentication = new ProviderHubMetadataProviderAuthentication(value);
+            set => ProviderAuthentication = new ResourceProviderAuthentication(value);
         }
 
         /// <summary> Serialized Name: ProviderHubMetadata.thirdPartyProviderAuthorization. </summary>
-        public ProviderHubMetadataThirdPartyProviderAuthorization ThirdPartyProviderAuthorization { get; set; }
+        public ThirdPartyProviderAuthorization ThirdPartyProviderAuthorization { get; set; }
     }
 }

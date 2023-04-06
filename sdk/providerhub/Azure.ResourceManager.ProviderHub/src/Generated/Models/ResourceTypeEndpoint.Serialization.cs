@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(ApiVersions))
             {
@@ -72,11 +72,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
-            if (Optional.IsDefined(EndpointType))
-            {
-                writer.WritePropertyName("endpointType"u8);
-                writer.WriteStringValue(EndpointType.Value.ToString());
-            }
             writer.WriteEndObject();
         }
 
@@ -88,12 +83,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             Optional<bool> enabled = default;
             Optional<IList<string>> apiVersions = default;
-            Optional<IList<string>> locations = default;
+            Optional<IList<AzureLocation>> locations = default;
             Optional<IList<string>> requiredFeatures = default;
-            Optional<ResourceTypeEndpointFeaturesRule> featuresRule = default;
+            Optional<FeaturesRule> featuresRule = default;
             Optional<IList<ResourceTypeExtension>> extensions = default;
             Optional<TimeSpan> timeout = default;
-            Optional<EndpointType> endpointType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -128,10 +122,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
@@ -158,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    featuresRule = ResourceTypeEndpointFeaturesRule.DeserializeResourceTypeEndpointFeaturesRule(property.Value);
+                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extensions"u8))
@@ -186,18 +180,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("endpointType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    endpointType = new EndpointType(property.Value.GetString());
-                    continue;
-                }
             }
-            return new ResourceTypeEndpoint(Optional.ToNullable(enabled), Optional.ToList(apiVersions), Optional.ToList(locations), Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToList(extensions), Optional.ToNullable(timeout), Optional.ToNullable(endpointType));
+            return new ResourceTypeEndpoint(Optional.ToNullable(enabled), Optional.ToList(apiVersions), Optional.ToList(locations), Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToList(extensions), Optional.ToNullable(timeout));
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="direction"> Serialized Name: LoggingRule.direction. </param>
         /// <param name="detailLevel"> Serialized Name: LoggingRule.detailLevel. </param>
         /// <param name="hiddenPropertyPaths"> Serialized Name: LoggingRule.hiddenPropertyPaths. </param>
-        internal LoggingRule(string action, LoggingDirection direction, LoggingDetail detailLevel, LoggingRuleHiddenPropertyPaths hiddenPropertyPaths)
+        internal LoggingRule(string action, LoggingDirection direction, LoggingDetail detailLevel, LoggingHiddenPropertyPaths hiddenPropertyPaths)
         {
             Action = action;
             Direction = direction;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Serialized Name: LoggingRule.detailLevel. </summary>
         public LoggingDetail DetailLevel { get; set; }
         /// <summary> Serialized Name: LoggingRule.hiddenPropertyPaths. </summary>
-        public LoggingRuleHiddenPropertyPaths HiddenPropertyPaths { get; set; }
+        public LoggingHiddenPropertyPaths HiddenPropertyPaths { get; set; }
     }
 }

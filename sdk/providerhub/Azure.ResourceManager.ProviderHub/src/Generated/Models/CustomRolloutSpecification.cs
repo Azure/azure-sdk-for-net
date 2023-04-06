@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of CustomRolloutSpecification. </summary>
         /// <param name="canary"> Serialized Name: CustomRolloutSpecification.canary. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="canary"/> is null. </exception>
-        public CustomRolloutSpecification(CustomRolloutSpecificationCanary canary)
+        public CustomRolloutSpecification(TrafficRegions canary)
         {
             Argument.AssertNotNull(canary, nameof(canary));
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="canary"> Serialized Name: CustomRolloutSpecification.canary. </param>
         /// <param name="providerRegistration"> Serialized Name: CustomRolloutSpecification.providerRegistration. </param>
         /// <param name="resourceTypeRegistrations"> Serialized Name: CustomRolloutSpecification.resourceTypeRegistrations. </param>
-        internal CustomRolloutSpecification(CustomRolloutSpecificationCanary canary, CustomRolloutSpecificationProviderRegistration providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations)
+        internal CustomRolloutSpecification(TrafficRegions canary, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations)
         {
             Canary = canary;
             ProviderRegistration = providerRegistration;
@@ -41,20 +41,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Serialized Name: CustomRolloutSpecification.canary. </summary>
-        internal CustomRolloutSpecificationCanary Canary { get; set; }
+        internal TrafficRegions Canary { get; set; }
         /// <summary> Serialized Name: TrafficRegions.regions. </summary>
-        public IList<string> CanaryRegions
+        public IList<AzureLocation> CanaryRegions
         {
             get
             {
                 if (Canary is null)
-                    Canary = new CustomRolloutSpecificationCanary();
+                    Canary = new TrafficRegions();
                 return Canary.Regions;
             }
         }
 
         /// <summary> Serialized Name: CustomRolloutSpecification.providerRegistration. </summary>
-        public CustomRolloutSpecificationProviderRegistration ProviderRegistration { get; set; }
+        public ProviderRegistrationData ProviderRegistration { get; set; }
         /// <summary> Serialized Name: CustomRolloutSpecification.resourceTypeRegistrations. </summary>
         public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
     }

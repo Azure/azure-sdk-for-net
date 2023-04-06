@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Initializes a new instance of SubscriptionLifecycleNotificationSpecifications. </summary>
         /// <param name="subscriptionStateOverrideActions"> Serialized Name: SubscriptionLifecycleNotificationSpecifications.subscriptionStateOverrideActions. </param>
-        /// <param name="softDeleteTTL"> Serialized Name: SubscriptionLifecycleNotificationSpecifications.softDeleteTTL. </param>
-        internal SubscriptionLifecycleNotificationSpecifications(IList<SubscriptionStateOverrideAction> subscriptionStateOverrideActions, TimeSpan? softDeleteTTL)
+        /// <param name="softDeleteTtl"> Serialized Name: SubscriptionLifecycleNotificationSpecifications.softDeleteTTL. </param>
+        internal SubscriptionLifecycleNotificationSpecifications(IList<SubscriptionStateOverrideAction> subscriptionStateOverrideActions, TimeSpan? softDeleteTtl)
         {
             SubscriptionStateOverrideActions = subscriptionStateOverrideActions;
-            SoftDeleteTTL = softDeleteTTL;
+            SoftDeleteTtl = softDeleteTtl;
         }
 
         /// <summary> Serialized Name: SubscriptionLifecycleNotificationSpecifications.subscriptionStateOverrideActions. </summary>
         public IList<SubscriptionStateOverrideAction> SubscriptionStateOverrideActions { get; }
         /// <summary> Serialized Name: SubscriptionLifecycleNotificationSpecifications.softDeleteTTL. </summary>
-        public TimeSpan? SoftDeleteTTL { get; set; }
+        public TimeSpan? SoftDeleteTtl { get; set; }
     }
 }

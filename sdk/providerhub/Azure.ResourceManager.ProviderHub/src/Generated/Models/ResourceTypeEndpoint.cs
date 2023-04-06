@@ -21,49 +21,47 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceTypeEndpoint()
         {
             ApiVersions = new ChangeTrackingList<string>();
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
             RequiredFeatures = new ChangeTrackingList<string>();
             Extensions = new ChangeTrackingList<ResourceTypeExtension>();
         }
 
         /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
-        /// <param name="enabled"> Serialized Name: ResourceTypeEndpoint.enabled. </param>
+        /// <param name="isEnabled"> Serialized Name: ResourceTypeEndpoint.enabled. </param>
         /// <param name="apiVersions"> Serialized Name: ResourceTypeEndpoint.apiVersions. </param>
         /// <param name="locations"> Serialized Name: ResourceTypeEndpoint.locations. </param>
         /// <param name="requiredFeatures"> Serialized Name: ResourceTypeEndpoint.requiredFeatures. </param>
         /// <param name="featuresRule"> Serialized Name: ResourceTypeEndpoint.featuresRule. </param>
         /// <param name="extensions"> Serialized Name: ResourceTypeEndpoint.extensions. </param>
         /// <param name="timeout"> Serialized Name: ResourceTypeEndpoint.timeout. </param>
-        /// <param name="endpointType"> Serialized Name: ResourceTypeEndpoint.endpointType. </param>
-        internal ResourceTypeEndpoint(bool? enabled, IList<string> apiVersions, IList<string> locations, IList<string> requiredFeatures, ResourceTypeEndpointFeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout, EndpointType? endpointType)
+        internal ResourceTypeEndpoint(bool? isEnabled, IList<string> apiVersions, IList<AzureLocation> locations, IList<string> requiredFeatures, FeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             ApiVersions = apiVersions;
             Locations = locations;
             RequiredFeatures = requiredFeatures;
             FeaturesRule = featuresRule;
             Extensions = extensions;
             Timeout = timeout;
-            EndpointType = endpointType;
         }
 
         /// <summary> Serialized Name: ResourceTypeEndpoint.enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Serialized Name: ResourceTypeEndpoint.apiVersions. </summary>
         public IList<string> ApiVersions { get; }
         /// <summary> Serialized Name: ResourceTypeEndpoint.locations. </summary>
-        public IList<string> Locations { get; }
+        public IList<AzureLocation> Locations { get; }
         /// <summary> Serialized Name: ResourceTypeEndpoint.requiredFeatures. </summary>
         public IList<string> RequiredFeatures { get; }
         /// <summary> Serialized Name: ResourceTypeEndpoint.featuresRule. </summary>
-        internal ResourceTypeEndpointFeaturesRule FeaturesRule { get; set; }
+        internal FeaturesRule FeaturesRule { get; set; }
         /// <summary> Serialized Name: FeaturesRule.requiredFeaturesPolicy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule is null ? default(FeaturesPolicy?) : FeaturesRule.RequiredFeaturesPolicy;
             set
             {
-                FeaturesRule = value.HasValue ? new ResourceTypeEndpointFeaturesRule(value.Value) : null;
+                FeaturesRule = value.HasValue ? new FeaturesRule(value.Value) : null;
             }
         }
 
@@ -71,7 +69,5 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<ResourceTypeExtension> Extensions { get; }
         /// <summary> Serialized Name: ResourceTypeEndpoint.timeout. </summary>
         public TimeSpan? Timeout { get; set; }
-        /// <summary> Serialized Name: ResourceTypeEndpoint.endpointType. </summary>
-        public EndpointType? EndpointType { get; set; }
     }
 }

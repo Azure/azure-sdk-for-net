@@ -21,19 +21,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ServiceTreeInfo. </summary>
         /// <param name="serviceId"> Serialized Name: ServiceTreeInfo.serviceId. </param>
         /// <param name="componentId"> Serialized Name: ServiceTreeInfo.componentId. </param>
-        /// <param name="readiness"> Serialized Name: ServiceTreeInfo.readiness. </param>
-        internal ServiceTreeInfo(string serviceId, string componentId, Readiness? readiness)
+        internal ServiceTreeInfo(string serviceId, string componentId)
         {
             ServiceId = serviceId;
             ComponentId = componentId;
-            Readiness = readiness;
         }
 
         /// <summary> Serialized Name: ServiceTreeInfo.serviceId. </summary>
         public string ServiceId { get; set; }
         /// <summary> Serialized Name: ServiceTreeInfo.componentId. </summary>
         public string ComponentId { get; set; }
-        /// <summary> Serialized Name: ServiceTreeInfo.readiness. </summary>
-        public Readiness? Readiness { get; set; }
     }
 }

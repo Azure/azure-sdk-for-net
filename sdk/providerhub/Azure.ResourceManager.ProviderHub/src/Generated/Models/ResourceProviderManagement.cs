@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="serviceTreeInfos"> Serialized Name: ResourceProviderManagement.serviceTreeInfos. </param>
         /// <param name="resourceAccessPolicy"> Serialized Name: ResourceProviderManagement.resourceAccessPolicy. </param>
         /// <param name="resourceAccessRoles"> Serialized Name: ResourceProviderManagement.resourceAccessRoles. </param>
-        internal ResourceProviderManagement(IList<string> schemaOwners, IList<string> manifestOwners, string incidentRoutingService, string incidentRoutingTeam, string incidentContactEmail, IList<ServiceTreeInfo> serviceTreeInfos, ResourceProviderManagementResourceAccessPolicy? resourceAccessPolicy, IList<BinaryData> resourceAccessRoles)
+        internal ResourceProviderManagement(IList<string> schemaOwners, IList<string> manifestOwners, string incidentRoutingService, string incidentRoutingTeam, string incidentContactEmail, IList<ServiceTreeInfo> serviceTreeInfos, ResourceAccessPolicy? resourceAccessPolicy, IList<BinaryData> resourceAccessRoles)
         {
             SchemaOwners = schemaOwners;
             ManifestOwners = manifestOwners;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Serialized Name: ResourceProviderManagement.serviceTreeInfos. </summary>
         public IList<ServiceTreeInfo> ServiceTreeInfos { get; }
         /// <summary> Serialized Name: ResourceProviderManagement.resourceAccessPolicy. </summary>
-        public ResourceProviderManagementResourceAccessPolicy? ResourceAccessPolicy { get; set; }
+        public ResourceAccessPolicy? ResourceAccessPolicy { get; set; }
         /// <summary>
         /// Serialized Name: ResourceProviderManagement.resourceAccessRoles
         /// <para>

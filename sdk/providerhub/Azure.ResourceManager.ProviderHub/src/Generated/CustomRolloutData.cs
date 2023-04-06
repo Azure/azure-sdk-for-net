@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// Properties of the rollout.
         /// Serialized Name: CustomRollout.properties
         /// </param>
-        internal CustomRolloutData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, CustomRolloutProperties properties) : base(id, name, resourceType, systemData)
+        internal CustomRolloutData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomRolloutProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

@@ -29,9 +29,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RequiredFeatures = new ChangeTrackingList<string>();
             DisallowedActionVerbs = new ChangeTrackingList<string>();
             ServiceTreeInfos = new ChangeTrackingList<ServiceTreeInfo>();
-            SubscriptionStateRules = new ChangeTrackingList<SubscriptionStateRule>();
-            ExtendedLocations = new ChangeTrackingList<ExtendedLocationOptions>();
-            ResourceConcurrencyControlOptions = new ChangeTrackingDictionary<string, ResourceConcurrencyControlOption>();
+            SubscriptionStateRules = new ChangeTrackingList<ProviderSubscriptionStateRule>();
+            ExtendedLocations = new ChangeTrackingList<ProviderHubExtendedLocationOptions>();
         }
 
         /// <summary> Initializes a new instance of ResourceTypeRegistrationProperties. </summary>
@@ -50,10 +49,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="requiredFeatures"> Serialized Name: ResourceTypeRegistrationProperties.requiredFeatures. </param>
         /// <param name="featuresRule"> Serialized Name: ResourceTypeRegistrationProperties.featuresRule. </param>
         /// <param name="enableAsyncOperation"> Serialized Name: ResourceTypeRegistrationProperties.enableAsyncOperation. </param>
-        /// <param name="provisioningState">
-        /// The provisioned state of the resource.
-        /// Serialized Name: ResourceTypeRegistrationProperties.provisioningState
-        /// </param>
+        /// <param name="provisioningState"> Serialized Name: ResourceTypeRegistrationProperties.provisioningState. </param>
         /// <param name="enableThirdPartyS2S"> Serialized Name: ResourceTypeRegistrationProperties.enableThirdPartyS2S. </param>
         /// <param name="subscriptionLifecycleNotificationSpecifications"> Serialized Name: ResourceTypeRegistrationProperties.subscriptionLifecycleNotificationSpecifications. </param>
         /// <param name="isPureProxy"> Serialized Name: ResourceTypeRegistrationProperties.isPureProxy. </param>
@@ -67,14 +63,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="extendedLocations"> Serialized Name: ResourceTypeRegistrationProperties.extendedLocations. </param>
         /// <param name="resourceMovePolicy"> Serialized Name: ResourceTypeRegistrationProperties.resourceMovePolicy. </param>
         /// <param name="resourceDeletionPolicy"> Serialized Name: ResourceTypeRegistrationProperties.resourceDeletionPolicy. </param>
-        /// <param name="resourceConcurrencyControlOptions">
-        /// Dictionary of &lt;ResourceConcurrencyControlOption&gt;
-        /// Serialized Name: ResourceTypeRegistrationProperties.resourceConcurrencyControlOptions
-        /// </param>
-        /// <param name="resourceGraphConfiguration"> Serialized Name: ResourceTypeRegistrationProperties.resourceGraphConfiguration. </param>
-        /// <param name="management"> Serialized Name: ResourceTypeRegistrationProperties.management. </param>
-        /// <param name="openApiConfiguration"> Serialized Name: ResourceTypeRegistrationProperties.openApiConfiguration. </param>
-        internal ResourceTypeRegistrationProperties(RoutingType? routingType, Regionality? regionality, IList<ResourceTypeEndpoint> endpoints, ResourceTypeRegistrationPropertiesExtensionOptions extensionOptions, ResourceTypeRegistrationPropertiesMarketplaceType? marketplaceType, IList<SwaggerSpecification> swaggerSpecifications, IList<string> allowedUnauthorizedActions, IList<AuthorizationActionMapping> authorizationActionMappings, IList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IList<LoggingRule> loggingRules, IList<ThrottlingRule> throttlingRules, IList<string> requiredFeatures, ResourceTypeRegistrationPropertiesFeaturesRule featuresRule, bool? enableAsyncOperation, ProvisioningState? provisioningState, bool? enableThirdPartyS2S, ResourceTypeRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, bool? isPureProxy, ResourceTypeRegistrationPropertiesIdentityManagement identityManagement, ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications, IList<string> disallowedActionVerbs, IList<ServiceTreeInfo> serviceTreeInfos, ResourceTypeRegistrationPropertiesRequestHeaderOptions requestHeaderOptions, IList<SubscriptionStateRule> subscriptionStateRules, ResourceTypeRegistrationPropertiesTemplateDeploymentOptions templateDeploymentOptions, IList<ExtendedLocationOptions> extendedLocations, ResourceTypeRegistrationPropertiesResourceMovePolicy resourceMovePolicy, ResourceDeletionPolicy? resourceDeletionPolicy, IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions, ResourceTypeRegistrationPropertiesResourceGraphConfiguration resourceGraphConfiguration, ResourceTypeRegistrationPropertiesManagement management, OpenApiConfiguration openApiConfiguration)
+        internal ResourceTypeRegistrationProperties(ResourceRoutingType? routingType, ResourceTypeRegistrationRegionality? regionality, IList<ResourceTypeEndpoint> endpoints, ResourceTypeExtensionOptions extensionOptions, MarketplaceType? marketplaceType, IList<SwaggerSpecification> swaggerSpecifications, IList<string> allowedUnauthorizedActions, IList<AuthorizationActionMapping> authorizationActionMappings, IList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IList<LoggingRule> loggingRules, IList<ThrottlingRule> throttlingRules, IList<string> requiredFeatures, FeaturesRule featuresRule, bool? enableAsyncOperation, ProviderHubProvisioningState? provisioningState, bool? enableThirdPartyS2S, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, bool? isPureProxy, IdentityManagementProperties identityManagement, CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications, IList<string> disallowedActionVerbs, IList<ServiceTreeInfo> serviceTreeInfos, RequestHeaderOptions requestHeaderOptions, IList<ProviderSubscriptionStateRule> subscriptionStateRules, TemplateDeploymentOptions templateDeploymentOptions, IList<ProviderHubExtendedLocationOptions> extendedLocations, ResourceMovePolicy resourceMovePolicy, ResourceDeletionPolicy? resourceDeletionPolicy)
         {
             RoutingType = routingType;
             Regionality = regionality;
@@ -105,34 +94,30 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ExtendedLocations = extendedLocations;
             ResourceMovePolicy = resourceMovePolicy;
             ResourceDeletionPolicy = resourceDeletionPolicy;
-            ResourceConcurrencyControlOptions = resourceConcurrencyControlOptions;
-            ResourceGraphConfiguration = resourceGraphConfiguration;
-            Management = management;
-            OpenApiConfiguration = openApiConfiguration;
         }
 
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.routingType. </summary>
-        public RoutingType? RoutingType { get; set; }
+        public ResourceRoutingType? RoutingType { get; set; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.regionality. </summary>
-        public Regionality? Regionality { get; set; }
+        public ResourceTypeRegistrationRegionality? Regionality { get; set; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.endpoints. </summary>
         public IList<ResourceTypeEndpoint> Endpoints { get; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.extensionOptions. </summary>
-        internal ResourceTypeRegistrationPropertiesExtensionOptions ExtensionOptions { get; set; }
+        internal ResourceTypeExtensionOptions ExtensionOptions { get; set; }
         /// <summary> Serialized Name: ResourceTypeExtensionOptions.resourceCreationBegin. </summary>
-        public ResourceTypeExtensionOptionsResourceCreationBegin ExtensionOptionsResourceCreationBegin
+        public ExtensionOptions ExtensionOptionsResourceCreationBegin
         {
             get => ExtensionOptions is null ? default : ExtensionOptions.ResourceCreationBegin;
             set
             {
                 if (ExtensionOptions is null)
-                    ExtensionOptions = new ResourceTypeRegistrationPropertiesExtensionOptions();
+                    ExtensionOptions = new ResourceTypeExtensionOptions();
                 ExtensionOptions.ResourceCreationBegin = value;
             }
         }
 
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.marketplaceType. </summary>
-        public ResourceTypeRegistrationPropertiesMarketplaceType? MarketplaceType { get; set; }
+        public MarketplaceType? MarketplaceType { get; set; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.swaggerSpecifications. </summary>
         public IList<SwaggerSpecification> SwaggerSpecifications { get; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.allowedUnauthorizedActions. </summary>
@@ -150,40 +135,37 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.requiredFeatures. </summary>
         public IList<string> RequiredFeatures { get; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.featuresRule. </summary>
-        internal ResourceTypeRegistrationPropertiesFeaturesRule FeaturesRule { get; set; }
+        internal FeaturesRule FeaturesRule { get; set; }
         /// <summary> Serialized Name: FeaturesRule.requiredFeaturesPolicy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule is null ? default(FeaturesPolicy?) : FeaturesRule.RequiredFeaturesPolicy;
             set
             {
-                FeaturesRule = value.HasValue ? new ResourceTypeRegistrationPropertiesFeaturesRule(value.Value) : null;
+                FeaturesRule = value.HasValue ? new FeaturesRule(value.Value) : null;
             }
         }
 
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.enableAsyncOperation. </summary>
         public bool? EnableAsyncOperation { get; set; }
-        /// <summary>
-        /// The provisioned state of the resource.
-        /// Serialized Name: ResourceTypeRegistrationProperties.provisioningState
-        /// </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        /// <summary> Serialized Name: ResourceTypeRegistrationProperties.provisioningState. </summary>
+        public ProviderHubProvisioningState? ProvisioningState { get; set; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.enableThirdPartyS2S. </summary>
         public bool? EnableThirdPartyS2S { get; set; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.subscriptionLifecycleNotificationSpecifications. </summary>
-        public ResourceTypeRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications SubscriptionLifecycleNotificationSpecifications { get; set; }
+        public SubscriptionLifecycleNotificationSpecifications SubscriptionLifecycleNotificationSpecifications { get; set; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.isPureProxy. </summary>
         public bool? IsPureProxy { get; set; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.identityManagement. </summary>
-        public ResourceTypeRegistrationPropertiesIdentityManagement IdentityManagement { get; set; }
+        public IdentityManagementProperties IdentityManagement { get; set; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.checkNameAvailabilitySpecifications. </summary>
-        public ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications CheckNameAvailabilitySpecifications { get; set; }
+        public CheckNameAvailabilitySpecifications CheckNameAvailabilitySpecifications { get; set; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.disallowedActionVerbs. </summary>
         public IList<string> DisallowedActionVerbs { get; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.serviceTreeInfos. </summary>
         public IList<ServiceTreeInfo> ServiceTreeInfos { get; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.requestHeaderOptions. </summary>
-        internal ResourceTypeRegistrationPropertiesRequestHeaderOptions RequestHeaderOptions { get; set; }
+        internal RequestHeaderOptions RequestHeaderOptions { get; set; }
         /// <summary> Serialized Name: RequestHeaderOptions.optInHeaders. </summary>
         public OptInHeaderType? OptInHeaders
         {
@@ -191,45 +173,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
             set
             {
                 if (RequestHeaderOptions is null)
-                    RequestHeaderOptions = new ResourceTypeRegistrationPropertiesRequestHeaderOptions();
+                    RequestHeaderOptions = new RequestHeaderOptions();
                 RequestHeaderOptions.OptInHeaders = value;
             }
         }
 
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.subscriptionStateRules. </summary>
-        public IList<SubscriptionStateRule> SubscriptionStateRules { get; }
+        public IList<ProviderSubscriptionStateRule> SubscriptionStateRules { get; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.templateDeploymentOptions. </summary>
-        public ResourceTypeRegistrationPropertiesTemplateDeploymentOptions TemplateDeploymentOptions { get; set; }
+        public TemplateDeploymentOptions TemplateDeploymentOptions { get; set; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.extendedLocations. </summary>
-        public IList<ExtendedLocationOptions> ExtendedLocations { get; }
+        public IList<ProviderHubExtendedLocationOptions> ExtendedLocations { get; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.resourceMovePolicy. </summary>
-        public ResourceTypeRegistrationPropertiesResourceMovePolicy ResourceMovePolicy { get; set; }
+        public ResourceMovePolicy ResourceMovePolicy { get; set; }
         /// <summary> Serialized Name: ResourceTypeRegistrationProperties.resourceDeletionPolicy. </summary>
         public ResourceDeletionPolicy? ResourceDeletionPolicy { get; set; }
-        /// <summary>
-        /// Dictionary of &lt;ResourceConcurrencyControlOption&gt;
-        /// Serialized Name: ResourceTypeRegistrationProperties.resourceConcurrencyControlOptions
-        /// </summary>
-        public IDictionary<string, ResourceConcurrencyControlOption> ResourceConcurrencyControlOptions { get; }
-        /// <summary> Serialized Name: ResourceTypeRegistrationProperties.resourceGraphConfiguration. </summary>
-        public ResourceTypeRegistrationPropertiesResourceGraphConfiguration ResourceGraphConfiguration { get; set; }
-        /// <summary> Serialized Name: ResourceTypeRegistrationProperties.management. </summary>
-        public ResourceTypeRegistrationPropertiesManagement Management { get; set; }
-        /// <summary> Serialized Name: ResourceTypeRegistrationProperties.openApiConfiguration. </summary>
-        internal OpenApiConfiguration OpenApiConfiguration { get; set; }
-        /// <summary>
-        /// Indicates whether a non compliance response is allowed for a LIST call
-        /// Serialized Name: OpenApiValidation.allowNoncompliantCollectionResponse
-        /// </summary>
-        public bool? AllowNoncompliantCollectionResponse
-        {
-            get => OpenApiConfiguration is null ? default : OpenApiConfiguration.AllowNoncompliantCollectionResponse;
-            set
-            {
-                if (OpenApiConfiguration is null)
-                    OpenApiConfiguration = new OpenApiConfiguration();
-                OpenApiConfiguration.AllowNoncompliantCollectionResponse = value;
-            }
-        }
     }
 }
