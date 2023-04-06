@@ -25,7 +25,7 @@ namespace Azure.Core.Expressions.DataFactory
         /// <summary>
         /// A SecureString element.
         /// </summary>
-        public static DataFactoryElementKind SecureString { get; } = new DataFactoryElementKind("SecureString");
+        public static DataFactoryElementKind MaskedString { get; } = new DataFactoryElementKind("SecureString");
 
         /// <summary>
         /// A KeyVaultReference element.

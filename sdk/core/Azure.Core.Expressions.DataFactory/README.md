@@ -79,7 +79,7 @@ blobDataSet.FolderPath = DataFactoryElement<string>.FromExpression("foo/bar-@{pi
 #### Secure String
 
 ```C# Snippet:DataFactoryElementSecureString
-blobDataSet.FolderPath = DataFactoryElement<string>.FromLiteral("some/secret/path", asSecureString: true);
+blobDataSet.FolderPath = DataFactoryElement<string>.FromMaskedString("some/secret/path");
 ```
 
 #### Key Vault Secret Reference

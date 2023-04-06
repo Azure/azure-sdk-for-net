@@ -24,7 +24,7 @@ namespace Azure.Core.Expressions.DataFactory.Samples
             Assert.AreEqual("foo/bar-@{pipeline().TriggerTime}", blobDataSet.FolderPath.ToString());
 
             #region Snippet:DataFactoryElementSecureString
-            blobDataSet.FolderPath = DataFactoryElement<string>.FromLiteral("some/secret/path", asSecureString: true);
+            blobDataSet.FolderPath = DataFactoryElement<string>.FromMaskedString("some/secret/path");
             #endregion
 
             Assert.AreEqual("some/secret/path", blobDataSet.FolderPath.ToString());

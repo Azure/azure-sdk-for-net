@@ -90,32 +90,24 @@ namespace Azure.Core.Expressions.DataFactory
         }
 
         /// <summary>
+        /// Creates a new instance of <see cref="DataFactoryElement{T}"/> using the KeyVaultSecretReference value.
+        /// </summary>
+        /// <param name="maskedString"> The unmasked string value. </param>
+#pragma warning disable CA1000 // Do not declare static members on generic types
+        public static DataFactoryElement<string?> FromMaskedString(DataFactoryMaskedString maskedString)
+#pragma warning restore CA1000 // Do not declare static members on generic types
+        {
+            return new DataFactoryElement<string?>(maskedString.Value, DataFactoryElementKind.MaskedString);
+        }
+
+        /// <summary>
         /// Creates a new instance of <see cref="DataFactoryElement{T}"/> using the literal value.
         /// </summary>
         /// <param name="literal">The literal value.</param>
-        /// <param name="asSecureString">Whether to create the element as a secure string. If set to <value>true</value>, the value
-        /// will be masked with asterisks when subsequently retrieved from the service. By default, this is <value>false</value>. The value will
-        /// NOT be masked when calling <see cref="ToString"/> after creating the element from a literal.</param>
 #pragma warning disable CA1000 // Do not declare static members on generic types
-        public static DataFactoryElement<T> FromLiteral(T? literal, bool asSecureString = false)
+        public static DataFactoryElement<T> FromLiteral(T? literal)
 #pragma warning restore CA1000 // Do not declare static members on generic types
         {
-            if (asSecureString)
-            {
-                if (typeof(T) != typeof(string) &&
-                    typeof(T) != typeof(bool) && typeof(T) != typeof(bool?) &&
-                    typeof(T) != typeof(int) && typeof(T) != typeof(int?) &&
-                    typeof(T) != typeof(double) && typeof(T) != typeof(double?) &&
-                    typeof(T) != typeof(TimeSpan) && typeof(T) != typeof(TimeSpan?) &&
-                    typeof(T) != typeof(DateTimeOffset) && typeof(T) != typeof(DateTimeOffset?) &&
-                    typeof(T) != typeof(Uri))
-                {
-                    throw new ArgumentException("asSecureString can only be set to `true` for primitive types.", nameof(literal));
-                }
-
-                var literalString = literal?.ToString() ?? string.Empty;
-                return new DataFactoryElement<T>(literalString, DataFactoryElementKind.SecureString);
-            }
             return new DataFactoryElement<T>(literal);
         }
 
