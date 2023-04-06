@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Dns
             request.Uri = uri;
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch.Value);
+                request.Headers.Add("If-Match", ifMatch.Value.ToString("G"));
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Dns
             request.Uri = uri;
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch.Value);
+                request.Headers.Add("If-Match", ifMatch.Value.ToString("G"));
             }
             if (ifNoneMatch != null)
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Dns
             request.Uri = uri;
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch.Value);
+                request.Headers.Add("If-Match", ifMatch.Value.ToString("G"));
             }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

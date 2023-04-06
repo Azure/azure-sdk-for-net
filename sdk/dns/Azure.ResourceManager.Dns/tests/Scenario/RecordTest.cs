@@ -146,6 +146,55 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
+        public async Task ARecordOperationIfMatchTest()
+        {
+            var collection = _dnsZone.GetDnsARecords();
+            string aRecordName = Recording.GenerateAssetName("a");
+            string ipv4AddressValue1 = "10.10.0.1";
+            string ipv4AddressValue2 = "10.10.0.2";
+
+            // Create new
+            var data = new DnsARecordData()
+            {
+                TtlInSeconds = 3600,
+                DnsARecords =
+                {
+                    new DnsARecordInfo()
+                    {
+                        IPv4Address = IPAddress.Parse(ipv4AddressValue1)
+                    }
+                }
+            };
+            var aRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, aRecordName, data);
+            ValidateRecordBaseInfo(aRecord.Value.Data, aRecordName);
+            Assert.AreEqual("dnszones/A", aRecord.Value.Data.ResourceType.Type.ToString());
+            Assert.AreEqual(3600, aRecord.Value.Data.TtlInSeconds);
+            Assert.AreEqual(ipv4AddressValue1, aRecord.Value.Data.DnsARecords[0].IPv4Address.ToString());
+
+            // Update DnsARecords with IfMatch
+            data.ETag = aRecord.Value.Data.ETag;
+            data.DnsARecords.Add(
+                    new DnsARecordInfo()
+                    {
+                        IPv4Address = IPAddress.Parse(ipv4AddressValue2)
+                    }
+                );
+            aRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, aRecordName, data, aRecord.Value.Data.ETag);
+            ValidateRecordBaseInfo(aRecord.Value.Data, aRecordName);
+            Assert.AreEqual(ipv4AddressValue1, aRecord.Value.Data.DnsARecords[0].IPv4Address.ToString());
+            Assert.AreEqual(ipv4AddressValue2, aRecord.Value.Data.DnsARecords[1].IPv4Address.ToString());
+
+            // Update TtlInSeconds with IfMatch
+            var updateResponse = await aRecord.Value.UpdateAsync(new DnsARecordData() { TtlInSeconds = 7200 }, aRecord.Value.Data.ETag);
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
+
+            // Delete with IfMatch
+            await aRecord.Value.DeleteAsync(WaitUntil.Completed, updateResponse.Value.Data.ETag);
+            bool flag = await collection.ExistsAsync(aRecordName);
+            Assert.IsFalse(flag);
+        }
+
+        [RecordedTest]
         public async Task CaaRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsCaaRecords();
