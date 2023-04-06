@@ -54,7 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
 
             var connectionVars = new ConnectionVars("0000", "https://westus.test.azure.com", null);
-            var statsbeat = AzureMonitorTransmitter.InitializeStatsbeat(options, connectionVars, platform);
+            var statsbeat = AzureMonitorTransmitter.InitializeStatsbeat(options, connectionVars, platform, new MockVmMetadataProvider());
 
             if (shouldInitialize)
             {

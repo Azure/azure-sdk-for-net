@@ -31,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
         private bool _disposed;
 
-        public AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform)
+        public AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform, IVmMetadataProvider vmMetadataProvider)
         {
             if (options == null)
             {
@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager);
             }
 
-            _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
+            _statsbeat = InitializeStatsbeat(options, _connectionVars, platform, vmMetadataProvider);
         }
 
         internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
@@ -130,7 +130,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return null;
         }
 
-        internal static AzureMonitorStatsbeat? InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars, IPlatform platform)
+        internal static AzureMonitorStatsbeat? InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars, IPlatform platform, IVmMetadataProvider vmMetadataProvider)
         {
             if (options.EnableStatsbeat && connectionVars != null)
             {
@@ -144,7 +144,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         return null;
                     }
 
-                    return new AzureMonitorStatsbeat(connectionVars, platform);
+                    return new AzureMonitorStatsbeat(connectionVars, platform, vmMetadataProvider);
                 }
                 catch (Exception ex)
                 {

@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal static Regex s_endpoint_pattern => new("^https?://(?:www\\.)?([^/.-]+)");
 
-        internal AzureMonitorStatsbeat(ConnectionVars connectionStringVars, IPlatform platform)
+        internal AzureMonitorStatsbeat(ConnectionVars connectionStringVars, IPlatform platform, IVmMetadataProvider vmMetadataProvider)
         {
             _statsbeat_ConnectionString = GetStatsbeatConnectionString(connectionStringVars.IngestionEndpoint);
 
@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             _customer_Ikey = connectionStringVars?.InstrumentationKey;
 
-            _resourceProviderDetails = GetResourceProviderDetails(platform);
+            _resourceProviderDetails = GetResourceProviderDetails(platform, vmMetadataProvider ?? new DefaultVmMetadataProvider());
 
             s_myMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatMetricName, () => GetAttachStatsbeat());
 
@@ -99,27 +99,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                         new("os", _resourceProviderDetails.OperatingSystem));
         }
 
-        private static VmMetadataResponse? GetVmMetadataResponse()
-        {
-            try
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    httpClient.DefaultRequestHeaders.Add("Metadata", "True");
-                    var responseString = httpClient.GetStringAsync(StatsbeatConstants.AMS_Url);
-                    var vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result);
-
-                    return vmMetadata;
-                }
-            }
-            catch (Exception ex)
-            {
-                AzureMonitorExporterEventSource.Log.WriteInformational("Failed to get VM metadata details", ex);
-                return null;
-            }
-        }
-
-        internal static ResourceProviderDetails GetResourceProviderDetails(IPlatform platform)
+        internal static ResourceProviderDetails GetResourceProviderDetails(IPlatform platform, IVmMetadataProvider vmMetadataProvider)
         {
             try
             {
@@ -149,7 +129,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     };
                 }
 
-                var vmMetadata = GetVmMetadataResponse();
+                var vmMetadata = vmMetadataProvider.GetVmMetadataResponse();
                 if (vmMetadata != null)
                 {
                     return new ResourceProviderDetails

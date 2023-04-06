@@ -44,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var customer_ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://{euEndpoint}.in.applicationinsights.azure.com/";
             var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
-            var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform());
+            var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform(), new MockVmMetadataProvider());
 
             Assert.Equal(StatsbeatConstants.Statsbeat_ConnectionString_EU, statsBeatInstance._statsbeat_ConnectionString);
         }
@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var customer_ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://{nonEUEndpoint}.in.applicationinsights.azure.com/";
             var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
-            var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform());
+            var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform(), new MockVmMetadataProvider());
 
             Assert.Equal(StatsbeatConstants.Statsbeat_ConnectionString_NonEU, statsBeatInstance._statsbeat_ConnectionString);
         }
@@ -66,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var customer_ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://foo.in.applicationinsights.azure.com/";
 
             var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
-            Assert.Throws<InvalidOperationException>(() => new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform()));
+            Assert.Throws<InvalidOperationException>(() => new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform(), new MockVmMetadataProvider()));
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var platform = new MockPlatform();
             platform.OSPlatformName = "UnitTest";
 
-            var resourceProviderDetails = AzureMonitorStatsbeat.GetResourceProviderDetails(platform);
+            var resourceProviderDetails = AzureMonitorStatsbeat.GetResourceProviderDetails(platform, new MockVmMetadataProvider());
 
             Assert.Equal("unknown", resourceProviderDetails.ResourceProvider);
             Assert.Equal("unknown", resourceProviderDetails.ResourceProviderId);
@@ -89,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             platform.OSPlatformName = "UnitTest";
             platform.SetEnvironmentVariable("WEBSITE_SITE_NAME", "testWebSite");
 
-            var resourceProviderDetails = AzureMonitorStatsbeat.GetResourceProviderDetails(platform);
+            var resourceProviderDetails = AzureMonitorStatsbeat.GetResourceProviderDetails(platform, new MockVmMetadataProvider());
 
             Assert.Equal("appsvc", resourceProviderDetails.ResourceProvider);
             Assert.Equal("testWebSite", resourceProviderDetails.ResourceProviderId);
@@ -104,7 +104,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             platform.SetEnvironmentVariable("WEBSITE_SITE_NAME", "testWebSite");
             platform.SetEnvironmentVariable("WEBSITE_HOME_STAMPNAME", "testStampName");
 
-            var resourceProviderDetails = AzureMonitorStatsbeat.GetResourceProviderDetails(platform);
+            var resourceProviderDetails = AzureMonitorStatsbeat.GetResourceProviderDetails(platform, new MockVmMetadataProvider());
 
             Assert.Equal("appsvc", resourceProviderDetails.ResourceProvider);
             Assert.Equal("testWebSite/testStampName", resourceProviderDetails.ResourceProviderId);
@@ -119,16 +119,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             platform.SetEnvironmentVariable("FUNCTIONS_WORKER_RUNTIME", "test");
             platform.SetEnvironmentVariable("WEBSITE_HOSTNAME", "testHostName");
 
-            var resourceProviderDetails = AzureMonitorStatsbeat.GetResourceProviderDetails(platform);
+            var resourceProviderDetails = AzureMonitorStatsbeat.GetResourceProviderDetails(platform, new MockVmMetadataProvider());
 
             Assert.Equal("functions", resourceProviderDetails.ResourceProvider);
             Assert.Equal("testHostName", resourceProviderDetails.ResourceProviderId);
             Assert.Equal("UnitTest", resourceProviderDetails.OperatingSystem);
         }
 
-        [Fact(Skip = "TODO: NEED A TEST FOR THIS SCENARIO")]
+        [Fact]
         public void Verify_GetResourceProviderDetails_AzureVM()
         {
+            var platform = new MockPlatform();
+
+            var vmMetadataProvider = new MockVmMetadataProvider
+            {
+                Response = new VmMetadataResponse
+                {
+                    osType = "UnitTest",
+                    vmId = "testVmId",
+                    subscriptionId = "testSubscriptionId",
+                }
+            };
+
+            var resourceProviderDetails = AzureMonitorStatsbeat.GetResourceProviderDetails(platform, vmMetadataProvider);
+
+            Assert.Equal("vm", resourceProviderDetails.ResourceProvider);
+            Assert.Equal("testVmId/testSubscriptionId", resourceProviderDetails.ResourceProviderId);
+            Assert.Equal("unittest", resourceProviderDetails.OperatingSystem);
         }
     }
 }
