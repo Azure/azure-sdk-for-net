@@ -27,7 +27,7 @@ namespace Azure.Core.Pipeline
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
         /// </summary>
         /// <param name="maxRetries">The maximum number of retries to attempt.</param>
-        /// <param name="delay">The delay to use for computing the interval between attempts.</param>
+        /// <param name="delay">The delay to use for computing the interval between retry attempts.</param>
         public RetryPolicy(int maxRetries = 3, Delay? delay = default)
         {
             _maxRetries = maxRetries;

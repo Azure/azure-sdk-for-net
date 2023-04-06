@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Core
 {
     /// <summary>
-    /// An abstraction that may be overriden to control delay behavior.
+    /// An abstraction to control delay behavior.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
     public abstract class Delay
@@ -37,7 +37,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Create an exponential delay with jitter.
+        /// Create an exponential delay with the default jitter factor.
         /// </summary>
         /// <param name="initialDelay">The initial delay to use.</param>
         /// <param name="maxDelay">The maximum delay to use.</param>
@@ -69,7 +69,7 @@ namespace Azure.Core
         protected abstract TimeSpan GetNextDelayCore(Response? response, int retryNumber);
 
         /// <summary>
-        /// Get the next delay interval taking into account the Max Delay, jitter, and any Retry-After headers.
+        /// Gets the next delay interval taking into account the Max Delay, jitter, and any Retry-After headers.
         /// </summary>
         /// <param name="response">The response, if any, returned from the service.</param>
         /// <param name="retryNumber">The retry number.</param>
