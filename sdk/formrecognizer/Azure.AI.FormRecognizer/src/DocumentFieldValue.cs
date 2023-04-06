@@ -30,7 +30,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="valueObject"> Dictionary of named field values. </param>
         /// <param name="valueCurrency"> Currency value. </param>
         /// <param name="valueAddress"> Address value. </param>
-        internal DocumentFieldValue(DocumentFieldType expectedFieldType, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueNumber = null, long? valueInteger = null, V3SelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IReadOnlyList<DocumentField> valueArray = null, IReadOnlyDictionary<string, DocumentField> valueObject = null, CurrencyValue? valueCurrency = null, AddressValue valueAddress = null)
+        /// <param name="valueBoolean"> Boolean value. </param>
+        internal DocumentFieldValue(DocumentFieldType expectedFieldType, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueNumber = null, long? valueInteger = null, V3SelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IReadOnlyList<DocumentField> valueArray = null, IReadOnlyDictionary<string, DocumentField> valueObject = null, CurrencyValue? valueCurrency = null, AddressValue valueAddress = null, bool? valueBoolean = null)
         {
             ExpectedFieldType = expectedFieldType;
             ValueString = valueString;
@@ -46,6 +47,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             ValueObject = valueObject;
             ValueCurrency = valueCurrency;
             ValueAddress = valueAddress;
+            ValueBoolean = valueBoolean;
         }
 
         /// <summary>
@@ -88,6 +90,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private AddressValue ValueAddress { get; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private bool? ValueBoolean { get; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private V3SelectionMarkState? ValueSelectionMark { get; }

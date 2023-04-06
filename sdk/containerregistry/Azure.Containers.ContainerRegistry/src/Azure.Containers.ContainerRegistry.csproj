@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This client library enables working with the Microsoft Azure Container Registry service to store and manage container images and deployment artifacts.</Description>
     <AssemblyTitle>Microsoft Azure.Containers.ContainerRegistry client library</AssemblyTitle>
-    <Version>1.1.0-beta.8</Version>
+    <Version>1.1.0-beta.9</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure Container Registry;$(PackageCommonTags)</PackageTags>
@@ -21,7 +21,9 @@
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)RetriableStream.cs" LinkBase="SharedCore" />
   </ItemGroup>
 
 </Project>

@@ -8,34 +8,34 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Returns the requested OCI Manifest file. </summary>
     public partial class OciImageManifest
     {
         /// <summary> Initializes a new instance of OciImageManifest. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
-        public OciImageManifest(int schemaVersion = 2)
+        public OciImageManifest(int schemaVersion)
         {
             Layers = new ChangeTrackingList<OciDescriptor>();
             SchemaVersion = schemaVersion;
         }
 
         /// <summary> Initializes a new instance of OciImageManifest. </summary>
-        /// <param name="config"> V2 image config descriptor. </param>
+        /// <param name="configuration"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
         /// <param name="schemaVersion"> Schema version. </param>
-        internal OciImageManifest(OciDescriptor config, IList<OciDescriptor> layers, OciAnnotations annotations, int schemaVersion)
+        internal OciImageManifest(OciDescriptor configuration, IList<OciDescriptor> layers, OciAnnotations annotations, int schemaVersion)
         {
-            Config = config;
+            Configuration = configuration;
             Layers = layers;
             Annotations = annotations;
             SchemaVersion = schemaVersion;
         }
 
         /// <summary> V2 image config descriptor. </summary>
-        public OciDescriptor Config { get; set; }
+        public OciDescriptor Configuration { get; set; }
         /// <summary> List of V2 image layer information. </summary>
         public IList<OciDescriptor> Layers { get; }
         /// <summary> Additional information provided through arbitrary metadata. </summary>

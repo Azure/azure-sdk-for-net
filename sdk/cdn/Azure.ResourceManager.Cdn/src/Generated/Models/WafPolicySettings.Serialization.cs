@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DefaultCustomBlockResponseStatusCode != null)
                 {
                     writer.WritePropertyName("defaultCustomBlockResponseStatusCode"u8);
-                    writer.WriteStringValue(DefaultCustomBlockResponseStatusCode.Value.ToString());
+                    writer.WriteNumberValue(DefaultCustomBlockResponseStatusCode.Value.ToSerialInt32());
                 }
                 else
                 {

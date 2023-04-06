@@ -13,6 +13,8 @@ namespace Azure.Core.Json
         {
             private List<MutableJsonChange>? _changes;
 
+            internal const char Delimiter = (char)1;
+
             internal bool HasChanges => _changes != null && _changes.Count > 0;
 
             internal bool AncestorChanged(string path, int highWaterMark)
@@ -53,39 +55,6 @@ namespace Azure.Core.Json
                 }
 
                 return changed;
-            }
-
-            internal bool TryGetChange(ReadOnlySpan<byte> path, out MutableJsonChange change)
-            {
-                if (_changes == null)
-                {
-                    change = default;
-                    return false;
-                }
-
-                // TODO: re-enable optimizations
-                // (System.Text.Unicode.Utf8 isn't available to us here)
-                var pathStr = Encoding.UTF8.GetString(path.ToArray());
-
-                //Span<char> utf16 = stackalloc char[path.Length];
-                //OperationStatus status = System.Text.Unicode.Utf8.ToUtf16(path, utf16, out _, out int written, false, true);
-                //if (status != OperationStatus.Done)
-                //{ throw new NotImplementedException(); } // TODO: needs to allocate from the pool
-                //utf16 = utf16.Slice(0, written);
-
-                for (int i = _changes.Count - 1; i >= 0; i--)
-                {
-                    var c = _changes[i];
-                    if (c.Path == pathStr)
-                    //if (change.Property.AsSpan().SequenceEqual(utf16))
-                    {
-                        change = c;
-                        return true;
-                    }
-                }
-
-                change = default;
-                return false;
             }
 
             internal bool TryGetChange(string path, in int lastAppliedChange, out MutableJsonChange change)
@@ -146,26 +115,31 @@ namespace Azure.Core.Json
                 {
                     return value;
                 }
-                return $"{path}.{value}";
+
+                return string.Concat(path, Delimiter, value);
             }
 
             internal static string PushProperty(string path, ReadOnlySpan<byte> value)
             {
                 string propertyName = BinaryData.FromBytes(value.ToArray()).ToString();
+
                 if (path.Length == 0)
                 {
                     return propertyName;
                 }
-                return $"{path}.{propertyName}";
+
+                return string.Concat(path, Delimiter, propertyName);
             }
 
             internal static string PopProperty(string path)
             {
-                int lastDelimiter = path.LastIndexOf('.');
+                int lastDelimiter = path.LastIndexOf(Delimiter);
+
                 if (lastDelimiter == -1)
                 {
                     return string.Empty;
                 }
+
                 return path.Substring(0, lastDelimiter);
             }
         }

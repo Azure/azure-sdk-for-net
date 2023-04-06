@@ -60,20 +60,24 @@
     "deserializable",
     "deserializes",
     "diagnoser",
+    "dicom",
     "dont",
     "dotnetcli",
     "dtmf",
     "epsg",
     "expando",
+    "fhir",
     "finalizer",
     "finalizers",
     "illumos",
+    "interventional",
     "ints",
     "kubernetes",
     "lucene",
     "mgmt",
     "nunit",
     "odata",
+    "onco",
     "otel",
     "overridden",
     "parallelization",
@@ -637,6 +641,29 @@
       ]
     },
     {
+      "filename": "**/sdk/paloaltonetworks/**/*",
+      "words": [
+      	"armid",
+      	"cpus",
+      	"eastus",
+      	"cloudngfw",
+      	"fqdnlists",
+      	"isvtestuklegacy",
+      	"liftr",
+      	"liftrpantestplan",
+      	"msal",
+        "ngfw",
+        "panrsid",
+        "palo",
+        "paloaltonetworks",
+        "payg",
+        "praval",
+        "rgopenapi",
+        "vmos",
+        "vwan"
+      ]
+    },
+    {
       "filename": "**/sdk/peering/**/*.cs",
       "words": [
         "asns",
@@ -678,6 +705,12 @@
       "words": [
         "checkin",
         "regionality"
+      ]
+    },
+    {
+      "filename": "**/sdk/qumulo/**/*",
+      "words": [
+      	"qumulo"
       ]
     },
     {

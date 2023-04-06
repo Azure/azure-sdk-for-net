@@ -47,7 +47,7 @@ namespace Azure.Data.AppConfiguration
             Version = version switch
             {
                 ServiceVersion.V1_0 => "1.0",
-                // ServiceVersion.V2022_11_01_Preview => "2022-11-01-preview",
+                //ServiceVersion.V2022_11_01_Preview => "2022-11-01-preview",
 
                 _ => throw new NotSupportedException()
             };

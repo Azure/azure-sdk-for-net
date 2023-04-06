@@ -1,6 +1,22 @@
 # Release History
 
-## 4.5.0 (2023-03-07)
+## 4.6.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.5.1 (2023-03-31)
+
+### Bugs Fixed
+
+- Correctly serialize `CertificateIssuer.OrganizationId` property ([#35245](https://github.com/Azure/azure-sdk-for-net/issues/35245))
+
+## 4.5.0 (2023-03-14)
 
 ### Breaking Changes
 

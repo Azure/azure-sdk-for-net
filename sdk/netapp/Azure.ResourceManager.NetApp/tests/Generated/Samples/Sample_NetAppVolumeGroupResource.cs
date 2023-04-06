@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VolumeGroupsGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/VolumeGroups_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/VolumeGroups_Get.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_VolumeGroupsCreate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/VolumeGroups_Create.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/VolumeGroups_Create.json
             // this example is just showing the usage of "VolumeGroups_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,29 +81,29 @@ namespace Azure.ResourceManager.NetApp.Samples
                     GroupDescription = "Volume group",
                     ApplicationType = NetAppApplicationType.SapHana,
                     ApplicationIdentifier = "DEV",
-                    DeploymentSpecId = "fb04dbeb-005d-2703-197e-6208dfadb5d9",
+                    DeploymentSpecId = "20542149-bfca-5618-1879-9863dc6767f1",
                 },
                 Volumes =
 {
-new NetAppVolumeGroupVolume("testVol1",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+new NetAppVolumeGroupVolume("test-data-mnt00001",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
-Name = "testVol1",
+Name = "test-data-mnt00001",
 ServiceLevel = NetAppFileServiceLevel.Premium,
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 ProximityPlacementGroupId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/cys_sjain_fcp_rg/providers/Microsoft.Compute/proximityPlacementGroups/svlqa_sjain_multivolume_ppg"),
 VolumeSpecName = "data",
-},new NetAppVolumeGroupVolume("testVol2",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-log-mnt00001",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
-Name = "testVol2",
+Name = "test-log-mnt00001",
 ServiceLevel = NetAppFileServiceLevel.Premium,
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 ProximityPlacementGroupId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/cys_sjain_fcp_rg/providers/Microsoft.Compute/proximityPlacementGroups/svlqa_sjain_multivolume_ppg"),
 VolumeSpecName = "log",
-},new NetAppVolumeGroupVolume("testVol3",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+},new NetAppVolumeGroupVolume("test-shared",107374182400,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
-Name = "testVol3",
+Name = "test-shared",
 ServiceLevel = NetAppFileServiceLevel.Premium,
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
@@ -127,7 +127,7 @@ VolumeSpecName = "shared",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_VolumeGroupsDelete()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/VolumeGroups_Delete.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/VolumeGroups_Delete.json
             // this example is just showing the usage of "VolumeGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
