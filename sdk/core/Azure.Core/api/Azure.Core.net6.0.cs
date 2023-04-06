@@ -398,6 +398,16 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public abstract partial class Delay
+    {
+        protected Delay(System.TimeSpan? maxDelay = default(System.TimeSpan?), double jitterFactor = 0.2) { }
+        public static Azure.Core.Delay CreateExponentialDelay(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Core.Delay CreateFixedDelay(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
+        public System.TimeSpan GetNextDelay(Azure.Response? response, int retryNumber) { throw null; }
+        protected abstract System.TimeSpan GetNextDelayCore(Azure.Response? response, int retryNumber);
+        protected static System.TimeSpan Max(System.TimeSpan val1, System.TimeSpan val2) { throw null; }
+        protected static System.TimeSpan Min(System.TimeSpan val1, System.TimeSpan val2) { throw null; }
+    }
     public static partial class DelegatedTokenCredential
     {
         public static Azure.Core.TokenCredential Create(System.Func<Azure.Core.TokenRequestContext, System.Threading.CancellationToken, Azure.Core.AccessToken> getToken) { throw null; }
@@ -1022,6 +1032,21 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
         public static void SetAllowAutoRedirect(Azure.Core.HttpMessage message, bool allowAutoRedirect) { }
+    }
+    public partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
+    {
+        public RetryPolicy(int maxRetries = 3, Azure.Core.Delay? delay = null) { }
+        protected Azure.Core.Delay Delay { get { throw null; } }
+        protected virtual System.TimeSpan GetNextDelay(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual System.Threading.Tasks.ValueTask<System.TimeSpan> GetNextDelayAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected internal virtual void OnRequestSent(Azure.Core.HttpMessage message) { }
+        protected internal virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected internal virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }
+        protected internal virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(Azure.Core.HttpMessage message) { throw null; }
+        public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
+        protected internal virtual bool ShouldRetry(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
+        protected internal virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
     }
     public partial class ServerCertificateCustomValidationArgs
     {
