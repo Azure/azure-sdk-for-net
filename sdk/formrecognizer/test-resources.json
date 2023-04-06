@@ -54,6 +54,10 @@
             "type": "string",
             "defaultValue": "labeled-tables-fixed-rows"
         },
+        "classifierTrainingDataContainer": {
+            "type": "string",
+            "defaultValue": "training-data-classifier"
+        },
         "trainingDataResourceId": {
             "type": "string",
             "defaultValue": "[resourceId('TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
@@ -147,6 +151,15 @@
                 "signedPermission": "rl",
                 "signedResource": "c"
             }
+        },
+        "classifierTrainingSasPropertiesV3": {
+            "type": "object",
+            "defaultValue": {
+                "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('classifierTrainingDataContainer'), '-v3')]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedPermission": "rl",
+                "signedResource": "c"
+            }
         }
     },
     "variables": {
@@ -234,6 +247,10 @@
         "FORM_RECOGNIZER_TABLE_FIXED_ROWS_BLOB_CONTAINER_SAS_URL": {
             "type": "string",
             "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('labelTablesFixedRowsDataContainer'), '-v3?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('labelTablesFixedRowsSasPropertiesV3')).serviceSasToken)]"
+        },
+        "FORM_RECOGNIZER_CLASSIFIER_TRAINING_BLOB_CONTAINER_SAS_URL": {
+            "type": "string",
+            "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('classifierTrainingDataContainer'), '-v3?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('classifierTrainingSasPropertiesV3')).serviceSasToken)]"
         }
     }
 }
