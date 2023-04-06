@@ -27,7 +27,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="maxDelay">The max delay value to apply on an individual delay.</param>
         /// <param name="jitterFactor">The jitter factor to apply to each delay. For example, if the delay is 1 second with a jitterFactor of 0.2, the actual
-        /// delay used will be a random double between 0.8 and 1.2. Set to 0, to turn jitter off.</param>
+        /// delay used will be a random double between 0.8 and 1.2. If set to 0, no jitter will be applied.</param>
         protected Delay(TimeSpan? maxDelay = default, double jitterFactor = 0.2)
         {
             // use same defaults as RetryOptions

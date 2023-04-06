@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
         private readonly int _maxRetries;
 
         /// <summary>
-        /// Gets the delay to use between retries.
+        /// Gets the delay to use for computing the interval between retry attempts.
         /// </summary>
         protected Delay Delay { get; }
 
