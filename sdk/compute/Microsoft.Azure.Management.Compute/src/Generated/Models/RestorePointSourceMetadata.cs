@@ -46,7 +46,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="userData">UserData associated with the source VM for
         /// which restore point is captured, which is a base-64 encoded
         /// value.</param>
-        public RestorePointSourceMetadata(HardwareProfile hardwareProfile = default(HardwareProfile), RestorePointSourceVMStorageProfile storageProfile = default(RestorePointSourceVMStorageProfile), OSProfile osProfile = default(OSProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), string licenseType = default(string), string vmId = default(string), SecurityProfile securityProfile = default(SecurityProfile), string location = default(string), string userData = default(string))
+        /// <param name="hyperVGeneration">HyperVGeneration of the source VM
+        /// for which restore point is captured. Possible values include: 'V1',
+        /// 'V2'</param>
+        public RestorePointSourceMetadata(HardwareProfile hardwareProfile = default(HardwareProfile), RestorePointSourceVMStorageProfile storageProfile = default(RestorePointSourceVMStorageProfile), OSProfile osProfile = default(OSProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), string licenseType = default(string), string vmId = default(string), SecurityProfile securityProfile = default(SecurityProfile), string location = default(string), string userData = default(string), string hyperVGeneration = default(string))
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
@@ -57,6 +60,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             SecurityProfile = securityProfile;
             Location = location;
             UserData = userData;
+            HyperVGeneration = hyperVGeneration;
             CustomInit();
         }
 
@@ -121,6 +125,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "userData")]
         public string UserData { get; set; }
+
+        /// <summary>
+        /// Gets or sets hyperVGeneration of the source VM for which restore
+        /// point is captured. Possible values include: 'V1', 'V2'
+        /// </summary>
+        [JsonProperty(PropertyName = "hyperVGeneration")]
+        public string HyperVGeneration { get; set; }
 
         /// <summary>
         /// Validate the object.

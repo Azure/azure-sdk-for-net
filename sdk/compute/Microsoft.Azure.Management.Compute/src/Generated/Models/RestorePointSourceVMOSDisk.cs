@@ -40,7 +40,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="managedDisk">Gets the managed disk details</param>
         /// <param name="diskRestorePoint">Gets the disk restore point
         /// Id.</param>
-        public RestorePointSourceVMOSDisk(string osType = default(string), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), string name = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters), ApiEntityReference diskRestorePoint = default(ApiEntityReference))
+        /// <param name="writeAcceleratorEnabled">Shows true if the disk is
+        /// write-accelerator enabled.</param>
+        public RestorePointSourceVMOSDisk(string osType = default(string), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), string name = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters), ApiEntityReference diskRestorePoint = default(ApiEntityReference), bool? writeAcceleratorEnabled = default(bool?))
         {
             OsType = osType;
             EncryptionSettings = encryptionSettings;
@@ -49,6 +51,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             DiskSizeGB = diskSizeGB;
             ManagedDisk = managedDisk;
             DiskRestorePoint = diskRestorePoint;
+            WriteAcceleratorEnabled = writeAcceleratorEnabled;
             CustomInit();
         }
 
@@ -100,6 +103,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskRestorePoint")]
         public ApiEntityReference DiskRestorePoint { get; set; }
+
+        /// <summary>
+        /// Gets or sets shows true if the disk is write-accelerator enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "writeAcceleratorEnabled")]
+        public bool? WriteAcceleratorEnabled { get; set; }
 
         /// <summary>
         /// Validate the object.
