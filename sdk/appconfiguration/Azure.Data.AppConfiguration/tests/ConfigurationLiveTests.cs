@@ -1823,6 +1823,35 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
+        [Test]
+        [Ignore("Snapshot feature is currently available only in the dogfood version")]
+        public async Task GetConfigurationSettingsForSnapshot()
+        {
+            ConfigurationClient service = GetClient();
+            var setting = new ConfigurationSetting("Test_Key", "Test_Value");
+
+            try
+            {
+                await service.SetConfigurationSettingAsync(setting);
+
+                List<SnapshotSettingFilter> snapshotFilter = new(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
+                string snapshotName = "Test_Snapshot";
+                CreateSnapshotOperation snapshotOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSettingsSnapshot(snapshotFilter));
+                ConfigurationSettingsSnapshot createdSnapshot = snapshotOperation.Value;
+
+                Assert.NotNull(createdSnapshot);
+                Assert.AreEqual(snapshotName, createdSnapshot.Name);
+
+                AsyncPageable<ConfigurationSetting> settingsForSnapshot = service.GetConfigurationSettingsForSnapshotAsync(snapshotName);
+                var settingscount = (await settingsForSnapshot.ToEnumerableAsync()).Count;
+                Assert.GreaterOrEqual(settingscount, 1);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key));
+            }
+        }
+
         private static void AssertStatus200(Response response) => Assert.AreEqual(200, response.Status);
     }
 }
