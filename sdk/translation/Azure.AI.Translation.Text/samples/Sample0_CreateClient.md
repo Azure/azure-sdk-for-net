@@ -57,7 +57,7 @@ TokenCredential credential = new CustomTokenCredential();
 TextTranslationClient client = new(credential);
 ```
 
-[translator_client_class]: https://aka.ms/https://github.com/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/src/TextTranslationClient.cs
+[translator_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/src/Custom/TextTranslationClient.cs
 [translator_vnet]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-reference#virtual-network-support
 [custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [translator_token]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-reference#authenticating-with-an-access-token

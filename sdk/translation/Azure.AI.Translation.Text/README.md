@@ -14,7 +14,7 @@ Use the Text Translation client library for .NET to:
 
 * Return grammatical structure and context examples for the source term and target term pair.
 
-[Source code](https://aka.ms/https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/src) | [Package (NuGet)](https://aka.ms/https://www.nuget.org/packages/Azure.AI.Translation.Text) | [API reference documentation](https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-reference) | [Product documentation](https://learn.microsoft.com/azure/cognitive-services/translator/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/src) | [API reference documentation](https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-reference) | [Product documentation](https://learn.microsoft.com/azure/cognitive-services/translator/)
 
 ## Getting started
 
@@ -349,7 +349,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
 
-[translator_client_class]: https://aka.ms/https://github.com/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/src/TextTranslationClient.cs
+[translator_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/src/Custom/TextTranslationClient.cs
 
 [translator_auth]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-reference#authentication
 [translator_limits]: https://learn.microsoft.com/azure/cognitive-services/translator/request-limits
@@ -361,13 +361,13 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [dictionarylookup_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-dictionary-lookup
 [dictionaryexamples_doc]: https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-dictionary-examples
 
-[client_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample0_CreateClient.md
-[languages_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample1_GetLanguages.md
-[translate_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample2_Translate.md
-[transliterate_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample3_Transliterate.md
-[breaksentence_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample4_BreakSentence.md
-[dictionarylookup_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample5_DictionaryLookup.md
-[dictionaryexamples_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample6_DictionaryExamples.md
+[client_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample0_CreateClient.md
+[languages_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample1_GetLanguages.md
+[translate_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample2_Translate.md
+[transliterate_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample3_Transliterate.md
+[breaksentence_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample4_BreakSentence.md
+[dictionarylookup_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample5_DictionaryLookup.md
+[dictionaryexamples_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample6_DictionaryExamples.md
 
 [translator_resource_create]: https://learn.microsoft.com/azure/cognitive-services/Translator/create-translator-resource
 
