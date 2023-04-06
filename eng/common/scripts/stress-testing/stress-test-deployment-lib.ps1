@@ -4,6 +4,7 @@ $ErrorActionPreference = 'Stop'
 $FailedCommands = New-Object Collections.Generic.List[hashtable]
 
 . (Join-Path $PSScriptRoot "../Helpers" PSModule-Helpers.ps1)
+. (Join-Path $PSScriptRoot "../SemVer.ps1")
 
 $limitRangeSpec = @"
 apiVersion: v1
@@ -389,8 +390,7 @@ function generateRetryTestsHelmValues ($pkg, $releaseName, $generatedHelmValues)
     # helm version example: v3.11.2+g912ebc1
     $helmVer = (helm version --short).substring(1) -replace '\+.*',''
     $helmVer = [AzureEngSemanticVersion]::new($helmVer)
-    $minHelmVer =[AzureEngSemanticVersion]::new("3.11.0")
-    Write-Host $helmVer.CompareTo($minHelmVer)
+    $minHelmVer = [AzureEngSemanticVersion]::new("3.11.0")
     if ($helmVer.CompareTo($minHelmVer) -le 0) {
         throw "Please update helm to version >= 3.11.0`nAdditional information for updating helm version can be found here: https://helm.sh/docs/intro/install/"
     }
