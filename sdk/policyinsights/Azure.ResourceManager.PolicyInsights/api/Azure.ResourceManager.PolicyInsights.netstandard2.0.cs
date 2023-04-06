@@ -128,6 +128,7 @@ namespace Azure.ResourceManager.PolicyInsights
     {
         internal PolicyMetadataData() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property has been replaced by AdditionalContentUriString", true)]
         public System.Uri AdditionalContentUri { get { throw null; } }
         public string AdditionalContentUriString { get { throw null; } }
         public string Category { get { throw null; } }
@@ -608,6 +609,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal SlimPolicyMetadata() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property has been replaced by AdditionalContentUriString", true)]
         public System.Uri AdditionalContentUri { get { throw null; } }
         public string AdditionalContentUriString { get { throw null; } }
         public string Category { get { throw null; } }

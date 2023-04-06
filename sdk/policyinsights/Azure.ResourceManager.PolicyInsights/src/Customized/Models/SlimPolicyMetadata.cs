@@ -51,7 +51,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string Owner { get; }
         /// <summary> Url for getting additional content about the resource metadata. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Uri AdditionalContentUri => Uri.IsWellFormedUriString(AdditionalContentUriString, UriKind.Absolute) ? new Uri(AdditionalContentUriString) : null;
+        [Obsolete("This property has been replaced by AdditionalContentUriString", true)]
+        public Uri AdditionalContentUri { get; }
         /// <summary> Url for getting additional content about the resource metadata. </summary>
 #pragma warning disable CA1056 // AdditionalContentUri is not always a real URI
         public string AdditionalContentUriString { get; }

@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             Assert.AreEqual(metadataName, metadata.Value.Data.Name);
             Assert.AreEqual("Microsoft.PolicyInsights/policyMetadata", metadata.Value.Data.ResourceType.ToString());
             Assert.AreEqual("Shared", metadata.Value.Data.Owner);
-            Assert.IsTrue(Uri.IsWellFormedUriString(metadata.Value.Data.AdditionalContentUri.AbsoluteUri, UriKind.Absolute));
             Assert.IsNotEmpty(metadata.Value.Data.AdditionalContentUriString);
         }
 
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             Assert.IsNotEmpty(metadata.Value.Data.Id);
             Assert.AreEqual(metadataName, metadata.Value.Data.Name);
             Assert.AreEqual("7", metadata.Value.Data.AdditionalContentUriString);
-            Assert.AreEqual(null, metadata.Value.Data.AdditionalContentUri);
         }
     }
 }
