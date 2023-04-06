@@ -29,7 +29,6 @@ function GetNpmPackageVersion([string]$packagePath) {
 }
 
 function GetEmitterDependencyVersion([string]$packagePath) {
-    $emitterName = &$GetEmitterNameFn
     $matchString = "`"$emitterName`": `"(.*?)`""
     If ((Get-Content -Raw $packagePath) -match $matchString) {
         return $Matches[1]
@@ -37,7 +36,7 @@ function GetEmitterDependencyVersion([string]$packagePath) {
 }
 
 function NpmInstallAtRoot() {
-    $root = git rev-parse --show-toplevel
+    $root = Resolve-Path "$PSScriptRoot/../../.."
     Push-Location $root
     try {
         #default to root/eng/emitter-package.json but you can override by writing
@@ -47,7 +46,6 @@ function NpmInstallAtRoot() {
             $replacementPackageJson = &$GetEmitterPackageJsonPathFn
         }
 
-        $emitterName = &$GetEmitterNameFn
         $installedPath = Join-Path $root "node_modules" $emitterName "package.json"
         if (Test-Path $installedPath) {
             $installedVersion = GetNpmPackageVersion $installedPath
@@ -68,16 +66,7 @@ function NpmInstallAtRoot() {
             Remove-Item -Path "node_modules" -Force -Recurse
         }
 
-        Write-Host("Copying package.json from $replacementPackageJson")
-        Copy-Item -Path $replacementPackageJson -Destination "package.json" -Force
-        npm install --no-lock-file
-
-        if (Test-Path "package.json") {
-            Remove-Item -Path "package.json" -Force
-        }
-        if (Test-Path "package-lock.json") {
-            Remove-Item -Path "package-lock.json" -Force
-        }
+        npm install "$emitterName@$replacementVersion" --no-lock-file
 
         if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
@@ -108,10 +97,7 @@ function NpmInstallForProject([string]$workingDirectory) {
             Remove-Item -Path "package-lock.json" -Force
         }
 
-        $lockFile = Join-Path (git rev-parse --show-toplevel) "temp.lock"
-        FileLockEnter($lockFile)
         NpmInstallAtRoot
-        FileLockExit($lockFile)
     }
     finally {
         Pop-Location
