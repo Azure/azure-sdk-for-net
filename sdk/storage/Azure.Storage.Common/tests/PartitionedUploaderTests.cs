@@ -175,24 +175,9 @@ namespace Azure.Storage.Tests
             }
 
             // all stream-accepting delegates are rigged to throw if they get a non-seekable stream
-            var createScope = GetMockCreateScope();
-            var initializeDestination = GetMockInitializeDestinationInternal();
-            var singleUploadStreaming = GetMockSingleUploadStreamingInternal(streamSize);
-            var uploadPartitionStreaming = GetMockUploadPartitionStreamingInternal(blockSize);
-            var singleUploadContent = GetMockSingleUploadBinaryDataInternal(streamSize);
-            var uploadPartitionContent = GetMockUploadPartitionBinaryDataInternal(blockSize);
-            var commitPartitions = GetMockCommitPartitionedUploadInternal();
+            var mocks = GetMockBehaviors(streamSize, blockSize);
             var partitionedUploader = new PartitionedUploader<object, object>(
-                new PartitionedUploader<object, object>.Behaviors
-                {
-                    Scope = createScope.Object,
-                    InitializeDestination = initializeDestination.Object,
-                    SingleUploadStreaming = singleUploadStreaming.Object,
-                    SingleUploadBinaryData = singleUploadContent.Object,
-                    UploadPartitionStreaming = uploadPartitionStreaming.Object,
-                    UploadPartitionBinaryData = uploadPartitionContent.Object,
-                    CommitPartitionedUpload = commitPartitions.Object
-                },
+                mocks.ToBehaviors(),
                 new StorageTransferOptions()
                 {
                     InitialTransferSize = blockSize,
@@ -205,7 +190,7 @@ namespace Azure.Storage.Tests
             Response<object> result = await partitionedUploader.UploadInternal(stream.Object, default, s_objectArgs, s_progress, IsAsync, s_cancellation).ConfigureAwait(false);
 
             // assert streams were actually sent to delegates; the delegates themselves threw if conditions weren't met
-            Assert.Greater(singleUploadStreaming.Invocations.Count + uploadPartitionStreaming.Invocations.Count, 0);
+            Assert.Greater(mocks.SingleUploadStream.Invocations.Count + mocks.PartitionUploadStream.Invocations.Count, 0);
         }
 
         [Test]
@@ -231,24 +216,9 @@ namespace Azure.Storage.Tests
             // confirm our stream cannot give a length
             Assert.Throws<NotSupportedException>(() => _ = stream.Object.Length);
 
-            var createScope = GetMockCreateScope();
-            var initializeDestination = GetMockInitializeDestinationInternal();
-            var singleUploadStreaming = GetMockSingleUploadStreamingInternal(dataSize);
-            var uploadPartitionStreaming = GetMockUploadPartitionStreamingInternal(blockSize);
-            var singleUploadContent = GetMockSingleUploadBinaryDataInternal(dataSize);
-            var uploadPartitionContent = GetMockUploadPartitionBinaryDataInternal(blockSize);
-            var commitPartitions = GetMockCommitPartitionedUploadInternal();
+            var mocks = GetMockBehaviors(dataSize, blockSize);
             var partitionedUploader = new PartitionedUploader<object, object>(
-                new PartitionedUploader<object, object>.Behaviors
-                {
-                    Scope = createScope.Object,
-                    InitializeDestination = initializeDestination.Object,
-                    SingleUploadStreaming = singleUploadStreaming.Object,
-                    SingleUploadBinaryData = singleUploadContent.Object,
-                    UploadPartitionStreaming = uploadPartitionStreaming.Object,
-                    UploadPartitionBinaryData = uploadPartitionContent.Object,
-                    CommitPartitionedUpload = commitPartitions.Object
-                },
+                mocks.ToBehaviors(),
                 new StorageTransferOptions()
                 {
                     InitialTransferSize = blockSize,
@@ -265,15 +235,15 @@ namespace Azure.Storage.Tests
             // Assert
             if (oneshot)
             {
-                Assert.AreEqual(1, singleUploadStreaming.Invocations.Count);
-                Assert.IsEmpty(uploadPartitionStreaming.Invocations);
-                Assert.IsEmpty(commitPartitions.Invocations);
+                Assert.AreEqual(1, mocks.SingleUploadStream.Invocations.Count);
+                Assert.IsEmpty(mocks.PartitionUploadStream.Invocations);
+                Assert.IsEmpty(mocks.Commit.Invocations);
             }
             else
             {
-                Assert.IsEmpty(singleUploadStreaming.Invocations);
-                Assert.AreEqual(numPartitions, uploadPartitionStreaming.Invocations.Count);
-                Assert.AreEqual(1, commitPartitions.Invocations.Count);
+                Assert.IsEmpty(mocks.SingleUploadStream.Invocations);
+                Assert.AreEqual(numPartitions, mocks.PartitionUploadStream.Invocations.Count);
+                Assert.AreEqual(1, mocks.Commit.Invocations.Count);
             }
         }
 

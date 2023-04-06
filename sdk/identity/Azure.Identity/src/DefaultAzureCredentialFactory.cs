@@ -124,7 +124,8 @@ namespace Azure.Identity
                     ClientId = Options.ManagedIdentityClientId,
                     Pipeline = Pipeline,
                     Options = Options,
-                    InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1)
+                    InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1),
+                    ExcludeTokenExchangeManagedIdentitySource = Options.ExcludeWorkloadIdentityCredential
                 })
             );
         }
