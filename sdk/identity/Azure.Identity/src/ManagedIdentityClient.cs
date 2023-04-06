@@ -17,7 +17,7 @@ namespace Azure.Identity
         internal const string MsiUnavailableError =
             "ManagedIdentityCredential authentication unavailable. No Managed Identity endpoint found.";
 
-        private Lazy<ManagedIdentitySource> _identitySource;
+        internal Lazy<ManagedIdentitySource> _identitySource;
         private MsalConfidentialClient _msal;
 
         protected ManagedIdentityClient()

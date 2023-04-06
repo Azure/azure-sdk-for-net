@@ -310,7 +310,7 @@ namespace Azure.Identity.Tests
             var options = new DefaultAzureCredentialOptions
             {
                 ExcludeEnvironmentCredential = false,
-                ExcludeWorkloadIdentityCredential= false,
+                ExcludeWorkloadIdentityCredential = false,
                 ExcludeManagedIdentityCredential = false,
                 ExcludeAzureDeveloperCliCredential = false,
                 ExcludeSharedTokenCacheCredential = false,
@@ -419,6 +419,33 @@ namespace Azure.Identity.Tests
                 string[] additionallyAllowedTenantIds = CredentialTestHelpers.ExtractAdditionalTenantProperty(targetCred);
 
                 CollectionAssert.Contains(additionallyAllowedTenantIds, additionalTenant);
+            }
+        }
+
+        [Test]
+        public void ExcludeWorkloadIdentityCredential_Disables_TokenExchangeManagedIdentitySource()
+        {
+            var availableCredential = typeof(ManagedIdentityCredential);
+
+            // Set environment variables to use token exchange managed identity source
+            using (new TestEnvVar(new Dictionary<string, string> {
+                    { "AZURE_CLIENT_ID", "mockclientid" },
+                    { "AZURE_TENANT_ID", "mocktenantid" },
+                    { "AZURE_FEDERATED_TOKEN_FILE", "c:/temp/token" }
+            }))
+            {
+                DefaultAzureCredentialOptions options = GetDacOptions(availableCredential, false);
+                // exclude workload identity credential to exclude use of token exchange managed identity source
+                options.ExcludeWorkloadIdentityCredential = true;
+
+                var credential = new DefaultAzureCredential(options);
+                Assert.AreEqual(1, credential._sources.Length);
+                var targetCred = credential._sources[0];
+
+                Assert.IsInstanceOf<ManagedIdentityCredential>(targetCred);
+                ManagedIdentityCredential miCred = targetCred as ManagedIdentityCredential;
+                var source = miCred.Client._identitySource.Value;
+                Assert.IsNotInstanceOf<TokenExchangeManagedIdentitySource>(source);
             }
         }
 
