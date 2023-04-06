@@ -45,7 +45,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetResourceBuilder(resourceBuilder)
                 .AddSource("TestActivitySource")
-                .AddAzureMonitorTraceExporter(o => o.ConnectionString = TestEnvironment.ConnectionString)
+                .AddAzureMonitorTraceExporter(o =>
+                {
+                    o.ConnectionString = TestEnvironment.ConnectionString;
+                    o.DisableOfflineStorage = true;
+                    o.EnableStatsbeat = false;
+                })
                 .Build();
 
             using (var activity = src.StartActivity("Test", ActivityKind.Internal))
