@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Runtime.InteropServices;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 {
@@ -12,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
     {
         private static string? s_defaultStorageDirectory;
 
-        internal static string? GetDefaultStorageDirectory()
+        internal static string? GetDefaultStorageDirectory(IPlatform platform)
         {
             if (s_defaultStorageDirectory != null)
             {
@@ -21,9 +22,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
             else
             {
                 string? dirPath;
-                IDictionary environmentVars = Environment.GetEnvironmentVariables();
+                IDictionary environmentVars = platform.GetEnvironmentVariables();
 
-                if (IsWindowsOS())
+                if (platform.IsOSPlatform(OSPlatform.Windows))
                 {
                     if (TryCreateTelemetryDirectory(path: environmentVars["LOCALAPPDATA"]?.ToString(), createdDirectoryPath: out dirPath)
                         || TryCreateTelemetryDirectory(path: environmentVars["TEMP"]?.ToString(), createdDirectoryPath: out dirPath))
@@ -73,7 +74,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
                 return false;
             }
         }
-
-        internal static bool IsWindowsOS() => RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
     }
 }
