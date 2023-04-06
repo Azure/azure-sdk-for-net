@@ -89,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return;
         }
 
-        private static bool TryGetRedirectUri(Response response, out Uri redirectUri)
+        private static bool TryGetRedirectUri(Response response, [NotNullWhen(true)] out Uri? redirectUri)
         {
             response.Headers.TryGetValue("Location", out string? locationString);
             return Uri.TryCreate(locationString, UriKind.Absolute, out redirectUri);
@@ -97,8 +97,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static bool TryGetRedirectCacheTimeSpan(Response response, out TimeSpan cacheExpirationDuration)
         {
+            cacheExpirationDuration = default;
+
             response.Headers.TryGetValue("Cache-Control", out string? cacheControlHeader);
-            if (CacheControlHeaderValue.TryParse(cacheControlHeader, out CacheControlHeaderValue cacheControlHeaderValue))
+            if (CacheControlHeaderValue.TryParse(cacheControlHeader, out CacheControlHeaderValue? cacheControlHeaderValue))
             {
                 cacheExpirationDuration = cacheControlHeaderValue?.MaxAge ?? default;
             }

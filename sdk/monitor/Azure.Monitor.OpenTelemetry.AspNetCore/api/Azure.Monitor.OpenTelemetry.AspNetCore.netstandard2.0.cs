@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     }
     public static partial class OpenTelemetryBuilderExtensions
     {
-        public static OpenTelemetry.OpenTelemetryBuilder WithAzureMonitor(this OpenTelemetry.OpenTelemetryBuilder builder) { throw null; }
-        public static OpenTelemetry.OpenTelemetryBuilder WithAzureMonitor(this OpenTelemetry.OpenTelemetryBuilder builder, System.Action<Azure.Monitor.OpenTelemetry.AspNetCore.AzureMonitorOptions> configureAzureMonitor) { throw null; }
+        public static OpenTelemetry.OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetry.OpenTelemetryBuilder builder) { throw null; }
+        public static OpenTelemetry.OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetry.OpenTelemetryBuilder builder, System.Action<Azure.Monitor.OpenTelemetry.AspNetCore.AzureMonitorOptions> configureAzureMonitor) { throw null; }
     }
 }
