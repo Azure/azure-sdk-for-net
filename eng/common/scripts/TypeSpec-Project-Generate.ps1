@@ -61,9 +61,10 @@ function NpmInstallAtRoot() {
             }
         }
 
-        Write-Host "Installing package at $root"
+        Write-Host "Installing package at"(Get-Location)
 
         if (Test-Path "node_modules") {
+            Write-Host "Remove existing node_modules at"(Get-Location)
             Remove-Item -Path "node_modules" -Force -Recurse
         }
 
