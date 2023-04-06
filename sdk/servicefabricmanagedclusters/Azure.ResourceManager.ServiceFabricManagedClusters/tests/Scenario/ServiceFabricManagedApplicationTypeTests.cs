@@ -56,6 +56,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             Assert.IsFalse(flag);
         }
 
+        //[TestCase(null)] // 405: The HTTP method 'GET' is not supported at scope 'Microsoft.ServiceFabric/managedclusters/sfmctest3040/applicationTypes/appType111'
+        //[TestCase(true)] // 405: The HTTP method 'GET' is not supported at scope 'Microsoft.ServiceFabric/managedclusters/sfmctest3040/applicationTypes/appType111'
+        [TestCase(false)]
+        public async Task AddRemoveTag(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            string appTypeName = Recording.GenerateAssetName("appType");
+            var appType = await CreateSFMAppType(_cluster, appTypeName);
+
+            // AddTag
+            await appType.AddTagAsync("addtagkey", "addtagvalue");
+            appType = await _appTypeCollection.GetAsync(appTypeName);
+            Assert.AreEqual(1, appType.Data.Tags.Count);
+            KeyValuePair<string, string> tag = appType.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
+            Assert.AreEqual("addtagkey", tag.Key);
+            Assert.AreEqual("addtagvalue", tag.Value);
+
+            // RemoveTag
+            await appType.RemoveTagAsync("addtagkey");
+            appType = await _appTypeCollection.GetAsync(appTypeName);
+            Assert.AreEqual(0, appType.Data.Tags.Count);
+        }
+
         private void ValidateServiceFabricManagedApplicationType(ServiceFabricManagedApplicationTypeData appType, string appTypeName)
         {
             Assert.IsNotNull(appType);
