@@ -46,14 +46,14 @@ function NpmInstallAtRoot() {
             $replacementPackageJson = &$GetEmitterPackageJsonPathFn
         }
 
+        $replacementVersion = GetEmitterDependencyVersion $replacementPackageJson
+        Write-Host "Replacement emitter version: $replacementVersion"
+
         $installedPath = Join-Path $root "node_modules" $emitterName "package.json"
         Write-Host "Checking installed emitter at $installedPath"
         if (Test-Path $installedPath) {
             $installedVersion = GetNpmPackageVersion $installedPath
             Write-Host "Installed emitter version: $installedVersion"
-
-            $replacementVersion = GetEmitterDependencyVersion $replacementPackageJson
-            Write-Host "Replacement emitter version: $replacementVersion"
 
             if ($installedVersion -eq $replacementVersion) {
                 Write-Host "Emitter already installed. Skip installing."
