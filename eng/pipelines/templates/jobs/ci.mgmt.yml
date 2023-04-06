@@ -16,8 +16,7 @@ jobs:
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - task: UseDotNet@2
-        condition: and(succeeded()) # We still need .NET Core 3.1 for .NET Track 1 SDK
-        displayName: 'Use .NET Core 3.1 SDK'
+        displayName: 'Use .NET Core 3.1 SDK' # We still need .NET Core 3.1 for .NET Track 1 SDK
         retryCountOnTaskFailure: 3
         inputs:
           # AspNetCore runtime pack can't be installed outside of SDK and we need it for intergation tests
