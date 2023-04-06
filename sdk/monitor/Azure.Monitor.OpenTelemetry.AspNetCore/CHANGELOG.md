@@ -4,7 +4,7 @@
 
 ### Features Added
 
-* Added new public APIs `Services.AddOpenTelemetry().WithAzureMonitor()` and `Services.AddOpenTelemetry().WithAzureMonitor(Action<AzureMonitorOptions> configureAzureMonitor)`.
+* Added new public APIs `Services.AddOpenTelemetry().UseAzureMonitor()` and `Services.AddOpenTelemetry().UseAzureMonitor(Action<AzureMonitorOptions> configureAzureMonitor)`.
 
 ### Breaking Changes
 
