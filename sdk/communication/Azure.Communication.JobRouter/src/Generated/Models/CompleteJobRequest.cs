@@ -25,7 +25,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> The assignment within the job to complete. </summary>
         public string AssignmentId { get; }
-        /// <summary> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </summary>
+        /// <summary> (Optional) A note that will be appended to the jobs&apos; Notes collection with the current timestamp. </summary>
         public string Note { get; set; }
     }
 }

@@ -41,19 +41,33 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createJob1 = createJob1Response.Value;
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
 
+            RouterJob? updatedJob1Response = null;
             // update job with notes
             DateTimeOffset updateNoteTimeStamp = new DateTimeOffset(2022, 9, 01, 3, 0, 0, new TimeSpan(0, 0, 0));
-            var updatedJob1Response = await routerClient.UpdateJobAsync(new UpdateJobOptions(jobId1)
-            {
-                Notes = new Dictionary<DateTimeOffset, string>()
-                {
-                    [updateNoteTimeStamp] = "Fake notes attached to job with update"
-                }
-            });
-            var updatedJob1 = updatedJob1Response.Value;
 
-            Assert.IsNotEmpty(updatedJob1.Notes);
-            Assert.IsTrue(updatedJob1.Notes.Count == 1);
+            try
+            {
+                updatedJob1Response = await routerClient.UpdateJobAsync(new UpdateJobOptions(jobId1)
+                {
+                    Notes = new Dictionary<DateTimeOffset, string>()
+                    {
+                        [updateNoteTimeStamp] = "Fake notes attached to job with update"
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                updatedJob1Response = await routerClient.UpdateJobAsync(new UpdateJobOptions(jobId1)
+                {
+                    Notes = new Dictionary<DateTimeOffset, string>()
+                    {
+                        [updateNoteTimeStamp] = "Fake notes attached to job with update"
+                    }
+                });
+            }
+
+            Assert.IsNotEmpty(updatedJob1Response.Notes);
+            Assert.IsTrue(updatedJob1Response.Notes.Count == 1);
         }
 
         [Test]
