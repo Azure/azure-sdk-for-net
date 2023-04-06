@@ -21,7 +21,7 @@ namespace Azure.Core.Experimental.Perf.Benchmarks
         [Benchmark]
         public string ReadJsonData()
         {
-            var json = JsonSamples.DocumentSentiment.ToDynamic();
+            var json = JsonSamples.DocumentSentiment.ToDynamicFromJson();
             return json.documents[0].sentences[1].sentiment;
         }
     }
