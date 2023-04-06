@@ -12,9 +12,9 @@ using static Azure.AI.Translation.Text.TextTranslationClientOptions;
 
 namespace Azure.AI.Translation.Text.Tests
 {
-    public abstract class TextTranslatorLiveTestBase : RecordedTestBase<TextTranslatorTestEnvironment>
+    public abstract class TextTranslationLiveTestBase : RecordedTestBase<TextTranslationTestEnvironment>
     {
-        public TextTranslatorLiveTestBase(bool isAsync)
+        public TextTranslationLiveTestBase(bool isAsync)
             : base(isAsync)
         {
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");

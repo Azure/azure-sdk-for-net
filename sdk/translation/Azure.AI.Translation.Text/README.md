@@ -1,8 +1,8 @@
-# Azure TextTranslator client library for .NET
+# Azure Text Translation client library for .NET
 
 Text translation is a cloud-based REST API feature of the Translator service that uses neural machine translation technology to enable quick and accurate source-to-target text translation in real time across all supported languages.
 
-Use the TextTranslator client library for .NET to:
+Use the Text Translation client library for .NET to:
 
 * Return a list of languages supported by Translate, Transliterate, and Dictionary operations.
 
@@ -30,19 +30,16 @@ This table shows the relationship between SDK versions and supported API version
 
 |SDK version  |Supported API version of service
 |-------------|-----------------------------------------------------|
-|1.0.X        | 3.0
+|1.0.0-beta.1 | 3.0
 
 ### Prerequisites
 
 * An [Azure subscription][azure_sub].
-* An existing Translator service or Cognitive Services resource.
-
-#### Create a Translator service resource
-You can create Translator resource following [Create a Translator resource][translator_resource_create].
+* An existing Translator service or Cognitive Services resource. You can create Translator resource following [Create a Translator resource][translator_resource_create].
 
 ### Authenticate the client
 
-Interaction with the service using the client library begins with creating an instance of the [TextTranslationClient][translator_client_class] class. You will need an **API key** or ``TokenCredential`` to instantiate a client object. For more information regarding authenticating with cognitive services, see [Authenticate requests to Translator Service][translator_auth].
+Interaction with the service using the client library begins with creating an instance of the [TextTranslationClient][translator_client_class] class. You will need an **API key** or ``TokenCredential`` to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Translator Service][translator_auth].
 
 #### Get an API key
 
@@ -70,7 +67,7 @@ TextTranslationClient client = new(credential, "<region>");
 
 ### `TextTranslationClient`
 
-A `TextTranslationClient` is the primary interface for developers using the Text Translator client library.  It provides both synchronous and asynchronous operations to access a specific use of text translator, such as get supported languages detection or text translation.
+A `TextTranslationClient` is the primary interface for developers using the Text Translation client library.  It provides both synchronous and asynchronous operations to access a specific use of text translator, such as get supported languages detection or text translation.
 
 ### Input
 
@@ -275,7 +272,7 @@ Please refer to the service documentation for a conceptual discussion of [dictio
 
 ## Troubleshooting
 
-When you interact with the Translator Service using the TextTranslator client library, errors returned by the Translator service correspond to the same HTTP status codes returned for REST API requests.
+When you interact with the Translator Service using the Text Translation client library, errors returned by the Translator service correspond to the same HTTP status codes returned for REST API requests.
 
 For example, if you submit a translation request without a target translate language, a `400` error is returned, indicating "Bad Request".
 
@@ -372,15 +369,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [dictionarylookup_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample5_DictionaryLookup.md
 [dictionaryexamples_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample6_DictionaryExamples.md
 
-[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
-[register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [translator_resource_create]: https://learn.microsoft.com/azure/cognitive-services/Translator/create-translator-resource
 
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com
-[moq]: https://github.com/Moq/moq4/

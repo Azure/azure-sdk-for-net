@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Text.Tests
 {
-    public partial class DictionaryExamplesLiveTests : TextTranslatorLiveTestBase
+    public partial class DictionaryExamplesLiveTests : TextTranslationLiveTestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TranslationLiveTests"/> class.

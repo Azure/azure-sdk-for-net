@@ -1,7 +1,8 @@
 # Create Text Translation Client
 
 ## Creating Cognitive Services resource
-Text translation supports both [multi-service and single-service access][service_access]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint and API key. To access the features of the Text translation service only, create a Text translation service resource instead.
+
+Text translation supports both [multi-service and single-service access][service_access]. Create a Cognitive Services resource if you plan to access multiple Cognitive Services under a single endpoint and API key. To access the features of the Text translation service only, create a Text translation service resource instead.
 
 You can create Cognitive Services resource via the [Azure portal][cognitive_resource_azure_portal] or, alternatively, you can follow the steps in [this document][cognitive_resource_azure_cli] to create it using the [Azure CLI][azure_cli].
 
@@ -32,6 +33,7 @@ TextTranslationClient client = new(credential, "<region>");
 > Replace `<apiKey>` and `<region>` with a value created in [Creating Cognitive Services resource](#creating-cognitive-services-resource).
 
 ## Create a `TextTranslationClient` using a Custom Subdomain and Api Key
+
 When Translator service is configured to use [Virtual Network (VNET)][translator_vnet] capability you need to use [custom subdomain][custom_subdomain].
 
 Once you have your resource configured and you have your custom subdomain value and your API key, you can create the [TextTranslationClient][translator_client_class]:

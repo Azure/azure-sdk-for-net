@@ -10,9 +10,7 @@ name: Azure.AI.Translation.Text samples for .NET
 description: Samples for the Azure.AI.Translation.Text client library.
 ---
 
-# Azure.AI.Translation.Text Samples
-
-# Azure Text Translator client library for .NET
+# Azure Text Translation client library for .NET
 
 Translator Service is a cloud-based neural machine translation service that is part of the Azure Cognitive Services family of REST APIs and can be used with any operating system. This client library offers the following features:
 

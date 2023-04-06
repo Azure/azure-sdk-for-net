@@ -78,7 +78,7 @@
             "type": "Microsoft.CognitiveServices/accounts",
             "apiVersion": "2017-04-18",
             "name": "[variables('uniqueSubDomainName')]",
-            "location":"[parameters('location')]",
+            "location": "[parameters('location')]",
             "sku": {
                 "name": "S1"
             },
@@ -119,13 +119,13 @@
             "name": "[variables('txtUniqueSubDomainName')]",
             "location": "[parameters('location')]",
             "sku": {
-              "name": "S1"
+                "name": "S1"
             },
             "kind": "TextTranslation",
             "properties": {
-              "customSubDomainName": "[variables('txtUniqueSubDomainName')]"
+                "customSubDomainName": "[variables('txtUniqueSubDomainName')]"
             }
-          }
+        }
     ],
     "outputs": {
         "DOCUMENT_TRANSLATION_API_KEY": {
@@ -147,18 +147,18 @@
         "TEXT_TRANSLATION_API_KEY": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('txtUniqueSubDomainName')), '2017-04-18').key1]"
-          },
-          "TEXT_TRANSLATION_ENDPOINT": {
+        },
+        "TEXT_TRANSLATION_ENDPOINT": {
             "type": "string",
             "value": "[variables('txtEndpointValue')]"
-          },
-          "TEXT_TRANSLATION_CUSTOM_ENDPOINT": {
+        },
+        "TEXT_TRANSLATION_CUSTOM_ENDPOINT": {
             "type": "string",
             "value": "[variables('txtCustomEndpointValue')]"
-          },
-          "TEXT_TRANSLATION_REGION": {
+        },
+        "TEXT_TRANSLATION_REGION": {
             "type": "string",
             "value": "[variables('txtRegionValue')]"
-          }
+        }
     }
 }

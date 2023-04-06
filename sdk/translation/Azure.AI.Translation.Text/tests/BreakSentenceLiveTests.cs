@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -10,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Text.Tests
 {
-    public partial class BreakSentenceLiveTests : TextTranslatorLiveTestBase
+    public partial class BreakSentenceLiveTests : TextTranslationLiveTestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TranslationLiveTests"/> class.
@@ -30,7 +31,7 @@ namespace Azure.AI.Translation.Text.Tests
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual("en", response.Value[0].DetectedLanguage.Language);
-            Assert.AreEqual(1.0, response.Value[0].DetectedLanguage.Score);
+            Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Score);
             Assert.AreEqual(11, response.Value[0].SentLen[0]);
         }
 

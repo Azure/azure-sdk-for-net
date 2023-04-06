@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Text.Tests
 {
-    public partial class DictionaryLookupLiveTests : TextTranslatorLiveTestBase
+    public partial class DictionaryLookupLiveTests : TextTranslationLiveTestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TranslationLiveTests"/> class.

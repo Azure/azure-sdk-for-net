@@ -2,7 +2,8 @@
 
 All samples are using `client` created in [Create a `TextTranslationClient`][create_client_sample] samples.
 
-## Transliterate
+## Transliterate Text
+
 Converts characters or letters of a source language to the corresponding characters or letters of a target language.
 
 ```C#
@@ -30,7 +31,7 @@ catch (RequestFailedException exception)
 }
 ```
 
-See the [README] of the Text Translator client library for more information, including useful links and instructions.
+See the [README] of the Text Translation client library for more information, including useful links and instructions.
 
 [README]: https://aka.ms/https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Text/README.md
 [create_client_sample]: https://aka.ms/https://github.com/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample0_CreateClient.md
