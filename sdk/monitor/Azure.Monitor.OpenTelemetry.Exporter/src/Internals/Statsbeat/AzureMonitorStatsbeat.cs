@@ -156,7 +156,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     {
                         ResourceProvider = "vm",
                         ResourceProviderId = vmMetadata.vmId + "/" + vmMetadata.subscriptionId,
-                        OperatingSystem = vmMetadata.osType?.ToLower(CultureInfo.InvariantCulture),
+                        OperatingSystem = vmMetadata.osType?.ToLower(CultureInfo.InvariantCulture)
+                                            ?? platform.GetOSPlatformName(),
                     };
                 }
             }
