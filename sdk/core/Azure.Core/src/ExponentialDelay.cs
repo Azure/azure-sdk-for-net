@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {

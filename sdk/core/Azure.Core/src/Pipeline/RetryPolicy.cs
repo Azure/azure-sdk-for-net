@@ -121,7 +121,8 @@ namespace Azure.Core.Pipeline
 
                 if (shouldRetry)
                 {
-                    TimeSpan delay = async ? await GetNextDelayAsync(message).ConfigureAwait(false) : GetNextDelay(message);
+                    var retryAfter = message.HasResponse ? message.Response.Headers.RetryAfter : default;
+                    TimeSpan delay = async ? await GetNextDelayAsync(message, retryAfter).ConfigureAwait(false) : GetNextDelay(message, retryAfter);
                     if (delay > TimeSpan.Zero)
                     {
                         if (async)
@@ -215,15 +216,17 @@ namespace Azure.Core.Pipeline
         /// This method can be overriden to control how long to delay before retrying. This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
+        /// <param name="retryAfter">The Retry-After header value, if any, returned from the service.</param>
         /// <returns>The amount of time to delay before retrying.</returns>
-        protected virtual TimeSpan GetNextDelay(HttpMessage message) => GetNextDelayInternal(message);
+        protected virtual TimeSpan GetNextDelay(HttpMessage message, TimeSpan? retryAfter) => GetNextDelayInternal(message);
 
         /// <summary>
         /// This method can be overriden to control how long to delay before retrying. This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
+        /// <param name="retryAfter">The Retry-After header value, if any, returned from the service.</param>
         /// <returns>The amount of time to delay before retrying.</returns>
-        protected virtual ValueTask<TimeSpan> GetNextDelayAsync(HttpMessage message) => new(GetNextDelayInternal(message));
+        protected virtual ValueTask<TimeSpan> GetNextDelayAsync(HttpMessage message, TimeSpan? retryAfter) => new(GetNextDelayInternal(message));
 
         /// <summary>
         /// This method can be overridden to introduce logic before each request attempt is sent. This will run even for the first attempt.
