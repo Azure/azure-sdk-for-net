@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
     {
         private ServiceFabricManagedClusterResource _cluster;
         private ServiceFabricManagedNodeTypeCollection _nodeTypeCollection;
-        public ServiceFabricManagedNodeTypeTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public ServiceFabricManagedNodeTypeTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -68,6 +68,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
         private void ValidatePurviewAccount(ServiceFabricManagedNodeTypeData nodeType, string nodeTypeName)
         {
             Assert.IsNotNull(nodeType);
+            Assert.IsNotEmpty(nodeType.Id);
+            Assert.AreEqual(nodeTypeName, nodeType.Name);
+            Assert.AreEqual("S", nodeType.DataDiskLetter);
+            Assert.AreEqual(256, nodeType.DataDiskSizeInGB);
+            Assert.AreEqual(ServiceFabricManagedDataDiskType.StandardSsdLrs, nodeType.DataDiskType);
+            Assert.AreEqual("WindowsServer", nodeType.VmImageOffer);
+            Assert.AreEqual("MicrosoftWindowsServer", nodeType.VmImagePublisher);
+            Assert.AreEqual("2019-Datacenter", nodeType.VmImageSku);
+            Assert.AreEqual("latest", nodeType.VmImageVersion);
+            Assert.AreEqual(6, nodeType.VmInstanceCount);
+            Assert.AreEqual("Standard_D2_v2", nodeType.VmSize);
         }
     }
 }

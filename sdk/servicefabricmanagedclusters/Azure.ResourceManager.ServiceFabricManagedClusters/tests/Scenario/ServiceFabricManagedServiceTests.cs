@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
         private const string _clusterNamePrefix = "sfmctest";
         private ResourceGroupResource _resourceGroup;
         private ServiceFabricManagedClusterCollection _clusterCollection;
-        public ServiceFabricManagedServiceTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public ServiceFabricManagedServiceTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
         [TestCase(true)]  // api-version '2022-09-01' is not support
         [TestCase(null)]  // api-version '2022-09-01' is not support
         [TestCase(false)] // Azure.RequestFailedException: 'Service request failed. Status: 202 (Accepted)
-        [Ignore("Both update methods failed")]
+        [Ignore("All update methods failed")]
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
@@ -91,7 +91,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             Assert.AreEqual(ManagedClusterUpgradeMode.Automatic, cluster.ClusterUpgradeMode);
             Assert.AreEqual(false, cluster.HasZoneResiliency);
             Assert.AreEqual("vmadmin", cluster.AdminUserName);
-            //Assert.AreEqual("Password123!@#", cluster.AdminPassword);
         }
     }
 }

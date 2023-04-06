@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
     {
         private ServiceFabricManagedClusterResource _cluster;
         private ServiceFabricManagedApplicationTypeCollection _appTypeCollection;
-        public ServiceFabricManagedApplicationTypeTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public ServiceFabricManagedApplicationTypeTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -59,8 +59,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
         private void ValidateServiceFabricManagedApplicationType(ServiceFabricManagedApplicationTypeData appType, string appTypeName)
         {
             Assert.IsNotNull(appType);
-            //Assert.IsNotEmpty(appType.Id);
-            //Assert.AreEqual(appTypeName, appType.Name);
+            Assert.IsNotEmpty(appType.Id);
+            Assert.AreEqual(appTypeName, appType.Name);
+            Assert.AreEqual(DefaultLocation, appType.Location);
+            Assert.AreEqual("Succeeded", appType.ProvisioningState);
         }
     }
 }
