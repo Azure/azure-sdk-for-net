@@ -806,6 +806,7 @@ namespace Azure.Storage.DataMovement.Tests
                 }
                 return Task.CompletedTask;
             };
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
             TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
@@ -817,6 +818,7 @@ namespace Azure.Storage.DataMovement.Tests
             await transfer.AwaitCompletion(cancellationTokenSource.Token);
 
             // Assert
+            failureTransferHolder.AssertFailureCheck();
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
@@ -1485,8 +1487,6 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
-
-            string exceptionMessage = default;
             int waitTimeInSec = 10;
             bool progressSeen = false;
             SingleTransferOptions options = new SingleTransferOptions();
@@ -1507,10 +1507,6 @@ namespace Azure.Storage.DataMovement.Tests
                 options: optionsList).ConfigureAwait(false);
 
             // Assert
-            if (!string.IsNullOrEmpty(exceptionMessage))
-            {
-                Assert.Fail(exceptionMessage);
-            }
             Assert.IsTrue(progressSeen);
         }
 
