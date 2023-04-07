@@ -2249,6 +2249,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBIPAddressOrRange() { }
         public string IPAddressOrRange { get { throw null; } set { } }
     }
+    public partial class CosmosDBKeyWrapMetadata
+    {
+        public CosmosDBKeyWrapMetadata() { }
+        public string Algorithm { get { throw null; } set { } }
+        public string CosmosDBKeyWrapMetadataType { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
     public partial class CosmosDBLocationProperties
     {
         public CosmosDBLocationProperties() { }
@@ -2573,7 +2581,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBSqlClientEncryptionKeyResourceInfo() { }
         public string EncryptionAlgorithm { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
-        public Azure.ResourceManager.CosmosDB.Models.KeyWrapMetadata KeyWrapMetadata { get { throw null; } set { } }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBKeyWrapMetadata KeyWrapMetadata { get { throw null; } set { } }
         public byte[] WrappedDataEncryptionKey { get { throw null; } set { } }
     }
     public partial class CosmosDBSqlContainerCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
@@ -2983,14 +2991,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBIndexingPolicy IndexingPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBContainerPartitionKey PartitionKey { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CosmosDB.Models.CosmosDBUniqueKey> UniqueKeys { get { throw null; } }
-    }
-    public partial class KeyWrapMetadata
-    {
-        public KeyWrapMetadata() { }
-        public string Algorithm { get { throw null; } set { } }
-        public string KeyWrapMetadataType { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
     }
     public partial class MaterializedViewsBuilderRegionalService : Azure.ResourceManager.CosmosDB.Models.CosmosDBRegionalService
     {
