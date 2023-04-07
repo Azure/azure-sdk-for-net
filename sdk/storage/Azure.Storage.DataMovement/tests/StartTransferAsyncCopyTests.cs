@@ -12,6 +12,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.DataMovement.Models;
 using NUnit.Framework;
 using Azure.Storage.DataMovement.Blobs;
+using System.Linq;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -1650,11 +1651,6 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         public async Task AppendBlobToAppendBlob_Failure_Exists()
         {
-            // Arrange
-            Exception exception = default;
-            bool sourceResourceCheck = false;
-            bool destinationResourceCheck = false;
-
             // Create source local file for checking, and source blob
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
             string blobName = GetNewBlobName();
@@ -1666,8 +1662,9 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to fail and keep track of the failure.
             SingleTransferOptions options = new SingleTransferOptions()
             {
-                CreateMode = StorageResourceCreateMode.Fail,
+                CreateMode = StorageResourceCreateMode.Fail
             };
+            FailureTrackingTransfer failureTracking = new FailureTrackingTransfer(options);
             // Create new source block blob.
             string newSourceFile = Path.GetTempFileName();
             AppendBlobClient blockBlobClient = await CreateAppendBlob(
@@ -1681,23 +1678,6 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     CopyMethod = TransferCopyMethod.AsyncCopy,
                 });
-            options.TransferFailed += (TransferFailedEventArgs args) =>
-            {
-                // We can't Assert here or else it takes down everything.
-                if (args.Exception != default)
-                {
-                    exception = args.Exception;
-                }
-                if (args.SourceResource.Path == sourceResource.Path)
-                {
-                    sourceResourceCheck = true;
-                }
-                if (args.DestinationResource.Uri == destinationResource.Uri)
-                {
-                    destinationResourceCheck = true;
-                }
-                return Task.CompletedTask;
-            };
             TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
@@ -1713,10 +1693,12 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
             Assert.IsTrue(await destinationClient.ExistsAsync());
-            Assert.IsTrue(sourceResourceCheck);
-            Assert.IsTrue(destinationResourceCheck);
-            Assert.NotNull(exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
-            Assert.IsTrue(exception.Message.Contains("The specified blob already exists."));
+            Assert.AreEqual(1, failureTracking.FailedArguments.Count);
+            TransferFailedEventArgs args = failureTracking.FailedArguments.First();
+            Assert.AreEqual(sourceResource, args.SourceResource);
+            Assert.AreEqual(destinationResource, args.DestinationResource);
+            Assert.NotNull(args.Exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
+            Assert.IsTrue(args.Exception.Message.Contains("The specified blob already exists."));
             // Verify Upload - That we skipped over and didn't reupload something new.
             using (FileStream fileStream = File.OpenRead(originalSourceFile))
             {
