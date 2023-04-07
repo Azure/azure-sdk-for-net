@@ -2221,7 +2221,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
             }
-            if (excludeRelationshipTypeList != null)
+            if (excludeRelationshipTypeList != null && Optional.IsCollectionDefined(excludeRelationshipTypeList))
             {
                 foreach (var param in excludeRelationshipTypeList)
                 {

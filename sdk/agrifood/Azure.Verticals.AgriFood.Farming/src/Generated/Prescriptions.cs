@@ -488,63 +488,63 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/parties/", false);
             uri.AppendPath(partyId, true);
             uri.AppendPath("/prescriptions", false);
-            if (prescriptionMapIds != null)
+            if (prescriptionMapIds != null && Optional.IsCollectionDefined(prescriptionMapIds))
             {
                 foreach (var param in prescriptionMapIds)
                 {
                     uri.AppendQuery("prescriptionMapIds", param, true);
                 }
             }
-            if (types != null)
+            if (types != null && Optional.IsCollectionDefined(types))
             {
                 foreach (var param in types)
                 {
                     uri.AppendQuery("types", param, true);
                 }
             }
-            if (productCodes != null)
+            if (productCodes != null && Optional.IsCollectionDefined(productCodes))
             {
                 foreach (var param in productCodes)
                 {
                     uri.AppendQuery("productCodes", param, true);
                 }
             }
-            if (productNames != null)
+            if (productNames != null && Optional.IsCollectionDefined(productNames))
             {
                 foreach (var param in productNames)
                 {
                     uri.AppendQuery("productNames", param, true);
                 }
             }
-            if (sources != null)
+            if (sources != null && Optional.IsCollectionDefined(sources))
             {
                 foreach (var param in sources)
                 {
                     uri.AppendQuery("sources", param, true);
                 }
             }
-            if (ids != null)
+            if (ids != null && Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null)
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null)
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {
@@ -642,63 +642,63 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/prescriptions", false);
-            if (prescriptionMapIds != null)
+            if (prescriptionMapIds != null && Optional.IsCollectionDefined(prescriptionMapIds))
             {
                 foreach (var param in prescriptionMapIds)
                 {
                     uri.AppendQuery("prescriptionMapIds", param, true);
                 }
             }
-            if (types != null)
+            if (types != null && Optional.IsCollectionDefined(types))
             {
                 foreach (var param in types)
                 {
                     uri.AppendQuery("types", param, true);
                 }
             }
-            if (productCodes != null)
+            if (productCodes != null && Optional.IsCollectionDefined(productCodes))
             {
                 foreach (var param in productCodes)
                 {
                     uri.AppendQuery("productCodes", param, true);
                 }
             }
-            if (productNames != null)
+            if (productNames != null && Optional.IsCollectionDefined(productNames))
             {
                 foreach (var param in productNames)
                 {
                     uri.AppendQuery("productNames", param, true);
                 }
             }
-            if (sources != null)
+            if (sources != null && Optional.IsCollectionDefined(sources))
             {
                 foreach (var param in sources)
                 {
                     uri.AppendQuery("sources", param, true);
                 }
             }
-            if (ids != null)
+            if (ids != null && Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null)
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null)
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {

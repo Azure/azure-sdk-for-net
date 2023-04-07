@@ -422,21 +422,21 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxDarkPixelCoveragePercentage", maxDarkPixelCoveragePercentage.Value, true);
             }
-            if (imageNames != null)
+            if (imageNames != null && Optional.IsCollectionDefined(imageNames))
             {
                 foreach (var param in imageNames)
                 {
                     uri.AppendQuery("imageNames", param, true);
                 }
             }
-            if (imageResolutions != null)
+            if (imageResolutions != null && Optional.IsCollectionDefined(imageResolutions))
             {
                 foreach (var param in imageResolutions)
                 {
                     uri.AppendQuery("imageResolutions", param, true);
                 }
             }
-            if (imageFormats != null)
+            if (imageFormats != null && Optional.IsCollectionDefined(imageFormats))
             {
                 foreach (var param in imageFormats)
                 {

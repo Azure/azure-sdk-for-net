@@ -257,7 +257,10 @@ namespace Azure.Maps.Rendering
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("tilesetId", tilesetId.ToString(), true);
             uri.AppendQuery("zoom", zoom, true);
-            uri.AppendQueryDelimited("bounds", bounds, ",", true);
+            if (bounds != null && Optional.IsCollectionDefined(bounds))
+            {
+                uri.AppendQueryDelimited("bounds", bounds, ",", true);
+            }
             request.Uri = uri;
             if (_clientId != null)
             {
@@ -530,11 +533,11 @@ namespace Azure.Maps.Rendering
             {
                 uri.AppendQuery("zoom", zoom.Value, true);
             }
-            if (center != null)
+            if (center != null && Optional.IsCollectionDefined(center))
             {
                 uri.AppendQueryDelimited("center", center, ",", true);
             }
-            if (boundingBoxPrivate != null)
+            if (boundingBoxPrivate != null && Optional.IsCollectionDefined(boundingBoxPrivate))
             {
                 uri.AppendQueryDelimited("bbox", boundingBoxPrivate, ",", true);
             }
@@ -554,14 +557,14 @@ namespace Azure.Maps.Rendering
             {
                 uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
             }
-            if (pins != null)
+            if (pins != null && Optional.IsCollectionDefined(pins))
             {
                 foreach (var param in pins)
                 {
                     uri.AppendQuery("pins", param, true);
                 }
             }
-            if (path != null)
+            if (path != null && Optional.IsCollectionDefined(path))
             {
                 foreach (var param in path)
                 {
@@ -1165,8 +1168,14 @@ namespace Azure.Maps.Rendering
             uri.AppendPath("/map/copyright/bounding/", false);
             uri.AppendPath(format.Value.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQueryDelimited("mincoordinates", boundingBox.SouthWest, ",", true);
-            uri.AppendQueryDelimited("maxcoordinates", boundingBox.NorthEast, ",", true);
+            if (boundingBox?.SouthWest != null && Optional.IsCollectionDefined(boundingBox?.SouthWest))
+            {
+                uri.AppendQueryDelimited("mincoordinates", boundingBox.SouthWest, ",", true);
+            }
+            if (boundingBox?.NorthEast != null && Optional.IsCollectionDefined(boundingBox?.NorthEast))
+            {
+                uri.AppendQueryDelimited("maxcoordinates", boundingBox.NorthEast, ",", true);
+            }
             if (includeText != null)
             {
                 uri.AppendQuery("text", includeText.Value.ToString(), true);
