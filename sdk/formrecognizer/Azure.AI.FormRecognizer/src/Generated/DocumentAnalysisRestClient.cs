@@ -68,11 +68,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (features != null)
+            if (features != null && Optional.IsCollectionDefined(features))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }
-            if (queryFields != null)
+            if (queryFields != null && Optional.IsCollectionDefined(queryFields))
             {
                 uri.AppendQueryDelimited("queryFields", queryFields, ",", true);
             }
@@ -172,11 +172,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (features != null)
+            if (features != null && Optional.IsCollectionDefined(features))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }
-            if (queryFields != null)
+            if (queryFields != null && Optional.IsCollectionDefined(queryFields))
             {
                 uri.AppendQueryDelimited("queryFields", queryFields, ",", true);
             }
@@ -276,11 +276,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (features != null)
+            if (features != null && Optional.IsCollectionDefined(features))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }
-            if (queryFields != null)
+            if (queryFields != null && Optional.IsCollectionDefined(queryFields))
             {
                 uri.AppendQueryDelimited("queryFields", queryFields, ",", true);
             }
