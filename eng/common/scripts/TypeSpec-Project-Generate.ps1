@@ -68,7 +68,18 @@ function NpmInstallAtRoot() {
             Remove-Item -Path "node_modules" -Force -Recurse
         }
 
-        npm install "$emitterName@$replacementVersion" --no-lock-file
+        $hasPackageFile = Test-Path "package.json"
+
+        $npmInstallCommand = "npm install --prefix $root $emitterName@$replacementVersion --no-package-lock --omit=dev"
+        Write-Host($npmInstallCommand)
+        Invoke-Expression $npmInstallCommand
+
+        if ($hasPackageFile) {
+            git restore package.json
+        }
+        else {
+            rm package.json
+        }
 
         if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
