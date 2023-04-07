@@ -12,34 +12,31 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.WebPubSub;
 using Azure.ResourceManager.WebPubSub.Models;
 
-namespace Azure.ResourceManager.WebPubSub
+namespace Azure.ResourceManager.WebPubSub.Mock
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    /// <summary> A class to add extension methods to WebPubSubResource. </summary>
+    public partial class WebPubSubResourceExtension : ArmResource
     {
         private ClientDiagnostics _webPubSubClientDiagnostics;
         private WebPubSubRestOperations _webPubSubRestClient;
-        private ClientDiagnostics _usagesClientDiagnostics;
-        private UsagesRestOperations _usagesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubResourceExtension"/> class for mocking. </summary>
+        protected WebPubSubResourceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubResourceExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebPubSubResourceExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics WebPubSubClientDiagnostics => _webPubSubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubResource.ResourceType.Namespace, Diagnostics);
+        private ClientDiagnostics WebPubSubClientDiagnostics => _webPubSubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mock", WebPubSubResource.ResourceType.Namespace, Diagnostics);
         private WebPubSubRestOperations WebPubSubRestClient => _webPubSubRestClient ??= new WebPubSubRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WebPubSubResource.ResourceType));
-        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -63,9 +60,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = WebPubSubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckWebPubSubNameAvailability");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = WebPubSubClientDiagnostics.CreateScope("WebPubSubResourceExtension.CheckWebPubSubNameAvailability");
             scope.Start();
             try
             {
@@ -95,9 +95,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = WebPubSubClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckWebPubSubNameAvailability");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = WebPubSubClientDiagnostics.CreateScope("WebPubSubResourceExtension.CheckWebPubSubNameAvailability");
             scope.Start();
             try
             {
@@ -130,7 +133,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WebPubSubRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WebPubSubRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebPubSubResource(Client, WebPubSubData.DeserializeWebPubSubData(e)), WebPubSubClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetWebPubSubs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebPubSubResource(Client, WebPubSubData.DeserializeWebPubSubData(e)), WebPubSubClientDiagnostics, Pipeline, "WebPubSubResourceExtension.GetWebPubSubs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -152,53 +155,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WebPubSubRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WebPubSubRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebPubSubResource(Client, WebPubSubData.DeserializeWebPubSubData(e)), WebPubSubClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetWebPubSubs", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List resource usage quotas by location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> the location like &quot;eastus&quot;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SignalRServiceUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SignalRServiceUsage.DeserializeSignalRServiceUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List resource usage quotas by location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> the location like &quot;eastus&quot;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SignalRServiceUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SignalRServiceUsage.DeserializeSignalRServiceUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebPubSubResource(Client, WebPubSubData.DeserializeWebPubSubData(e)), WebPubSubClientDiagnostics, Pipeline, "WebPubSubResourceExtension.GetWebPubSubs", "value", "nextLink", cancellationToken);
         }
     }
 }
