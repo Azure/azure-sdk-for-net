@@ -1664,7 +1664,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CreateMode = StorageResourceCreateMode.Fail
             };
-            FailureTrackingTransfer failureTracking = new FailureTrackingTransfer(options);
+            FailureTransferHolder failureTracking = new FailureTransferHolder(options);
             // Create new source block blob.
             string newSourceFile = Path.GetTempFileName();
             AppendBlobClient blockBlobClient = await CreateAppendBlob(
@@ -1693,8 +1693,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
             Assert.IsTrue(await destinationClient.ExistsAsync());
-            Assert.AreEqual(1, failureTracking.FailedArguments.Count);
-            TransferFailedEventArgs args = failureTracking.FailedArguments.First();
+            Assert.AreEqual(1, failureTracking.FailedEvents.Count);
+            TransferFailedEventArgs args = failureTracking.FailedEvents.First();
             Assert.AreEqual(sourceResource, args.SourceResource);
             Assert.AreEqual(destinationResource, args.DestinationResource);
             Assert.NotNull(args.Exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");

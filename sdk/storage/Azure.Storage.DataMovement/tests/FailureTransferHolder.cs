@@ -27,19 +27,19 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         public FailureTransferHolder(ContainerTransferOptions options)
-            : base()
+            : this()
         {
             options.TransferFailed += AppendFailedArg;
         }
 
         public FailureTransferHolder(SingleTransferOptions options)
-            : base()
+            : this()
         {
             options.TransferFailed += AppendFailedArg;
         }
 
         public FailureTransferHolder(List<SingleTransferOptions> optionsList)
-            : base()
+            : this()
         {
             foreach (SingleTransferOptions options in optionsList)
             {
@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
         public FailureTransferHolder(List<ContainerTransferOptions> optionsList)
-            : base()
+            : this()
         {
             foreach (ContainerTransferOptions options in optionsList)
             {
