@@ -7,8 +7,8 @@
 
 using System;
 using Azure;
-using Azure.AI.OpenAI;
 using Azure.Core.Extensions;
+using Azure.OpenAI;
 
 namespace Microsoft.Extensions.Azure
 {
