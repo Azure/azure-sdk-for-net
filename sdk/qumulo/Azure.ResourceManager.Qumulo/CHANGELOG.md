@@ -1,7 +1,20 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
-Expected release date: 2023-04-18
+## 1.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.1 (2023-04-06)
+
+### Other Changes
+
+This is the first beta release of Qumulo client library.
 
 ### General New Features
 
