@@ -106,11 +106,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
-                    var storageDirectory = options.StorageDirectory
-                        ?? StorageHelper.GetDefaultStorageDirectory(platform)
-                        ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
+                    var storageDirectory = StorageHelper.GetStorageDirectory(
+                        platform: platform,
+                        configuredStorageDirectory: options.StorageDirectory);
 
-                    // TODO: Fallback to default location if location provided via options does not work.
                     AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", storageDirectory);
 
                     return new FileBlobProvider(storageDirectory);

@@ -13,6 +13,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
     {
         private static string? s_defaultStorageDirectory;
 
+        internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory)
+        {
+            // get root directory
+            var rootDirectory = configuredStorageDirectory
+                ?? GetDefaultStorageDirectory(platform)
+                ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
+
+            return rootDirectory;
+        }
+
         internal static string? GetDefaultStorageDirectory(IPlatform platform)
         {
             if (s_defaultStorageDirectory != null)
@@ -64,7 +74,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 
             try
             {
-                createdDirectoryPath = Path.Combine(path, "Microsoft\\AzureMonitor");
+                // these names need to be separate to use the correct OS specific DirectorySeparatorChar.
+                createdDirectoryPath = Path.Combine(path, "Microsoft", "AzureMonitor");
                 Directory.CreateDirectory(createdDirectoryPath);
                 return true;
             }
