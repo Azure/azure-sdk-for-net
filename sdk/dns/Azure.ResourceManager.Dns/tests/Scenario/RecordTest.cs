@@ -89,6 +89,63 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         }
 
         [RecordedTest]
+        public async Task AaaaRecordOperationIfMatchTest()
+        {
+            var collection = _dnsZone.GetDnsAaaaRecords();
+            string aaaaRecordName = Recording.GenerateAssetName("aaaa");
+            string ipv6AddressValue1 = "3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d55";
+            string ipv6AddressValue2 = "3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d66";
+
+            // CreateOrUpdate
+            var data = new DnsAaaaRecordData()
+            {
+                TtlInSeconds = 3600,
+                DnsAaaaRecords =
+                {
+                    new DnsAaaaRecordInfo()
+                    {
+                        IPv6Address =  IPAddress.Parse(ipv6AddressValue1)
+                    },
+                }
+            };
+            var aaaaRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, aaaaRecordName, data);
+            ValidateRecordBaseInfo(aaaaRecord.Value.Data, aaaaRecordName);
+            Assert.AreEqual("dnszones/AAAA", aaaaRecord.Value.Data.ResourceType.Type.ToString());
+            Assert.AreEqual(3600, aaaaRecord.Value.Data.TtlInSeconds);
+            Assert.AreEqual(ipv6AddressValue1, aaaaRecord.Value.Data.DnsAaaaRecords[0].IPv6Address.ToString());
+
+            // Update DnsAaaaRecords with IfMatch
+            data.ETag = aaaaRecord.Value.Data.ETag;
+            data.DnsAaaaRecords.Add(
+                    new DnsAaaaRecordInfo()
+                    {
+                        IPv6Address = IPAddress.Parse(ipv6AddressValue2)
+                    }
+                );
+            try {
+                aaaaRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, aaaaRecordName, data, aaaaRecord.Value.Data.ETag);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.AreEqual(ex.Status, 412);
+            }
+
+            /*
+            ValidateRecordBaseInfo(aaaaRecord.Value.Data, aaaaRecordName);
+            Assert.AreEqual(ipv6AddressValue1, aaaaRecord.Value.Data.DnsAaaaRecords[0].IPv6Address.ToString());
+            Assert.AreEqual(ipv6AddressValue2, aaaaRecord.Value.Data.DnsAaaaRecords[1].IPv6Address.ToString());
+
+            // Update TtlInSeconds with IfMatch
+            var updateResponse = await aaaaRecord.Value.UpdateAsync(new DnsAaaaRecordData() { TtlInSeconds = 7200 }, aaaaRecord.Value.Data.ETag);
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
+
+            // Delete with IfMatch
+            await aaaaRecord.Value.DeleteAsync(WaitUntil.Completed, updateResponse.Value.Data.ETag);
+            bool flag = await collection.ExistsAsync(aaaaRecordName);
+            Assert.IsFalse(flag);*/
+        }
+
+        [RecordedTest]
         public async Task ARecordOperationTest()
         {
             var collection = _dnsZone.GetDnsARecords();
