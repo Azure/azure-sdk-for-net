@@ -716,6 +716,88 @@ namespace Azure.Monitor.Query.Tests
             Assert.IsTrue(verifyColumn1 && verifyColumn2);
         }
 
+        [RecordedTest]
+        public async Task CanQueryResourceCheckNoBackslash()
+        {
+            var client = CreateClient();
+
+            var results = await client.QueryResourceAsync(TestEnvironment.StorageAccountId.Substring(1),
+                "search *",
+                _logsTestData.DataTimeRange);
+
+            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
+            var resultTable = results.Value.Table;
+            CollectionAssert.IsNotEmpty(resultTable.Rows);
+            CollectionAssert.IsNotEmpty(resultTable.Columns);
+
+            bool verifyRow = false;
+            bool verifyColumn1 = false;
+            bool verifyColumn2 = false;
+            foreach (LogsTableRow rows in resultTable.Rows)
+            {
+                foreach (var row in rows)
+                {
+                    if ((row != null) && row.ToString().Contains("Create/Update Storage Account"))
+                    {
+                        verifyRow = true;
+                    }
+                }
+            }
+
+            foreach (LogsTableColumn columns in resultTable.Columns)
+            {
+                if (columns.Name == "SubscriptionId" && columns.Type == LogsColumnType.StringTypeValue)
+                    verifyColumn1 = true;
+
+                if (columns.Name == "TimeGenerated" && columns.Type == LogsColumnType.DatetimeTypeValue)
+                    verifyColumn2 = true;
+            }
+
+            Assert.IsTrue(verifyRow);
+            Assert.IsTrue(verifyColumn1 && verifyColumn2);
+        }
+
+        [RecordedTest]
+        public async Task CanQueryResourceCheckMultipleBackslash()
+        {
+            var client = CreateClient();
+
+            var results = await client.QueryResourceAsync("///" + TestEnvironment.StorageAccountId,
+                "search *",
+                _logsTestData.DataTimeRange);
+
+            Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
+            var resultTable = results.Value.Table;
+            CollectionAssert.IsNotEmpty(resultTable.Rows);
+            CollectionAssert.IsNotEmpty(resultTable.Columns);
+
+            bool verifyRow = false;
+            bool verifyColumn1 = false;
+            bool verifyColumn2 = false;
+            foreach (LogsTableRow rows in resultTable.Rows)
+            {
+                foreach (var row in rows)
+                {
+                    if ((row != null) && row.ToString().Contains("Create/Update Storage Account"))
+                    {
+                        verifyRow = true;
+                    }
+                }
+            }
+
+            foreach (LogsTableColumn columns in resultTable.Columns)
+            {
+                if (columns.Name == "SubscriptionId" && columns.Type == LogsColumnType.StringTypeValue)
+                    verifyColumn1 = true;
+
+                if (columns.Name == "TimeGenerated" && columns.Type == LogsColumnType.DatetimeTypeValue)
+                    verifyColumn2 = true;
+            }
+
+            Assert.IsTrue(verifyRow);
+            Assert.IsTrue(verifyColumn1 && verifyColumn2);
+        }
+
         public static IEnumerable<FormattableStringWrapper> Queries
         {
             get

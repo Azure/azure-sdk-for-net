@@ -385,13 +385,6 @@ namespace Azure.Monitor.Query.Tests
         public async Task QueryResource()
         {
             #region Snippet:QueryResource
-
-#if SNIPPET
-            string workspaceId = "<workspace_id>";
-#else
-            string workspaceId = TestEnvironment.WorkspaceId;
-#endif
-
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
             var results = await client.QueryResourceAsync(TestEnvironment.StorageAccountId,

@@ -322,8 +322,6 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
-        /// string workspaceId = &quot;&lt;workspace_id&gt;&quot;;
-        ///
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
         /// var results = await client.QueryResourceAsync(TestEnvironment.StorageAccountId,
@@ -375,8 +373,6 @@ namespace Azure.Monitor.Query
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
-        /// string workspaceId = &quot;&lt;workspace_id&gt;&quot;;
-        ///
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
         /// var results = await client.QueryResourceAsync(TestEnvironment.StorageAccountId,
