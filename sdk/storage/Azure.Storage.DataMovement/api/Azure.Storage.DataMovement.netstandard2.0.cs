@@ -123,7 +123,7 @@ namespace Azure.Storage.DataMovement
     public partial class TransferManagerOptions
     {
         public TransferManagerOptions() { }
-        public Azure.Storage.DataMovement.Models.TransferCheckpointerMethod CheckpointerMethod { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Models.TransferCheckpointerOptions CheckpointerOptions { get { throw null; } set { } }
         public Azure.Storage.DataMovement.ErrorHandlingOptions ErrorHandling { get { throw null; } set { } }
         public int? MaximumConcurrency { get { throw null; } set { } }
     }
@@ -214,9 +214,9 @@ namespace Azure.Storage.DataMovement.Models
         public StorageResourceWriteToOffsetOptions() { }
         public string BlockId { get { throw null; } }
     }
-    public partial class TransferCheckpointerMethod
+    public partial class TransferCheckpointerOptions
     {
-        public TransferCheckpointerMethod(string localCheckpointerPath) { }
+        public TransferCheckpointerOptions(string localCheckpointerPath) { }
     }
     public enum TransferCopyMethod
     {

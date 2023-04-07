@@ -153,13 +153,15 @@ namespace Azure.Storage.DataMovement
             if (_destinationResource.ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
             {
                 // Perform a one call method to copy the resource.
-                await StartSingleCallCopy(length, true).ConfigureAwait(false);
+                await QueueChunkToChannelAsync(
+                    StartSingleCallCopy(length, true)).ConfigureAwait(false);
             }
             else // For now we default to sync copy
             {
                 if (_initialTransferSize >= length)
                 {
-                    await StartSingleCallCopy(length, false).ConfigureAwait(false);
+                    await QueueChunkToChannelAsync(
+                        StartSingleCallCopy(length, false)).ConfigureAwait(false);
                     return;
                 }
                 long blockSize = CalculateBlockSize(length);
@@ -180,12 +182,16 @@ namespace Azure.Storage.DataMovement
                     else // Sequential
                     {
                         // Queue paritioned block task
-                        await QueueChunkToChannel(
+                        await QueueChunkToChannelAsync(
                             PutBlockFromUri(
                                 commitBlockList[0].Offset,
                                 commitBlockList[0].Length,
                                 length)).ConfigureAwait(false);
                     }
+                }
+                else
+                {
+                    await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
                 }
             }
         }
@@ -326,7 +332,7 @@ namespace Azure.Storage.DataMovement
             foreach ((long Offset, long Length) block in commitBlockList)
             {
                 // Queue paritioned block task
-                await QueueChunkToChannel(PutBlockFromUri(
+                await QueueChunkToChannelAsync(PutBlockFromUri(
                         block.Offset,
                         block.Length,
                         expectedLength)).ConfigureAwait(false);

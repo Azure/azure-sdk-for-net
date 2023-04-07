@@ -145,7 +145,7 @@ namespace Azure.Storage.DataMovement
                 if (_initialTransferSize >= length)
                 {
                     // If we can create the destination in one call
-                    await QueueChunkToChannel(CreateDestinationResource(
+                    await QueueChunkToChannelAsync(CreateDestinationResource(
                             blockSize: length,
                             length: length,
                             singleCall: true)).ConfigureAwait(false);
@@ -171,7 +171,7 @@ namespace Azure.Storage.DataMovement
                     else // Sequential
                     {
                         // Queue paritioned block task
-                        await QueueChunkToChannel(
+                        await QueueChunkToChannelAsync(
                             StageBlockInternal(
                                 rangeList[0].Offset,
                                 rangeList[0].Length,
@@ -382,7 +382,7 @@ namespace Azure.Storage.DataMovement
             foreach ((long Offset, long Length) block in rangeList)
             {
                 // Queue paritioned block task
-                await QueueChunkToChannel(StageBlockInternal(
+                await QueueChunkToChannelAsync(StageBlockInternal(
                     block.Offset,
                     block.Length,
                     completeLength)).ConfigureAwait(false);

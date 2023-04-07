@@ -197,7 +197,7 @@ namespace Azure.Storage.DataMovement
         /// when we're looking to stop/pause the job part.
         /// </summary>
         /// <returns></returns>
-        public async Task QueueChunkToChannel(Task chunkTask)
+        public async Task QueueChunkToChannelAsync(Task chunkTask)
         {
             // Attach TaskCompletionSource
             TaskCompletionSource<bool> chunkCompleted = new TaskCompletionSource<bool>(
@@ -211,7 +211,7 @@ namespace Azure.Storage.DataMovement
                 {
                     await chunkTask.ConfigureAwait(false);
                     chunkCompleted.SetResult(true);
-                    await CheckAndUpdateCancellationStatus().ConfigureAwait(false);
+                    await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
                 }).ConfigureAwait(false);
         }
 
@@ -347,6 +347,7 @@ namespace Azure.Storage.DataMovement
             }
             // Trigger job cancellation if the failed handler is enabled
             await TriggerCancellationAsync().ConfigureAwait(false);
+            await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
         }
 
         public async virtual Task AddJobPartToCheckpointer(int chunksTotal)
@@ -461,7 +462,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task CheckAndUpdateCancellationStatus()
+        internal async Task CheckAndUpdateCancellationStatusAsync()
         {
             if (_chunkTasks.All((Task task) => (task.IsCompleted)))
             {
