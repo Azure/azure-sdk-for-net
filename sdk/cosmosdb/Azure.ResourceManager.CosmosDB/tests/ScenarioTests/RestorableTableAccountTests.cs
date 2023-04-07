@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var tableName = Recording.GenerateAssetName("table-");
             CosmosDBTableResource table = await CreateTable(tableName, null);
-            Thread.Sleep(60000);
+            AddDelayInSeconds(60);
 
             DateTimeOffset ts = DateTimeOffset.FromUnixTimeSeconds((int)table.Data.Resource.Timestamp.Value);
-            Thread.Sleep(60000);
+            AddDelayInSeconds(60);
 
             CosmosDBAccountRestoreParameters restoreParameters = new CosmosDBAccountRestoreParameters()
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var tableName1 = Recording.GenerateAssetName("table-");
             CosmosDBTableResource table1 = await CreateTable(tableName1, null);
-            Thread.Sleep(60000);
+            AddDelayInSeconds(60);
 
             var tableName2 = Recording.GenerateAssetName("table-");
             CosmosDBTableResource table2 = await CreateTable(tableName2, null);
-            Thread.Sleep(60000);
+            AddDelayInSeconds(60);
 
             DateTimeOffset ts = DateTimeOffset.FromUnixTimeSeconds((int)table1.Data.Resource.Timestamp.Value);
-            Thread.Sleep(60000);
+            AddDelayInSeconds(60);
 
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
             Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
@@ -274,6 +274,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 );
 
             return account;
+        }
+
+        private void AddDelayInSeconds(int delayInSeconds)
+        {
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Thread.Sleep(delayInSeconds * 1000);
+            }
         }
     }
 }

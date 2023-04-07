@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var containerName = Recording.GenerateAssetName("sql-container-");
             CosmosDBSqlContainerResource container = await CreateSqlContainer(containerName, database, null);
-            Thread.Sleep(60000);
+            AddDelayInSeconds(60);
 
             DateTimeOffset ts = DateTimeOffset.FromUnixTimeSeconds((int)container.Data.Resource.Timestamp.Value);
-            Thread.Sleep(10000);
+            AddDelayInSeconds(60);
 
             CosmosDBAccountRestoreParameters restoreParameters = new CosmosDBAccountRestoreParameters()
             {
@@ -273,6 +273,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
 
             return account;
+        }
+
+        private void AddDelayInSeconds(int delayInSeconds)
+        {
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Thread.Sleep(delayInSeconds * 1000);
+            }
         }
     }
 }

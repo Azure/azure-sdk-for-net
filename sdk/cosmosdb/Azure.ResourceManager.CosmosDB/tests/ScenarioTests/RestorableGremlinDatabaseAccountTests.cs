@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var containerName = Recording.GenerateAssetName("graph-");
             GremlinGraphResource container = await CreateGremlinGraph(containerName, database, null);
-            Thread.Sleep(60000);
+            AddDelayInSeconds(60);
 
             DateTimeOffset ts = DateTimeOffset.FromUnixTimeSeconds((int)container.Data.Resource.Timestamp.Value);
-            Thread.Sleep(60000);
+            AddDelayInSeconds(60);
 
             CosmosDBAccountRestoreParameters restoreParameters = new CosmosDBAccountRestoreParameters()
             {
@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var graphName1 = Recording.GenerateAssetName("graph-");
             GremlinGraphResource graph1 = await CreateGremlinGraph(graphName1, database1, null);
-            Thread.Sleep(60000);
+            AddDelayInSeconds(60);
 
             var databaseName2 = Recording.GenerateAssetName("graphdb-");
             GremlinDatabaseResource database2 = await CreateGremlinDatabase(databaseName2, null);
 
             var graphName2 = Recording.GenerateAssetName("graph-");
             GremlinGraphResource graph2 = await CreateGremlinGraph(graphName2, database2, null);
-            Thread.Sleep(60000);
+            AddDelayInSeconds(60);
 
             DateTimeOffset ts = DateTimeOffset.FromUnixTimeSeconds((int)graph1.Data.Resource.Timestamp.Value);
-            Thread.Sleep(60000);
+            AddDelayInSeconds(60);
 
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
             Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
@@ -340,6 +340,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     capabilities: new List<CosmosDBAccountCapability> { new CosmosDBAccountCapability("EnableGremlin") }
                     );
             return account;
+        }
+
+        private void AddDelayInSeconds(int delayInSeconds)
+        {
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Thread.Sleep(delayInSeconds * 1000);
+            }
         }
     }
 }
