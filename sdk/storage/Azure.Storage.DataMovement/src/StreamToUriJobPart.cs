@@ -368,7 +368,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>
         /// Task containing the buffered stream partition.
         /// </returns>
-        private static async Task<SlicedStream> GetOffsetPartitionInternal(
+        private static async Task<Stream> GetOffsetPartitionInternal(
             Stream stream,
             int offset,
             int length,

@@ -15,6 +15,7 @@ using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Azure.Core.Diagnostics;
+using System.Diagnostics;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 {
@@ -27,18 +28,20 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         /// </summary>
         internal class PartitionProcessor : IEventProcessor, IDisposable
         {
+            private readonly CancellationTokenSource _cts = new();
+
             private readonly ITriggeredFunctionExecutor _executor;
             private readonly bool _singleDispatch;
             private readonly ILogger _logger;
-            private readonly CancellationTokenSource _cts = new();
             private readonly int _batchCheckpointFrequency;
             private int _batchCounter;
+            private bool _firstFunctionExecute;
             private bool _minimumBatchesEnabled;
             private bool _disposed;
-            private Task _cachedEventsBackgroundTask;
             private TimeSpan _maxWaitTime;
             private ValueStopwatch _currentCycle;
             private EventProcessorHostPartition _mostRecentPartitionContext;
+            private Task _cachedEventsBackgroundTask;
             private CancellationTokenSource _cachedEventsBackgroundTaskCts;
             private SemaphoreSlim _cachedEventsGuard;
 
@@ -53,17 +56,23 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 _singleDispatch = singleDispatch;
                 _batchCheckpointFrequency = options.BatchCheckpointFrequency;
                 _logger = logger;
-                _minimumBatchesEnabled = options.MinEventBatchSize > 1; // 1 is the default
-                CachedEventsManager = new PartitionProcessorEventsManager(maxBatchSize: options.MaxEventBatchSize, minBatchSize: options.MinEventBatchSize);
+                _firstFunctionExecute = true;
                 _maxWaitTime = options.MaxWaitTime;
-                _cachedEventsGuard = new SemaphoreSlim(1, 1);
+                _minimumBatchesEnabled = options.MinEventBatchSize > 1; // 1 is the default
+
+                // Events are only cached when building a batch of minimum size.
+                if (_minimumBatchesEnabled)
+                {
+                    _cachedEventsGuard = new SemaphoreSlim(1, 1);
+                    CachedEventsManager = new PartitionProcessorEventsManager(maxBatchSize: options.MaxEventBatchSize, minBatchSize: options.MinEventBatchSize);
+                }
             }
 
             public Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
             {
                 // signal cancellation for any in progress executions and clear the cached events
                 _cts.Cancel();
-                CachedEventsManager.ClearEventCache();
+                CachedEventsManager?.ClearEventCache();
 
                 _logger.LogDebug(GetOperationDetails(context, $"CloseAsync, {reason}"));
                 return Task.CompletedTask;
@@ -127,6 +136,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         };
 
                         await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
+                        _firstFunctionExecute = false;
                         eventToCheckpoint = events[i];
                     }
                 }
@@ -158,6 +168,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
                                 UpdateCheckpointContext(triggerEvents, context);
                                 await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
+                                _firstFunctionExecute = false;
                                 eventToCheckpoint = triggerEvents.Last();
 
                                 // If there is a background timer task, cancel it and dispose of the cancellation token. If there
@@ -176,7 +187,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                             {
                                 // If there are events waiting to be processed, and no background task running, start a monitoring cycle.
                                 _cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
-                                _cachedEventsBackgroundTask = MonitorCachedEvents(_cachedEventsBackgroundTaskCts);
+                                _cachedEventsBackgroundTask = MonitorCachedEvents(context.ProcessorHost.GetLastReadCheckpoint(context.PartitionId)?.LastModified, _cachedEventsBackgroundTaskCts);
                             }
                         }
                         finally
@@ -191,6 +202,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     {
                         UpdateCheckpointContext(events, context);
                         await TriggerExecute(events, context, _cts.Token).ConfigureAwait(false);
+                        _firstFunctionExecute = false;
                         eventToCheckpoint = events.LastOrDefault();
                     }
 
@@ -227,19 +239,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 };
 
                 await _executor.TryExecuteAsync(input, cancellationToken).ConfigureAwait(false);
+                _firstFunctionExecute = false;
             }
 
-            private async Task MonitorCachedEvents(CancellationTokenSource backgroundCancellationTokenSource)
+            private async Task MonitorCachedEvents(DateTimeOffset? lastCheckpointTime, CancellationTokenSource backgroundCancellationTokenSource)
             {
+                Debug.Assert(_minimumBatchesEnabled, "Monitoring of cached events should only take place when minimum batches are enabled.");
+
                 var acquiredSemaphore = false;
+                var adjustedMaxWaitTime = GetAdjustedMaxWaitTime(_maxWaitTime, lastCheckpointTime, _firstFunctionExecute);
+
                 try
                 {
                     _currentCycle = ValueStopwatch.StartNew();
 
                     // Wait max wait time after starting this task before checking the number of events.
-                    while (_currentCycle.GetElapsedTime() < _maxWaitTime && !backgroundCancellationTokenSource.Token.IsCancellationRequested)
+                    while (_currentCycle.GetElapsedTime() < adjustedMaxWaitTime && !backgroundCancellationTokenSource.Token.IsCancellationRequested)
                     {
-                        var remainingTime = GetRemainingTime(_currentCycle.GetElapsedTime());
+                        var remainingTime = GetRemainingTime(_currentCycle.GetElapsedTime(), adjustedMaxWaitTime);
                         await Task.Delay(remainingTime, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
                     }
 
@@ -287,19 +304,61 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 }
             }
 
-            private TimeSpan GetRemainingTime(TimeSpan elapsed)
+            private TimeSpan GetAdjustedMaxWaitTime(TimeSpan configuredMaxWaitTime, DateTimeOffset? lastCheckpointTime, bool firstInvocation)
             {
-                if ((_maxWaitTime == Timeout.InfiniteTimeSpan) || (_maxWaitTime == TimeSpan.Zero) || (elapsed == TimeSpan.Zero))
+                // If this is not the first invocation of the function for this partition then use the configured wait time.
+                if (!firstInvocation)
                 {
-                    return _maxWaitTime;
+                    return configuredMaxWaitTime;
                 }
 
-                if (elapsed >= _maxWaitTime)
+                // If there was no checkpoint found, then it is safer to dispatch a partial batch for the
+                // first invocation than assume no ownership changes are taking place.
+                if (!lastCheckpointTime.HasValue)
                 {
                     return TimeSpan.Zero;
                 }
 
-                return TimeSpan.FromMilliseconds(_maxWaitTime.TotalMilliseconds - elapsed.TotalMilliseconds);
+                var timeSinceLastCheckpoint = DateTimeOffset.UtcNow.Subtract(lastCheckpointTime.Value);
+
+                // If the checkpoint was last recorded less that the configured wait time ago, then we can
+                // assume that was when a batch was last dispatched.  Adjust the wait time to reduce the configured
+                // wait time and try to honor the configured interval.  In the worst case where checkpoints are written
+                // infrequently, we'll dispatch a partial batch more quickly for the first iteration.
+                if (timeSinceLastCheckpoint < configuredMaxWaitTime)
+                {
+                    return configuredMaxWaitTime.Subtract(timeSinceLastCheckpoint);
+                }
+
+                // If the checkpoint was last recorded longer than the configured wait time ago, ownership
+                // of the partition likely migrated and the function was not invoked on the expected schedule.
+                // Dispatch any available events immediately, as the wait time is presumed to have already elapsed.
+                if (timeSinceLastCheckpoint >= configuredMaxWaitTime)
+                {
+                    return TimeSpan.Zero;
+                }
+
+                return configuredMaxWaitTime;
+            }
+
+            private TimeSpan GetRemainingTime(TimeSpan elapsed, TimeSpan maxWaitTime)
+            {
+                if (maxWaitTime == Timeout.InfiniteTimeSpan)
+                {
+                    return TimeSpan.Zero;
+                }
+
+                if ((maxWaitTime == TimeSpan.Zero) || (elapsed == TimeSpan.Zero))
+                {
+                    return maxWaitTime;
+                }
+
+                if (elapsed >= maxWaitTime)
+                {
+                    return TimeSpan.Zero;
+                }
+
+                return TimeSpan.FromMilliseconds(maxWaitTime.TotalMilliseconds - elapsed.TotalMilliseconds);
             }
 
             private void UpdateCheckpointContext(EventData[] events, EventProcessorHostPartition context)
@@ -345,8 +404,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     if (disposing)
                     {
                         _cts.Dispose();
-                        _cachedEventsBackgroundTaskCts.Dispose();
-                        _cachedEventsGuard.Dispose();
+                        _cachedEventsBackgroundTaskCts?.Dispose();
+                        _cachedEventsGuard?.Dispose();
                     }
 
                     _disposed = true;
