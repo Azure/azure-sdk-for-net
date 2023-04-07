@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The SwaggerSpecification.
-    /// Serialized Name: SwaggerSpecification
-    /// </summary>
+    /// <summary> The SwaggerSpecification. </summary>
     public partial class SwaggerSpecification
     {
         /// <summary> Initializes a new instance of SwaggerSpecification. </summary>
@@ -24,17 +21,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of SwaggerSpecification. </summary>
-        /// <param name="apiVersions"> Serialized Name: SwaggerSpecification.apiVersions. </param>
-        /// <param name="swaggerSpecFolderUri"> Serialized Name: SwaggerSpecification.swaggerSpecFolderUri. </param>
+        /// <param name="apiVersions"></param>
+        /// <param name="swaggerSpecFolderUri"></param>
         internal SwaggerSpecification(IList<string> apiVersions, Uri swaggerSpecFolderUri)
         {
             ApiVersions = apiVersions;
             SwaggerSpecFolderUri = swaggerSpecFolderUri;
         }
 
-        /// <summary> Serialized Name: SwaggerSpecification.apiVersions. </summary>
+        /// <summary> Gets the api versions. </summary>
         public IList<string> ApiVersions { get; }
-        /// <summary> Serialized Name: SwaggerSpecification.swaggerSpecFolderUri. </summary>
+        /// <summary> Gets or sets the swagger spec folder uri. </summary>
         public Uri SwaggerSpecFolderUri { get; set; }
     }
 }

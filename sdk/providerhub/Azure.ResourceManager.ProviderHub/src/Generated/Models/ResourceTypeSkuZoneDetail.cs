@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceTypeSkuZoneDetail.
-    /// Serialized Name: SkuZoneDetail
-    /// </summary>
+    /// <summary> The ResourceTypeSkuZoneDetail. </summary>
     public partial class ResourceTypeSkuZoneDetail
     {
         /// <summary> Initializes a new instance of ResourceTypeSkuZoneDetail. </summary>
@@ -24,17 +21,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeSkuZoneDetail. </summary>
-        /// <param name="name"> Serialized Name: SkuZoneDetail.name. </param>
-        /// <param name="capabilities"> Serialized Name: SkuZoneDetail.capabilities. </param>
+        /// <param name="name"></param>
+        /// <param name="capabilities"></param>
         internal ResourceTypeSkuZoneDetail(IList<string> name, IList<ResourceSkuCapability> capabilities)
         {
             Name = name;
             Capabilities = capabilities;
         }
 
-        /// <summary> Serialized Name: SkuZoneDetail.name. </summary>
+        /// <summary> Gets the name. </summary>
         public IList<string> Name { get; }
-        /// <summary> Serialized Name: SkuZoneDetail.capabilities. </summary>
+        /// <summary> Gets the capabilities. </summary>
         public IList<ResourceSkuCapability> Capabilities { get; }
     }
 }

@@ -7,31 +7,28 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ReRegisterSubscriptionMetadata.
-    /// Serialized Name: ReRegisterSubscriptionMetadata
-    /// </summary>
+    /// <summary> The ReRegisterSubscriptionMetadata. </summary>
     public partial class ReRegisterSubscriptionMetadata
     {
         /// <summary> Initializes a new instance of ReRegisterSubscriptionMetadata. </summary>
-        /// <param name="isEnabled"> Serialized Name: ReRegisterSubscriptionMetadata.enabled. </param>
+        /// <param name="isEnabled"></param>
         internal ReRegisterSubscriptionMetadata(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of ReRegisterSubscriptionMetadata. </summary>
-        /// <param name="isEnabled"> Serialized Name: ReRegisterSubscriptionMetadata.enabled. </param>
-        /// <param name="concurrencyLimit"> Serialized Name: ReRegisterSubscriptionMetadata.concurrencyLimit. </param>
+        /// <param name="isEnabled"></param>
+        /// <param name="concurrencyLimit"></param>
         internal ReRegisterSubscriptionMetadata(bool isEnabled, int? concurrencyLimit)
         {
             IsEnabled = isEnabled;
             ConcurrencyLimit = concurrencyLimit;
         }
 
-        /// <summary> Serialized Name: ReRegisterSubscriptionMetadata.enabled. </summary>
+        /// <summary> Gets the is enabled. </summary>
         public bool IsEnabled { get; }
-        /// <summary> Serialized Name: ReRegisterSubscriptionMetadata.concurrencyLimit. </summary>
+        /// <summary> Gets the concurrency limit. </summary>
         public int? ConcurrencyLimit { get; }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ProviderHub.ResourceTypeSkuData resourceData = result.Data;
+            ResourceTypeSkuData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -110,21 +110,21 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // invoke the operation
             string sku = "testSku";
-            ProviderHub.ResourceTypeSkuData data = new ProviderHub.ResourceTypeSkuData()
+            ResourceTypeSkuData data = new ResourceTypeSkuData()
             {
-                Properties = new Models.ResourceTypeSkuProperties(new Models.ResourceTypeSkuSetting[]
+                Properties = new ResourceTypeSkuProperties(new ResourceTypeSkuSetting[]
             {
-new Models.ResourceTypeSkuSetting("freeSku")
+new ResourceTypeSkuSetting("freeSku")
 {
 Tier = "Tier1",
 Kind = "Standard",
-},new Models.ResourceTypeSkuSetting("premiumSku")
+},new ResourceTypeSkuSetting("premiumSku")
 {
 Tier = "Tier2",
 Kind = "Premium",
 Costs =
 {
-new Models.ResourceTypeSkuCost("xxx")
+new ResourceTypeSkuCost("xxx")
 },
 }
             }),
@@ -134,7 +134,7 @@ new Models.ResourceTypeSkuCost("xxx")
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ProviderHub.ResourceTypeSkuData resourceData = result.Data;
+            ResourceTypeSkuData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -168,7 +168,7 @@ new Models.ResourceTypeSkuCost("xxx")
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ProviderHub.ResourceTypeSkuData resourceData = item.Data;
+                ResourceTypeSkuData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

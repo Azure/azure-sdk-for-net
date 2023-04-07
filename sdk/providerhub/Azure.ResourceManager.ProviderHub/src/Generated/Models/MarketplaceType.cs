@@ -7,31 +7,16 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The MarketplaceType.
-    /// Serialized Name: MarketplaceType
-    /// </summary>
+    /// <summary> The MarketplaceType. </summary>
     public enum MarketplaceType
     {
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: MarketplaceType.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         NotSpecified,
-        /// <summary>
-        /// AddOn
-        /// Serialized Name: MarketplaceType.AddOn
-        /// </summary>
+        /// <summary> AddOn. </summary>
         AddOn,
-        /// <summary>
-        /// Bypass
-        /// Serialized Name: MarketplaceType.Bypass
-        /// </summary>
+        /// <summary> Bypass. </summary>
         Bypass,
-        /// <summary>
-        /// Store
-        /// Serialized Name: MarketplaceType.Store
-        /// </summary>
+        /// <summary> Store. </summary>
         Store
     }
 }

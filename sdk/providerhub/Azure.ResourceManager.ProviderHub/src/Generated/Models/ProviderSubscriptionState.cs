@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ProviderSubscriptionState.
-    /// Serialized Name: SubscriptionState
-    /// </summary>
+    /// <summary> The ProviderSubscriptionState. </summary>
     public readonly partial struct ProviderSubscriptionState : IEquatable<ProviderSubscriptionState>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string DisabledValue = "Disabled";
         private const string DeletedValue = "Deleted";
 
-        /// <summary>
-        /// NotDefined
-        /// Serialized Name: SubscriptionState.NotDefined
-        /// </summary>
+        /// <summary> NotDefined. </summary>
         public static ProviderSubscriptionState NotDefined { get; } = new ProviderSubscriptionState(NotDefinedValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: SubscriptionState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static ProviderSubscriptionState Enabled { get; } = new ProviderSubscriptionState(EnabledValue);
-        /// <summary>
-        /// Warned
-        /// Serialized Name: SubscriptionState.Warned
-        /// </summary>
+        /// <summary> Warned. </summary>
         public static ProviderSubscriptionState Warned { get; } = new ProviderSubscriptionState(WarnedValue);
-        /// <summary>
-        /// PastDue
-        /// Serialized Name: SubscriptionState.PastDue
-        /// </summary>
+        /// <summary> PastDue. </summary>
         public static ProviderSubscriptionState PastDue { get; } = new ProviderSubscriptionState(PastDueValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: SubscriptionState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static ProviderSubscriptionState Disabled { get; } = new ProviderSubscriptionState(DisabledValue);
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: SubscriptionState.Deleted
-        /// </summary>
+        /// <summary> Deleted. </summary>
         public static ProviderSubscriptionState Deleted { get; } = new ProviderSubscriptionState(DeletedValue);
         /// <summary> Determines if two <see cref="ProviderSubscriptionState"/> values are the same. </summary>
         public static bool operator ==(ProviderSubscriptionState left, ProviderSubscriptionState right) => left.Equals(right);

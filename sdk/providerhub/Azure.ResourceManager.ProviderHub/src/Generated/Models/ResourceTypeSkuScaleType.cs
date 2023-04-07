@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceTypeSkuScaleType.
-    /// Serialized Name: SkuScaleType
-    /// </summary>
+    /// <summary> The ResourceTypeSkuScaleType. </summary>
     public readonly partial struct ResourceTypeSkuScaleType : IEquatable<ResourceTypeSkuScaleType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string ManualValue = "Manual";
         private const string AutomaticValue = "Automatic";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: SkuScaleType.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static ResourceTypeSkuScaleType None { get; } = new ResourceTypeSkuScaleType(NoneValue);
-        /// <summary>
-        /// Manual
-        /// Serialized Name: SkuScaleType.Manual
-        /// </summary>
+        /// <summary> Manual. </summary>
         public static ResourceTypeSkuScaleType Manual { get; } = new ResourceTypeSkuScaleType(ManualValue);
-        /// <summary>
-        /// Automatic
-        /// Serialized Name: SkuScaleType.Automatic
-        /// </summary>
+        /// <summary> Automatic. </summary>
         public static ResourceTypeSkuScaleType Automatic { get; } = new ResourceTypeSkuScaleType(AutomaticValue);
         /// <summary> Determines if two <see cref="ResourceTypeSkuScaleType"/> values are the same. </summary>
         public static bool operator ==(ResourceTypeSkuScaleType left, ResourceTypeSkuScaleType right) => left.Equals(right);

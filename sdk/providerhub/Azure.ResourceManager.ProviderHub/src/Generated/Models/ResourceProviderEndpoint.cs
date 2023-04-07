@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceProviderEndpoint.
-    /// Serialized Name: ResourceProviderEndpoint
-    /// </summary>
+    /// <summary> The ResourceProviderEndpoint. </summary>
     public partial class ResourceProviderEndpoint
     {
         /// <summary> Initializes a new instance of ResourceProviderEndpoint. </summary>
@@ -26,13 +23,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceProviderEndpoint. </summary>
-        /// <param name="isEnabled"> Serialized Name: ResourceProviderEndpoint.enabled. </param>
-        /// <param name="apiVersions"> Serialized Name: ResourceProviderEndpoint.apiVersions. </param>
-        /// <param name="endpointUri"> Serialized Name: ResourceProviderEndpoint.endpointUri. </param>
-        /// <param name="locations"> Serialized Name: ResourceProviderEndpoint.locations. </param>
-        /// <param name="requiredFeatures"> Serialized Name: ResourceProviderEndpoint.requiredFeatures. </param>
-        /// <param name="featuresRule"> Serialized Name: ResourceProviderEndpoint.featuresRule. </param>
-        /// <param name="timeout"> Serialized Name: ResourceProviderEndpoint.timeout. </param>
+        /// <param name="isEnabled"></param>
+        /// <param name="apiVersions"></param>
+        /// <param name="endpointUri"></param>
+        /// <param name="locations"></param>
+        /// <param name="requiredFeatures"></param>
+        /// <param name="featuresRule"></param>
+        /// <param name="timeout"></param>
         internal ResourceProviderEndpoint(bool? isEnabled, IReadOnlyList<string> apiVersions, Uri endpointUri, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> requiredFeatures, FeaturesRule featuresRule, TimeSpan? timeout)
         {
             IsEnabled = isEnabled;
@@ -44,25 +41,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Timeout = timeout;
         }
 
-        /// <summary> Serialized Name: ResourceProviderEndpoint.enabled. </summary>
+        /// <summary> Gets the is enabled. </summary>
         public bool? IsEnabled { get; }
-        /// <summary> Serialized Name: ResourceProviderEndpoint.apiVersions. </summary>
+        /// <summary> Gets the api versions. </summary>
         public IReadOnlyList<string> ApiVersions { get; }
-        /// <summary> Serialized Name: ResourceProviderEndpoint.endpointUri. </summary>
+        /// <summary> Gets the endpoint uri. </summary>
         public Uri EndpointUri { get; }
-        /// <summary> Serialized Name: ResourceProviderEndpoint.locations. </summary>
+        /// <summary> Gets the locations. </summary>
         public IReadOnlyList<AzureLocation> Locations { get; }
-        /// <summary> Serialized Name: ResourceProviderEndpoint.requiredFeatures. </summary>
+        /// <summary> Gets the required features. </summary>
         public IReadOnlyList<string> RequiredFeatures { get; }
-        /// <summary> Serialized Name: ResourceProviderEndpoint.featuresRule. </summary>
+        /// <summary> Gets the features rule. </summary>
         internal FeaturesRule FeaturesRule { get; }
-        /// <summary> Serialized Name: FeaturesRule.requiredFeaturesPolicy. </summary>
+        /// <summary> Gets the required features policy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule?.RequiredFeaturesPolicy;
         }
 
-        /// <summary> Serialized Name: ResourceProviderEndpoint.timeout. </summary>
+        /// <summary> Gets the timeout. </summary>
         public TimeSpan? Timeout { get; }
     }
 }

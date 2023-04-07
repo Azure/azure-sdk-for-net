@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The NotificationRegistrationProperties.
-    /// Serialized Name: NotificationRegistrationProperties
-    /// </summary>
+    /// <summary> The NotificationRegistrationProperties. </summary>
     public partial class NotificationRegistrationProperties
     {
         /// <summary> Initializes a new instance of NotificationRegistrationProperties. </summary>
@@ -24,11 +21,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of NotificationRegistrationProperties. </summary>
-        /// <param name="notificationMode"> Serialized Name: NotificationRegistrationProperties.notificationMode. </param>
-        /// <param name="messageScope"> Serialized Name: NotificationRegistrationProperties.messageScope. </param>
-        /// <param name="includedEvents"> Serialized Name: NotificationRegistrationProperties.includedEvents. </param>
-        /// <param name="notificationEndpoints"> Serialized Name: NotificationRegistrationProperties.notificationEndpoints. </param>
-        /// <param name="provisioningState"> Serialized Name: NotificationRegistrationProperties.provisioningState. </param>
+        /// <param name="notificationMode"></param>
+        /// <param name="messageScope"></param>
+        /// <param name="includedEvents"></param>
+        /// <param name="notificationEndpoints"></param>
+        /// <param name="provisioningState"></param>
         internal NotificationRegistrationProperties(NotificationMode? notificationMode, MessageScope? messageScope, IList<string> includedEvents, IList<NotificationEndpoint> notificationEndpoints, ProviderHubProvisioningState? provisioningState)
         {
             NotificationMode = notificationMode;
@@ -38,15 +35,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Serialized Name: NotificationRegistrationProperties.notificationMode. </summary>
+        /// <summary> Gets or sets the notification mode. </summary>
         public NotificationMode? NotificationMode { get; set; }
-        /// <summary> Serialized Name: NotificationRegistrationProperties.messageScope. </summary>
+        /// <summary> Gets or sets the message scope. </summary>
         public MessageScope? MessageScope { get; set; }
-        /// <summary> Serialized Name: NotificationRegistrationProperties.includedEvents. </summary>
+        /// <summary> Gets the included events. </summary>
         public IList<string> IncludedEvents { get; }
-        /// <summary> Serialized Name: NotificationRegistrationProperties.notificationEndpoints. </summary>
+        /// <summary> Gets the notification endpoints. </summary>
         public IList<NotificationEndpoint> NotificationEndpoints { get; }
-        /// <summary> Serialized Name: NotificationRegistrationProperties.provisioningState. </summary>
+        /// <summary> Gets or sets the provisioning state. </summary>
         public ProviderHubProvisioningState? ProvisioningState { get; set; }
     }
 }

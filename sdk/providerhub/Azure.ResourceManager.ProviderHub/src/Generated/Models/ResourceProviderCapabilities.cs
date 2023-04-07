@@ -11,15 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceProviderCapabilities.
-    /// Serialized Name: ResourceProviderCapabilities
-    /// </summary>
+    /// <summary> The ResourceProviderCapabilities. </summary>
     public partial class ResourceProviderCapabilities
     {
         /// <summary> Initializes a new instance of ResourceProviderCapabilities. </summary>
-        /// <param name="quotaId"> Serialized Name: ResourceProviderCapabilities.quotaId. </param>
-        /// <param name="effect"> Serialized Name: ResourceProviderCapabilities.effect. </param>
+        /// <param name="quotaId"></param>
+        /// <param name="effect"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaId"/> is null. </exception>
         public ResourceProviderCapabilities(string quotaId, ResourceProviderCapabilitiesEffect effect)
         {
@@ -31,9 +28,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceProviderCapabilities. </summary>
-        /// <param name="quotaId"> Serialized Name: ResourceProviderCapabilities.quotaId. </param>
-        /// <param name="effect"> Serialized Name: ResourceProviderCapabilities.effect. </param>
-        /// <param name="requiredFeatures"> Serialized Name: ResourceProviderCapabilities.requiredFeatures. </param>
+        /// <param name="quotaId"></param>
+        /// <param name="effect"></param>
+        /// <param name="requiredFeatures"></param>
         internal ResourceProviderCapabilities(string quotaId, ResourceProviderCapabilitiesEffect effect, IList<string> requiredFeatures)
         {
             QuotaId = quotaId;
@@ -41,11 +38,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RequiredFeatures = requiredFeatures;
         }
 
-        /// <summary> Serialized Name: ResourceProviderCapabilities.quotaId. </summary>
+        /// <summary> Gets or sets the quota id. </summary>
         public string QuotaId { get; set; }
-        /// <summary> Serialized Name: ResourceProviderCapabilities.effect. </summary>
+        /// <summary> Gets or sets the effect. </summary>
         public ResourceProviderCapabilitiesEffect Effect { get; set; }
-        /// <summary> Serialized Name: ResourceProviderCapabilities.requiredFeatures. </summary>
+        /// <summary> Gets the required features. </summary>
         public IList<string> RequiredFeatures { get; }
     }
 }

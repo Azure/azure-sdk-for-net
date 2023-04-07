@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The SubscriptionLifecycleNotificationSpecifications.
-    /// Serialized Name: SubscriptionLifecycleNotificationSpecifications
-    /// </summary>
+    /// <summary> The SubscriptionLifecycleNotificationSpecifications. </summary>
     public partial class SubscriptionLifecycleNotificationSpecifications
     {
         /// <summary> Initializes a new instance of SubscriptionLifecycleNotificationSpecifications. </summary>
@@ -24,17 +21,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of SubscriptionLifecycleNotificationSpecifications. </summary>
-        /// <param name="subscriptionStateOverrideActions"> Serialized Name: SubscriptionLifecycleNotificationSpecifications.subscriptionStateOverrideActions. </param>
-        /// <param name="softDeleteTtl"> Serialized Name: SubscriptionLifecycleNotificationSpecifications.softDeleteTTL. </param>
+        /// <param name="subscriptionStateOverrideActions"></param>
+        /// <param name="softDeleteTtl"></param>
         internal SubscriptionLifecycleNotificationSpecifications(IList<SubscriptionStateOverrideAction> subscriptionStateOverrideActions, TimeSpan? softDeleteTtl)
         {
             SubscriptionStateOverrideActions = subscriptionStateOverrideActions;
             SoftDeleteTtl = softDeleteTtl;
         }
 
-        /// <summary> Serialized Name: SubscriptionLifecycleNotificationSpecifications.subscriptionStateOverrideActions. </summary>
+        /// <summary> Gets the subscription state override actions. </summary>
         public IList<SubscriptionStateOverrideAction> SubscriptionStateOverrideActions { get; }
-        /// <summary> Serialized Name: SubscriptionLifecycleNotificationSpecifications.softDeleteTTL. </summary>
+        /// <summary> Gets or sets the soft delete ttl. </summary>
         public TimeSpan? SoftDeleteTtl { get; set; }
     }
 }

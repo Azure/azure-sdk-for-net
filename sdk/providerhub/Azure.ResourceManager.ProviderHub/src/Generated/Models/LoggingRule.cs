@@ -10,16 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The LoggingRule.
-    /// Serialized Name: LoggingRule
-    /// </summary>
+    /// <summary> The LoggingRule. </summary>
     public partial class LoggingRule
     {
         /// <summary> Initializes a new instance of LoggingRule. </summary>
-        /// <param name="action"> Serialized Name: LoggingRule.action. </param>
-        /// <param name="direction"> Serialized Name: LoggingRule.direction. </param>
-        /// <param name="detailLevel"> Serialized Name: LoggingRule.detailLevel. </param>
+        /// <param name="action"></param>
+        /// <param name="direction"></param>
+        /// <param name="detailLevel"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         public LoggingRule(string action, LoggingDirection direction, LoggingDetail detailLevel)
         {
@@ -31,10 +28,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of LoggingRule. </summary>
-        /// <param name="action"> Serialized Name: LoggingRule.action. </param>
-        /// <param name="direction"> Serialized Name: LoggingRule.direction. </param>
-        /// <param name="detailLevel"> Serialized Name: LoggingRule.detailLevel. </param>
-        /// <param name="hiddenPropertyPaths"> Serialized Name: LoggingRule.hiddenPropertyPaths. </param>
+        /// <param name="action"></param>
+        /// <param name="direction"></param>
+        /// <param name="detailLevel"></param>
+        /// <param name="hiddenPropertyPaths"></param>
         internal LoggingRule(string action, LoggingDirection direction, LoggingDetail detailLevel, LoggingHiddenPropertyPaths hiddenPropertyPaths)
         {
             Action = action;
@@ -43,13 +40,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             HiddenPropertyPaths = hiddenPropertyPaths;
         }
 
-        /// <summary> Serialized Name: LoggingRule.action. </summary>
+        /// <summary> Gets or sets the action. </summary>
         public string Action { get; set; }
-        /// <summary> Serialized Name: LoggingRule.direction. </summary>
+        /// <summary> Gets or sets the direction. </summary>
         public LoggingDirection Direction { get; set; }
-        /// <summary> Serialized Name: LoggingRule.detailLevel. </summary>
+        /// <summary> Gets or sets the detail level. </summary>
         public LoggingDetail DetailLevel { get; set; }
-        /// <summary> Serialized Name: LoggingRule.hiddenPropertyPaths. </summary>
+        /// <summary> Gets or sets the hidden property paths. </summary>
         public LoggingHiddenPropertyPaths HiddenPropertyPaths { get; set; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The DefaultRolloutStatus.
-    /// Serialized Name: DefaultRolloutStatus
-    /// </summary>
+    /// <summary> The DefaultRolloutStatus. </summary>
     public partial class DefaultRolloutStatus : RolloutStatusBase
     {
         /// <summary> Initializes a new instance of DefaultRolloutStatus. </summary>
@@ -23,14 +20,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutStatus. </summary>
-        /// <param name="completedRegions"> Serialized Name: RolloutStatusBase.completedRegions. </param>
-        /// <param name="failedOrSkippedRegions">
-        /// Dictionary of &lt;ExtendedErrorInfo&gt;
-        /// Serialized Name: RolloutStatusBase.failedOrSkippedRegions
-        /// </param>
-        /// <param name="nextTrafficRegion"> Serialized Name: DefaultRolloutStatus.nextTrafficRegion. </param>
-        /// <param name="nextTrafficRegionScheduledOn"> Serialized Name: DefaultRolloutStatus.nextTrafficRegionScheduledTime. </param>
-        /// <param name="subscriptionReregistrationResult"> Serialized Name: DefaultRolloutStatus.subscriptionReregistrationResult. </param>
+        /// <param name="completedRegions"></param>
+        /// <param name="failedOrSkippedRegions"> Dictionary of &lt;ExtendedErrorInfo&gt;. </param>
+        /// <param name="nextTrafficRegion"></param>
+        /// <param name="nextTrafficRegionScheduledOn"></param>
+        /// <param name="subscriptionReregistrationResult"></param>
         internal DefaultRolloutStatus(IList<AzureLocation> completedRegions, IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions, TrafficRegionCategory? nextTrafficRegion, DateTimeOffset? nextTrafficRegionScheduledOn, SubscriptionReregistrationResult? subscriptionReregistrationResult) : base(completedRegions, failedOrSkippedRegions)
         {
             NextTrafficRegion = nextTrafficRegion;
@@ -38,11 +32,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             SubscriptionReregistrationResult = subscriptionReregistrationResult;
         }
 
-        /// <summary> Serialized Name: DefaultRolloutStatus.nextTrafficRegion. </summary>
+        /// <summary> Gets or sets the next traffic region. </summary>
         public TrafficRegionCategory? NextTrafficRegion { get; set; }
-        /// <summary> Serialized Name: DefaultRolloutStatus.nextTrafficRegionScheduledTime. </summary>
+        /// <summary> Gets or sets the next traffic region scheduled on. </summary>
         public DateTimeOffset? NextTrafficRegionScheduledOn { get; set; }
-        /// <summary> Serialized Name: DefaultRolloutStatus.subscriptionReregistrationResult. </summary>
+        /// <summary> Gets or sets the subscription reregistration result. </summary>
         public SubscriptionReregistrationResult? SubscriptionReregistrationResult { get; set; }
     }
 }

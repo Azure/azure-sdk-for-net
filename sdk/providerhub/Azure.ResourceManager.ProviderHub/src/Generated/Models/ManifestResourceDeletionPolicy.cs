@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ManifestResourceDeletionPolicy.
-    /// Serialized Name: ManifestResourceDeletionPolicy
-    /// </summary>
+    /// <summary> The ManifestResourceDeletionPolicy. </summary>
     public readonly partial struct ManifestResourceDeletionPolicy : IEquatable<ManifestResourceDeletionPolicy>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string CascadeValue = "Cascade";
         private const string ForceValue = "Force";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: ManifestResourceDeletionPolicy.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static ManifestResourceDeletionPolicy NotSpecified { get; } = new ManifestResourceDeletionPolicy(NotSpecifiedValue);
-        /// <summary>
-        /// Cascade
-        /// Serialized Name: ManifestResourceDeletionPolicy.Cascade
-        /// </summary>
+        /// <summary> Cascade. </summary>
         public static ManifestResourceDeletionPolicy Cascade { get; } = new ManifestResourceDeletionPolicy(CascadeValue);
-        /// <summary>
-        /// Force
-        /// Serialized Name: ManifestResourceDeletionPolicy.Force
-        /// </summary>
+        /// <summary> Force. </summary>
         public static ManifestResourceDeletionPolicy Force { get; } = new ManifestResourceDeletionPolicy(ForceValue);
         /// <summary> Determines if two <see cref="ManifestResourceDeletionPolicy"/> values are the same. </summary>
         public static bool operator ==(ManifestResourceDeletionPolicy left, ManifestResourceDeletionPolicy right) => left.Equals(right);

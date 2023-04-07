@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The LoggingDetail.
-    /// Serialized Name: LoggingDetails
-    /// </summary>
+    /// <summary> The LoggingDetail. </summary>
     public readonly partial struct LoggingDetail : IEquatable<LoggingDetail>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string NoneValue = "None";
         private const string BodyValue = "Body";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: LoggingDetails.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static LoggingDetail None { get; } = new LoggingDetail(NoneValue);
-        /// <summary>
-        /// Body
-        /// Serialized Name: LoggingDetails.Body
-        /// </summary>
+        /// <summary> Body. </summary>
         public static LoggingDetail Body { get; } = new LoggingDetail(BodyValue);
         /// <summary> Determines if two <see cref="LoggingDetail"/> values are the same. </summary>
         public static bool operator ==(LoggingDetail left, LoggingDetail right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The TemplateDeploymentPreflightOption.
-    /// Serialized Name: TemplateDeploymentPreflightOptions
-    /// </summary>
+    /// <summary> The TemplateDeploymentPreflightOption. </summary>
     public readonly partial struct TemplateDeploymentPreflightOption : IEquatable<TemplateDeploymentPreflightOption>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string TestOnlyValue = "TestOnly";
         private const string RegisteredOnlyValue = "RegisteredOnly";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: TemplateDeploymentPreflightOptions.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static TemplateDeploymentPreflightOption None { get; } = new TemplateDeploymentPreflightOption(NoneValue);
-        /// <summary>
-        /// ValidationRequests
-        /// Serialized Name: TemplateDeploymentPreflightOptions.ValidationRequests
-        /// </summary>
+        /// <summary> ValidationRequests. </summary>
         public static TemplateDeploymentPreflightOption ValidationRequests { get; } = new TemplateDeploymentPreflightOption(ValidationRequestsValue);
-        /// <summary>
-        /// DeploymentRequests
-        /// Serialized Name: TemplateDeploymentPreflightOptions.DeploymentRequests
-        /// </summary>
+        /// <summary> DeploymentRequests. </summary>
         public static TemplateDeploymentPreflightOption DeploymentRequests { get; } = new TemplateDeploymentPreflightOption(DeploymentRequestsValue);
-        /// <summary>
-        /// TestOnly
-        /// Serialized Name: TemplateDeploymentPreflightOptions.TestOnly
-        /// </summary>
+        /// <summary> TestOnly. </summary>
         public static TemplateDeploymentPreflightOption TestOnly { get; } = new TemplateDeploymentPreflightOption(TestOnlyValue);
-        /// <summary>
-        /// RegisteredOnly
-        /// Serialized Name: TemplateDeploymentPreflightOptions.RegisteredOnly
-        /// </summary>
+        /// <summary> RegisteredOnly. </summary>
         public static TemplateDeploymentPreflightOption RegisteredOnly { get; } = new TemplateDeploymentPreflightOption(RegisteredOnlyValue);
         /// <summary> Determines if two <see cref="TemplateDeploymentPreflightOption"/> values are the same. </summary>
         public static bool operator ==(TemplateDeploymentPreflightOption left, TemplateDeploymentPreflightOption right) => left.Equals(right);

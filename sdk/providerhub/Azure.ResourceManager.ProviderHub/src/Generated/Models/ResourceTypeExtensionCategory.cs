@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceTypeExtensionCategory.
-    /// Serialized Name: ExtensionCategory
-    /// </summary>
+    /// <summary> The ResourceTypeExtensionCategory. </summary>
     public readonly partial struct ResourceTypeExtensionCategory : IEquatable<ResourceTypeExtensionCategory>
     {
         private readonly string _value;
@@ -42,85 +39,37 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string ResourceMoveBeginValue = "ResourceMoveBegin";
         private const string ResourceMoveCompletedValue = "ResourceMoveCompleted";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: ExtensionCategory.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static ResourceTypeExtensionCategory NotSpecified { get; } = new ResourceTypeExtensionCategory(NotSpecifiedValue);
-        /// <summary>
-        /// ResourceCreationValidate
-        /// Serialized Name: ExtensionCategory.ResourceCreationValidate
-        /// </summary>
+        /// <summary> ResourceCreationValidate. </summary>
         public static ResourceTypeExtensionCategory ResourceCreationValidate { get; } = new ResourceTypeExtensionCategory(ResourceCreationValidateValue);
-        /// <summary>
-        /// ResourceCreationBegin
-        /// Serialized Name: ExtensionCategory.ResourceCreationBegin
-        /// </summary>
+        /// <summary> ResourceCreationBegin. </summary>
         public static ResourceTypeExtensionCategory ResourceCreationBegin { get; } = new ResourceTypeExtensionCategory(ResourceCreationBeginValue);
-        /// <summary>
-        /// ResourceCreationCompleted
-        /// Serialized Name: ExtensionCategory.ResourceCreationCompleted
-        /// </summary>
+        /// <summary> ResourceCreationCompleted. </summary>
         public static ResourceTypeExtensionCategory ResourceCreationCompleted { get; } = new ResourceTypeExtensionCategory(ResourceCreationCompletedValue);
-        /// <summary>
-        /// ResourceReadValidate
-        /// Serialized Name: ExtensionCategory.ResourceReadValidate
-        /// </summary>
+        /// <summary> ResourceReadValidate. </summary>
         public static ResourceTypeExtensionCategory ResourceReadValidate { get; } = new ResourceTypeExtensionCategory(ResourceReadValidateValue);
-        /// <summary>
-        /// ResourceReadBegin
-        /// Serialized Name: ExtensionCategory.ResourceReadBegin
-        /// </summary>
+        /// <summary> ResourceReadBegin. </summary>
         public static ResourceTypeExtensionCategory ResourceReadBegin { get; } = new ResourceTypeExtensionCategory(ResourceReadBeginValue);
-        /// <summary>
-        /// ResourcePatchValidate
-        /// Serialized Name: ExtensionCategory.ResourcePatchValidate
-        /// </summary>
+        /// <summary> ResourcePatchValidate. </summary>
         public static ResourceTypeExtensionCategory ResourcePatchValidate { get; } = new ResourceTypeExtensionCategory(ResourcePatchValidateValue);
-        /// <summary>
-        /// ResourcePatchCompleted
-        /// Serialized Name: ExtensionCategory.ResourcePatchCompleted
-        /// </summary>
+        /// <summary> ResourcePatchCompleted. </summary>
         public static ResourceTypeExtensionCategory ResourcePatchCompleted { get; } = new ResourceTypeExtensionCategory(ResourcePatchCompletedValue);
-        /// <summary>
-        /// ResourceDeletionValidate
-        /// Serialized Name: ExtensionCategory.ResourceDeletionValidate
-        /// </summary>
+        /// <summary> ResourceDeletionValidate. </summary>
         public static ResourceTypeExtensionCategory ResourceDeletionValidate { get; } = new ResourceTypeExtensionCategory(ResourceDeletionValidateValue);
-        /// <summary>
-        /// ResourceDeletionBegin
-        /// Serialized Name: ExtensionCategory.ResourceDeletionBegin
-        /// </summary>
+        /// <summary> ResourceDeletionBegin. </summary>
         public static ResourceTypeExtensionCategory ResourceDeletionBegin { get; } = new ResourceTypeExtensionCategory(ResourceDeletionBeginValue);
-        /// <summary>
-        /// ResourceDeletionCompleted
-        /// Serialized Name: ExtensionCategory.ResourceDeletionCompleted
-        /// </summary>
+        /// <summary> ResourceDeletionCompleted. </summary>
         public static ResourceTypeExtensionCategory ResourceDeletionCompleted { get; } = new ResourceTypeExtensionCategory(ResourceDeletionCompletedValue);
-        /// <summary>
-        /// ResourcePostAction
-        /// Serialized Name: ExtensionCategory.ResourcePostAction
-        /// </summary>
+        /// <summary> ResourcePostAction. </summary>
         public static ResourceTypeExtensionCategory ResourcePostAction { get; } = new ResourceTypeExtensionCategory(ResourcePostActionValue);
-        /// <summary>
-        /// SubscriptionLifecycleNotification
-        /// Serialized Name: ExtensionCategory.SubscriptionLifecycleNotification
-        /// </summary>
+        /// <summary> SubscriptionLifecycleNotification. </summary>
         public static ResourceTypeExtensionCategory SubscriptionLifecycleNotification { get; } = new ResourceTypeExtensionCategory(SubscriptionLifecycleNotificationValue);
-        /// <summary>
-        /// ResourcePatchBegin
-        /// Serialized Name: ExtensionCategory.ResourcePatchBegin
-        /// </summary>
+        /// <summary> ResourcePatchBegin. </summary>
         public static ResourceTypeExtensionCategory ResourcePatchBegin { get; } = new ResourceTypeExtensionCategory(ResourcePatchBeginValue);
-        /// <summary>
-        /// ResourceMoveBegin
-        /// Serialized Name: ExtensionCategory.ResourceMoveBegin
-        /// </summary>
+        /// <summary> ResourceMoveBegin. </summary>
         public static ResourceTypeExtensionCategory ResourceMoveBegin { get; } = new ResourceTypeExtensionCategory(ResourceMoveBeginValue);
-        /// <summary>
-        /// ResourceMoveCompleted
-        /// Serialized Name: ExtensionCategory.ResourceMoveCompleted
-        /// </summary>
+        /// <summary> ResourceMoveCompleted. </summary>
         public static ResourceTypeExtensionCategory ResourceMoveCompleted { get; } = new ResourceTypeExtensionCategory(ResourceMoveCompletedValue);
         /// <summary> Determines if two <see cref="ResourceTypeExtensionCategory"/> values are the same. </summary>
         public static bool operator ==(ResourceTypeExtensionCategory left, ResourceTypeExtensionCategory right) => left.Equals(right);

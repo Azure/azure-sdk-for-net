@@ -12,14 +12,11 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The CustomRolloutSpecification.
-    /// Serialized Name: CustomRolloutSpecification
-    /// </summary>
+    /// <summary> The CustomRolloutSpecification. </summary>
     public partial class CustomRolloutSpecification
     {
         /// <summary> Initializes a new instance of CustomRolloutSpecification. </summary>
-        /// <param name="canary"> Serialized Name: CustomRolloutSpecification.canary. </param>
+        /// <param name="canary"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="canary"/> is null. </exception>
         public CustomRolloutSpecification(TrafficRegions canary)
         {
@@ -30,9 +27,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of CustomRolloutSpecification. </summary>
-        /// <param name="canary"> Serialized Name: CustomRolloutSpecification.canary. </param>
-        /// <param name="providerRegistration"> Serialized Name: CustomRolloutSpecification.providerRegistration. </param>
-        /// <param name="resourceTypeRegistrations"> Serialized Name: CustomRolloutSpecification.resourceTypeRegistrations. </param>
+        /// <param name="canary"></param>
+        /// <param name="providerRegistration"></param>
+        /// <param name="resourceTypeRegistrations"></param>
         internal CustomRolloutSpecification(TrafficRegions canary, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations)
         {
             Canary = canary;
@@ -40,9 +37,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ResourceTypeRegistrations = resourceTypeRegistrations;
         }
 
-        /// <summary> Serialized Name: CustomRolloutSpecification.canary. </summary>
+        /// <summary> Gets or sets the canary. </summary>
         internal TrafficRegions Canary { get; set; }
-        /// <summary> Serialized Name: TrafficRegions.regions. </summary>
+        /// <summary> Gets the canary regions. </summary>
         public IList<AzureLocation> CanaryRegions
         {
             get
@@ -53,9 +50,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <summary> Serialized Name: CustomRolloutSpecification.providerRegistration. </summary>
+        /// <summary> Gets or sets the provider registration. </summary>
         public ProviderRegistrationData ProviderRegistration { get; set; }
-        /// <summary> Serialized Name: CustomRolloutSpecification.resourceTypeRegistrations. </summary>
+        /// <summary> Gets the resource type registrations. </summary>
         public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
     }
 }

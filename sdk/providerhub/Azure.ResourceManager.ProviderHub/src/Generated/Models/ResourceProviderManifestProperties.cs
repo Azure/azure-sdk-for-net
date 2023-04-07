@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceProviderManifestProperties.
-    /// Serialized Name: ResourceProviderManifestProperties
-    /// </summary>
+    /// <summary> The ResourceProviderManifestProperties. </summary>
     public partial class ResourceProviderManifestProperties
     {
         /// <summary> Initializes a new instance of ResourceProviderManifestProperties. </summary>
@@ -26,21 +23,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceProviderManifestProperties. </summary>
-        /// <param name="providerAuthentication"> Serialized Name: ResourceProviderManifestProperties.providerAuthentication. </param>
-        /// <param name="providerAuthorizations"> Serialized Name: ResourceProviderManifestProperties.providerAuthorizations. </param>
-        /// <param name="namespace"> Serialized Name: ResourceProviderManifestProperties.namespace. </param>
-        /// <param name="providerVersion"> Serialized Name: ResourceProviderManifestProperties.providerVersion. </param>
-        /// <param name="providerType"> Serialized Name: ResourceProviderManifestProperties.providerType. </param>
-        /// <param name="requiredFeatures"> Serialized Name: ResourceProviderManifestProperties.requiredFeatures. </param>
-        /// <param name="featuresRule"> Serialized Name: ResourceProviderManifestProperties.featuresRule. </param>
-        /// <param name="requestHeaderOptions"> Serialized Name: ResourceProviderManifestProperties.requestHeaderOptions. </param>
-        /// <param name="management"> Serialized Name: ResourceProviderManifestProperties.management. </param>
-        /// <param name="capabilities"> Serialized Name: ResourceProviderManifestProperties.capabilities. </param>
-        /// <param name="metadata">
-        /// Anything
-        /// Serialized Name: ResourceProviderManifestProperties.metadata
-        /// </param>
-        /// <param name="templateDeploymentOptions"> Serialized Name: ResourceProviderManifestProperties.templateDeploymentOptions. </param>
+        /// <param name="providerAuthentication"></param>
+        /// <param name="providerAuthorizations"></param>
+        /// <param name="namespace"></param>
+        /// <param name="providerVersion"></param>
+        /// <param name="providerType"></param>
+        /// <param name="requiredFeatures"></param>
+        /// <param name="featuresRule"></param>
+        /// <param name="requestHeaderOptions"></param>
+        /// <param name="management"></param>
+        /// <param name="capabilities"></param>
+        /// <param name="metadata"> Anything. </param>
+        /// <param name="templateDeploymentOptions"></param>
         internal ResourceProviderManifestProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions)
         {
             ProviderAuthentication = providerAuthentication;
@@ -57,28 +51,28 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TemplateDeploymentOptions = templateDeploymentOptions;
         }
 
-        /// <summary> Serialized Name: ResourceProviderManifestProperties.providerAuthentication. </summary>
+        /// <summary> Gets or sets the provider authentication. </summary>
         internal ResourceProviderAuthentication ProviderAuthentication { get; set; }
-        /// <summary> Serialized Name: ResourceProviderAuthentication.allowedAudiences. </summary>
+        /// <summary> Gets or sets the provider authentication allowed audiences. </summary>
         public IList<string> ProviderAuthenticationAllowedAudiences
         {
             get => ProviderAuthentication is null ? default : ProviderAuthentication.AllowedAudiences;
             set => ProviderAuthentication = new ResourceProviderAuthentication(value);
         }
 
-        /// <summary> Serialized Name: ResourceProviderManifestProperties.providerAuthorizations. </summary>
+        /// <summary> Gets the provider authorizations. </summary>
         public IList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
-        /// <summary> Serialized Name: ResourceProviderManifestProperties.namespace. </summary>
+        /// <summary> Gets or sets the namespace. </summary>
         public string Namespace { get; set; }
-        /// <summary> Serialized Name: ResourceProviderManifestProperties.providerVersion. </summary>
+        /// <summary> Gets or sets the provider version. </summary>
         public string ProviderVersion { get; set; }
-        /// <summary> Serialized Name: ResourceProviderManifestProperties.providerType. </summary>
+        /// <summary> Gets or sets the provider type. </summary>
         public ResourceProviderType? ProviderType { get; set; }
-        /// <summary> Serialized Name: ResourceProviderManifestProperties.requiredFeatures. </summary>
+        /// <summary> Gets the required features. </summary>
         public IList<string> RequiredFeatures { get; }
-        /// <summary> Serialized Name: ResourceProviderManifestProperties.featuresRule. </summary>
+        /// <summary> Gets or sets the features rule. </summary>
         internal FeaturesRule FeaturesRule { get; set; }
-        /// <summary> Serialized Name: FeaturesRule.requiredFeaturesPolicy. </summary>
+        /// <summary> Gets or sets the required features policy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule is null ? default(FeaturesPolicy?) : FeaturesRule.RequiredFeaturesPolicy;
@@ -88,9 +82,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <summary> Serialized Name: ResourceProviderManifestProperties.requestHeaderOptions. </summary>
+        /// <summary> Gets or sets the request header options. </summary>
         internal RequestHeaderOptions RequestHeaderOptions { get; set; }
-        /// <summary> Serialized Name: RequestHeaderOptions.optInHeaders. </summary>
+        /// <summary> Gets or sets the opt in headers. </summary>
         public OptInHeaderType? OptInHeaders
         {
             get => RequestHeaderOptions is null ? default : RequestHeaderOptions.OptInHeaders;
@@ -102,13 +96,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <summary> Serialized Name: ResourceProviderManifestProperties.management. </summary>
+        /// <summary> Gets or sets the management. </summary>
         public ResourceProviderManagement Management { get; set; }
-        /// <summary> Serialized Name: ResourceProviderManifestProperties.capabilities. </summary>
+        /// <summary> Gets the capabilities. </summary>
         public IList<ResourceProviderCapabilities> Capabilities { get; }
         /// <summary>
         /// Anything
-        /// Serialized Name: ResourceProviderManifestProperties.metadata
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -138,7 +131,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// </para>
         /// </summary>
         public BinaryData Metadata { get; set; }
-        /// <summary> Serialized Name: ResourceProviderManifestProperties.templateDeploymentOptions. </summary>
+        /// <summary> Gets or sets the template deployment options. </summary>
         public TemplateDeploymentOptions TemplateDeploymentOptions { get; set; }
     }
 }

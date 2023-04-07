@@ -12,14 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceTypeSkuProperties.
-    /// Serialized Name: ResourceTypeSku
-    /// </summary>
+    /// <summary> The ResourceTypeSkuProperties. </summary>
     public partial class ResourceTypeSkuProperties
     {
         /// <summary> Initializes a new instance of ResourceTypeSkuProperties. </summary>
-        /// <param name="skuSettings"> Serialized Name: ResourceTypeSku.skuSettings. </param>
+        /// <param name="skuSettings"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuSettings"/> is null. </exception>
         public ResourceTypeSkuProperties(IEnumerable<ResourceTypeSkuSetting> skuSettings)
         {
@@ -29,17 +26,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeSkuProperties. </summary>
-        /// <param name="skuSettings"> Serialized Name: ResourceTypeSku.skuSettings. </param>
-        /// <param name="provisioningState"> Serialized Name: ResourceTypeSku.provisioningState. </param>
+        /// <param name="skuSettings"></param>
+        /// <param name="provisioningState"></param>
         internal ResourceTypeSkuProperties(IList<ResourceTypeSkuSetting> skuSettings, ProviderHubProvisioningState? provisioningState)
         {
             SkuSettings = skuSettings;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Serialized Name: ResourceTypeSku.skuSettings. </summary>
+        /// <summary> Gets the sku settings. </summary>
         public IList<ResourceTypeSkuSetting> SkuSettings { get; }
-        /// <summary> Serialized Name: ResourceTypeSku.provisioningState. </summary>
+        /// <summary> Gets or sets the provisioning state. </summary>
         public ProviderHubProvisioningState? ProvisioningState { get; set; }
     }
 }

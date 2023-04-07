@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The LoggingDirection.
-    /// Serialized Name: LoggingDirections
-    /// </summary>
+    /// <summary> The LoggingDirection. </summary>
     public readonly partial struct LoggingDirection : IEquatable<LoggingDirection>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string RequestValue = "Request";
         private const string ResponseValue = "Response";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: LoggingDirections.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static LoggingDirection None { get; } = new LoggingDirection(NoneValue);
-        /// <summary>
-        /// Request
-        /// Serialized Name: LoggingDirections.Request
-        /// </summary>
+        /// <summary> Request. </summary>
         public static LoggingDirection Request { get; } = new LoggingDirection(RequestValue);
-        /// <summary>
-        /// Response
-        /// Serialized Name: LoggingDirections.Response
-        /// </summary>
+        /// <summary> Response. </summary>
         public static LoggingDirection Response { get; } = new LoggingDirection(ResponseValue);
         /// <summary> Determines if two <see cref="LoggingDirection"/> values are the same. </summary>
         public static bool operator ==(LoggingDirection left, LoggingDirection right) => left.Equals(right);

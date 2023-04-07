@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The LoggingHiddenPropertyPaths.
-    /// Serialized Name: LoggingHiddenPropertyPath
-    /// </summary>
+    /// <summary> The LoggingHiddenPropertyPaths. </summary>
     public partial class LoggingHiddenPropertyPaths
     {
         /// <summary> Initializes a new instance of LoggingHiddenPropertyPaths. </summary>
@@ -24,17 +21,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of LoggingHiddenPropertyPaths. </summary>
-        /// <param name="hiddenPathsOnRequest"> Serialized Name: LoggingHiddenPropertyPath.hiddenPathsOnRequest. </param>
-        /// <param name="hiddenPathsOnResponse"> Serialized Name: LoggingHiddenPropertyPath.hiddenPathsOnResponse. </param>
+        /// <param name="hiddenPathsOnRequest"></param>
+        /// <param name="hiddenPathsOnResponse"></param>
         internal LoggingHiddenPropertyPaths(IList<string> hiddenPathsOnRequest, IList<string> hiddenPathsOnResponse)
         {
             HiddenPathsOnRequest = hiddenPathsOnRequest;
             HiddenPathsOnResponse = hiddenPathsOnResponse;
         }
 
-        /// <summary> Serialized Name: LoggingHiddenPropertyPath.hiddenPathsOnRequest. </summary>
+        /// <summary> Gets the hidden paths on request. </summary>
         public IList<string> HiddenPathsOnRequest { get; }
-        /// <summary> Serialized Name: LoggingHiddenPropertyPath.hiddenPathsOnResponse. </summary>
+        /// <summary> Gets the hidden paths on response. </summary>
         public IList<string> HiddenPathsOnResponse { get; }
     }
 }

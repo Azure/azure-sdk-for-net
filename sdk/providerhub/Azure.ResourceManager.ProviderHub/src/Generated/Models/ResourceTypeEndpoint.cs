@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceTypeEndpoint.
-    /// Serialized Name: ResourceTypeEndpoint
-    /// </summary>
+    /// <summary> The ResourceTypeEndpoint. </summary>
     public partial class ResourceTypeEndpoint
     {
         /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
@@ -27,13 +24,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
-        /// <param name="isEnabled"> Serialized Name: ResourceTypeEndpoint.enabled. </param>
-        /// <param name="apiVersions"> Serialized Name: ResourceTypeEndpoint.apiVersions. </param>
-        /// <param name="locations"> Serialized Name: ResourceTypeEndpoint.locations. </param>
-        /// <param name="requiredFeatures"> Serialized Name: ResourceTypeEndpoint.requiredFeatures. </param>
-        /// <param name="featuresRule"> Serialized Name: ResourceTypeEndpoint.featuresRule. </param>
-        /// <param name="extensions"> Serialized Name: ResourceTypeEndpoint.extensions. </param>
-        /// <param name="timeout"> Serialized Name: ResourceTypeEndpoint.timeout. </param>
+        /// <param name="isEnabled"></param>
+        /// <param name="apiVersions"></param>
+        /// <param name="locations"></param>
+        /// <param name="requiredFeatures"></param>
+        /// <param name="featuresRule"></param>
+        /// <param name="extensions"></param>
+        /// <param name="timeout"></param>
         internal ResourceTypeEndpoint(bool? isEnabled, IList<string> apiVersions, IList<AzureLocation> locations, IList<string> requiredFeatures, FeaturesRule featuresRule, IList<ResourceTypeExtension> extensions, TimeSpan? timeout)
         {
             IsEnabled = isEnabled;
@@ -45,17 +42,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Timeout = timeout;
         }
 
-        /// <summary> Serialized Name: ResourceTypeEndpoint.enabled. </summary>
+        /// <summary> Gets or sets the is enabled. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> Serialized Name: ResourceTypeEndpoint.apiVersions. </summary>
+        /// <summary> Gets the api versions. </summary>
         public IList<string> ApiVersions { get; }
-        /// <summary> Serialized Name: ResourceTypeEndpoint.locations. </summary>
+        /// <summary> Gets the locations. </summary>
         public IList<AzureLocation> Locations { get; }
-        /// <summary> Serialized Name: ResourceTypeEndpoint.requiredFeatures. </summary>
+        /// <summary> Gets the required features. </summary>
         public IList<string> RequiredFeatures { get; }
-        /// <summary> Serialized Name: ResourceTypeEndpoint.featuresRule. </summary>
+        /// <summary> Gets or sets the features rule. </summary>
         internal FeaturesRule FeaturesRule { get; set; }
-        /// <summary> Serialized Name: FeaturesRule.requiredFeaturesPolicy. </summary>
+        /// <summary> Gets or sets the required features policy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule is null ? default(FeaturesPolicy?) : FeaturesRule.RequiredFeaturesPolicy;
@@ -65,9 +62,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <summary> Serialized Name: ResourceTypeEndpoint.extensions. </summary>
+        /// <summary> Gets the extensions. </summary>
         public IList<ResourceTypeExtension> Extensions { get; }
-        /// <summary> Serialized Name: ResourceTypeEndpoint.timeout. </summary>
+        /// <summary> Gets or sets the timeout. </summary>
         public TimeSpan? Timeout { get; set; }
     }
 }

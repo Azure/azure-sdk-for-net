@@ -11,10 +11,7 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceTypeRegistrationListResult.
-    /// Serialized Name: ResourceTypeRegistrationArrayResponseWithContinuation
-    /// </summary>
+    /// <summary> The ResourceTypeRegistrationListResult. </summary>
     internal partial class ResourceTypeRegistrationListResult
     {
         /// <summary> Initializes a new instance of ResourceTypeRegistrationListResult. </summary>
@@ -24,23 +21,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeRegistrationListResult. </summary>
-        /// <param name="value"> Serialized Name: ResourceTypeRegistrationArrayResponseWithContinuation.value. </param>
-        /// <param name="nextLink">
-        /// The URL to get to the next set of results, if there are any.
-        /// Serialized Name: ResourceTypeRegistrationArrayResponseWithContinuation.nextLink
-        /// </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
         internal ResourceTypeRegistrationListResult(IReadOnlyList<ResourceTypeRegistrationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Serialized Name: ResourceTypeRegistrationArrayResponseWithContinuation.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<ResourceTypeRegistrationData> Value { get; }
-        /// <summary>
-        /// The URL to get to the next set of results, if there are any.
-        /// Serialized Name: ResourceTypeRegistrationArrayResponseWithContinuation.nextLink
-        /// </summary>
+        /// <summary> The URL to get to the next set of results, if there are any. </summary>
         public string NextLink { get; }
     }
 }

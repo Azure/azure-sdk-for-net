@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ProviderHubProvisioningState.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> The ProviderHubProvisioningState. </summary>
     public readonly partial struct ProviderHubProvisioningState : IEquatable<ProviderHubProvisioningState>
     {
         private readonly string _value;
@@ -39,70 +36,31 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string TransientFailureValue = "TransientFailure";
         private const string RolloutInProgressValue = "RolloutInProgress";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: ProvisioningState.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static ProviderHubProvisioningState NotSpecified { get; } = new ProviderHubProvisioningState(NotSpecifiedValue);
-        /// <summary>
-        /// Accepted
-        /// Serialized Name: ProvisioningState.Accepted
-        /// </summary>
+        /// <summary> Accepted. </summary>
         public static ProviderHubProvisioningState Accepted { get; } = new ProviderHubProvisioningState(AcceptedValue);
-        /// <summary>
-        /// Running
-        /// Serialized Name: ProvisioningState.Running
-        /// </summary>
+        /// <summary> Running. </summary>
         public static ProviderHubProvisioningState Running { get; } = new ProviderHubProvisioningState(RunningValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static ProviderHubProvisioningState Creating { get; } = new ProviderHubProvisioningState(CreatingValue);
-        /// <summary>
-        /// Created
-        /// Serialized Name: ProvisioningState.Created
-        /// </summary>
+        /// <summary> Created. </summary>
         public static ProviderHubProvisioningState Created { get; } = new ProviderHubProvisioningState(CreatedValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static ProviderHubProvisioningState Deleting { get; } = new ProviderHubProvisioningState(DeletingValue);
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: ProvisioningState.Deleted
-        /// </summary>
+        /// <summary> Deleted. </summary>
         public static ProviderHubProvisioningState Deleted { get; } = new ProviderHubProvisioningState(DeletedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static ProviderHubProvisioningState Canceled { get; } = new ProviderHubProvisioningState(CanceledValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static ProviderHubProvisioningState Failed { get; } = new ProviderHubProvisioningState(FailedValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static ProviderHubProvisioningState Succeeded { get; } = new ProviderHubProvisioningState(SucceededValue);
-        /// <summary>
-        /// MovingResources
-        /// Serialized Name: ProvisioningState.MovingResources
-        /// </summary>
+        /// <summary> MovingResources. </summary>
         public static ProviderHubProvisioningState MovingResources { get; } = new ProviderHubProvisioningState(MovingResourcesValue);
-        /// <summary>
-        /// TransientFailure
-        /// Serialized Name: ProvisioningState.TransientFailure
-        /// </summary>
+        /// <summary> TransientFailure. </summary>
         public static ProviderHubProvisioningState TransientFailure { get; } = new ProviderHubProvisioningState(TransientFailureValue);
-        /// <summary>
-        /// RolloutInProgress
-        /// Serialized Name: ProvisioningState.RolloutInProgress
-        /// </summary>
+        /// <summary> RolloutInProgress. </summary>
         public static ProviderHubProvisioningState RolloutInProgress { get; } = new ProviderHubProvisioningState(RolloutInProgressValue);
         /// <summary> Determines if two <see cref="ProviderHubProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProviderHubProvisioningState left, ProviderHubProvisioningState right) => left.Equals(right);

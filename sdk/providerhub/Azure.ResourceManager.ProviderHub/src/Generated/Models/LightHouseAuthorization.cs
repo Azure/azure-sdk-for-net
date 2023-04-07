@@ -10,15 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The LightHouseAuthorization.
-    /// Serialized Name: LightHouseAuthorization
-    /// </summary>
+    /// <summary> The LightHouseAuthorization. </summary>
     public partial class LightHouseAuthorization
     {
         /// <summary> Initializes a new instance of LightHouseAuthorization. </summary>
-        /// <param name="principalId"> Serialized Name: LightHouseAuthorization.principalId. </param>
-        /// <param name="roleDefinitionId"> Serialized Name: LightHouseAuthorization.roleDefinitionId. </param>
+        /// <param name="principalId"></param>
+        /// <param name="roleDefinitionId"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="principalId"/> or <paramref name="roleDefinitionId"/> is null. </exception>
         public LightHouseAuthorization(string principalId, string roleDefinitionId)
         {
@@ -29,9 +26,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RoleDefinitionId = roleDefinitionId;
         }
 
-        /// <summary> Serialized Name: LightHouseAuthorization.principalId. </summary>
+        /// <summary> Gets or sets the principal id. </summary>
         public string PrincipalId { get; set; }
-        /// <summary> Serialized Name: LightHouseAuthorization.roleDefinitionId. </summary>
+        /// <summary> Gets or sets the role definition id. </summary>
         public string RoleDefinitionId { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ProviderHubMetadata.
-    /// Serialized Name: ProviderHubMetadata
-    /// </summary>
+    /// <summary> The ProviderHubMetadata. </summary>
     public partial class ProviderHubMetadata
     {
         /// <summary> Initializes a new instance of ProviderHubMetadata. </summary>
@@ -23,9 +20,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ProviderHubMetadata. </summary>
-        /// <param name="providerAuthorizations"> Serialized Name: ProviderHubMetadata.providerAuthorizations. </param>
-        /// <param name="providerAuthentication"> Serialized Name: ProviderHubMetadata.providerAuthentication. </param>
-        /// <param name="thirdPartyProviderAuthorization"> Serialized Name: ProviderHubMetadata.thirdPartyProviderAuthorization. </param>
+        /// <param name="providerAuthorizations"></param>
+        /// <param name="providerAuthentication"></param>
+        /// <param name="thirdPartyProviderAuthorization"></param>
         internal ProviderHubMetadata(IList<ResourceProviderAuthorization> providerAuthorizations, ResourceProviderAuthentication providerAuthentication, ThirdPartyProviderAuthorization thirdPartyProviderAuthorization)
         {
             ProviderAuthorizations = providerAuthorizations;
@@ -33,18 +30,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ThirdPartyProviderAuthorization = thirdPartyProviderAuthorization;
         }
 
-        /// <summary> Serialized Name: ProviderHubMetadata.providerAuthorizations. </summary>
+        /// <summary> Gets the provider authorizations. </summary>
         public IList<ResourceProviderAuthorization> ProviderAuthorizations { get; }
-        /// <summary> Serialized Name: ProviderHubMetadata.providerAuthentication. </summary>
+        /// <summary> Gets or sets the provider authentication. </summary>
         internal ResourceProviderAuthentication ProviderAuthentication { get; set; }
-        /// <summary> Serialized Name: ResourceProviderAuthentication.allowedAudiences. </summary>
+        /// <summary> Gets or sets the provider authentication allowed audiences. </summary>
         public IList<string> ProviderAuthenticationAllowedAudiences
         {
             get => ProviderAuthentication is null ? default : ProviderAuthentication.AllowedAudiences;
             set => ProviderAuthentication = new ResourceProviderAuthentication(value);
         }
 
-        /// <summary> Serialized Name: ProviderHubMetadata.thirdPartyProviderAuthorization. </summary>
+        /// <summary> Gets or sets the third party provider authorization. </summary>
         public ThirdPartyProviderAuthorization ThirdPartyProviderAuthorization { get; set; }
     }
 }

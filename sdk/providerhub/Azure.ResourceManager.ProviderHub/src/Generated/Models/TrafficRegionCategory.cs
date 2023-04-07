@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The TrafficRegionCategory.
-    /// Serialized Name: TrafficRegionCategory
-    /// </summary>
+    /// <summary> The TrafficRegionCategory. </summary>
     public readonly partial struct TrafficRegionCategory : IEquatable<TrafficRegionCategory>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string RestOfTheWorldGroupOneValue = "RestOfTheWorldGroupOne";
         private const string RestOfTheWorldGroupTwoValue = "RestOfTheWorldGroupTwo";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: TrafficRegionCategory.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static TrafficRegionCategory NotSpecified { get; } = new TrafficRegionCategory(NotSpecifiedValue);
-        /// <summary>
-        /// Canary
-        /// Serialized Name: TrafficRegionCategory.Canary
-        /// </summary>
+        /// <summary> Canary. </summary>
         public static TrafficRegionCategory Canary { get; } = new TrafficRegionCategory(CanaryValue);
-        /// <summary>
-        /// LowTraffic
-        /// Serialized Name: TrafficRegionCategory.LowTraffic
-        /// </summary>
+        /// <summary> LowTraffic. </summary>
         public static TrafficRegionCategory LowTraffic { get; } = new TrafficRegionCategory(LowTrafficValue);
-        /// <summary>
-        /// MediumTraffic
-        /// Serialized Name: TrafficRegionCategory.MediumTraffic
-        /// </summary>
+        /// <summary> MediumTraffic. </summary>
         public static TrafficRegionCategory MediumTraffic { get; } = new TrafficRegionCategory(MediumTrafficValue);
-        /// <summary>
-        /// HighTraffic
-        /// Serialized Name: TrafficRegionCategory.HighTraffic
-        /// </summary>
+        /// <summary> HighTraffic. </summary>
         public static TrafficRegionCategory HighTraffic { get; } = new TrafficRegionCategory(HighTrafficValue);
-        /// <summary>
-        /// None
-        /// Serialized Name: TrafficRegionCategory.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static TrafficRegionCategory None { get; } = new TrafficRegionCategory(NoneValue);
-        /// <summary>
-        /// RestOfTheWorldGroupOne
-        /// Serialized Name: TrafficRegionCategory.RestOfTheWorldGroupOne
-        /// </summary>
+        /// <summary> RestOfTheWorldGroupOne. </summary>
         public static TrafficRegionCategory RestOfTheWorldGroupOne { get; } = new TrafficRegionCategory(RestOfTheWorldGroupOneValue);
-        /// <summary>
-        /// RestOfTheWorldGroupTwo
-        /// Serialized Name: TrafficRegionCategory.RestOfTheWorldGroupTwo
-        /// </summary>
+        /// <summary> RestOfTheWorldGroupTwo. </summary>
         public static TrafficRegionCategory RestOfTheWorldGroupTwo { get; } = new TrafficRegionCategory(RestOfTheWorldGroupTwoValue);
         /// <summary> Determines if two <see cref="TrafficRegionCategory"/> values are the same. </summary>
         public static bool operator ==(TrafficRegionCategory left, TrafficRegionCategory right) => left.Equals(right);

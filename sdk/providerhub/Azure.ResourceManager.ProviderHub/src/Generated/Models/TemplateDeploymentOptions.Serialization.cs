@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreflightSupported))
+            if (Optional.IsDefined(IsPreflightSupported))
             {
                 writer.WritePropertyName("preflightSupported"u8);
-                writer.WriteBooleanValue(PreflightSupported.Value);
+                writer.WriteBooleanValue(IsPreflightSupported.Value);
             }
             if (Optional.IsCollectionDefined(PreflightOptions))
             {

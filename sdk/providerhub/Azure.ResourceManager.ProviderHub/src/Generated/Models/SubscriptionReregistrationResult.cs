@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The SubscriptionReregistrationResult.
-    /// Serialized Name: SubscriptionReregistrationResult
-    /// </summary>
+    /// <summary> The SubscriptionReregistrationResult. </summary>
     public readonly partial struct SubscriptionReregistrationResult : IEquatable<SubscriptionReregistrationResult>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string ForcedUpdateValue = "ForcedUpdate";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// NotApplicable
-        /// Serialized Name: SubscriptionReregistrationResult.NotApplicable
-        /// </summary>
+        /// <summary> NotApplicable. </summary>
         public static SubscriptionReregistrationResult NotApplicable { get; } = new SubscriptionReregistrationResult(NotApplicableValue);
-        /// <summary>
-        /// ConditionalUpdate
-        /// Serialized Name: SubscriptionReregistrationResult.ConditionalUpdate
-        /// </summary>
+        /// <summary> ConditionalUpdate. </summary>
         public static SubscriptionReregistrationResult ConditionalUpdate { get; } = new SubscriptionReregistrationResult(ConditionalUpdateValue);
-        /// <summary>
-        /// ForcedUpdate
-        /// Serialized Name: SubscriptionReregistrationResult.ForcedUpdate
-        /// </summary>
+        /// <summary> ForcedUpdate. </summary>
         public static SubscriptionReregistrationResult ForcedUpdate { get; } = new SubscriptionReregistrationResult(ForcedUpdateValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: SubscriptionReregistrationResult.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static SubscriptionReregistrationResult Failed { get; } = new SubscriptionReregistrationResult(FailedValue);
         /// <summary> Determines if two <see cref="SubscriptionReregistrationResult"/> values are the same. </summary>
         public static bool operator ==(SubscriptionReregistrationResult left, SubscriptionReregistrationResult right) => left.Equals(right);

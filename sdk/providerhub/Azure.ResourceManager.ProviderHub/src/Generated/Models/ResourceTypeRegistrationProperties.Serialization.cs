@@ -126,20 +126,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("featuresRule"u8);
                 writer.WriteObjectValue(FeaturesRule);
             }
-            if (Optional.IsDefined(EnableAsyncOperation))
+            if (Optional.IsDefined(IsAsyncOperationEnabled))
             {
                 writer.WritePropertyName("enableAsyncOperation"u8);
-                writer.WriteBooleanValue(EnableAsyncOperation.Value);
+                writer.WriteBooleanValue(IsAsyncOperationEnabled.Value);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(EnableThirdPartyS2S))
+            if (Optional.IsDefined(IsThirdPartyS2SEnabled))
             {
                 writer.WritePropertyName("enableThirdPartyS2S"u8);
-                writer.WriteBooleanValue(EnableThirdPartyS2S.Value);
+                writer.WriteBooleanValue(IsThirdPartyS2SEnabled.Value);
             }
             if (Optional.IsDefined(SubscriptionLifecycleNotificationSpecifications))
             {

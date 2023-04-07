@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceProviderAuthorization.
-    /// Serialized Name: ResourceProviderAuthorization
-    /// </summary>
+    /// <summary> The ResourceProviderAuthorization. </summary>
     public partial class ResourceProviderAuthorization
     {
         /// <summary> Initializes a new instance of ResourceProviderAuthorization. </summary>
@@ -19,9 +16,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceProviderAuthorization. </summary>
-        /// <param name="applicationId"> Serialized Name: ResourceProviderAuthorization.applicationId. </param>
-        /// <param name="roleDefinitionId"> Serialized Name: ResourceProviderAuthorization.roleDefinitionId. </param>
-        /// <param name="managedByRoleDefinitionId"> Serialized Name: ResourceProviderAuthorization.managedByRoleDefinitionId. </param>
+        /// <param name="applicationId"></param>
+        /// <param name="roleDefinitionId"></param>
+        /// <param name="managedByRoleDefinitionId"></param>
         internal ResourceProviderAuthorization(string applicationId, string roleDefinitionId, string managedByRoleDefinitionId)
         {
             ApplicationId = applicationId;
@@ -29,11 +26,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ManagedByRoleDefinitionId = managedByRoleDefinitionId;
         }
 
-        /// <summary> Serialized Name: ResourceProviderAuthorization.applicationId. </summary>
+        /// <summary> Gets or sets the application id. </summary>
         public string ApplicationId { get; set; }
-        /// <summary> Serialized Name: ResourceProviderAuthorization.roleDefinitionId. </summary>
+        /// <summary> Gets or sets the role definition id. </summary>
         public string RoleDefinitionId { get; set; }
-        /// <summary> Serialized Name: ResourceProviderAuthorization.managedByRoleDefinitionId. </summary>
+        /// <summary> Gets or sets the managed by role definition id. </summary>
         public string ManagedByRoleDefinitionId { get; set; }
     }
 }

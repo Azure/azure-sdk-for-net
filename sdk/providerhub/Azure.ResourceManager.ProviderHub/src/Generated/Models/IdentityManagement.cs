@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The IdentityManagement.
-    /// Serialized Name: IdentityManagement
-    /// </summary>
+    /// <summary> The IdentityManagement. </summary>
     internal partial class IdentityManagement
     {
         /// <summary> Initializes a new instance of IdentityManagement. </summary>
@@ -19,13 +16,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of IdentityManagement. </summary>
-        /// <param name="managementType"> Serialized Name: IdentityManagement.type. </param>
+        /// <param name="managementType"></param>
         internal IdentityManagement(IdentityManagementType? managementType)
         {
             ManagementType = managementType;
         }
 
-        /// <summary> Serialized Name: IdentityManagement.type. </summary>
+        /// <summary> Gets the management type. </summary>
         public IdentityManagementType? ManagementType { get; }
     }
 }

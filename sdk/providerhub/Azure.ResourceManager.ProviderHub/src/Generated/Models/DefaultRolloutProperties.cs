@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The DefaultRolloutProperties.
-    /// Serialized Name: DefaultRolloutProperties
-    /// </summary>
+    /// <summary> The DefaultRolloutProperties. </summary>
     public partial class DefaultRolloutProperties
     {
         /// <summary> Initializes a new instance of DefaultRolloutProperties. </summary>
@@ -19,9 +16,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutProperties. </summary>
-        /// <param name="provisioningState"> Serialized Name: DefaultRolloutProperties.provisioningState. </param>
-        /// <param name="specification"> Serialized Name: DefaultRolloutProperties.specification. </param>
-        /// <param name="status"> Serialized Name: DefaultRolloutProperties.status. </param>
+        /// <param name="provisioningState"></param>
+        /// <param name="specification"></param>
+        /// <param name="status"></param>
         internal DefaultRolloutProperties(ProviderHubProvisioningState? provisioningState, DefaultRolloutSpecification specification, DefaultRolloutStatus status)
         {
             ProvisioningState = provisioningState;
@@ -29,11 +26,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Status = status;
         }
 
-        /// <summary> Serialized Name: DefaultRolloutProperties.provisioningState. </summary>
+        /// <summary> Gets or sets the provisioning state. </summary>
         public ProviderHubProvisioningState? ProvisioningState { get; set; }
-        /// <summary> Serialized Name: DefaultRolloutProperties.specification. </summary>
+        /// <summary> Gets or sets the specification. </summary>
         public DefaultRolloutSpecification Specification { get; set; }
-        /// <summary> Serialized Name: DefaultRolloutProperties.status. </summary>
+        /// <summary> Gets or sets the status. </summary>
         public DefaultRolloutStatus Status { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The LinkedAction.
-    /// Serialized Name: LinkedAction
-    /// </summary>
+    /// <summary> The LinkedAction. </summary>
     public readonly partial struct LinkedAction : IEquatable<LinkedAction>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string ValidateValue = "Validate";
         private const string EnabledValue = "Enabled";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: LinkedAction.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static LinkedAction NotSpecified { get; } = new LinkedAction(NotSpecifiedValue);
-        /// <summary>
-        /// Blocked
-        /// Serialized Name: LinkedAction.Blocked
-        /// </summary>
+        /// <summary> Blocked. </summary>
         public static LinkedAction Blocked { get; } = new LinkedAction(BlockedValue);
-        /// <summary>
-        /// Validate
-        /// Serialized Name: LinkedAction.Validate
-        /// </summary>
+        /// <summary> Validate. </summary>
         public static LinkedAction Validate { get; } = new LinkedAction(ValidateValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: LinkedAction.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static LinkedAction Enabled { get; } = new LinkedAction(EnabledValue);
         /// <summary> Determines if two <see cref="LinkedAction"/> values are the same. </summary>
         public static bool operator ==(LinkedAction left, LinkedAction right) => left.Equals(right);

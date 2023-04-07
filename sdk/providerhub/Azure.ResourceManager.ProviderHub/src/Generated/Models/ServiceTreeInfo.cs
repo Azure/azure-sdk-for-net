@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ServiceTreeInfo.
-    /// Serialized Name: ServiceTreeInfo
-    /// </summary>
+    /// <summary> The ServiceTreeInfo. </summary>
     public partial class ServiceTreeInfo
     {
         /// <summary> Initializes a new instance of ServiceTreeInfo. </summary>
@@ -19,17 +16,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ServiceTreeInfo. </summary>
-        /// <param name="serviceId"> Serialized Name: ServiceTreeInfo.serviceId. </param>
-        /// <param name="componentId"> Serialized Name: ServiceTreeInfo.componentId. </param>
+        /// <param name="serviceId"></param>
+        /// <param name="componentId"></param>
         internal ServiceTreeInfo(string serviceId, string componentId)
         {
             ServiceId = serviceId;
             ComponentId = componentId;
         }
 
-        /// <summary> Serialized Name: ServiceTreeInfo.serviceId. </summary>
+        /// <summary> Gets or sets the service id. </summary>
         public string ServiceId { get; set; }
-        /// <summary> Serialized Name: ServiceTreeInfo.componentId. </summary>
+        /// <summary> Gets or sets the component id. </summary>
         public string ComponentId { get; set; }
     }
 }

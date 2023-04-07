@@ -17,8 +17,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug: 
-  show-serialized-names: true
+# mgmt-debug: 
+#  show-serialized-names: true
 
 rename-mapping:
   ResourceTypeSku: ResourceTypeSkuProperties
@@ -58,6 +58,12 @@ rename-mapping:
   ResourceTypeEndpoint.enabled: IsEnabled
   ResourceTypeEndpoint.locations: -|azure-location
   RolloutStatusBase.completedRegions: -|azure-location
+  ResourceMovePolicy.validationRequired: IsValidationRequired
+  ResourceMovePolicy.crossResourceGroupMoveEnabled: IsCrossResourceGroupMoveEnabled
+  ResourceMovePolicy.crossSubscriptionMoveEnabled: IsCrossSubscriptionMoveEnabled
+  ResourceTypeRegistrationProperties.enableAsyncOperation: IsAsyncOperationEnabled
+  ResourceTypeRegistrationProperties.enableThirdPartyS2S: IsThirdPartyS2SEnabled
+  TemplateDeploymentOptions.preflightSupported: IsPreflightSupported
 
 prepend-rp-prefix:
   - ExtendedLocationOptions

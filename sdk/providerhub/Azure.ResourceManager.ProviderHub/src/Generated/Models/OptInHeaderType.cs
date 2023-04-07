@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The OptInHeaderType.
-    /// Serialized Name: OptInHeaderType
-    /// </summary>
+    /// <summary> The OptInHeaderType. </summary>
     public readonly partial struct OptInHeaderType : IEquatable<OptInHeaderType>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string SignedAuxiliaryTokensValue = "SignedAuxiliaryTokens";
         private const string UnboundedClientGroupMembershipValue = "UnboundedClientGroupMembership";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: OptInHeaderType.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static OptInHeaderType NotSpecified { get; } = new OptInHeaderType(NotSpecifiedValue);
-        /// <summary>
-        /// SignedUserToken
-        /// Serialized Name: OptInHeaderType.SignedUserToken
-        /// </summary>
+        /// <summary> SignedUserToken. </summary>
         public static OptInHeaderType SignedUserToken { get; } = new OptInHeaderType(SignedUserTokenValue);
-        /// <summary>
-        /// ClientGroupMembership
-        /// Serialized Name: OptInHeaderType.ClientGroupMembership
-        /// </summary>
+        /// <summary> ClientGroupMembership. </summary>
         public static OptInHeaderType ClientGroupMembership { get; } = new OptInHeaderType(ClientGroupMembershipValue);
-        /// <summary>
-        /// SignedAuxiliaryTokens
-        /// Serialized Name: OptInHeaderType.SignedAuxiliaryTokens
-        /// </summary>
+        /// <summary> SignedAuxiliaryTokens. </summary>
         public static OptInHeaderType SignedAuxiliaryTokens { get; } = new OptInHeaderType(SignedAuxiliaryTokensValue);
-        /// <summary>
-        /// UnboundedClientGroupMembership
-        /// Serialized Name: OptInHeaderType.UnboundedClientGroupMembership
-        /// </summary>
+        /// <summary> UnboundedClientGroupMembership. </summary>
         public static OptInHeaderType UnboundedClientGroupMembership { get; } = new OptInHeaderType(UnboundedClientGroupMembershipValue);
         /// <summary> Determines if two <see cref="OptInHeaderType"/> values are the same. </summary>
         public static bool operator ==(OptInHeaderType left, OptInHeaderType right) => left.Equals(right);

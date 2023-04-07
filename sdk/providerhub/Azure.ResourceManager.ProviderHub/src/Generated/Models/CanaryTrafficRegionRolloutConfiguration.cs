@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The CanaryTrafficRegionRolloutConfiguration.
-    /// Serialized Name: CanaryTrafficRegionRolloutConfiguration
-    /// </summary>
+    /// <summary> The CanaryTrafficRegionRolloutConfiguration. </summary>
     public partial class CanaryTrafficRegionRolloutConfiguration
     {
         /// <summary> Initializes a new instance of CanaryTrafficRegionRolloutConfiguration. </summary>
@@ -24,17 +21,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of CanaryTrafficRegionRolloutConfiguration. </summary>
-        /// <param name="skipRegions"> Serialized Name: CanaryTrafficRegionRolloutConfiguration.skipRegions. </param>
-        /// <param name="regions"> Serialized Name: CanaryTrafficRegionRolloutConfiguration.regions. </param>
+        /// <param name="skipRegions"></param>
+        /// <param name="regions"></param>
         internal CanaryTrafficRegionRolloutConfiguration(IList<AzureLocation> skipRegions, IList<AzureLocation> regions)
         {
             SkipRegions = skipRegions;
             Regions = regions;
         }
 
-        /// <summary> Serialized Name: CanaryTrafficRegionRolloutConfiguration.skipRegions. </summary>
+        /// <summary> Gets the skip regions. </summary>
         public IList<AzureLocation> SkipRegions { get; }
-        /// <summary> Serialized Name: CanaryTrafficRegionRolloutConfiguration.regions. </summary>
+        /// <summary> Gets the regions. </summary>
         public IList<AzureLocation> Regions { get; }
     }
 }

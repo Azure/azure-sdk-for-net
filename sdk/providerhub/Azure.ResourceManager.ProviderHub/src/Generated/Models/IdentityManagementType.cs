@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The IdentityManagementType.
-    /// Serialized Name: IdentityManagementTypes
-    /// </summary>
+    /// <summary> The IdentityManagementType. </summary>
     public readonly partial struct IdentityManagementType : IEquatable<IdentityManagementType>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string ActorValue = "Actor";
         private const string DelegatedResourceIdentityValue = "DelegatedResourceIdentity";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: IdentityManagementTypes.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static IdentityManagementType NotSpecified { get; } = new IdentityManagementType(NotSpecifiedValue);
-        /// <summary>
-        /// SystemAssigned
-        /// Serialized Name: IdentityManagementTypes.SystemAssigned
-        /// </summary>
+        /// <summary> SystemAssigned. </summary>
         public static IdentityManagementType SystemAssigned { get; } = new IdentityManagementType(SystemAssignedValue);
-        /// <summary>
-        /// UserAssigned
-        /// Serialized Name: IdentityManagementTypes.UserAssigned
-        /// </summary>
+        /// <summary> UserAssigned. </summary>
         public static IdentityManagementType UserAssigned { get; } = new IdentityManagementType(UserAssignedValue);
-        /// <summary>
-        /// Actor
-        /// Serialized Name: IdentityManagementTypes.Actor
-        /// </summary>
+        /// <summary> Actor. </summary>
         public static IdentityManagementType Actor { get; } = new IdentityManagementType(ActorValue);
-        /// <summary>
-        /// DelegatedResourceIdentity
-        /// Serialized Name: IdentityManagementTypes.DelegatedResourceIdentity
-        /// </summary>
+        /// <summary> DelegatedResourceIdentity. </summary>
         public static IdentityManagementType DelegatedResourceIdentity { get; } = new IdentityManagementType(DelegatedResourceIdentityValue);
         /// <summary> Determines if two <see cref="IdentityManagementType"/> values are the same. </summary>
         public static bool operator ==(IdentityManagementType left, IdentityManagementType right) => left.Equals(right);

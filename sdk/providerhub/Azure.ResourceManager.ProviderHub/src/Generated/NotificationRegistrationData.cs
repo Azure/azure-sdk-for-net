@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.ProviderHub
     /// <summary>
     /// A class representing the NotificationRegistration data model.
     /// The notification registration definition.
-    /// Serialized Name: NotificationRegistration
     /// </summary>
     public partial class NotificationRegistrationData : ResourceData
     {
@@ -28,13 +27,13 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Serialized Name: NotificationRegistration.properties. </param>
+        /// <param name="properties"></param>
         internal NotificationRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NotificationRegistrationProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Serialized Name: NotificationRegistration.properties. </summary>
+        /// <summary> Gets or sets the properties. </summary>
         public NotificationRegistrationProperties Properties { get; set; }
     }
 }

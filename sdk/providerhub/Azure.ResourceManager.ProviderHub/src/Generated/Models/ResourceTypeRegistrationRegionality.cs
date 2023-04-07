@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceTypeRegistrationRegionality.
-    /// Serialized Name: Regionality
-    /// </summary>
+    /// <summary> The ResourceTypeRegistrationRegionality. </summary>
     public readonly partial struct ResourceTypeRegistrationRegionality : IEquatable<ResourceTypeRegistrationRegionality>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string GlobalValue = "Global";
         private const string RegionalValue = "Regional";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: Regionality.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static ResourceTypeRegistrationRegionality NotSpecified { get; } = new ResourceTypeRegistrationRegionality(NotSpecifiedValue);
-        /// <summary>
-        /// Global
-        /// Serialized Name: Regionality.Global
-        /// </summary>
+        /// <summary> Global. </summary>
         public static ResourceTypeRegistrationRegionality Global { get; } = new ResourceTypeRegistrationRegionality(GlobalValue);
-        /// <summary>
-        /// Regional
-        /// Serialized Name: Regionality.Regional
-        /// </summary>
+        /// <summary> Regional. </summary>
         public static ResourceTypeRegistrationRegionality Regional { get; } = new ResourceTypeRegistrationRegionality(RegionalValue);
         /// <summary> Determines if two <see cref="ResourceTypeRegistrationRegionality"/> values are the same. </summary>
         public static bool operator ==(ResourceTypeRegistrationRegionality left, ResourceTypeRegistrationRegionality right) => left.Equals(right);

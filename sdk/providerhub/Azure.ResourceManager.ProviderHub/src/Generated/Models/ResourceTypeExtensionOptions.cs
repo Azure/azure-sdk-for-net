@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceTypeExtensionOptions.
-    /// Serialized Name: ResourceTypeExtensionOptions
-    /// </summary>
+    /// <summary> The ResourceTypeExtensionOptions. </summary>
     internal partial class ResourceTypeExtensionOptions
     {
         /// <summary> Initializes a new instance of ResourceTypeExtensionOptions. </summary>
@@ -19,13 +16,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeExtensionOptions. </summary>
-        /// <param name="resourceCreationBegin"> Serialized Name: ResourceTypeExtensionOptions.resourceCreationBegin. </param>
+        /// <param name="resourceCreationBegin"></param>
         internal ResourceTypeExtensionOptions(ExtensionOptions resourceCreationBegin)
         {
             ResourceCreationBegin = resourceCreationBegin;
         }
 
-        /// <summary> Serialized Name: ResourceTypeExtensionOptions.resourceCreationBegin. </summary>
+        /// <summary> Gets or sets the resource creation begin. </summary>
         public ExtensionOptions ResourceCreationBegin { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The MessageScope.
-    /// Serialized Name: MessageScope
-    /// </summary>
+    /// <summary> The MessageScope. </summary>
     public readonly partial struct MessageScope : IEquatable<MessageScope>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string NotSpecifiedValue = "NotSpecified";
         private const string RegisteredSubscriptionsValue = "RegisteredSubscriptions";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: MessageScope.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static MessageScope NotSpecified { get; } = new MessageScope(NotSpecifiedValue);
-        /// <summary>
-        /// RegisteredSubscriptions
-        /// Serialized Name: MessageScope.RegisteredSubscriptions
-        /// </summary>
+        /// <summary> RegisteredSubscriptions. </summary>
         public static MessageScope RegisteredSubscriptions { get; } = new MessageScope(RegisteredSubscriptionsValue);
         /// <summary> Determines if two <see cref="MessageScope"/> values are the same. </summary>
         public static bool operator ==(MessageScope left, MessageScope right) => left.Equals(right);

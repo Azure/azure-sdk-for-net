@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             ProviderRegistrationResource providerRegistration = client.GetProviderRegistrationResource(providerRegistrationResourceId);
 
             // invoke the operation
-            Models.CheckinManifestContent content = new Models.CheckinManifestContent("Prod", new AzureLocation("EastUS2EUAP"));
+            CheckinManifestContent content = new CheckinManifestContent("Prod", new AzureLocation("EastUS2EUAP"));
             CheckinManifestInfo result = await providerRegistration.CheckinManifestAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");

@@ -12,14 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceProviderAuthentication.
-    /// Serialized Name: ResourceProviderAuthentication
-    /// </summary>
+    /// <summary> The ResourceProviderAuthentication. </summary>
     internal partial class ResourceProviderAuthentication
     {
         /// <summary> Initializes a new instance of ResourceProviderAuthentication. </summary>
-        /// <param name="allowedAudiences"> Serialized Name: ResourceProviderAuthentication.allowedAudiences. </param>
+        /// <param name="allowedAudiences"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="allowedAudiences"/> is null. </exception>
         public ResourceProviderAuthentication(IEnumerable<string> allowedAudiences)
         {
@@ -29,13 +26,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceProviderAuthentication. </summary>
-        /// <param name="allowedAudiences"> Serialized Name: ResourceProviderAuthentication.allowedAudiences. </param>
+        /// <param name="allowedAudiences"></param>
         internal ResourceProviderAuthentication(IList<string> allowedAudiences)
         {
             AllowedAudiences = allowedAudiences;
         }
 
-        /// <summary> Serialized Name: ResourceProviderAuthentication.allowedAudiences. </summary>
+        /// <summary> Gets the allowed audiences. </summary>
         public IList<string> AllowedAudiences { get; }
     }
 }

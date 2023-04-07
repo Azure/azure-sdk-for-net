@@ -11,14 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceTypeSkuSetting.
-    /// Serialized Name: SkuSetting
-    /// </summary>
+    /// <summary> The ResourceTypeSkuSetting. </summary>
     public partial class ResourceTypeSkuSetting
     {
         /// <summary> Initializes a new instance of ResourceTypeSkuSetting. </summary>
-        /// <param name="name"> Serialized Name: SkuSetting.name. </param>
+        /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ResourceTypeSkuSetting(string name)
         {
@@ -34,18 +31,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeSkuSetting. </summary>
-        /// <param name="name"> Serialized Name: SkuSetting.name. </param>
-        /// <param name="tier"> Serialized Name: SkuSetting.tier. </param>
-        /// <param name="size"> Serialized Name: SkuSetting.size. </param>
-        /// <param name="family"> Serialized Name: SkuSetting.family. </param>
-        /// <param name="kind"> Serialized Name: SkuSetting.kind. </param>
-        /// <param name="locations"> Serialized Name: SkuSetting.locations. </param>
-        /// <param name="locationInfo"> Serialized Name: SkuSetting.locationInfo. </param>
-        /// <param name="requiredQuotaIds"> Serialized Name: SkuSetting.requiredQuotaIds. </param>
-        /// <param name="requiredFeatures"> Serialized Name: SkuSetting.requiredFeatures. </param>
-        /// <param name="capacity"> Serialized Name: SkuSetting.capacity. </param>
-        /// <param name="costs"> Serialized Name: SkuSetting.costs. </param>
-        /// <param name="capabilities"> Serialized Name: SkuSetting.capabilities. </param>
+        /// <param name="name"></param>
+        /// <param name="tier"></param>
+        /// <param name="size"></param>
+        /// <param name="family"></param>
+        /// <param name="kind"></param>
+        /// <param name="locations"></param>
+        /// <param name="locationInfo"></param>
+        /// <param name="requiredQuotaIds"></param>
+        /// <param name="requiredFeatures"></param>
+        /// <param name="capacity"></param>
+        /// <param name="costs"></param>
+        /// <param name="capabilities"></param>
         internal ResourceTypeSkuSetting(string name, string tier, string size, string family, string kind, IList<string> locations, IList<ResourceTypeSkuLocationInfo> locationInfo, IList<string> requiredQuotaIds, IList<string> requiredFeatures, ResourceTypeSkuCapacity capacity, IList<ResourceTypeSkuCost> costs, IList<ResourceSkuCapability> capabilities)
         {
             Name = name;
@@ -62,29 +59,29 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Capabilities = capabilities;
         }
 
-        /// <summary> Serialized Name: SkuSetting.name. </summary>
+        /// <summary> Gets or sets the name. </summary>
         public string Name { get; set; }
-        /// <summary> Serialized Name: SkuSetting.tier. </summary>
+        /// <summary> Gets or sets the tier. </summary>
         public string Tier { get; set; }
-        /// <summary> Serialized Name: SkuSetting.size. </summary>
+        /// <summary> Gets or sets the size. </summary>
         public string Size { get; set; }
-        /// <summary> Serialized Name: SkuSetting.family. </summary>
+        /// <summary> Gets or sets the family. </summary>
         public string Family { get; set; }
-        /// <summary> Serialized Name: SkuSetting.kind. </summary>
+        /// <summary> Gets or sets the kind. </summary>
         public string Kind { get; set; }
-        /// <summary> Serialized Name: SkuSetting.locations. </summary>
+        /// <summary> Gets the locations. </summary>
         public IList<string> Locations { get; }
-        /// <summary> Serialized Name: SkuSetting.locationInfo. </summary>
+        /// <summary> Gets the location info. </summary>
         public IList<ResourceTypeSkuLocationInfo> LocationInfo { get; }
-        /// <summary> Serialized Name: SkuSetting.requiredQuotaIds. </summary>
+        /// <summary> Gets the required quota ids. </summary>
         public IList<string> RequiredQuotaIds { get; }
-        /// <summary> Serialized Name: SkuSetting.requiredFeatures. </summary>
+        /// <summary> Gets the required features. </summary>
         public IList<string> RequiredFeatures { get; }
-        /// <summary> Serialized Name: SkuSetting.capacity. </summary>
+        /// <summary> Gets or sets the capacity. </summary>
         public ResourceTypeSkuCapacity Capacity { get; set; }
-        /// <summary> Serialized Name: SkuSetting.costs. </summary>
+        /// <summary> Gets the costs. </summary>
         public IList<ResourceTypeSkuCost> Costs { get; }
-        /// <summary> Serialized Name: SkuSetting.capabilities. </summary>
+        /// <summary> Gets the capabilities. </summary>
         public IList<ResourceSkuCapability> Capabilities { get; }
     }
 }

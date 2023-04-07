@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ExtensionOptions.
-    /// Serialized Name: ExtensionOptions
-    /// </summary>
+    /// <summary> The ExtensionOptions. </summary>
     public partial class ExtensionOptions
     {
         /// <summary> Initializes a new instance of ExtensionOptions. </summary>
@@ -24,17 +21,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ExtensionOptions. </summary>
-        /// <param name="request"> Serialized Name: ExtensionOptions.request. </param>
-        /// <param name="response"> Serialized Name: ExtensionOptions.response. </param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
         internal ExtensionOptions(IList<ExtensionOptionType> request, IList<ExtensionOptionType> response)
         {
             Request = request;
             Response = response;
         }
 
-        /// <summary> Serialized Name: ExtensionOptions.request. </summary>
+        /// <summary> Gets the request. </summary>
         public IList<ExtensionOptionType> Request { get; }
-        /// <summary> Serialized Name: ExtensionOptions.response. </summary>
+        /// <summary> Gets the response. </summary>
         public IList<ExtensionOptionType> Response { get; }
     }
 }

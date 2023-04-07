@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ProviderRegistrationProperties.
-    /// Serialized Name: ProviderRegistrationProperties
-    /// </summary>
+    /// <summary> The ProviderRegistrationProperties. </summary>
     public partial class ProviderRegistrationProperties : ResourceProviderManifestProperties
     {
         /// <summary> Initializes a new instance of ProviderRegistrationProperties. </summary>
@@ -22,24 +19,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ProviderRegistrationProperties. </summary>
-        /// <param name="providerAuthentication"> Serialized Name: ResourceProviderManifestProperties.providerAuthentication. </param>
-        /// <param name="providerAuthorizations"> Serialized Name: ResourceProviderManifestProperties.providerAuthorizations. </param>
-        /// <param name="namespace"> Serialized Name: ResourceProviderManifestProperties.namespace. </param>
-        /// <param name="providerVersion"> Serialized Name: ResourceProviderManifestProperties.providerVersion. </param>
-        /// <param name="providerType"> Serialized Name: ResourceProviderManifestProperties.providerType. </param>
-        /// <param name="requiredFeatures"> Serialized Name: ResourceProviderManifestProperties.requiredFeatures. </param>
-        /// <param name="featuresRule"> Serialized Name: ResourceProviderManifestProperties.featuresRule. </param>
-        /// <param name="requestHeaderOptions"> Serialized Name: ResourceProviderManifestProperties.requestHeaderOptions. </param>
-        /// <param name="management"> Serialized Name: ResourceProviderManifestProperties.management. </param>
-        /// <param name="capabilities"> Serialized Name: ResourceProviderManifestProperties.capabilities. </param>
-        /// <param name="metadata">
-        /// Anything
-        /// Serialized Name: ResourceProviderManifestProperties.metadata
-        /// </param>
-        /// <param name="templateDeploymentOptions"> Serialized Name: ResourceProviderManifestProperties.templateDeploymentOptions. </param>
-        /// <param name="providerHubMetadata"> Serialized Name: ProviderRegistrationProperties.providerHubMetadata. </param>
-        /// <param name="provisioningState"> Serialized Name: ProviderRegistrationProperties.provisioningState. </param>
-        /// <param name="subscriptionLifecycleNotificationSpecifications"> Serialized Name: ProviderRegistrationProperties.subscriptionLifecycleNotificationSpecifications. </param>
+        /// <param name="providerAuthentication"></param>
+        /// <param name="providerAuthorizations"></param>
+        /// <param name="namespace"></param>
+        /// <param name="providerVersion"></param>
+        /// <param name="providerType"></param>
+        /// <param name="requiredFeatures"></param>
+        /// <param name="featuresRule"></param>
+        /// <param name="requestHeaderOptions"></param>
+        /// <param name="management"></param>
+        /// <param name="capabilities"></param>
+        /// <param name="metadata"> Anything. </param>
+        /// <param name="templateDeploymentOptions"></param>
+        /// <param name="providerHubMetadata"></param>
+        /// <param name="provisioningState"></param>
+        /// <param name="subscriptionLifecycleNotificationSpecifications"></param>
         internal ProviderRegistrationProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, ProviderHubMetadata providerHubMetadata, ProviderHubProvisioningState? provisioningState, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications) : base(providerAuthentication, providerAuthorizations, @namespace, providerVersion, providerType, requiredFeatures, featuresRule, requestHeaderOptions, management, capabilities, metadata, templateDeploymentOptions)
         {
             ProviderHubMetadata = providerHubMetadata;
@@ -47,11 +41,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             SubscriptionLifecycleNotificationSpecifications = subscriptionLifecycleNotificationSpecifications;
         }
 
-        /// <summary> Serialized Name: ProviderRegistrationProperties.providerHubMetadata. </summary>
+        /// <summary> Gets or sets the provider hub metadata. </summary>
         public ProviderHubMetadata ProviderHubMetadata { get; set; }
-        /// <summary> Serialized Name: ProviderRegistrationProperties.provisioningState. </summary>
+        /// <summary> Gets or sets the provisioning state. </summary>
         public ProviderHubProvisioningState? ProvisioningState { get; set; }
-        /// <summary> Serialized Name: ProviderRegistrationProperties.subscriptionLifecycleNotificationSpecifications. </summary>
+        /// <summary> Gets or sets the subscription lifecycle notification specifications. </summary>
         public SubscriptionLifecycleNotificationSpecifications SubscriptionLifecycleNotificationSpecifications { get; set; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The DefaultRolloutSpecification.
-    /// Serialized Name: DefaultRolloutSpecification
-    /// </summary>
+    /// <summary> The DefaultRolloutSpecification. </summary>
     public partial class DefaultRolloutSpecification
     {
         /// <summary> Initializes a new instance of DefaultRolloutSpecification. </summary>
@@ -24,14 +21,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutSpecification. </summary>
-        /// <param name="canary"> Serialized Name: DefaultRolloutSpecification.canary. </param>
-        /// <param name="lowTraffic"> Serialized Name: DefaultRolloutSpecification.lowTraffic. </param>
-        /// <param name="mediumTraffic"> Serialized Name: DefaultRolloutSpecification.mediumTraffic. </param>
-        /// <param name="highTraffic"> Serialized Name: DefaultRolloutSpecification.highTraffic. </param>
-        /// <param name="restOfTheWorldGroupOne"> Serialized Name: DefaultRolloutSpecification.restOfTheWorldGroupOne. </param>
-        /// <param name="restOfTheWorldGroupTwo"> Serialized Name: DefaultRolloutSpecification.restOfTheWorldGroupTwo. </param>
-        /// <param name="providerRegistration"> Serialized Name: DefaultRolloutSpecification.providerRegistration. </param>
-        /// <param name="resourceTypeRegistrations"> Serialized Name: DefaultRolloutSpecification.resourceTypeRegistrations. </param>
+        /// <param name="canary"></param>
+        /// <param name="lowTraffic"></param>
+        /// <param name="mediumTraffic"></param>
+        /// <param name="highTraffic"></param>
+        /// <param name="restOfTheWorldGroupOne"></param>
+        /// <param name="restOfTheWorldGroupTwo"></param>
+        /// <param name="providerRegistration"></param>
+        /// <param name="resourceTypeRegistrations"></param>
         internal DefaultRolloutSpecification(CanaryTrafficRegionRolloutConfiguration canary, TrafficRegionRolloutConfiguration lowTraffic, TrafficRegionRolloutConfiguration mediumTraffic, TrafficRegionRolloutConfiguration highTraffic, TrafficRegionRolloutConfiguration restOfTheWorldGroupOne, TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations)
         {
             Canary = canary;
@@ -44,21 +41,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ResourceTypeRegistrations = resourceTypeRegistrations;
         }
 
-        /// <summary> Serialized Name: DefaultRolloutSpecification.canary. </summary>
+        /// <summary> Gets or sets the canary. </summary>
         public CanaryTrafficRegionRolloutConfiguration Canary { get; set; }
-        /// <summary> Serialized Name: DefaultRolloutSpecification.lowTraffic. </summary>
+        /// <summary> Gets or sets the low traffic. </summary>
         public TrafficRegionRolloutConfiguration LowTraffic { get; set; }
-        /// <summary> Serialized Name: DefaultRolloutSpecification.mediumTraffic. </summary>
+        /// <summary> Gets or sets the medium traffic. </summary>
         public TrafficRegionRolloutConfiguration MediumTraffic { get; set; }
-        /// <summary> Serialized Name: DefaultRolloutSpecification.highTraffic. </summary>
+        /// <summary> Gets or sets the high traffic. </summary>
         public TrafficRegionRolloutConfiguration HighTraffic { get; set; }
-        /// <summary> Serialized Name: DefaultRolloutSpecification.restOfTheWorldGroupOne. </summary>
+        /// <summary> Gets or sets the rest of the world group one. </summary>
         public TrafficRegionRolloutConfiguration RestOfTheWorldGroupOne { get; set; }
-        /// <summary> Serialized Name: DefaultRolloutSpecification.restOfTheWorldGroupTwo. </summary>
+        /// <summary> Gets or sets the rest of the world group two. </summary>
         public TrafficRegionRolloutConfiguration RestOfTheWorldGroupTwo { get; set; }
-        /// <summary> Serialized Name: DefaultRolloutSpecification.providerRegistration. </summary>
+        /// <summary> Gets or sets the provider registration. </summary>
         public ProviderRegistrationData ProviderRegistration { get; set; }
-        /// <summary> Serialized Name: DefaultRolloutSpecification.resourceTypeRegistrations. </summary>
+        /// <summary> Gets the resource type registrations. </summary>
         public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
     }
 }

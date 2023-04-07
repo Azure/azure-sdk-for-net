@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The TrafficRegionRolloutConfiguration.
-    /// Serialized Name: TrafficRegionRolloutConfiguration
-    /// </summary>
+    /// <summary> The TrafficRegionRolloutConfiguration. </summary>
     public partial class TrafficRegionRolloutConfiguration : TrafficRegions
     {
         /// <summary> Initializes a new instance of TrafficRegionRolloutConfiguration. </summary>
@@ -23,14 +20,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of TrafficRegionRolloutConfiguration. </summary>
-        /// <param name="regions"> Serialized Name: TrafficRegions.regions. </param>
-        /// <param name="waitDuration"> Serialized Name: TrafficRegionRolloutConfiguration.waitDuration. </param>
+        /// <param name="regions"></param>
+        /// <param name="waitDuration"></param>
         internal TrafficRegionRolloutConfiguration(IList<AzureLocation> regions, TimeSpan? waitDuration) : base(regions)
         {
             WaitDuration = waitDuration;
         }
 
-        /// <summary> Serialized Name: TrafficRegionRolloutConfiguration.waitDuration. </summary>
+        /// <summary> Gets or sets the wait duration. </summary>
         public TimeSpan? WaitDuration { get; set; }
     }
 }

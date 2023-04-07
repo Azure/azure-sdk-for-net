@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The IdentityManagementProperties.
-    /// Serialized Name: IdentityManagementProperties
-    /// </summary>
+    /// <summary> The IdentityManagementProperties. </summary>
     public partial class IdentityManagementProperties
     {
         /// <summary> Initializes a new instance of IdentityManagementProperties. </summary>
@@ -19,17 +16,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of IdentityManagementProperties. </summary>
-        /// <param name="managementType"> Serialized Name: IdentityManagementProperties.type. </param>
-        /// <param name="applicationId"> Serialized Name: IdentityManagementProperties.applicationId. </param>
+        /// <param name="managementType"></param>
+        /// <param name="applicationId"></param>
         internal IdentityManagementProperties(IdentityManagementType? managementType, string applicationId)
         {
             ManagementType = managementType;
             ApplicationId = applicationId;
         }
 
-        /// <summary> Serialized Name: IdentityManagementProperties.type. </summary>
+        /// <summary> Gets or sets the management type. </summary>
         public IdentityManagementType? ManagementType { get; set; }
-        /// <summary> Serialized Name: IdentityManagementProperties.applicationId. </summary>
+        /// <summary> Gets or sets the application id. </summary>
         public string ApplicationId { get; set; }
     }
 }

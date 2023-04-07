@@ -10,15 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The CheckinManifestInfo.
-    /// Serialized Name: CheckinManifestInfo
-    /// </summary>
+    /// <summary> The CheckinManifestInfo. </summary>
     public partial class CheckinManifestInfo
     {
         /// <summary> Initializes a new instance of CheckinManifestInfo. </summary>
-        /// <param name="isCheckedIn"> Serialized Name: CheckinManifestInfo.isCheckedIn. </param>
-        /// <param name="statusMessage"> Serialized Name: CheckinManifestInfo.statusMessage. </param>
+        /// <param name="isCheckedIn"></param>
+        /// <param name="statusMessage"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="statusMessage"/> is null. </exception>
         internal CheckinManifestInfo(bool isCheckedIn, string statusMessage)
         {
@@ -29,10 +26,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of CheckinManifestInfo. </summary>
-        /// <param name="isCheckedIn"> Serialized Name: CheckinManifestInfo.isCheckedIn. </param>
-        /// <param name="statusMessage"> Serialized Name: CheckinManifestInfo.statusMessage. </param>
-        /// <param name="pullRequest"> Serialized Name: CheckinManifestInfo.pullRequest. </param>
-        /// <param name="commitId"> Serialized Name: CheckinManifestInfo.commitId. </param>
+        /// <param name="isCheckedIn"></param>
+        /// <param name="statusMessage"></param>
+        /// <param name="pullRequest"></param>
+        /// <param name="commitId"></param>
         internal CheckinManifestInfo(bool isCheckedIn, string statusMessage, string pullRequest, string commitId)
         {
             IsCheckedIn = isCheckedIn;
@@ -41,13 +38,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             CommitId = commitId;
         }
 
-        /// <summary> Serialized Name: CheckinManifestInfo.isCheckedIn. </summary>
+        /// <summary> Gets the is checked in. </summary>
         public bool IsCheckedIn { get; }
-        /// <summary> Serialized Name: CheckinManifestInfo.statusMessage. </summary>
+        /// <summary> Gets the status message. </summary>
         public string StatusMessage { get; }
-        /// <summary> Serialized Name: CheckinManifestInfo.pullRequest. </summary>
+        /// <summary> Gets the pull request. </summary>
         public string PullRequest { get; }
-        /// <summary> Serialized Name: CheckinManifestInfo.commitId. </summary>
+        /// <summary> Gets the commit id. </summary>
         public string CommitId { get; }
     }
 }

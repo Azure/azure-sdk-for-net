@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceProviderType.
-    /// Serialized Name: ResourceProviderType
-    /// </summary>
+    /// <summary> The ResourceProviderType. </summary>
     public readonly partial struct ResourceProviderType : IEquatable<ResourceProviderType>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string TenantOnlyValue = "TenantOnly";
         private const string AuthorizationFreeValue = "AuthorizationFree";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: ResourceProviderType.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static ResourceProviderType NotSpecified { get; } = new ResourceProviderType(NotSpecifiedValue);
-        /// <summary>
-        /// Internal
-        /// Serialized Name: ResourceProviderType.Internal
-        /// </summary>
+        /// <summary> Internal. </summary>
         public static ResourceProviderType Internal { get; } = new ResourceProviderType(InternalValue);
-        /// <summary>
-        /// External
-        /// Serialized Name: ResourceProviderType.External
-        /// </summary>
+        /// <summary> External. </summary>
         public static ResourceProviderType External { get; } = new ResourceProviderType(ExternalValue);
-        /// <summary>
-        /// Hidden
-        /// Serialized Name: ResourceProviderType.Hidden
-        /// </summary>
+        /// <summary> Hidden. </summary>
         public static ResourceProviderType Hidden { get; } = new ResourceProviderType(HiddenValue);
-        /// <summary>
-        /// RegistrationFree
-        /// Serialized Name: ResourceProviderType.RegistrationFree
-        /// </summary>
+        /// <summary> RegistrationFree. </summary>
         public static ResourceProviderType RegistrationFree { get; } = new ResourceProviderType(RegistrationFreeValue);
-        /// <summary>
-        /// LegacyRegistrationRequired
-        /// Serialized Name: ResourceProviderType.LegacyRegistrationRequired
-        /// </summary>
+        /// <summary> LegacyRegistrationRequired. </summary>
         public static ResourceProviderType LegacyRegistrationRequired { get; } = new ResourceProviderType(LegacyRegistrationRequiredValue);
-        /// <summary>
-        /// TenantOnly
-        /// Serialized Name: ResourceProviderType.TenantOnly
-        /// </summary>
+        /// <summary> TenantOnly. </summary>
         public static ResourceProviderType TenantOnly { get; } = new ResourceProviderType(TenantOnlyValue);
-        /// <summary>
-        /// AuthorizationFree
-        /// Serialized Name: ResourceProviderType.AuthorizationFree
-        /// </summary>
+        /// <summary> AuthorizationFree. </summary>
         public static ResourceProviderType AuthorizationFree { get; } = new ResourceProviderType(AuthorizationFreeValue);
         /// <summary> Determines if two <see cref="ResourceProviderType"/> values are the same. </summary>
         public static bool operator ==(ResourceProviderType left, ResourceProviderType right) => left.Equals(right);

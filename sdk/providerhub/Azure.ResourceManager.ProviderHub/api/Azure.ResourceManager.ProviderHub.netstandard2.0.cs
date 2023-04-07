@@ -868,9 +868,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public partial class ResourceMovePolicy
     {
         public ResourceMovePolicy() { }
-        public bool? CrossResourceGroupMoveEnabled { get { throw null; } set { } }
-        public bool? CrossSubscriptionMoveEnabled { get { throw null; } set { } }
-        public bool? ValidationRequired { get { throw null; } set { } }
+        public bool? IsCrossResourceGroupMoveEnabled { get { throw null; } set { } }
+        public bool? IsCrossSubscriptionMoveEnabled { get { throw null; } set { } }
+        public bool? IsValidationRequired { get { throw null; } set { } }
     }
     public partial class ResourceProviderAuthorization
     {
@@ -1075,13 +1075,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.ResourceManager.ProviderHub.Models.CheckNameAvailabilitySpecifications CheckNameAvailabilitySpecifications { get { throw null; } set { } }
         public string DefaultApiVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DisallowedActionVerbs { get { throw null; } }
-        public bool? EnableAsyncOperation { get { throw null; } set { } }
-        public bool? EnableThirdPartyS2S { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpoint> Endpoints { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions> ExtendedLocations { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.ExtensionOptions ExtensionOptionsResourceCreationBegin { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.IdentityManagementProperties IdentityManagement { get { throw null; } set { } }
+        public bool? IsAsyncOperationEnabled { get { throw null; } set { } }
         public bool? IsPureProxy { get { throw null; } set { } }
+        public bool? IsThirdPartyS2SEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck> LinkedAccessChecks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.LoggingRule> LoggingRules { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.MarketplaceType? MarketplaceType { get { throw null; } set { } }
@@ -1331,8 +1331,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public partial class TemplateDeploymentOptions
     {
         public TemplateDeploymentOptions() { }
+        public bool? IsPreflightSupported { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.PreflightOption> PreflightOptions { get { throw null; } }
-        public bool? PreflightSupported { get { throw null; } set { } }
     }
     public partial class TemplateDeploymentPolicy
     {

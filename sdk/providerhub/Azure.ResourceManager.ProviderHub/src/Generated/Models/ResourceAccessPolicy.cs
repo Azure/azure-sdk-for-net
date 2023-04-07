@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceAccessPolicy.
-    /// Serialized Name: ResourceAccessPolicy
-    /// </summary>
+    /// <summary> The ResourceAccessPolicy. </summary>
     public enum ResourceAccessPolicy
     {
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: ResourceAccessPolicy.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         NotSpecified,
-        /// <summary>
-        /// AcisReadAllowed
-        /// Serialized Name: ResourceAccessPolicy.AcisReadAllowed
-        /// </summary>
+        /// <summary> AcisReadAllowed. </summary>
         AcisReadAllowed,
-        /// <summary>
-        /// AcisActionAllowed
-        /// Serialized Name: ResourceAccessPolicy.AcisActionAllowed
-        /// </summary>
+        /// <summary> AcisActionAllowed. </summary>
         AcisActionAllowed
     }
 }

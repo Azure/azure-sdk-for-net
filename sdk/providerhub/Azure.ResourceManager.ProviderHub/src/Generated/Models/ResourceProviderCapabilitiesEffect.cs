@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceProviderCapabilitiesEffect.
-    /// Serialized Name: ResourceProviderCapabilitiesEffect
-    /// </summary>
+    /// <summary> The ResourceProviderCapabilitiesEffect. </summary>
     public readonly partial struct ResourceProviderCapabilitiesEffect : IEquatable<ResourceProviderCapabilitiesEffect>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string AllowValue = "Allow";
         private const string DisallowValue = "Disallow";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: ResourceProviderCapabilitiesEffect.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static ResourceProviderCapabilitiesEffect NotSpecified { get; } = new ResourceProviderCapabilitiesEffect(NotSpecifiedValue);
-        /// <summary>
-        /// Allow
-        /// Serialized Name: ResourceProviderCapabilitiesEffect.Allow
-        /// </summary>
+        /// <summary> Allow. </summary>
         public static ResourceProviderCapabilitiesEffect Allow { get; } = new ResourceProviderCapabilitiesEffect(AllowValue);
-        /// <summary>
-        /// Disallow
-        /// Serialized Name: ResourceProviderCapabilitiesEffect.Disallow
-        /// </summary>
+        /// <summary> Disallow. </summary>
         public static ResourceProviderCapabilitiesEffect Disallow { get; } = new ResourceProviderCapabilitiesEffect(DisallowValue);
         /// <summary> Determines if two <see cref="ResourceProviderCapabilitiesEffect"/> values are the same. </summary>
         public static bool operator ==(ResourceProviderCapabilitiesEffect left, ResourceProviderCapabilitiesEffect right) => left.Equals(right);

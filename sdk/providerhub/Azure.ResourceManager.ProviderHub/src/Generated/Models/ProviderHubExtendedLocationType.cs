@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ProviderHubExtendedLocationType.
-    /// Serialized Name: ExtendedLocationType
-    /// </summary>
+    /// <summary> The ProviderHubExtendedLocationType. </summary>
     public enum ProviderHubExtendedLocationType
     {
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: ExtendedLocationType.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         NotSpecified,
-        /// <summary>
-        /// EdgeZone
-        /// Serialized Name: ExtendedLocationType.EdgeZone
-        /// </summary>
+        /// <summary> EdgeZone. </summary>
         EdgeZone,
-        /// <summary>
-        /// ArcZone
-        /// Serialized Name: ExtendedLocationType.ArcZone
-        /// </summary>
+        /// <summary> ArcZone. </summary>
         ArcZone
     }
 }

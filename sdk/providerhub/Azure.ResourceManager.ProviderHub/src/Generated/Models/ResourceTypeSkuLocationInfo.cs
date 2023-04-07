@@ -10,14 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceTypeSkuLocationInfo.
-    /// Serialized Name: SkuLocationInfo
-    /// </summary>
+    /// <summary> The ResourceTypeSkuLocationInfo. </summary>
     public partial class ResourceTypeSkuLocationInfo
     {
         /// <summary> Initializes a new instance of ResourceTypeSkuLocationInfo. </summary>
-        /// <param name="location"> Serialized Name: SkuLocationInfo.location. </param>
+        /// <param name="location"></param>
         public ResourceTypeSkuLocationInfo(AzureLocation location)
         {
             Location = location;
@@ -27,11 +24,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTypeSkuLocationInfo. </summary>
-        /// <param name="location"> Serialized Name: SkuLocationInfo.location. </param>
-        /// <param name="zones"> Serialized Name: SkuLocationInfo.zones. </param>
-        /// <param name="zoneDetails"> Serialized Name: SkuLocationInfo.zoneDetails. </param>
-        /// <param name="extendedLocations"> Serialized Name: SkuLocationInfo.extendedLocations. </param>
-        /// <param name="extendedLocationType"> Serialized Name: SkuLocationInfo.type. </param>
+        /// <param name="location"></param>
+        /// <param name="zones"></param>
+        /// <param name="zoneDetails"></param>
+        /// <param name="extendedLocations"></param>
+        /// <param name="extendedLocationType"></param>
         internal ResourceTypeSkuLocationInfo(AzureLocation location, IList<string> zones, IList<ResourceTypeSkuZoneDetail> zoneDetails, IList<string> extendedLocations, ProviderHubExtendedLocationType? extendedLocationType)
         {
             Location = location;
@@ -41,15 +38,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ExtendedLocationType = extendedLocationType;
         }
 
-        /// <summary> Serialized Name: SkuLocationInfo.location. </summary>
+        /// <summary> Gets or sets the location. </summary>
         public AzureLocation Location { get; set; }
-        /// <summary> Serialized Name: SkuLocationInfo.zones. </summary>
+        /// <summary> Gets the zones. </summary>
         public IList<string> Zones { get; }
-        /// <summary> Serialized Name: SkuLocationInfo.zoneDetails. </summary>
+        /// <summary> Gets the zone details. </summary>
         public IList<ResourceTypeSkuZoneDetail> ZoneDetails { get; }
-        /// <summary> Serialized Name: SkuLocationInfo.extendedLocations. </summary>
+        /// <summary> Gets the extended locations. </summary>
         public IList<string> ExtendedLocations { get; }
-        /// <summary> Serialized Name: SkuLocationInfo.type. </summary>
+        /// <summary> Gets or sets the extended location type. </summary>
         public ProviderHubExtendedLocationType? ExtendedLocationType { get; set; }
     }
 }

@@ -7,24 +7,21 @@
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The ResourceTypeSkuCapacity.
-    /// Serialized Name: SkuCapacity
-    /// </summary>
+    /// <summary> The ResourceTypeSkuCapacity. </summary>
     public partial class ResourceTypeSkuCapacity
     {
         /// <summary> Initializes a new instance of ResourceTypeSkuCapacity. </summary>
-        /// <param name="minimum"> Serialized Name: SkuCapacity.minimum. </param>
+        /// <param name="minimum"></param>
         public ResourceTypeSkuCapacity(int minimum)
         {
             Minimum = minimum;
         }
 
         /// <summary> Initializes a new instance of ResourceTypeSkuCapacity. </summary>
-        /// <param name="minimum"> Serialized Name: SkuCapacity.minimum. </param>
-        /// <param name="maximum"> Serialized Name: SkuCapacity.maximum. </param>
-        /// <param name="default"> Serialized Name: SkuCapacity.default. </param>
-        /// <param name="scaleType"> Serialized Name: SkuCapacity.scaleType. </param>
+        /// <param name="minimum"></param>
+        /// <param name="maximum"></param>
+        /// <param name="default"></param>
+        /// <param name="scaleType"></param>
         internal ResourceTypeSkuCapacity(int minimum, int? maximum, int? @default, ResourceTypeSkuScaleType? scaleType)
         {
             Minimum = minimum;
@@ -33,13 +30,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ScaleType = scaleType;
         }
 
-        /// <summary> Serialized Name: SkuCapacity.minimum. </summary>
+        /// <summary> Gets or sets the minimum. </summary>
         public int Minimum { get; set; }
-        /// <summary> Serialized Name: SkuCapacity.maximum. </summary>
+        /// <summary> Gets or sets the maximum. </summary>
         public int? Maximum { get; set; }
-        /// <summary> Serialized Name: SkuCapacity.default. </summary>
+        /// <summary> Gets or sets the default. </summary>
         public int? Default { get; set; }
-        /// <summary> Serialized Name: SkuCapacity.scaleType. </summary>
+        /// <summary> Gets or sets the scale type. </summary>
         public ResourceTypeSkuScaleType? ScaleType { get; set; }
     }
 }

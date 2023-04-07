@@ -10,14 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The CustomRolloutProperties.
-    /// Serialized Name: CustomRolloutProperties
-    /// </summary>
+    /// <summary> The CustomRolloutProperties. </summary>
     public partial class CustomRolloutProperties
     {
         /// <summary> Initializes a new instance of CustomRolloutProperties. </summary>
-        /// <param name="specification"> Serialized Name: CustomRolloutProperties.specification. </param>
+        /// <param name="specification"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="specification"/> is null. </exception>
         public CustomRolloutProperties(CustomRolloutSpecification specification)
         {
@@ -27,9 +24,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of CustomRolloutProperties. </summary>
-        /// <param name="provisioningState"> Serialized Name: CustomRolloutProperties.provisioningState. </param>
-        /// <param name="specification"> Serialized Name: CustomRolloutProperties.specification. </param>
-        /// <param name="status"> Serialized Name: CustomRolloutProperties.status. </param>
+        /// <param name="provisioningState"></param>
+        /// <param name="specification"></param>
+        /// <param name="status"></param>
         internal CustomRolloutProperties(ProviderHubProvisioningState? provisioningState, CustomRolloutSpecification specification, CustomRolloutStatus status)
         {
             ProvisioningState = provisioningState;
@@ -37,11 +34,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Status = status;
         }
 
-        /// <summary> Serialized Name: CustomRolloutProperties.provisioningState. </summary>
+        /// <summary> Gets or sets the provisioning state. </summary>
         public ProviderHubProvisioningState? ProvisioningState { get; set; }
-        /// <summary> Serialized Name: CustomRolloutProperties.specification. </summary>
+        /// <summary> Gets or sets the specification. </summary>
         public CustomRolloutSpecification Specification { get; set; }
-        /// <summary> Serialized Name: CustomRolloutProperties.status. </summary>
+        /// <summary> Gets or sets the status. </summary>
         public CustomRolloutStatus Status { get; set; }
     }
 }

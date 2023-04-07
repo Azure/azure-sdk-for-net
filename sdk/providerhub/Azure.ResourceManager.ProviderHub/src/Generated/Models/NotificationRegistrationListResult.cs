@@ -11,10 +11,7 @@ using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary>
-    /// The NotificationRegistrationListResult.
-    /// Serialized Name: NotificationRegistrationArrayResponseWithContinuation
-    /// </summary>
+    /// <summary> The NotificationRegistrationListResult. </summary>
     internal partial class NotificationRegistrationListResult
     {
         /// <summary> Initializes a new instance of NotificationRegistrationListResult. </summary>
@@ -24,23 +21,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of NotificationRegistrationListResult. </summary>
-        /// <param name="value"> Serialized Name: NotificationRegistrationArrayResponseWithContinuation.value. </param>
-        /// <param name="nextLink">
-        /// The URL to get to the next set of results, if there are any.
-        /// Serialized Name: NotificationRegistrationArrayResponseWithContinuation.nextLink
-        /// </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
         internal NotificationRegistrationListResult(IReadOnlyList<NotificationRegistrationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Serialized Name: NotificationRegistrationArrayResponseWithContinuation.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<NotificationRegistrationData> Value { get; }
-        /// <summary>
-        /// The URL to get to the next set of results, if there are any.
-        /// Serialized Name: NotificationRegistrationArrayResponseWithContinuation.nextLink
-        /// </summary>
+        /// <summary> The URL to get to the next set of results, if there are any. </summary>
         public string NextLink { get; }
     }
 }
