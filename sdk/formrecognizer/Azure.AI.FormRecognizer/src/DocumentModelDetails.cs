@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentModelDetails")]
     public partial class DocumentModelDetails
     {
         /// <summary>
@@ -17,12 +16,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public DateTimeOffset CreatedOn { get; }
 
         /// <summary>
+        /// Date and time (UTC) when the document model will expire.
+        /// </summary>
+        internal DateTimeOffset? ExpirationDateTime { get; }
+
+        /// <summary>
         /// Supported document types.
         /// </summary>
         [CodeGenMember("DocTypes")]
         public IReadOnlyDictionary<string, DocumentTypeDetails> DocumentTypes { get; }
 
-        [CodeGenMember("ApiVersion")]
         internal string ApiVersion { get; }
     }
 }

@@ -1,0 +1,6859 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-dd4a02c359df7a4ab065e5981d180087-d7952ea47776b849-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d300667bf440f9a30b8e61d1008b85cc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Mar 2023 08:05:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "42a17ba9-9c7a-4fc8-8737-79f02ecc046b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "42a17ba9-9c7a-4fc8-8737-79f02ecc046b",
+        "x-ms-routing-request-id": "JAPANEAST:20230321T080508Z:42a17ba9-9c7a-4fc8-8737-79f02ecc046b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/storagecachetestrg8537?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-7053e051facbe044b3719411b8176046-6de5deb4e283104a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "34bff3e0674abbc1b20dd7eda40026a9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "241",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Mar 2023 08:05:10 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b61e97c9-f6ad-4c24-a5b7-bba13a9978b8",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "b61e97c9-f6ad-4c24-a5b7-bba13a9978b8",
+        "x-ms-routing-request-id": "JAPANEAST:20230321T080510Z:b61e97c9-f6ad-4c24-a5b7-bba13a9978b8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/storagecachetestrg8537",
+        "name": "storagecachetestrg8537",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.StorageCache/skus?api-version=2023-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-39871dbcd683d9418c7ed04c0f36edb8-d43f2821d9b23146-00",
+        "User-Agent": "azsdk-net-ResourceManager.StorageCache/1.1.0-alpha.20230320.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "280270e113510615a7084c729efc2f23",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "72877",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Mar 2023 08:05:10 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e4e6d8df-a816-4ba6-a7c2-34d16cb4df02",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "e4e6d8df-a816-4ba6-a7c2-34d16cb4df02",
+        "x-ms-routing-request-id": "JAPANEAST:20230321T080510Z:e4e6d8df-a816-4ba6-a7c2-34d16cb4df02"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "australiaeast"
+            ],
+            "locationInfo": [
+              {
+                "location": "australiaeast",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "CanadaCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "CanadaCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "CentralIndia"
+            ],
+            "locationInfo": [
+              {
+                "location": "CentralIndia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "centraluseuap"
+            ],
+            "locationInfo": [
+              {
+                "location": "centraluseuap",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "eastus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "EastUS2EUAP"
+            ],
+            "locationInfo": [
+              {
+                "location": "EastUS2EUAP",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "uksouth"
+            ],
+            "locationInfo": [
+              {
+                "location": "uksouth",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "westeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "westeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-125",
+            "locations": [
+              "WestUS3"
+            ],
+            "locationInfo": [
+              {
+                "location": "WestUS3",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "16"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "125"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "australiaeast"
+            ],
+            "locationInfo": [
+              {
+                "location": "australiaeast",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "CanadaCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "CanadaCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "CentralIndia"
+            ],
+            "locationInfo": [
+              {
+                "location": "CentralIndia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "centraluseuap"
+            ],
+            "locationInfo": [
+              {
+                "location": "centraluseuap",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "eastus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "EastUS2EUAP"
+            ],
+            "locationInfo": [
+              {
+                "location": "EastUS2EUAP",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "uksouth"
+            ],
+            "locationInfo": [
+              {
+                "location": "uksouth",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "westeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "westeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "amlFilesystems",
+            "name": "AMLFS-Durable-Premium-250",
+            "locations": [
+              "WestUS3"
+            ],
+            "locationInfo": [
+              {
+                "location": "WestUS3",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "capacity increment (TiB)",
+                "value": "8"
+              },
+              {
+                "name": "bandwidth increment (MB/s/TiB)",
+                "value": "250"
+              },
+              {
+                "name": "durable",
+                "value": "True"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "australiaeast"
+            ],
+            "locationInfo": [
+              {
+                "location": "australiaeast",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "centralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "centralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "eastus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "GermanyWestCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "GermanyWestCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "northeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "northeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "southeastasia"
+            ],
+            "locationInfo": [
+              {
+                "location": "southeastasia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "uksouth"
+            ],
+            "locationInfo": [
+              {
+                "location": "uksouth",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "westeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "westeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "westus"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_10G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "10"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "australiaeast"
+            ],
+            "locationInfo": [
+              {
+                "location": "australiaeast",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "centralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "centralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "eastus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "GermanyWestCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "GermanyWestCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "northeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "northeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "southeastasia"
+            ],
+            "locationInfo": [
+              {
+                "location": "southeastasia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "uksouth"
+            ],
+            "locationInfo": [
+              {
+                "location": "uksouth",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "westeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "westeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "westus"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_20G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "20"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "australiaeast"
+            ],
+            "locationInfo": [
+              {
+                "location": "australiaeast",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "centralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "centralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "eastus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "GermanyWestCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "GermanyWestCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "northeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "northeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "southeastasia"
+            ],
+            "locationInfo": [
+              {
+                "location": "southeastasia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "uksouth"
+            ],
+            "locationInfo": [
+              {
+                "location": "uksouth",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "westeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "westeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "westus"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Premium_5G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "australiaeast"
+            ],
+            "locationInfo": [
+              {
+                "location": "australiaeast",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "CanadaCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "CanadaCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "CentralIndia"
+            ],
+            "locationInfo": [
+              {
+                "location": "CentralIndia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "centralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "centralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "centraluseuap"
+            ],
+            "locationInfo": [
+              {
+                "location": "centraluseuap",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "eastasia"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastasia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "eastus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "EastUS2EUAP"
+            ],
+            "locationInfo": [
+              {
+                "location": "EastUS2EUAP",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "GermanyWestCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "GermanyWestCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "KoreaCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "KoreaCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "northcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "northcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "northeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "northeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "southeastasia"
+            ],
+            "locationInfo": [
+              {
+                "location": "southeastasia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "SwedenCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "SwedenCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "uksouth"
+            ],
+            "locationInfo": [
+              {
+                "location": "uksouth",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "westeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "westeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "westus"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_2G",
+            "locations": [
+              "WestUS3"
+            ],
+            "locationInfo": [
+              {
+                "location": "WestUS3",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "australiaeast"
+            ],
+            "locationInfo": [
+              {
+                "location": "australiaeast",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "CanadaCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "CanadaCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "CentralIndia"
+            ],
+            "locationInfo": [
+              {
+                "location": "CentralIndia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "centralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "centralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "centraluseuap"
+            ],
+            "locationInfo": [
+              {
+                "location": "centraluseuap",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "eastasia"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastasia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "eastus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "EastUS2EUAP"
+            ],
+            "locationInfo": [
+              {
+                "location": "EastUS2EUAP",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "GermanyWestCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "GermanyWestCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "KoreaCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "KoreaCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "northcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "northcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "northeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "northeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "southeastasia"
+            ],
+            "locationInfo": [
+              {
+                "location": "southeastasia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "SwedenCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "SwedenCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "uksouth"
+            ],
+            "locationInfo": [
+              {
+                "location": "uksouth",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "westeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "westeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "westus"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_4G",
+            "locations": [
+              "WestUS3"
+            ],
+            "locationInfo": [
+              {
+                "location": "WestUS3",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "6144,12288,24576"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "australiaeast"
+            ],
+            "locationInfo": [
+              {
+                "location": "australiaeast",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "CanadaCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "CanadaCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "CentralIndia"
+            ],
+            "locationInfo": [
+              {
+                "location": "CentralIndia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "centralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "centralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "centraluseuap"
+            ],
+            "locationInfo": [
+              {
+                "location": "centraluseuap",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "eastasia"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastasia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "eastus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "EastUS2EUAP"
+            ],
+            "locationInfo": [
+              {
+                "location": "EastUS2EUAP",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "GermanyWestCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "GermanyWestCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "KoreaCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "KoreaCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "northcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "northcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "northeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "northeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "southeastasia"
+            ],
+            "locationInfo": [
+              {
+                "location": "southeastasia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "SwedenCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "SwedenCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "uksouth"
+            ],
+            "locationInfo": [
+              {
+                "location": "uksouth",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "westeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "westeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "westus"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_8G",
+            "locations": [
+              "WestUS3"
+            ],
+            "locationInfo": [
+              {
+                "location": "WestUS3",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "8"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "12288,24576,49152"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L13_5G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "13.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "64368"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "australiaeast"
+            ],
+            "locationInfo": [
+              {
+                "location": "australiaeast",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "centralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "centralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "eastus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "GermanyWestCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "GermanyWestCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "northeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "northeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "southeastasia"
+            ],
+            "locationInfo": [
+              {
+                "location": "southeastasia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "uksouth"
+            ],
+            "locationInfo": [
+              {
+                "location": "uksouth",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "westeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "westeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "westus"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L16G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "16"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "86491"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L18G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "18"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "85824"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "australiaeast"
+            ],
+            "locationInfo": [
+              {
+                "location": "australiaeast",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "centralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "centralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "eastus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "GermanyWestCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "GermanyWestCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "northeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "northeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "southeastasia"
+            ],
+            "locationInfo": [
+              {
+                "location": "southeastasia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "uksouth"
+            ],
+            "locationInfo": [
+              {
+                "location": "uksouth",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "westeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "westeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "westus"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L4_5G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "4.5"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "21623"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "australiaeast"
+            ],
+            "locationInfo": [
+              {
+                "location": "australiaeast",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "centralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "centralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "eastus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "GermanyWestCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "GermanyWestCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "northeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "northeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "southeastasia"
+            ],
+            "locationInfo": [
+              {
+                "location": "southeastasia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "uksouth"
+            ],
+            "locationInfo": [
+              {
+                "location": "uksouth",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "westeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "westeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "westus"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_L9G",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "9"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "43246"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "australiaeast"
+            ],
+            "locationInfo": [
+              {
+                "location": "australiaeast",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "CanadaCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "CanadaCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "CentralIndia"
+            ],
+            "locationInfo": [
+              {
+                "location": "CentralIndia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "centralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "centralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "centraluseuap"
+            ],
+            "locationInfo": [
+              {
+                "location": "centraluseuap",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "eastasia"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastasia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "eastus"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "eastus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "eastus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "EastUS2EUAP"
+            ],
+            "locationInfo": [
+              {
+                "location": "EastUS2EUAP",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "GermanyWestCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "GermanyWestCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "KoreaCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "KoreaCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "northcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "northcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "northeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "northeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "southcentralus"
+            ],
+            "locationInfo": [
+              {
+                "location": "southcentralus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "southeastasia"
+            ],
+            "locationInfo": [
+              {
+                "location": "southeastasia",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "SwedenCentral"
+            ],
+            "locationInfo": [
+              {
+                "location": "SwedenCentral",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "uksouth"
+            ],
+            "locationInfo": [
+              {
+                "location": "uksouth",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "westeurope"
+            ],
+            "locationInfo": [
+              {
+                "location": "westeurope",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "westus"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "westus2"
+            ],
+            "locationInfo": [
+              {
+                "location": "westus2",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          },
+          {
+            "resourceType": "caches",
+            "name": "Standard_Scalable",
+            "locations": [
+              "WestUS3"
+            ],
+            "locationInfo": [
+              {
+                "location": "WestUS3",
+                "zones": [],
+                "zoneDetails": []
+              }
+            ],
+            "capabilities": [
+              {
+                "name": "throughput (GB/s)",
+                "value": "2"
+              },
+              {
+                "name": "cache sizes (GB)",
+                "value": "3072,6144,12288"
+              },
+              {
+                "name": "scalingFactors",
+                "value": "1.0,1.33,2.0,4.0"
+              }
+            ],
+            "restrictions": []
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/storagecachetestrg8537?api-version=**",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-174d9e08a4df4d49b3a2c63d19141f0e-f751f2502565b247-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "fddde61aaf51ff303e188ee7cc0b678e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 21 Mar 2023 08:05:11 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVE9SQUdFQ0FDSEVURVNUUkc4NTM3LUVBU1RVUyIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2022-09-01",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1885d928-16c1-4d57-beb8-49fcddcf7f22",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14998",
+        "x-ms-request-id": "1885d928-16c1-4d57-beb8-49fcddcf7f22",
+        "x-ms-routing-request-id": "JAPANEAST:20230321T080512Z:1885d928-16c1-4d57-beb8-49fcddcf7f22"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVE9SQUdFQ0FDSEVURVNUUkc4NTM3LUVBU1RVUyIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-174d9e08a4df4d49b3a2c63d19141f0e-44671dcb1dddfc46-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "bdd2b4de292331583f03e938852d3a9b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 21 Mar 2023 08:05:12 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1TVE9SQUdFQ0FDSEVURVNUUkc4NTM3LUVBU1RVUyIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2022-09-01",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5e70c401-bb55-4891-b027-194bc937b3c7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "5e70c401-bb55-4891-b027-194bc937b3c7",
+        "x-ms-routing-request-id": "JAPANEAST:20230321T080512Z:5e70c401-bb55-4891-b027-194bc937b3c7"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1394956616",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

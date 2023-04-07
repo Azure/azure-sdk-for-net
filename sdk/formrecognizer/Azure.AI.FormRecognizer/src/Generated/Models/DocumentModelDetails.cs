@@ -32,14 +32,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
+        /// <param name="expirationDateTime"> Date and time (UTC) when the document model will expire. </param>
         /// <param name="apiVersion"> API version used to create this document model. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="documentTypes"> Supported document types. </param>
-        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdOn, string apiVersion, IReadOnlyDictionary<string, string> tags, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes)
+        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdOn, DateTimeOffset? expirationDateTime, string apiVersion, IReadOnlyDictionary<string, string> tags, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes)
         {
             ModelId = modelId;
             Description = description;
             CreatedOn = createdOn;
+            ExpirationDateTime = expirationDateTime;
             ApiVersion = apiVersion;
             Tags = tags;
             DocumentTypes = documentTypes;

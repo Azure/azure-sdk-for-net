@@ -77,6 +77,7 @@ trigger:
     - sdk/fluidrelay/Azure.ResourceManager.FluidRelay
     - sdk/frontdoor/Azure.ResourceManager.FrontDoor
     - sdk/grafana/Azure.ResourceManager.Grafana
+    - sdk/graphservices/Azure.ResourceManager.GraphServices
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
     - sdk/healthbot/Azure.ResourceManager.HealthBot
@@ -117,6 +118,7 @@ trigger:
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
     - sdk/orbital/Azure.ResourceManager.Orbital
+    - sdk/paloaltonetworks/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
@@ -125,6 +127,7 @@ trigger:
     - sdk/providerhub/Azure.ResourceManager.ProviderHub
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/quantum/Azure.ResourceManager.Quantum
+    - sdk/qumulo/Azure.ResourceManager.Qumulo
     - sdk/quota/Azure.ResourceManager.Quota
     - sdk/recoveryservices/Azure.ResourceManager.RecoveryServices
     - sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup
@@ -243,6 +246,7 @@ pr:
     - sdk/fluidrelay/Azure.ResourceManager.FluidRelay
     - sdk/frontdoor/Azure.ResourceManager.FrontDoor
     - sdk/grafana/Azure.ResourceManager.Grafana
+    - sdk/graphservices/Azure.ResourceManager.GraphServices
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
     - sdk/healthbot/Azure.ResourceManager.HealthBot
@@ -283,6 +287,7 @@ pr:
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
     - sdk/orbital/Azure.ResourceManager.Orbital
+    - sdk/paloaltonetworks/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
@@ -291,6 +296,7 @@ pr:
     - sdk/providerhub/Azure.ResourceManager.ProviderHub
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/quantum/Azure.ResourceManager.Quantum
+    - sdk/qumulo/Azure.ResourceManager.Qumulo
     - sdk/quota/Azure.ResourceManager.Quota
     - sdk/recoveryservices/Azure.ResourceManager.RecoveryServices
     - sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup

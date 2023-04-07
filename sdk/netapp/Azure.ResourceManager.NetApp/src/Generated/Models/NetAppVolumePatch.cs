@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        /// <summary> Maximum throughput in Mibps that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
+        /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
         public float? ThroughputMibps { get; set; }
         /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
         public NetAppVolumePatchDataProtection DataProtection { get; set; }
