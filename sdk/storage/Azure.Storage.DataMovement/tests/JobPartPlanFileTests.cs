@@ -5,12 +5,13 @@ using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Storage.DataMovement.JobPlanModels;
+using Azure.Core.TestFramework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
     public class JobPartPlanFileTests : DataMovementTestBase
     {
-        public JobPartPlanFileTests(bool async) : base(async)
+        public JobPartPlanFileTests(bool async) : base(async, default)
         {
         }
 
