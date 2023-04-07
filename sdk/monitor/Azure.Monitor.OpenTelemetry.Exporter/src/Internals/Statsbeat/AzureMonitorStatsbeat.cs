@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal static Regex s_endpoint_pattern => new("^https?://(?:www\\.)?([^/.-]+)");
 
-        internal AzureMonitorStatsbeat(ConnectionVars connectionStringVars, IPlatform platform, IVmMetadataProvider vmMetadataProvider)
+        internal AzureMonitorStatsbeat(ConnectionVars connectionStringVars, IPlatform platform, IVmMetadataProvider? vmMetadataProvider)
         {
             _statsbeat_ConnectionString = GetStatsbeatConnectionString(connectionStringVars.IngestionEndpoint);
 

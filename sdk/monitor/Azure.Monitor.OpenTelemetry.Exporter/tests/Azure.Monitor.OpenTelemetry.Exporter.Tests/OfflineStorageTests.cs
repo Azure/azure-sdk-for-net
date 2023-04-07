@@ -243,7 +243,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Transport = mockTransport,
                 EnableStatsbeat = false, // disabled in tests.
             };
-            AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options, new MockPlatform(), new MockVmMetadataProvider());
+            AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options, new MockPlatform());
 
             // Overwrite storage with mock
             transmitter._fileBlobProvider = new MockFileProvider();
