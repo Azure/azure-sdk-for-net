@@ -10,35 +10,35 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class VirtualNetworksPropertiesInfraVnetProfileKubevirt : IUtf8JsonSerializable
+    internal partial class VirtualNetworksPropertiesInfraVnetProfileNetworkCloud : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VnetName))
+            if (Optional.IsDefined(NetworkId))
             {
-                writer.WritePropertyName("vnetName"u8);
-                writer.WriteStringValue(VnetName);
+                writer.WritePropertyName("networkId"u8);
+                writer.WriteStringValue(NetworkId);
             }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworksPropertiesInfraVnetProfileKubevirt DeserializeVirtualNetworksPropertiesInfraVnetProfileKubevirt(JsonElement element)
+        internal static VirtualNetworksPropertiesInfraVnetProfileNetworkCloud DeserializeVirtualNetworksPropertiesInfraVnetProfileNetworkCloud(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> vnetName = default;
+            Optional<string> networkId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vnetName"u8))
+                if (property.NameEquals("networkId"u8))
                 {
-                    vnetName = property.Value.GetString();
+                    networkId = property.Value.GetString();
                     continue;
                 }
             }
-            return new VirtualNetworksPropertiesInfraVnetProfileKubevirt(vnetName.Value);
+            return new VirtualNetworksPropertiesInfraVnetProfileNetworkCloud(networkId.Value);
         }
     }
 }
