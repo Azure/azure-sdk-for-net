@@ -2014,9 +2014,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(_endpoint);
             uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
-            foreach (var param in guids)
+            if (guids != null && Optional.IsCollectionDefined(guids))
             {
-                uri.AppendQuery("guid", param, true);
+                foreach (var param in guids)
+                {
+                    uri.AppendQuery("guid", param, true);
+                }
             }
             if (minExtInfo != null)
             {
@@ -2026,11 +2029,11 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("ignoreRelationships", ignoreRelationships.Value, true);
             }
-            if (excludeRelationshipTypes != null)
+            if (excludeRelationshipTypes != null && Optional.IsCollectionDefined(excludeRelationshipTypes))
             {
-                foreach (var param0 in excludeRelationshipTypes)
+                foreach (var param in excludeRelationshipTypes)
                 {
-                    uri.AppendQuery("excludeRelationshipTypes", param0, true);
+                    uri.AppendQuery("excludeRelationshipTypes", param, true);
                 }
             }
             request.Uri = uri;
@@ -2063,9 +2066,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(_endpoint);
             uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
-            foreach (var param in guids)
+            if (guids != null && Optional.IsCollectionDefined(guids))
             {
-                uri.AppendQuery("guid", param, true);
+                foreach (var param in guids)
+                {
+                    uri.AppendQuery("guid", param, true);
+                }
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
