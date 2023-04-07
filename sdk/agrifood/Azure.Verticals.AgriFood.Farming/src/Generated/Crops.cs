@@ -278,42 +278,42 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/crops", false);
-            if (phenotypes != null)
+            if (phenotypes != null && Optional.IsCollectionDefined(phenotypes))
             {
                 foreach (var param in phenotypes)
                 {
                     uri.AppendQuery("phenotypes", param, true);
                 }
             }
-            if (breedingMethods != null)
+            if (breedingMethods != null && Optional.IsCollectionDefined(breedingMethods))
             {
                 foreach (var param in breedingMethods)
                 {
                     uri.AppendQuery("breedingMethods", param, true);
                 }
             }
-            if (cropIds != null)
+            if (cropIds != null && Optional.IsCollectionDefined(cropIds))
             {
                 foreach (var param in cropIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null)
+            if (names != null && Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null)
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null)
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {
