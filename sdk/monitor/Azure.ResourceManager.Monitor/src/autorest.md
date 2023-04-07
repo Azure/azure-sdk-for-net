@@ -260,6 +260,7 @@ rename-mapping:
   TimeSeriesElement: MonitorTimeSeriesElement
   StorageBlobDestination.storageAccountResourceId: -|arm-id
   StorageTableDestination.storageAccountResourceId: -|arm-id
+  PrivateLinkScopedResource: DataCollectionRulePrivateLinkScopedResource
 
 directive:
   # remove operations because they are covered in resourcemanager we no longer need to generate them here, and they are causing duplicate schemas
