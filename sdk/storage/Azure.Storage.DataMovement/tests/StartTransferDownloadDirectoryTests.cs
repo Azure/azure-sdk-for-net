@@ -14,6 +14,7 @@ using NUnit.Framework;
 using System.IO;
 using Azure.Storage.Blobs.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.CodeAnalysis;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -53,6 +54,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Set transfer options
             options ??= new ContainerTransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
@@ -100,6 +102,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             // List all files in the destination local path
+            failureTransferHolder.AssertFailureCheck();
             List<string> destinationFiles = ListFilesInDirectory(destinationLocalPath);
             Assert.AreEqual(destinationFiles.Count, sourceFiles.Count);
             destinationFiles.Sort();
@@ -468,16 +471,20 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Create transfer to do a AwaitCompletion
+                ContainerTransferOptions options = new ContainerTransferOptions();
+                FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
                 DataTransfer transfer = await CreateStartTransfer(
                     test.Container,
                     destinationFolder,
-                    1);
+                    1,
+                    options: options);
 
                 // Act
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
                 await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
                 // Assert
+                failureTransferHolder.AssertFailureCheck();
                 Assert.NotNull(transfer);
                 Assert.IsTrue(transfer.HasCompleted);
                 Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
@@ -503,6 +510,7 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     CreateMode = StorageResourceCreateMode.Fail
                 };
+                FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
                 // Create at least one of the dest files to make it fail
                 File.Create(Path.Combine(destinationFolder, "blob1")).Close();
@@ -519,6 +527,7 @@ namespace Azure.Storage.DataMovement.Tests
                 await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
                 // Assert
+                failureTransferHolder.AssertFailureCheck();
                 Assert.NotNull(transfer);
                 Assert.IsTrue(transfer.HasCompleted);
                 Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
@@ -545,6 +554,7 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     CreateMode = StorageResourceCreateMode.Skip
                 };
+                FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
                 // Create at least one of the dest files to make it fail
                 File.Create(Path.Combine(destinationFolder, "blob1")).Close();
@@ -561,6 +571,7 @@ namespace Azure.Storage.DataMovement.Tests
                 await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
                 // Assert
+                failureTransferHolder.AssertFailureCheck();
                 Assert.NotNull(transfer);
                 Assert.IsTrue(transfer.HasCompleted);
                 Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);
@@ -582,16 +593,21 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Create transfer to do a EnsureCompleted
+                ContainerTransferOptions options = new ContainerTransferOptions();
+                FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
+
                 DataTransfer transfer = await CreateStartTransfer(
                         test.Container,
                         destinationFolder,
-                        1);
+                        1,
+                        options: options);
 
                 // Act
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
                 transfer.EnsureCompleted(cancellationTokenSource.Token);
 
                 // Assert
+                failureTransferHolder.AssertFailureCheck();
                 Assert.NotNull(transfer);
                 Assert.IsTrue(transfer.HasCompleted);
                 Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
@@ -617,6 +633,7 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     CreateMode = StorageResourceCreateMode.Fail
                 };
+                FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
                 // Create at least one of the dest files to make it fail
                 File.Create(Path.Combine(destinationFolder, "blob1")).Close();
@@ -633,6 +650,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transfer.EnsureCompleted(cancellationTokenSource.Token);
 
                 // Assert
+                failureTransferHolder.AssertFailureCheck();
                 Assert.NotNull(transfer);
                 Assert.IsTrue(transfer.HasCompleted);
                 Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
@@ -659,6 +677,7 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     CreateMode = StorageResourceCreateMode.Skip
                 };
+                FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
                 // Create at least one of the dest files to make it fail
                 File.Create(Path.Combine(destinationFolder, "blob1")).Close();
@@ -675,6 +694,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transfer.EnsureCompleted(cancellationTokenSource.Token);
 
                 // Assert
+                failureTransferHolder.AssertFailureCheck();
                 Assert.NotNull(transfer);
                 Assert.IsTrue(transfer.HasCompleted);
                 Assert.AreEqual(StorageTransferStatus.CompletedWithSkippedTransfers, transfer.TransferStatus);

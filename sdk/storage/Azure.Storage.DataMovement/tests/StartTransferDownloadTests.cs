@@ -42,21 +42,18 @@ namespace Azure.Storage.DataMovement.Tests
             public SingleTransferOptions DownloadOptions;
             public DataTransfer DataTransfer;
             public bool CompletedStatus;
-            public Exception Exception;
 
             public VerifyDownloadBlobContentInfo(
                 string sourceFile,
                 string destinationFile,
                 SingleTransferOptions downloadOptions,
-                bool completed,
-                Exception exception)
+                bool completed)
             {
                 SourceLocalPath = sourceFile;
                 DestinationLocalPath = destinationFile;
                 DownloadOptions = downloadOptions;
                 CompletedStatus = completed;
                 DataTransfer = default;
-                Exception = exception;
             }
         };
 
@@ -109,6 +106,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // If blobNames is popluated make sure these number of blobs match
                 Assert.AreEqual(blobCount, options.Count);
             }
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
@@ -125,7 +123,6 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     // Set up Blob to be downloaded
                     bool completed = false;
-                    Exception exception = null;
                     var data = GetRandomBuffer(size);
                     using Stream originalStream = await CreateLimitedMemoryStream(size);
                     string localSourceFile = Path.GetTempFileName();
@@ -141,11 +138,6 @@ namespace Azure.Storage.DataMovement.Tests
                         }
                         return Task.CompletedTask;
                     };
-                    options[i].TransferFailed += (TransferFailedEventArgs args) =>
-                    {
-                        exception = args.Exception;
-                        return Task.CompletedTask;
-                    };
 
                     // Create destination file path
                     string destFile = Path.GetTempPath() + Path.GetRandomFileName();
@@ -154,8 +146,7 @@ namespace Azure.Storage.DataMovement.Tests
                         localSourceFile,
                         destFile,
                         options[i],
-                        completed,
-                        exception));
+                        completed));
                 }
 
                 // Schedule all download blobs consecutively
@@ -183,13 +174,10 @@ namespace Azure.Storage.DataMovement.Tests
                     downloadedBlobInfo[i].DataTransfer = transfer;
                 }
 
+                failureTransferHolder.AssertFailureCheck();
                 for (int i = 0; i < downloadedBlobInfo.Count; i++)
                 {
                     // Assert
-                    if (downloadedBlobInfo[i].Exception != null)
-                    {
-                        Assert.Fail(downloadedBlobInfo[i].Exception.Message);
-                    }
                     Assert.NotNull(downloadedBlobInfo[i].DataTransfer);
                     CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                     await downloadedBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
@@ -431,7 +419,6 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
-            string exceptionMessage = default;
             int waitTimeInSec = 10;
             bool seenInProgress = false;
             SingleTransferOptions options = new SingleTransferOptions();
@@ -452,10 +439,6 @@ namespace Azure.Storage.DataMovement.Tests
                 options: optionsList).ConfigureAwait(false);
 
             // Assert
-            if (!string.IsNullOrEmpty(exceptionMessage))
-            {
-                Assert.Fail(exceptionMessage);
-            }
             Assert.IsTrue(seenInProgress);
         }
 
@@ -633,6 +616,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // If blobNames is popluated make sure these number of blobs match
                 Assert.AreEqual(blobCount, options.Count);
             }
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
@@ -649,19 +633,11 @@ namespace Azure.Storage.DataMovement.Tests
                 for (int i = 0; i < blobCount; i++)
                 {
                     bool completed = false;
-                    Exception exception = null;
                     // Set up Blob to be downloaded
                     var data = GetRandomBuffer(size);
                     using Stream originalStream = await CreateLimitedMemoryStream(size);
                     string localSourceFile = Path.GetTempFileName();
                     await CreateAppendBlob(container, localSourceFile, blobNames[i], size);
-
-                    // Set up event handler for the respective blob
-                    options[i].TransferFailed += (TransferFailedEventArgs args) =>
-                    {
-                        exception = args.Exception;
-                        return Task.CompletedTask;
-                    };
 
                     // Create destination file path
                     string destFile = Path.GetTempPath() + Path.GetRandomFileName();
@@ -670,8 +646,7 @@ namespace Azure.Storage.DataMovement.Tests
                         localSourceFile,
                         destFile,
                         options[i],
-                        completed,
-                        exception));
+                        completed));
                 }
 
                 // Schedule all download blobs consecutively
@@ -698,13 +673,10 @@ namespace Azure.Storage.DataMovement.Tests
                     downloadedBlobInfo[i].DataTransfer = transfer;
                 }
 
+                failureTransferHolder.AssertFailureCheck();
                 for (int i = 0; i < downloadedBlobInfo.Count; i++)
                 {
                     // Assert
-                    if (downloadedBlobInfo[i].Exception != null)
-                    {
-                        Assert.Fail(downloadedBlobInfo[i].Exception.Message);
-                    }
                     Assert.NotNull(downloadedBlobInfo[i].DataTransfer);
                     CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                     await downloadedBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
@@ -924,7 +896,6 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
-            string exceptionMessage = default;
             int waitTimeInSec = 10;
             AutoResetEvent InProgressWait = new AutoResetEvent(false);
             SingleTransferOptions options = new SingleTransferOptions();
@@ -937,15 +908,7 @@ namespace Azure.Storage.DataMovement.Tests
                 }
                 return Task.CompletedTask;
             };
-            options.TransferFailed += (TransferFailedEventArgs args) =>
-            {
-                if (args.Exception != null)
-                {
-                    exceptionMessage = args.Exception.Message;
-                    InProgressWait.Set();
-                }
-                return Task.CompletedTask;
-            };
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
             await DownloadAppendBlobsAndVerify(
@@ -954,10 +917,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options: optionsList).ConfigureAwait(false);
 
             // Assert
-            if (!string.IsNullOrEmpty(exceptionMessage))
-            {
-                Assert.Fail(exceptionMessage);
-            }
+            failureTransferHolder.AssertFailureCheck();
             Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
         }
 
@@ -1223,6 +1183,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // If blobNames is popluated make sure these number of blobs match
                 Assert.AreEqual(blobCount, options.Count);
             }
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
@@ -1239,7 +1200,6 @@ namespace Azure.Storage.DataMovement.Tests
                 for (int i = 0; i < blobCount; i++)
                 {
                     bool completed = false;
-                    Exception exception = null;
                     // Set up Blob to be downloaded
                     var data = GetRandomBuffer(size);
                     using Stream originalStream = await CreateLimitedMemoryStream(size);
@@ -1249,7 +1209,6 @@ namespace Azure.Storage.DataMovement.Tests
                     // Set up event handler for the respective blob
                     options[i].TransferFailed += (TransferFailedEventArgs args) =>
                     {
-                        exception = args.Exception;
                         return Task.CompletedTask;
                     };
 
@@ -1260,8 +1219,7 @@ namespace Azure.Storage.DataMovement.Tests
                         localSourceFile,
                         destFile,
                         options[i],
-                        completed,
-                        exception));
+                        completed));
                 }
 
                 // Schedule all download blobs consecutively
@@ -1289,13 +1247,10 @@ namespace Azure.Storage.DataMovement.Tests
                     downloadedBlobInfo[i].DataTransfer = transfer;
                 }
 
+                failureTransferHolder.AssertFailureCheck();
                 for (int i = 0; i < downloadedBlobInfo.Count; i++)
                 {
                     // Assert
-                    if (downloadedBlobInfo[i].Exception != null)
-                    {
-                        Assert.Fail(downloadedBlobInfo[i].Exception.Message);
-                    }
                     Assert.NotNull(downloadedBlobInfo[i].DataTransfer);
                     CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                     await downloadedBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
