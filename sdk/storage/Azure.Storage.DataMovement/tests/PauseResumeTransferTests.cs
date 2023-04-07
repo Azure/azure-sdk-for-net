@@ -69,6 +69,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_Id()
         {
             // Arrange
@@ -108,6 +109,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_DataTransfer()
         {
             // Arrange
@@ -145,6 +147,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public void TryPauseTransferAsync_Error()
         {
             // Arrange
@@ -161,6 +164,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_AlreadyPaused()
         {
             // Arrange
@@ -202,6 +206,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task PauseThenResumeTransferAsync()
         {
             // Arrange
