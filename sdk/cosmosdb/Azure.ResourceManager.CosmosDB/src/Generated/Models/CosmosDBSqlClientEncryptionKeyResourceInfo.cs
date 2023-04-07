@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="encryptionAlgorithm"> Encryption algorithm that will be used along with this client encryption key to encrypt/decrypt data. </param>
         /// <param name="wrappedDataEncryptionKey"> Wrapped (encrypted) form of the key represented as a byte array. </param>
         /// <param name="keyWrapMetadata"> Metadata for the wrapping provider that can be used to unwrap the wrapped client encryption key. </param>
-        internal CosmosDBSqlClientEncryptionKeyResourceInfo(string id, string encryptionAlgorithm, byte[] wrappedDataEncryptionKey, KeyWrapMetadata keyWrapMetadata)
+        internal CosmosDBSqlClientEncryptionKeyResourceInfo(string id, string encryptionAlgorithm, byte[] wrappedDataEncryptionKey, CosmosDBKeyWrapMetadata keyWrapMetadata)
         {
             Id = id;
             EncryptionAlgorithm = encryptionAlgorithm;
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Wrapped (encrypted) form of the key represented as a byte array. </summary>
         public byte[] WrappedDataEncryptionKey { get; set; }
         /// <summary> Metadata for the wrapping provider that can be used to unwrap the wrapped client encryption key. </summary>
-        public KeyWrapMetadata KeyWrapMetadata { get; set; }
+        public CosmosDBKeyWrapMetadata KeyWrapMetadata { get; set; }
     }
 }

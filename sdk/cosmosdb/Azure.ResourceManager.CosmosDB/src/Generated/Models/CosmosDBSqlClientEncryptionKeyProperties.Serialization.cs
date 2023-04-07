@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> id = default;
             Optional<string> encryptionAlgorithm = default;
             Optional<byte[]> wrappedDataEncryptionKey = default;
-            Optional<KeyWrapMetadata> keyWrapMetadata = default;
+            Optional<CosmosDBKeyWrapMetadata> keyWrapMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyWrapMetadata = KeyWrapMetadata.DeserializeKeyWrapMetadata(property.Value);
+                    keyWrapMetadata = CosmosDBKeyWrapMetadata.DeserializeCosmosDBKeyWrapMetadata(property.Value);
                     continue;
                 }
             }

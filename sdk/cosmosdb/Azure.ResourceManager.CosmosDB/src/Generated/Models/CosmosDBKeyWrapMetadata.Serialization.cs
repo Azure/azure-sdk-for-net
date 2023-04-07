@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class KeyWrapMetadata : IUtf8JsonSerializable
+    public partial class CosmosDBKeyWrapMetadata : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(KeyWrapMetadataType))
+            if (Optional.IsDefined(CosmosDBKeyWrapMetadataType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(KeyWrapMetadataType);
+                writer.WriteStringValue(CosmosDBKeyWrapMetadataType);
             }
             if (Optional.IsDefined(Value))
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        internal static KeyWrapMetadata DeserializeKeyWrapMetadata(JsonElement element)
+        internal static CosmosDBKeyWrapMetadata DeserializeCosmosDBKeyWrapMetadata(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new KeyWrapMetadata(name.Value, type.Value, value.Value, algorithm.Value);
+            return new CosmosDBKeyWrapMetadata(name.Value, type.Value, value.Value, algorithm.Value);
         }
     }
 }

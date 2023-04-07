@@ -533,6 +533,9 @@ directive:
 - rename-model:
     from: RestorableTableGetResult
     to: RestorableTable
+- rename-model:
+    from: KeyWrapMetadata
+    to: CosmosDBKeyWrapMetadata
 # same as `Metric`
 - rename-model:
     from: Metric

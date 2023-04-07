@@ -8,22 +8,22 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Represents key wrap metadata that a key wrapping provider can use to wrap/unwrap a client encryption key. </summary>
-    public partial class KeyWrapMetadata
+    public partial class CosmosDBKeyWrapMetadata
     {
-        /// <summary> Initializes a new instance of KeyWrapMetadata. </summary>
-        public KeyWrapMetadata()
+        /// <summary> Initializes a new instance of CosmosDBKeyWrapMetadata. </summary>
+        public CosmosDBKeyWrapMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyWrapMetadata. </summary>
+        /// <summary> Initializes a new instance of CosmosDBKeyWrapMetadata. </summary>
         /// <param name="name"> The name of associated KeyEncryptionKey (aka CustomerManagedKey). </param>
-        /// <param name="keyWrapMetadataType"> ProviderName of KeyStoreProvider. </param>
+        /// <param name="cosmosDBKeyWrapMetadataType"> ProviderName of KeyStoreProvider. </param>
         /// <param name="value"> Reference / link to the KeyEncryptionKey. </param>
         /// <param name="algorithm"> Algorithm used in wrapping and unwrapping of the data encryption key. </param>
-        internal KeyWrapMetadata(string name, string keyWrapMetadataType, string value, string algorithm)
+        internal CosmosDBKeyWrapMetadata(string name, string cosmosDBKeyWrapMetadataType, string value, string algorithm)
         {
             Name = name;
-            KeyWrapMetadataType = keyWrapMetadataType;
+            CosmosDBKeyWrapMetadataType = cosmosDBKeyWrapMetadataType;
             Value = value;
             Algorithm = algorithm;
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The name of associated KeyEncryptionKey (aka CustomerManagedKey). </summary>
         public string Name { get; set; }
         /// <summary> ProviderName of KeyStoreProvider. </summary>
-        public string KeyWrapMetadataType { get; set; }
+        public string CosmosDBKeyWrapMetadataType { get; set; }
         /// <summary> Reference / link to the KeyEncryptionKey. </summary>
         public string Value { get; set; }
         /// <summary> Algorithm used in wrapping and unwrapping of the data encryption key. </summary>
