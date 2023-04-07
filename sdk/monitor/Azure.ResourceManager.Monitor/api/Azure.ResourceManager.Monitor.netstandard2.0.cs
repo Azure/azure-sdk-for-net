@@ -2458,13 +2458,13 @@ namespace Azure.ResourceManager.Monitor.Models
         public StorageBlobDestination() { }
         public string ContainerName { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string StorageAccountResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountResourceId { get { throw null; } set { } }
     }
     public partial class StorageTableDestination
     {
         public StorageTableDestination() { }
         public string Name { get { throw null; } set { } }
-        public string StorageAccountResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountResourceId { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
     }
     public partial class SubscriptionMonitorMetric

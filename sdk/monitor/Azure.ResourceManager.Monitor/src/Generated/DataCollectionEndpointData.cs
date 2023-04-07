@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public DataCollectionEndpointData(AzureLocation location) : base(location)
         {
-            PrivateLinkScopedResources = new ChangeTrackingList<PrivateLinkScopedResource>();
+            PrivateLinkScopedResources = new ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of DataCollectionEndpointData. </summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor
         /// Metadata for the resource. This property is READ-ONLY.
         /// Serialized Name: DataCollectionEndpointResource.properties.metadata
         /// </param>
-        internal DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointResourceKind? kind, ManagedServiceIdentity identity, ETag? etag, string description, string immutableId, DataCollectionEndpointConfigurationAccess configurationAccess, DataCollectionEndpointLogsIngestion logsIngestion, DataCollectionEndpointMetricsIngestion metricsIngestion, DataCollectionEndpointNetworkAcls networkAcls, DataCollectionEndpointProvisioningState? provisioningState, IReadOnlyList<PrivateLinkScopedResource> privateLinkScopedResources, DataCollectionEndpointFailoverConfiguration failoverConfiguration, DataCollectionEndpointMetadata metadata) : base(id, name, resourceType, systemData, tags, location)
+        internal DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointResourceKind? kind, ManagedServiceIdentity identity, ETag? etag, string description, string immutableId, DataCollectionEndpointConfigurationAccess configurationAccess, DataCollectionEndpointLogsIngestion logsIngestion, DataCollectionEndpointMetricsIngestion metricsIngestion, DataCollectionEndpointNetworkAcls networkAcls, DataCollectionEndpointProvisioningState? provisioningState, IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo> privateLinkScopedResources, DataCollectionEndpointFailoverConfiguration failoverConfiguration, DataCollectionEndpointMetadata metadata) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Identity = identity;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Monitor
         /// List of Azure Monitor Private Link Scope Resources to which this data collection endpoint resource is associated. This property is READ-ONLY.
         /// Serialized Name: DataCollectionEndpointResource.properties.privateLinkScopedResources
         /// </summary>
-        public IReadOnlyList<PrivateLinkScopedResource> PrivateLinkScopedResources { get; }
+        public IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get; }
         /// <summary>
         /// Failover configuration on this endpoint. This property is READ-ONLY.
         /// Serialized Name: DataCollectionEndpointResource.properties.failoverConfiguration

@@ -10,21 +10,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class PrivateLinkScopedResource
+    public partial class DataCollectionRulePrivateLinkScopedResourceInfo
     {
-        internal static PrivateLinkScopedResource DeserializePrivateLinkScopedResource(JsonElement element)
+        internal static DataCollectionRulePrivateLinkScopedResourceInfo DeserializeDataCollectionRulePrivateLinkScopedResourceInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<string> scopeId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scopeId"u8))
@@ -33,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new PrivateLinkScopedResource(resourceId.Value, scopeId.Value);
+            return new DataCollectionRulePrivateLinkScopedResourceInfo(resourceId.Value, scopeId.Value);
         }
     }
 }

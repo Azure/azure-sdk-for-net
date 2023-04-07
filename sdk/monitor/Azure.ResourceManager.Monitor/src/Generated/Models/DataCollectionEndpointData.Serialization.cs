@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<DataCollectionEndpointMetricsIngestion> metricsIngestion = default;
             Optional<DataCollectionEndpointNetworkAcls> networkAcls = default;
             Optional<DataCollectionEndpointProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<PrivateLinkScopedResource>> privateLinkScopedResources = default;
+            Optional<IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
             Optional<DataCollectionEndpointFailoverConfiguration> failoverConfiguration = default;
             Optional<DataCollectionEndpointMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
@@ -256,10 +256,10 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateLinkScopedResource> array = new List<PrivateLinkScopedResource>();
+                            List<DataCollectionRulePrivateLinkScopedResourceInfo> array = new List<DataCollectionRulePrivateLinkScopedResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateLinkScopedResource.DeserializePrivateLinkScopedResource(item));
+                                array.Add(DataCollectionRulePrivateLinkScopedResourceInfo.DeserializeDataCollectionRulePrivateLinkScopedResourceInfo(item));
                             }
                             privateLinkScopedResources = array;
                             continue;
