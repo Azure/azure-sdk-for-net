@@ -309,6 +309,7 @@ namespace Azure.Storage.DataMovement
                         false,
                         _cancellationToken)).ConfigureAwait(false);
             }
+            await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -327,6 +328,7 @@ namespace Azure.Storage.DataMovement
                     _cancellationToken)).ConfigureAwait(false);
             }
             await OnTransferStatusChanged(StorageTransferStatus.CompletedWithSkippedTransfers).ConfigureAwait(false);
+            await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
         }
 
         /// <summary>
