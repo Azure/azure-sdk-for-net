@@ -5,11 +5,11 @@ using System;
 
 namespace Azure.Core
 {
-    internal class FixedDelay : Delay
+    internal class FixedDelayStrategy : DelayStrategy
     {
         private readonly TimeSpan _delay;
 
-        public FixedDelay(TimeSpan delay) : base(TimeSpan.FromMilliseconds(delay.TotalMilliseconds))
+        public FixedDelayStrategy(TimeSpan delay) : base(TimeSpan.FromMilliseconds(delay.TotalMilliseconds))
         {
             _delay = delay;
         }
