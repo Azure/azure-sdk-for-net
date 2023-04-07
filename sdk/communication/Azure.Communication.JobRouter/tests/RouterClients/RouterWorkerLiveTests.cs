@@ -32,7 +32,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var workerId = GenerateUniqueId($"{IdPrefix}{nameof(CreateWorkerTest)}");
             var totalCapacity = 100;
 
-            var channelConfig1 = new ChannelConfiguration(20);
+            var channelConfig1 = new ChannelConfiguration(20) { MaxNumberOfJobs = 5 };
 
             var channelConfigList = new Dictionary<string, ChannelConfiguration>()
             {
@@ -51,7 +51,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     QueueIds = queueAssignmentList.ToDictionary(x => x, _ => new QueueAssignment()),
                     Labels = workerLabels,
-                    ChannelConfigurations = channelConfigList,
+                    ChannelConfigurations = channelConfigList
                 });
 
             Assert.NotNull(routerWorkerResponse.Value);
@@ -128,8 +128,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     },
                     ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
                     {
-                        ["WebChat"] = new ChannelConfiguration(1),
-                        ["Voip"] = new ChannelConfiguration(10)
+                        ["WebChat"] = new ChannelConfiguration(1) { MaxNumberOfJobs = 4 },
+                        ["Voip"] = new ChannelConfiguration(10) { MaxNumberOfJobs = 9 }
                     },
                     AvailableForOffers = true,
                 });
@@ -146,7 +146,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     },
                     ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
                     {
-                        ["WebChat"] = new ChannelConfiguration(1),
+                        ["WebChat"] = new ChannelConfiguration(1) { MaxNumberOfJobs = 12 },
                         ["Voip"] = new ChannelConfiguration(10)
                     },
                     AvailableForOffers = true,
