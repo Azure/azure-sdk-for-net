@@ -81,11 +81,11 @@ namespace Azure.Storage.DataMovement.Tests
             // "abcdefgh-abcd-abcd-abcd-123456789abc--00210.steV02"
             // Transfer Id: abcdefgh-abcd-abcd-abcd-123456789abc
             // Part Num: 210
-            string blankPrefix = "startprefix";
-            string pathName3 = Path.Combine(blankPrefix, $"abcdefgh-abcd-abcd-abcd-123456789abc--00210.steV{schemaVersion}");
+            string prefixPath3 = Path.Combine("folder", "sub");
+            string pathName3 = Path.Combine(prefixPath3, $"abcdefgh-abcd-abcd-abcd-123456789abc--00210.steV{schemaVersion}");
             JobPartPlanFileName jobFileName3 = new JobPartPlanFileName(pathName3);
 
-            Assert.AreEqual(blankPrefix, jobFileName3.PrefixPath);
+            Assert.AreEqual(prefixPath3, jobFileName3.PrefixPath);
             Assert.AreEqual("abcdefgh-abcd-abcd-abcd-123456789abc", jobFileName3.Id);
             Assert.AreEqual(210, jobFileName3.JobPartNumber);
             Assert.AreEqual(schemaVersion, jobFileName3.SchemaVersion);
@@ -188,19 +188,21 @@ namespace Azure.Storage.DataMovement.Tests
         public void ToString_FullPath()
         {
             // "C:/folder/subfolder/12345678-1234-1234-1234-123456789abc--00001.steV01"
-            string originalPath = $"C:/folder/subfolder/12345678-1234-1234-1234-123456789abc--00001.steV{schemaVersion}";
+            string tempPath = Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar);
+            string originalPath = Path.Combine(tempPath, $"12345678-1234-1234-1234-123456789abc--00001.steV{schemaVersion}");
             JobPartPlanFileName jobFileName = new JobPartPlanFileName(originalPath);
             Assert.AreEqual(originalPath, jobFileName.ToString());
 
             // "F:/folder/foo/randomtransferidthataddsupto36charac--00001.steV01"
-            string originalPath2 = $"F:/folder/foo/randomtransferidthataddsupto36charac--00001.steV{schemaVersion}";
+            string originalPath2 = Path.Combine(tempPath, $"randomtransferidthataddsupto36charac--00001.steV{schemaVersion}");
             JobPartPlanFileName jobFileName2 = new JobPartPlanFileName(originalPath2);
             Assert.AreEqual(originalPath2, jobFileName2.ToString());
 
             // "/folder/sub/abcdefgh-abcd-abcd-abcd-123456789abc--00210.steV02"
             // Transfer Id: abcdefgh-abcd-abcd-abcd-123456789abc
             // Part Num: 210
-            string originalPath3 = $"/folder/sub/abcdefgh-abcd-abcd-abcd-123456789abc--00210.steV{schemaVersion}";
+            string prefixPath3 = Path.Combine("folder", "sub");
+            string originalPath3 = Path.Combine(prefixPath3, $"abcdefgh-abcd-abcd-abcd-123456789abc--00210.steV{schemaVersion}");
             JobPartPlanFileName jobFileName3 = new JobPartPlanFileName(originalPath3);
             Assert.AreEqual(originalPath3, jobFileName3.ToString());
         }
@@ -209,18 +211,19 @@ namespace Azure.Storage.DataMovement.Tests
         public void ToString_Divided()
         {
             // "C:/folder/subfolder/12345678-1234-1234-1234-123456789abc--00001.steV01"
-            string originalPath = $"C:\\folder\\subfolder\\12345678-1234-1234-1234-123456789abc--00001.steV{schemaVersion}";
+            string tempPath = Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar);
+            string originalPath = Path.Combine(tempPath, $"12345678-1234-1234-1234-123456789abc--00001.steV{schemaVersion}");
             JobPartPlanFileName jobFileName = new JobPartPlanFileName(
-                checkpointerPath: "C:\\folder\\subfolder",
+                checkpointerPath: tempPath,
                 id: "12345678-1234-1234-1234-123456789abc",
                 jobPartNumber: 1,
                 schemaVersion: schemaVersion);
             Assert.AreEqual(originalPath, jobFileName.ToString());
 
             // "F:/folder/foo/randomtransferidthataddsupto36charac--00001.steV01"
-            string originalPath2 = $"F:\\folder\\foo\\randomtransferidthataddsupto36charac--00001.steV{schemaVersion}";
+            string originalPath2 = Path.Combine(tempPath, $"randomtransferidthataddsupto36charac--00001.steV{schemaVersion}");
             JobPartPlanFileName jobFileName2 = new JobPartPlanFileName(
-                checkpointerPath: "F:\\folder\\foo",
+                checkpointerPath: tempPath,
                 id: "randomtransferidthataddsupto36charac",
                 jobPartNumber: 1,
                 schemaVersion: schemaVersion);
@@ -229,9 +232,10 @@ namespace Azure.Storage.DataMovement.Tests
             // "/folder/sub/abcdefgh-abcd-abcd-abcd-123456789abc--00210.steV02"
             // Transfer Id: abcdefgh-abcd-abcd-abcd-123456789abc
             // Part Num: 210
-            string originalPath3 = $"\\folder\\sub\\abcdefgh-abcd-abcd-abcd-123456789abc--00210.steV{schemaVersion}";
+            string prefixPath3 = Path.Combine("folder", "sub");
+            string originalPath3 = Path.Combine(prefixPath3, $"abcdefgh-abcd-abcd-abcd-123456789abc--00210.steV{schemaVersion}");
             JobPartPlanFileName jobFileName3 = new JobPartPlanFileName(
-                checkpointerPath: "\\folder\\sub",
+                checkpointerPath: prefixPath3,
                 id: "abcdefgh-abcd-abcd-abcd-123456789abc",
                 jobPartNumber: 210,
                 schemaVersion: schemaVersion);
