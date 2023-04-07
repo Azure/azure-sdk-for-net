@@ -675,7 +675,8 @@ namespace Azure.Monitor.Query.Tests
             Assert.True(response.Value.Single());
         }
 
-        [RecordedTest]
+        [LiveOnly]
+        [Test]
         public async Task CanQueryResource()
         {
             var client = CreateClient();
@@ -716,7 +717,8 @@ namespace Azure.Monitor.Query.Tests
             Assert.IsTrue(verifyColumn1 && verifyColumn2);
         }
 
-        [RecordedTest]
+        [LiveOnly]
+        [Test]
         public async Task CanQueryResourceCheckNoBackslash()
         {
             var client = CreateClient();
@@ -757,7 +759,8 @@ namespace Azure.Monitor.Query.Tests
             Assert.IsTrue(verifyColumn1 && verifyColumn2);
         }
 
-        [RecordedTest]
+        [LiveOnly]
+        [Test]
         public async Task CanQueryResourceCheckMultipleBackslash()
         {
             var client = CreateClient();
