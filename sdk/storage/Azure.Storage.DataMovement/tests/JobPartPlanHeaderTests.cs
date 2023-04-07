@@ -78,8 +78,6 @@ namespace Azure.Storage.DataMovement.Tests
             string blobTagsStr = DictionaryToString(blobTags);
             Assert.AreEqual(header.DstBlobData.BlobTags, blobTagsStr);
             Assert.AreEqual(header.DstBlobData.BlobTagsLength, blobTagsStr.Length);
-            Assert.AreEqual(header.DstBlobData.CpkInfo, _testCpkInfo);
-            Assert.AreEqual(header.DstBlobData.CpkInfoLength, _testCpkInfo.Length);
             Assert.IsFalse(header.DstBlobData.IsSourceEncrypted);
             Assert.AreEqual(header.DstBlobData.CpkScopeInfo, _testCpkScopeInfo);
             Assert.AreEqual(header.DstBlobData.CpkScopeInfoLength, _testCpkScopeInfo.Length);
@@ -310,16 +308,6 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(blobTagsBuffer, 0, blobTagsSize);
                 Assert.AreEqual(blobTagsStr.ToByteArray(blobTagsSize), blobTagsBuffer);
 
-                int cpkInfoLengthSize = DataMovementConstants.PlanFile.LongSizeInBytes;
-                byte[] cpkInfoLengthBuffer = new byte[cpkInfoLengthSize];
-                stream.ReadAsync(cpkInfoLengthBuffer, 0, cpkInfoLengthSize);
-                Assert.AreEqual(((long)_testCpkInfo.Length).ToByteArray(cpkInfoLengthSize), cpkInfoLengthBuffer);
-
-                int cpkInfoSize = DataMovementConstants.PlanFile.HeaderValueMaxSize;
-                byte[] cpkInfoBuffer = new byte[cpkInfoSize];
-                stream.ReadAsync(cpkInfoBuffer, 0, cpkInfoSize);
-                Assert.AreEqual(_testCpkInfo.ToByteArray(cpkInfoSize), cpkInfoBuffer);
-
                 byte[] isSourceEncryptedBuffer = new byte[oneByte];
                 stream.ReadAsync(isSourceEncryptedBuffer, 0, oneByte);
                 Assert.AreEqual(0, isSourceEncryptedBuffer[0]);
@@ -466,8 +454,6 @@ namespace Azure.Storage.DataMovement.Tests
                 string blobTagsStr = DictionaryToString(blobTags);
                 Assert.AreEqual(deserializedHeader.DstBlobData.BlobTags, blobTagsStr);
                 Assert.AreEqual(deserializedHeader.DstBlobData.BlobTagsLength, blobTagsStr.Length);
-                Assert.AreEqual(deserializedHeader.DstBlobData.CpkInfo, _testCpkInfo);
-                Assert.AreEqual(deserializedHeader.DstBlobData.CpkInfoLength, _testCpkInfo.Length);
                 Assert.IsFalse(deserializedHeader.DstBlobData.IsSourceEncrypted);
                 Assert.AreEqual(deserializedHeader.DstBlobData.CpkScopeInfo, _testCpkScopeInfo);
                 Assert.AreEqual(deserializedHeader.DstBlobData.CpkScopeInfoLength, _testCpkScopeInfo.Length);

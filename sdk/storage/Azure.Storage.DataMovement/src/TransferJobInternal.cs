@@ -162,6 +162,7 @@ namespace Azure.Storage.DataMovement
             _enumerationComplete = false;
             _cancellationToken = dataTransfer._state.CancellationTokenSource.Token;
 
+            JobPartStatusEvents += JobPartEvent;
             TransferStatusEventHandler = statusEventHandler;
             TransferFailedEventHandler = failedEventHandler;
             TransferSkippedEventHandler = skippedEventHandler;

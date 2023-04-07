@@ -248,7 +248,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
             else
             {
-                throw Errors.InvalidPlanFileJson(
+                throw Errors.InvalidPlanFileElement(
                     elementName: nameof(Version),
                     expectedSize: DataMovementConstants.PlanFile.VersionStrMaxSize,
                     actualSize: version.Length);
@@ -261,7 +261,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
             else
             {
-                throw Errors.InvalidPlanFileJson(
+                throw Errors.InvalidPlanFileElement(
                     elementName: nameof(TransferId),
                     expectedSize: DataMovementConstants.PlanFile.TransferIdStrMaxSize,
                     actualSize: transferId.Length);
@@ -276,7 +276,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
             else
             {
-                throw Errors.InvalidPlanFileJson(
+                throw Errors.InvalidPlanFileElement(
                     elementName: nameof(SourcePath),
                     expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
                     actualSize: sourcePath.Length);
@@ -289,7 +289,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
             else
             {
-                throw Errors.InvalidPlanFileJson(
+                throw Errors.InvalidPlanFileElement(
                     elementName: nameof(SourceExtraQuery),
                     expectedSize: DataMovementConstants.PlanFile.ExtraQueryMaxSize,
                     actualSize: sourceExtraQuery.Length);
@@ -302,7 +302,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
             else
             {
-                throw Errors.InvalidPlanFileJson(
+                throw Errors.InvalidPlanFileElement(
                     elementName: nameof(DestinationPath),
                     expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
                     actualSize: destinationPath.Length);
@@ -314,7 +314,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
             else
             {
-                throw Errors.InvalidPlanFileJson(
+                throw Errors.InvalidPlanFileElement(
                     elementName: nameof(DestinationExtraQuery),
                     expectedSize: DataMovementConstants.PlanFile.ExtraQueryMaxSize,
                     actualSize: destinationExtraQuery.Length);
@@ -476,12 +476,6 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             // DstBlobData.BlobTags
             WriteString(writer, DstBlobData.BlobTags, DataMovementConstants.PlanFile.BlobTagsStrMaxSize);
 
-            // DstBlobData.CpkInfoLength
-            writer.Write(DstBlobData.CpkInfoLength);
-
-            // DstBlobData.CpkInfo
-            WriteString(writer, DstBlobData.CpkInfo, DataMovementConstants.PlanFile.HeaderValueMaxSize);
-
             // DstBlobData.IsSourceEncrypted
             writer.Write(DstBlobData.IsSourceEncrypted);
 
@@ -568,6 +562,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             byte[] sourcePathLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
             sourcePathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
             long sourcePathLength = sourcePathLengthBuffer.ToLong();
+            Errors.ThrowIfElementIsNotPositive(elementName: nameof(SourcePathLength), actualValue: sourcePathLength);
 
             // SourcePath
             byte[] sourcePathBuffer = new byte[DataMovementConstants.PlanFile.PathStrMaxSize];
@@ -588,6 +583,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             byte[] destinationPathLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
             destinationPathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
             long destinationPathLength = destinationPathLengthBuffer.ToLong();
+            Errors.ThrowIfElementIsNotPositive(elementName: nameof(DestinationPathLength), actualValue: destinationPathLength);
 
             // DestinationPath
             byte[] destinationPathBuffer = new byte[DataMovementConstants.PlanFile.PathStrMaxSize];
@@ -731,16 +727,6 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             blobTagsBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.BlobTagsStrMaxSize);
             string blobTags = blobTagsBuffer.ToString(blobTagsLength);
 
-            // DstBlobData.CpkInfoLength
-            byte[] cpkInfoLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
-            cpkInfoLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
-            long cpkInfoLength = cpkInfoLengthBuffer.ToLong();
-
-            // DstBlobData.CpkInfo
-            byte[] cpkInfoBuffer = new byte[DataMovementConstants.PlanFile.HeaderValueMaxSize];
-            cpkInfoBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.HeaderValueMaxSize);
-            string cpkInfo = cpkInfoBuffer.ToString(cpkInfoLength);
-
             // DstBlobData.IsSourceEncrypted
             bool isSourceEncrypted = Convert.ToBoolean(reader.ReadByte());
 
@@ -816,7 +802,6 @@ namespace Azure.Storage.DataMovement.JobPlanModels
                 putMd5: putMd5,
                 metadata: metadata,
                 blobTags: blobTags,
-                cpkInfo: cpkInfo,
                 isSourceEncrypted: isSourceEncrypted,
                 cpkScopeInfo: cpkScopeInfo,
                 blockSize: blockSize);

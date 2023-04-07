@@ -87,13 +87,13 @@ namespace Azure.Storage.DataMovement
             internal const int TransferIdIndex = StartTimeIndex + LongSizeInBytes;
             /// <summary>Index: 46</summary>
             internal const int PartNumberIndex = TransferIdIndex + TransferIdStrMaxSize;
-            /// <summary>Index: 52</summary>
+            /// <summary>Index: 54</summary>
             internal const int SourcePathLengthIndex = PartNumberIndex + LongSizeInBytes;
-            /// <summary>Index: 60</summary>
+            /// <summary>Index: 62</summary>
             internal const int SourcePathIndex = SourcePathLengthIndex + LongSizeInBytes;
-            /// <summary>Index: 4,156</summary>
+            /// <summary>Index: 4,158</summary>
             internal const int SourceExtraQueryLengthIndex = SourcePathIndex + PathStrMaxSize;
-            /// <summary>Index: 4,164</summary>
+            /// <summary>Index: 4,166</summary>
             internal const int SourceExtraQueryIndex = SourceExtraQueryLengthIndex + LongSizeInBytes;
             /// <summary>Index: 5,164</summary>
             internal const int DestinationPathLengthIndex = SourceExtraQueryIndex + ExtraQueryMaxSize;
@@ -150,9 +150,7 @@ namespace Azure.Storage.DataMovement
             internal const int DstBlobMetadataIndex = DstBlobMetadataLengthIndex + LongSizeInBytes;
             internal const int DstBlobTagsLengthIndex = DstBlobMetadataIndex + MetadataStrMaxSize;
             internal const int DstBlobTagsIndex = DstBlobTagsLengthIndex + LongSizeInBytes;
-            internal const int DstBlobCpkInfoLengthIndex = DstBlobTagsIndex + BlobTagsStrMaxSize;
-            internal const int DstBlobCpkInfoIndex = DstBlobCpkInfoLengthIndex + LongSizeInBytes;
-            internal const int DstBlobIsSourceEncrypted = DstBlobCpkInfoIndex + HeaderValueMaxSize;
+            internal const int DstBlobIsSourceEncrypted = DstBlobTagsIndex + BlobTagsStrMaxSize;
             internal const int DstBlobCpkScopeInfoLengthIndex = DstBlobIsSourceEncrypted + OneByte;
             internal const int DstBlobCpkScopeInfoIndex = DstBlobCpkScopeInfoLengthIndex + LongSizeInBytes;
             internal const int DstBlobBlockSizeIndex = DstBlobCpkScopeInfoIndex + HeaderValueMaxSize;

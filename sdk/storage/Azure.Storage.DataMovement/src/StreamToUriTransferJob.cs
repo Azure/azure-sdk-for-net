@@ -62,7 +62,6 @@ namespace Azure.Storage.DataMovement
         /// <returns>An IEnumerable that contains the job parts</returns>
         public override async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync()
         {
-            JobPartStatusEvents += JobPartEvent;
             await OnJobStatusChangedAsync(StorageTransferStatus.InProgress).ConfigureAwait(false);
             int partNumber = 0;
 

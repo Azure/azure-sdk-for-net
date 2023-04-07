@@ -122,7 +122,7 @@ namespace Azure.Storage.DataMovement
             _maxJobChunkTasks = options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks;
             _dataTransfers = new Dictionary<string, DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
-            _checkpointer = options?.CheckpointerMethod != default ? options.CheckpointerMethod.checkpointer : CreateDefaultCheckpointer();
+            _checkpointer = options?.CheckpointerOptions != default ? options.CheckpointerOptions.CreateTransferCheckpointer() : CreateDefaultCheckpointer();
             _errorHandling = options?.ErrorHandling != default ? options.ErrorHandling : ErrorHandlingOptions.StopOnAllFailures;
         }
 
@@ -316,16 +316,23 @@ namespace Azure.Storage.DataMovement
                 {
                     throw Errors.MismatchIdSingleContainer(transferId);
                 }
-
+                if (_dataTransfers.ContainsKey(transferId))
+                {
+                    // Remove the stale DataTransfer so we can pass a new DataTransfer object
+                    // to the user and also track the transfer from the DataTransfer object
+                    _dataTransfers.Remove(transferId);
+                }
                 dataTransfer = new DataTransfer(transferOptions.ResumeFromCheckpointId, 0);
             }
             else
             {
                 // Add Transfer to Checkpointer
-                string transferId = GetNewTransferId();
+                string transferId = Guid.NewGuid().ToString();
                 dataTransfer = new DataTransfer(transferId, 0);
                 await _checkpointer.AddNewJobAsync(transferId, _cancellationToken).ConfigureAwait(false);
             }
+            // Add DataTransfer object to keep track of.
+            _dataTransfers.Add(dataTransfer.Id, dataTransfer);
 
             // If the resource cannot produce a Uri, it means it can only produce a local path
             // From here we only support an upload job
@@ -438,7 +445,6 @@ namespace Azure.Storage.DataMovement
 
             // Queue Job
             await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
-            _dataTransfers.Add(dataTransfer.Id, dataTransfer);
 
             return dataTransfer;
         }

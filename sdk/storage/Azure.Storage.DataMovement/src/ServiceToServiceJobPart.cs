@@ -104,7 +104,8 @@ namespace Azure.Storage.DataMovement
             StorageResource sourceResource,
             StorageResource destinationResource,
             StorageTransferStatus jobPartStatus = default,
-            long? length = default)
+            long? length = default,
+            bool partPlanFileExists = false)
         {
             // Create Job Part file as we're intializing the job part
             ServiceToServiceJobPart part = new ServiceToServiceJobPart(
@@ -114,7 +115,10 @@ namespace Azure.Storage.DataMovement
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
                 length: length);
-            await part.AddJobPartToCheckpointer(1).ConfigureAwait(false); // For now we only store 1 chunk
+            if (!partPlanFileExists)
+            {
+                await part.AddJobPartToCheckpointer(1).ConfigureAwait(false); // For now we only store 1 chunk
+            }
             return part;
         }
 

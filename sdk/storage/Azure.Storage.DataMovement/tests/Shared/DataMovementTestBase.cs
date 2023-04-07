@@ -119,7 +119,6 @@ namespace Azure.Storage.DataMovement.Tests
         internal const string _testCacheControl = "cache-control";
         internal const JobPartPlanBlockBlobTier _testBlockBlobTier = JobPartPlanBlockBlobTier.None;
         internal const JobPartPlanPageBlobTier _testPageBlobTier = JobPartPlanPageBlobTier.None;
-        internal const string _testCpkInfo = "cpk-info";
         internal const string _testCpkScopeInfo = "cpk-scope-info";
         internal const long _testBlockSize = 4 * Constants.KB;
         internal const byte _testS2sInvalidMetadataHandleOption = 0;
@@ -160,7 +159,6 @@ namespace Azure.Storage.DataMovement.Tests
             bool putMd5 = false,
             IDictionary<string, string> metadata = default,
             IDictionary<string, string> blobTags = default,
-            string cpkInfo = _testCpkInfo,
             bool isSourceEncrypted = false,
             string cpkScopeInfo = _testCpkScopeInfo,
             long blockSize = _testBlockSize,
@@ -202,7 +200,6 @@ namespace Azure.Storage.DataMovement.Tests
                 putMd5: putMd5,
                 metadata: metadata,
                 blobTags: blobTags,
-                cpkInfo: cpkInfo,
                 isSourceEncrypted: isSourceEncrypted,
                 cpkScopeInfo: cpkScopeInfo,
                 blockSize: blockSize);
@@ -247,10 +244,9 @@ namespace Azure.Storage.DataMovement.Tests
         internal static async Task AssertJobPlanHeaderAsync(JobPartPlanHeader header, Stream stream)
         {
             int headerSize = DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes;
-            var actual = new byte[headerSize];
             using var originalHeaderStream = new MemoryStream(headerSize);
             header.Serialize(originalHeaderStream);
-
+            originalHeaderStream.Seek(0, SeekOrigin.Begin);
             stream.Seek(0, SeekOrigin.Begin);
 
             for (var i = 0; i < headerSize; i += Constants.DefaultBufferSize * 5 / 2)
@@ -259,12 +255,15 @@ namespace Azure.Storage.DataMovement.Tests
                 var count = Math.Min(Constants.DefaultBufferSize, (int)(headerSize - startIndex));
 
                 var buffer = new byte[count];
+                var actual = new byte[count];
                 stream.Seek(i, SeekOrigin.Begin);
+                originalHeaderStream.Seek(i, SeekOrigin.Begin);
                 await stream.ReadAsync(buffer, 0, count);
+                await originalHeaderStream.ReadAsync(actual, 0, count);
 
                 TestHelper.AssertSequenceEqual(
-                    buffer,
-                    actual.AsSpan(0, count).ToArray());
+                    actual,
+                    buffer);
             }
         }
     }

@@ -103,16 +103,6 @@ namespace Azure.Storage.DataMovement.JobPlanModels
         public string BlobTags;
 
         /// <summary>
-        /// Client Provided Key information
-        /// </summary>
-        public long CpkInfoLength;
-
-        /// <summary>
-        /// Client Provided Key information
-        /// </summary>
-        public string CpkInfo;
-
-        /// <summary>
         /// Is source encrypted?
         /// </summary>
         public bool IsSourceEncrypted;
@@ -145,7 +135,6 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             bool putMd5,
             string metadata,
             string blobTags,
-            string cpkInfo,
             bool isSourceEncrypted,
             string cpkScopeInfo,
             long blockSize)
@@ -162,7 +151,6 @@ namespace Azure.Storage.DataMovement.JobPlanModels
                 putMd5: putMd5,
                 metadata: StringToDictionary(metadata, nameof(metadata)),
                 blobTags: StringToDictionary(blobTags, nameof(blobTags)),
-                cpkInfo: cpkInfo,
                 isSourceEncrypted: isSourceEncrypted,
                 cpkScopeInfo: cpkScopeInfo,
                 blockSize: blockSize)
@@ -182,7 +170,6 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             bool putMd5,
             IDictionary<string,string> metadata,
             IDictionary<string, string> blobTags,
-            string cpkInfo,
             bool isSourceEncrypted,
             string cpkScopeInfo,
             long blockSize)
@@ -196,7 +183,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
             else
             {
-                throw Errors.InvalidPlanFileJson(
+                throw Errors.InvalidPlanFileElement(
                     elementName: nameof(ContentType),
                     expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
                     actualSize: contentType.Length);
@@ -208,7 +195,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
             else
             {
-                throw Errors.InvalidPlanFileJson(
+                throw Errors.InvalidPlanFileElement(
                     elementName: nameof(ContentEncoding),
                     expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
                     actualSize: contentEncoding.Length);
@@ -220,7 +207,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
             else
             {
-                throw Errors.InvalidPlanFileJson(
+                throw Errors.InvalidPlanFileElement(
                     elementName: nameof(ContentLanguage),
                     expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
                     actualSize: contentLanguage.Length);
@@ -232,7 +219,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
             else
             {
-                throw Errors.InvalidPlanFileJson(
+                throw Errors.InvalidPlanFileElement(
                     elementName: nameof(ContentDisposition),
                     expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
                     actualSize: contentDisposition.Length);
@@ -244,7 +231,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
             else
             {
-                throw Errors.InvalidPlanFileJson(
+                throw Errors.InvalidPlanFileElement(
                     elementName: nameof(CacheControl),
                     expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
                     actualSize: cacheControl.Length);
@@ -260,7 +247,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
             else
             {
-                throw Errors.InvalidPlanFileJson(
+                throw Errors.InvalidPlanFileElement(
                     elementName: nameof(Metadata),
                     expectedSize: DataMovementConstants.PlanFile.MetadataStrMaxSize,
                     actualSize: metadataConvert.Length);
@@ -273,22 +260,10 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
             else
             {
-                throw Errors.InvalidPlanFileJson(
+                throw Errors.InvalidPlanFileElement(
                     elementName: nameof(blobTags),
                     expectedSize: DataMovementConstants.PlanFile.BlobTagsStrMaxSize,
                     actualSize: blobTagsConvert.Length);
-            }
-            if (cpkInfo.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
-            {
-                CpkInfo = cpkInfo;
-                CpkInfoLength = cpkInfo.Length;
-            }
-            else
-            {
-                throw Errors.InvalidPlanFileJson(
-                    elementName: nameof(CpkInfo),
-                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
-                    actualSize: cpkInfo.Length);
             }
             IsSourceEncrypted = isSourceEncrypted;
             if (cpkScopeInfo.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
@@ -298,7 +273,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             }
             else
             {
-                throw Errors.InvalidPlanFileJson(
+                throw Errors.InvalidPlanFileElement(
                     elementName: nameof(CpkScopeInfo),
                     expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
                     actualSize: cpkScopeInfo.Length);

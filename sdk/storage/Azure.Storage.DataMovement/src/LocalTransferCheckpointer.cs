@@ -103,6 +103,7 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNull(partNumber, nameof(partNumber));
             Argument.AssertNotNull(chunksTotal, nameof(chunksTotal));
             Argument.AssertNotNull(headerStream, nameof(headerStream));
+            headerStream.Position = 0;
 
             JobPartPlanFile mappedFile = await JobPartPlanFile.CreateJobPartPlanFileAsync(
                 _pathToCheckpointer,
@@ -256,6 +257,7 @@ namespace Azure.Storage.DataMovement
                 }
                 // MMF release
                 jobPartFiles[partNumber].WriteLock.Release();
+                copiedStream.Position = 0;
                 return copiedStream;
             }
             else

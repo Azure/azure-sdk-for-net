@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement.Tests
             DisposingBlobContainer blobContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerMethod = new TransferCheckpointerMethod(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
                 MaximumConcurrency = 4
             };
@@ -116,7 +116,7 @@ namespace Azure.Storage.DataMovement.Tests
             DisposingBlobContainer blobContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerMethod = new TransferCheckpointerMethod(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
             TransferManager transferManager = new TransferManager(options);
@@ -151,7 +151,7 @@ namespace Azure.Storage.DataMovement.Tests
             DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerMethod = new TransferCheckpointerMethod(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
             TransferManager transferManager = new TransferManager(options);
@@ -169,7 +169,7 @@ namespace Azure.Storage.DataMovement.Tests
             DisposingBlobContainer blobContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerMethod = new TransferCheckpointerMethod(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
             TransferManager transferManager = new TransferManager(options);
@@ -210,7 +210,7 @@ namespace Azure.Storage.DataMovement.Tests
             DisposingBlobContainer blobContainer = await GetTestContainerAsync();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerMethod = new TransferCheckpointerMethod(checkpointerDirectory.DirectoryPath),
+                CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
             TransferManager transferManager = new TransferManager(options);
@@ -248,7 +248,7 @@ namespace Azure.Storage.DataMovement.Tests
                 singleTransferOptions: singleTransferOptions,
                 size: Constants.MB * 4);
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(100));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await resumeTransfer.AwaitCompletion(cancellationTokenSource.Token);
 
             Assert.IsTrue(resumeTransfer.HasCompleted);

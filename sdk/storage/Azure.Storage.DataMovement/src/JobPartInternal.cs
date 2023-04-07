@@ -461,7 +461,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private async Task CheckAndUpdateCancellationStatus()
+        internal async Task CheckAndUpdateCancellationStatus()
         {
             if (_chunkTasks.All((Task task) => (task.IsCompleted)))
             {

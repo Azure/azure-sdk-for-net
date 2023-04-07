@@ -2,18 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.IO.MemoryMappedFiles;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Storage.DataMovement.JobPlanModels;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -35,7 +27,8 @@ namespace Azure.Storage.DataMovement
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
-                destinationResource: destinationResource).ConfigureAwait(false);
+                destinationResource: destinationResource,
+                partPlanFileExists: true).ConfigureAwait(false);
 
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
@@ -103,7 +96,8 @@ namespace Azure.Storage.DataMovement
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource.GetChildStorageResource(childSourcePath.Substring(sourceResource.Path.Length)),
-                destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Path.Length))).ConfigureAwait(false);
+                destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Path.Length)),
+                partPlanFileExists: true).ConfigureAwait(false);
 
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
@@ -175,7 +169,6 @@ namespace Azure.Storage.DataMovement
                 putMd5: false,// TODO: update when supported
                 metadata: "",// TODO: update when supported
                 blobTags: "",// TODO: update when supported
-                cpkInfo: "",// TODO: update when supported
                 isSourceEncrypted: false,// TODO: update when supported
                 cpkScopeInfo: "",// TODO: update when supported
                 blockSize: jobPart._maximumTransferChunkSize);
