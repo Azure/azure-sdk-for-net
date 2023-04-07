@@ -320,20 +320,29 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
-        /// <example snippet="Snippet:ResourceQuery">
+        /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
-        /// string resourceId = &quot;&lt;resource_id&gt;&quot;;
-        /// // Get activity over last 24 hours
-        /// string query = &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;;
+        /// string workspaceId = &quot;&lt;workspace_id&gt;&quot;;
+        ///
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// Response&lt;LogsQueryResult&gt; response = await client.QueryResource(resourceId, query,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1));
+        /// var results = await client.QueryResourceAsync(TestEnvironment.StorageAccountId,
+        ///     &quot;search *&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
         ///
-        /// LogsTable table = response.Value.Table;
-        /// foreach (var row in table.Rows)
+        /// var resultTable = results.Value.Table;
+        ///
+        /// foreach (LogsTableRow rows in resultTable.Rows)
         /// {
-        ///     Console.WriteLine(row);
+        ///     foreach (var row in rows)
+        ///     {
+        ///         Console.WriteLine(row);
+        ///     }
+        /// }
+        ///
+        /// foreach (LogsTableColumn columns in resultTable.Columns)
+        /// {
+        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
         /// }
         /// </code>
         /// </example>
@@ -364,20 +373,29 @@ namespace Azure.Monitor.Query
 
         /// <summary>
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
-        /// <example snippet="Snippet:ResourceQuery">
+        /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
-        /// string resourceId = &quot;&lt;resource_id&gt;&quot;;
-        /// // Get activity over last 24 hours
-        /// string query = &quot;AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count&quot;;
+        /// string workspaceId = &quot;&lt;workspace_id&gt;&quot;;
+        ///
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         ///
-        /// Response&lt;LogsQueryResult&gt; response = await client.QueryResource(resourceId, query,
-        ///     new QueryTimeRange(TimeSpan.FromDays(1));
+        /// var results = await client.QueryResourceAsync(TestEnvironment.StorageAccountId,
+        ///     &quot;search *&quot;,
+        ///     new QueryTimeRange(TimeSpan.FromDays(5)));
         ///
-        /// LogsTable table = response.Value.Table;
-        /// foreach (var row in table.Rows)
+        /// var resultTable = results.Value.Table;
+        ///
+        /// foreach (LogsTableRow rows in resultTable.Rows)
         /// {
-        ///     Console.WriteLine(row);
+        ///     foreach (var row in rows)
+        ///     {
+        ///         Console.WriteLine(row);
+        ///     }
+        /// }
+        ///
+        /// foreach (LogsTableColumn columns in resultTable.Columns)
+        /// {
+        ///     Console.WriteLine(&quot;Name: &quot; + columns.Name + &quot; Type: &quot; + columns.Type);
         /// }
         /// </code>
         /// </example>

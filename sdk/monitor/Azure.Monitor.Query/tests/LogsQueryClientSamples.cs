@@ -380,47 +380,39 @@ namespace Azure.Monitor.Query.Tests
             #endregion
         }
 
-        //[Test]
-        //[Explicit]
-//        public async Task QueryResource()
-//        {
-//            #region Snippet:QueryResource
+        [Test]
+        [Explicit]
+        public async Task QueryResource()
+        {
+            #region Snippet:QueryResource
 
-//#if SNIPPET
-//            string workspaceId = "<workspace_id>";
-//#else
-//            string workspaceId = TestEnvironment.WorkspaceId;
-//#endif
+#if SNIPPET
+            string workspaceId = "<workspace_id>";
+#else
+            string workspaceId = TestEnvironment.WorkspaceId;
+#endif
 
-//            var client = new LogsQueryClient(new DefaultAzureCredential());
+            var client = new LogsQueryClient(new DefaultAzureCredential());
 
-//            // Query TOP 10 resource groups by event count
-//            // And total event count
-//            var batch = new LogsBatchQuery();
+            var results = await client.QueryResourceAsync(TestEnvironment.StorageAccountId,
+                "search *",
+                new QueryTimeRange(TimeSpan.FromDays(5)));
 
-//            #region Snippet:QueryResourceLast24Hours
-//            string countQueryId = batch.AddWorkspaceQuery(
-//                workspaceId,
-//                "AzureActivity | count",
-//                new QueryTimeRange(TimeSpan.FromDays(1)));
-//            string topQueryId = batch.AddWorkspaceQuery(
-//                workspaceId,
-//                "AzureActivity | summarize Count = count() by ResourceGroup | top 10 by Count",
-//                new QueryTimeRange(TimeSpan.FromDays(1)));
+            var resultTable = results.Value.Table;
 
-//            Response<LogsQueryResult> response = await client.QueryResource(resou);
+            foreach (LogsTableRow rows in resultTable.Rows)
+            {
+                foreach (var row in rows)
+                {
+                    Console.WriteLine(row);
+                }
+            }
 
-//            var count = response.Value.GetResult<int>(countQueryId).Single();
-//            var topEntries = response.Value.GetResult<MyLogEntryModel>(topQueryId);
-//            #endregion
-
-//            Console.WriteLine($"AzureActivity has total {count} events");
-//            foreach (var logEntryModel in topEntries)
-//            {
-//                Console.WriteLine($"{logEntryModel.ResourceGroup} had {logEntryModel.Count} events");
-//            }
-
-//            #endregion
-//        }
+            foreach (LogsTableColumn columns in resultTable.Columns)
+            {
+                Console.WriteLine("Name: " + columns.Name + " Type: " + columns.Type);
+            }
+            #endregion
+        }
     }
 }
