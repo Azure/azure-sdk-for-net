@@ -44,7 +44,7 @@ namespace Azure.AI.Translation.Text
             Name = name;
             NativeName = nativeName;
             Dir = dir;
-            Translations = translations.ToList();
+            Translations = translations;
         }
 
         /// <summary> Display name of the language in the locale requested via Accept-Language header. </summary>
