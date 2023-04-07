@@ -1036,9 +1036,6 @@ namespace Azure.Core.Pipeline
     public partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
         public RetryPolicy(int maxRetries = 3, Azure.Core.Delay? delay = null) { }
-        protected Azure.Core.Delay Delay { get { throw null; } }
-        protected virtual System.TimeSpan GetNextDelay(Azure.Core.HttpMessage message, System.TimeSpan? retryAfter) { throw null; }
-        protected virtual System.Threading.Tasks.ValueTask<System.TimeSpan> GetNextDelayAsync(Azure.Core.HttpMessage message, System.TimeSpan? retryAfter) { throw null; }
         protected internal virtual void OnRequestSent(Azure.Core.HttpMessage message) { }
         protected internal virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(Azure.Core.HttpMessage message) { throw null; }
         protected internal virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }

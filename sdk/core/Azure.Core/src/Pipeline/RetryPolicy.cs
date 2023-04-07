@@ -21,7 +21,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Gets the delay to use for computing the interval between retry attempts.
         /// </summary>
-        protected Delay Delay { get; }
+        private readonly Delay _delay;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
@@ -31,7 +31,7 @@ namespace Azure.Core.Pipeline
         public RetryPolicy(int maxRetries = 3, Delay? delay = default)
         {
             _maxRetries = maxRetries;
-            Delay = delay ?? Delay.CreateExponentialDelay();
+            _delay = delay ?? Delay.CreateExponentialDelay();
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The message containing the request and response.</param>
         /// <param name="retryAfter">The Retry-After header value, if any, returned from the service.</param>
         /// <returns>The amount of time to delay before retrying.</returns>
-        protected virtual TimeSpan GetNextDelay(HttpMessage message, TimeSpan? retryAfter) => GetNextDelayInternal(message);
+        internal TimeSpan GetNextDelay(HttpMessage message, TimeSpan? retryAfter) => GetNextDelayInternal(message);
 
         /// <summary>
         /// This method can be overriden to control how long to delay before retrying. This method will only be called for async methods.
@@ -226,7 +226,7 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The message containing the request and response.</param>
         /// <param name="retryAfter">The Retry-After header value, if any, returned from the service.</param>
         /// <returns>The amount of time to delay before retrying.</returns>
-        protected virtual ValueTask<TimeSpan> GetNextDelayAsync(HttpMessage message, TimeSpan? retryAfter) => new(GetNextDelayInternal(message));
+        internal ValueTask<TimeSpan> GetNextDelayAsync(HttpMessage message, TimeSpan? retryAfter) => new(GetNextDelayInternal(message));
 
         /// <summary>
         /// This method can be overridden to introduce logic before each request attempt is sent. This will run even for the first attempt.
@@ -262,7 +262,7 @@ namespace Azure.Core.Pipeline
 
         private TimeSpan GetNextDelayInternal(HttpMessage message)
         {
-            return Delay.GetNextDelay(
+            return _delay.GetNextDelay(
                 message.HasResponse ? message.Response : default,
                 message.RetryNumber);
         }
