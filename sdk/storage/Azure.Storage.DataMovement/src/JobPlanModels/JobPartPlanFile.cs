@@ -18,11 +18,6 @@ namespace Azure.Storage.DataMovement.JobPlanModels
         public JobPartPlanFileName FileName { get; set; }
 
         /// <summary>
-        /// Used when opening the MemoryMappedFileReference
-        /// </summary>
-        public string MapName { get; internal set; }
-
-        /// <summary>
         /// The associated file on disk. When the last process has finished working
         /// with the file, the data is saved to the file on the disk.
         /// </summary>
@@ -49,11 +44,9 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             Argument.AssertNotNull(jobPart, nameof(jobPart));
             Argument.AssertNotNull(headerStream, nameof(headerStream));
 
-            string mapName = string.Concat(id, jobPart);
             JobPartPlanFileName fileName = new JobPartPlanFileName(checkpointerPath: checkpointerPath, id: id, jobPartNumber: jobPart);
             JobPartPlanFile result = new JobPartPlanFile()
             {
-                MapName = mapName,
                 FileName = fileName
             };
             using (FileStream fileStream = File.Create(result.FileName.ToString()))
@@ -67,10 +60,8 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             JobPartPlanFileName fileName,
             Stream headerStream)
         {
-            string mapName = string.Concat(fileName.Id, fileName.JobPartNumber);
             JobPartPlanFile result = new JobPartPlanFile()
             {
-                MapName = mapName,
                 FileName = fileName
             };
 

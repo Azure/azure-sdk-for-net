@@ -247,7 +247,7 @@ namespace Azure.Storage.DataMovement
                 using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(
                     path: jobPartFiles[partNumber].FilePath,
                     mode: FileMode.Open,
-                    mapName: jobPartFiles[partNumber].MapName,
+                    mapName: null,
                     capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
                 {
                     using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, readSize, MemoryMappedFileAccess.Read))
@@ -314,7 +314,7 @@ namespace Azure.Storage.DataMovement
                     using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(
                         path: jobPartFiles[partNumber].FilePath,
                         mode: FileMode.Open,
-                        mapName: jobPartFiles[partNumber].MapName,
+                        mapName: null,
                         capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
                     {
                         using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(chunkIndex, buffer.Length, MemoryMappedFileAccess.Write))
@@ -415,7 +415,7 @@ namespace Azure.Storage.DataMovement
                     using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(
                             path: jobPartPair.Value.FilePath,
                             mode: FileMode.Open,
-                            mapName: jobPartPair.Value.MapName,
+                            mapName: null,
                             capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
                     {
                         using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
@@ -465,7 +465,7 @@ namespace Azure.Storage.DataMovement
                     using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(
                                 path: file.FilePath,
                                 mode: FileMode.Open,
-                                mapName: file.MapName,
+                                mapName: null,
                                 capacity: DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes))
                     {
                         using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
