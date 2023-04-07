@@ -192,21 +192,21 @@ namespace Azure.Identity
                 }
 
                 arguments.Clear();
+                // Add the arguments set in the token provider file.
+                if (tokenProvider.Arguments?.Length > 0)
+                {
+                    foreach (var argument in tokenProvider.Arguments)
+                    {
+                        arguments.Append(argument).Append(' ');
+                    }
+                }
+
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 if (tenantId != default)
                 {
                     arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);
-                }
-
-                // Add the arguments set in the token provider file.
-                if (tokenProvider.Arguments?.Length > 0)
-                {
-                    foreach (var argument in tokenProvider.Arguments)
-                    {
-                        arguments.Append(' ').Append(argument);
-                    }
                 }
 
                 var startInfo = new ProcessStartInfo
