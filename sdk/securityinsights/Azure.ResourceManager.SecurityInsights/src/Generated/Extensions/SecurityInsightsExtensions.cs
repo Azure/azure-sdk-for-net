@@ -7,22 +7,28 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SecurityInsights.Mock;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.SecurityInsights. </summary>
     public static partial class SecurityInsightsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
+        private static ResourceGroupResourceExtension GetResourceGroupResourceExtension(ArmResource resource)
         {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtension(client, resource.Id);
+            });
         }
 
+        private static ResourceGroupResourceExtension GetResourceGroupResourceExtension(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtension(client, scope);
+            });
+        }
         #region SecurityInsightsAlertRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="SecurityInsightsAlertRuleResource" /> along with the instance operations that can be performed on it but with no data.
