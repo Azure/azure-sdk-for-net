@@ -708,6 +708,12 @@
       ]
     },
     {
+      "filename": "**/sdk/qumulo/**/*",
+      "words": [
+      	"qumulo"
+      ]
+    },
+    {
       "filename": "**/sdk/redis/**/*.cs",
       "words": [
         "hana",
