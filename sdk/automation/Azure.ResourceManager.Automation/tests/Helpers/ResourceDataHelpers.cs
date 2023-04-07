@@ -117,6 +117,86 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
             };
             return data;
         }
+
+        public static void AssertRunbook(AutomationRunbookData data1, AutomationRunbookData data2)
+        {
+            AssertResource(data1, data2);
+            Assert.AreEqual(data1.Location, data2.Location);
+            Assert.AreEqual(data1.State, data2.State);
+            Assert.AreEqual(data1.Description, data2.Description);
+            Assert.AreEqual(data1.JobCount, data2.JobCount);
+        }
+        #endregion
+
+        #region SourceControl
+        public static AutomationSourceControlCreateOrUpdateContent GetSourceControlData()
+        {
+            var data = new AutomationSourceControlCreateOrUpdateContent()
+            {
+                RepoUri = new Uri("https://dev.azure.com/vinkumar0563/_git/VinKumar-AzureAutomation"),
+                Branch = "sdktest",
+                FolderPath = "/Runbooks/PowershellScripts",
+                IsAutoSyncEnabled = false,
+                IsAutoPublishRunbookEnabled = true,
+                SourceType = SourceControlSourceType.VsoGit,
+                SecurityToken = new SourceControlSecurityTokenProperties()
+                {
+                    AccessToken = "p26mwl3frnfa4l5i6a7zjfog7k75qeac7otyfa76q3ceajmrnjoq"
+                },
+                Description = "test creating a Source Control",
+            };
+            return data;
+        }
+
+        public static void AssertSourceControl(AutomationSourceControlData data1, AutomationSourceControlData data2)
+        {
+            AssertResource(data1, data2);
+            Assert.AreEqual(data1.Description, data2.Description);
+            Assert.AreEqual(data1.Branch, data2.Branch);
+            Assert.AreEqual(data1.RepoUri, data2.RepoUri);
+            Assert.AreEqual(data1.FolderPath, data2.FolderPath);
+        }
+        #endregion
+
+        #region Variable
+        public static AutomationVariableCreateOrUpdateContent GetVariableData(string name)
+        {
+            var data = new AutomationVariableCreateOrUpdateContent(name)
+            {
+                Value = "10",
+                IsEncrypted = false,
+            };
+            return data;
+        }
+
+        public static void AssertVariable(AutomationVariableData data1, AutomationVariableData data2)
+        {
+            AssertResource(data1, data2);
+            Assert.AreEqual(data1.Value, data2.Value);
+            Assert.AreEqual(data1.IsEncrypted, data2.IsEncrypted);
+            Assert.AreEqual(data1.CreatedOn, data2.CreatedOn);
+            Assert.AreEqual(data1.LastModifiedOn, data2.LastModifiedOn);
+            Assert.AreEqual(data1.Description, data2.Description);
+        }
+        #endregion
+
+        #region Schedule
+        public static AutomationScheduleCreateOrUpdateContent GetScheduleData(string name)
+        {
+            var data = new AutomationScheduleCreateOrUpdateContent(name, DateTime.Today, AutomationScheduleFrequency.Hour)
+            {
+                Interval = BinaryData.FromString("1"),
+            };
+            return data;
+        }
+
+        public static void AssertSchedule(AutomationScheduleData data1, AutomationScheduleData data2)
+        {
+            AssertResource(data1, data2);
+            Assert.AreEqual(data1.Frequency, data2.Frequency);
+            Assert.AreEqual(data1.Interval, data2.Interval);
+            Assert.AreEqual(data1.Description, data2.Description);
+        }
         #endregion
     }
 }
