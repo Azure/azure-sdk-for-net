@@ -487,7 +487,7 @@ namespace Azure.Storage.Files.Shares
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
-            if (include != null)
+            if (include != null && Optional.IsCollectionDefined(include))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
