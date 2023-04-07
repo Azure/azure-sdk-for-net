@@ -10,7 +10,7 @@ namespace Azure.Core
     /// <summary>
     /// Strategy to control delay behavior.
     /// </summary>
-    internal abstract class DelayStrategy
+    internal abstract class DelayStrategyInternal
     {
         /// <summary>
         /// Get the interval of next delay iteration.

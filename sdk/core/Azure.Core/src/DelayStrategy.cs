@@ -14,7 +14,7 @@ namespace Azure.Core
     /// An abstraction to control delay behavior.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Delay
+    public abstract class DelayStrategy
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         private readonly Random _random = new ThreadSafeRandom();
@@ -23,12 +23,12 @@ namespace Azure.Core
         private readonly TimeSpan _maxDelay;
 
         /// <summary>
-        /// Constructs a new instance of <see cref="Delay"/>.
+        /// Constructs a new instance of <see cref="DelayStrategy"/>.
         /// </summary>
         /// <param name="maxDelay">The max delay value to apply on an individual delay.</param>
         /// <param name="jitterFactor">The jitter factor to apply to each delay. For example, if the delay is 1 second with a jitterFactor of 0.2, the actual
         /// delay used will be a random double between 0.8 and 1.2. If set to 0, no jitter will be applied.</param>
-        protected Delay(TimeSpan? maxDelay = default, double jitterFactor = 0.2)
+        protected DelayStrategy(TimeSpan? maxDelay = default, double jitterFactor = 0.2)
         {
             // use same defaults as RetryOptions
             _minJitterFactor = 1 - jitterFactor;
@@ -41,23 +41,23 @@ namespace Azure.Core
         /// </summary>
         /// <param name="initialDelay">The initial delay to use.</param>
         /// <param name="maxDelay">The maximum delay to use.</param>
-        /// <returns>The <see cref="Delay"/> instance.</returns>
-        public static Delay CreateExponentialDelay(
+        /// <returns>The <see cref="DelayStrategy"/> instance.</returns>
+        public static DelayStrategy CreateExponentialDelayStrategy(
             TimeSpan? initialDelay = default,
             TimeSpan? maxDelay = default)
         {
-            return new ExponentialDelay(initialDelay ?? TimeSpan.FromSeconds(0.8), maxDelay ?? TimeSpan.FromMinutes(1));
+            return new ExponentialDelayStrategyInternal(initialDelay ?? TimeSpan.FromSeconds(0.8), maxDelay ?? TimeSpan.FromMinutes(1));
         }
 
         /// <summary>
         /// Create a fixed delay with jitter.
         /// </summary>
         /// <param name="delay">The delay to use.</param>
-        /// <returns>The <see cref="Delay"/> instance.</returns>
-        public static Delay CreateFixedDelay(
+        /// <returns>The <see cref="DelayStrategy"/> instance.</returns>
+        public static DelayStrategy CreateFixedDelayStrategy(
             TimeSpan? delay = default)
         {
-            return new FixedDelay(delay ?? TimeSpan.FromSeconds(0.8));
+            return new FixedDelayStrategy(delay ?? TimeSpan.FromSeconds(0.8));
         }
 
         /// <summary>
