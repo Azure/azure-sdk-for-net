@@ -1,5 +1,12 @@
 # Microsoft Azure GraphServices management client library for .NET
 
+The Microsoft Graph Services API operations enable you to programmatically set up billing for metered APIs and services in Microsoft Graph. 
+
+**More information**
+- [Overview of Microsoft Graph](https://learn.microsoft.com/graph/overview)
+- [Overview of metered APIs and services in Microsoft Graph](https://learn.microsoft.com/graph/metered-api-overview)
+- [Enable metered APIs and services in Microsoft Graph](https://learn.microsoft.com/graph/metered-api-setup)
+
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.

@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("ruleName"u8);
                 writer.WriteStringValue(RuleName);
             }
+            if (Optional.IsDefined(IsSoftDeleted))
+            {
+                writer.WritePropertyName("isSoftDeleted"u8);
+                writer.WriteBooleanValue(IsSoftDeleted.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -37,6 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             Optional<DateTimeOffset> expiryTime = default;
             Optional<string> ruleName = default;
+            Optional<bool> isSoftDeleted = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiryTime"u8))
@@ -54,8 +60,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     ruleName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("isSoftDeleted"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isSoftDeleted = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new RecoveryPointProperties(Optional.ToNullable(expiryTime), ruleName.Value);
+            return new RecoveryPointProperties(Optional.ToNullable(expiryTime), ruleName.Value, Optional.ToNullable(isSoftDeleted));
         }
     }
 }
