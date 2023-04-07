@@ -5,11 +5,19 @@ using System.IO;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class StorageHelperTests
     {
+        internal readonly ITestOutputHelper output;
+
+        public StorageHelperTests(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
         // The directory separator is either '/' or '\' depending on the Platform, making unit testing tricky.
         private static readonly char ds = Path.DirectorySeparatorChar;
 
@@ -20,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 platform: new MockPlatform(),
                 configuredStorageDirectory: $"C:{ds}Temp");
 
-            Assert.Equal(directoryPath, $"C:{ds}Temp");
+            Assert.Equal($"C:{ds}Temp", directoryPath);
         }
 
         [Theory]
@@ -37,7 +45,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 platform: platform,
                 configuredStorageDirectory: null);
 
-            Assert.Equal(directoryPath, $"C:{ds}Temp{ds}Microsoft{ds}AzureMonitor");
+            Assert.Equal($"C:{ds}Temp{ds}Microsoft{ds}AzureMonitor", directoryPath);
+        }
+
+        [Fact]
+        public void INVESTIGATE_TEST_FAILURE()
+        {
+            var input = $"C:{ds}Temp";
+            this.output.WriteLine($"Input: {input}");
+
+            var path = Path.Combine(input, "Microsoft");
+            this.output.WriteLine($"Path: {path}");
+
+            var directory = Directory.CreateDirectory(path);
+            this.output.WriteLine($"Directory: {directory.FullName}");
+
+            Assert.Fail("investigating test");
         }
     }
 }
