@@ -797,11 +797,11 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("orderby", orderby, true);
             }
-            if (runStatuses != null)
+            if (runStatuses != null && Optional.IsCollectionDefined(runStatuses))
             {
                 uri.AppendQueryDelimited("runStatuses", runStatuses, ",", true);
             }
-            if (workflowIds != null)
+            if (workflowIds != null && Optional.IsCollectionDefined(workflowIds))
             {
                 uri.AppendQueryDelimited("workflowIds", workflowIds, ",", true);
             }
@@ -863,7 +863,7 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("viewMode", viewMode, true);
             }
-            if (workflowIds != null)
+            if (workflowIds != null && Optional.IsCollectionDefined(workflowIds))
             {
                 uri.AppendQueryDelimited("workflowIds", workflowIds, ",", true);
             }
@@ -879,11 +879,11 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("orderby", orderby, true);
             }
-            if (taskTypes != null)
+            if (taskTypes != null && Optional.IsCollectionDefined(taskTypes))
             {
                 uri.AppendQueryDelimited("taskTypes", taskTypes, ",", true);
             }
-            if (taskStatuses != null)
+            if (taskStatuses != null && Optional.IsCollectionDefined(taskStatuses))
             {
                 uri.AppendQueryDelimited("taskStatuses", taskStatuses, ",", true);
             }
