@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core.Json;
 using NUnit.Framework;
@@ -42,7 +44,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanWriteDateTime_Utf8Bytes()
+        public void CanWriteDateTime()
         {
             ReadOnlySpan<byte> json = """
                 {
@@ -61,23 +63,40 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanWriteDateTime_String()
+        public void CanWriteQuote()
         {
             string json = """
                 {
                     "foo": "hi",
-                    "last_modified":"2023-03-23T16:34:34+00:00"
+                    "value":"aa\"b+b"
                 }
                 """;
 
-            MutableJsonDocument jd = MutableJsonDocument.Parse(json);
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
             // Make a change to force it to go through our custom WriteTo() op.
-            jd.RootElement.GetProperty("foo").Set("hi");
+            mdoc.RootElement.GetProperty("foo").Set("hi");
 
-            WriteToAndParse(jd, out string jsonString);
+            // Our goal is that MutableJsonDocument.WriteTo() will have the same behavior
+            // as JsonDocument.WriteTo(). Confirm that below.
 
-            Assert.AreEqual(RemoveWhiteSpace(json), RemoveWhiteSpace(jsonString));
+            JsonDocument doc = JsonDocument.Parse(json);
+            using MemoryStream m1 = new();
+            using Utf8JsonWriter w1 = new(m1);
+            doc.WriteTo(w1);
+            w1.Flush();
+            m1.Position = 0;
+
+            using MemoryStream m2 = new();
+            using Utf8JsonWriter w2 = new(m2);
+            mdoc.WriteTo(w2);
+            w2.Flush();
+            m2.Position = 0;
+
+            string docAsString = BinaryData.FromStream(m1).ToString();
+            string mdocAsString = BinaryData.FromStream(m2).ToString();
+
+            Assert.AreEqual(docAsString, mdocAsString);
         }
 
         [Test]
@@ -239,6 +258,69 @@ namespace Azure.Core.Experimental.Tests
             WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(RemoveWhiteSpace(json), RemoveWhiteSpace(jsonString));
+        }
+
+        [TestCaseSource(nameof(TestCases))]
+        public void WriteToBehaviorMatchesJsonDocument(string json)
+        {
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            // Make a change to force it to go through our custom WriteTo() op.
+            string name = mdoc.RootElement.EnumerateObject().First().Name;
+            var value = mdoc.RootElement.EnumerateObject().First().Value;
+            mdoc.RootElement.GetProperty(name).Set(value);
+
+            // Our goal is that MutableJsonDocument.WriteTo() will have the same behavior
+            // as JsonDocument.WriteTo(). Confirm that below.
+
+            JsonDocument doc = JsonDocument.Parse(json);
+            using MemoryStream m1 = new();
+            using Utf8JsonWriter w1 = new(m1);
+            doc.WriteTo(w1);
+            w1.Flush();
+            m1.Position = 0;
+
+            using MemoryStream m2 = new();
+            using Utf8JsonWriter w2 = new(m2);
+            mdoc.WriteTo(w2);
+            w2.Flush();
+            m2.Position = 0;
+
+            string jdocString = BinaryData.FromStream(m1).ToString();
+            string mdocString = BinaryData.FromStream(m2).ToString();
+
+            Assert.AreEqual(jdocString, mdocString);
+        }
+
+        public static IEnumerable<string> TestCases()
+        {
+            yield return """
+                {
+                    "foo": "hi",
+                    "value":"aabb"
+                }
+                """;
+
+                yield return """
+                {
+                    "foo": "hi",
+                    "value": 2 
+                }
+                """;
+
+            yield return """
+                {
+                    "foo": "hi",
+                    "value": "a+b" 
+                }
+                """;
+
+            yield return """
+                {
+                    "foo": "hi",
+                    "value": "a\"b" 
+                }
+                """;
         }
 
         #region Helpers
