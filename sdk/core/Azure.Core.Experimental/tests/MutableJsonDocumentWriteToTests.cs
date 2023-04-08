@@ -297,28 +297,66 @@ namespace Azure.Core.Experimental.Tests
             yield return """
                 {
                     "foo": "hi",
-                    "value":"aabb"
+                    "bar": "aabb"
                 }
                 """;
 
                 yield return """
                 {
                     "foo": "hi",
-                    "value": 2 
+                    "bar": 2
                 }
                 """;
 
             yield return """
                 {
                     "foo": "hi",
-                    "value": "a+b" 
+                    "bar": "a+b" 
                 }
                 """;
 
             yield return """
                 {
                     "foo": "hi",
-                    "value": "a\"b" 
+                    "bar": "a\"b" 
+                }
+                """;
+
+            yield return """
+                {
+                    "foo": "hi",
+                    "bar": true
+                }
+                """;
+
+            yield return """
+                {
+                    "foo": "hi",
+                    "bar": 2.5
+                }
+                """;
+
+            yield return """
+                {
+                    "foo": "hi",
+                    "bar": [ true, null, 6, 1.2, "hello" ]
+                }
+                """;
+
+            yield return """
+                {
+                    "foo": "hi",
+                    "bar": {
+                        "one" : 1,
+                        "two" : "2"
+                    }
+                }
+                """;
+
+            yield return """
+                {
+                    "foo": "hi",
+                    "bar": "~!@#$%^&*()_+\\\"'"
                 }
                 """;
         }
