@@ -2,6 +2,24 @@
 
 $DevOpsAPIBaseURI = "https://dev.azure.com/{0}/{1}/_apis/{2}/{3}?{4}api-version=6.0"
 
+function Get-Base64EncodedToken([string]$AuthToken)
+{
+  $unencodedAuthToken = "nobody:$AuthToken"
+  $unencodedAuthTokenBytes = [System.Text.Encoding]::UTF8.GetBytes($unencodedAuthToken)
+  $encodedAuthToken = [System.Convert]::ToBase64String($unencodedAuthTokenBytes)
+
+  if ($isDevOpsRun) {
+    # We are doing this here so that there is zero chance that this token is emitted in Azure Pipelines
+    # build logs. Azure Pipelines will see this text and register the secret as a value it should *** out
+    # before being transmitted to the server (and shown in logs). It means if the value is accidentally
+    # leaked anywhere else that it won't be visible. The downside is that when the script is executed
+    # on a local development box, it will be visible.
+    Write-Host "##vso[task.setvariable variable=_throwawayencodedaccesstoken;issecret=true;]$($encodedAuthToken)"
+  }
+
+  return $encodedAuthToken
+}
+
 function Get-DevOpsApiHeaders ($Base64EncodedToken) {
   $headers = @{
     Authorization = "Basic $Base64EncodedToken"
