@@ -165,7 +165,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
             finally
             {
-                if (sameOperation.HasValue)
+                if (sameOperation != null && sameOperation.HasValue)
                 {
                     await client.DeleteDocumentClassifierAsync(classifierId);
                 }
@@ -203,7 +203,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
             finally
             {
-                if (operation.HasValue)
+                if (operation != null && operation.HasValue)
                 {
                     await client.DeleteDocumentClassifierAsync(classifierId);
                 }
