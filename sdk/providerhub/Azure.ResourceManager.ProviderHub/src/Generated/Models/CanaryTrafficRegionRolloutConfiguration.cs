@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of CanaryTrafficRegionRolloutConfiguration. </summary>
         public CanaryTrafficRegionRolloutConfiguration()
         {
-            SkipRegions = new ChangeTrackingList<string>();
-            Regions = new ChangeTrackingList<string>();
+            SkipRegions = new ChangeTrackingList<AzureLocation>();
+            Regions = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of CanaryTrafficRegionRolloutConfiguration. </summary>
         /// <param name="skipRegions"></param>
         /// <param name="regions"></param>
-        internal CanaryTrafficRegionRolloutConfiguration(IList<string> skipRegions, IList<string> regions)
+        internal CanaryTrafficRegionRolloutConfiguration(IList<AzureLocation> skipRegions, IList<AzureLocation> regions)
         {
             SkipRegions = skipRegions;
             Regions = regions;
         }
 
         /// <summary> Gets the skip regions. </summary>
-        public IList<string> SkipRegions { get; }
+        public IList<AzureLocation> SkipRegions { get; }
         /// <summary> Gets the regions. </summary>
-        public IList<string> Regions { get; }
+        public IList<AzureLocation> Regions { get; }
     }
 }

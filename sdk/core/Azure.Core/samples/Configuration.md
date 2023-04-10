@@ -31,7 +31,7 @@ internal class GlobalTimeoutRetryPolicy : RetryPolicy
 {
     private readonly TimeSpan _timeout;
 
-    public GlobalTimeoutRetryPolicy(int maxRetries, Delay delay, TimeSpan timeout) : base(maxRetries, delay)
+    public GlobalTimeoutRetryPolicy(int maxRetries, DelayStrategy delayStrategy, TimeSpan timeout) : base(maxRetries, delayStrategy)
     {
         _timeout = timeout;
     }
@@ -61,10 +61,10 @@ internal class GlobalTimeoutRetryPolicy : RetryPolicy
 Here is how we would configure the client to use the policy we just created.
 
 ```C# Snippet:SetGlobalTimeoutRetryPolicy
-var delay = Delay.CreateFixedDelay(TimeSpan.FromSeconds(2));
+var delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromSeconds(2));
 SecretClientOptions options = new SecretClientOptions()
 {
-    RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delay: delay, timeout: TimeSpan.FromSeconds(30))
+    RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delayStrategy: delay, timeout: TimeSpan.FromSeconds(30))
 };
 ```
 
@@ -74,7 +74,7 @@ In the below example, we create a customized exponential delay strategy that use
 ```C# Snippet:CustomizeExponentialDelay
 SecretClientOptions options = new SecretClientOptions()
 {
-    RetryPolicy = new RetryPolicy(delay: new MyCustomDelay())
+    RetryPolicy = new RetryPolicy(delayStrategy: new MyCustomDelayStrategy())
 };
 ```
 
