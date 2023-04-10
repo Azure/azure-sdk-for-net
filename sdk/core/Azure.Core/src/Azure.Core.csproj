@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.31.0-beta.1</Version>
+    <Version>1.31.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.30.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
@@ -70,7 +70,7 @@
     <Compile Include="Shared\TaskExtensions.cs" />
     <Compile Include="Shared\CancellationHelper.cs" />
     <Compile Include="Shared\OperationPoller.cs" />
-    <Compile Include="Shared\DelayStrategy.cs" />
+    <Compile Include="Shared\DelayStrategyInternal.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
     <Compile Include="Shared\GeoRedundantFallbackPolicy.cs" />
   </ItemGroup>
