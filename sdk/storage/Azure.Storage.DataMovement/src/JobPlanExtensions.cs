@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.JobPlanModels;
+using Azure.Storage.DataMovement.Models.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
