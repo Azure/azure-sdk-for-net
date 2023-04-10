@@ -106,7 +106,7 @@
 /sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/       @miaojiang
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @nisha-bhatia @ShivangiReja @AlexanderSher @jsquire
+/sdk/appconfiguration/                                             @ShivangiReja @jsquire @pallavit
 
 # ServiceLabel: %App Services %Service Attention
 #/<NotInRepo>/                                                     @antcp @AzureAppServiceCLI
@@ -195,7 +195,7 @@
 #/<NotInRepo>/                                                     @swmachan
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                                                  @mshaban-msft
+/sdk/translation/                                                  @mikeymcz @cpoulain @joseharriaga
 
 # ServiceLabel: %Cognitive - Speech %Service Attention
 #/<NotInRepo>/                                                     @robch @oscholz
@@ -234,10 +234,10 @@
 /sdk/communication/Azure.Communication.Chat/                       @LuChen-Microsoft
 
 # PRLabel: %Communication - Common
-/sdk/communication/Azure.Communication.Common/                     @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @ostoliarova-msft @mjafferi-msft
+/sdk/communication/Azure.Communication.Common/                     @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft
 
 # PRLabel: %Communication - Identity
-/sdk/communication/Azure.Communication.Identity/                   @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @ostoliarova-msft @mjafferi-msft
+/sdk/communication/Azure.Communication.Identity/                   @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft
 
 # PRLabel: %Communication - Network Traversal
 /sdk/communication/Azure.Communication.NetworkTraversal/           @ajpeacock0 @nathpete-msft
@@ -483,9 +483,13 @@
 # ServiceLabel: %Monitor %Service Attention
 /sdk/monitor/                                                      @SameergMS @dadunl
 
+# PRLabel: %Monitor - Ingestion
+/sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @pallavit
+/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit
+
 # PRLabel: %Monitor - Query
-/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @ShivangiReja
-/sdk/monitor/ci.yml                                                @nisha-bhatia @ShivangiReja
+/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit 
+/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit
 
 # PRLabel: %Monitor - ApplicationInsights
 # ServiceLabel: %Monitor - ApplicationInsights %Service Attention

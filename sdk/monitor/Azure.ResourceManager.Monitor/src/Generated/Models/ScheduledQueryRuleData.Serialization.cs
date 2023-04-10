@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity.Value.ToString());
+                writer.WriteNumberValue(Severity.Value.ToSerialInt64());
             }
             if (Optional.IsDefined(IsEnabled))
             {

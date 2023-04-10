@@ -78,7 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
 
-                    destination.Add(tag.Key, tag.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength));
+                    destination.Add(tag.Key, tag.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
                 }
             }
         }
@@ -133,7 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 linksJson.Append(']');
 
-                AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object>(msLinks, linksJson.ToString()));
+                AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(msLinks, linksJson.ToString()));
             }
         }
 

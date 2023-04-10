@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Gets a list of all search services in the given subscription.
+        /// Gets a list of all Search services in the given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Gets a list of all search services in the given subscription.
+        /// Gets a list of all Search services in the given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

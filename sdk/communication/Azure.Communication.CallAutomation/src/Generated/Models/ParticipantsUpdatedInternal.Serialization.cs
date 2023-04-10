@@ -23,6 +23,7 @@ namespace Azure.Communication.CallAutomation
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
             Optional<IReadOnlyList<CallParticipantInternal>> participants = default;
+            Optional<int> sequenceNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -55,8 +56,18 @@ namespace Azure.Communication.CallAutomation
                     participants = array;
                     continue;
                 }
+                if (property.NameEquals("sequenceNumber"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sequenceNumber = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new ParticipantsUpdatedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, Optional.ToList(participants));
+            return new ParticipantsUpdatedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, Optional.ToList(participants), Optional.ToNullable(sequenceNumber));
         }
     }
 }

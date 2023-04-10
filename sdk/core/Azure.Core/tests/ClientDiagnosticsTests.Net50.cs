@@ -429,6 +429,45 @@ namespace Azure.Core.Tests
             scope.Start();
             Assert.Throws<InvalidOperationException>(() => scope.SetTraceContext(parentId));
         }
+
+        [Test]
+        [NonParallelizable]
+        public void FailedStopsActivityAndWritesExceptionEventActivitySource()
+        {
+            using var _ = SetAppConfigSwitch();
+            using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
+
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory(
+                "Azure.Clients.ClientName",
+                "Microsoft.Azure.Core.Cool.Tests",
+                true,
+                false);
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+
+            scope.AddAttribute("Attribute1", "Value1");
+            scope.AddAttribute("Attribute2", 2, i => i.ToString());
+
+            scope.Start();
+
+            var activity = activityListener.AssertAndRemoveActivity("ActivityName");
+            Assert.IsEmpty(activityListener.Activities);
+
+            Assert.AreEqual(ActivityStatusCode.Unset, activity.Status);
+            Assert.IsNull(activity.StatusDescription);
+
+            var exception = new Exception();
+            scope.Failed(exception);
+            scope.Dispose();
+
+            Assert.Null(Activity.Current);
+
+            Assert.AreEqual(exception.ToString(), activity.StatusDescription);
+            Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
+
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
+        }
     }
 #endif
 }

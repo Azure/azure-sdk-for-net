@@ -34,6 +34,7 @@ namespace Azure.Communication.JobRouter
                     case "direct-map-rule": return DirectMapRule.DeserializeDirectMapRule(element);
                     case "expression-rule": return ExpressionRule.DeserializeExpressionRule(element);
                     case "static-rule": return StaticRule.DeserializeStaticRule(element);
+                    case "webhook-rule": return WebhookRule.DeserializeWebhookRule(element);
                 }
             }
             return UnknownRouterRule.DeserializeUnknownRouterRule(element);

@@ -10,7 +10,7 @@ Install the Azure Communication CallAutomation client library for .NET with [NuG
 
 ```dotnetcli
 dotnet add package Azure.Communication.CallAutomation --prerelease
-``` 
+```
 
 ### Prerequisites
 You need an [Azure subscription][azure_sub] and a [Communication Service Resource][communication_resource_docs] to use this package.
@@ -22,8 +22,6 @@ To create a new Communication Service, you can use the [Azure Portal][communicat
 
 ### Using statements
 ```C#
-using System;
-using System.Collections.Generic;
 using Azure.Communication.CallAutomation;
 ```
 
@@ -46,73 +44,131 @@ var client = new CallAutomationClient(endpoint, tokenCredential);
 ### Make a call to a phone number recipient
 To make an outbound call, call the `CreateCall` or `CreateCallAsync` function from the `CallAutomationClient`.
 ```C#
-CallSource callSource = new CallSource(
-       new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
-       );
-callSource.CallerId = new PhoneNumberIdentifier("<caller-id-phonenumber>") // E.164 formatted phone number that's associated to your Azure Communication Resource
-```
-```C#
-CreateCallResult createCallResult = await callAutomationClient.CreateCallAsync(
-    source: callSource,
-    targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
-    callbackEndpoint: new Uri(TestEnvironment.AppCallbackUrl)
+CallInvite callInvite = new CallInvite(
+    new PhoneNumberIdentifier("<targets-phone-number>"),
+    new PhoneNumberIdentifier("<caller-id-phonenumber>")
+    );  // E.164 formatted recipient phone number
+
+// create call with above invitation
+createCallResult = await callAutomationClient.CreateCallAsync(
+    callInvite,
+    new Uri("<YOUR-CALLBACK-URL>")
     );
+
 Console.WriteLine($"Call connection id: {createCallResult.CallConnectionProperties.CallConnectionId}");
 ```
 
-### Handle Mid-Connection call back events
-Your app will receive mid-connection call back events via the callbackEndpoint you provided. You will need to write event handler controller to receive the events and direct your app flow based on your business logic.
+### Handle Mid-Connection callback events
+Your app will receive mid-connection callback events via the callbackEndpoint you provided. You will need to write event handler controller to receive the events and direct your app flow based on your business logic.
 ```C#
-    /// <summary>
-    /// Handle call back events.
-    /// </summary>>
-    [HttpPost]
-    [Route("/CallBackEvent")]
-    public IActionResult OnMidConnectionCallBackEvent([FromBody] CloudEvent[] events)
+/// <summary>
+/// Handle call back events.
+/// </summary>>
+[HttpPost]
+[Route("/CallBackEvent")]
+public IActionResult OnMidConnectionCallBackEvent([FromBody] CloudEvent[] events)
+{
+    try
     {
-        try
+        if (events != null)
         {
-            if (events != null)
+            // Helper function to parse CloudEvent to a CallAutomation event.
+            CallAutomationEventBase callBackEvent = CallAutomationEventParser.Parse(events.FirstOrDefault());
+
+            switch (callBackEvent)
             {
-                // Helper function to parse CloudEvent to a CallAutomation event.
-                CallAutomationEventBase callBackEvent = CallAutomationEventParser.Parse(events.FirstOrDefault());
-            
-                switch (callBackEvent)
-                {
-                    case CallConnected ev:
-                        # logic to handle a CallConnected event
-                        break;
-                    case CallDisconnected ev:
-                        # logic to handle a CallDisConnected event
-                        break;
-                    case ParticipantsUpdated ev:
-                        # cast the event into a ParticipantUpdated event and do something with it. Eg. iterate through the participants
-                        ParticipantsUpdated updatedEvent = (ParticipantsUpdated)ev;
-                        break;
-                    case AddParticipantsSucceeded ev:
-                        # logic to handle an AddParticipantsSucceeded event
-                        break;
-                    case AddParticipantsFailed ev:
-                        # logic to handle an AddParticipantsFailed event
-                        break;
-                    case CallTransferAccepted ev:
-                        # logic to handle CallTransferAccepted event
-                        break;
-                    case CallTransferFailed ev:
-                        # logic to handle CallTransferFailed event
-                       break;
-                    default:
-                        break;
-                }
+                case CallConnected ev:
+                    # logic to handle a CallConnected event
+                    break;
+                case CallDisconnected ev:
+                    # logic to handle a CallDisConnected event
+                    break;
+                case ParticipantsUpdated ev:
+                    # cast the event into a ParticipantUpdated event and do something with it. Eg. iterate through the participants
+                    ParticipantsUpdated updatedEvent = (ParticipantsUpdated)ev;
+                    break;
+                case AddParticipantsSucceeded ev:
+                    # logic to handle an AddParticipantsSucceeded event
+                    break;
+                case AddParticipantsFailed ev:
+                    # logic to handle an AddParticipantsFailed event
+                    break;
+                case CallTransferAccepted ev:
+                    # logic to handle CallTransferAccepted event
+                    break;
+                case CallTransferFailed ev:
+                    # logic to handle CallTransferFailed event
+                    break;
+                default:
+                    break;
             }
         }
-        catch (Exception ex)
-        {
-            // handle exception
-        }
-        return Ok();
     }
+    catch (Exception ex)
+    {
+        // handle exception
+    }
+    return Ok();
+}
 ```
+
+### Handle Mid-Connection events with CallAutomation's EventProcessor
+To easily handle mid-connection events, Call Automation's SDK provides easier way to handle these events.
+Take a look at `CallAutomationEventProcessor`. this will ensure corelation between call and events more easily.
+```C#
+[HttpPost]
+[Route("/CallBackEvent")]
+public IActionResult OnMidConnectionCallBackEvent([FromBody] CloudEvent[] events)
+{
+    try
+    {
+        // process incoming event for EventProcessor
+        _callAutomationClient.GetEventProcessor().ProcessEvents(cloudEvents);
+    }
+    catch (Exception ex)
+    {
+        // handle exception
+    }
+    return Ok();
+}
+```
+`ProcessEvents` is required for EventProcessor to work.
+After event is being consumed by EventProcessor, you can start using its feature.
+
+See below for example: where you are making a call with `CreateCall`, and wait for `CallConnected` event of the call.
+```C#
+CallInvite callInvite = new CallInvite(
+    new PhoneNumberIdentifier("<targets-phone-number>"),
+    new PhoneNumberIdentifier("<caller-id-phonenumber>")
+    );  // E.164 formatted recipient phone number
+
+// create call with above invitation
+createCallResult = await callAutomationClient.CreateCallAsync(
+    callInvite,
+    new Uri("<YOUR-CALLBACK-URL>")
+    );
+
+// giving 30 seconds timeout for call reciever to answer
+CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+CancellationToken token = cts.Token;
+
+try
+{
+    // this will wait until CreateCall is completed or Timesout!
+    CreateCallEventResult eventResult = await createCallResult.WaitForEventAsync(token);
+
+    // Once this is recieved, you know the call is now connected.
+    CallConnected returnedEvent = eventResult.SuccessEvent;
+
+    // ...Do more actions, such as Play or AddParticipant, since the call is established...
+}
+catch (OperationCanceledException ex)
+{
+    // Timeout exception happend!
+    // Call likely was never answered.
+}
+```
+If cancellation token was not passed with timeout, the default timeout is 4 minutes.
 
 ## Troubleshooting
 A `RequestFailedException` is thrown as a service response for any unsuccessful requests. The exception contains information about what response code was returned from the service.

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<IReadOnlyList<ReservationTerm>> terms = default;
             Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<SkuProperty>> skuProperties = default;
-            Optional<CatalogMsrp> msrp = default;
+            Optional<ReservationCatalogMsrp> msrp = default;
             Optional<IReadOnlyList<SkuRestriction>> restrictions = default;
             Optional<string> tier = default;
             Optional<string> size = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    msrp = CatalogMsrp.DeserializeCatalogMsrp(property.Value);
+                    msrp = ReservationCatalogMsrp.DeserializeReservationCatalogMsrp(property.Value);
                     continue;
                 }
                 if (property.NameEquals("restrictions"u8))

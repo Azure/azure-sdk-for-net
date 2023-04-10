@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(DiffBackupIntervalInHours))
             {
                 writer.WritePropertyName("diffBackupIntervalInHours"u8);
-                writer.WriteStringValue(DiffBackupIntervalInHours.Value.ToString());
+                writer.WriteNumberValue(DiffBackupIntervalInHours.Value.ToSerialInt32());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

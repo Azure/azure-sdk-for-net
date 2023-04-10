@@ -1,40 +1,34 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/97fa26b5-39ef-45ce-8f17-e4359d0d2730/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "138",
+        "Content-Length": "139",
         "Content-Type": "application/json",
-        "traceparent": "00-b72ca2f843aa0b48a29000065571a1f4-a5ae91ab333a6049-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210914.1",
-          "(.NET 5.0.10; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "25b5de3f5eba54423babdd99d1c03f40",
+        "traceparent": "00-6da0ee93f951f949a2f6461193619587-b0f3839d3565144e-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "9899ac39956ac12c36b5743763bdbd1d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "query": "set truncationmaxrecords=1; datatable (s: string) [\u0027a\u0027, \u0027b\u0027]",
-        "timespan": "2021-09-06T00:00:00.0000000Z/P7D"
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "0",
+        "Age": "67",
         "Connection": "keep-alive",
-        "Content-Length": "509",
+        "Content-Length": "596",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 15 Sep 2021 00:03:10 GMT",
+        "Date": "Tue, 14 Mar 2023 22:25:53 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Vary": [
-          "Accept-Encoding",
-          "Accept-Encoding"
-        ],
-        "Via": "1.1 draft-oms-5cbfc96d4-ncmt4",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-85c67bc895-p626w",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -63,7 +57,7 @@
               "message": "Something went wrong processing your query on the server.",
               "innererror": {
                 "code": "-2133196797",
-                "message": "Query result set has exceeded the internal record count limit 1 (E_QUERY_RESULT_SET_TOO_LARGE; see https://aka.ms/kustoquerylimits)",
+                "message": "The results of this query exceed the set limit of 1 records, so not all records were returned (E_QUERY_RESULT_SET_TOO_LARGE, 0x80DA0003). See https://aka.ms/kustoquerylimits for more information and possible solutions.",
                 "severity": 2,
                 "severityName": "Error"
               }
@@ -74,9 +68,10 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-09-14T17:03:10.3734827-07:00",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DateTimeOffsetNow": "2023-03-14T15:25:51.0978586-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "1967895409",
-    "WORKSPACE_ID": "97fa26b5-39ef-45ce-8f17-e4359d0d2730"
+    "RandomSeed": "234499550",
+    "WORKSPACE_ID": "314be15c-6065-462b-a0dc-8fe1213796f2"
   }
 }

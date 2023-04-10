@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Use specified `DynamicJsonNameMapping` in array and object enumerators.
+
 ### Other Changes
 
 ## 0.1.0-preview.25 (2023-03-02)

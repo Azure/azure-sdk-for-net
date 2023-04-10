@@ -17,6 +17,11 @@ namespace Azure.Communication.CallAutomation
         public IReadOnlyList<DtmfTone> Tones { get; }
 
         /// <summary>
+        /// The RecognizeResultType of this RecognizeResult.
+        /// </summary>
+        public override RecognizeResultType ResultType => RecognizeResultType.CollectTonesResult;
+
+        /// <summary>
         /// Convert the collection of tones to a string like "12345#".
         /// </summary>
         public string ConvertToString()

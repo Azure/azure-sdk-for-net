@@ -1,11 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Azure.Storage.DataMovement
+namespace Azure.Storage.DataMovement.JobPlanModels
 {
     /// <summary>
     /// Required if the blob has associated snapshots. Specify one of the following two options:
