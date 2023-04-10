@@ -1,6 +1,6 @@
 # Release History
 
-## 5.3.0-beta.1 (Unreleased)
+## 5.3.0 (2023-04-11)
 
 ### Features Added
 
@@ -8,13 +8,9 @@
 
   It is important to note that neither the minimum batch size or maximum wait time are guarantees; the trigger will make its best effort to honor them but you may see partial batches or inaccurate timing.  This scenario is common when a Function is scaling.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Changed the approach that the trigger uses to validate permissions on startup to ensure that it does not interrupt other triggers already running by temporarily asserting ownership of a partition.
-
-### Other Changes
 
 ## 5.2.0 (2023-02-23)
 
