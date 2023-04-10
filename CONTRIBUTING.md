@@ -1,10 +1,6 @@
 # Contributing
 
-| Component            | Build Status                                                                                                                                                                                                          |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20mgmt%20-%20ci?branchName=main)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=main)   |
-
-# Prerequisites:
+## Prerequisites:
 
 - Install Visual Studio 2022 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
@@ -13,6 +9,7 @@
 - Install the latest version of git (https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher, if you plan to make public API changes or are working with generated code snippets.
 - Install [NodeJS](https://nodejs.org/) (16.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
+- [Fork the repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo); work will be done in your fork and a pull request should be opened agains the `main` branch of the Azure SDK for .NET repository when ready for review.
 
 ## GENERAL THINGS TO KNOW:
 
@@ -25,6 +22,8 @@
 **Dependencies :** To ensure that the same versions of dependencies are used for all projects in the repo, package versions are managed from a central location in `eng\Packages.Data.props`. When adding package references you should first ensure that an **Update** reference of the package with the version exist in the **Packages.Data.props** then **Include** the reference without the version in your .csproj. Contact [azuresdkengsysteam@microsoft.com](mailto:azuresdkengsysteam@microsoft.com) if you need to change  versions for packages already present in **Packages.Data.props**
 
 **Line Endings :** If working on windows OS ensure git is installed with `Checkout Windows-style, commit Unix-style` option or `core.autocrlf` set to *true* in git config. If working on Unix based Linux or MacOS ensure git is installed with `Checkout as-is, commit Unix-style` option or `core.autocrlf` set to *input* in git config
+
+**GitHub Actions :** Forks of the repository will inherit the automations performed in the Azure SDK for .NET repository as GitHub Actions.  It is reccommended that you explicitly [disable](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#managing-github-actions-permissions-for-your-repository) these Actions to prevent errors and unwanted automation.
 
 ----
 
