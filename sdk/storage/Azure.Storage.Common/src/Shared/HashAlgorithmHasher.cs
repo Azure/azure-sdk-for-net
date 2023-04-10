@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.IO.Hashing;
 using System.Security.Cryptography;
 
 namespace Azure.Storage
@@ -15,7 +14,7 @@ namespace Azure.Storage
     {
         private readonly HashAlgorithm _hashAlgorithm;
 
-        public int HashSize => _hashAlgorithm.HashSize;
+        public int HashSizeInBytes => _hashAlgorithm.HashSize >> 3;
 
         public HashAlgorithmHasher(HashAlgorithm hashAlgorithm)
         {
@@ -31,9 +30,9 @@ namespace Azure.Storage
 
         public int GetFinalHash(Span<byte> hashDestination)
         {
-            byte[] hash = _hashAlgorithm.TransformFinalBlock(new byte[0], 0, 0);
-            hash.CopyTo(hashDestination);
-            return hash.Length;
+            _hashAlgorithm.TransformFinalBlock(new byte[0], 0, 0);
+            _hashAlgorithm.Hash.CopyTo(hashDestination);
+            return _hashAlgorithm.Hash.Length;
         }
 
         public void Dispose()

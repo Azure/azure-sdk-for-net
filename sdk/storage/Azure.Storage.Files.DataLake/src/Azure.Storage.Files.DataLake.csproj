@@ -48,6 +48,7 @@
     <Compile Include="$(AzureStorageSharedSources)GeoRedundantReadPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)HashAlgorithmHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)IHasher.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)IHasherExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)LoggingExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)NonCryptographicHashAlgorithmHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)NonDisposingStream.cs" LinkBase="Shared" />

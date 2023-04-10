@@ -257,13 +257,19 @@ namespace Azure.Storage.Tests
                 ApiCalls = new List<string>();
             }
 
-            protected override Task AppendInternal(bool async, CancellationToken cancellationToken)
+            protected override Task AppendInternal(
+                UploadTransferValidationOptions validationOptions,
+                bool async,
+                CancellationToken cancellationToken)
             {
                 ApiCalls.Add(s_append);
                 return Task.CompletedTask;
             }
 
-            protected override Task FlushInternal(bool async, CancellationToken cancellationToken)
+            protected override Task FlushInternal(
+                UploadTransferValidationOptions validationOptions,
+                bool async,
+                CancellationToken cancellationToken)
             {
                 ApiCalls.Add(s_flush);
                 return Task.CompletedTask;

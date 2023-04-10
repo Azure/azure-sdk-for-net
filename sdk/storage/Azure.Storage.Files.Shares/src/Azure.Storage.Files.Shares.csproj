@@ -50,6 +50,7 @@
     <Compile Include="$(AzureStorageSharedSources)LoggingExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)IDownloadedContent.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)IHasher.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)IHasherExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)NonCryptographicHashAlgorithmHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)NonDisposingStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)PartitionedUploader.cs" LinkBase="Shared" />

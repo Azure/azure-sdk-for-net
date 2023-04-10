@@ -6,6 +6,7 @@ using System.Buffers;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Shared
@@ -16,7 +17,8 @@ namespace Azure.Storage.Shared
         protected long _bufferSize;
         protected readonly IProgress<long> _progressHandler;
         protected readonly PooledMemoryStream _buffer;
-        protected readonly UploadTransferValidationOptions _validationOptions;
+        private readonly StorageChecksumAlgorithm _checksumAlgorithm;
+        private IHasher _bufferChecksum;
         private bool _disposed;
         private bool _shouldDisposeBuffer;
 
@@ -35,15 +37,19 @@ namespace Azure.Storage.Shared
                 _progressHandler = new AggregatingProgressIncrementer(progressHandler);
             }
 
-            _validationOptions = transferValidation;
+            _checksumAlgorithm = Argument.CheckNotNull(transferValidation, nameof(transferValidation)).ChecksumAlgorithm;
             // write streams don't support pre-calculated hashes
-            if (!(_validationOptions?.PrecalculatedChecksum.IsEmpty ?? true))
+            if (!transferValidation.PrecalculatedChecksum.IsEmpty)
             {
                 throw Errors.PrecalculatedHashNotSupportedOnSplit();
             }
 
             if (buffer != null)
             {
+                if (buffer.Position != 0)
+                {
+                    throw new ArgumentException("Buffer must be empty if provided.", nameof(buffer));
+                }
                 _buffer = buffer;
                 _shouldDisposeBuffer = false;
             }
@@ -54,6 +60,7 @@ namespace Azure.Storage.Shared
                     maxArraySize: (int)Math.Min(Constants.MB, bufferSize));
                 _shouldDisposeBuffer = true;
             }
+            _bufferChecksum = ContentHasher.GetHasherFromAlgorithmId(_checksumAlgorithm);
         }
 
         public override bool CanRead => false;
@@ -129,7 +136,11 @@ namespace Azure.Storage.Shared
                 offset += remainingSpace;
 
                 // Upload bytes.
-                await AppendInternal(async, cancellationToken).ConfigureAwait(false);
+                await AppendInternal(
+                    FinalizeAndReplaceBufferChecksum(),
+                    async,
+                    cancellationToken)
+                    .ConfigureAwait(false);
 
                 // We need to loop, because remaining bytes might be greater than _buffer size.
                 while (remaining > 0)
@@ -147,25 +158,37 @@ namespace Azure.Storage.Shared
                     // Renaming bytes won't fit in buffer.
                     if (remaining > 0)
                     {
-                        await AppendInternal(async, cancellationToken).ConfigureAwait(false);
+                        await AppendInternal(
+                            FinalizeAndReplaceBufferChecksum(),
+                            async,
+                            cancellationToken)
+                            .ConfigureAwait(false);
                     }
                 }
             }
         }
 
-        protected abstract Task FlushInternal(bool async, CancellationToken cancellationToken);
+        protected abstract Task FlushInternal(
+            UploadTransferValidationOptions validationOptions,
+            bool async,
+            CancellationToken cancellationToken);
 
         public override void Flush()
             => FlushInternal(
+                FinalizeAndReplaceBufferChecksum(),
                 async: false,
                 cancellationToken: default).EnsureCompleted();
 
         public override async Task FlushAsync(CancellationToken cancellationToken)
             => await FlushInternal(
+                FinalizeAndReplaceBufferChecksum(),
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
-        protected abstract Task AppendInternal(bool async, CancellationToken cancellationToken);
+        protected abstract Task AppendInternal(
+            UploadTransferValidationOptions validationOptions,
+            bool async,
+            CancellationToken cancellationToken);
 
         protected abstract void ValidateBufferSize(long bufferSize);
 
@@ -176,6 +199,7 @@ namespace Azure.Storage.Shared
             bool async,
             CancellationToken cancellationToken)
         {
+            _bufferChecksum?.AppendHash(new Span<byte>(buffer, offset, count));
             if (async)
             {
                 await _buffer.WriteAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
@@ -234,6 +258,43 @@ namespace Azure.Storage.Shared
             _disposed = true;
 
             base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// <para>
+        /// Take the checksum of the currnet buffer and reset the tracked checksum calculation.
+        /// </para>
+        /// <para>
+        /// Note: Avoid using in subclasses. This is only exposed for page blobs, as they override
+        /// <see cref="WriteInternal(byte[], int, int, bool, CancellationToken)"/> for pageblob 512
+        /// requirements. Since WriteInternal is what calls
+        /// <see cref="AppendInternal(UploadTransferValidationOptions, bool, CancellationToken)"/>
+        /// with appropriate validation options, it needs access to this. However, it's not clear
+        /// whether page blob needs direct access to calling AppendInternal or whether it can call
+        /// into its base implementation instead. If it can do this, that is preferred and this can
+        /// be made private.
+        /// </para>
+        /// </summary>
+        /// <returns></returns>
+        protected UploadTransferValidationOptions FinalizeAndReplaceBufferChecksum()
+        {
+            if (_buffer.Length == 0)
+            {
+                return new UploadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.None
+                };
+            }
+
+            var result = new UploadTransferValidationOptions
+            {
+                ChecksumAlgorithm = _checksumAlgorithm,
+                PrecalculatedChecksum = _bufferChecksum?.GetFinalHash() ?? ReadOnlyMemory<byte>.Empty,
+            };
+            _bufferChecksum?.Dispose();
+            _bufferChecksum = ContentHasher.GetHasherFromAlgorithmId(_checksumAlgorithm);
+
+            return result;
         }
     }
 }
