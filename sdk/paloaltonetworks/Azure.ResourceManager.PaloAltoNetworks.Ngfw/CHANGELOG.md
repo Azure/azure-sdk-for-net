@@ -1,7 +1,8 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
-Expected release date: 2023-04-18
+## 1.0.0-beta.1 (2023-04-18)
+
+This is the first beta release of Azure PaloAltoNetworks.Ngfw client library.
 
 ### General New Features
 
