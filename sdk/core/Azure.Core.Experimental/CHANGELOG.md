@@ -2,6 +2,10 @@
 
 ## 0.1.0-preview.26 (2023-04-10)
 
+### Features Added
+
+- Added basic debugger support for DynamicData
+
 ### Bugs Fixed
 
 - Use specified `DynamicJsonNameMapping` in array and object enumerators.
