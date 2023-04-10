@@ -5,7 +5,7 @@
 ### Features Added
 
 - Added the `RetryPolicy` type which can be used to create a custom retry policy.
-- Added the `Delay` type which can be used to customize delays.
+- Added the `DelayStrategy` type which can be used to customize delays.
 
 ### Bugs Fixed
 
