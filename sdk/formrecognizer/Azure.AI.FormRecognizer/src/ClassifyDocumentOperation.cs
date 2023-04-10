@@ -11,9 +11,9 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary>
-    /// Tracks the status of a long-running operation for analyzing documents.
+    /// Tracks the status of a long-running operation for classifying documents.
     /// </summary>
-    public class AnalyzeDocumentOperation : Operation<AnalyzeResult>, IOperation<AnalyzeResult>
+    public class ClassifyDocumentOperation : Operation<AnalyzeResult>, IOperation<AnalyzeResult>
     {
         private readonly OperationInternal<AnalyzeResult> _operationInternal;
 
@@ -23,10 +23,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
 
-        /// <summary>The ID of the model to use for analyzing documents.</summary>
-        private readonly string _modelId;
+        /// <summary>The ID of the classifier to use for classifying documents.</summary>
+        private readonly string _classifierId;
 
-        /// <summary>An ID representing the operation that can be used along with <see cref="_modelId"/> to poll for the status of the long-running operation.</summary>
+        /// <summary>An ID representing the operation that can be used along with <see cref="_classifierId"/> to poll for the status of the long-running operation.</summary>
         private readonly string _resultId;
 
         /// <summary>
@@ -58,18 +58,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <remarks>
         /// The last response returned from the server during the lifecycle of this instance.
-        /// An instance of <see cref="AnalyzeDocumentOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
+        /// An instance of <see cref="ClassifyDocumentOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
         /// Responses from these requests can be accessed using GetRawResponse.
         /// </remarks>
         public override Response GetRawResponse() => _operationInternal.RawResponse;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeDocumentOperation"/> class which
-        /// tracks the status of a long-running operation for analyzing documents.
+        /// Initializes a new instance of the <see cref="ClassifyDocumentOperation"/> class which
+        /// tracks the status of a long-running operation for classifying documents.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        public AnalyzeDocumentOperation(string operationId, DocumentAnalysisClient client)
+        public ClassifyDocumentOperation(string operationId, DocumentAnalysisClient client)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNull(client, nameof(client));
@@ -78,57 +78,45 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             _diagnostics = client.Diagnostics;
             _operationInternal = new(_diagnostics, this, rawResponse: null);
 
-            // TODO: Use regex to parse ids.
-            // https://github.com/Azure/azure-sdk-for-net/issues/11505
-
-            // TODO: Add validation here (should we store _resuldId and _modelId as GUIDs?)
-            // https://github.com/Azure/azure-sdk-for-net/issues/10385
-
             string[] substrs = operationId.Split('/');
 
             if (substrs.Length < 3)
             {
-                throw new ArgumentException($"Invalid '{nameof(operationId)}'. It should be formatted as: '{{modelId}}/analyzeresults/{{resultId}}'.", nameof(operationId));
+                throw new ArgumentException($"Invalid '{nameof(operationId)}'. It should be formatted as: '{{classifierId}}/analyzeresults/{{resultId}}'.", nameof(operationId));
             }
 
             _resultId = substrs.Last();
-            _modelId = substrs.First();
+            _classifierId = substrs.First();
 
             Id = operationId;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeDocumentOperation"/> class.
+        /// Initializes a new instance of the <see cref="ClassifyDocumentOperation"/> class.
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="postResponse">Response from the POST request that initiated the operation.</param>
-        internal AnalyzeDocumentOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, Response postResponse)
+        internal ClassifyDocumentOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, Response postResponse)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
             _operationInternal = new(_diagnostics, this, rawResponse: postResponse);
 
-            // TODO: Use regex to parse ids.
-            // https://github.com/Azure/azure-sdk-for-net/issues/11505
-
-            // TODO: Add validation here (should we store _resuldId and _modelId as GUIDs?)
-            // https://github.com/Azure/azure-sdk-for-net/issues/10385
-
             string[] substrs = operationLocation.Split('/', '?');
 
             _resultId = substrs[substrs.Length - 2];
-            _modelId = substrs[substrs.Length - 4];
+            _classifierId = substrs[substrs.Length - 4];
 
             Id = string.Join("/", substrs, substrs.Length - 4, 3);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeDocumentOperation"/> class. This constructor
+        /// Initializes a new instance of the <see cref="ClassifyDocumentOperation"/> class. This constructor
         /// is intended to be used for mocking only.
         /// </summary>
-        protected AnalyzeDocumentOperation()
+        protected ClassifyDocumentOperation()
         {
         }
 
@@ -184,8 +172,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         async ValueTask<OperationState<AnalyzeResult>> IOperation<AnalyzeResult>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeResultOperation> response = async
-                ? await _serviceClient.DocumentModelsGetAnalyzeResultAsync(_modelId, _resultId, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.DocumentModelsGetAnalyzeResult(_modelId, _resultId, cancellationToken);
+                ? await _serviceClient.DocumentClassifiersGetClassifyResultAsync(_classifierId, _resultId, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.DocumentClassifiersGetClassifyResult(_classifierId, _resultId, cancellationToken);
 
             AnalyzeResultOperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();
