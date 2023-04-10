@@ -8,6 +8,7 @@
 ### Breaking Changes
 
 - Removed `DynamicJson` type, and moved its functionality into `DynamicData`.
+- Sealed the `DynamicData` type.
 - Renamed `DynamicJsonNameMapping` enum to `DynamicDataNameMapping`.
 - Renamed `DynamicJsonProperty` to `DynamicDataProperty`.
 - Renamed `ToDynamic()` extension method on `BinaryData` to `ToDynamicFromJson()`.
