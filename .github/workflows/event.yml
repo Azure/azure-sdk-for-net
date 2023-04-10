@@ -20,6 +20,6 @@ jobs:
     name: Handle ${{ github.event_name }} ${{ github.event.action }} event
     runs-on: ubuntu-latest
     steps:
-      - uses: azure/azure-sdk-actions@main
+      - uses: benbp/azure-sdk-actions@benbp/check-enforcer-skip-unsupported
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
