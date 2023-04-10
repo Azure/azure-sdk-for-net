@@ -5,6 +5,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
@@ -71,17 +74,35 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(backupResult, Is.Not.Null);
             Assert.That(backupOperation.HasValue, Is.True);
 
-            // Start the restore.
-            KeyVaultRestoreOperation restoreOperation = await Client.StartRestoreAsync(backupResult.FolderUri, "?" + SasToken, source.Token);
+            try
+            {
+                // Start the restore.
+                KeyVaultRestoreOperation restoreOperation = await Client.StartRestoreAsync(backupResult.FolderUri, "?" + SasToken, source.Token);
 
-            // Wait for completion of the LRO
-            var restoreResult = await restoreOperation.WaitForCompletionAsync(source.Token);
+                // Wait for completion of the LRO
+                var restoreResult = await restoreOperation.WaitForCompletionAsync(source.Token);
 
-            await WaitForOperationAsync();
+                await WaitForOperationAsync();
 
-            Assert.That(source.IsCancellationRequested, Is.False);
-            Assert.That(restoreResult, Is.Not.Null);
-            Assert.That(restoreOperation.HasValue, Is.True);
+                Assert.That(source.IsCancellationRequested, Is.False);
+                Assert.That(restoreResult, Is.Not.Null);
+                Assert.That(restoreOperation.HasValue, Is.True);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 400)
+            {
+                TestContext.Error.WriteLine($"Cannot restore backup from {backupResult.FolderUri}");
+
+                BlobContainerClient containerClient = new(
+                    backupResult.FolderUri,
+                    new StorageSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey)
+                );
+
+                BlobClient blobClient = containerClient.GetBlobClient("hsm_backup.json");
+                BlobDownloadResult result = blobClient.DownloadContent();
+                TestContext.Error.WriteLine($"Content:\n{result.Content}");
+
+                throw;
+            }
         }
     }
 }
