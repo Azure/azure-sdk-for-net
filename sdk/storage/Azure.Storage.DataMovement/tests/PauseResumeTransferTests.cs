@@ -69,7 +69,7 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, singleTransferOptions);
         }
 
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/35439
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [Test]
         public async Task TryPauseTransferAsync_Id()
         {
@@ -113,7 +113,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/35439
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [Test]
         public async Task TryPauseTransferAsync_DataTransfer()
         {
@@ -171,7 +171,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.CatchAsync( async () => await transferManager.TryPauseTransferAsync("bad transfer Id"));
         }
 
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/35439
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [Test]
         public async Task TryPauseTransferAsync_AlreadyPaused()
         {
@@ -217,7 +217,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/35439
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [Test]
         public async Task PauseThenResumeTransferAsync()
         {
