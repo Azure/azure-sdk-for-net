@@ -1,23 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class StorageHelperTests
     {
-        internal readonly ITestOutputHelper output;
-
-        public StorageHelperTests(ITestOutputHelper output)
-        {
-            this.output = output;
-        }
-
         // The directory separator is either '/' or '\' depending on the Platform, making unit testing tricky.
         private static readonly char ds = Path.DirectorySeparatorChar;
 
@@ -35,32 +28,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("WINDOWS", "LOCALAPPDATA")]
         [InlineData("WINDOWS", "TEMP")]
         [InlineData("LINUX", "TMPDIR")]
-        public void VerifyDefaultDirectory(string osName, string environmentVarName)
+        public void VerifyDefaultDirectory_EnvVar(string osName, string environmentVarName)
         {
             var platform = new MockPlatform();
             platform.IsOsPlatformFunc = (os) => os.ToString() == osName;
             platform.SetEnvironmentVariable(environmentVarName, $"C:{ds}Temp");
 
-            var directoryPath = StorageHelper.GetStorageDirectory(
-                platform: platform,
-                configuredStorageDirectory: null);
+            var directoryPath = StorageHelper.GetDefaultStorageDirectory(platform: platform);
 
             Assert.Equal($"C:{ds}Temp{ds}Microsoft{ds}AzureMonitor", directoryPath);
         }
 
-        [Fact]
-        public void INVESTIGATE_TEST_FAILURE()
+        [Theory]
+        [InlineData(0, "/var/tmp/")]
+        [InlineData(1, "/tmp/")]
+        public void VerifyDefaultDirectory_HardCoded(int attempt, string expectedDirectory)
         {
-            var input = $"C:{ds}Temp";
-            this.output.WriteLine($"Input: {input}");
+            // In NON-Windows environments, First attempt is an EnvironmentVariable.
+            // If that's not available, we'll attempt hardcoded defaults.
+            int attemptCount = 0;
 
-            var path = Path.Combine(input, "Microsoft");
-            this.output.WriteLine($"Path: {path}");
+            var platform = new MockPlatform();
+            platform.IsOsPlatformFunc = (os) => os.ToString() == "LINUX";
+            platform.CreateDirectoryFunc = (path) => attemptCount++ == attempt;
 
-            var directory = Directory.CreateDirectory(path);
-            this.output.WriteLine($"Directory: {directory.FullName}");
+            var directoryPath = StorageHelper.GetDefaultStorageDirectory(platform: platform);
 
-            Assert.Fail("investigating test");
+            Assert.Equal($"{expectedDirectory}Microsoft{ds}AzureMonitor", directoryPath);
         }
     }
 }
