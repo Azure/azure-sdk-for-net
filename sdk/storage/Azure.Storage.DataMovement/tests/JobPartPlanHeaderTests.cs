@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Azure.Storage.DataMovement.JobPlanModels;
+using Azure.Storage.DataMovement.Models.JobPlan;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests

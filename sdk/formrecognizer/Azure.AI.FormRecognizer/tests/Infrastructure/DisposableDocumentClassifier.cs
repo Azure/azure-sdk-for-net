@@ -9,22 +9,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 {
     /// <summary>
     /// Represents a classifier that has been built for test purposes. In order to create a new instance
-    /// of this class, the <see cref="DisposableDocumentClassifier.BuildAsync"/> static method must be
-    /// invoked. The trained classifier will be deleted upon disposal.
+    /// of this class, the <see cref="BuildAsync"/> static method must be invoked. The built classifier
+    /// will be deleted upon disposal.
     /// </summary>
-    internal class DisposableDocumentClassifier : IAsyncDisposable
+    public class DisposableDocumentClassifier : IAsyncDisposable
     {
         /// <summary>The client to use for deleting the classifier upon disposal.</summary>
-        private readonly DocumentModelAdministrationClient _adminClient;
+        private readonly DocumentModelAdministrationClient _client;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DisposableDocumentClassifier"/> class.
         /// </summary>
         /// <param name="adminClient">The client to use for deleting the classifier upon disposal.</param>
         /// <param name="classifierId">The identifier of the classifier to delete upon disposal.</param>
-        private DisposableDocumentClassifier(DocumentModelAdministrationClient adminClient, DocumentClassifierDetails value)
+        private DisposableDocumentClassifier(DocumentModelAdministrationClient client, DocumentClassifierDetails value)
         {
-            _adminClient = adminClient;
+            _client = client;
             Value = value;
         }
 
@@ -37,21 +37,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// Builds a classifier using the specified <see cref="DocumentModelAdministrationClient"/> and the specified set of training files. A
         /// <see cref="DisposableDocumentClassifier"/> instance is returned. Upon disposal, the associated classifier will be deleted.
         /// </summary>
-        /// <param name="adminClient">The client to use for building and for deleting the classifier upon disposal.</param>
+        /// <param name="client">The client to use for building and for deleting the classifier upon disposal.</param>
         /// <param name="documentTypes">A mapping to the training data of each document type supported by the classifier.</param>
         /// <param name="classifierId">The identifier of the classifier.</param>
         /// <param name="description">An optional classifier description.</param>
-        /// <returns>A <see cref="DisposableDocumentClassifier"/> instance from which the built classifier ID can be obtained.</returns>
-        public static async Task<DisposableDocumentClassifier> BuildAsync(DocumentModelAdministrationClient adminClient, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId, string description = null)
+        /// <returns>A <see cref="DisposableDocumentClassifier"/> instance from which the built classifier can be obtained.</returns>
+        public static async Task<DisposableDocumentClassifier> BuildAsync(DocumentModelAdministrationClient client, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId, string description = null)
         {
-            BuildDocumentClassifierOperation operation = await adminClient.BuildDocumentClassifierAsync(WaitUntil.Completed, documentTypes, classifierId, description);
+            BuildDocumentClassifierOperation operation = await client.BuildDocumentClassifierAsync(WaitUntil.Completed, documentTypes, classifierId, description);
 
-            return new DisposableDocumentClassifier(adminClient, operation.Value);
+            return new DisposableDocumentClassifier(client, operation.Value);
         }
 
         /// <summary>
         /// Deletes the classifier this instance is associated with.
         /// </summary>
-        public async ValueTask DisposeAsync() => await _adminClient.DeleteDocumentClassifierAsync(Value.ClassifierId);
+        public async ValueTask DisposeAsync() => await _client.DeleteDocumentClassifierAsync(Value.ClassifierId);
     }
 }
