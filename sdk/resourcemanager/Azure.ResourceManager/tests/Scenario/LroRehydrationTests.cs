@@ -20,6 +20,49 @@ namespace Azure.ResourceManager.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task FakeLroTest()
+        {
+            string rgName = Recording.GenerateAssetName("testLroRg-");
+            var tags = new Dictionary<string, string>()
+            {
+                { "key", "value"}
+            };
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+
+            // fake LRO - PUT
+            var orgData = new ResourceGroupData(AzureLocation.WestUS2);
+            orgData.Tags.ReplaceWith(tags);
+            var rgOp = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, orgData);
+            var rg = rgOp.Value;
+            var rgOpId = rgOp.Id;
+            var rehydratedOrgOperation = new ArmOperation<ResourceGroupResource>(Client, rgOpId);
+            var rehydratedOrgResponse = await rehydratedOrgOperation.UpdateStatusAsync();
+            //var rehydratedRg = rehydratedOrgOperation.Value;
+            var response = rgOp.GetRawResponse();
+            //Assert.AreEqual(response.Status, rehydratedOrgResponse.Status);
+            //Assert.AreEqual(response.ReasonPhrase, rehydratedOrgResponse.ReasonPhrase);
+            //Assert.AreEqual(response.ClientRequestId, rehydratedOrgResponse.ClientRequestId);
+            Assert.AreEqual(response.IsError, rehydratedOrgResponse.IsError);
+            Assert.AreEqual(response.Headers.Count(), rehydratedOrgResponse.Headers.Count());
+
+            // fake LRO - Delete
+            string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
+            PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(subscription, policyAssignmentName);
+            var deleteOp = await policyAssignment.DeleteAsync(WaitUntil.Started);
+            var deleteResponse = deleteOp.GetRawResponse();
+            var deleteOpId = deleteOp.Id;
+            var rehydratedDeleteOperation = new ArmOperation(Client, deleteOpId);
+            var rehydatedDeleteResponse = await rehydratedDeleteOperation.UpdateStatusAsync();
+            Assert.AreEqual(200, deleteResponse.Status);
+            Assert.AreEqual(404, rehydatedDeleteResponse.Status);
+            Assert.IsFalse(deleteResponse.IsError);
+            Assert.IsTrue(rehydatedDeleteResponse.IsError);
+            //Assert.AreEqual(deleteResponse.ClientRequestId, rehydatedDeleteResponse.ClientRequestId);
+            Assert.AreEqual(deleteResponse.Headers.Count(), rehydatedDeleteResponse.Headers.Count());
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task CreateDeleteResourceGroup()
         {
             string rgName = Recording.GenerateAssetName("testLroRg-");
@@ -28,18 +71,12 @@ namespace Azure.ResourceManager.Tests
                 { "key", "value"}
             };
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+
             // The creation of a resource group is a fake LRO
             var orgData = new ResourceGroupData(AzureLocation.WestUS2);
             orgData.Tags.ReplaceWith(tags);
             var rgOp = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, rgName, orgData);
-            var temp = await rgOp.UpdateStatusAsync();
-            await rgOp.WaitForCompletionAsync();
-            temp = await rgOp.UpdateStatusAsync();
-            //await rgOp.WaitForCompletionAsync();
-            var rgOpId = rgOp.Id;
             var rg = rgOp.Value;
-            Assert.Throws<ArgumentException>(() => new ArmOperation<ResourceGroupData>(Client, rgOpId));
-            var response = rgOp.GetRawResponse();
 
             // Template exportation is a real LRO with generic type
             var parameters = new ExportTemplate();
@@ -74,14 +111,13 @@ namespace Azure.ResourceManager.Tests
             var deleteOp = await rg.DeleteAsync(WaitUntil.Started);
             var deleteOpId = deleteOp.Id;
             var deleteRehydratedLro = new ArmOperation(Client, deleteOpId);
-            await deleteRehydratedLro.UpdateStatusAsync();
-            var deleteOpId2 = deleteRehydratedLro.Id;
-            var deleteRehydratedLro2 = new ArmOperation(Client, deleteOpId2);
-            await deleteRehydratedLro2.WaitForCompletionResponseAsync();
-            Assert.AreEqual(deleteRehydratedLro2.HasCompleted, true);
-            Assert.Throws<ArgumentException>(() => new ArmOperation(Client, deleteRehydratedLro2.Id));
+            await deleteRehydratedLro.WaitForCompletionResponseAsync();
+            Assert.AreEqual(deleteRehydratedLro.HasCompleted, true);
+            var deleteFinalRehydratedLro = new ArmOperation(Client, deleteRehydratedLro.Id);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await rg.GetAsync());
+            var deleteRehydratedResponse = await deleteFinalRehydratedLro.UpdateStatusAsync();
             Assert.AreEqual(404, ex.Status);
+            Assert.AreEqual(200, deleteRehydratedResponse.Status);
         }
 
         [TestCase]

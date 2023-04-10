@@ -57,9 +57,9 @@ namespace Azure.ResourceManager
             _operation = operation;
         }
 
-        internal ArmOperation(Response<T> response)
+        internal ArmOperation(Response<T> response, string operationId)
         {
-            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
+            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value, operationId);
         }
 
         internal ArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string resourceTypeName)
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager
         }
 
         /// <inheritdoc />
-        public override string Id => HasCompleted ? string.Empty : _operation.GetOperationId();
+        public override string Id => _operation.GetOperationId();
 
         /// <inheritdoc />
         public override T Value => _operation.Value;

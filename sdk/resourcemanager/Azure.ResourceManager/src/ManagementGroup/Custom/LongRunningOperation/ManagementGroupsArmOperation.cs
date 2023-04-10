@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagementGroups
         {
         }
 
-        internal ManagementGroupsArmOperation(Response response): base(response)
+        internal ManagementGroupsArmOperation(Response response, string operationId): base(response, operationId)
         {
         }
 

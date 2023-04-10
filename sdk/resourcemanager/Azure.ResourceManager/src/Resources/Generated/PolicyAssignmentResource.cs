@@ -172,7 +172,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policyAssignmentRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()));
+                var request = _policyAssignmentRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request;
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, request.Uri.ToUri(), request.Uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +208,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyAssignmentRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()));
+                var request = _policyAssignmentRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request;
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, request.Uri.ToUri(), request.Uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -244,7 +248,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policyAssignmentRestClient.CreateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()));
+                var request = _policyAssignmentRestClient.CreateCreateRequest(Id.Parent, Id.Name, data).Request;
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, request.Uri.ToUri(), request.Uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +288,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyAssignmentRestClient.Create(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()));
+                var request = _policyAssignmentRestClient.CreateCreateRequest(Id.Parent, Id.Name, data).Request;
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, request.Uri.ToUri(), request.Uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

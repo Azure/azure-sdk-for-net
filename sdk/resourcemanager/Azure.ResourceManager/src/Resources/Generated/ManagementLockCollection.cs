@@ -71,7 +71,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _managementLockRestClient.CreateOrUpdateByScopeAsync(Id, lockName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ManagementLockResource>(Response.FromValue(new ManagementLockResource(Client, response), response.GetRawResponse()));
+                var request = _managementLockRestClient.CreateCreateOrUpdateByScopeRequest(Id, lockName, data).Request;
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, request.Uri.ToUri(), request.Uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ResourcesArmOperation<ManagementLockResource>(Response.FromValue(new ManagementLockResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,7 +114,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _managementLockRestClient.CreateOrUpdateByScope(Id, lockName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<ManagementLockResource>(Response.FromValue(new ManagementLockResource(Client, response), response.GetRawResponse()));
+                var request = _managementLockRestClient.CreateCreateOrUpdateByScopeRequest(Id, lockName, data).Request;
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, request.Uri.ToUri(), request.Uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ResourcesArmOperation<ManagementLockResource>(Response.FromValue(new ManagementLockResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

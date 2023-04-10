@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        internal ResourcesArmOperation(Response<T> response): base(response)
+        internal ResourcesArmOperation(Response<T> response, string operationId): base(response, operationId)
         {
         }
 

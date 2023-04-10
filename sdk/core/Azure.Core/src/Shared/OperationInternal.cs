@@ -51,14 +51,16 @@ namespace Azure.Core
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final successful state.
         /// </summary>
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
-        public static OperationInternal Succeeded(Response rawResponse) => new(OperationState.Success(rawResponse));
+        /// <param name="operationId"></param>
+        public static OperationInternal Succeeded(Response rawResponse, string? operationId) => new(OperationState.Success(rawResponse, operationId), operationId);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final failed state.
         /// </summary>
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
         /// <param name="operationFailedException">The exception that will be thrown by <c>UpdateStatusAsync</c>.</param>
-        public static OperationInternal Failed(Response rawResponse, RequestFailedException operationFailedException) => new(OperationState.Failure(rawResponse, operationFailedException));
+        /// <param name="operationId"></param>
+        public static OperationInternal Failed(Response rawResponse, RequestFailedException operationFailedException, string? operationId) => new(OperationState.Failure(rawResponse, operationFailedException), operationId);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class.
@@ -95,12 +97,12 @@ namespace Azure.Core
             _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
         }
 
-        private OperationInternal(OperationState finalState)
+        private OperationInternal(OperationState finalState, string? operationId)
             : base(finalState.RawResponse)
         {
             _internalOperation = finalState.HasSucceeded
-                ? OperationInternal<VoidValue>.Succeeded(finalState.RawResponse, default)
-                : OperationInternal<VoidValue>.Failed(finalState.RawResponse, finalState.OperationFailedException!);
+                ? OperationInternal<VoidValue>.Succeeded(finalState.RawResponse, default, operationId)
+                : OperationInternal<VoidValue>.Failed(finalState.RawResponse, finalState.OperationFailedException!, operationId);
         }
 
         public override Response RawResponse => _internalOperation.RawResponse;
@@ -201,12 +203,13 @@ namespace Azure.Core
     /// </summary>
     internal readonly struct OperationState
     {
-        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, RequestFailedException? operationFailedException)
+        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, RequestFailedException? operationFailedException, string? operationId)
         {
             RawResponse = rawResponse;
             HasCompleted = hasCompleted;
             HasSucceeded = hasSucceeded;
             OperationFailedException = operationFailedException;
+            OperationId = operationId;
         }
 
         public Response RawResponse { get; }
@@ -217,16 +220,19 @@ namespace Azure.Core
 
         public RequestFailedException? OperationFailedException { get; }
 
+        public string? OperationId { get; }
+
         /// <summary>
         /// Instantiates an <see cref="OperationState"/> indicating the operation has completed successfully.
         /// </summary>
         /// <param name="rawResponse">The HTTP response obtained during the status update.</param>
+        /// <param name="operationId">operation id</param>
         /// <returns>A new <see cref="OperationState"/> instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
-        public static OperationState Success(Response rawResponse)
+        public static OperationState Success(Response rawResponse, string? operationId = null)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-            return new OperationState(rawResponse, true, true, default);
+            return new OperationState(rawResponse, true, true, default, operationId);
         }
 
         /// <summary>
@@ -237,12 +243,13 @@ namespace Azure.Core
         /// The exception to throw from <c>UpdateStatus</c> because of the operation failure. If left <c>null</c>,
         /// a default exception is created based on the <paramref name="rawResponse"/> parameter.
         /// </param>
+        /// <param name="operationId">operation id</param>
         /// <returns>A new <see cref="OperationState"/> instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
-        public static OperationState Failure(Response rawResponse, RequestFailedException? operationFailedException = null)
+        public static OperationState Failure(Response rawResponse, RequestFailedException? operationFailedException = null, string? operationId = null)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-            return new OperationState(rawResponse, true, false, operationFailedException);
+            return new OperationState(rawResponse, true, false, operationFailedException, operationId);
         }
 
         /// <summary>
@@ -254,7 +261,7 @@ namespace Azure.Core
         public static OperationState Pending(Response rawResponse)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-            return new OperationState(rawResponse, false, default, default);
+            return new OperationState(rawResponse, false, default, default, default);
         }
     }
 }
