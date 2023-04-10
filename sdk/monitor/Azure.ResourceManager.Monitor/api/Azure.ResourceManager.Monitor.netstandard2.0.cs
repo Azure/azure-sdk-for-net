@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Monitor
         public string LogsIngestionEndpoint { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionEndpointMetadata Metadata { get { throw null; } }
         public string MetricsIngestionEndpoint { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.PrivateLinkScopedResource> PrivateLinkScopedResources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.DataCollectionRulePrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.DataCollectionEndpointProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
     }
@@ -1078,6 +1078,12 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class DataCollectionRuleMetadata : Azure.ResourceManager.Monitor.Models.Metadata
     {
         internal DataCollectionRuleMetadata() { }
+    }
+    public partial class DataCollectionRulePrivateLinkScopedResourceInfo
+    {
+        internal DataCollectionRulePrivateLinkScopedResourceInfo() { }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public string ScopeId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataCollectionRuleProvisioningState : System.IEquatable<Azure.ResourceManager.Monitor.Models.DataCollectionRuleProvisioningState>
@@ -2264,12 +2270,6 @@ namespace Azure.ResourceManager.Monitor.Models
         internal PredictiveValue() { }
         public System.DateTimeOffset TimeStamp { get { throw null; } }
         public double Value { get { throw null; } }
-    }
-    public partial class PrivateLinkScopedResource
-    {
-        internal PrivateLinkScopedResource() { }
-        public string ResourceId { get { throw null; } }
-        public string ScopeId { get { throw null; } }
     }
     public partial class PrometheusForwarderDataSource
     {
