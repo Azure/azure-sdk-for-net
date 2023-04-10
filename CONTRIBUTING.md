@@ -362,17 +362,16 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
 
 #### Standard Process
 
-1. Create fork of [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
-2. Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-3. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](https://swagger.io)
-4. Install the latest version of AutoRest. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
-5. Create a branch in your fork of the Azure SDK for .NET.
-6. Generate the code. See [Generating Client Code](#generating-client-code) below.
-7. **MANDATORY**: Add or update tests for the newly generated code.
-8. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
-9. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
-10. A Pull request of your Azure SDK for .NET changes against **main** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-11. The pull requests will be reviewed and merged by the Azure SDK team
+1. Fork the [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs) repository
+2. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](https://swagger.io)
+3. Install the latest version of AutoRest. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
+4. **RECOMMENDED**: Create a branch in your fork of the Azure SDK for .NET.
+5. Generate the code. See [Generating Client Code](#generating-client-code) below.
+6. **MANDATORY**: Add or update tests for the newly generated code.
+7. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
+8. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
+9. Opan a pull request with your changes against the `main` branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
+10. The pull requests will be reviewed and merged by the Azure SDK team
 
 #### Generating Client Code
 
