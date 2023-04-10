@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.1 (2023-04-07)
 
 This is the first beta release of Azure Hybrid Container Service client library.

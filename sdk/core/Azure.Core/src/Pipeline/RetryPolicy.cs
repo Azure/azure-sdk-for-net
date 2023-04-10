@@ -21,17 +21,17 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Gets the delay to use for computing the interval between retry attempts.
         /// </summary>
-        private readonly Delay _delay;
+        private readonly DelayStrategy _delayStrategy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
         /// </summary>
         /// <param name="maxRetries">The maximum number of retries to attempt.</param>
-        /// <param name="delay">The delay to use for computing the interval between retry attempts.</param>
-        public RetryPolicy(int maxRetries = 3, Delay? delay = default)
+        /// <param name="delayStrategy">The delay to use for computing the interval between retry attempts.</param>
+        public RetryPolicy(int maxRetries = 3, DelayStrategy? delayStrategy = default)
         {
             _maxRetries = maxRetries;
-            _delay = delay ?? Delay.CreateExponentialDelay();
+            _delayStrategy = delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.Core.Pipeline
 
         private TimeSpan GetNextDelayInternal(HttpMessage message)
         {
-            return _delay.GetNextDelay(
+            return _delayStrategy.GetNextDelay(
                 message.HasResponse ? message.Response : default,
                 message.RetryNumber);
         }

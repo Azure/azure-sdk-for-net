@@ -1,111 +1,97 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.InteropServices;
-using Azure.Storage.DataMovement.Models;
+using System;
+using System.IO;
+using Azure.Core;
 
-namespace Azure.Storage.DataMovement
+namespace Azure.Storage.DataMovement.JobPlanModels
 {
     /// <summary>
-    /// This matching the JobPartPlanHeader of azcopy
+    /// Stores the Job Part Header information to resume from.
     ///
-    /// TODO: check if we want to set the pack and/or size for the struct layout
+    /// This matching the JobPartPlanHeader of azcopy
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
-    internal struct JobPartPlanHeader
+    internal class JobPartPlanHeader
     {
         /// <summary>
         /// The version of data schema format of header
         /// This will seem weird because we will have a schema for how we store the data
-        /// when the schema changes this verison will increment
+        /// when the schema changes this version will increment
         ///
-        /// Set to a size of 3
-        /// TODO: Consider changing to an int when GA comes. In public preview we should
+        /// TODO: Consider changing to an int when GA comes.
+        /// TODO: In public preview we should
         /// leave the version as "b1", instead of complete ints.
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 3)]
-        public byte[] Version;
+        public string Version;
 
         /// <summary>
-        /// The start time of the job part
+        /// The start time of the job part.
         /// </summary>
-        public long StartTime;
+        public DateTimeOffset StartTime;
 
         /// <summary>
         /// The Transfer/Job Id
         ///
-        /// Size of a GUID
+        /// Size of a GUID.
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
         public string TransferId;
 
         /// <summary>
         /// Job Part's part number (0+)
-        ///
-        /// We don't expect there to be more than 50,000 job parts
-        /// So reaching int.MAX is extremely unlikely
         /// </summary>
-        public uint PartNum;
+        public long PartNumber;
 
         /// <summary>
         /// The length of the source root path
         /// </summary>
-        public ushort SourceRootLength;
+        public long SourcePathLength;
 
         /// <summary>
-        /// The root directory of the source
-        ///
-        /// Size of byte[] in azcopy is 1000 bytes.
-        /// TODO: consider a different number, the max name of a blob cannot exceed 254
-        /// however the max length of a path in linux is 4096.
+        /// The source path
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1000)]
-        public byte[] SourceRoot;
+        public string SourcePath;
 
         /// <summary>
-        /// Length of the extra source query params if the source is a URL.
+        /// The length of the source path query
         /// </summary>
-	    public ushort SourceExtraQueryLength;
+        public long SourceExtraQueryLength;
 
         /// <summary>
         /// Extra query params applicable to the source
         ///
         /// Size of byte array in azcopy is 1000 bytes.
-        /// TODO: consider changing this to something like 2048 because the max a url could be
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1000)]
-        public byte[] SourceExtraQuery;
+        public string SourceExtraQuery;
 
         /// <summary>
         /// The length of the destination root path
         /// </summary>
-	    public ushort DestinationRootLength;
+        public long DestinationPathLength;
 
         /// <summary>
-        /// The root directory of the destination.
+        /// The destination path
         ///
         /// Size of byte array in azcopy is 1000 bytes
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1000)]
-        public byte[] DestinationRoot;
+        public string DestinationPath;
 
         /// <summary>
-        /// Length of the extra destination query params if applicable.
+        /// The length of the destination path query
         /// </summary>
-	    public ushort DestExtraQueryLength;
+        public long DestinationExtraQueryLength;
 
         /// <summary>
         /// Extra query params applicable to the dest
         ///
         /// Size of byte array in azcopy is 1000 bytes
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1000)]
-        public byte[] DestExtraQuery;
+        public string DestinationExtraQuery;
 
         /// <summary>
         /// True if this is the Job's last part; else false
         /// </summary>
-	    public bool IsFinalPart;
+        public bool IsFinalPart;
 
         /// <summary>
         /// True if the existing blobs needs to be overwritten.
@@ -129,40 +115,27 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Time to live after completion is used to persists the file on disk of specified time after the completion of JobPartOrder
-        ///
-        /// TODO: change to DateTimeOffset object, and make convert from DateTimeOffset to UInt32
         /// </summary>
-        public uint TTLAfterCompletion;
+        public DateTimeOffset TTLAfterCompletion;
 
         /// <summary>
         /// The location of the transfer's source and destination
-        ///
-        /// TODO: change to object for storing transfer source and destination
         /// </summary>
-        public uint FromTo;
+        public JobPlanOperation JobPlanOperation;
 
         /// <summary>
         /// option specifying how folders will be handled
-        ///
-        /// TODO: change to struct for FolderPropertyOptions
         /// </summary>
-        public FolderPropertiesMode FolderPropertyOption;
+        public FolderPropertiesMode FolderPropertyMode;
 
         /// <summary>
         /// The number of transfers in the Job part
         /// </summary>
-        public uint NumTransfers;
-
-        /// <summary>
-        /// This Job Part's minimal log level
-        /// </summary>
-        /// TODO: use core diagnostics log level instead
-        ///public DataMovementLogLevel LogLevel;
+        public long NumberChunks;
 
         /// <summary>
         /// Additional data for blob destinations
-        ///
-        /// holds the additional information about the blob, see BlobProperties and request conditions
+        /// Holds the additional information about the blob
         /// </summary>
         public JobPartPlanDestinationBlob DstBlobData;
 
@@ -174,7 +147,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// If applicable the SMB information
         /// </summary>
-        public byte PreserveSMBPermissions;
+        public bool PreserveSMBPermissions;
 
         /// <summary>
         /// Whether to preserve SMB info
@@ -203,23 +176,683 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public byte S2SInvalidMetadataHandleOption;
 
+        /// <summary>
+        /// For delete operation specify what to do with snapshots
+        /// </summary>
+        public JobPartDeleteSnapshotsOption DeleteSnapshotsOption;
+
+        /// <summary>
+        /// Permanent Delete Option
+        /// </summary>
+        public JobPartPermanentDeleteOption PermanentDeleteOption;
+
+        /// <summary>
+        /// Rehydrate Priority type
+        /// </summary>
+        public JobPartPlanRehydratePriorityType RehydratePriorityType;
+
         // Any fields below this comment are NOT constants; they may change over as the job part is processed.
         // Care must be taken to read/write to these fields in a thread-safe way!
 
         // jobStatus_doNotUse represents the current status of JobPartPlan
         // jobStatus_doNotUse is a private member whose value can be accessed by Status and SetJobStatus
         // jobStatus_doNotUse should not be directly accessed anywhere except by the Status and SetJobStatus
-        public uint atomicJobStatus;
+        public StorageTransferStatus AtomicJobStatus;
 
-        public uint atomicPartStatus;
+        public StorageTransferStatus AtomicPartStatus;
+
+        internal JobPartPlanHeader(
+            string version,
+            DateTimeOffset startTime,
+            string transferId,
+            long partNumber,
+            string sourcePath,
+            string sourceExtraQuery,
+            string destinationPath,
+            string destinationExtraQuery,
+            bool isFinalPart,
+            bool forceWrite,
+            bool forceIfReadOnly,
+            bool autoDecompress,
+            byte priority,
+            DateTimeOffset ttlAfterCompletion,
+            JobPlanOperation jobPlanOperation,
+            FolderPropertiesMode folderPropertyMode,
+            long numberChunks,
+            JobPartPlanDestinationBlob dstBlobData,
+            JobPartPlanDestinationLocal dstLocalData,
+            bool preserveSMBPermissions,
+            bool preserveSMBInfo,
+            bool s2sGetPropertiesInBackend,
+            bool s2sSourceChangeValidation,
+            bool destLengthValidation,
+            byte s2sInvalidMetadataHandleOption,
+            JobPartDeleteSnapshotsOption deleteSnapshotsOption,
+            JobPartPermanentDeleteOption permanentDeleteOption,
+            JobPartPlanRehydratePriorityType rehydratePriorityType,
+            StorageTransferStatus atomicJobStatus,
+            StorageTransferStatus atomicPartStatus)
+        {
+            // Version String size verification
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(startTime, nameof(startTime));
+            Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
+            Argument.AssertNotNullOrEmpty(sourcePath, nameof(sourcePath));
+            Argument.AssertNotNullOrWhiteSpace(destinationPath, nameof(destinationPath));
+            Argument.AssertNotNull(ttlAfterCompletion, nameof(ttlAfterCompletion));
+            Argument.AssertNotNull(dstBlobData, nameof(dstBlobData));
+            Argument.AssertNotNull(dstLocalData, nameof(dstLocalData));
+            if (version.Length == DataMovementConstants.PlanFile.VersionStrMaxSize)
+            {
+                Version = version;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileElement(
+                    elementName: nameof(Version),
+                    expectedSize: DataMovementConstants.PlanFile.VersionStrMaxSize,
+                    actualSize: version.Length);
+            }
+            StartTime = startTime;
+            // TransferId String size verification
+            if (transferId.Length == DataMovementConstants.PlanFile.TransferIdStrMaxSize)
+            {
+                TransferId = transferId;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileElement(
+                    elementName: nameof(TransferId),
+                    expectedSize: DataMovementConstants.PlanFile.TransferIdStrMaxSize,
+                    actualSize: transferId.Length);
+            }
+            PartNumber = partNumber;
+            SourcePath = sourcePath;
+            // TransferId String size verification
+            if (sourcePath.Length <= DataMovementConstants.PlanFile.PathStrMaxSize)
+            {
+                SourcePath = sourcePath;
+                SourcePathLength = sourcePath.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileElement(
+                    elementName: nameof(SourcePath),
+                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    actualSize: sourcePath.Length);
+            }
+            // SourcePath
+            if (sourceExtraQuery.Length <= DataMovementConstants.PlanFile.ExtraQueryMaxSize)
+            {
+                SourceExtraQuery = sourceExtraQuery;
+                SourceExtraQueryLength = sourceExtraQuery.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileElement(
+                    elementName: nameof(SourceExtraQuery),
+                    expectedSize: DataMovementConstants.PlanFile.ExtraQueryMaxSize,
+                    actualSize: sourceExtraQuery.Length);
+            }
+            // DestinationPath
+            if (destinationPath.Length <= DataMovementConstants.PlanFile.PathStrMaxSize)
+            {
+                DestinationPath = destinationPath;
+                DestinationPathLength = destinationPath.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileElement(
+                    elementName: nameof(DestinationPath),
+                    expectedSize: DataMovementConstants.PlanFile.PathStrMaxSize,
+                    actualSize: destinationPath.Length);
+            }
+            if (destinationExtraQuery.Length <= DataMovementConstants.PlanFile.ExtraQueryMaxSize)
+            {
+                DestinationExtraQuery = destinationExtraQuery;
+                DestinationExtraQueryLength = destinationExtraQuery.Length;
+            }
+            else
+            {
+                throw Errors.InvalidPlanFileElement(
+                    elementName: nameof(DestinationExtraQuery),
+                    expectedSize: DataMovementConstants.PlanFile.ExtraQueryMaxSize,
+                    actualSize: destinationExtraQuery.Length);
+            }
+            IsFinalPart = isFinalPart;
+            ForceWrite = forceWrite;
+            ForceIfReadOnly = forceIfReadOnly;
+            AutoDecompress = autoDecompress;
+            Priority = priority;
+            TTLAfterCompletion = ttlAfterCompletion;
+            JobPlanOperation = jobPlanOperation;
+            FolderPropertyMode = folderPropertyMode;
+            NumberChunks = numberChunks;
+            DstBlobData = dstBlobData;
+            DstLocalData = dstLocalData;
+            PreserveSMBPermissions = preserveSMBPermissions;
+            PreserveSMBInfo = preserveSMBInfo;
+            S2SGetPropertiesInBackend = s2sGetPropertiesInBackend;
+            S2SSourceChangeValidation = s2sSourceChangeValidation;
+            DestLengthValidation = destLengthValidation;
+            S2SInvalidMetadataHandleOption = s2sInvalidMetadataHandleOption;
+            DeleteSnapshotsOption = deleteSnapshotsOption;
+            PermanentDeleteOption = permanentDeleteOption;
+            RehydratePriorityType = rehydratePriorityType;
+            AtomicJobStatus = atomicJobStatus;
+            AtomicPartStatus = atomicPartStatus;
+        }
 
         /// <summary>
-        /// For delete operation specify what to do with snapshots
+        /// Serializes the <see cref="JobPartPlanHeader"/> to the specified <see cref="Stream"/>.
         /// </summary>
-        public JobPartDeleteSnapshotsOption DeleteSnapshotsOption;
+        /// <param name="stream">The <see cref="Stream"/> to which the serialized <see cref="JobPartPlanHeader"/> will be written.</param>
+        public void Serialize(Stream stream)
+        {
+            if (stream is null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
 
-        public JobPartPermanentDeleteOption PermanentDeleteOption;
+            BinaryWriter writer = new BinaryWriter(stream);
 
-        public JobPartPlanRehydratePriorityType RehydratePriorityType;
+            // Version
+            WriteString(writer, Version, DataMovementConstants.PlanFile.VersionStrMaxSize);
+
+            // StartTime
+            writer.Write(StartTime.Ticks);
+
+            // TransferId
+            WriteString(writer, TransferId, DataMovementConstants.PlanFile.TransferIdStrMaxSize);
+
+            // PartNumber
+            writer.Write(PartNumber);
+
+            // SourcePathLength
+            writer.Write(SourcePathLength);
+
+            // SourcePath
+            WriteString(writer, SourcePath, DataMovementConstants.PlanFile.PathStrMaxSize);
+
+            // SourceExtraQueryLength
+            writer.Write(SourceExtraQueryLength);
+
+            // SourceExtraQuery
+            WriteString(writer, SourceExtraQuery, DataMovementConstants.PlanFile.ExtraQueryMaxSize);
+
+            // DestinationPathLength
+            writer.Write(DestinationPathLength);
+
+            // DestinationPath
+            WriteString(writer, DestinationPath, DataMovementConstants.PlanFile.PathStrMaxSize);
+
+            // DestinationExtraQueryLength
+            writer.Write(DestinationExtraQueryLength);
+
+            // DestinationExtraQuery
+            WriteString(writer, DestinationExtraQuery, DataMovementConstants.PlanFile.ExtraQueryMaxSize);
+
+            // IsFinalPart
+            writer.Write(Convert.ToByte(IsFinalPart));
+
+            // ForceWrite
+            writer.Write(Convert.ToByte(ForceWrite));
+
+            // ForceIfReadOnly
+            writer.Write(Convert.ToByte(ForceIfReadOnly));
+
+            // AutoDecompress
+            writer.Write(Convert.ToByte(AutoDecompress));
+
+            // Priority
+            writer.Write(Priority);
+
+            // TTLAfterCompletion
+            writer.Write(TTLAfterCompletion.Ticks);
+
+            // FromTo
+            writer.Write((byte)JobPlanOperation);
+
+            // FolderPropertyOption
+            writer.Write((byte)FolderPropertyMode);
+
+            // NumberChunks
+            writer.Write(NumberChunks);
+
+            // DstBlobData.BlobType
+            writer.Write((byte)DstBlobData.BlobType);
+
+            // DstBlobData.NoGuessMimeType
+            writer.Write(Convert.ToByte(DstBlobData.NoGuessMimeType));
+
+            // DstBlobData.ContentTypeLength
+            writer.Write(DstBlobData.ContentTypeLength);
+
+            // DstBlobData.ContentType
+            WriteString(writer, DstBlobData.ContentType, DataMovementConstants.PlanFile.HeaderValueMaxSize);
+
+            // DstBlobData.ContentEncodingLength
+            writer.Write(DstBlobData.ContentEncodingLength);
+
+            // DstBlobData.ContentEncoding
+            WriteString(writer, DstBlobData.ContentEncoding, DataMovementConstants.PlanFile.HeaderValueMaxSize);
+
+            // DstBlobData.ContentLanguageLength
+            writer.Write(DstBlobData.ContentLanguageLength);
+
+            // DstBlobData.ContentLanguage
+            WriteString(writer, DstBlobData.ContentLanguage, DataMovementConstants.PlanFile.HeaderValueMaxSize);
+
+            // DstBlobData.ContentDispositionLength
+            writer.Write(DstBlobData.ContentDispositionLength);
+
+            // DstBlobData.ContentDisposition
+            WriteString(writer, DstBlobData.ContentDisposition, DataMovementConstants.PlanFile.HeaderValueMaxSize);
+
+            // DstBlobData.CacheControlLength
+            writer.Write(DstBlobData.CacheControlLength);
+
+            // DstBlobData.CacheControl
+            WriteString(writer, DstBlobData.CacheControl, DataMovementConstants.PlanFile.HeaderValueMaxSize);
+
+            // DstBlobData.BlockBlobTier
+            writer.Write((byte)DstBlobData.BlockBlobTier);
+
+            // DstBlobData.PageBlobTier
+            writer.Write((byte)DstBlobData.PageBlobTier);
+
+            // DstBlobData.PutMd5
+            writer.Write(Convert.ToByte(DstBlobData.PutMd5));
+
+            // DstBlobData.MetadataLength
+            writer.Write(DstBlobData.MetadataLength);
+
+            // DstBlobData.Metadata
+            WriteString(writer, DstBlobData.Metadata, DataMovementConstants.PlanFile.MetadataStrMaxSize);
+
+            // DstBlobData.BlobTagsLength
+            writer.Write(DstBlobData.BlobTagsLength);
+
+            // DstBlobData.BlobTags
+            WriteString(writer, DstBlobData.BlobTags, DataMovementConstants.PlanFile.BlobTagsStrMaxSize);
+
+            // DstBlobData.IsSourceEncrypted
+            writer.Write(DstBlobData.IsSourceEncrypted);
+
+            // DstBlobData.CpkScopeInfoLength
+            writer.Write(DstBlobData.CpkScopeInfoLength);
+
+            // DstBlobData.CpkScopeInfo
+            WriteString(writer, DstBlobData.CpkScopeInfo, DataMovementConstants.PlanFile.HeaderValueMaxSize);
+
+            // DstBlobData.BlockSize
+            writer.Write(DstBlobData.BlockSize);
+
+            // DstLocalData.PreserveLastModifiedTime
+            writer.Write(Convert.ToByte(DstLocalData.PreserveLastModifiedTime));
+
+            // DstLocalData.MD5VerificationOption
+            writer.Write(DstLocalData.MD5VerificationOption);
+
+            // PreserveSMBPermissions
+            writer.Write(Convert.ToByte(PreserveSMBPermissions));
+
+            // PreserveSMBInfo
+            writer.Write(Convert.ToByte(PreserveSMBInfo));
+
+            // S2SGetPropertiesInBackend
+            writer.Write(Convert.ToByte(S2SGetPropertiesInBackend));
+
+            // S2SSourceChangeValidationBuffer
+            writer.Write(Convert.ToByte(S2SSourceChangeValidation));
+
+            // DestLengthValidation
+            writer.Write(Convert.ToByte(DestLengthValidation));
+
+            // S2SInvalidMetadataHandleOption
+            writer.Write(S2SInvalidMetadataHandleOption);
+
+            // DeleteSnapshotsOption
+            writer.Write((byte)DeleteSnapshotsOption);
+
+            // PermanentDeleteOption
+            writer.Write((byte)PermanentDeleteOption);
+
+            // RehydratePriorityType
+            writer.Write((byte)RehydratePriorityType);
+
+            // AtomicJobStatus
+            writer.Write((byte)AtomicJobStatus);
+
+            // AtomicPartStatus
+            writer.Write((byte)AtomicPartStatus);
+        }
+
+        public static JobPartPlanHeader Deserialize(Stream stream)
+        {
+            if (stream is null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            BinaryReader reader = new BinaryReader(stream);
+            reader.BaseStream.Position = 0;
+
+            // Version
+            byte[] versionBuffer = new byte[DataMovementConstants.PlanFile.VersionStrMaxSize];
+            versionBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.VersionStrMaxSize);
+            string version = versionBuffer.ToString(DataMovementConstants.PlanFile.VersionStrMaxSize);
+
+            // Start Time
+            byte[] startTimeBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            startTimeBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            DateTimeOffset startTime = new DateTimeOffset(startTimeBuffer.ToLong(), new TimeSpan(0, 0, 0));
+
+            // Transfer Id
+            byte[] transferIdBuffer = new byte[DataMovementConstants.PlanFile.TransferIdStrMaxSize];
+            transferIdBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.TransferIdStrMaxSize);
+            string transferId = transferIdBuffer.ToString(DataMovementConstants.PlanFile.TransferIdStrMaxSize);
+
+            // Job Part Number
+            byte[] partNumberBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            partNumberBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long partNumber = partNumberBuffer.ToLong();
+
+            // SourcePathLength
+            byte[] sourcePathLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            sourcePathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long sourcePathLength = sourcePathLengthBuffer.ToLong();
+            Errors.ThrowIfElementIsNotPositive(elementName: nameof(SourcePathLength), actualValue: sourcePathLength);
+
+            // SourcePath
+            byte[] sourcePathBuffer = new byte[DataMovementConstants.PlanFile.PathStrMaxSize];
+            sourcePathBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.PathStrMaxSize);
+            string sourcePath = sourcePathBuffer.ToString(sourcePathLength);
+
+            // SourceExtraQueryLength
+            byte[] sourceExtraQueryLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            sourceExtraQueryLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long sourceExtraQueryLength = sourceExtraQueryLengthBuffer.ToLong();
+
+            // SourceExtraQuery
+            byte[] sourceExtraQueryBuffer = new byte[DataMovementConstants.PlanFile.ExtraQueryMaxSize];
+            sourceExtraQueryBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.ExtraQueryMaxSize);
+            string sourceExtraQuery = sourceExtraQueryBuffer.ToString(sourceExtraQueryLength);
+
+            // DestinationPathLength
+            byte[] destinationPathLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            destinationPathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long destinationPathLength = destinationPathLengthBuffer.ToLong();
+            Errors.ThrowIfElementIsNotPositive(elementName: nameof(DestinationPathLength), actualValue: destinationPathLength);
+
+            // DestinationPath
+            byte[] destinationPathBuffer = new byte[DataMovementConstants.PlanFile.PathStrMaxSize];
+            destinationPathBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.PathStrMaxSize);
+            string destinationPath = destinationPathBuffer.ToString(destinationPathLength);
+
+            // DestinationExtraQueryLength
+            byte[] destinationExtraQueryLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            destinationExtraQueryLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long destinationExtraQueryLength = destinationExtraQueryLengthBuffer.ToLong();
+
+            // DestinationExtraQuery
+            byte[] destinationExtraQueryBuffer = new byte[DataMovementConstants.PlanFile.ExtraQueryMaxSize];
+            destinationExtraQueryBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.ExtraQueryMaxSize);
+            string destinationExtraQuery = destinationExtraQueryBuffer.ToString(destinationExtraQueryLength);
+
+            // IsFinalPart
+            byte isFinalPartByte = reader.ReadByte();
+            bool isFinalPart = Convert.ToBoolean(isFinalPartByte);
+
+            // ForceWrite
+            byte forceWriteByte = reader.ReadByte();
+            bool forceWrite = Convert.ToBoolean(forceWriteByte);
+
+            // ForceIfReadOnly
+            byte forceIfReadOnlyByte = reader.ReadByte();
+            bool forceIfReadOnly = Convert.ToBoolean(forceIfReadOnlyByte);
+
+            // AutoDecompress
+            byte autoDecompressByte = reader.ReadByte();
+            bool autoDecompress = Convert.ToBoolean(autoDecompressByte);
+
+            // Priority
+            byte priority = reader.ReadByte();
+
+            // TTLAfterCompletion
+            byte[] ttlAfterCompletionBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            ttlAfterCompletionBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            DateTimeOffset ttlAfterCompletion = new DateTimeOffset(ttlAfterCompletionBuffer.ToLong(), new TimeSpan(0, 0, 0));
+
+            // FromTo
+            byte fromToByte = reader.ReadByte();
+            JobPlanOperation fromTo = (JobPlanOperation)fromToByte;
+
+            // FolderPropertyOption
+            byte folderPropertyOptionByte = reader.ReadByte();
+            FolderPropertiesMode folderPropertyMode = (FolderPropertiesMode)folderPropertyOptionByte;
+
+            // NumberChunks
+            byte[] numberChunksBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            numberChunksBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long numberChunks = numberChunksBuffer.ToLong();
+
+            // DstBlobData.BlobType
+            byte blobTypeByte = reader.ReadByte();
+            JobPlanBlobType blobType = (JobPlanBlobType)blobTypeByte;
+
+            // DstBlobData.NoGuessMimeType
+            byte noGuessMimeTypeByte = reader.ReadByte();
+            bool noGuessMimeType = Convert.ToBoolean(noGuessMimeTypeByte);
+
+            // DstBlobData.ContentTypeLength
+            byte[] contentTypeLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            contentTypeLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long contentTypeLength = contentTypeLengthBuffer.ToLong();
+
+            // DstBlobData.ContentType
+            byte[] contentTypeBuffer = new byte[DataMovementConstants.PlanFile.HeaderValueMaxSize];
+            contentTypeBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.HeaderValueMaxSize);
+            string contentType = contentTypeBuffer.ToString(contentTypeLength);
+
+            // DstBlobData.ContentEncodingLength
+            byte[] contentEncodingLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            contentEncodingLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long contentEncodingLength = contentEncodingLengthBuffer.ToLong();
+
+            // DstBlobData.ContentEncoding
+            byte[] contentEncodingBuffer = new byte[DataMovementConstants.PlanFile.HeaderValueMaxSize];
+            contentEncodingBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.HeaderValueMaxSize);
+            string contentEncoding = contentEncodingBuffer.ToString(contentEncodingLength);
+
+            // DstBlobData.ContentLanguageLength
+            byte[] contentLanguageLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            contentLanguageLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long contentLanguageLength = contentLanguageLengthBuffer.ToLong();
+
+            // DstBlobData.ContentLanguage
+            byte[] contentLanguageBuffer = new byte[DataMovementConstants.PlanFile.HeaderValueMaxSize];
+            contentLanguageBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.HeaderValueMaxSize);
+            string contentLanguage = contentLanguageBuffer.ToString(contentLanguageLength);
+
+            // DstBlobData.ContentDispositionLength
+            byte[] contentDispositionLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            contentDispositionLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long contentDispositionLength = contentDispositionLengthBuffer.ToLong();
+
+            // DstBlobData.ContentDisposition
+            byte[] contentDispositionBuffer = new byte[DataMovementConstants.PlanFile.HeaderValueMaxSize];
+            contentDispositionBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.HeaderValueMaxSize);
+            string contentDisposition = contentDispositionBuffer.ToString(contentDispositionLength);
+
+            // DstBlobData.CacheControlLength
+            byte[] cacheControlLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            cacheControlLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long cacheControlLength = cacheControlLengthBuffer.ToLong();
+
+            // DstBlobData.CacheControl
+            byte[] cacheControlBuffer = new byte[DataMovementConstants.PlanFile.HeaderValueMaxSize];
+            cacheControlBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.HeaderValueMaxSize);
+            string cacheControl = cacheControlBuffer.ToString(cacheControlLength);
+
+            // DstBlobData.BlockBlobTier
+            byte blockBlobTierByte = reader.ReadByte();
+            JobPartPlanBlockBlobTier blockBlobTier = (JobPartPlanBlockBlobTier)blockBlobTierByte;
+
+            // DstBlobData.PageBlobTier
+            byte pageBlobTierByte = reader.ReadByte();
+            JobPartPlanPageBlobTier pageBlobTier = (JobPartPlanPageBlobTier)pageBlobTierByte;
+
+            // DstBlobData.PutMd5
+            byte putMd5Byte = reader.ReadByte();
+            bool putMd5 = Convert.ToBoolean(putMd5Byte);
+
+            // DstBlobData.MetadataLength
+            byte[] metadataLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            metadataLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long metadataLength = metadataLengthBuffer.ToLong();
+
+            // DstBlobData.Metadata
+            byte[] metadataBuffer = new byte[DataMovementConstants.PlanFile.MetadataStrMaxSize];
+            metadataBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.MetadataStrMaxSize);
+            string metadata = metadataBuffer.ToString(metadataLength);
+
+            // DstBlobData.BlobTagsLength
+            byte[] blobTagsLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            blobTagsLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long blobTagsLength = blobTagsLengthBuffer.ToLong();
+
+            // DstBlobData.BlobTags
+            byte[] blobTagsBuffer = new byte[DataMovementConstants.PlanFile.BlobTagsStrMaxSize];
+            blobTagsBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.BlobTagsStrMaxSize);
+            string blobTags = blobTagsBuffer.ToString(blobTagsLength);
+
+            // DstBlobData.IsSourceEncrypted
+            bool isSourceEncrypted = Convert.ToBoolean(reader.ReadByte());
+
+            // DstBlobData.CpkScopeInfoLength
+            byte[] cpkScopeInfoLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            cpkScopeInfoLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long cpkScopeInfoLength = cpkScopeInfoLengthBuffer.ToLong();
+
+            // DstBlobData.CpkScopeInfo
+            byte[] cpkScopeInfoBuffer = new byte[DataMovementConstants.PlanFile.HeaderValueMaxSize];
+            cpkScopeInfoBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.HeaderValueMaxSize);
+            string cpkScopeInfo = cpkScopeInfoBuffer.ToString(cpkScopeInfoLength);
+
+            // DstBlobData.BlockSize
+            byte[] blockSizeLengthBuffer = new byte[DataMovementConstants.PlanFile.LongSizeInBytes];
+            blockSizeLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+            long blockSize = blockSizeLengthBuffer.ToLong();
+
+            // DstLocalData.PreserveLastModifiedTime
+            bool preserveLastModifiedTime = Convert.ToBoolean(reader.ReadByte());
+
+            // DstBlobData.MD5VerificationOption
+            byte md5VerificationOption = reader.ReadByte();
+
+            // preserveSMBPermissions
+            bool preserveSMBPermissions = Convert.ToBoolean(reader.ReadByte());
+
+            // PreserveSMBInfo
+            bool preserveSMBInfo = Convert.ToBoolean(reader.ReadByte());
+
+            // S2SGetPropertiesInBackend
+            bool s2sGetPropertiesInBackend = Convert.ToBoolean(reader.ReadByte());
+
+            // S2SSourceChangeValidation
+            bool s2sSourceChangeValidation = Convert.ToBoolean(reader.ReadByte());
+
+            // DestLengthValidation
+            bool destLengthValidation = Convert.ToBoolean(reader.ReadByte());
+
+            // S2SInvalidMetadataHandleOption
+            byte s2sInvalidMetadataHandleOption = reader.ReadByte();
+
+            // DeleteSnapshotsOption
+            byte deleteSnapshotsOptionByte = reader.ReadByte();
+            JobPartDeleteSnapshotsOption deleteSnapshotsOption = (JobPartDeleteSnapshotsOption)deleteSnapshotsOptionByte;
+
+            // PermanentDeleteOption
+            byte permanentDeleteOptionByte = reader.ReadByte();
+            JobPartPermanentDeleteOption permanentDeleteOption = (JobPartPermanentDeleteOption)permanentDeleteOptionByte;
+
+            // RehydratePriorityType
+            byte rehydratePriorityTypeByte = reader.ReadByte();
+            JobPartPlanRehydratePriorityType rehydratePriorityType = (JobPartPlanRehydratePriorityType)rehydratePriorityTypeByte;
+
+            // AtomicJobStatus
+            byte atomicJobStatusByte = reader.ReadByte();
+            StorageTransferStatus atomicJobStatus = (StorageTransferStatus)atomicJobStatusByte;
+
+            // AtomicPartStatus
+            byte atomicPartStatusByte = reader.ReadByte();
+            StorageTransferStatus atomicPartStatus = (StorageTransferStatus)atomicPartStatusByte;
+
+            JobPartPlanDestinationBlob dstBlobData = new JobPartPlanDestinationBlob(
+                blobType: blobType,
+                noGuessMimeType: noGuessMimeType,
+                contentType: contentType,
+                contentEncoding: contentEncoding,
+                contentLanguage: contentLanguage,
+                contentDisposition: contentDisposition,
+                cacheControl: cacheControl,
+                blockBlobTier: blockBlobTier,
+                pageBlobTier: pageBlobTier,
+                putMd5: putMd5,
+                metadata: metadata,
+                blobTags: blobTags,
+                isSourceEncrypted: isSourceEncrypted,
+                cpkScopeInfo: cpkScopeInfo,
+                blockSize: blockSize);
+
+            JobPartPlanDestinationLocal dstLocalData = new JobPartPlanDestinationLocal(
+                preserveLastModifiedTime: preserveLastModifiedTime,
+                md5VerificationOption: md5VerificationOption);
+
+            return new JobPartPlanHeader(
+                version: version,
+                startTime: startTime,
+                transferId: transferId,
+                partNumber: partNumber,
+                sourcePath: sourcePath,
+                sourceExtraQuery: sourceExtraQuery,
+                destinationPath: destinationPath,
+                destinationExtraQuery: destinationExtraQuery,
+                isFinalPart: isFinalPart,
+                forceWrite: forceWrite,
+                forceIfReadOnly: forceIfReadOnly,
+                autoDecompress: autoDecompress,
+                priority: priority,
+                ttlAfterCompletion: ttlAfterCompletion,
+                jobPlanOperation: fromTo,
+                folderPropertyMode: folderPropertyMode,
+                numberChunks: numberChunks,
+                dstBlobData: dstBlobData,
+                dstLocalData: dstLocalData,
+                preserveSMBPermissions: preserveSMBPermissions,
+                preserveSMBInfo: preserveSMBInfo,
+                s2sGetPropertiesInBackend: s2sGetPropertiesInBackend,
+                s2sSourceChangeValidation: s2sSourceChangeValidation,
+                destLengthValidation: destLengthValidation,
+                s2sInvalidMetadataHandleOption: s2sInvalidMetadataHandleOption,
+                deleteSnapshotsOption: deleteSnapshotsOption,
+                permanentDeleteOption: permanentDeleteOption,
+                rehydratePriorityType: rehydratePriorityType,
+                atomicJobStatus: atomicJobStatus,
+                atomicPartStatus: atomicPartStatus);
+        }
+
+        private static void WriteString(BinaryWriter writer, string value, int setSizeInBytes)
+        {
+            writer.Write(value.ToCharArray());
+
+            int padding =  setSizeInBytes - value.Length;
+            if (padding > 0)
+            {
+                char[] paddingArray = new char[padding];
+                writer.Write(paddingArray);
+            }
+        }
     }
 }
