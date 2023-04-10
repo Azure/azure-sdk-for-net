@@ -896,7 +896,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "108",
+        "Content-Length": "106",
         "Content-Type": "application/json",
         "traceparent": "00-56f7cd4953d1e4d9ba5490afa25d6c67-49aa6a7c145e5522-00",
         "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.3.0-alpha.20230405.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
@@ -1137,7 +1137,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "317",
+        "Content-Length": "311",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 11:46:50 GMT",
         "Pragma": "no-cache",
@@ -1167,7 +1167,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "190",
+        "Content-Length": "186",
         "Content-Type": "application/json",
         "traceparent": "00-61a8876e6e4b40fefac44b45134cf00c-5fe0bf187e9b271e-00",
         "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.3.0-alpha.20230405.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
@@ -1445,7 +1445,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "497",
+        "Content-Length": "491",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 11:47:10 GMT",
         "Pragma": "no-cache",
@@ -1496,7 +1496,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "509",
+        "Content-Length": "503",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 11:47:10 GMT",
         "Pragma": "no-cache",
@@ -1551,7 +1551,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "497",
+        "Content-Length": "491",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 11:47:10 GMT",
         "Pragma": "no-cache",

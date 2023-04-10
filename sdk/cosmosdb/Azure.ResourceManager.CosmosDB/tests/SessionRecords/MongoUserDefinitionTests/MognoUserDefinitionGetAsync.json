@@ -354,7 +354,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T141148Z:dba49b79-b8cf-4b1f-a41b-8b73ac163104"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -385,7 +385,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T141150Z:aa1102a2-cda7-4a72-9011-38b36fcec6bc"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1332,7 +1332,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T141651Z:c9613036-9b15-446d-8578-21ebde662426"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1363,7 +1363,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T141653Z:5a1c37ba-8005-4b69-a9cb-22492d63d87f"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1442,7 +1442,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "491",
+        "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 14:17:04 GMT",
         "Pragma": "no-cache",
@@ -1478,7 +1478,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/23587e98-b6ac-4328-a753-03bcd3c8e744/resourceGroups/dbaccount-6754/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4555/mongodbUserDefinitions/mongodb-1381.mongo-user-def-2349?api-version=2022-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-474d78bb91166f613a44dacb23bdd2d4-26ff1d567ce4aabc-00",
         "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.3.0-alpha.20230405.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
@@ -1489,7 +1488,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "491",
+        "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 14:17:05 GMT",
         "Pragma": "no-cache",
@@ -1525,7 +1524,6 @@
       "RequestUri": "https://management.azure.com/subscriptions/23587e98-b6ac-4328-a753-03bcd3c8e744/resourceGroups/dbaccount-6754/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4555/mongodbUserDefinitions/mongodb-1381.mongo-user-def-2349?api-version=2022-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-03cbca35e17a261168e802d517d884bb-7dde587e106eeea0-00",
         "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.3.0-alpha.20230405.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
@@ -1801,7 +1799,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T141713Z:37eaf738-0530-42d5-bc27-bd29075ce423"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1989,7 +1987,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T141728Z:f83df56c-bcde-4fd0-8c8e-50cd754360ea"
       },
       "ResponseBody": {
-        "status": "Enqueued"
+        "status": "Dequeued"
       }
     },
     {

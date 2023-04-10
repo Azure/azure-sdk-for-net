@@ -15,7 +15,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "472",
+        "Content-Length": "470",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 09:35:45 GMT",
         "Pragma": "no-cache",
@@ -388,7 +388,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "1462",
+        "Content-Length": "1460",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 09:36:04 GMT",
         "Pragma": "no-cache",
@@ -519,7 +519,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "1462",
+        "Content-Length": "1460",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 09:36:04 GMT",
         "Pragma": "no-cache",
@@ -650,7 +650,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "1462",
+        "Content-Length": "1460",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 09:36:04 GMT",
         "Pragma": "no-cache",
@@ -1101,7 +1101,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "1462",
+        "Content-Length": "1460",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 09:36:22 GMT",
         "Pragma": "no-cache",
@@ -1232,7 +1232,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "1462",
+        "Content-Length": "1460",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 09:36:23 GMT",
         "Pragma": "no-cache",
@@ -1363,7 +1363,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "1462",
+        "Content-Length": "1460",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 09:36:23 GMT",
         "Pragma": "no-cache",

@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<DatabaseAccountKeysMetadata> keysMetadata = default;
             Optional<bool> enablePartitionMerge = default;
             Optional<bool> enableBurstCapacity = default;
-            Optional<MinimalTlsVersion> minimalTlsVersion = default;
+            Optional<CosmosDBMinimalTlsVersion> minimalTlsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

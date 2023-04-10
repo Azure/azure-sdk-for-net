@@ -165,7 +165,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "108",
+        "Content-Length": "107",
         "Content-Type": "application/json",
         "traceparent": "00-e3fbac6c9fc7c5886f1687ea67613793-de579977e6835371-00",
         "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.3.0-alpha.20230405.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",

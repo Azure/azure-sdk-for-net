@@ -385,7 +385,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T135719Z:23de4699-c04b-4d65-a3c9-ad66c5261e6b"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1058,7 +1058,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T140208Z:c58d8e24-ebdb-482b-b8a1-e6fee67f2495"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1167,7 +1167,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "217",
+        "Content-Length": "216",
         "Content-Type": "application/json",
         "traceparent": "00-6b4e829f78d9f870881f259d0686a03e-12c847802b264f4b-00",
         "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.3.0-alpha.20230405.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
@@ -1363,7 +1363,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T140221Z:c600968d-c06c-4676-a784-9609f446359d"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1442,7 +1442,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "491",
+        "Content-Length": "488",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 14:02:33 GMT",
         "Pragma": "no-cache",
@@ -1629,7 +1629,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T140238Z:e31424c0-de52-4ff0-bcee-a005a445c5bf"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1660,7 +1660,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T140240Z:112d4347-4bf3-40d5-88d9-a784d669adce"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1691,7 +1691,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T140244Z:59348886-3be1-4971-8e0f-9a0a95b0b39e"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1708,7 +1708,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "22",
+        "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 14:02:51 GMT",
         "Pragma": "no-cache",
@@ -1722,14 +1722,13 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T140252Z:4714a565-876d-4a89-af22-b0d9aebb2267"
       },
       "ResponseBody": {
-        "status": "Succeeded"
+        "status": "Dequeued"
       }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/23587e98-b6ac-4328-a753-03bcd3c8e744/resourceGroups/dbaccount-6754/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6571/mongodbUserDefinitions/mongodb-7725.mongo-user-def-1382?api-version=2022-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-e451488bdf8859da76e1da1856edf522-3073c1f458ace7fb-00",
         "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.3.0-alpha.20230405.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
@@ -1737,10 +1736,10 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
-      "StatusCode": 404,
+      "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "210",
+        "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 14:02:51 GMT",
         "Pragma": "no-cache",
@@ -2071,7 +2070,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T140304Z:7df74986-e00c-463f-ba54-0a0d597a4732"
       },
       "ResponseBody": {
-        "status": "Enqueued"
+        "status": "Dequeued"
       }
     },
     {

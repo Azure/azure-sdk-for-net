@@ -15,7 +15,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "1333",
+        "Content-Length": "1331",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 19:37:45 GMT",
         "Pragma": "no-cache",
@@ -362,7 +362,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "769",
+        "Content-Length": "767",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 19:37:56 GMT",
         "Pragma": "no-cache",

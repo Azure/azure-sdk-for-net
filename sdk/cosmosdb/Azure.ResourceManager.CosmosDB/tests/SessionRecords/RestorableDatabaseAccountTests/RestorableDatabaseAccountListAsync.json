@@ -43,7 +43,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "517",
+        "Content-Length": "540",
         "Content-Type": "application/json",
         "traceparent": "00-59d761dbc2f6f0f80e6789e5d3efc2e6-c5a716184f006f5f-00",
         "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.3.0-alpha.20230405.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
@@ -76,6 +76,7 @@
           "enableAutomaticFailover": false,
           "connectorOffer": "Small",
           "disableKeyBasedMetadataWriteAccess": false,
+          "enableFreeTier": false,
           "backupPolicy": {
             "type": "Continuous"
           }

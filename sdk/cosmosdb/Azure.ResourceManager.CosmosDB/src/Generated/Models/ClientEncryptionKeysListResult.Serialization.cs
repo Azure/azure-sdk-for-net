@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ClientEncryptionKeyGetResultData>> value = default;
+            Optional<IReadOnlyList<CosmosDBSqlClientEncryptionKeyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ClientEncryptionKeyGetResultData> array = new List<ClientEncryptionKeyGetResultData>();
+                    List<CosmosDBSqlClientEncryptionKeyData> array = new List<CosmosDBSqlClientEncryptionKeyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClientEncryptionKeyGetResultData.DeserializeClientEncryptionKeyGetResultData(item));
+                        array.Add(CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(item));
                     }
                     value = array;
                     continue;

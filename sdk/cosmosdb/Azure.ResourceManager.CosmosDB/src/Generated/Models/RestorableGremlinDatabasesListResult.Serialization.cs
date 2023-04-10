@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RestorableGremlinDatabaseGetResult>> value = default;
+            Optional<IReadOnlyList<RestorableGremlinDatabase>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RestorableGremlinDatabaseGetResult> array = new List<RestorableGremlinDatabaseGetResult>();
+                    List<RestorableGremlinDatabase> array = new List<RestorableGremlinDatabase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableGremlinDatabaseGetResult.DeserializeRestorableGremlinDatabaseGetResult(item));
+                        array.Add(RestorableGremlinDatabase.DeserializeRestorableGremlinDatabase(item));
                     }
                     value = array;
                     continue;

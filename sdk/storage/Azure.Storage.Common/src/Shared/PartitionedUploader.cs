@@ -109,7 +109,7 @@ namespace Azure.Storage
         /// <summary>
         /// Delegte for getting a partition from a stream based on the selected data management stragegy.
         /// </summary>
-        private delegate Task<SlicedStream> GetNextStreamPartition(
+        private delegate Task<Stream> GetNextStreamPartition(
             Stream stream,
             long minCount,
             long maxCount,
@@ -269,9 +269,9 @@ namespace Azure.Storage
                     transferOptions.MaximumTransferSize.Value);
             }
 
-            _validationOptions = transferValidation;
+            _validationOptions = Argument.CheckNotNull(transferValidation, nameof(transferValidation));
             //partitioned uploads don't support pre-calculated hashes
-            if (!(_validationOptions?.PrecalculatedChecksum.IsEmpty ?? true))
+            if (!(_validationOptions.PrecalculatedChecksum.IsEmpty))
             {
                 throw Errors.PrecalculatedHashNotSupportedOnSplit();
             }
@@ -291,13 +291,21 @@ namespace Azure.Storage
             await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
             long length = content.ToMemory().Length;
 
+            // Calculate upfront. We are guaranteed an in-place calculation here while consuming code may be Stream-based.
+            var totalContentChecksum = ContentHasher.GetHashOrDefault(content, _validationOptions);
+
             if (length < _singleUploadThreshold)
             {
                 return await _singleUploadBinaryDataInternal(
                     content,
                     args,
                     progressHandler,
-                    _validationOptions,
+                    // use the upfront calculation
+                    new UploadTransferValidationOptions
+                    {
+                        ChecksumAlgorithm = totalContentChecksum?.Algorithm ?? StorageChecksumAlgorithm.None,
+                        PrecalculatedChecksum = totalContentChecksum?.Checksum ?? ReadOnlyMemory<byte>.Empty
+                    },
                     _operationName,
                     async,
                     cancellationToken)
@@ -367,7 +375,7 @@ namespace Azure.Storage
 
             if (content.CanSeek && content.Position > 0)
             {
-                content = WindowStream.GetWindow(content, content.Length - content.Position, content.Position);
+                content = WindowStream.GetWindow(content, content.Length - content.Position);
             }
 
             await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
@@ -381,21 +389,14 @@ namespace Azure.Storage
             if (length < _singleUploadThreshold)
             {
                 IDisposable disposable = null;
+                UploadTransferValidationOptions oneshotValidationOptions = _validationOptions;
 
-                // may not be seekable. buffer if that's the case
+                // If not seekable, buffer and checksum if necessary.
                 if (!content.CanSeek)
                 {
-                    content = await PooledMemoryStream.BufferStreamPartitionInternal(
-                        content,
-                        // we've passed a comparison on length; we know there is a value
-                        length.Value,
-                        length.Value,
-                        // for the purposes of a one-shot, absolutePosition is always zero
-                        absolutePosition: 0,
-                        _arrayPool,
-                        maxArrayPoolRentalSize: default,
-                        async,
-                        cancellationToken).ConfigureAwait(false);
+                    (content, oneshotValidationOptions) = await BufferAndOptionalChecksumStreamInternal(
+                        content, length.Value, oneshotValidationOptions, async, cancellationToken)
+                        .ConfigureAwait(false);
                     disposable = content;
                 }
 
@@ -404,7 +405,7 @@ namespace Azure.Storage
                     content,
                     args,
                     progressHandler,
-                    _validationOptions,
+                    oneshotValidationOptions,
                     _operationName,
                     async,
                     cancellationToken)
@@ -468,6 +469,82 @@ namespace Azure.Storage
                     async: async,
                     cancellationToken).ConfigureAwait(false);
             }
+        }
+
+        /// <summary>
+        /// Buffers the given stream and optionally checksums the stream contents as they are buffered.
+        /// </summary>
+        /// <param name="source">
+        /// Stream to buffer.
+        /// </param>
+        /// <param name="sourceLength">
+        /// Length of the source stream.
+        /// </param>
+        /// <param name="validationOptions">
+        /// Validation options for the upload to determine if buffering is needed.
+        /// </param>
+        /// <param name="async">
+        /// Whether to perform the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A tuple containing:
+        /// <list type="number">
+        /// <item>
+        /// The buffered contents of <paramref name="source"/>, exposed as a <see cref="Stream"/>.
+        /// </item>
+        /// <item>
+        /// Updated transfer validation options for this upload. Will contain the calculated checksum, if any.
+        /// </item>
+        /// </list>
+        /// </returns>
+        private async Task<(Stream Stream, UploadTransferValidationOptions ValidationOptions)>
+            BufferAndOptionalChecksumStreamInternal(
+                Stream source,
+                long sourceLength,
+                UploadTransferValidationOptions validationOptions,
+                bool async,
+                CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(validationOptions, nameof(validationOptions));
+
+            bool usingChecksumStream =
+                validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None &&
+                validationOptions.PrecalculatedChecksum.IsEmpty;
+            ContentHasher.GetFinalStreamHash checksumCallback = null;
+            int checksumSize = 0;
+            IDisposable hashCalculatorDisposable = null;
+            if (usingChecksumStream)
+            {
+                (source, checksumCallback, checksumSize, hashCalculatorDisposable) = ContentHasher
+                    .SetupChecksumCalculatingReadStream(source, validationOptions.ChecksumAlgorithm);
+            }
+
+            Stream bufferedContent = await PooledMemoryStream.BufferStreamPartitionInternal(
+                source,
+                sourceLength,
+                sourceLength,
+                _arrayPool,
+                maxArrayPoolRentalSize: default,
+                async,
+                cancellationToken).ConfigureAwait(false);
+
+            if (usingChecksumStream)
+            {
+                var checksum = new Memory<byte>(new byte[checksumSize]);
+                checksumCallback(checksum.Span);
+                validationOptions = new UploadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = validationOptions.ChecksumAlgorithm,
+                    PrecalculatedChecksum = checksum,
+                };
+            }
+
+            hashCalculatorDisposable?.Dispose();
+            return (bufferedContent, validationOptions);
         }
 
         private async Task<Response<TCompleteUploadReturn>> UploadInSequenceInternal<TContent>(
@@ -820,7 +897,7 @@ namespace Azure.Storage
             long absolutePosition = 0;
             do
             {
-                SlicedStream partition = await getNextPartition(
+                Stream partition = await getNextPartition(
                     stream,
                     acceptableBlockSize,
                     blockSize,
@@ -828,7 +905,6 @@ namespace Azure.Storage
                     async,
                     cancellationToken).ConfigureAwait(false);
                 read = partition.Length;
-                absolutePosition += read;
 
                 // If we read anything, turn it into a StreamPartition and
                 // return it for staging
@@ -837,9 +913,10 @@ namespace Azure.Storage
                     // The StreamParitition is disposable and it'll be the
                     // user's responsibility to return the bytes used to our
                     // ArrayPool
-                    yield return new ContentPartition<Stream>(partition.AbsolutePosition, partition.Length, partition);
+                    yield return new ContentPartition<Stream>(absolutePosition, partition.Length, partition);
                 }
 
+                absolutePosition += read;
                 // Continue reading blocks until we've exhausted the stream
             } while (read != 0);
         }
@@ -870,7 +947,7 @@ namespace Azure.Storage
         /// <returns>
         /// Task containing the buffered stream partition.
         /// </returns>
-        private async Task<SlicedStream> GetBufferedPartitionInternal(
+        private async Task<Stream> GetBufferedPartitionInternal(
             Stream stream,
             long minCount,
             long maxCount,
@@ -881,7 +958,6 @@ namespace Azure.Storage
                 stream,
                 minCount,
                 maxCount,
-                absolutePosition,
                 _arrayPool,
                 maxArrayPoolRentalSize: default,
                 async,
@@ -912,14 +988,14 @@ namespace Azure.Storage
         /// <returns>
         /// Task containing the stream facade.
         /// </returns>
-        private static Task<SlicedStream> GetStreamedPartitionInternal(
+        private static Task<Stream> GetStreamedPartitionInternal(
             Stream stream,
             long minCount,
             long maxCount,
             long absolutePosition,
             bool async,
             CancellationToken cancellationToken)
-            => Task.FromResult((SlicedStream)WindowStream.GetWindow(stream, maxCount, absolutePosition));
+            => Task.FromResult(WindowStream.GetWindow(stream, maxCount));
         #endregion
     }
 

@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of RestorableGremlinGraphsListResult. </summary>
         internal RestorableGremlinGraphsListResult()
         {
-            Value = new ChangeTrackingList<RestorableGremlinGraphGetResult>();
+            Value = new ChangeTrackingList<RestorableGremlinGraph>();
         }
 
         /// <summary> Initializes a new instance of RestorableGremlinGraphsListResult. </summary>
         /// <param name="value"> List of Gremlin graph events and their properties. </param>
-        internal RestorableGremlinGraphsListResult(IReadOnlyList<RestorableGremlinGraphGetResult> value)
+        internal RestorableGremlinGraphsListResult(IReadOnlyList<RestorableGremlinGraph> value)
         {
             Value = value;
         }
 
         /// <summary> List of Gremlin graph events and their properties. </summary>
-        public IReadOnlyList<RestorableGremlinGraphGetResult> Value { get; }
+        public IReadOnlyList<RestorableGremlinGraph> Value { get; }
     }
 }

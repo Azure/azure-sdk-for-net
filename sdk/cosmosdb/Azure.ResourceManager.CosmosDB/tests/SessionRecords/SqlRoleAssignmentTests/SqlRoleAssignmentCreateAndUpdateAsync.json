@@ -1018,7 +1018,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "362",
+        "Content-Length": "361",
         "Content-Type": "application/json",
         "traceparent": "00-47439f95fe2b9832687042986bda7b21-fef1c27868d50fc6-00",
         "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.3.0-alpha.20230405.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
@@ -1294,7 +1294,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "702",
+        "Content-Length": "701",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 18:26:50 GMT",
         "Pragma": "no-cache",

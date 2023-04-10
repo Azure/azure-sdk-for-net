@@ -312,7 +312,7 @@
         "x-ms-routing-request-id": "WESTUS:20230406T055929Z:c4eae12a-1e8f-405d-ba0c-c18bbb2cd318"
       },
       "ResponseBody": {
-        "status": "Enqueued"
+        "status": "Dequeued"
       }
     },
     {
@@ -1232,7 +1232,7 @@
         "x-ms-routing-request-id": "WESTUS:20230406T060422Z:57f8db91-50aa-4485-b113-a9d39cec7078"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1263,7 +1263,7 @@
         "x-ms-routing-request-id": "WESTUS:20230406T060424Z:de13d5e7-ba65-4e74-9510-83c4988e9af9"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1387,7 +1387,7 @@
         "x-ms-routing-request-id": "WESTUS:20230406T060525Z:0a9b7495-20c2-4ca8-90c6-44dc459cd79d"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {

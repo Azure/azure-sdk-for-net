@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of ClientEncryptionKeysListResult. </summary>
         internal ClientEncryptionKeysListResult()
         {
-            Value = new ChangeTrackingList<ClientEncryptionKeyGetResultData>();
+            Value = new ChangeTrackingList<CosmosDBSqlClientEncryptionKeyData>();
         }
 
         /// <summary> Initializes a new instance of ClientEncryptionKeysListResult. </summary>
         /// <param name="value"> List of client encryption keys and their properties. </param>
-        internal ClientEncryptionKeysListResult(IReadOnlyList<ClientEncryptionKeyGetResultData> value)
+        internal ClientEncryptionKeysListResult(IReadOnlyList<CosmosDBSqlClientEncryptionKeyData> value)
         {
             Value = value;
         }
 
         /// <summary> List of client encryption keys and their properties. </summary>
-        public IReadOnlyList<ClientEncryptionKeyGetResultData> Value { get; }
+        public IReadOnlyList<CosmosDBSqlClientEncryptionKeyData> Value { get; }
     }
 }

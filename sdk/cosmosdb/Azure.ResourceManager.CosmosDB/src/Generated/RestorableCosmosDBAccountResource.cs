@@ -481,11 +481,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableGremlinDatabaseGetResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableGremlinDatabaseGetResult> GetRestorableGremlinDatabasesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RestorableGremlinDatabase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorableGremlinDatabase> GetRestorableGremlinDatabasesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableGremlinDatabasesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableGremlinDatabaseGetResult.DeserializeRestorableGremlinDatabaseGetResult, _restorableGremlinDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinDatabases", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableGremlinDatabase.DeserializeRestorableGremlinDatabase, _restorableGremlinDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -502,11 +502,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableGremlinDatabaseGetResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableGremlinDatabaseGetResult> GetRestorableGremlinDatabases(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorableGremlinDatabase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorableGremlinDatabase> GetRestorableGremlinDatabases(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableGremlinDatabasesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableGremlinDatabaseGetResult.DeserializeRestorableGremlinDatabaseGetResult, _restorableGremlinDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinDatabases", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableGremlinDatabase.DeserializeRestorableGremlinDatabase, _restorableGremlinDatabasesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -526,11 +526,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="startTime"> Restorable Gremlin graphs event feed start time. </param>
         /// <param name="endTime"> Restorable Gremlin graphs event feed end time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableGremlinGraphGetResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableGremlinGraphGetResult> GetRestorableGremlinGraphsAsync(string restorableGremlinDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RestorableGremlinGraph" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorableGremlinGraph> GetRestorableGremlinGraphsAsync(string restorableGremlinDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableGremlinGraphsRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableGremlinDatabaseRid, startTime, endTime);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableGremlinGraphGetResult.DeserializeRestorableGremlinGraphGetResult, _restorableGremlinGraphsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinGraphs", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableGremlinGraph.DeserializeRestorableGremlinGraph, _restorableGremlinGraphsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinGraphs", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -550,11 +550,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="startTime"> Restorable Gremlin graphs event feed start time. </param>
         /// <param name="endTime"> Restorable Gremlin graphs event feed end time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableGremlinGraphGetResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableGremlinGraphGetResult> GetRestorableGremlinGraphs(string restorableGremlinDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorableGremlinGraph" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorableGremlinGraph> GetRestorableGremlinGraphs(string restorableGremlinDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableGremlinGraphsRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableGremlinDatabaseRid, startTime, endTime);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableGremlinGraphGetResult.DeserializeRestorableGremlinGraphGetResult, _restorableGremlinGraphsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinGraphs", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableGremlinGraph.DeserializeRestorableGremlinGraph, _restorableGremlinGraphsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinGraphs", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -573,11 +573,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreLocation"> The location where the restorable resources are located. </param>
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableGremlinResourcesGetResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableGremlinResourcesGetResult> GetRestorableGremlinResourcesAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RestorableGremlinResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorableGremlinResourceData> GetRestorableGremlinResourcesAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableGremlinResourcesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableGremlinResourcesGetResult.DeserializeRestorableGremlinResourcesGetResult, _restorableGremlinResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinResources", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableGremlinResourceData.DeserializeRestorableGremlinResourceData, _restorableGremlinResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -596,11 +596,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreLocation"> The location where the restorable resources are located. </param>
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableGremlinResourcesGetResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableGremlinResourcesGetResult> GetRestorableGremlinResources(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorableGremlinResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorableGremlinResourceData> GetRestorableGremlinResources(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableGremlinResourcesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableGremlinResourcesGetResult.DeserializeRestorableGremlinResourcesGetResult, _restorableGremlinResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinResources", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableGremlinResourceData.DeserializeRestorableGremlinResourceData, _restorableGremlinResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableGremlinResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -619,11 +619,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="startTime"> Restorable Tables event feed start time. </param>
         /// <param name="endTime"> Restorable Tables event feed end time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableTableGetResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableTableGetResult> GetRestorableTablesAsync(string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RestorableTable" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorableTable> GetRestorableTablesAsync(string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableTablesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), startTime, endTime);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableTableGetResult.DeserializeRestorableTableGetResult, _restorableTablesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTables", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableTable.DeserializeRestorableTable, _restorableTablesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTables", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -642,11 +642,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="startTime"> Restorable Tables event feed start time. </param>
         /// <param name="endTime"> Restorable Tables event feed end time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableTableGetResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableTableGetResult> GetRestorableTables(string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorableTable" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorableTable> GetRestorableTables(string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableTablesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), startTime, endTime);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableTableGetResult.DeserializeRestorableTableGetResult, _restorableTablesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTables", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableTable.DeserializeRestorableTable, _restorableTablesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTables", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -665,11 +665,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreLocation"> The location where the restorable resources are located. </param>
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableTableResourcesGetResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableTableResourcesGetResult> GetRestorableTableResourcesAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RestorableTableResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorableTableResourceData> GetRestorableTableResourcesAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableTableResourcesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableTableResourcesGetResult.DeserializeRestorableTableResourcesGetResult, _restorableTableResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTableResources", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableTableResourceData.DeserializeRestorableTableResourceData, _restorableTableResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTableResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -688,11 +688,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreLocation"> The location where the restorable resources are located. </param>
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableTableResourcesGetResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableTableResourcesGetResult> GetRestorableTableResources(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorableTableResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorableTableResourceData> GetRestorableTableResources(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableTableResourcesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableTableResourcesGetResult.DeserializeRestorableTableResourcesGetResult, _restorableTableResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTableResources", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RestorableTableResourceData.DeserializeRestorableTableResourceData, _restorableTableResourcesClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableTableResources", "value", null, cancellationToken);
         }
     }
 }

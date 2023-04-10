@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
-        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, ClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode)
+        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode)
         {
             ContainerName = containerName;
             IndexingPolicy = indexingPolicy;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The conflict resolution policy for the container. </summary>
         public ConflictResolutionPolicy ConflictResolutionPolicy { get; set; }
         /// <summary> The client encryption policy for the container. </summary>
-        public ClientEncryptionPolicy ClientEncryptionPolicy { get; set; }
+        public CosmosDBClientEncryptionPolicy ClientEncryptionPolicy { get; set; }
         /// <summary> Analytical TTL. </summary>
         public long? AnalyticalStorageTtl { get; set; }
         /// <summary> Parameters to indicate the information about the restore. </summary>

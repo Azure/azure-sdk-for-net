@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<int> defaultTtl = default;
             Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
             Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
-            Optional<ClientEncryptionPolicy> clientEncryptionPolicy = default;
+            Optional<CosmosDBClientEncryptionPolicy> clientEncryptionPolicy = default;
             Optional<long> analyticalStorageTtl = default;
             Optional<ResourceRestoreParameters> restoreParameters = default;
             Optional<CosmosDBAccountCreateMode> createMode = default;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    clientEncryptionPolicy = ClientEncryptionPolicy.DeserializeClientEncryptionPolicy(property.Value);
+                    clientEncryptionPolicy = CosmosDBClientEncryptionPolicy.DeserializeCosmosDBClientEncryptionPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("analyticalStorageTtl"u8))

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CosmosDBAccountRestoreParameters()
         {
             DatabasesToRestore = new ChangeTrackingList<DatabaseRestoreResourceInfo>();
-            GremlinDatabasesToRestore = new ChangeTrackingList<GremlinDatabaseRestoreResource>();
+            GremlinDatabasesToRestore = new ChangeTrackingList<GremlinDatabaseRestoreResourceInfo>();
             TablesToRestore = new ChangeTrackingList<string>();
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="gremlinDatabasesToRestore"> List of specific gremlin databases available for restore. </param>
         /// <param name="tablesToRestore"> List of specific tables available for restore. </param>
         /// <param name="sourceBackupLocation"> The source backup location for restore. </param>
-        internal CosmosDBAccountRestoreParameters(string restoreSource, DateTimeOffset? restoreTimestampInUtc, CosmosDBAccountRestoreMode? restoreMode, IList<DatabaseRestoreResourceInfo> databasesToRestore, IList<GremlinDatabaseRestoreResource> gremlinDatabasesToRestore, IList<string> tablesToRestore, string sourceBackupLocation) : base(restoreSource, restoreTimestampInUtc)
+        internal CosmosDBAccountRestoreParameters(string restoreSource, DateTimeOffset? restoreTimestampInUtc, CosmosDBAccountRestoreMode? restoreMode, IList<DatabaseRestoreResourceInfo> databasesToRestore, IList<GremlinDatabaseRestoreResourceInfo> gremlinDatabasesToRestore, IList<string> tablesToRestore, string sourceBackupLocation) : base(restoreSource, restoreTimestampInUtc)
         {
             RestoreMode = restoreMode;
             DatabasesToRestore = databasesToRestore;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> List of specific databases available for restore. </summary>
         public IList<DatabaseRestoreResourceInfo> DatabasesToRestore { get; }
         /// <summary> List of specific gremlin databases available for restore. </summary>
-        public IList<GremlinDatabaseRestoreResource> GremlinDatabasesToRestore { get; }
+        public IList<GremlinDatabaseRestoreResourceInfo> GremlinDatabasesToRestore { get; }
         /// <summary> List of specific tables available for restore. </summary>
         public IList<string> TablesToRestore { get; }
         /// <summary> The source backup location for restore. </summary>

@@ -15,7 +15,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "472",
+        "Content-Length": "471",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 09:28:25 GMT",
         "Pragma": "no-cache",
@@ -357,7 +357,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "1462",
+        "Content-Length": "1461",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 09:28:36 GMT",
         "Pragma": "no-cache",
@@ -488,7 +488,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "1361",
+        "Content-Length": "1360",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 09:28:36 GMT",
         "Pragma": "no-cache",
@@ -614,7 +614,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "1462",
+        "Content-Length": "1461",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 09:28:36 GMT",
         "Pragma": "no-cache",

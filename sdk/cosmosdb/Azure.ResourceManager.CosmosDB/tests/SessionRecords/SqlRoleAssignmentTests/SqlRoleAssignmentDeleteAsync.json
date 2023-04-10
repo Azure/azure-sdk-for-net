@@ -243,7 +243,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T183620Z:470b99fd-6eae-45f0-a2f6-828c1d059ea2"
       },
       "ResponseBody": {
-        "status": "Enqueued"
+        "status": "Dequeued"
       }
     },
     {
@@ -274,7 +274,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T183621Z:ce08c230-a74d-4f9f-b974-2f4bdfd9a7fc"
       },
       "ResponseBody": {
-        "status": "Enqueued"
+        "status": "Dequeued"
       }
     },
     {
@@ -305,7 +305,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T183622Z:9c9c0bdb-a274-42ad-b3cb-48e02c56d450"
       },
       "ResponseBody": {
-        "status": "Enqueued"
+        "status": "Dequeued"
       }
     },
     {
@@ -1859,7 +1859,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "22",
+        "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 18:39:44 GMT",
         "Pragma": "no-cache",
@@ -1873,14 +1873,13 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T183945Z:3f5f7044-7a34-48b3-b3a5-664c6ddc7a89"
       },
       "ResponseBody": {
-        "status": "Succeeded"
+        "status": "Dequeued"
       }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/23587e98-b6ac-4328-a753-03bcd3c8e744/resourceGroups/dbaccount-2162/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9501/sqlRoleAssignments/cb8ed2d7-2371-4e3c-bd31-6cc1560e84f8?api-version=2022-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-755f680a169e8e0f7da4d302aaa8d821-4ebf38eb822e4606-00",
         "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.3.0-alpha.20230405.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
@@ -1888,10 +1887,10 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
-      "StatusCode": 404,
+      "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "209",
+        "Content-Length": "22",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 18:39:44 GMT",
         "Pragma": "no-cache",
@@ -2097,7 +2096,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T183950Z:761d7de5-c43d-4f49-b1dd-94f78393ef6f"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -2176,7 +2175,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "22",
+        "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 18:40:03 GMT",
         "Pragma": "no-cache",
@@ -2190,7 +2189,7 @@
         "x-ms-routing-request-id": "WESTCENTRALUS:20230406T184004Z:5075a89a-710b-4998-8a1a-7cc21fecde9f"
       },
       "ResponseBody": {
-        "status": "Succeeded"
+        "status": "Dequeued"
       }
     },
     {

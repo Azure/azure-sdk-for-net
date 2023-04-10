@@ -51,7 +51,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "482",
+        "Content-Length": "481",
         "Content-Type": "application/json",
         "traceparent": "00-979e9802031931e6d985e0d434202fe6-91a614d1504f9085-00",
         "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.3.0-alpha.20230405.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
@@ -705,7 +705,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "707",
+        "Content-Length": "706",
         "Content-Type": "application/json",
         "traceparent": "00-d2c1a0ed5bd4b6a5563e260bcf537a7c-7cbd1211659d3a32-00",
         "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.3.0-alpha.20230405.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",

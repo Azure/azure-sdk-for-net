@@ -15,6 +15,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
+        "Connection": "close",
         "Content-Length": "226",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Thu, 06 Apr 2023 15:42:47 GMT",

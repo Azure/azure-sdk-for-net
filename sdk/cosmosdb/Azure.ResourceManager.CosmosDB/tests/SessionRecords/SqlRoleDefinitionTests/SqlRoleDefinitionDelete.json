@@ -1483,7 +1483,7 @@
         "x-ms-routing-request-id": "WESTUS:20230406T205050Z:215d2d94-6e77-4230-9578-7caa1c1a9c9e"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -1593,7 +1593,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "22",
+        "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 20:51:21 GMT",
         "Pragma": "no-cache",
@@ -1607,14 +1607,13 @@
         "x-ms-routing-request-id": "WESTUS:20230406T205121Z:fc1148aa-d163-4918-b0ce-15e99b81e7b9"
       },
       "ResponseBody": {
-        "status": "Succeeded"
+        "status": "Dequeued"
       }
     },
     {
       "RequestUri": "https://management.azure.com/subscriptions/23587e98-b6ac-4328-a753-03bcd3c8e744/resourceGroups/dbaccount-4928/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-2723/sqlRoleDefinitions/be79875a-2cc4-40d5-8958-566017875b39?api-version=2022-11-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-4fa77085419cb108a17ff5dce00f041e-feac3909de67bd69-00",
         "User-Agent": "azsdk-net-ResourceManager.CosmosDB/1.3.0-alpha.20230405.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
@@ -1622,10 +1621,10 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
-      "StatusCode": 404,
+      "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-store, no-cache",
-        "Content-Length": "209",
+        "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Thu, 06 Apr 2023 20:51:21 GMT",
         "Pragma": "no-cache",
@@ -1861,7 +1860,7 @@
         "x-ms-routing-request-id": "WESTUS:20230406T205128Z:b2e67e6e-448c-41fa-a67e-b8d9936c2c4e"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -2049,7 +2048,7 @@
         "x-ms-routing-request-id": "WESTUS:20230406T205136Z:e2a6ee19-9284-4760-a692-8ed5bc5dbabb"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -2080,7 +2079,7 @@
         "x-ms-routing-request-id": "WESTUS:20230406T205138Z:9e7e5c15-b1ca-4859-80c3-a145edf12bc7"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {
@@ -2111,7 +2110,7 @@
         "x-ms-routing-request-id": "WESTUS:20230406T205142Z:1881324c-6824-41e9-b195-8031ceb869b7"
       },
       "ResponseBody": {
-        "status": "Dequeued"
+        "status": "Enqueued"
       }
     },
     {

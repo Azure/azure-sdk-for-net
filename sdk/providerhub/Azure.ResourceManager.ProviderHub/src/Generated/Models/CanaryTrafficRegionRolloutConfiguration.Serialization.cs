@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<string>> skipRegions = default;
-            Optional<IList<string>> regions = default;
+            Optional<IList<AzureLocation>> skipRegions = default;
+            Optional<IList<AzureLocation>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skipRegions"u8))
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     skipRegions = array;
                     continue;
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     regions = array;
                     continue;
