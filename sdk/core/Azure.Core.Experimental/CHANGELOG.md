@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Use `DynamicJsonOptions` in child elements, arrays, and object enumerators.
+- Use root `DynamicJsonOptions` in child elements, arrays, and object enumerators.
 
 ## 0.1.0-preview.25 (2023-03-02)
 
