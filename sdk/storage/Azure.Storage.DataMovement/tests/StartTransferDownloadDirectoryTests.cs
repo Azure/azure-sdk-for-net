@@ -69,28 +69,13 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer destinationResource =
                 new LocalDirectoryStorageResourceContainer(destinationLocalPath);
 
-            Exception exception = default;
-            options.TransferFailed += (TransferFailedEventArgs args) =>
-            {
-                if (args.Exception != null)
-                {
-                    // If we call Assert.Fail here it will throw an exception within the
-                    // event handler and take down everything with it.
-                    //Assert.Fail(args.Exception.Message);
-                    exception = args.Exception;
-                }
-                return Task.CompletedTask;
-            };
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
 
             // Assert
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
             await transfer.AwaitCompletion(tokenSource.Token);
 
-            if (exception != default)
-            {
-                Assert.Fail(exception.StackTrace);
-            }
+            failureTransferHolder.AssertFailureCheck();
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
 
@@ -102,7 +87,6 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             // List all files in the destination local path
-            failureTransferHolder.AssertFailureCheck();
             List<string> destinationFiles = ListFilesInDirectory(destinationLocalPath);
             Assert.AreEqual(destinationFiles.Count, sourceFiles.Count);
             destinationFiles.Sort();
@@ -527,10 +511,11 @@ namespace Azure.Storage.DataMovement.Tests
                 await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
                 // Assert
-                failureTransferHolder.AssertFailureCheck();
                 Assert.NotNull(transfer);
                 Assert.IsTrue(transfer.HasCompleted);
                 Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+                Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
+                Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
             }
             finally
             {
@@ -650,10 +635,11 @@ namespace Azure.Storage.DataMovement.Tests
                 transfer.EnsureCompleted(cancellationTokenSource.Token);
 
                 // Assert
-                failureTransferHolder.AssertFailureCheck();
                 Assert.NotNull(transfer);
                 Assert.IsTrue(transfer.HasCompleted);
                 Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+                Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
+                Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
             }
             finally
             {

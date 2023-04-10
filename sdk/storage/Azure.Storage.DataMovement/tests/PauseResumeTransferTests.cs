@@ -194,6 +194,7 @@ namespace Azure.Storage.DataMovement.Tests
             bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer);
 
             // Assert
+            failureTransferHolder.AssertFailureCheck();
             Assert.IsTrue(pauseSuccess);
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
 
@@ -209,7 +210,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [RecordedTest]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/35439
+        [Test]
         public async Task PauseThenResumeTransferAsync()
         {
             // Arrange
@@ -243,6 +245,7 @@ namespace Azure.Storage.DataMovement.Tests
             bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer.Id);
 
             // Assert - Confirm we've paused
+            Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
             failureTransferHolder.AssertFailureCheck();
             Assert.IsTrue(pauseSuccess);
 

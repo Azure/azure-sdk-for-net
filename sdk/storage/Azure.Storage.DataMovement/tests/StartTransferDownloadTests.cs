@@ -13,6 +13,8 @@ using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Shared;
 using System.Data.Common;
+using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -928,7 +930,6 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
-            Exception exception = default;
             string blobName = GetNewBlobName();
             int size = Constants.KB;
 
@@ -947,15 +948,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CreateMode = StorageResourceCreateMode.Fail,
             };
-            options.TransferFailed += (TransferFailedEventArgs args) =>
-            {
-                // We can't Assert here or else it takes down everything.
-                if (args.Exception != default)
-                {
-                    exception = args.Exception;
-                }
-                return Task.CompletedTask;
-            };
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             StorageResource sourceResource = new AppendBlobStorageResource(sourceClient);
             StorageResource destinationResource = new LocalFileStorageResource(destFile);
@@ -966,9 +959,8 @@ namespace Azure.Storage.DataMovement.Tests
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await transfer.AwaitCompletion(cancellationTokenSource.Token);
-
-            Assert.NotNull(exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
-            Assert.AreEqual(exception.Message, $"File path `{destFile}` already exists. Cannot overwite file.");
+            Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
+            Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("Cannot overwite file."));
         }
 
         [RecordedTest]
@@ -1735,6 +1727,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CreateMode = StorageResourceCreateMode.Fail
             };
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
@@ -1751,6 +1744,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
+            Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("Cannot overwite file."));
         }
 
         [RecordedTest]
@@ -1811,6 +1806,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CreateMode = StorageResourceCreateMode.Fail
             };
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             // Create transfer to do a AwaitCompletion
             DataTransfer transfer = await CreateStartTransfer(
@@ -1827,6 +1823,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
+            Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("Cannot overwite file."));
         }
 
         [RecordedTest]

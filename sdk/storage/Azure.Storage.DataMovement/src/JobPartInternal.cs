@@ -334,7 +334,8 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async virtual Task InvokeFailedArg(Exception ex)
         {
-            if (TransferFailedEventHandler != null)
+            if (TransferFailedEventHandler != null &&
+                ex is not OperationCanceledException)
             {
                 // TODO: change to RaiseAsync
                 await TransferFailedEventHandler.Invoke(new TransferFailedEventArgs(
