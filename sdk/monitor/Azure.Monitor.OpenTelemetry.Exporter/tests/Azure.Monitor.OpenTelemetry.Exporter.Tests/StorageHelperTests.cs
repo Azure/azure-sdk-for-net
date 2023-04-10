@@ -25,24 +25,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [InlineData("WINDOWS", "LOCALAPPDATA")]
-        [InlineData("WINDOWS", "TEMP")]
-        [InlineData("LINUX", "TMPDIR")]
-        public void VerifyDefaultDirectory_EnvVar(string osName, string environmentVarName)
+        [InlineData("LOCALAPPDATA")]
+        [InlineData("TEMP")]
+        public void VerifyDefaultDirectory_Windows(string envVarName)
         {
             var platform = new MockPlatform();
-            platform.IsOsPlatformFunc = (os) => os.ToString() == osName;
-            platform.SetEnvironmentVariable(environmentVarName, $"C:{ds}Temp");
+            platform.IsOsPlatformFunc = (os) => os.ToString() == "WINDOWS";
+            platform.SetEnvironmentVariable(envVarName, $"C:{ds}Temp");
 
             var directoryPath = StorageHelper.GetDefaultStorageDirectory(platform: platform);
 
+            // when using a default directory, we will append /Microsoft/AzureMonitor
             Assert.Equal($"C:{ds}Temp{ds}Microsoft{ds}AzureMonitor", directoryPath);
         }
 
         [Theory]
-        [InlineData(0, "/var/tmp/")]
-        [InlineData(1, "/tmp/")]
-        public void VerifyDefaultDirectory_HardCoded(int attempt, string expectedDirectory)
+        [InlineData(0, "/unitTest/tmp/", "/unitTest/tmp/")]
+        [InlineData(1, "null", "/var/tmp/")]
+        [InlineData(2, "null", "/tmp/")]
+        public void VerifyDefaultDirectory_Linux(int attempt, string envVarValue, string expectedDirectory)
         {
             // In NON-Windows environments, First attempt is an EnvironmentVariable.
             // If that's not available, we'll attempt hardcoded defaults.
@@ -50,10 +51,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var platform = new MockPlatform();
             platform.IsOsPlatformFunc = (os) => os.ToString() == "LINUX";
+            platform.SetEnvironmentVariable("TMPDIR", envVarValue);
             platform.CreateDirectoryFunc = (path) => attemptCount++ == attempt;
 
             var directoryPath = StorageHelper.GetDefaultStorageDirectory(platform: platform);
 
+            // when using a default directory, we will append /Microsoft/AzureMonitor
             Assert.Equal($"{expectedDirectory}Microsoft{ds}AzureMonitor", directoryPath);
         }
     }
