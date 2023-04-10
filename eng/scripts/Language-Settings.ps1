@@ -562,3 +562,7 @@ function Get-dotnet-LatestTag([string]$projectDirectory) {
 
   return ""
 }
+
+function Get-dotnet-SourceCodeSubDirectory() {
+  return "src"
+}
