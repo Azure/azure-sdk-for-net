@@ -69,7 +69,7 @@ namespace Azure.Core.Json
                 return;
             }
 
-            WriteRootElementTo(writer);
+            RootElement.WriteTo(writer);
         }
 
         private static void Write(Stream stream, ReadOnlySpan<byte> buffer)

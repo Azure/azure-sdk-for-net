@@ -54,12 +54,28 @@ namespace Azure.Core.Experimental.Tests
                 """u8;
             BinaryData data = new(json.ToArray());
 
-            MutableJsonDocument jd = MutableJsonDocument.Parse(data);
-            jd.RootElement.GetProperty("foo").Set("hi");
+            JsonDocument doc = JsonDocument.Parse(data);
+            using MemoryStream m1 = new();
+            using Utf8JsonWriter w1 = new(m1);
+            doc.WriteTo(w1);
+            w1.Flush();
+            m1.Position = 0;
+            BinaryData jdocData = BinaryData.FromStream(m1);
 
-            WriteToAndParse(jd, out string jsonString);
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(data);
+            mdoc.RootElement.GetProperty("foo").Set("hi");
 
-            Assert.AreEqual(RemoveWhiteSpace(data.ToString()), RemoveWhiteSpace(jsonString));
+            // Write the MutableJsonDocument with changes and validate.
+            using MemoryStream m3 = new();
+            using Utf8JsonWriter w3 = new(m3);
+            mdoc.WriteTo(w3);
+            w3.Flush();
+            m3.Position = 0;
+            BinaryData mdocData = BinaryData.FromStream(m3);
+
+            Assert.AreEqual(jdocData.ToString(), mdocData.ToString());
+            Assert.IsTrue(jdocData.ToMemory().Span.SequenceEqual(mdocData.ToMemory().Span),
+                "JsonDocument buffer does not match MutableJsonDocument buffer.");
         }
 
         [Test]
@@ -261,7 +277,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [TestCaseSource(nameof(TestCases))]
-        public void WriteToBehaviorMatchesJsonDocument(string json)
+        public void WriteToBehaviorMatchesJsonDocument(dynamic json)
         {
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
@@ -304,7 +320,7 @@ namespace Azure.Core.Experimental.Tests
             // Our goal is that MutableJsonDocument.WriteTo() will have the same behavior
             // as JsonDocument.WriteTo(). Confirm that below.
 
-            // Write the MutableJsonDocument without changes and validate.
+            // Write the MutableJsonDocument with changes and validate.
             using MemoryStream m3 = new();
             using Utf8JsonWriter w3 = new(m3);
             mdoc.WriteTo(w3);
@@ -317,7 +333,7 @@ namespace Azure.Core.Experimental.Tests
                 "JsonDocument buffer does not match MutableJsonDocument buffer.");
         }
 
-        public static IEnumerable<string> TestCases()
+        public static IEnumerable<dynamic> TestCases()
         {
             yield return """
                 {
@@ -326,7 +342,7 @@ namespace Azure.Core.Experimental.Tests
                 }
                 """;
 
-                yield return """
+            yield return """
                 {
                     "foo": "hi",
                     "bar": 2
@@ -384,6 +400,14 @@ namespace Azure.Core.Experimental.Tests
                     "bar\"+": "~!@#$%^&*()_+\\\"'"
                 }
                 """;
+
+            ReadOnlySpan<byte> json = """
+                {
+                    "foo": "hi",
+                    "last_modified":"2023-03-23T16:34:34+00:00"
+                }
+                """u8;
+            yield return new BinaryData(json.ToArray());
         }
 
         #region Helpers
