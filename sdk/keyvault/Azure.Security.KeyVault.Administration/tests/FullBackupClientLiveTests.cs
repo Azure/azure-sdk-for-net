@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 Assert.That(restoreResult, Is.Not.Null);
                 Assert.That(restoreOperation.HasValue, Is.True);
             }
-            catch (RequestFailedException ex) when (ex.Status == 400)
+            catch (RequestFailedException ex) when (ex.ErrorCode == "BadRequest")
             {
                 TestContext.Error.WriteLine($"Cannot restore backup from {backupResult.FolderUri}");
 
