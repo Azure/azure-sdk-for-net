@@ -379,5 +379,24 @@ namespace Azure.ResourceManager.Communication
             );
         }
         #endregion
+
+        #region SenderUsernameResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SenderUsernameResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SenderUsernameResource.CreateResourceIdentifier" /> to create a <see cref="SenderUsernameResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SenderUsernameResource" /> object. </returns>
+        public static SenderUsernameResource GetSenderUsernameResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SenderUsernameResource.ValidateResourceId(id);
+                return new SenderUsernameResource(client, id);
+            }
+            );
+        }
+        #endregion
     }
 }

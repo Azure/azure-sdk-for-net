@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of ReservationToExchange. </summary>
-        /// <param name="reservationId"> Fully qualified id of the Reservation being returned. </param>
+        /// <param name="reservationId"> Fully qualified id of the reservation being returned. </param>
         /// <param name="quantity"> Quantity to be returned. </param>
-        /// <param name="billingRefundAmount"></param>
+        /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingInformation"> billing information. </param>
         internal ReservationToExchange(ResourceIdentifier reservationId, int? quantity, PurchasePrice billingRefundAmount, BillingInformation billingInformation)
         {
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Reservations.Models
             BillingInformation = billingInformation;
         }
 
-        /// <summary> Fully qualified id of the Reservation being returned. </summary>
+        /// <summary> Fully qualified id of the reservation being returned. </summary>
         public ResourceIdentifier ReservationId { get; }
         /// <summary> Quantity to be returned. </summary>
         public int? Quantity { get; }
-        /// <summary> Gets the billing refund amount. </summary>
+        /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice BillingRefundAmount { get; }
         /// <summary> billing information. </summary>
         public BillingInformation BillingInformation { get; }

@@ -1,14 +1,31 @@
 # Release History
 
-## 1.1.0-beta.9 (Unreleased)
+## 1.1.0-beta.9 (2023-04-11)
 
 ### Features Added
 
+- Added a `DownloadStreaming()` method to `ContainerRegistryContentClient`.  This method returns a network stream in the returned result that the caller must dispose after use.
+- Added overloads to the `DownloadBlobTo()` method that take a file path instead of a Stream.
+- Exceptions returned from service methods will now have the ErrorCode value populated when it is available in the service's error response.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Renamed `ContainerRegistryBlobClient` to `ContainerRegistryContentClient`.
+- Moved `ContainerRegistryContentClient` and related types into main namespace.
+- Removed `MaxChunkSize` property from `ContainerRegistryClientOptions`.
+- Renamed `ContainerRegistryContentClient.DownloadBlob()` method to `DownloadBlobContent()`.
+- Renamed `DownloadBlobResult` to `DownloadRegistryBlobResult`.
+- Renamed `UploadBlobResult` to `UploadRegistryBlobResult`.
+- Renamed `ContainerRegistryContentClient.DownloadManifest()` to `GetManifest()` and `DownloadManifestResult` to `GetManifestResult`.
+- Renamed `ContainerRegistryContentClient.UploadManifest ()` to `SetManifest()` and `UploadManifestResult` to `SetManifestResult`.
+- Renamed `GetManifestResult.Content` name to `GetManifestResult.Manifest`.
+- Removed `GetManifestResult.AsOciManifest()` method in favor of `BinaryData.ToObjectFromJson<OciImageManifest>()`.
+- Changed `Url`, `Source` and `Documentation` properties on `OciAnnotations` type to `Uri` type.
+- Renamed `OciAnnotations.Config` to `OciAnnotations.Configuration`.
 
 ### Other Changes
+
+- Removed requirement to pass `Audience` property on `ContainerRegistryClientOptions` in order to create any client instance.
 
 ## 1.1.0-beta.8 (2023-03-13)
 

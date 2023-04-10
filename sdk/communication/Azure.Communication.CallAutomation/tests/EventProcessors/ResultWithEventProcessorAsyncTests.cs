@@ -200,7 +200,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
 
-            AddParticipantsEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+            AddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
@@ -227,7 +227,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send event to event processor
             SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
 
-            AddParticipantsEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+            AddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
@@ -389,6 +389,114 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.NotNull(returnedResult.FailureEvent);
             Assert.IsNull(returnedResult.SuccessEvent);
             Assert.AreEqual(typeof(RecognizeFailed), returnedResult.FailureEvent.GetType());
+            Assert.AreEqual(CallConnectionId, returnedResult.FailureEvent.CallConnectionId);
+            Assert.AreEqual(OperationContext, returnedResult.FailureEvent.OperationContext);
+        }
+
+        [Test]
+        public async Task RemoveParticipantEventResultSuccessTest()
+        {
+            int successCode = (int)HttpStatusCode.Accepted;
+
+            var callConnection = CreateMockCallConnection(successCode, RemoveParticipantPayload);
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
+            var callInvite = CreateMockInvite();
+
+            var response = callConnection.RemoveParticipant(new RemoveParticipantOptions(callInvite.Target));
+            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+
+            // Create and send event to event processor
+            SendAndProcessEvent(handler, CallAutomationModelFactory.RemoveParticipantSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
+
+            RemoveParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+
+            // Assert
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(true, returnedResult.IsSuccessEvent);
+            Assert.NotNull(returnedResult.SuccessEvent);
+            Assert.IsNull(returnedResult.FailureEvent);
+            Assert.AreEqual(typeof(RemoveParticipantSucceeded), returnedResult.SuccessEvent.GetType());
+            Assert.AreEqual(CallConnectionId, returnedResult.SuccessEvent.CallConnectionId);
+            Assert.AreEqual(response.Value.OperationContext, returnedResult.SuccessEvent.OperationContext);
+        }
+
+        [Test]
+        public async Task RemoveParticipantsEventResultFailedTest()
+        {
+            int successCode = (int)HttpStatusCode.Accepted;
+
+            var callConnection = CreateMockCallConnection(successCode, RemoveParticipantPayload);
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
+
+            var callInvite = CreateMockInvite();
+            var response = callConnection.RemoveParticipant(new RemoveParticipantOptions(callInvite.Target));
+            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+
+            // Create and send event to event processor
+            SendAndProcessEvent(handler, CallAutomationModelFactory.RemoveParticipantFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
+
+            RemoveParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+
+            // Assert
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(false, returnedResult.IsSuccessEvent);
+            Assert.IsNull(returnedResult.SuccessEvent);
+            Assert.NotNull(returnedResult.FailureEvent);
+            Assert.AreEqual(typeof(RemoveParticipantFailed), returnedResult.FailureEvent.GetType());
+            Assert.AreEqual(CallConnectionId, returnedResult.FailureEvent.CallConnectionId);
+            Assert.AreEqual(response.Value.OperationContext, returnedResult.FailureEvent.OperationContext);
+        }
+
+        [Test]
+        public async Task SendDtmfEventResultSuccessTest()
+        {
+            int successCode = (int)HttpStatusCode.Accepted;
+
+            var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
+
+            var response = callConnection.GetCallMedia().SendDtmf(new(new CommunicationUserIdentifier("targetUserId"),
+            new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound }));
+            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+
+            // Create and send event to event processor
+            SendAndProcessEvent(handler, new SendDtmfCompleted(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation()));
+
+            SendDtmfEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+
+            // Assert
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(true, returnedResult.IsSuccessEvent);
+            Assert.NotNull(returnedResult.SuccessEvent);
+            Assert.IsNull(returnedResult.FailureEvent);
+            Assert.AreEqual(typeof(SendDtmfCompleted), returnedResult.SuccessEvent.GetType());
+            Assert.AreEqual(CallConnectionId, returnedResult.SuccessEvent.CallConnectionId);
+            Assert.AreEqual(OperationContext, returnedResult.SuccessEvent.OperationContext);
+        }
+
+        [Test]
+        public async Task SendDtmfEventResultFailedTest()
+        {
+            int successCode = (int)HttpStatusCode.Accepted;
+
+            var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
+
+            var response = callConnection.GetCallMedia().SendDtmf(new(new CommunicationUserIdentifier("targetUserId"),
+            new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound }));
+            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+
+            // Create and send event to event processor
+            SendAndProcessEvent(handler, new SendDtmfFailed(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation()));
+
+            SendDtmfEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+
+            // Assert
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(false, returnedResult.IsSuccessEvent);
+            Assert.NotNull(returnedResult.FailureEvent);
+            Assert.IsNull(returnedResult.SuccessEvent);
+            Assert.AreEqual(typeof(SendDtmfFailed), returnedResult.FailureEvent.GetType());
             Assert.AreEqual(CallConnectionId, returnedResult.FailureEvent.CallConnectionId);
             Assert.AreEqual(OperationContext, returnedResult.FailureEvent.OperationContext);
         }

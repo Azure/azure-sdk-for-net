@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            CustomRolloutPropertiesSpecification specification = default;
-            Optional<CustomRolloutPropertiesStatus> status = default;
+            Optional<ProviderHubProvisioningState> provisioningState = default;
+            CustomRolloutSpecification specification = default;
+            Optional<CustomRolloutStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ProviderHubProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("specification"u8))
                 {
-                    specification = CustomRolloutPropertiesSpecification.DeserializeCustomRolloutPropertiesSpecification(property.Value);
+                    specification = CustomRolloutSpecification.DeserializeCustomRolloutSpecification(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = CustomRolloutPropertiesStatus.DeserializeCustomRolloutPropertiesStatus(property.Value);
+                    status = CustomRolloutStatus.DeserializeCustomRolloutStatus(property.Value);
                     continue;
                 }
             }
