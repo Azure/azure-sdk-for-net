@@ -10,7 +10,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.DataMovement.Models;
 using NUnit.Framework;
-using Azure.Storage.DataMovement.JobPlanModels;
+using Azure.Storage.DataMovement.Models.JobPlan;
 
 namespace Azure.Storage.DataMovement.Tests
 {
