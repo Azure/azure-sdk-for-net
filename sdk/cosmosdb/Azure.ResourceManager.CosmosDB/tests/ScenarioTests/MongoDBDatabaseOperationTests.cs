@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
-            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB)).Id;
+            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB, true)).Id;
             await StopSessionRecordingAsync();
         }
 
@@ -88,6 +90,62 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
             database2 = await MongoDBDatabaseCollection.GetAsync(_databaseName);
             VerifyMongoDBDatabases(database, database2);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task MongoDBDatabaseRestoreTest()
+        {
+            var database = await CreateMongoDBDatabase(null);
+            Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
+
+            bool ifExists = await MongoDBDatabaseCollection.ExistsAsync(_databaseName);
+            Assert.True(ifExists);
+
+            MongoDBDatabaseResource database2 = await MongoDBDatabaseCollection.GetAsync(_databaseName);
+            Assert.AreEqual(_databaseName, database2.Data.Resource.DatabaseName);
+
+            VerifyMongoDBDatabases(database, database2);
+
+            var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
+            var restorableDatabaseAccount = restorableAccounts.SingleOrDefault(account => account.Data.AccountName == _databaseAccount.Data.Name);
+            DateTime restoreTimestampInUtc = DateTime.UtcNow;
+
+            String restoreSource = restorableDatabaseAccount.Id;
+            ResourceRestoreParameters RestoreParameters = new ResourceRestoreParameters
+            {
+                RestoreSource = restoreSource,
+                RestoreTimestampInUtc = restoreTimestampInUtc
+            };
+
+            await database.DeleteAsync(WaitUntil.Completed);
+
+            bool exists = await MongoDBDatabaseCollection.ExistsAsync(_databaseName);
+            Assert.IsFalse(exists);
+
+            MongoDBDatabaseResourceInfo resource = new MongoDBDatabaseResourceInfo(_databaseName)
+            {
+                RestoreParameters = RestoreParameters,
+                CreateMode = CosmosDBAccountCreateMode.Restore
+            };
+
+            var updateOptions = new MongoDBDatabaseCreateOrUpdateContent(AzureLocation.WestUS, resource)
+            {
+                Options = new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }
+            };
+
+            var database3 = (await MongoDBDatabaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, _databaseName, updateOptions)).Value;
+            Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
+            var database4 = await MongoDBDatabaseCollection.GetAsync(_databaseName);
+            VerifyMongoDBDatabases(database3, database4);
+            VerifyMongoDBDatabases(database, database3, true);
+
+            ifExists = await MongoDBDatabaseCollection.ExistsAsync(_databaseName);
+            Assert.True(ifExists);
+
+            await database.DeleteAsync(WaitUntil.Completed);
+            exists = await MongoDBDatabaseCollection.ExistsAsync(_databaseName);
+            Assert.IsFalse(exists);
         }
 
         [Test]
@@ -177,14 +235,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return databaseLro.Value;
         }
 
-        private void VerifyMongoDBDatabases(MongoDBDatabaseResource expectedValue, MongoDBDatabaseResource actualValue)
+        private void VerifyMongoDBDatabases(MongoDBDatabaseResource expectedValue, MongoDBDatabaseResource actualValue, bool isRestoredResource = false)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
             Assert.AreEqual(expectedValue.Data.Resource.DatabaseName, actualValue.Data.Resource.DatabaseName);
             Assert.AreEqual(expectedValue.Data.Resource.Rid, actualValue.Data.Resource.Rid);
-            Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
-            Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
+            if (!isRestoredResource)
+            {
+                Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
+                Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
+            }
         }
     }
 }
