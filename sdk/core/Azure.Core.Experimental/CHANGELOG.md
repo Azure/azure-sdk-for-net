@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Use specified `DynamicJsonNameMapping` in array and object enumerators.
+- Use `DynamicJsonOptions` in child elements, arrays, and object enumerators.
 
 ## 0.1.0-preview.25 (2023-03-02)
 
