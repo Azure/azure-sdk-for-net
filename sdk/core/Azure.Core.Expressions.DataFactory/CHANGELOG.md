@@ -11,10 +11,6 @@
 - The `DataFactoryExpression<T>` type has been renamed to `DataFactoryElement<T>`.
 - The `HasLiteral` property was removed in favor of the `Kind` property.
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.1 (2022-12-07)
 
 ### Features Added
