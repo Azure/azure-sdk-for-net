@@ -69,7 +69,8 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, singleTransferOptions);
         }
 
-        [RecordedTest]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/35439
+        [Test]
         public async Task TryPauseTransferAsync_Id()
         {
             // Arrange
@@ -83,6 +84,8 @@ namespace Azure.Storage.DataMovement.Tests
                 MaximumConcurrency = 4
             };
             TransferManager transferManager = new TransferManager(options);
+            SingleTransferOptions singleTransferOptions = new SingleTransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(singleTransferOptions);
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -90,15 +93,17 @@ namespace Azure.Storage.DataMovement.Tests
                 manager: transferManager,
                 sourceDirectory: sourceDirectory.DirectoryPath,
                 destinationContainer: blobContainer.Container,
-                size: Constants.MB * 20);
+                size: Constants.MB * 20,
+                singleTransferOptions: singleTransferOptions);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
-            Assert.IsTrue(pauseSuccess);
+            failureTransferHolder.AssertFailureCheck();
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+            Assert.IsTrue(pauseSuccess);
 
             // Check if Job Plan File exists in checkpointer path.
             JobPartPlanFileName fileName = new JobPartPlanFileName(
@@ -108,7 +113,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [RecordedTest]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/35439
+        [Test]
         public async Task TryPauseTransferAsync_DataTransfer()
         {
             // Arrange
@@ -138,8 +144,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             failureTransferHolder.AssertFailureCheck();
-            Assert.IsTrue(pauseSuccess);
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+            Assert.IsTrue(pauseSuccess);
 
             // Check if Job Plan File exists in checkpointer path.
             JobPartPlanFileName fileName = new JobPartPlanFileName(
@@ -165,7 +171,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.CatchAsync( async () => await transferManager.TryPauseTransferAsync("bad transfer Id"));
         }
 
-        [RecordedTest]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/35439
+        [Test]
         public async Task TryPauseTransferAsync_AlreadyPaused()
         {
             // Arrange
@@ -195,8 +202,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             failureTransferHolder.AssertFailureCheck();
-            Assert.IsTrue(pauseSuccess);
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+            Assert.IsTrue(pauseSuccess);
 
             bool pauseFailure = await transferManager.TryPauseTransferAsync(transfer);
 
@@ -268,8 +275,8 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.AwaitCompletion(cancellationTokenSource.Token);
 
             resumeFailureHolder.AssertFailureCheck();
-            Assert.IsTrue(resumeTransfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
+            Assert.IsTrue(resumeTransfer.HasCompleted);
         }
     }
 }
