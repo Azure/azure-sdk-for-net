@@ -411,7 +411,6 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CreateMode = StorageResourceCreateMode.Fail,
             };
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
             // Create new source block blob.
             string newSourceFile = Path.GetTempFileName();
             BlockBlobClient blockBlobClient = await CreateBlockBlob(
@@ -465,7 +464,6 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(destinationResourceCheck);
             Assert.NotNull(exception, "Excepted failure: Failure was supposed to be raised during the test");
             Assert.IsTrue(exception.Message.Contains("The blob type is invalid for this operation."));
-            failureTransferHolder.AssertFailureCheck();
         }
 
         [RecordedTest]
@@ -484,7 +482,6 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CreateMode = StorageResourceCreateMode.Fail,
             };
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
             // Create new source block blob.
             string newSourceFile = Path.GetTempFileName();
             BlockBlobClient blockBlobClient = await CreateBlockBlob(
@@ -539,7 +536,6 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(destinationResourceCheck);
             Assert.NotNull(exception, "Excepted failure: Failure was supposed to be raised during the test");
             Assert.IsTrue(exception.Message.Contains("The blob type is invalid for this operation."));
-            failureTransferHolder.AssertFailureCheck();
         }
 
         [RecordedTest]
@@ -1799,10 +1795,11 @@ namespace Azure.Storage.DataMovement.Tests
             await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            failureTransferHolder.AssertFailureCheck();
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
+            Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
         }
 
         [RecordedTest]
@@ -1881,10 +1878,11 @@ namespace Azure.Storage.DataMovement.Tests
             transfer.EnsureCompleted(cancellationTokenSource.Token);
 
             // Assert
-            failureTransferHolder.AssertFailureCheck();
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
+            Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
         }
 
         [RecordedTest]
