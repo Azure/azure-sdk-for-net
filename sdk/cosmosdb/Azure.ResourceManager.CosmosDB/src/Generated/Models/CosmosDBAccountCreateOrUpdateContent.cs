@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             KeysMetadata = keysMetadata;
             EnablePartitionMerge = enablePartitionMerge;
             EnableBurstCapacity = enableBurstCapacity;
-            CosmosDBMinimalTlsVersion = minimalTlsVersion;
+            MinimalTlsVersion = minimalTlsVersion;
             Identity = identity;
         }
 

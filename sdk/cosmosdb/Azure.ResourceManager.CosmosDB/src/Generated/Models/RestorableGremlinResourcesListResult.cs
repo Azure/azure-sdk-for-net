@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of restorable Gremlin resources, including the gremlin database and graph names. </summary>
-        public IReadOnlyList<RestorableGremlinResourcesGetResult> Value { get; }
+        public IReadOnlyList<RestorableGremlinResourceData> Value { get; }
     }
 }

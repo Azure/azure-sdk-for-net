@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            minimalTlsVersion = new MinimalTlsVersion(property0.Value.GetString());
+                            minimalTlsVersion = new CosmosDBMinimalTlsVersion(property0.Value.GetString());
                             continue;
                         }
                     }
