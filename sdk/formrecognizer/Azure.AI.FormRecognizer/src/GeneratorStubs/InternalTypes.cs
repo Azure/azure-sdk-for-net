@@ -25,10 +25,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
     internal partial class ClassifyDocumentRequest { }
 
-    internal partial class ClassifyResult { }
-
-    internal partial class ClassifyResultOperation { }
-
     internal partial class ComponentDocumentModelDetails { }
 
     internal partial class ComposeDocumentModelRequest { }
@@ -49,8 +45,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
     internal partial struct DocumentBarcodeKind { }
 
-    internal partial class DocumentClassifierBuildOperationDetails { }
-
     internal partial class DocumentFormula { }
 
     internal partial struct DocumentFormulaKind { }
@@ -60,8 +54,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     internal partial struct DocumentPageKind { }
 
     internal partial class Error { }
-
-    internal partial struct FontFamily { }
 
     internal partial struct FontStyle { }
 

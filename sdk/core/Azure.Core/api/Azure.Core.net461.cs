@@ -398,11 +398,11 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class Delay
+    public abstract partial class DelayStrategy
     {
-        protected Delay(System.TimeSpan? maxDelay = default(System.TimeSpan?), double jitterFactor = 0.2) { }
-        public static Azure.Core.Delay CreateExponentialDelay(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { throw null; }
-        public static Azure.Core.Delay CreateFixedDelay(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
+        protected DelayStrategy(System.TimeSpan? maxDelay = default(System.TimeSpan?), double jitterFactor = 0.2) { }
+        public static Azure.Core.DelayStrategy CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Core.DelayStrategy CreateFixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
         public System.TimeSpan GetNextDelay(Azure.Response? response, int retryNumber) { throw null; }
         protected abstract System.TimeSpan GetNextDelayCore(Azure.Response? response, int retryNumber);
         protected static System.TimeSpan Max(System.TimeSpan val1, System.TimeSpan val2) { throw null; }
@@ -1035,7 +1035,7 @@ namespace Azure.Core.Pipeline
     }
     public partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
-        public RetryPolicy(int maxRetries = 3, Azure.Core.Delay? delay = null) { }
+        public RetryPolicy(int maxRetries = 3, Azure.Core.DelayStrategy? delayStrategy = null) { }
         protected internal virtual void OnRequestSent(Azure.Core.HttpMessage message) { }
         protected internal virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(Azure.Core.HttpMessage message) { throw null; }
         protected internal virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }
