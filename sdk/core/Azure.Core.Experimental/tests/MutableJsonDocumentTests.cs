@@ -35,41 +35,6 @@ namespace Azure.Core.Experimental.Tests
             ValidateWriteTo(json, mdoc);
         }
 
-        private static void ValidateWriteTo(string json, MutableJsonDocument mdoc)
-        {
-            // To validate MutableJsonDocument.WriteTo(), we want to ensure that
-            // its behavior is the same as the behavior of JsonDocument.WriteTo().
-
-            JsonDocument doc = JsonDocument.Parse(json);
-            BinaryData jdocBuffer = GetWriteToBuffer(doc);
-
-            BinaryData mdocBuffer = GetWriteToBuffer(mdoc);
-
-            Assert.AreEqual(jdocBuffer.ToString(), mdocBuffer.ToString());
-            Assert.IsTrue(jdocBuffer.ToMemory().Span.SequenceEqual(mdocBuffer.ToMemory().Span),
-                "JsonDocument buffer does not match MutableJsonDocument buffer.");
-        }
-
-        private static BinaryData GetWriteToBuffer(JsonDocument doc)
-        {
-            using MemoryStream stream = new();
-            using Utf8JsonWriter writer = new(stream);
-            doc.WriteTo(writer);
-            writer.Flush();
-            stream.Position = 0;
-            return BinaryData.FromStream(stream);
-        }
-
-        private static BinaryData GetWriteToBuffer(MutableJsonDocument mdoc)
-        {
-            using MemoryStream stream = new();
-            using Utf8JsonWriter writer = new(stream);
-            mdoc.WriteTo(writer);
-            writer.Flush();
-            stream.Position = 0;
-            return BinaryData.FromStream(stream);
-        }
-
         [Test]
         public void CanSetProperty()
         {
@@ -1127,5 +1092,64 @@ namespace Azure.Core.Experimental.Tests
 
             Assert.Throws<ObjectDisposedException>(() => { var foo = mdoc.RootElement.GetProperty("Foo"); });
         }
+
+        #region Helpers
+
+        internal static void ValidateWriteTo(BinaryData json, MutableJsonDocument mdoc)
+        {
+            // To validate MutableJsonDocument.WriteTo(), we want to ensure that
+            // its behavior is the same as the behavior of JsonDocument.WriteTo().
+
+            JsonDocument doc = JsonDocument.Parse(json);
+            BinaryData jdocBuffer = GetWriteToBuffer(doc);
+
+            BinaryData mdocBuffer = GetWriteToBuffer(mdoc);
+
+            Assert.AreEqual(jdocBuffer.ToString(), mdocBuffer.ToString());
+            Assert.IsTrue(jdocBuffer.ToMemory().Span.SequenceEqual(mdocBuffer.ToMemory().Span),
+                "JsonDocument buffer does not match MutableJsonDocument buffer.");
+        }
+
+        internal static void ValidateWriteTo(string json, MutableJsonDocument mdoc)
+        {
+            // To validate MutableJsonDocument.WriteTo(), we want to ensure that
+            // its behavior is the same as the behavior of JsonDocument.WriteTo().
+
+            JsonDocument doc = JsonDocument.Parse(json);
+            BinaryData jdocBuffer = GetWriteToBuffer(doc);
+
+            BinaryData mdocBuffer = GetWriteToBuffer(mdoc);
+
+            Assert.AreEqual(jdocBuffer.ToString(), mdocBuffer.ToString());
+            Assert.IsTrue(jdocBuffer.ToMemory().Span.SequenceEqual(mdocBuffer.ToMemory().Span),
+                "JsonDocument buffer does not match MutableJsonDocument buffer.");
+        }
+
+        internal static BinaryData GetWriteToBuffer(JsonDocument doc)
+        {
+            using MemoryStream stream = new();
+            using Utf8JsonWriter writer = new(stream);
+            doc.WriteTo(writer);
+            writer.Flush();
+            stream.Position = 0;
+            return BinaryData.FromStream(stream);
+        }
+
+        internal static BinaryData GetWriteToBuffer(MutableJsonDocument mdoc)
+        {
+            using MemoryStream stream = new();
+            using Utf8JsonWriter writer = new(stream);
+            mdoc.WriteTo(writer);
+            writer.Flush();
+            stream.Position = 0;
+            return BinaryData.FromStream(stream);
+        }
+
+        internal static string RemoveWhiteSpace(string value)
+        {
+            return value.Replace(" ", "").Replace("\r", "").Replace("\n", "");
+        }
+
+        #endregion
     }
 }

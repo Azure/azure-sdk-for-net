@@ -26,13 +26,6 @@ namespace Azure.Core.Experimental.Tests
             ValidateToString(json, element);
         }
 
-        private static void ValidateToString(string json, MutableJsonElement element)
-        {
-            // Validate that MutableJsonElement.ToString() has the same behavior as JsonElement.
-
-            Assert.AreEqual(JsonDocument.Parse(json).RootElement.ToString(), element.ToString());
-        }
-
         [Test]
         public void ToStringWorksWithChanges()
         {
@@ -51,10 +44,7 @@ namespace Azure.Core.Experimental.Tests
                 }
                 """;
 
-            Assert.AreEqual(
-				MutableJsonDocumentWriteToTests.RemoveWhiteSpace(expected),
-				MutableJsonDocumentWriteToTests.RemoveWhiteSpace(mdoc.RootElement.ToString())
-			);
+            ValidateToString(expected, mdoc.RootElement);
         }
 
         [Test]
@@ -76,10 +66,7 @@ namespace Azure.Core.Experimental.Tests
                 }
                 """;
 
-            Assert.AreEqual(
-				MutableJsonDocumentWriteToTests.RemoveWhiteSpace(expected),
-				MutableJsonDocumentWriteToTests.RemoveWhiteSpace(mdoc.RootElement.ToString())
-			);
+            ValidateToString(expected, mdoc.RootElement);
         }
 
         [Test]
@@ -107,8 +94,8 @@ namespace Azure.Core.Experimental.Tests
                 """;
 
             Assert.AreEqual(
-				MutableJsonDocumentWriteToTests.RemoveWhiteSpace(expected),
-				MutableJsonDocumentWriteToTests.RemoveWhiteSpace(rootElement.ToString())
+				MutableJsonDocumentTests.RemoveWhiteSpace(expected),
+				MutableJsonDocumentTests.RemoveWhiteSpace(rootElement.ToString())
 			);
         }
 
@@ -299,5 +286,16 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(5, value.GetInt32());
             Assert.AreEqual(5, mdoc.RootElement.GetProperty("Bar").GetInt32());
         }
+
+        #region Helpers
+
+        internal static void ValidateToString(string json, MutableJsonElement element)
+        {
+            Assert.AreEqual(
+                MutableJsonDocumentTests.RemoveWhiteSpace(json),
+                MutableJsonDocumentTests.RemoveWhiteSpace(element.ToString()));
+        }
+
+        #endregion
     }
 }
