@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resource"> The standard JSON format of a SQL database. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal CosmosDBSqlDatabaseCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBSqlDatabaseResourceInfo resource, CosmosDBCreateUpdateConfig options, ManagedServiceIdentity identity = default(ManagedServiceIdentity)) : base(id, name, resourceType, systemData, tags, location)
+        internal CosmosDBSqlDatabaseCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBSqlDatabaseResourceInfo resource, CosmosDBCreateUpdateConfig options, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
