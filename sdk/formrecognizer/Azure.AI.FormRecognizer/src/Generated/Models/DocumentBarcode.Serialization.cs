@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class DocumentBarcode
+    public partial class DocumentBarcode
     {
         internal static DocumentBarcode DeserializeDocumentBarcode(JsonElement element)
         {

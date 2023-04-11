@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class DocumentImage
+    public partial class DocumentImage
     {
         internal static DocumentImage DeserializeDocumentImage(JsonElement element)
         {

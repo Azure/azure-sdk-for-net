@@ -8,21 +8,22 @@ using System.Drawing;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentWord
+    public partial class DocumentFormula
     {
         /// <summary>
-        /// Initializes a new instance of DocumentWord. Used for the <see cref="DocumentAnalysisModelFactory"/>.
+        /// Initializes a new instance of DocumentFormula. Used for the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        internal DocumentWord(string content, IReadOnlyList<PointF> boundingPolygon, DocumentSpan span, float confidence)
+        internal DocumentFormula(DocumentFormulaKind kind, string value, IReadOnlyList<PointF> boundingPolygon, DocumentSpan span, float confidence)
         {
-            Content = content;
+            Kind = kind;
+            Value = value;
             BoundingPolygon = boundingPolygon;
             Span = span;
             Confidence = confidence;
         }
 
         /// <summary>
-        /// The polygon that outlines the content of this word. Coordinates are specified relative to the
+        /// The polygon that outlines the content of this formula. Coordinates are specified relative to the
         /// top-left of the page, and points are ordered clockwise from the left relative to the word
         /// orientation. Units are in pixels for images and inches for PDF. The <see cref="DocumentPageLengthUnit"/>
         /// type of a recognized page can be found at <see cref="DocumentPage.Unit"/>.
