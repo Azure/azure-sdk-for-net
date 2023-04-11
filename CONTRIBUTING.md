@@ -9,7 +9,7 @@
 - Install the latest version of git (https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher, if you plan to make public API changes or are working with generated code snippets.
 - Install [NodeJS](https://nodejs.org/) (16.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
-- [Fork the repository](https://docs.github.com/get-started/quickstart/fork-a-repo); work will be done in your fork and a pull request should be opened against the `main` branch of the Azure SDK for .NET repository when ready for review.
+- [Fork the repository](https://docs.github.com/get-started/quickstart/fork-a-repo); work will be done on a topic branch in your fork and a pull request opened against the `main` branch of the Azure SDK for .NET repository when ready for review.
 
 ## GENERAL THINGS TO KNOW:
 
@@ -365,7 +365,7 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
 1. Fork the [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs) repository
 2. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](https://swagger.io)
 3. Install the latest version of AutoRest. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
-4. **RECOMMENDED**: Create a branch in your fork of the Azure SDK for .NET.
+4. **MANDATORY**: Create a topic branch in your fork of the Azure SDK for .NET; this is where your changes will be made.
 5. Generate the code. See [Generating Client Code](#generating-client-code) below.
 6. **MANDATORY**: Add or update tests for the newly generated code.
 7. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
