@@ -14,18 +14,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class UploadCertificateContent
     {
         /// <summary> Initializes a new instance of UploadCertificateContent. </summary>
-        /// <param name="certificate"> The base64 encoded certificate raw data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificate"/> is null. </exception>
-        public UploadCertificateContent(string certificate)
+        /// <param name="properties"> Raw Certificate Data. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public UploadCertificateContent(RawCertificateData properties)
         {
-            Argument.AssertNotNull(certificate, nameof(certificate));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            Certificate = certificate;
+            Properties = properties;
         }
 
-        /// <summary> The authentication type. </summary>
-        public DataBoxEdgeAuthenticationType? AuthenticationType { get; set; }
-        /// <summary> The base64 encoded certificate raw data. </summary>
-        public string Certificate { get; }
+        /// <summary> Raw Certificate Data. </summary>
+        public RawCertificateData Properties { get; }
     }
 }

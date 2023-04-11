@@ -19,8 +19,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(Value);
             if (Optional.IsDefined(EncryptionCertThumbprint))
             {
-                writer.WritePropertyName("encryptionCertThumbprint"u8);
-                writer.WriteStringValue(EncryptionCertThumbprint);
+                if (EncryptionCertThumbprint != null)
+                {
+                    writer.WritePropertyName("encryptionCertThumbprint"u8);
+                    writer.WriteStringValue(EncryptionCertThumbprint);
+                }
+                else
+                {
+                    writer.WriteNull("encryptionCertThumbprint");
+                }
             }
             writer.WritePropertyName("encryptionAlgorithm"u8);
             writer.WriteStringValue(EncryptionAlgorithm.ToString());
@@ -45,6 +52,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("encryptionCertThumbprint"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        encryptionCertThumbprint = null;
+                        continue;
+                    }
                     encryptionCertThumbprint = property.Value.GetString();
                     continue;
                 }

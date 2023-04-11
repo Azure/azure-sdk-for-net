@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class DataBoxEdgeSecuritySettings : ResourceData
     {
         /// <summary> Initializes a new instance of DataBoxEdgeSecuritySettings. </summary>
-        /// <param name="deviceAdminPassword"> Device administrator password as an encrypted string (encrypted using RSA PKCS #1) is used to sign into the  local web UI of the device. The Actual password should have at least 8 characters that are a combination of  uppercase, lowercase, numeric, and special characters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceAdminPassword"/> is null. </exception>
-        public DataBoxEdgeSecuritySettings(AsymmetricEncryptedSecret deviceAdminPassword)
+        /// <param name="properties"> The properties of security settings. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DataBoxEdgeSecuritySettings(SecuritySettingsProperties properties)
         {
-            Argument.AssertNotNull(deviceAdminPassword, nameof(deviceAdminPassword));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            DeviceAdminPassword = deviceAdminPassword;
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeSecuritySettings. </summary>
@@ -29,13 +29,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="deviceAdminPassword"> Device administrator password as an encrypted string (encrypted using RSA PKCS #1) is used to sign into the  local web UI of the device. The Actual password should have at least 8 characters that are a combination of  uppercase, lowercase, numeric, and special characters. </param>
-        internal DataBoxEdgeSecuritySettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AsymmetricEncryptedSecret deviceAdminPassword) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The properties of security settings. </param>
+        internal DataBoxEdgeSecuritySettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecuritySettingsProperties properties) : base(id, name, resourceType, systemData)
         {
-            DeviceAdminPassword = deviceAdminPassword;
+            Properties = properties;
         }
 
-        /// <summary> Device administrator password as an encrypted string (encrypted using RSA PKCS #1) is used to sign into the  local web UI of the device. The Actual password should have at least 8 characters that are a combination of  uppercase, lowercase, numeric, and special characters. </summary>
-        public AsymmetricEncryptedSecret DeviceAdminPassword { get; set; }
+        /// <summary> The properties of security settings. </summary>
+        internal SecuritySettingsProperties Properties { get; set; }
+        /// <summary> Represent the secrets intended for encryption with asymmetric key pair. </summary>
+        public AsymmetricEncryptedSecret SecurityDeviceAdminPassword
+        {
+            get => Properties is null ? default : Properties.DeviceAdminPassword;
+            set => Properties = new SecuritySettingsProperties(value);
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of AvailableDataBoxEdgeSku. </summary>
         internal AvailableDataBoxEdgeSku()
         {
-            Locations = new ChangeTrackingList<AzureLocation>();
+            Locations = new ChangeTrackingList<string>();
             ApiVersions = new ChangeTrackingList<string>();
             LocationInfo = new ChangeTrackingList<DataBoxEdgeSkuLocationInfo>();
             Costs = new ChangeTrackingList<DataBoxEdgeSkuCost>();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="availability"> Links to the next set of results. </param>
         /// <param name="shipmentTypes"> List of Shipment Types supported by this SKU. </param>
         /// <param name="capabilities"> The capability info of the SKU. </param>
-        internal AvailableDataBoxEdgeSku(string resourceType, DataBoxEdgeSkuName? name, string kind, DataBoxEdgeSkuTier? tier, string size, string family, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> apiVersions, IReadOnlyList<DataBoxEdgeSkuLocationInfo> locationInfo, IReadOnlyList<DataBoxEdgeSkuCost> costs, DataBoxEdgeSkuSignupOption? signupOption, DataBoxEdgeSkuVersion? version, DataBoxEdgeSkuAvailability? availability, IReadOnlyList<DataBoxEdgeShipmentType> shipmentTypes, IReadOnlyList<DataBoxEdgeSkuCapability> capabilities)
+        internal AvailableDataBoxEdgeSku(string resourceType, DataBoxEdgeSkuName? name, string kind, DataBoxEdgeSkuTier? tier, string size, string family, IReadOnlyList<string> locations, IReadOnlyList<string> apiVersions, IReadOnlyList<DataBoxEdgeSkuLocationInfo> locationInfo, IReadOnlyList<DataBoxEdgeSkuCost> costs, DataBoxEdgeSkuSignupOption? signupOption, DataBoxEdgeSkuVersion? version, DataBoxEdgeSkuAvailability? availability, IReadOnlyList<DataBoxEdgeShipmentType> shipmentTypes, IReadOnlyList<DataBoxEdgeSkuCapability> capabilities)
         {
             ResourceType = resourceType;
             Name = name;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The Sku family. </summary>
         public string Family { get; }
         /// <summary> Availability of the Sku for the region. </summary>
-        public IReadOnlyList<AzureLocation> Locations { get; }
+        public IReadOnlyList<string> Locations { get; }
         /// <summary> The API versions in which Sku is available. </summary>
         public IReadOnlyList<string> ApiVersions { get; }
         /// <summary> Availability of the Sku for the location/zone/site. </summary>

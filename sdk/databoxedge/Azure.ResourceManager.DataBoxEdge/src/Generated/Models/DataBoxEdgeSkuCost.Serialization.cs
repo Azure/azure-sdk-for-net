@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("meterId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        meterId = null;
+                        continue;
+                    }
                     meterId = property.Value.GetString();
                     continue;
                 }
@@ -40,6 +45,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("extendedUnit"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        extendedUnit = null;
+                        continue;
+                    }
                     extendedUnit = property.Value.GetString();
                     continue;
                 }

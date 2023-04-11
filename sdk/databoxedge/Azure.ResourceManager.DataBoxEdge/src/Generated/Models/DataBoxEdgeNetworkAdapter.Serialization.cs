@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> adapterId = default;
             Optional<DataBoxEdgeNetworkAdapterPosition> adapterPosition = default;
             Optional<int> index = default;
-            Optional<Guid> nodeId = default;
+            Optional<Guid?> nodeId = default;
             Optional<string> networkAdapterName = default;
             Optional<string> label = default;
             Optional<string> macAddress = default;
@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("adapterId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        adapterId = null;
+                        continue;
+                    }
                     adapterId = property.Value.GetString();
                     continue;
                 }
@@ -66,7 +71,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        nodeId = null;
                         continue;
                     }
                     nodeId = property.Value.GetGuid();
@@ -74,16 +79,31 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("networkAdapterName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        networkAdapterName = null;
+                        continue;
+                    }
                     networkAdapterName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("label"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        label = null;
+                        continue;
+                    }
                     label = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("macAddress"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        macAddress = null;
+                        continue;
+                    }
                     macAddress = property.Value.GetString();
                     continue;
                 }
@@ -149,6 +169,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("ipv6LinkLocalAddress"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        ipv6LinkLocalAddress = null;
+                        continue;
+                    }
                     ipv6LinkLocalAddress = property.Value.GetString();
                     continue;
                 }
@@ -156,7 +181,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        dnsServers = null;
                         continue;
                     }
                     List<string> array = new List<string>();

@@ -32,30 +32,16 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="startOn"> The UTC date and time at which the job started. </param>
         /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="percentComplete"> The percentage of the job that is complete. </param>
-        /// <param name="error"> The error details. </param>
-        /// <param name="jobType"> The type of the job. </param>
-        /// <param name="currentStage"> Current stage of the update operation. </param>
-        /// <param name="downloadProgress"> The download progress. </param>
-        /// <param name="installProgress"> The install progress. </param>
-        /// <param name="totalRefreshErrors"> Total number of errors encountered during the refresh process. </param>
-        /// <param name="errorManifestFile"> Local share/remote container relative path to the error manifest file of the refresh. </param>
-        /// <param name="refreshedEntityId"> ARM ID of the entity that was refreshed. </param>
-        /// <param name="folder"> If only subfolders need to be refreshed, then the subfolder path inside the share or container. (The path is empty if there are no subfolders.). </param>
-        internal DataBoxEdgeJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, int? percentComplete, DataBoxEdgeJobErrorDetails error, DataBoxEdgeJobType? jobType, UpdateOperationStage? currentStage, UpdateDownloadProgress downloadProgress, UpdateInstallProgress installProgress, int? totalRefreshErrors, string errorManifestFile, ResourceIdentifier refreshedEntityId, string folder) : base(id, name, resourceType, systemData)
+        /// <param name="error"> The job error information containing the list of job errors. </param>
+        /// <param name="properties"> The properties for the job. </param>
+        internal DataBoxEdgeJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, int? percentComplete, DataBoxEdgeJobErrorDetails error, JobProperties properties) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartOn = startOn;
             EndOn = endOn;
             PercentComplete = percentComplete;
             Error = error;
-            JobType = jobType;
-            CurrentStage = currentStage;
-            DownloadProgress = downloadProgress;
-            InstallProgress = installProgress;
-            TotalRefreshErrors = totalRefreshErrors;
-            ErrorManifestFile = errorManifestFile;
-            RefreshedEntityId = refreshedEntityId;
-            Folder = folder;
+            Properties = properties;
         }
 
         /// <summary> The current status of the job. </summary>
@@ -66,23 +52,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         public DateTimeOffset? EndOn { get; }
         /// <summary> The percentage of the job that is complete. </summary>
         public int? PercentComplete { get; }
-        /// <summary> The error details. </summary>
+        /// <summary> The job error information containing the list of job errors. </summary>
         public DataBoxEdgeJobErrorDetails Error { get; }
-        /// <summary> The type of the job. </summary>
-        public DataBoxEdgeJobType? JobType { get; }
-        /// <summary> Current stage of the update operation. </summary>
-        public UpdateOperationStage? CurrentStage { get; }
-        /// <summary> The download progress. </summary>
-        public UpdateDownloadProgress DownloadProgress { get; }
-        /// <summary> The install progress. </summary>
-        public UpdateInstallProgress InstallProgress { get; }
-        /// <summary> Total number of errors encountered during the refresh process. </summary>
-        public int? TotalRefreshErrors { get; }
-        /// <summary> Local share/remote container relative path to the error manifest file of the refresh. </summary>
-        public string ErrorManifestFile { get; }
-        /// <summary> ARM ID of the entity that was refreshed. </summary>
-        public ResourceIdentifier RefreshedEntityId { get; }
-        /// <summary> If only subfolders need to be refreshed, then the subfolder path inside the share or container. (The path is empty if there are no subfolders.). </summary>
-        public string Folder { get; }
+        /// <summary> The properties for the job. </summary>
+        public JobProperties Properties { get; }
     }
 }

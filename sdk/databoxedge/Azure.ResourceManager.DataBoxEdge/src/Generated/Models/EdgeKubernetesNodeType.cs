@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private const string InvalidValue = "Invalid";
         private const string MasterValue = "Master";
         private const string WorkerValue = "Worker";
+        private const string ManagementClusterValue = "ManagementCluster";
+        private const string ControlPlaneValue = "ControlPlane";
+        private const string NodePoolValue = "NodePool";
 
         /// <summary> Invalid. </summary>
         public static EdgeKubernetesNodeType Invalid { get; } = new EdgeKubernetesNodeType(InvalidValue);
@@ -32,6 +35,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static EdgeKubernetesNodeType Master { get; } = new EdgeKubernetesNodeType(MasterValue);
         /// <summary> Worker. </summary>
         public static EdgeKubernetesNodeType Worker { get; } = new EdgeKubernetesNodeType(WorkerValue);
+        /// <summary> ManagementCluster. </summary>
+        public static EdgeKubernetesNodeType ManagementCluster { get; } = new EdgeKubernetesNodeType(ManagementClusterValue);
+        /// <summary> ControlPlane. </summary>
+        public static EdgeKubernetesNodeType ControlPlane { get; } = new EdgeKubernetesNodeType(ControlPlaneValue);
+        /// <summary> NodePool. </summary>
+        public static EdgeKubernetesNodeType NodePool { get; } = new EdgeKubernetesNodeType(NodePoolValue);
         /// <summary> Determines if two <see cref="EdgeKubernetesNodeType"/> values are the same. </summary>
         public static bool operator ==(EdgeKubernetesNodeType left, EdgeKubernetesNodeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeKubernetesNodeType"/> values are not the same. </summary>

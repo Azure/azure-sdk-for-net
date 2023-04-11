@@ -21,20 +21,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> The tags attached to the Data Box Edge/Gateway resource. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> Msi identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        public IDictionary<string, string> Tags { get; set; }
+        /// <summary> Msi identity details of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Edge Profile property of the Data Box Edge/Gateway device. </summary>
-        internal EdgeProfilePatch EdgeProfile { get; set; }
+        /// <summary> The Data Box Edge/Gateway device properties patch. </summary>
+        internal DataBoxEdgeDevicePropertiesPatch Properties { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SubscriptionId
         {
-            get => EdgeProfile is null ? default : EdgeProfile.SubscriptionId;
+            get => Properties is null ? default : Properties.SubscriptionId;
             set
             {
-                if (EdgeProfile is null)
-                    EdgeProfile = new EdgeProfilePatch();
-                EdgeProfile.SubscriptionId = value;
+                if (Properties is null)
+                    Properties = new DataBoxEdgeDevicePropertiesPatch();
+                Properties.SubscriptionId = value;
             }
         }
     }

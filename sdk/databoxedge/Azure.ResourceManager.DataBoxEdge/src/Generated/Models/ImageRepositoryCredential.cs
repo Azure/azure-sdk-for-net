@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of ImageRepositoryCredential. </summary>
         /// <param name="imageRepositoryUri"> Image repository url (e.g.: mcr.microsoft.com). </param>
         /// <param name="userName"> Repository user name. </param>
-        /// <param name="password"> Repository user password. </param>
+        /// <param name="password"> Represent the secrets intended for encryption with asymmetric key pair. </param>
         internal ImageRepositoryCredential(Uri imageRepositoryUri, string userName, AsymmetricEncryptedSecret password)
         {
             ImageRepositoryUri = imageRepositoryUri;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Uri ImageRepositoryUri { get; set; }
         /// <summary> Repository user name. </summary>
         public string UserName { get; set; }
-        /// <summary> Repository user password. </summary>
+        /// <summary> Represent the secrets intended for encryption with asymmetric key pair. </summary>
         public AsymmetricEncryptedSecret Password { get; set; }
     }
 }

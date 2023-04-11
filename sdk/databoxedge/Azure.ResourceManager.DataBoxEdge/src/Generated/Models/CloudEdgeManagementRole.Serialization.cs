@@ -16,16 +16,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties);
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(RoleStatus))
-            {
-                writer.WritePropertyName("roleStatus"u8);
-                writer.WriteStringValue(RoleStatus.Value.ToString());
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -35,16 +32,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
+            Optional<CloudEdgeManagementRoleProperties> properties = default;
             DataBoxEdgeRoleType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeRoleStatus> localManagementStatus = default;
-            Optional<EdgeProfile> edgeProfile = default;
-            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = CloudEdgeManagementRoleProperties.DeserializeCloudEdgeManagementRoleProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = new DataBoxEdgeRoleType(property.Value.GetString());
@@ -75,50 +80,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("localManagementStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            localManagementStatus = new DataBoxEdgeRoleStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("edgeProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            edgeProfile = EdgeProfile.DeserializeEdgeProfile(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("roleStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            roleStatus = new DataBoxEdgeRoleStatus(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new CloudEdgeManagementRole(id, name, type, systemData.Value, kind, Optional.ToNullable(localManagementStatus), edgeProfile.Value, Optional.ToNullable(roleStatus));
+            return new CloudEdgeManagementRole(id, name, type, systemData.Value, kind, properties.Value);
         }
     }
 }

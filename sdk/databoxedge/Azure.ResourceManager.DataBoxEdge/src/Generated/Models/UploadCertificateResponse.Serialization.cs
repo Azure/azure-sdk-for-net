@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeAuthenticationType> authType = default;
             Optional<string> resourceId = default;
             Optional<string> aadAuthority = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<Guid> servicePrincipalClientId = default;
-            Optional<Guid> servicePrincipalObjectId = default;
+            Optional<Guid?> aadTenantId = default;
+            Optional<Guid?> servicePrincipalClientId = default;
+            Optional<Guid?> servicePrincipalObjectId = default;
             Optional<string> azureManagementEndpointAudience = default;
             Optional<string> aadAudience = default;
             foreach (var property in element.EnumerateObject())
@@ -41,11 +41,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("resourceId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        resourceId = null;
+                        continue;
+                    }
                     resourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("aadAuthority"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        aadAuthority = null;
+                        continue;
+                    }
                     aadAuthority = property.Value.GetString();
                     continue;
                 }
@@ -53,7 +63,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        aadTenantId = null;
                         continue;
                     }
                     aadTenantId = property.Value.GetGuid();
@@ -63,7 +73,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        servicePrincipalClientId = null;
                         continue;
                     }
                     servicePrincipalClientId = property.Value.GetGuid();
@@ -73,7 +83,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        servicePrincipalObjectId = null;
                         continue;
                     }
                     servicePrincipalObjectId = property.Value.GetGuid();
@@ -81,11 +91,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("azureManagementEndpointAudience"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        azureManagementEndpointAudience = null;
+                        continue;
+                    }
                     azureManagementEndpointAudience = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("aadAudience"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        aadAudience = null;
+                        continue;
+                    }
                     aadAudience = property.Value.GetString();
                     continue;
                 }

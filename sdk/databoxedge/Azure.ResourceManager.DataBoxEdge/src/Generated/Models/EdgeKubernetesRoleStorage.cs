@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Kubernetes storage class info. </summary>
         public IReadOnlyList<EdgeKubernetesRoleStorageClassInfo> StorageClasses { get; }
         /// <summary> Mount points of shares in role(s). </summary>
-        public IList<DataBoxEdgeMountPointMap> Endpoints { get; }
+        public IList<DataBoxEdgeMountPointMap> Endpoints { get; set; }
     }
 }

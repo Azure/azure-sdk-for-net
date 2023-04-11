@@ -17,33 +17,75 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressLine1))
             {
-                writer.WritePropertyName("addressLine1"u8);
-                writer.WriteStringValue(AddressLine1);
+                if (AddressLine1 != null)
+                {
+                    writer.WritePropertyName("addressLine1"u8);
+                    writer.WriteStringValue(AddressLine1);
+                }
+                else
+                {
+                    writer.WriteNull("addressLine1");
+                }
             }
             if (Optional.IsDefined(AddressLine2))
             {
-                writer.WritePropertyName("addressLine2"u8);
-                writer.WriteStringValue(AddressLine2);
+                if (AddressLine2 != null)
+                {
+                    writer.WritePropertyName("addressLine2"u8);
+                    writer.WriteStringValue(AddressLine2);
+                }
+                else
+                {
+                    writer.WriteNull("addressLine2");
+                }
             }
             if (Optional.IsDefined(AddressLine3))
             {
-                writer.WritePropertyName("addressLine3"u8);
-                writer.WriteStringValue(AddressLine3);
+                if (AddressLine3 != null)
+                {
+                    writer.WritePropertyName("addressLine3"u8);
+                    writer.WriteStringValue(AddressLine3);
+                }
+                else
+                {
+                    writer.WriteNull("addressLine3");
+                }
             }
             if (Optional.IsDefined(PostalCode))
             {
-                writer.WritePropertyName("postalCode"u8);
-                writer.WriteStringValue(PostalCode);
+                if (PostalCode != null)
+                {
+                    writer.WritePropertyName("postalCode"u8);
+                    writer.WriteStringValue(PostalCode);
+                }
+                else
+                {
+                    writer.WriteNull("postalCode");
+                }
             }
             if (Optional.IsDefined(City))
             {
-                writer.WritePropertyName("city"u8);
-                writer.WriteStringValue(City);
+                if (City != null)
+                {
+                    writer.WritePropertyName("city"u8);
+                    writer.WriteStringValue(City);
+                }
+                else
+                {
+                    writer.WriteNull("city");
+                }
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State);
+                if (State != null)
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State);
+                }
+                else
+                {
+                    writer.WriteNull("state");
+                }
             }
             writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
@@ -67,31 +109,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("addressLine1"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        addressLine1 = null;
+                        continue;
+                    }
                     addressLine1 = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("addressLine2"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        addressLine2 = null;
+                        continue;
+                    }
                     addressLine2 = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("addressLine3"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        addressLine3 = null;
+                        continue;
+                    }
                     addressLine3 = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("postalCode"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        postalCode = null;
+                        continue;
+                    }
                     postalCode = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("city"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        city = null;
+                        continue;
+                    }
                     city = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("state"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        state = null;
+                        continue;
+                    }
                     state = property.Value.GetString();
                     continue;
                 }

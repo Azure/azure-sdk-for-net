@@ -17,13 +17,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VmSize))
             {
-                writer.WritePropertyName("vmSize"u8);
-                writer.WriteStartArray();
-                foreach (var item in VmSize)
+                if (VmSize != null)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("vmSize"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in VmSize)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("vmSize");
+                }
             }
             if (Optional.IsDefined(IsFeasible))
             {
@@ -32,13 +39,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             if (Optional.IsDefined(MessageCode))
             {
-                writer.WritePropertyName("messageCode"u8);
-                writer.WriteStringValue(MessageCode);
+                if (MessageCode != null)
+                {
+                    writer.WritePropertyName("messageCode"u8);
+                    writer.WriteStringValue(MessageCode);
+                }
+                else
+                {
+                    writer.WriteNull("messageCode");
+                }
             }
             if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("message"u8);
-                writer.WriteStringValue(Message);
+                if (Message != null)
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+                else
+                {
+                    writer.WriteNull("message");
+                }
             }
             writer.WriteEndObject();
         }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> The DataBoxEdgeShipmentType. </summary>
+    /// <summary> Defines the types of shipment for an order. </summary>
     public readonly partial struct DataBoxEdgeShipmentType : IEquatable<DataBoxEdgeShipmentType>
     {
         private readonly string _value;

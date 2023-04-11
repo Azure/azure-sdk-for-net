@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> Local Edge Management Status. </summary>
+    /// <summary> Role status. </summary>
     public readonly partial struct DataBoxEdgeRoleStatus : IEquatable<DataBoxEdgeRoleStatus>
     {
         private readonly string _value;

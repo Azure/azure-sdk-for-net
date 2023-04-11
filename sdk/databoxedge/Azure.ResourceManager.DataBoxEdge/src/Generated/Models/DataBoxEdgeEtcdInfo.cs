@@ -11,22 +11,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class DataBoxEdgeEtcdInfo
     {
         /// <summary> Initializes a new instance of DataBoxEdgeEtcdInfo. </summary>
-        internal DataBoxEdgeEtcdInfo()
+        public DataBoxEdgeEtcdInfo()
         {
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeEtcdInfo. </summary>
         /// <param name="etcdInfoType"> Etcd type. </param>
         /// <param name="version"> Etcd version. </param>
-        internal DataBoxEdgeEtcdInfo(string etcdInfoType, string version)
+        /// <param name="componentType"> ComponentType of the Kubernetes node. </param>
+        internal DataBoxEdgeEtcdInfo(string etcdInfoType, string version, KubernetesComponentType? componentType)
         {
             EtcdInfoType = etcdInfoType;
             Version = version;
+            ComponentType = componentType;
         }
 
         /// <summary> Etcd type. </summary>
         public string EtcdInfoType { get; }
         /// <summary> Etcd version. </summary>
         public string Version { get; }
+        /// <summary> ComponentType of the Kubernetes node. </summary>
+        public KubernetesComponentType? ComponentType { get; }
     }
 }

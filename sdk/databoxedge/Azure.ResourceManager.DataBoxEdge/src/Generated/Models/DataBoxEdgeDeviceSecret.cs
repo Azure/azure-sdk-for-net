@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceSecret. </summary>
-        /// <param name="encryptedSecret"> Encrypted (using device public key) secret value. </param>
+        /// <param name="encryptedSecret"> Represent the secrets intended for encryption with asymmetric key pair. </param>
         /// <param name="keyVaultId"> Id of the Key-Vault where secret is stored (ex: secrets/AuthClientSecret/82ef4346187a4033a10d629cde07d740). </param>
         internal DataBoxEdgeDeviceSecret(AsymmetricEncryptedSecret encryptedSecret, string keyVaultId)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             KeyVaultId = keyVaultId;
         }
 
-        /// <summary> Encrypted (using device public key) secret value. </summary>
+        /// <summary> Represent the secrets intended for encryption with asymmetric key pair. </summary>
         public AsymmetricEncryptedSecret EncryptedSecret { get; }
         /// <summary> Id of the Key-Vault where secret is stored (ex: secrets/AuthClientSecret/82ef4346187a4033a10d629cde07d740). </summary>
         public string KeyVaultId { get; }

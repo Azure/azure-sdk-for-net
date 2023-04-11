@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Used in activation key generation flow. </summary>
@@ -27,7 +25,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// needed to form the activation key
         /// </param>
         /// <param name="expireOn"> Gets or sets expiry time in UTC. </param>
-        internal GenerateCertResult(string publicKey, string privateKey, DateTimeOffset? expireOn)
+        internal GenerateCertResult(string publicKey, string privateKey, string expireOn)
         {
             PublicKey = publicKey;
             PrivateKey = privateKey;
@@ -45,6 +43,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// </summary>
         public string PrivateKey { get; }
         /// <summary> Gets or sets expiry time in UTC. </summary>
-        public DateTimeOffset? ExpireOn { get; }
+        public string ExpireOn { get; }
     }
 }

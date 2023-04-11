@@ -2,4 +2,10 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.DataBoxEdge.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestFramework" />
+  </ItemGroup>
 </Project>

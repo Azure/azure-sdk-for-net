@@ -16,35 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("vmPlacementQuery"u8);
-            writer.WriteStartArray();
-            foreach (var item in VmPlacementQuery)
-            {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStartArray();
-                foreach (var item0 in item)
-                {
-                    writer.WriteStringValue(item0);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(VmPlacementResults))
-            {
-                writer.WritePropertyName("vmPlacementResults"u8);
-                writer.WriteStartArray();
-                foreach (var item in VmPlacementResults)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
     }

@@ -17,10 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("deviceAdminPassword"u8);
-            writer.WriteObjectValue(DeviceAdminPassword);
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
 
@@ -30,13 +27,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
+            SecuritySettingsProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            AsymmetricEncryptedSecret deviceAdminPassword = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = SecuritySettingsProperties.DeserializeSecuritySettingsProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -62,25 +64,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("deviceAdminPassword"u8))
-                        {
-                            deviceAdminPassword = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value);
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new DataBoxEdgeSecuritySettings(id, name, type, systemData.Value, deviceAdminPassword);
+            return new DataBoxEdgeSecuritySettings(id, name, type, systemData.Value, properties);
         }
     }
 }

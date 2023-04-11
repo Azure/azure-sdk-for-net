@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        errorDetails = null;
                         continue;
                     }
                     List<DataBoxEdgeJobErrorItem> array = new List<DataBoxEdgeJobErrorItem>();
@@ -41,11 +41,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("code"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        code = null;
+                        continue;
+                    }
                     code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        message = null;
+                        continue;
+                    }
                     message = property.Value.GetString();
                     continue;
                 }

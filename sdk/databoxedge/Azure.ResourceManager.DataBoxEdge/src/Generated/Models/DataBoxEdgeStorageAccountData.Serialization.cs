@@ -18,25 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(StorageAccountStatus))
-            {
-                writer.WritePropertyName("storageAccountStatus"u8);
-                writer.WriteStringValue(StorageAccountStatus.Value.ToString());
-            }
-            writer.WritePropertyName("dataPolicy"u8);
-            writer.WriteStringValue(DataPolicy.ToString());
-            if (Optional.IsDefined(StorageAccountCredentialId))
-            {
-                writer.WritePropertyName("storageAccountCredentialId"u8);
-                writer.WriteStringValue(StorageAccountCredentialId);
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
 
@@ -46,18 +28,18 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
+            StorageAccountProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<DataBoxEdgeStorageAccountStatus> storageAccountStatus = default;
-            DataBoxEdgeDataPolicy dataPolicy = default;
-            Optional<ResourceIdentifier> storageAccountCredentialId = default;
-            Optional<string> blobEndpoint = default;
-            Optional<int> containerCount = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = StorageAccountProperties.DeserializeStorageAccountProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -83,65 +65,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageAccountStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            storageAccountStatus = new DataBoxEdgeStorageAccountStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("dataPolicy"u8))
-                        {
-                            dataPolicy = new DataBoxEdgeDataPolicy(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("storageAccountCredentialId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            storageAccountCredentialId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("blobEndpoint"u8))
-                        {
-                            blobEndpoint = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("containerCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            containerCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new DataBoxEdgeStorageAccountData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(storageAccountStatus), dataPolicy, storageAccountCredentialId.Value, blobEndpoint.Value, Optional.ToNullable(containerCount));
+            return new DataBoxEdgeStorageAccountData(id, name, type, systemData.Value, properties);
         }
     }
 }

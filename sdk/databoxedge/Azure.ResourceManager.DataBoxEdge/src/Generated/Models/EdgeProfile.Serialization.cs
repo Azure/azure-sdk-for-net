@@ -10,8 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    internal partial class EdgeProfile
+    internal partial class EdgeProfile : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Subscription))
+            {
+                writer.WritePropertyName("subscription"u8);
+                writer.WriteObjectValue(Subscription);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static EdgeProfile DeserializeEdgeProfile(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

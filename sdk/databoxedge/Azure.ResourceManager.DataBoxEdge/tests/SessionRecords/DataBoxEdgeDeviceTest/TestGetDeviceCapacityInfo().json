@@ -1,0 +1,200 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c45cf778e81b6b1b34705adbed66b1aa-fdbcd9006188d780-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6c91b5da616abbb3e6e8972df5344cb3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "397",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 05 Apr 2023 14:29:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "dd7d69fb-bf7b-42f6-a8ac-f5f3d5bc93ee",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "dd7d69fb-bf7b-42f6-a8ac-f5f3d5bc93ee",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230405T142903Z:dd7d69fb-bf7b-42f6-a8ac-f5f3d5bc93ee"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "db4e2fdb-6d80-4e6e-b7cd-736098270664",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Edge Gateway Test",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk9-2023/deviceCapacityInfo/default?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2e73bc427b16896626eec86fd2504cbe-adaf1a32436f8460-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "df5a0030586e05691e536a9872cb45bf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3294",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 05 Apr 2023 14:29:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "df5a0030586e05691e536a9872cb45bf",
+        "x-ms-correlation-request-id": "8a9f5dbb-7302-4f6d-9ec6-e14c505dbde2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "8a9f5dbb-7302-4f6d-9ec6-e14c505dbde2",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230405T142911Z:8a9f5dbb-7302-4f6d-9ec6-e14c505dbde2"
+      },
+      "ResponseBody": {
+        "properties": {
+          "timeStamp": "2021-12-22T10:14:21.505Z",
+          "clusterStorageCapacityInfo": {
+            "clusterTotalStorageMb": 5368642.0,
+            "clusterFreeStorageMb": 15953.0
+          },
+          "clusterComputeCapacityInfo": {
+            "fqdn": "1D9PHQ2",
+            "gpuCapacity": {
+              "gpuType": "NvidiaTeslaT4",
+              "gpuUsedUnitsCount": 0,
+              "gpuFreeUnitsCount": 2,
+              "gpuReservedForFailoverUnitsCount": 0,
+              "gpuTotalUnitsCount": 2
+            },
+            "memoryCapacity": {
+              "clusterFreeMemoryMb": 9999.64,
+              "clusterUsedMemoryMb": 19599.36,
+              "clusterFailoverMemoryMb": 0.0,
+              "clusterFragmentationMemoryMb": 0.0,
+              "clusterHypervReserveMemoryMb": 19599.36,
+              "clusterInfraVmMemoryMb": 4096.0,
+              "clusterTotalMemoryMb": 130690.0,
+              "clusterNonFailoverVmMb": 0.0,
+              "clusterMemoryUsedByVmsMb": 7680.0
+            },
+            "lastRefreshedTime": "2022-01-01T10:14:21.506Z",
+            "totalProvisionedNonHpnCores": 80
+          },
+          "nodeCapacityInfos": {
+            "1D9PHQ2": {
+              "hostName": "1D9PHQ2",
+              "effectiveAvailableMemoryMbOnHost": 114960,
+              "availableGpuCount": 2,
+              "vmUsedMemory": {
+                "00000000-0000-0000-0000-000000000000": {
+                  "startupMemoryMB": 4096,
+                  "currentMemoryUsageMB": 0
+                }
+              },
+              "gpuType": "NvidiaTeslaT4",
+              "numaNodesData": [
+                {
+                  "numaNodeIndex": 0,
+                  "totalMemoryInMb": 65154,
+                  "logicalCoreCountPerCore": 2,
+                  "effectiveAvailableMemoryInMb": 56310,
+                  "freeVCpuIndexesForHpn": [],
+                  "vCpuIndexesForHpn": [],
+                  "vCpuIndexesForRoot": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23
+                  ]
+                },
+                {
+                  "numaNodeIndex": 1,
+                  "totalMemoryInMb": 65536,
+                  "logicalCoreCountPerCore": 2,
+                  "effectiveAvailableMemoryInMb": 56969,
+                  "freeVCpuIndexesForHpn": [],
+                  "vCpuIndexesForHpn": [],
+                  "vCpuIndexesForRoot": [
+                    24,
+                    25,
+                    26,
+                    27,
+                    28,
+                    29,
+                    30,
+                    31,
+                    32,
+                    33,
+                    34,
+                    35,
+                    36,
+                    37,
+                    38,
+                    39,
+                    40,
+                    41,
+                    42,
+                    43,
+                    44,
+                    45,
+                    46,
+                    47
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk9-2023/deviceCapacityInfo/default",
+        "name": "default",
+        "type": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/deviceCapacityInfo"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1513132203",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db4e2fdb-6d80-4e6e-b7cd-736098270664"
+  }
+}

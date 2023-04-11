@@ -23,11 +23,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="name"> Node name. </param>
         /// <param name="nodeType"> Node type - Master/Worker. </param>
         /// <param name="ipConfiguration"> IP Configuration of the Kubernetes node. </param>
-        internal EdgeKubernetesNodeInfo(string name, EdgeKubernetesNodeType? nodeType, IReadOnlyList<EdgeKubernetesIPConfiguration> ipConfiguration)
+        /// <param name="componentType"> ComponentType of the Kubernetes node. </param>
+        internal EdgeKubernetesNodeInfo(string name, EdgeKubernetesNodeType? nodeType, IReadOnlyList<EdgeKubernetesIPConfiguration> ipConfiguration, KubernetesComponentType? componentType)
         {
             Name = name;
             NodeType = nodeType;
             IPConfiguration = ipConfiguration;
+            ComponentType = componentType;
         }
 
         /// <summary> Node name. </summary>
@@ -36,5 +38,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public EdgeKubernetesNodeType? NodeType { get; }
         /// <summary> IP Configuration of the Kubernetes node. </summary>
         public IReadOnlyList<EdgeKubernetesIPConfiguration> IPConfiguration { get; }
+        /// <summary> ComponentType of the Kubernetes node. </summary>
+        public KubernetesComponentType? ComponentType { get; }
     }
 }

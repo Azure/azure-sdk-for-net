@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> Platform where the runtime is hosted. </summary>
+    /// <summary> Host OS supported by the Kubernetes role. </summary>
     public readonly partial struct HostPlatformType : IEquatable<HostPlatformType>
     {
         private readonly string _value;

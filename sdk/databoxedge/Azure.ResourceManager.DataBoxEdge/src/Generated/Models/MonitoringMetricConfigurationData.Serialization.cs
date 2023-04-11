@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -19,15 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("metricConfigurations"u8);
-            writer.WriteStartArray();
-            foreach (var item in MetricConfigurations)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
 
@@ -37,13 +28,18 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
+            MonitoringMetricConfigurationProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            IList<DataBoxEdgeMetricConfiguration> metricConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = MonitoringMetricConfigurationProperties.DeserializeMonitoringMetricConfigurationProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -69,30 +65,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("metricConfigurations"u8))
-                        {
-                            List<DataBoxEdgeMetricConfiguration> array = new List<DataBoxEdgeMetricConfiguration>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DataBoxEdgeMetricConfiguration.DeserializeDataBoxEdgeMetricConfiguration(item));
-                            }
-                            metricConfigurations = array;
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new MonitoringMetricConfigurationData(id, name, type, systemData.Value, metricConfigurations);
+            return new MonitoringMetricConfigurationData(id, name, type, systemData.Value, properties);
         }
     }
 }

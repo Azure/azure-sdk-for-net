@@ -1,0 +1,1643 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-50c6ca4489adf4412ec54e0ef2b9b9e9-21e07edf9f8da904-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a8aee0e14a42746726c9dc91f2395540",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "397",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Apr 2023 07:01:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "17b567f6-1a64-4875-a114-ebdc2a686dfb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "17b567f6-1a64-4875-a114-ebdc2a686dfb",
+        "x-ms-routing-request-id": "CENTRALINDIA:20230410T070132Z:17b567f6-1a64-4875-a114-ebdc2a686dfb"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "db4e2fdb-6d80-4e6e-b7cd-736098270664",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Edge Gateway Test",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/providers/Microsoft.DataBoxEdge?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ea4f7959fd67965c22c81959e764e0ee-314d7886ebfd2ed0-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b717e1146522b3e5355ebac7c7ac8f71",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2199",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Apr 2023 07:02:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e9382763-5f5d-4e49-bc62-6bdf67607ffc",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "e9382763-5f5d-4e49-bc62-6bdf67607ffc",
+        "x-ms-routing-request-id": "CENTRALINDIA:20230410T070223Z:e9382763-5f5d-4e49-bc62-6bdf67607ffc"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/providers/Microsoft.DataBoxEdge",
+        "namespace": "Microsoft.DataBoxEdge",
+        "authorizations": [
+          {
+            "applicationId": "2368d027-f996-4edb-bf48-928f98f2ab8c"
+          }
+        ],
+        "resourceTypes": [
+          {
+            "resourceType": "DataBoxEdgeDevices",
+            "locations": [
+              "East US",
+              "West Europe",
+              "Southeast Asia",
+              "East US 2 EUAP",
+              "Central US EUAP",
+              "West Central US",
+              "West US 2"
+            ],
+            "apiVersions": [
+              "2023-02-01",
+              "2023-01-01-preview",
+              "2022-12-01-preview",
+              "2022-04-01-preview",
+              "2022-03-01",
+              "2021-06-01-preview",
+              "2021-06-01",
+              "2021-02-01-preview",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-09-01-preview",
+              "2020-09-01",
+              "2020-07-01-preview",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01-preview",
+              "2020-01-01",
+              "2019-08-01",
+              "2019-07-01",
+              "2019-03-01",
+              "2018-07-01",
+              "2017-09-01"
+            ],
+            "defaultApiVersion": "2021-06-01",
+            "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SystemAssignedResourceIdentity, SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "DataBoxEdgeDevices/checkNameAvailability",
+            "locations": [
+              "East US",
+              "West Europe",
+              "Southeast Asia",
+              "East US 2 EUAP",
+              "Central US EUAP",
+              "West Central US",
+              "West US 2"
+            ],
+            "apiVersions": [
+              "2023-02-01",
+              "2023-01-01-preview",
+              "2022-12-01-preview",
+              "2022-04-01-preview",
+              "2022-03-01",
+              "2021-06-01-preview",
+              "2021-06-01",
+              "2021-02-01-preview",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-09-01-preview",
+              "2020-09-01",
+              "2020-07-01-preview",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01-preview",
+              "2020-01-01",
+              "2019-08-01",
+              "2019-07-01",
+              "2019-03-01",
+              "2018-07-01",
+              "2017-09-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "operations",
+            "locations": [
+              "East US 2 EUAP"
+            ],
+            "apiVersions": [
+              "2023-02-01",
+              "2023-01-01-preview",
+              "2022-12-01-preview",
+              "2022-04-01-preview",
+              "2022-03-01",
+              "2021-06-01-preview",
+              "2021-06-01",
+              "2021-02-01-preview",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-09-01-preview",
+              "2020-09-01",
+              "2020-07-01-preview",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01-preview",
+              "2020-01-01",
+              "2019-08-01",
+              "2019-07-01",
+              "2019-03-01",
+              "2018-07-01",
+              "2017-09-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "availableSkus",
+            "locations": [],
+            "apiVersions": [
+              "2021-02-01-preview",
+              "2020-09-01-preview",
+              "2020-09-01",
+              "2020-07-01-preview",
+              "2020-05-01-preview"
+            ],
+            "capabilities": "None"
+          }
+        ],
+        "registrationState": "Registered",
+        "registrationPolicy": "RegistrationRequired"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DataBoxEdge/operations?api-version=2023-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ea4f7959fd67965c22c81959e764e0ee-a6cfbdaaf39ccda1-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "872dd43a8183bcdb10b07b114b471402",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "48457",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 10 Apr 2023 07:02:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "872dd43a8183bcdb10b07b114b471402",
+        "x-ms-correlation-request-id": "1baa69f0-6e13-4770-a132-11b1bbf3722e",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "1baa69f0-6e13-4770-a132-11b1bbf3722e",
+        "x-ms-routing-request-id": "CENTRALINDIA:20230410T070224Z:1baa69f0-6e13-4770-a132-11b1bbf3722e"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "Microsoft.DataBoxEdge/availableSkus/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "available skus",
+              "operation": "List available skus",
+              "description": "Lists or gets the available skus"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/addons/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "addons",
+              "operation": "List addons",
+              "description": "Lists or gets the addons"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/addons/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "addons",
+              "operation": "List addons",
+              "description": "Lists or gets the addons"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/addons/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "addons",
+              "operation": "Creates or updates addons",
+              "description": "Creates or updates the addons"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/addons/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "addons",
+              "operation": "Delete addons",
+              "description": "Deletes the addons"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/alerts/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "alerts",
+              "operation": "List alerts",
+              "description": "Lists or gets the alerts"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/alerts/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "alerts",
+              "operation": "List alerts",
+              "description": "Lists or gets the alerts"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/bandwidthSchedules/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "bandwidth schedules",
+              "operation": "List bandwidth schedules",
+              "description": "Lists or gets the bandwidth schedules"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/bandwidthSchedules/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "bandwidth schedules",
+              "operation": "List bandwidth schedules",
+              "description": "Lists or gets the bandwidth schedules"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/bandwidthSchedules/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "bandwidth schedules",
+              "operation": "Creates or updates bandwidth schedules",
+              "description": "Creates or updates the bandwidth schedules"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/bandwidthSchedules/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "bandwidth schedules",
+              "operation": "Delete bandwidth schedules",
+              "description": "Deletes the bandwidth schedules"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts/containers/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Containers",
+              "operation": "List Containers",
+              "description": "Lists or gets the Containers"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts/containers/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Containers",
+              "operation": "List Containers",
+              "description": "Lists or gets the Containers"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts/containers/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Containers",
+              "operation": "Creates or updates Containers",
+              "description": "Creates or updates the Containers"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts/containers/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Containers",
+              "operation": "Delete Containers",
+              "description": "Deletes the Containers"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts/containers/refresh/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Containers",
+              "operation": "Refreshes the container metadata with the data from the cloud",
+              "description": "Refresh the container metadata with the data from the cloud"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/deviceCapacityCheck/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "Perform Device Capacity Check Action",
+              "description": "Performs Device Capacity Check and Returns Feasibility"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/deviceCapacityInfo/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "device capacity information",
+              "operation": "List device capacity information",
+              "description": "Lists or gets the device capacity information"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "Creates or updates Data Box Edge devices",
+              "description": "Creates or updates the Data Box Edge devices"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "List Data Box Edge devices",
+              "description": "Lists or gets the Data Box Edge devices"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "Delete Data Box Edge devices",
+              "description": "Deletes the Data Box Edge devices"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "List Data Box Edge devices",
+              "description": "Lists or gets the Data Box Edge devices"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "List Data Box Edge devices",
+              "description": "Lists or gets the Data Box Edge devices"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "Creates or updates Data Box Edge devices",
+              "description": "Creates or updates the Data Box Edge devices"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/getExtendedInformation/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "Gets resource extended information",
+              "description": "Retrieves resource extended information"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/updateExtendedInformation/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "Updates resource extended information",
+              "description": "Updates resource extended information"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/networkSettings/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Device network settings",
+              "operation": "List Device network settings",
+              "description": "Lists or gets the Device network settings"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/securitySettings/update/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Device security settings",
+              "operation": "Update security settings",
+              "description": "Update security settings"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/updateSummary/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "update summary",
+              "operation": "List update summary",
+              "description": "Lists or gets the update summary"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/scanForUpdates/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "Scan for updates",
+              "description": "Scan for updates"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/downloadUpdates/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "Download Updates",
+              "description": "Download Updates in device"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/installUpdates/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "Install Updates",
+              "description": "Install Updates on device"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/uploadCertificate/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "Upload certificates",
+              "description": "Upload certificate for device registration"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/generateCertificate/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "Generate certificate",
+              "description": "Generate certificate"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "jobs",
+              "operation": "List jobs",
+              "description": "Lists or gets the jobs"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/publishers/offers/skus/versions/generatesastoken/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Versions",
+              "operation": "Gets the SAS Token for a specific image",
+              "description": "Gets the SAS Token for a specific image"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/monitoringConfig/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "monitoring configuration",
+              "operation": "Creates or updates monitoring configuration",
+              "description": "Creates or updates the monitoring configuration"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/monitoringConfig/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "monitoring configuration",
+              "operation": "Delete monitoring configuration",
+              "description": "Deletes the monitoring configuration"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/monitoringConfig/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "monitoring configuration",
+              "operation": "List monitoring configuration",
+              "description": "Lists or gets the monitoring configuration"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/monitoringConfig/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "monitoring configuration",
+              "operation": "List monitoring configuration",
+              "description": "Lists or gets the monitoring configuration"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/nodes/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "nodes",
+              "operation": "List nodes",
+              "description": "Lists or gets the nodes"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/addons/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/migrate/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/deviceCapacityCheck/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccountCredentials/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/bandwidthSchedules/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/shares/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/users/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/securitySettings/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/triggers/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/orders/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts/containers/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/monitoringConfig/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/diagnosticRemoteSupportSettings/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/diagnosticProactiveLogCollectionSettings/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/triggerSupportPackage/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/publishers/offers/skus/versions/generatesastoken/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "subscriptions/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge.Admin/locations/backupProviders/operationResults/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation result",
+              "operation": "List operation result",
+              "description": "Lists or gets the operation result"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "providers/Microsoft.DataBoxEdge/operations/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operations",
+              "operation": "List operations",
+              "description": "Lists or gets the operations"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/operationsStatus/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "operation status",
+              "operation": "List operation status",
+              "description": "Lists or gets the operation status"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/orders/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "orders",
+              "operation": "List orders",
+              "description": "Lists or gets the orders"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/orders/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "orders",
+              "operation": "List orders",
+              "description": "Lists or gets the orders"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/orders/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "orders",
+              "operation": "Creates or updates orders",
+              "description": "Creates or updates the orders"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/orders/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "orders",
+              "operation": "Delete orders",
+              "description": "Deletes the orders"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/orders/listDCAccessCode/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "orders",
+              "operation": "List data center access code",
+              "description": "Lists or gets the data center access code"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "subscriptions/resourceGroups/validateMoveResources/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "resource groups",
+              "operation": "Validate azure stack edge move resources",
+              "description": "Validate azure stack edge move resources"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "subscriptions/resourceGroups/moveResources/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "resource groups",
+              "operation": "Move azure stack edge resources",
+              "description": "Move azure stack edge resources"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "roles",
+              "operation": "List roles",
+              "description": "Lists or gets the roles"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "roles",
+              "operation": "List roles",
+              "description": "Lists or gets the roles"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/migrate/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "roles",
+              "operation": "Migrates\u00A0the\u00A0IoT\u00A0role\u00A0to\u00A0ASE Kubernetes role",
+              "description": "Migrates\u00A0the\u00A0IoT\u00A0role\u00A0to\u00A0ASE Kubernetes role"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "roles",
+              "operation": "Creates or updates roles",
+              "description": "Creates or updates the roles"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "roles",
+              "operation": "Delete roles",
+              "description": "Deletes the roles"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/shares/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "shares",
+              "operation": "List shares",
+              "description": "Lists or gets the shares"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/shares/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "shares",
+              "operation": "List shares",
+              "description": "Lists or gets the shares"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/shares/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "shares",
+              "operation": "Creates or updates shares",
+              "description": "Creates or updates the shares"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/shares/refresh/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "shares",
+              "operation": "Refreshes the share metadata with the data from the cloud",
+              "description": "Refresh the share metadata with the data from the cloud"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/shares/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "shares",
+              "operation": "Delete shares",
+              "description": "Deletes the shares"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccountCredentials/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "storage account credentials",
+              "operation": "Creates or updates storage account credentials",
+              "description": "Creates or updates the storage account credentials"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccountCredentials/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "storage account credentials",
+              "operation": "List storage account credentials",
+              "description": "Lists or gets the storage account credentials"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccountCredentials/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "storage account credentials",
+              "operation": "List storage account credentials",
+              "description": "Lists or gets the storage account credentials"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccountCredentials/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "storage account credentials",
+              "operation": "Delete storage account credentials",
+              "description": "Deletes the storage account credentials"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Storage Accounts",
+              "operation": "List Storage Accounts",
+              "description": "Lists or gets the Storage Accounts"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Storage Accounts",
+              "operation": "List Storage Accounts",
+              "description": "Lists or gets the Storage Accounts"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Storage Accounts",
+              "operation": "Creates or updates Storage Accounts",
+              "description": "Creates or updates the Storage Accounts"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Storage Accounts",
+              "operation": "Delete Storage Accounts",
+              "description": "Deletes the Storage Accounts"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/triggerSupportPackage/action",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge devices",
+              "operation": "Trigger Support Package",
+              "description": "Trigger Support Package"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/triggers/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "triggers",
+              "operation": "List triggers",
+              "description": "Lists or gets the triggers"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/triggers/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "triggers",
+              "operation": "List triggers",
+              "description": "Lists or gets the triggers"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/triggers/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "triggers",
+              "operation": "Creates or updates triggers",
+              "description": "Creates or updates the triggers"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/triggers/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "triggers",
+              "operation": "Delete triggers",
+              "description": "Deletes the triggers"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/users/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "share users",
+              "operation": "List share users",
+              "description": "Lists or gets the share users"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/users/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "share users",
+              "operation": "List share users",
+              "description": "Lists or gets the share users"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/users/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "share users",
+              "operation": "Creates or updates share users",
+              "description": "Creates or updates the share users"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/users/delete",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "share users",
+              "operation": "Delete share users",
+              "description": "Deletes the share users"
+            },
+            "origin": "user"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/providers/Microsoft.Insights/metricDefinitions/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge device",
+              "operation": "Read Data Box Edge device metric definition",
+              "description": "Gets the available Data Box Edge device level metrics"
+            },
+            "origin": "system",
+            "properties": {
+              "serviceSpecification": {
+                "metricSpecifications": [
+                  {
+                    "name": "NICReadThroughput",
+                    "displayName": "Read Throughput (Network)",
+                    "displayDescription": "The read throughput of the network interface on the device in the reporting period for all volumes in the gateway.",
+                    "unit": "BytesPerSecond",
+                    "aggregationType": "Average",
+                    "dimensions": [
+                      {
+                        "name": "InstanceName",
+                        "displayName": "Name",
+                        "toBeExportedForShoebox": true
+                      }
+                    ],
+                    "fillGapWithZero": false,
+                    "category": "Transaction",
+                    "supportedTimeGrainTypes": [
+                      "PT1M",
+                      "PT15M",
+                      "PT1H"
+                    ],
+                    "supportedAggregationTypes": [
+                      "Average",
+                      "Minimum",
+                      "Maximum"
+                    ]
+                  },
+                  {
+                    "name": "NICWriteThroughput",
+                    "displayName": "Write Throughput (Network)",
+                    "displayDescription": "The write throughput of the network interface on the device in the reporting period for all volumes in the gateway.",
+                    "unit": "BytesPerSecond",
+                    "aggregationType": "Average",
+                    "dimensions": [
+                      {
+                        "name": "InstanceName",
+                        "displayName": "Name",
+                        "toBeExportedForShoebox": true
+                      }
+                    ],
+                    "fillGapWithZero": false,
+                    "category": "Transaction",
+                    "supportedTimeGrainTypes": [
+                      "PT1M",
+                      "PT15M",
+                      "PT1H"
+                    ],
+                    "supportedAggregationTypes": [
+                      "Average",
+                      "Minimum",
+                      "Maximum"
+                    ]
+                  },
+                  {
+                    "name": "CloudReadThroughputPerShare",
+                    "displayName": "Cloud Download Throughput (Share)",
+                    "displayDescription": "The download throughput to Azure from a share during the reporting period.",
+                    "unit": "BytesPerSecond",
+                    "aggregationType": "Average",
+                    "dimensions": [
+                      {
+                        "name": "Share",
+                        "displayName": "Share",
+                        "toBeExportedForShoebox": true
+                      }
+                    ],
+                    "fillGapWithZero": false,
+                    "category": "Transaction",
+                    "supportedTimeGrainTypes": [
+                      "PT1M",
+                      "PT15M",
+                      "PT1H"
+                    ],
+                    "supportedAggregationTypes": [
+                      "Average",
+                      "Minimum",
+                      "Maximum"
+                    ]
+                  },
+                  {
+                    "name": "CloudUploadThroughputPerShare",
+                    "displayName": "Cloud Upload Throughput (Share)",
+                    "displayDescription": "The upload throughput to Azure from a share during the reporting period.",
+                    "unit": "BytesPerSecond",
+                    "aggregationType": "Average",
+                    "dimensions": [
+                      {
+                        "name": "Share",
+                        "displayName": "Share",
+                        "toBeExportedForShoebox": true
+                      }
+                    ],
+                    "fillGapWithZero": false,
+                    "category": "Transaction",
+                    "supportedTimeGrainTypes": [
+                      "PT1M",
+                      "PT15M",
+                      "PT1H"
+                    ],
+                    "supportedAggregationTypes": [
+                      "Average",
+                      "Minimum",
+                      "Maximum"
+                    ]
+                  },
+                  {
+                    "name": "BytesUploadedToCloudPerShare",
+                    "displayName": "Cloud Bytes Uploaded (Share)",
+                    "displayDescription": "The total number of bytes that is uploaded to Azure from a share during the reporting period.",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "dimensions": [
+                      {
+                        "name": "Share",
+                        "displayName": "Share",
+                        "toBeExportedForShoebox": true
+                      }
+                    ],
+                    "fillGapWithZero": false,
+                    "category": "Transaction",
+                    "supportedTimeGrainTypes": [
+                      "PT1M",
+                      "PT15M",
+                      "PT1H"
+                    ],
+                    "supportedAggregationTypes": [
+                      "Average",
+                      "Minimum",
+                      "Maximum"
+                    ]
+                  },
+                  {
+                    "name": "TotalCapacity",
+                    "displayName": "Total Capacity",
+                    "displayDescription": "The total capacity of the device in bytes during the reporting period.",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "dimensions": [],
+                    "fillGapWithZero": false,
+                    "category": "Capacity",
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT1H"
+                    ],
+                    "supportedAggregationTypes": [
+                      "Average",
+                      "Minimum",
+                      "Maximum"
+                    ]
+                  },
+                  {
+                    "name": "AvailableCapacity",
+                    "displayName": "Available Capacity",
+                    "displayDescription": "The available capacity in bytes during the reporting period.",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "dimensions": [],
+                    "fillGapWithZero": false,
+                    "category": "Capacity",
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT1H"
+                    ],
+                    "supportedAggregationTypes": [
+                      "Average",
+                      "Minimum",
+                      "Maximum"
+                    ]
+                  },
+                  {
+                    "name": "CloudUploadThroughput",
+                    "displayName": "Cloud Upload Throughput",
+                    "displayDescription": "The cloud upload throughput  to Azure during the reporting period.",
+                    "unit": "BytesPerSecond",
+                    "aggregationType": "Average",
+                    "dimensions": [],
+                    "fillGapWithZero": false,
+                    "category": "Transaction",
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT1H"
+                    ],
+                    "supportedAggregationTypes": [
+                      "Average",
+                      "Minimum",
+                      "Maximum"
+                    ]
+                  },
+                  {
+                    "name": "CloudReadThroughput",
+                    "displayName": "Cloud Download Throughput",
+                    "displayDescription": "The cloud download throughput to Azure during the reporting period.",
+                    "unit": "BytesPerSecond",
+                    "aggregationType": "Average",
+                    "dimensions": [],
+                    "fillGapWithZero": false,
+                    "category": "Transaction",
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT1H"
+                    ],
+                    "supportedAggregationTypes": [
+                      "Average",
+                      "Minimum",
+                      "Maximum"
+                    ]
+                  },
+                  {
+                    "name": "BytesUploadedToCloud",
+                    "displayName": "Cloud Bytes Uploaded (Device)",
+                    "displayDescription": "The total number of bytes that is uploaded to Azure from a device during the reporting period.",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "dimensions": [],
+                    "fillGapWithZero": false,
+                    "category": "Transaction",
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT1H"
+                    ],
+                    "supportedAggregationTypes": [
+                      "Average",
+                      "Minimum",
+                      "Maximum"
+                    ]
+                  },
+                  {
+                    "name": "HyperVVirtualProcessorUtilization",
+                    "displayName": "Edge Compute - Percentage CPU",
+                    "displayDescription": "Percent CPU Usage",
+                    "unit": "Percent",
+                    "aggregationType": "Average",
+                    "dimensions": [
+                      {
+                        "name": "InstanceName",
+                        "displayName": "Name",
+                        "toBeExportedForShoebox": true
+                      }
+                    ],
+                    "fillGapWithZero": false,
+                    "category": "Transaction",
+                    "supportedTimeGrainTypes": [
+                      "PT1M",
+                      "PT15M",
+                      "PT1H"
+                    ],
+                    "supportedAggregationTypes": [
+                      "Average",
+                      "Minimum",
+                      "Maximum"
+                    ]
+                  },
+                  {
+                    "name": "HyperVMemoryUtilization",
+                    "displayName": "Edge Compute - Memory Usage",
+                    "displayDescription": "Amount of RAM in Use",
+                    "unit": "Percent",
+                    "aggregationType": "Average",
+                    "dimensions": [
+                      {
+                        "name": "InstanceName",
+                        "displayName": "Name",
+                        "toBeExportedForShoebox": true
+                      }
+                    ],
+                    "fillGapWithZero": false,
+                    "category": "Transaction",
+                    "supportedTimeGrainTypes": [
+                      "PT1M",
+                      "PT15M",
+                      "PT1H"
+                    ],
+                    "supportedAggregationTypes": [
+                      "Average",
+                      "Minimum",
+                      "Maximum"
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/providers/Microsoft.Insights/diagnosticSettings/write",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge device",
+              "operation": "Write diagnostics setting",
+              "description": "Creates or updates the diagnostics setting for the resource"
+            },
+            "origin": "system"
+          },
+          {
+            "name": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/providers/Microsoft.Insights/diagnosticSettings/read",
+            "isDataAction": false,
+            "display": {
+              "provider": "Microsoft.DataBoxEdge",
+              "resource": "Data Box Edge device",
+              "operation": "Read diagnostics setting",
+              "description": "Gets the diagnostic setting for the resource"
+            },
+            "origin": "system"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1379605815",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db4e2fdb-6d80-4e6e-b7cd-736098270664"
+  }
+}

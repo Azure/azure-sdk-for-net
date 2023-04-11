@@ -18,13 +18,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Endpoints))
             {
-                writer.WritePropertyName("endpoints"u8);
-                writer.WriteStartArray();
-                foreach (var item in Endpoints)
+                if (Endpoints != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("endpoints"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Endpoints)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("endpoints");
+                }
             }
             writer.WriteEndObject();
         }
@@ -43,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        storageClasses = null;
                         continue;
                     }
                     List<EdgeKubernetesRoleStorageClassInfo> array = new List<EdgeKubernetesRoleStorageClassInfo>();
@@ -58,7 +65,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        endpoints = null;
                         continue;
                     }
                     List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();

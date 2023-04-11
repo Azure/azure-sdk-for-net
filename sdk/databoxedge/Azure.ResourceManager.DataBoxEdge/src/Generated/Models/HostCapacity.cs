@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The available amount of GPUs on the host to use after accounting for GPUS used by reservations on the host. </summary>
         public int? AvailableGpuCount { get; set; }
         /// <summary> The VM used memory per VmId. </summary>
-        public IDictionary<string, DataBoxEdgeVmMemory> VmUsedMemory { get; }
+        public IDictionary<string, DataBoxEdgeVmMemory> VmUsedMemory { get; set; }
         /// <summary> The GPU type of the VM. </summary>
         public string GpuType { get; set; }
         /// <summary> The numa nodes information for Hpn VMs. </summary>
-        public IList<NumaNodeInfo> NumaNodesData { get; }
+        public IList<NumaNodeInfo> NumaNodesData { get; set; }
     }
 }

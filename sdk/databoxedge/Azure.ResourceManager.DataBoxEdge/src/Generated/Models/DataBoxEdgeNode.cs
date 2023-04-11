@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -28,37 +27,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="nodeStatus"> The current status of the individual node. </param>
-        /// <param name="nodeChassisSerialNumber"> Serial number of the Chassis. </param>
-        /// <param name="nodeSerialNumber"> Serial number of the individual node. </param>
-        /// <param name="nodeDisplayName"> Display Name of the individual node. </param>
-        /// <param name="nodeFriendlySoftwareVersion"> Friendly software version name that is currently installed on the node. </param>
-        /// <param name="nodeHcsVersion"> HCS version that is currently installed on the node. </param>
-        /// <param name="nodeInstanceId"> Guid instance id of the node. </param>
-        internal DataBoxEdgeNode(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeNodeStatus? nodeStatus, string nodeChassisSerialNumber, string nodeSerialNumber, string nodeDisplayName, string nodeFriendlySoftwareVersion, string nodeHcsVersion, Guid? nodeInstanceId) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> This class represents the nodes in a highly available cluster. </param>
+        internal DataBoxEdgeNode(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeProperties properties) : base(id, name, resourceType, systemData)
         {
-            NodeStatus = nodeStatus;
-            NodeChassisSerialNumber = nodeChassisSerialNumber;
-            NodeSerialNumber = nodeSerialNumber;
-            NodeDisplayName = nodeDisplayName;
-            NodeFriendlySoftwareVersion = nodeFriendlySoftwareVersion;
-            NodeHcsVersion = nodeHcsVersion;
-            NodeInstanceId = nodeInstanceId;
+            Properties = properties;
         }
 
-        /// <summary> The current status of the individual node. </summary>
-        public DataBoxEdgeNodeStatus? NodeStatus { get; }
-        /// <summary> Serial number of the Chassis. </summary>
-        public string NodeChassisSerialNumber { get; }
-        /// <summary> Serial number of the individual node. </summary>
-        public string NodeSerialNumber { get; }
-        /// <summary> Display Name of the individual node. </summary>
-        public string NodeDisplayName { get; }
-        /// <summary> Friendly software version name that is currently installed on the node. </summary>
-        public string NodeFriendlySoftwareVersion { get; }
-        /// <summary> HCS version that is currently installed on the node. </summary>
-        public string NodeHcsVersion { get; }
-        /// <summary> Guid instance id of the node. </summary>
-        public Guid? NodeInstanceId { get; }
+        /// <summary> This class represents the nodes in a highly available cluster. </summary>
+        public NodeProperties Properties { get; set; }
     }
 }

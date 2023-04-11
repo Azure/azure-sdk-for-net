@@ -1,0 +1,645 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c3ab8678bb0638edea417d1e84a3ad58-e7d1a7ccec18a6cc-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ad4745271a5831e0671c968e28424dc3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "397",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Mar 2023 11:36:47 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "174a4c26-faaf-4d81-9755-4bdd835b2c87",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "174a4c26-faaf-4d81-9755-4bdd835b2c87",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230329T113648Z:174a4c26-faaf-4d81-9755-4bdd835b2c87"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "db4e2fdb-6d80-4e6e-b7cd-736098270664",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Edge Gateway Test",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/offers?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0bcb53cd3d31c842e719ce38c3f2178f-a9d6a0075bdff4d3-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0e875a6f0dc3c15336df79e8f4c5520d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1332",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Mar 2023 11:36:48 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0e875a6f0dc3c15336df79e8f4c5520d",
+        "x-ms-correlation-request-id": "9514ed4e-ae0b-4cd5-8d30-865d38d3c9ca",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "9514ed4e-ae0b-4cd5-8d30-865d38d3c9ca",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230329T113649Z:9514ed4e-ae0b-4cd5-8d30-865d38d3c9ca"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver",
+            "name": "windowsserver",
+            "type": "dataBoxEdgeDevices/publishers/offers"
+          },
+          {
+            "properties": {
+              "publisherId": "tidalmediainc",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/tidalmediainc/offers/ubuntu-20-04",
+            "name": "ubuntu-20-04",
+            "type": "dataBoxEdgeDevices/publishers/offers"
+          },
+          {
+            "properties": {
+              "publisherId": "tidalmediainc",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/tidalmediainc/offers/ubuntu-18-04",
+            "name": "ubuntu-18-04",
+            "type": "dataBoxEdgeDevices/publishers/offers"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-3d14bd2f142d8323047dd64efa295d8f-54fa6d9d07bac978-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9e4786fe12593a65a849e85119809c5b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "472",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Mar 2023 11:36:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9e4786fe12593a65a849e85119809c5b",
+        "x-ms-correlation-request-id": "f0dd4f10-56f3-4000-a8c5-dcdd96b1bbec",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "f0dd4f10-56f3-4000-a8c5-dcdd96b1bbec",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230329T113650Z:f0dd4f10-56f3-4000-a8c5-dcdd96b1bbec"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver",
+            "name": "windowsserver",
+            "type": "dataBoxEdgeDevices/publishers/offers"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-16b5585d408a43370c3c60e0c0c8fdfa-a4412057cb02f983-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3e59d3fbedde19d4f1867679a0f83da2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "766",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Mar 2023 11:36:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3e59d3fbedde19d4f1867679a0f83da2",
+        "x-ms-correlation-request-id": "02dd3276-33bf-4ef8-9b61-250e97f33333",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "02dd3276-33bf-4ef8-9b61-250e97f33333",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230329T113651Z:02dd3276-33bf-4ef8-9b61-250e97f33333"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver",
+            "name": "microsoftwindowsserver",
+            "type": "dataBoxEdgeDevices/publishers"
+          },
+          {
+            "properties": {
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/tidalmediainc",
+            "name": "tidalmediainc",
+            "type": "dataBoxEdgeDevices/publishers"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1006.220908/generatesastoken?api-version=2023-01-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-a23395cad93336698f0d7231a105d908-5e02abbfc011181f-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a18f89caaffb5d69f44c66792501a8b6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1006.220908/generatesastoken/operationResults/7b3f036655d94336b683bd7edff959df?api-version=2023-01-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "23",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Mar 2023 11:36:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a18f89caaffb5d69f44c66792501a8b6",
+        "x-ms-correlation-request-id": "49ae672a-c407-4b3b-8279-13d98c1f45e4",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "49ae672a-c407-4b3b-8279-13d98c1f45e4",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230329T113658Z:49ae672a-c407-4b3b-8279-13d98c1f45e4"
+      },
+      "ResponseBody": {
+        "status": "InProgress"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1006.220908/generatesastoken/operationResults/7b3f036655d94336b683bd7edff959df?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a23395cad93336698f0d7231a105d908-0632198dc00614e3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9087460cfaf04b6069fc4992875af4ef",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1006.220908/generatesastoken/operationResults/7b3f036655d94336b683bd7edff959df?api-version=2023-01-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "23",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Mar 2023 11:37:04 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "2",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9087460cfaf04b6069fc4992875af4ef",
+        "x-ms-correlation-request-id": "78d35f00-659b-44a6-afab-cabff3ad4c6d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "78d35f00-659b-44a6-afab-cabff3ad4c6d",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230329T113704Z:78d35f00-659b-44a6-afab-cabff3ad4c6d"
+      },
+      "ResponseBody": {
+        "status": "InProgress"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1006.220908/generatesastoken/operationResults/7b3f036655d94336b683bd7edff959df?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a23395cad93336698f0d7231a105d908-961e2b7dece3bcc3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8137c0dd1b0bb6365a7eefcc0195c108",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "260",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Mar 2023 11:37:07 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8137c0dd1b0bb6365a7eefcc0195c108",
+        "x-ms-correlation-request-id": "a54c304d-784c-40a6-8506-6f1aa3cd24b2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "a54c304d-784c-40a6-8506-6f1aa3cd24b2",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230329T113708Z:a54c304d-784c-40a6-8506-6f1aa3cd24b2"
+      },
+      "ResponseBody": {
+        "status": "Succeeded",
+        "properties": {
+          "sasUri": "https://md-hdd-nnt2bv0mgh04.z38.blob.storage.azure.net/kv4xmwhsms52/abcd?sv=2018-03-28\u0026sr=b\u0026si=82d2a56e-fa78-4f72-aa14-3f6c486d799f\u0026sig=T84ep2WnSTpTySv%2B7Gf42qke%2FOeoCKBB9pG%2BqNLk10w%3D"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b54e7f10b9da86e59ef67e3c121f2252-a958d3ecf3d5ae72-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "de6cb6b2177a47c5bea1b76fc99c8957",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2168",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Mar 2023 11:37:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "de6cb6b2177a47c5bea1b76fc99c8957",
+        "x-ms-correlation-request-id": "5d974734-c712-4a2a-b297-96b6f3773060",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "5d974734-c712-4a2a-b297-96b6f3773060",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230329T113708Z:5d974734-c712-4a2a-b297-96b6f3773060"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition",
+            "name": "2022-datacenter-azure-edition",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition-core",
+            "name": "2022-datacenter-azure-edition-core",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2019-datacenter",
+            "name": "2019-datacenter",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2019-datacenter-gensecond",
+            "name": "2019-datacenter-gensecond",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-127b885a05488ffe048fdc9e73ad8bae-81ed7c28e6884fd5-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "dbf5bd3a17b4f0a40fd036720b934ad4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "8662",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Mar 2023 11:37:09 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "dbf5bd3a17b4f0a40fd036720b934ad4",
+        "x-ms-correlation-request-id": "51aa329a-cb8c-4f1f-808c-2e5ec8238001",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "51aa329a-cb8c-4f1f-808c-2e5ec8238001",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230329T113709Z:51aa329a-cb8c-4f1f-808c-2e5ec8238001"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "skuId": "2022-datacenter-azure-edition",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1607.230310",
+            "name": "20348.1607.230310",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "skuId": "2022-datacenter-azure-edition",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1547.230207",
+            "name": "20348.1547.230207",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "skuId": "2022-datacenter-azure-edition",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1487.230106",
+            "name": "20348.1487.230106",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "skuId": "2022-datacenter-azure-edition",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1366.221207",
+            "name": "20348.1366.221207",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "skuId": "2022-datacenter-azure-edition",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1249.221105",
+            "name": "20348.1249.221105",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "skuId": "2022-datacenter-azure-edition",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1131.221014",
+            "name": "20348.1131.221014",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "skuId": "2022-datacenter-azure-edition",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1129.221007",
+            "name": "20348.1129.221007",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "skuId": "2022-datacenter-azure-edition",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1006.220908",
+            "name": "20348.1006.220908",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "skuId": "2022-datacenter-azure-edition",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.887.220806",
+            "name": "20348.887.220806",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "skuId": "2022-datacenter-azure-edition",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.825.220704",
+            "name": "20348.825.220704",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "skuId": "2022-datacenter-azure-edition",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.768.220609",
+            "name": "20348.768.220609",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "skuId": "2022-datacenter-azure-edition",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.707.220505",
+            "name": "20348.707.220505",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "skuId": "2022-datacenter-azure-edition",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.643.220403",
+            "name": "20348.643.220403",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+          },
+          {
+            "properties": {
+              "publisherId": "microsoftwindowsserver",
+              "offerId": "windowsserver",
+              "skuId": "2022-datacenter-azure-edition",
+              "provisioningState": "Succeeded"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.587.220303",
+            "name": "20348.587.220303",
+            "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1006.220908?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9bad14ae639f2972b6b4618e22b9a850-e6d5d366cc8219a1-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d0df403b15edc674faf0c26a64c7edbd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "571",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Mar 2023 11:37:10 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d0df403b15edc674faf0c26a64c7edbd",
+        "x-ms-correlation-request-id": "4c21304c-0cc2-46ee-be44-0c9781ecf4be",
+        "x-ms-ratelimit-remaining-subscription-reads": "11986",
+        "x-ms-request-id": "4c21304c-0cc2-46ee-be44-0c9781ecf4be",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230329T113711Z:4c21304c-0cc2-46ee-be44-0c9781ecf4be"
+      },
+      "ResponseBody": {
+        "properties": {
+          "publisherId": "microsoftwindowsserver",
+          "offerId": "windowsserver",
+          "skuId": "2022-datacenter-azure-edition",
+          "provisioningState": "Succeeded"
+        },
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1006.220908",
+        "name": "20348.1006.220908",
+        "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1006.220908?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-43dbbb03a15d718f95d06d18fb09a0b5-6e201bc90d146ade-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 7.0.4; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "439297f4e5a09a53127cceaae1533b2b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "571",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Mar 2023 11:37:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "439297f4e5a09a53127cceaae1533b2b",
+        "x-ms-correlation-request-id": "c07cb05a-6b81-4618-a4c7-675acfd6967a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11985",
+        "x-ms-request-id": "c07cb05a-6b81-4618-a4c7-675acfd6967a",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230329T113712Z:c07cb05a-6b81-4618-a4c7-675acfd6967a"
+      },
+      "ResponseBody": {
+        "properties": {
+          "publisherId": "microsoftwindowsserver",
+          "offerId": "windowsserver",
+          "skuId": "2022-datacenter-azure-edition",
+          "provisioningState": "Succeeded"
+        },
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/publishers/microsoftwindowsserver/offers/windowsserver/skus/2022-datacenter-azure-edition/versions/20348.1006.220908",
+        "name": "20348.1006.220908",
+        "type": "dataBoxEdgeDevices/publishers/offers/skus/versions"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1109279858",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db4e2fdb-6d80-4e6e-b7cd-736098270664"
+  }
+}

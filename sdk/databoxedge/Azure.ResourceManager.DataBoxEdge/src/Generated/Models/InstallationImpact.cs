@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private const string NoneValue = "None";
         private const string DeviceRebootedValue = "DeviceRebooted";
         private const string KubernetesWorkloadsDownValue = "KubernetesWorkloadsDown";
+        private const string SoftwareDisruptiveValue = "SoftwareDisruptive";
+        private const string SoftwareOptimizedValue = "SoftwareOptimized";
+        private const string KubernetesDisruptiveValue = "KubernetesDisruptive";
+        private const string KubernetesOptimizedValue = "KubernetesOptimized";
 
         /// <summary> None. </summary>
         public static InstallationImpact None { get; } = new InstallationImpact(NoneValue);
@@ -32,6 +36,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static InstallationImpact DeviceRebooted { get; } = new InstallationImpact(DeviceRebootedValue);
         /// <summary> KubernetesWorkloadsDown. </summary>
         public static InstallationImpact KubernetesWorkloadsDown { get; } = new InstallationImpact(KubernetesWorkloadsDownValue);
+        /// <summary> SoftwareDisruptive. </summary>
+        public static InstallationImpact SoftwareDisruptive { get; } = new InstallationImpact(SoftwareDisruptiveValue);
+        /// <summary> SoftwareOptimized. </summary>
+        public static InstallationImpact SoftwareOptimized { get; } = new InstallationImpact(SoftwareOptimizedValue);
+        /// <summary> KubernetesDisruptive. </summary>
+        public static InstallationImpact KubernetesDisruptive { get; } = new InstallationImpact(KubernetesDisruptiveValue);
+        /// <summary> KubernetesOptimized. </summary>
+        public static InstallationImpact KubernetesOptimized { get; } = new InstallationImpact(KubernetesOptimizedValue);
         /// <summary> Determines if two <see cref="InstallationImpact"/> values are the same. </summary>
         public static bool operator ==(InstallationImpact left, InstallationImpact right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstallationImpact"/> values are not the same. </summary>

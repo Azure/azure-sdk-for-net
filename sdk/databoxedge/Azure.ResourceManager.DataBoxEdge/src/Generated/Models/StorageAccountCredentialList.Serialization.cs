@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        value = null;
                         continue;
                     }
                     List<DataBoxEdgeStorageAccountCredentialData> array = new List<DataBoxEdgeStorageAccountCredentialData>();
@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        nextLink = null;
+                        continue;
+                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }

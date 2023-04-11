@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeSkuTier> tier = default;
             Optional<string> size = default;
             Optional<string> family = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
+            Optional<IReadOnlyList<string>> locations = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
             Optional<IReadOnlyList<DataBoxEdgeSkuLocationInfo>> locationInfo = default;
             Optional<IReadOnlyList<DataBoxEdgeSkuCost>> costs = default;
@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("resourceType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        resourceType = null;
+                        continue;
+                    }
                     resourceType = property.Value.GetString();
                     continue;
                 }
@@ -53,6 +58,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("kind"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        kind = null;
+                        continue;
+                    }
                     kind = property.Value.GetString();
                     continue;
                 }
@@ -68,11 +78,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("size"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        size = null;
+                        continue;
+                    }
                     size = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("family"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        family = null;
+                        continue;
+                    }
                     family = property.Value.GetString();
                     continue;
                 }
@@ -80,13 +100,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        locations = null;
                         continue;
                     }
-                    List<AzureLocation> array = new List<AzureLocation>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new AzureLocation(item.GetString()));
+                        array.Add(item.GetString());
                     }
                     locations = array;
                     continue;
@@ -95,7 +115,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        apiVersions = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -110,7 +130,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        locationInfo = null;
                         continue;
                     }
                     List<DataBoxEdgeSkuLocationInfo> array = new List<DataBoxEdgeSkuLocationInfo>();
@@ -125,7 +145,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        costs = null;
                         continue;
                     }
                     List<DataBoxEdgeSkuCost> array = new List<DataBoxEdgeSkuCost>();
@@ -170,7 +190,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        shipmentTypes = null;
                         continue;
                     }
                     List<DataBoxEdgeShipmentType> array = new List<DataBoxEdgeShipmentType>();
@@ -185,7 +205,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        capabilities = null;
                         continue;
                     }
                     List<DataBoxEdgeSkuCapability> array = new List<DataBoxEdgeSkuCapability>();

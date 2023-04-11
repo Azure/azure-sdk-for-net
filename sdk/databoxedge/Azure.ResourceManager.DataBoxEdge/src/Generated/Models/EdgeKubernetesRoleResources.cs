@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> Kubernetes role resources. </summary>
+    /// <summary> Kubernetes role resoures. </summary>
     public partial class EdgeKubernetesRoleResources
     {
         /// <summary> Initializes a new instance of EdgeKubernetesRoleResources. </summary>
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Kubernetes role compute resource. </summary>
         public EdgeKubernetesRoleCompute Compute { get; set; }
         /// <summary> Kubernetes role network resource. </summary>
-        public EdgeKubernetesRoleNetwork Network { get; }
+        public EdgeKubernetesRoleNetwork Network { get; set; }
     }
 }

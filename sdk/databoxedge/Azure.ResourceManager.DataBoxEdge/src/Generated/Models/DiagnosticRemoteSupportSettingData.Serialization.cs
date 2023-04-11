@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -19,18 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RemoteSupportSettingsList))
-            {
-                writer.WritePropertyName("remoteSupportSettingsList"u8);
-                writer.WriteStartArray();
-                foreach (var item in RemoteSupportSettingsList)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
 
@@ -40,13 +28,18 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
+            DiagnosticRemoteSupportSettingsProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<EdgeRemoteSupportSettings>> remoteSupportSettingsList = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = DiagnosticRemoteSupportSettingsProperties.DeserializeDiagnosticRemoteSupportSettingsProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -72,35 +65,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("remoteSupportSettingsList"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<EdgeRemoteSupportSettings> array = new List<EdgeRemoteSupportSettings>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(EdgeRemoteSupportSettings.DeserializeEdgeRemoteSupportSettings(item));
-                            }
-                            remoteSupportSettingsList = array;
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new DiagnosticRemoteSupportSettingData(id, name, type, systemData.Value, Optional.ToList(remoteSupportSettingsList));
+            return new DiagnosticRemoteSupportSettingData(id, name, type, systemData.Value, properties);
         }
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -19,15 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(EncryptedPassword))
-            {
-                writer.WritePropertyName("encryptedPassword"u8);
-                writer.WriteObjectValue(EncryptedPassword);
-            }
-            writer.WritePropertyName("userType"u8);
-            writer.WriteStringValue(UserType.ToString());
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
 
@@ -37,15 +28,18 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
+            UserProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<AsymmetricEncryptedSecret> encryptedPassword = default;
-            Optional<IReadOnlyList<ShareAccessRight>> shareAccessRights = default;
-            DataBoxEdgeUserType userType = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = UserProperties.DeserializeUserProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -71,50 +65,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("encryptedPassword"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            encryptedPassword = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("shareAccessRights"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<ShareAccessRight> array = new List<ShareAccessRight>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ShareAccessRight.DeserializeShareAccessRight(item));
-                            }
-                            shareAccessRights = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("userType"u8))
-                        {
-                            userType = new DataBoxEdgeUserType(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new DataBoxEdgeUserData(id, name, type, systemData.Value, encryptedPassword.Value, Optional.ToList(shareAccessRights), userType);
+            return new DataBoxEdgeUserData(id, name, type, systemData.Value, properties);
         }
     }
 }

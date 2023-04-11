@@ -18,8 +18,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HostName))
             {
-                writer.WritePropertyName("hostName"u8);
-                writer.WriteStringValue(HostName);
+                if (HostName != null)
+                {
+                    writer.WritePropertyName("hostName"u8);
+                    writer.WriteStringValue(HostName);
+                }
+                else
+                {
+                    writer.WriteNull("hostName");
+                }
             }
             if (Optional.IsDefined(EffectiveAvailableMemoryInMBOnHost))
             {
@@ -33,29 +40,50 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             if (Optional.IsCollectionDefined(VmUsedMemory))
             {
-                writer.WritePropertyName("vmUsedMemory"u8);
-                writer.WriteStartObject();
-                foreach (var item in VmUsedMemory)
+                if (VmUsedMemory != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WritePropertyName("vmUsedMemory"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in VmUsedMemory)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("vmUsedMemory");
+                }
             }
             if (Optional.IsDefined(GpuType))
             {
-                writer.WritePropertyName("gpuType"u8);
-                writer.WriteStringValue(GpuType);
+                if (GpuType != null)
+                {
+                    writer.WritePropertyName("gpuType"u8);
+                    writer.WriteStringValue(GpuType);
+                }
+                else
+                {
+                    writer.WriteNull("gpuType");
+                }
             }
             if (Optional.IsCollectionDefined(NumaNodesData))
             {
-                writer.WritePropertyName("numaNodesData"u8);
-                writer.WriteStartArray();
-                foreach (var item in NumaNodesData)
+                if (NumaNodesData != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("numaNodesData"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NumaNodesData)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("numaNodesData");
+                }
             }
             writer.WriteEndObject();
         }
@@ -76,6 +104,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("hostName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        hostName = null;
+                        continue;
+                    }
                     hostName = property.Value.GetString();
                     continue;
                 }
@@ -103,7 +136,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        vmUsedMemory = null;
                         continue;
                     }
                     Dictionary<string, DataBoxEdgeVmMemory> dictionary = new Dictionary<string, DataBoxEdgeVmMemory>();
@@ -116,6 +149,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("gpuType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        gpuType = null;
+                        continue;
+                    }
                     gpuType = property.Value.GetString();
                     continue;
                 }
@@ -123,7 +161,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        numaNodesData = null;
                         continue;
                     }
                     List<NumaNodeInfo> array = new List<NumaNodeInfo>();

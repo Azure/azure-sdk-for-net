@@ -11,8 +11,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeResourceMoveDetails
+    public partial class DataBoxEdgeResourceMoveDetails : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(OperationInProgress))
+            {
+                writer.WritePropertyName("operationInProgress"u8);
+                writer.WriteStringValue(OperationInProgress.Value.ToString());
+            }
+            if (Optional.IsDefined(OperationInProgressLockTimeoutInUtc))
+            {
+                if (OperationInProgressLockTimeoutInUtc != null)
+                {
+                    writer.WritePropertyName("operationInProgressLockTimeoutInUTC"u8);
+                    writer.WriteStringValue(OperationInProgressLockTimeoutInUtc.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("operationInProgressLockTimeoutInUTC");
+                }
+            }
+            writer.WriteEndObject();
+        }
+
         internal static DataBoxEdgeResourceMoveDetails DeserializeDataBoxEdgeResourceMoveDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -20,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             Optional<DataBoxEdgeResourceMoveStatus> operationInProgress = default;
-            Optional<DateTimeOffset> operationInProgressLockTimeoutInUtc = default;
+            Optional<DateTimeOffset?> operationInProgressLockTimeoutInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationInProgress"u8))
@@ -37,7 +60,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        operationInProgressLockTimeoutInUtc = null;
                         continue;
                     }
                     operationInProgressLockTimeoutInUtc = property.Value.GetDateTimeOffset("O");

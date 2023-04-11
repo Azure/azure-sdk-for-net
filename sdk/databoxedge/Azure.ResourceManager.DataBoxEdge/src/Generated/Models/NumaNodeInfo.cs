@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The effective available memory on the NUMA node in MB. </summary>
         public long? EffectiveAvailableMemoryInMB { get; set; }
         /// <summary> The free VCPU indices for the Hpn VMs. </summary>
-        public IList<int> FreeVCpuIndexesForHpn { get; }
+        public IList<int> FreeVCpuIndexesForHpn { get; set; }
         /// <summary> The VCPU indices for Hpn VMs. </summary>
-        public IList<int> VCpuIndexesForHpn { get; }
+        public IList<int> VCpuIndexesForHpn { get; set; }
         /// <summary> The VCPU indices for the root. </summary>
-        public IList<int> VCpuIndexesForRoot { get; }
+        public IList<int> VCpuIndexesForRoot { get; set; }
     }
 }

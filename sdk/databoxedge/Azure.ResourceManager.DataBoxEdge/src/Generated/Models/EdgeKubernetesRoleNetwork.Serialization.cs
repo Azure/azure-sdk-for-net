@@ -10,8 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeKubernetesRoleNetwork
+    public partial class EdgeKubernetesRoleNetwork : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CniConfig))
+            {
+                writer.WritePropertyName("cniConfig"u8);
+                writer.WriteObjectValue(CniConfig);
+            }
+            if (Optional.IsDefined(LoadBalancerConfig))
+            {
+                writer.WritePropertyName("loadBalancerConfig"u8);
+                writer.WriteObjectValue(LoadBalancerConfig);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static EdgeKubernetesRoleNetwork DeserializeEdgeKubernetesRoleNetwork(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Initializes a new instance of UploadCertificateResponse. </summary>
-        /// <param name="authType"> Specifies authentication type. </param>
+        /// <param name="authType"> Supported authentication types. </param>
         /// <param name="resourceId"> The resource ID of the Data Box Edge/Gateway device. </param>
         /// <param name="aadAuthority"> Azure Active Directory tenant authority. </param>
         /// <param name="aadTenantId"> Azure Active Directory tenant ID. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             AadAudience = aadAudience;
         }
 
-        /// <summary> Specifies authentication type. </summary>
+        /// <summary> Supported authentication types. </summary>
         public DataBoxEdgeAuthenticationType? AuthType { get; }
         /// <summary> The resource ID of the Data Box Edge/Gateway device. </summary>
         public string ResourceId { get; }

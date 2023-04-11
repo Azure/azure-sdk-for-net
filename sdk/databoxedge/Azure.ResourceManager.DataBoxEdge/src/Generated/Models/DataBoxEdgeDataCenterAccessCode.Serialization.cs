@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> authCode = default;
+            Optional<DCAccessCodeProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -28,18 +28,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("authCode"u8))
-                        {
-                            authCode = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    properties = DCAccessCodeProperties.DeserializeDCAccessCodeProperties(property.Value);
                     continue;
                 }
             }
-            return new DataBoxEdgeDataCenterAccessCode(authCode.Value);
+            return new DataBoxEdgeDataCenterAccessCode(properties.Value);
         }
     }
 }

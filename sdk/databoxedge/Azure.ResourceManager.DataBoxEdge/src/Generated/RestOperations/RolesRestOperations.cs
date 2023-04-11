@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         public RolesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _endpoint = endpoint ?? new Uri("management.azure.com");
+            _apiVersion = apiVersion ?? "2023-01-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/roles", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -221,8 +221,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "application/json-patch+json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
@@ -366,6 +366,91 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
+        internal HttpMessage CreateMigrateRequest(string subscriptionId, string resourceGroupName, string deviceName, string name)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/roles/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/migrate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Migrates the IOT Role To NewK8 experience. </summary>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="deviceName"> The device name. </param>
+        /// <param name="name"> The role name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DataBoxEdgeRoleData>> MigrateAsync(string subscriptionId, string resourceGroupName, string deviceName, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var message = CreateMigrateRequest(subscriptionId, resourceGroupName, deviceName, name);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataBoxEdgeRoleData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DataBoxEdgeRoleData.DeserializeDataBoxEdgeRoleData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Migrates the IOT Role To NewK8 experience. </summary>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="deviceName"> The device name. </param>
+        /// <param name="name"> The role name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DataBoxEdgeRoleData> Migrate(string subscriptionId, string resourceGroupName, string deviceName, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var message = CreateMigrateRequest(subscriptionId, resourceGroupName, deviceName, name);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataBoxEdgeRoleData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DataBoxEdgeRoleData.DeserializeDataBoxEdgeRoleData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateListByDataBoxEdgeDeviceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string deviceName)
         {
             var message = _pipeline.CreateMessage();
@@ -375,7 +460,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
         }

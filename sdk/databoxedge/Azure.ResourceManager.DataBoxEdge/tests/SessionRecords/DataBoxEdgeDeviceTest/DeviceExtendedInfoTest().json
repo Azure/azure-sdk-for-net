@@ -1,0 +1,149 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-96de30432b64a11603d70eb8589b34b9-5629d5b8eb3041cd-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a6cea4747f29152471ea458e1fa64cbe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "397",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Apr 2023 06:46:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cb808217-2e5e-469b-a391-64eb78da423c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "cb808217-2e5e-469b-a391-64eb78da423c",
+        "x-ms-routing-request-id": "CENTRALINDIA:20230407T064626Z:cb808217-2e5e-469b-a391-64eb78da423c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "db4e2fdb-6d80-4e6e-b7cd-736098270664",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Edge Gateway Test",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/ase-sdk-resource/getExtendedInformation?api-version=2023-01-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-26203a7f784dbaa8d4daedfc7a50acb2-7a6993f7a0155a25-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f6e55c92a99dafa8882d4b2f4c6a711d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2450",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Apr 2023 06:46:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f6e55c92a99dafa8882d4b2f4c6a711d",
+        "x-ms-correlation-request-id": "5e00be7c-13a3-44f8-861f-7733d53da630",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "5e00be7c-13a3-44f8-861f-7733d53da630",
+        "x-ms-routing-request-id": "CENTRALINDIA:20230407T064628Z:5e00be7c-13a3-44f8-861f-7733d53da630"
+      },
+      "ResponseBody": {
+        "properties": {
+          "encryptionKeyThumbprint": "740BF268B87ADCB59A3407BF2342CADBCB6AE2D3",
+          "encryptionKey": "EAAAAEyK9Xulss0f6sSFFrJabKD6DZjVWwgaiiL4G3NI4p9mp4/1iKIDTlOHR3/AZrQva1s7Uc6JBvj2is43d6w\u002BVwdL2s0qGAqvtpq3rcEXHUOwPnpwPJzbycqF7PPm6ZsSgCYH6dP3vDEVjmJM9gbOjCTqw5nCRkobQ6XhQcw/pXK9LQ1KaRqylQMeiinwi1A1SzEsaQG6cGO2Q1w8R5bUmMB6vADH3pzHKkom2z\u002Bg9PcevjZQ45t8FZYmOtzKHMhLsmTd5LQA9Zl\u002BpbejgpYNeEuYtLB9v2yBphzS5IeWjS8e8YyQ/NrP8LRoRBoSP\u002B0n46pzzbOpHQIB4409q8QHNPQdfLXFejn1BKPLImrG3CLiSOsubTRgA6hD8DfGFQeWA06vf\u002Bc\u002BhF1ZvCcmbRBjSGU1iZdxPYV8HT83oyweGCsorxVMh6AT3rufTUaRgSwBIWTJc9jP6P2Cca5OdY9qTMA/OOD3JjDKuudP/ZXuz8YroB1Ar2xQHA6TweZq4gqo2qlehsxvpZT7/0cdW0ygxawFyJctA84JQWnjCwV3AMM/X8J0C4xyfdGP8OXouEi1rB54sY9kojOICfvTbP7ZO3Wjvikj8iQH4kvRpvn6Fenr87J1i8YmtE5d\u002BSmty2UINAPsBwgU5A1Lnbor5XtgaVAATI4a3NaXkbqKlrO/w766p8Kimy\u002BvO/uwUPxuzscTe1U4Ry/BcwmD25cGKA\u002B5UuSliED6gg68JCLn4wbPjsYUW2et98wZGC5shrJP3yw0fLg36XIre/O9Ly8JBbRjWtA\u002BssBw6yFpd7nXkozYdNMDa9Gmt6zoEJIcTPeKmwpx2uMmbFxsQGoOClKocQ6w\u002B5QjQ2/S4ERfp\u002BQhcWkhpQmpqVOuhVzi7eVJBRLJ2iGHen0r9mHjDOyLH4UwRkcjWMVDp4BGWooETXWSGDJ9rQvpcTYX8jB4jD6\u002BEfKvhlfEohC20Pv8fU\u002BGLOnlceIi6KDhJU63tlAVC2iU1I0ZjiKqVO8DaFYOPRqzq36v7ZIIb09hJulJ9ERwo82q899uqWrZq0WjYntipVRwJep1kc\u002BPY4MnBthKsrKwqNHJ4G6tpiAR1IBUvVaG5QvJs72vwevEJBQC0csABCq6m7F\u002BrFzkBLDnd7NWEyLRKjYIplQMxMEX6JGZCvS6WuG8UxmX0ehcVDKG300rMmpOAYXz1kcaBvqsd0y/MXojWYhBlFb6Zvt\u002Bm4cY39vjfkV\u002BzvC9s05FnvgMj5cD6qcLKczX0Lv245gacBkZHxNZXzfKGeEtrOCgnKpPzpeZvXMjTHGEWMqpiwfk72N5RRVFWOQAVmXUOgwS35UDirJABXEJ5nO3gNHAVcDz9hOCEfmu6GYRj\u002BZCof/hP/OPRpznu/NgIn6Cb9\u002BZDjRXGds/xX3fFA52/e2gChHEWiM3WIoZqaxXeB0ANEmUxux3ts2yZQMnw4IihIw3tx6koTJV1uXkoyFTVsP55oa4xbeW5HlcLclRVK5cOFkg1Wf07oMj8zKqj52xP7nNwz3PIT4vQJJXTVI/AA==",
+          "resourceKey": "2037492405887237984",
+          "clientSecretStoreId": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.KeyVault/vaults/ase-asesdkreso-522f87dfb",
+          "clientSecretStoreUrl": "https://ase-asesdkreso-522f87dfb.vault.azure.net",
+          "channelIntegrityKeyName": "ase-cik-67ec1b0a-6c9d-46bd-8158-bba96d7d7290",
+          "channelIntegrityKeyVersion": "3cf460731e0a4ddf8eb977ecaa9fe05e",
+          "keyVaultSyncStatus": "KeyVaultSynced",
+          "clusterWitnessType": "None"
+        },
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourcegroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/ase-sdk-resource",
+        "name": "ase-sdk-resource",
+        "type": "Microsoft.DataBoxEdge/dataBoxEdgeDevices"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/ase-sdk-resource/updateExtendedInformation?api-version=2023-01-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "311",
+        "Content-Type": "application/json-patch\u002Bjson",
+        "traceparent": "00-31825a922ac297292bb6e3e9b4ca4797-d0eeed3e5f908638-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9662811ca5e3c867bd939c7ae97e282c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "clientSecretStoreId": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/gateway-bvt/providers/Microsoft.KeyVault/vaults/asekv",
+        "clientSecretStoreUrl": "https://asekv.vault.azure.net/",
+        "channelIntegrityKeyName": "IK-2933456679231",
+        "channelIntegrityKeyVersion": "816a9e3c0cc543918d4cf0727d041ad4"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2337",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Apr 2023 06:46:48 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9662811ca5e3c867bd939c7ae97e282c",
+        "x-ms-correlation-request-id": "d367fedf-d8d1-472e-b724-cc6b76c7e9c3",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "d367fedf-d8d1-472e-b724-cc6b76c7e9c3",
+        "x-ms-routing-request-id": "CENTRALINDIA:20230407T064649Z:d367fedf-d8d1-472e-b724-cc6b76c7e9c3"
+      },
+      "ResponseBody": {
+        "properties": {
+          "encryptionKeyThumbprint": "740BF268B87ADCB59A3407BF2342CADBCB6AE2D3",
+          "encryptionKey": "EAAAAEyK9Xulss0f6sSFFrJabKD6DZjVWwgaiiL4G3NI4p9mp4/1iKIDTlOHR3/AZrQva1s7Uc6JBvj2is43d6w\u002BVwdL2s0qGAqvtpq3rcEXHUOwPnpwPJzbycqF7PPm6ZsSgCYH6dP3vDEVjmJM9gbOjCTqw5nCRkobQ6XhQcw/pXK9LQ1KaRqylQMeiinwi1A1SzEsaQG6cGO2Q1w8R5bUmMB6vADH3pzHKkom2z\u002Bg9PcevjZQ45t8FZYmOtzKHMhLsmTd5LQA9Zl\u002BpbejgpYNeEuYtLB9v2yBphzS5IeWjS8e8YyQ/NrP8LRoRBoSP\u002B0n46pzzbOpHQIB4409q8QHNPQdfLXFejn1BKPLImrG3CLiSOsubTRgA6hD8DfGFQeWA06vf\u002Bc\u002BhF1ZvCcmbRBjSGU1iZdxPYV8HT83oyweGCsorxVMh6AT3rufTUaRgSwBIWTJc9jP6P2Cca5OdY9qTMA/OOD3JjDKuudP/ZXuz8YroB1Ar2xQHA6TweZq4gqo2qlehsxvpZT7/0cdW0ygxawFyJctA84JQWnjCwV3AMM/X8J0C4xyfdGP8OXouEi1rB54sY9kojOICfvTbP7ZO3Wjvikj8iQH4kvRpvn6Fenr87J1i8YmtE5d\u002BSmty2UINAPsBwgU5A1Lnbor5XtgaVAATI4a3NaXkbqKlrO/w766p8Kimy\u002BvO/uwUPxuzscTe1U4Ry/BcwmD25cGKA\u002B5UuSliED6gg68JCLn4wbPjsYUW2et98wZGC5shrJP3yw0fLg36XIre/O9Ly8JBbRjWtA\u002BssBw6yFpd7nXkozYdNMDa9Gmt6zoEJIcTPeKmwpx2uMmbFxsQGoOClKocQ6w\u002B5QjQ2/S4ERfp\u002BQhcWkhpQmpqVOuhVzi7eVJBRLJ2iGHen0r9mHjDOyLH4UwRkcjWMVDp4BGWooETXWSGDJ9rQvpcTYX8jB4jD6\u002BEfKvhlfEohC20Pv8fU\u002BGLOnlceIi6KDhJU63tlAVC2iU1I0ZjiKqVO8DaFYOPRqzq36v7ZIIb09hJulJ9ERwo82q899uqWrZq0WjYntipVRwJep1kc\u002BPY4MnBthKsrKwqNHJ4G6tpiAR1IBUvVaG5QvJs72vwevEJBQC0csABCq6m7F\u002BrFzkBLDnd7NWEyLRKjYIplQMxMEX6JGZCvS6WuG8UxmX0ehcVDKG300rMmpOAYXz1kcaBvqsd0y/MXojWYhBlFb6Zvt\u002Bm4cY39vjfkV\u002BzvC9s05FnvgMj5cD6qcLKczX0Lv245gacBkZHxNZXzfKGeEtrOCgnKpPzpeZvXMjTHGEWMqpiwfk72N5RRVFWOQAVmXUOgwS35UDirJABXEJ5nO3gNHAVcDz9hOCEfmu6GYRj\u002BZCof/hP/OPRpznu/NgIn6Cb9\u002BZDjRXGds/xX3fFA52/e2gChHEWiM3WIoZqaxXeB0ANEmUxux3ts2yZQMnw4IihIw3tx6koTJV1uXkoyFTVsP55oa4xbeW5HlcLclRVK5cOFkg1Wf07oMj8zKqj52xP7nNwz3PIT4vQJJXTVI/AA==",
+          "resourceKey": "2037492405887237984",
+          "clientSecretStoreId": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/gateway-bvt/providers/Microsoft.KeyVault/vaults/asekv",
+          "clientSecretStoreUrl": "https://asekv.vault.azure.net/",
+          "channelIntegrityKeyName": "IK-2933456679231",
+          "channelIntegrityKeyVersion": "816a9e3c0cc543918d4cf0727d041ad4",
+          "clusterWitnessType": "None"
+        },
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourcegroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/ase-sdk-resource",
+        "name": "ase-sdk-resource",
+        "type": "Microsoft.DataBoxEdge/dataBoxEdgeDevices"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "329440331",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db4e2fdb-6d80-4e6e-b7cd-736098270664"
+  }
+}

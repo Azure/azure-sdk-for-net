@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -19,9 +20,13 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DiagnosticRemoteSupportSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of DiagnosticRemoteSupportSettingData. </summary>
-        public DiagnosticRemoteSupportSettingData()
+        /// <param name="properties"> The properties of remote support settings. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DiagnosticRemoteSupportSettingData(DiagnosticRemoteSupportSettingsProperties properties)
         {
-            RemoteSupportSettingsList = new ChangeTrackingList<EdgeRemoteSupportSettings>();
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of DiagnosticRemoteSupportSettingData. </summary>
@@ -29,13 +34,24 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="remoteSupportSettingsList"> Remote support settings list according to the RemoteApplicationType. </param>
-        internal DiagnosticRemoteSupportSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<EdgeRemoteSupportSettings> remoteSupportSettingsList) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The properties of remote support settings. </param>
+        internal DiagnosticRemoteSupportSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DiagnosticRemoteSupportSettingsProperties properties) : base(id, name, resourceType, systemData)
         {
-            RemoteSupportSettingsList = remoteSupportSettingsList;
+            Properties = properties;
         }
 
+        /// <summary> The properties of remote support settings. </summary>
+        internal DiagnosticRemoteSupportSettingsProperties Properties { get; set; }
         /// <summary> Remote support settings list according to the RemoteApplicationType. </summary>
-        public IList<EdgeRemoteSupportSettings> RemoteSupportSettingsList { get; }
+        public IList<EdgeRemoteSupportSettings> RemoteSupportSettingsList
+        {
+            get => Properties is null ? default : Properties.RemoteSupportSettingsList;
+            set
+            {
+                if (Properties is null)
+                    Properties = new DiagnosticRemoteSupportSettingsProperties();
+                Properties.RemoteSupportSettingsList = value;
+            }
+        }
     }
 }

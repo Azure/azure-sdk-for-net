@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             writer.WritePropertyName("compute"u8);
             writer.WriteObjectValue(Compute);
+            if (Optional.IsDefined(Network))
+            {
+                writer.WritePropertyName("network"u8);
+                writer.WriteObjectValue(Network);
+            }
             writer.WriteEndObject();
         }
 

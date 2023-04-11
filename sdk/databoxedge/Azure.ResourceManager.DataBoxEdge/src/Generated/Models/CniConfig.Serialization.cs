@@ -10,8 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class CniConfig
+    public partial class CniConfig : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+        }
+
         internal static CniConfig DeserializeCniConfig(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -22,30 +28,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> version = default;
             Optional<string> podSubnet = default;
             Optional<string> serviceSubnet = default;
+            Optional<KubernetesComponentType> componentType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        type = null;
+                        continue;
+                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("version"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        version = null;
+                        continue;
+                    }
                     version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("podSubnet"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        podSubnet = null;
+                        continue;
+                    }
                     podSubnet = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("serviceSubnet"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        serviceSubnet = null;
+                        continue;
+                    }
                     serviceSubnet = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("componentType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    componentType = new KubernetesComponentType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new CniConfig(type.Value, version.Value, podSubnet.Value, serviceSubnet.Value);
+            return new CniConfig(type.Value, version.Value, podSubnet.Value, serviceSubnet.Value, Optional.ToNullable(componentType));
         }
     }
 }

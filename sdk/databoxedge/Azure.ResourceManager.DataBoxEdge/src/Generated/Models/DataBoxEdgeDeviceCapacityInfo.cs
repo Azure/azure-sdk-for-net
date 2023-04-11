@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -18,7 +16,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceCapacityInfo. </summary>
         public DataBoxEdgeDeviceCapacityInfo()
         {
-            NodeCapacityInfos = new ChangeTrackingDictionary<string, HostCapacity>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceCapacityInfo. </summary>
@@ -26,25 +23,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="timeStamp"> Timestamp of request in UTC. </param>
-        /// <param name="clusterStorageCapacityInfo"> Cluster capacity data for storage resources (CSV). </param>
-        /// <param name="clusterComputeCapacityInfo"> Cluster capacity data for compute resources (Memory and GPU). </param>
-        /// <param name="nodeCapacityInfos"> The dictionary of individual node names and node capacities in the cluster. </param>
-        internal DataBoxEdgeDeviceCapacityInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeStamp, EdgeClusterStorageViewInfo clusterStorageCapacityInfo, EdgeClusterCapacityViewInfo clusterComputeCapacityInfo, IDictionary<string, HostCapacity> nodeCapacityInfos) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The properties of Device Capacity Info. </param>
+        internal DataBoxEdgeDeviceCapacityInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceCapacityInfoProperties properties) : base(id, name, resourceType, systemData)
         {
-            TimeStamp = timeStamp;
-            ClusterStorageCapacityInfo = clusterStorageCapacityInfo;
-            ClusterComputeCapacityInfo = clusterComputeCapacityInfo;
-            NodeCapacityInfos = nodeCapacityInfos;
+            Properties = properties;
         }
 
-        /// <summary> Timestamp of request in UTC. </summary>
-        public DateTimeOffset? TimeStamp { get; set; }
-        /// <summary> Cluster capacity data for storage resources (CSV). </summary>
-        public EdgeClusterStorageViewInfo ClusterStorageCapacityInfo { get; set; }
-        /// <summary> Cluster capacity data for compute resources (Memory and GPU). </summary>
-        public EdgeClusterCapacityViewInfo ClusterComputeCapacityInfo { get; set; }
-        /// <summary> The dictionary of individual node names and node capacities in the cluster. </summary>
-        public IDictionary<string, HostCapacity> NodeCapacityInfos { get; }
+        /// <summary> The properties of Device Capacity Info. </summary>
+        public DeviceCapacityInfoProperties Properties { get; set; }
     }
 }

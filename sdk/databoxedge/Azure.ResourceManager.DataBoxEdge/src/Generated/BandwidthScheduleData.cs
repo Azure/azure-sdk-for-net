@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
@@ -21,19 +19,13 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class BandwidthScheduleData : ResourceData
     {
         /// <summary> Initializes a new instance of BandwidthScheduleData. </summary>
-        /// <param name="startOn"> The start time of the schedule in UTC. </param>
-        /// <param name="stopOn"> The stop time of the schedule in UTC. </param>
-        /// <param name="rateInMbps"> The bandwidth rate in Mbps. </param>
-        /// <param name="days"> The days of the week when this schedule is applicable. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="days"/> is null. </exception>
-        public BandwidthScheduleData(TimeSpan startOn, TimeSpan stopOn, int rateInMbps, IEnumerable<DataBoxEdgeDayOfWeek> days)
+        /// <param name="properties"> The properties of the bandwidth schedule. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public BandwidthScheduleData(BandwidthScheduleProperties properties)
         {
-            Argument.AssertNotNull(days, nameof(days));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            StartOn = startOn;
-            StopOn = stopOn;
-            RateInMbps = rateInMbps;
-            Days = days.ToList();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of BandwidthScheduleData. </summary>
@@ -41,25 +33,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="startOn"> The start time of the schedule in UTC. </param>
-        /// <param name="stopOn"> The stop time of the schedule in UTC. </param>
-        /// <param name="rateInMbps"> The bandwidth rate in Mbps. </param>
-        /// <param name="days"> The days of the week when this schedule is applicable. </param>
-        internal BandwidthScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan startOn, TimeSpan stopOn, int rateInMbps, IList<DataBoxEdgeDayOfWeek> days) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The properties of the bandwidth schedule. </param>
+        internal BandwidthScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BandwidthScheduleProperties properties) : base(id, name, resourceType, systemData)
         {
-            StartOn = startOn;
-            StopOn = stopOn;
-            RateInMbps = rateInMbps;
-            Days = days;
+            Properties = properties;
         }
 
-        /// <summary> The start time of the schedule in UTC. </summary>
-        public TimeSpan StartOn { get; set; }
-        /// <summary> The stop time of the schedule in UTC. </summary>
-        public TimeSpan StopOn { get; set; }
-        /// <summary> The bandwidth rate in Mbps. </summary>
-        public int RateInMbps { get; set; }
-        /// <summary> The days of the week when this schedule is applicable. </summary>
-        public IList<DataBoxEdgeDayOfWeek> Days { get; }
+        /// <summary> The properties of the bandwidth schedule. </summary>
+        public BandwidthScheduleProperties Properties { get; set; }
     }
 }

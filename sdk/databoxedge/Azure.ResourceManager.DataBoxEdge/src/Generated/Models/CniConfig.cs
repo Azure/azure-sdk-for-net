@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class CniConfig
     {
         /// <summary> Initializes a new instance of CniConfig. </summary>
-        internal CniConfig()
+        public CniConfig()
         {
         }
 
@@ -20,12 +20,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="version"> Cni version. </param>
         /// <param name="podSubnet"> Pod Subnet. </param>
         /// <param name="serviceSubnet"> Service subnet. </param>
-        internal CniConfig(string cniConfigType, string version, string podSubnet, string serviceSubnet)
+        /// <param name="componentType"> ComponentType of the Kubernetes node. </param>
+        internal CniConfig(string cniConfigType, string version, string podSubnet, string serviceSubnet, KubernetesComponentType? componentType)
         {
             CniConfigType = cniConfigType;
             Version = version;
             PodSubnet = podSubnet;
             ServiceSubnet = serviceSubnet;
+            ComponentType = componentType;
         }
 
         /// <summary> Cni type. </summary>
@@ -36,5 +38,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string PodSubnet { get; }
         /// <summary> Service subnet. </summary>
         public string ServiceSubnet { get; }
+        /// <summary> ComponentType of the Kubernetes node. </summary>
+        public KubernetesComponentType? ComponentType { get; }
     }
 }

@@ -179,20 +179,20 @@ namespace Azure.ResourceManager.DataBoxEdge
             return resourceGroupResource.GetDataBoxEdgeDevices().Get(deviceName, cancellationToken);
         }
 
-        #region DataBoxEdgeDeviceResource
+        #region DataBoxEdgeRoleAddonResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeDeviceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeDeviceResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeDeviceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataBoxEdgeRoleAddonResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeRoleAddonResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeRoleAddonResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeDeviceResource" /> object. </returns>
-        public static DataBoxEdgeDeviceResource GetDataBoxEdgeDeviceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataBoxEdgeRoleAddonResource" /> object. </returns>
+        public static DataBoxEdgeRoleAddonResource GetDataBoxEdgeRoleAddonResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataBoxEdgeDeviceResource.ValidateResourceId(id);
-                return new DataBoxEdgeDeviceResource(client, id);
+                DataBoxEdgeRoleAddonResource.ValidateResourceId(id);
+                return new DataBoxEdgeRoleAddonResource(client, id);
             }
             );
         }
@@ -231,6 +231,44 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 BandwidthScheduleResource.ValidateResourceId(id);
                 return new BandwidthScheduleResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DataBoxEdgeStorageContainerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DataBoxEdgeStorageContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeStorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeStorageContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataBoxEdgeStorageContainerResource" /> object. </returns>
+        public static DataBoxEdgeStorageContainerResource GetDataBoxEdgeStorageContainerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DataBoxEdgeStorageContainerResource.ValidateResourceId(id);
+                return new DataBoxEdgeStorageContainerResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DataBoxEdgeDeviceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DataBoxEdgeDeviceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeDeviceResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeDeviceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataBoxEdgeDeviceResource" /> object. </returns>
+        public static DataBoxEdgeDeviceResource GetDataBoxEdgeDeviceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DataBoxEdgeDeviceResource.ValidateResourceId(id);
+                return new DataBoxEdgeDeviceResource(client, id);
             }
             );
         }
@@ -293,6 +331,44 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
         #endregion
 
+        #region MarketplaceImageVersionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MarketplaceImageVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MarketplaceImageVersionResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MarketplaceImageVersionResource" /> object. </returns>
+        public static MarketplaceImageVersionResource GetMarketplaceImageVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MarketplaceImageVersionResource.ValidateResourceId(id);
+                return new MarketplaceImageVersionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MonitoringMetricConfigurationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MonitoringMetricConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitoringMetricConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringMetricConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource" /> object. </returns>
+        public static MonitoringMetricConfigurationResource GetMonitoringMetricConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MonitoringMetricConfigurationResource.ValidateResourceId(id);
+                return new MonitoringMetricConfigurationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region DataBoxEdgeOrderResource
         /// <summary>
         /// Gets an object representing a <see cref="DataBoxEdgeOrderResource" /> along with the instance operations that can be performed on it but with no data.
@@ -326,44 +402,6 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 DataBoxEdgeRoleResource.ValidateResourceId(id);
                 return new DataBoxEdgeRoleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region DataBoxEdgeRoleAddonResource
-        /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeRoleAddonResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeRoleAddonResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeRoleAddonResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeRoleAddonResource" /> object. </returns>
-        public static DataBoxEdgeRoleAddonResource GetDataBoxEdgeRoleAddonResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxEdgeRoleAddonResource.ValidateResourceId(id);
-                return new DataBoxEdgeRoleAddonResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MonitoringMetricConfigurationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MonitoringMetricConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitoringMetricConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringMetricConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource" /> object. </returns>
-        public static MonitoringMetricConfigurationResource GetMonitoringMetricConfigurationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MonitoringMetricConfigurationResource.ValidateResourceId(id);
-                return new MonitoringMetricConfigurationResource(client, id);
             }
             );
         }
@@ -421,25 +459,6 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 DataBoxEdgeStorageAccountResource.ValidateResourceId(id);
                 return new DataBoxEdgeStorageAccountResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region DataBoxEdgeStorageContainerResource
-        /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeStorageContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeStorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeStorageContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeStorageContainerResource" /> object. </returns>
-        public static DataBoxEdgeStorageContainerResource GetDataBoxEdgeStorageContainerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxEdgeStorageContainerResource.ValidateResourceId(id);
-                return new DataBoxEdgeStorageContainerResource(client, id);
             }
             );
         }

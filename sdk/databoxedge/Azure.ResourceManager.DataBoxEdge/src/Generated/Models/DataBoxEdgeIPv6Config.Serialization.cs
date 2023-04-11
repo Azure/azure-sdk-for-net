@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("ipAddress"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        ipAddress = null;
+                        continue;
+                    }
                     ipAddress = property.Value.GetString();
                     continue;
                 }
@@ -40,6 +45,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("gateway"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        gateway = null;
+                        continue;
+                    }
                     gateway = property.Value.GetString();
                     continue;
                 }

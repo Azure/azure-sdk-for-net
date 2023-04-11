@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of DataBoxEdgeNetworkAdapter. </summary>
         /// <param name="adapterId"> Instance ID of network adapter. </param>
-        /// <param name="adapterPosition"> Hardware position of network adapter. </param>
+        /// <param name="adapterPosition"> The network adapter position. </param>
         /// <param name="index"> Logical index of the adapter. </param>
         /// <param name="nodeId"> Node ID of the network adapter. </param>
         /// <param name="networkAdapterName"> Network adapter name. </param>
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="status"> Value indicating whether this adapter is valid. </param>
         /// <param name="rdmaStatus"> Value indicating whether this adapter is RDMA capable. </param>
         /// <param name="dhcpStatus"> Value indicating whether this adapter has DHCP enabled. </param>
-        /// <param name="ipv4Configuration"> The IPv4 configuration of the network adapter. </param>
-        /// <param name="ipv6Configuration"> The IPv6 configuration of the network adapter. </param>
+        /// <param name="ipv4Configuration"> Details related to the IPv4 address configuration. </param>
+        /// <param name="ipv6Configuration"> Details related to the IPv6 address configuration. </param>
         /// <param name="ipv6LinkLocalAddress"> The IPv6 local address. </param>
         /// <param name="dnsServers"> The list of DNS Servers of the device. </param>
         internal DataBoxEdgeNetworkAdapter(string adapterId, DataBoxEdgeNetworkAdapterPosition adapterPosition, int? index, Guid? nodeId, string networkAdapterName, string label, string macAddress, long? linkSpeed, DataBoxEdgeNetworkAdapterStatus? status, DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus, DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus, DataBoxEdgeIPv4Config ipv4Configuration, DataBoxEdgeIPv6Config ipv6Configuration, string ipv6LinkLocalAddress, IReadOnlyList<string> dnsServers)
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Instance ID of network adapter. </summary>
         public string AdapterId { get; }
-        /// <summary> Hardware position of network adapter. </summary>
+        /// <summary> The network adapter position. </summary>
         public DataBoxEdgeNetworkAdapterPosition AdapterPosition { get; }
         /// <summary> Logical index of the adapter. </summary>
         public int? Index { get; }
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeNetworkAdapterRdmaStatus? RdmaStatus { get; }
         /// <summary> Value indicating whether this adapter has DHCP enabled. </summary>
         public DataBoxEdgeNetworkAdapterDhcpStatus? DhcpStatus { get; }
-        /// <summary> The IPv4 configuration of the network adapter. </summary>
+        /// <summary> Details related to the IPv4 address configuration. </summary>
         public DataBoxEdgeIPv4Config IPv4Configuration { get; }
-        /// <summary> The IPv6 configuration of the network adapter. </summary>
+        /// <summary> Details related to the IPv6 address configuration. </summary>
         public DataBoxEdgeIPv6Config IPv6Configuration { get; }
         /// <summary> The IPv6 local address. </summary>
         public string IPv6LinkLocalAddress { get; }

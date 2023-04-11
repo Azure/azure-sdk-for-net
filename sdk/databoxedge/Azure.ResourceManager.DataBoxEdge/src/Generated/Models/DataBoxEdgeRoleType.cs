@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> The DataBoxEdgeRoleType. </summary>
+    /// <summary> Role type. </summary>
     public readonly partial struct DataBoxEdgeRoleType : IEquatable<DataBoxEdgeRoleType>
     {
         private readonly string _value;
@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private const string MecValue = "MEC";
         private const string CloudEdgeManagementValue = "CloudEdgeManagement";
         private const string KubernetesValue = "Kubernetes";
+        private const string ASEKubernetesValue = "ASEKubernetes";
 
         /// <summary> IOT. </summary>
         public static DataBoxEdgeRoleType IoT { get; } = new DataBoxEdgeRoleType(IoTValue);
@@ -44,6 +45,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeRoleType CloudEdgeManagement { get; } = new DataBoxEdgeRoleType(CloudEdgeManagementValue);
         /// <summary> Kubernetes. </summary>
         public static DataBoxEdgeRoleType Kubernetes { get; } = new DataBoxEdgeRoleType(KubernetesValue);
+        /// <summary> ASEKubernetes. </summary>
+        public static DataBoxEdgeRoleType ASEKubernetes { get; } = new DataBoxEdgeRoleType(ASEKubernetesValue);
         /// <summary> Determines if two <see cref="DataBoxEdgeRoleType"/> values are the same. </summary>
         public static bool operator ==(DataBoxEdgeRoleType left, DataBoxEdgeRoleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeRoleType"/> values are not the same. </summary>

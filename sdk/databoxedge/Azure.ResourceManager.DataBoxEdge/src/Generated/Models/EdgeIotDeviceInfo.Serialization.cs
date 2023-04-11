@@ -21,8 +21,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(IotHostHub);
             if (Optional.IsDefined(IotHostHubId))
             {
-                writer.WritePropertyName("ioTHostHubId"u8);
-                writer.WriteStringValue(IotHostHubId);
+                if (IotHostHubId != null)
+                {
+                    writer.WritePropertyName("ioTHostHubId"u8);
+                    writer.WriteStringValue(IotHostHubId);
+                }
+                else
+                {
+                    writer.WriteNull("ioTHostHubId");
+                }
             }
             if (Optional.IsDefined(Authentication))
             {
@@ -58,7 +65,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        iotHostHubId = null;
                         continue;
                     }
                     iotHostHubId = new ResourceIdentifier(property.Value.GetString());

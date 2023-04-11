@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> List of VM sizes being checked for creation on appliance along with corresponding result. </summary>
+    /// <summary> List of VM sizes being checked for creation on appliance along with corresponding result. </summary>
     public partial class VmPlacementRequestResult
     {
         /// <summary> Initializes a new instance of VmPlacementRequestResult. </summary>
@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             VmSize = new ChangeTrackingList<string>();
         }
 
-        /// <summary> List of VM sizes being checked. </summary>
-        public IList<string> VmSize { get; }
+        /// <summary> List of VM sizes being checked. </summary>
+        public IList<string> VmSize { get; set; }
         /// <summary> Boolean value indicating if the VM(s) in VmSize can be created. </summary>
         public bool? IsFeasible { get; set; }
         /// <summary> MessageCode indicating reason for success or failure. </summary>

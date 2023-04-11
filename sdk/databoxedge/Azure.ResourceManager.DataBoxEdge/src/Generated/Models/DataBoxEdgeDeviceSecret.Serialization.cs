@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("keyVaultId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        keyVaultId = null;
+                        continue;
+                    }
                     keyVaultId = property.Value.GetString();
                     continue;
                 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Optional<AzureLocation?> location = default;
             Optional<IReadOnlyList<string>> zones = default;
             Optional<IReadOnlyList<string>> sites = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        location = null;
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        zones = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        sites = null;
                         continue;
                     }
                     List<string> array = new List<string>();

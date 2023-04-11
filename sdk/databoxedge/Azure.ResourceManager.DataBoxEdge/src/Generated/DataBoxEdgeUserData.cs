@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DataBoxEdgeUserData : ResourceData
     {
         /// <summary> Initializes a new instance of DataBoxEdgeUserData. </summary>
-        /// <param name="userType"> Type of the user. </param>
-        public DataBoxEdgeUserData(DataBoxEdgeUserType userType)
+        /// <param name="properties"> The user properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DataBoxEdgeUserData(UserProperties properties)
         {
-            ShareAccessRights = new ChangeTrackingList<ShareAccessRight>();
-            UserType = userType;
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeUserData. </summary>
@@ -31,21 +33,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="encryptedPassword"> The password details. </param>
-        /// <param name="shareAccessRights"> List of shares that the user has rights on. This field should not be specified during user creation. </param>
-        /// <param name="userType"> Type of the user. </param>
-        internal DataBoxEdgeUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AsymmetricEncryptedSecret encryptedPassword, IReadOnlyList<ShareAccessRight> shareAccessRights, DataBoxEdgeUserType userType) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The user properties. </param>
+        internal DataBoxEdgeUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UserProperties properties) : base(id, name, resourceType, systemData)
         {
-            EncryptedPassword = encryptedPassword;
-            ShareAccessRights = shareAccessRights;
-            UserType = userType;
+            Properties = properties;
         }
 
-        /// <summary> The password details. </summary>
-        public AsymmetricEncryptedSecret EncryptedPassword { get; set; }
-        /// <summary> List of shares that the user has rights on. This field should not be specified during user creation. </summary>
-        public IReadOnlyList<ShareAccessRight> ShareAccessRights { get; }
-        /// <summary> Type of the user. </summary>
-        public DataBoxEdgeUserType UserType { get; set; }
+        /// <summary> The user properties. </summary>
+        public UserProperties Properties { get; set; }
     }
 }

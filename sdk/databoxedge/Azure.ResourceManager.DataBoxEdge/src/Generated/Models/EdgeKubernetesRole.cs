@@ -35,34 +35,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Role type. </param>
-        /// <param name="hostPlatform"> Host OS supported by the Kubernetes role. </param>
-        /// <param name="provisioningState"> State of Kubernetes deployment. </param>
-        /// <param name="hostPlatformType"> Platform where the runtime is hosted. </param>
-        /// <param name="kubernetesClusterInfo"> Kubernetes cluster configuration. </param>
-        /// <param name="kubernetesRoleResources"> Kubernetes role resources. </param>
-        /// <param name="roleStatus"> Role status. </param>
-        internal EdgeKubernetesRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, DataBoxEdgeOSPlatformType? hostPlatform, EdgeKubernetesState? provisioningState, HostPlatformType? hostPlatformType, EdgeKubernetesClusterInfo kubernetesClusterInfo, EdgeKubernetesRoleResources kubernetesRoleResources, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        /// <param name="properties"> Kubernetes role properties. </param>
+        internal EdgeKubernetesRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, KubernetesRoleProperties properties) : base(id, name, resourceType, systemData, kind)
         {
-            HostPlatform = hostPlatform;
-            ProvisioningState = provisioningState;
-            HostPlatformType = hostPlatformType;
-            KubernetesClusterInfo = kubernetesClusterInfo;
-            KubernetesRoleResources = kubernetesRoleResources;
-            RoleStatus = roleStatus;
+            Properties = properties;
             Kind = kind;
         }
 
-        /// <summary> Host OS supported by the Kubernetes role. </summary>
-        public DataBoxEdgeOSPlatformType? HostPlatform { get; set; }
-        /// <summary> State of Kubernetes deployment. </summary>
-        public EdgeKubernetesState? ProvisioningState { get; }
-        /// <summary> Platform where the runtime is hosted. </summary>
-        public HostPlatformType? HostPlatformType { get; }
-        /// <summary> Kubernetes cluster configuration. </summary>
-        public EdgeKubernetesClusterInfo KubernetesClusterInfo { get; set; }
-        /// <summary> Kubernetes role resources. </summary>
-        public EdgeKubernetesRoleResources KubernetesRoleResources { get; set; }
-        /// <summary> Role status. </summary>
-        public DataBoxEdgeRoleStatus? RoleStatus { get; set; }
+        /// <summary> Kubernetes role properties. </summary>
+        public KubernetesRoleProperties Properties { get; set; }
     }
 }

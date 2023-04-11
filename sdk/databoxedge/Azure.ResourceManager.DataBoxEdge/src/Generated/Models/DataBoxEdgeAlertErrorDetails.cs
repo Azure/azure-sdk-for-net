@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class DataBoxEdgeAlertErrorDetails
     {
         /// <summary> Initializes a new instance of DataBoxEdgeAlertErrorDetails. </summary>
-        internal DataBoxEdgeAlertErrorDetails()
+        public DataBoxEdgeAlertErrorDetails()
         {
         }
 

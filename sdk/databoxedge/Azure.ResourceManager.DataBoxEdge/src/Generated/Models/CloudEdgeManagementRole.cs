@@ -30,28 +30,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Role type. </param>
-        /// <param name="localManagementStatus"> Local Edge Management Status. </param>
-        /// <param name="edgeProfile"> Edge Profile of the resource. </param>
-        /// <param name="roleStatus"> Role status. </param>
-        internal CloudEdgeManagementRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, DataBoxEdgeRoleStatus? localManagementStatus, EdgeProfile edgeProfile, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        /// <param name="properties"> CloudEdgeManagement Role properties. </param>
+        internal CloudEdgeManagementRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, CloudEdgeManagementRoleProperties properties) : base(id, name, resourceType, systemData, kind)
         {
-            LocalManagementStatus = localManagementStatus;
-            EdgeProfile = edgeProfile;
-            RoleStatus = roleStatus;
+            Properties = properties;
             Kind = kind;
         }
 
-        /// <summary> Local Edge Management Status. </summary>
-        public DataBoxEdgeRoleStatus? LocalManagementStatus { get; }
-        /// <summary> Edge Profile of the resource. </summary>
-        internal EdgeProfile EdgeProfile { get; }
-        /// <summary> Edge Profile Subscription. </summary>
-        public EdgeProfileSubscription EdgeSubscription
-        {
-            get => EdgeProfile?.Subscription;
-        }
-
-        /// <summary> Role status. </summary>
-        public DataBoxEdgeRoleStatus? RoleStatus { get; set; }
+        /// <summary> CloudEdgeManagement Role properties. </summary>
+        public CloudEdgeManagementRoleProperties Properties { get; set; }
     }
 }

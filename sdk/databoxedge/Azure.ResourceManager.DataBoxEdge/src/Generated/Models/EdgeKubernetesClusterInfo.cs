@@ -29,18 +29,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="etcdInfo"> Etcd configuration. </param>
         /// <param name="nodes"> Kubernetes cluster nodes. </param>
         /// <param name="version"> Kubernetes cluster version. </param>
-        internal EdgeKubernetesClusterInfo(DataBoxEdgeEtcdInfo etcdInfo, IReadOnlyList<EdgeKubernetesNodeInfo> nodes, string version)
+        /// <param name="componentType"> ComponentType of the Kubernetes node. </param>
+        internal EdgeKubernetesClusterInfo(DataBoxEdgeEtcdInfo etcdInfo, IReadOnlyList<EdgeKubernetesNodeInfo> nodes, string version, KubernetesComponentType? componentType)
         {
             EtcdInfo = etcdInfo;
             Nodes = nodes;
             Version = version;
+            ComponentType = componentType;
         }
 
         /// <summary> Etcd configuration. </summary>
-        public DataBoxEdgeEtcdInfo EtcdInfo { get; }
+        public DataBoxEdgeEtcdInfo EtcdInfo { get; set; }
         /// <summary> Kubernetes cluster nodes. </summary>
         public IReadOnlyList<EdgeKubernetesNodeInfo> Nodes { get; }
         /// <summary> Kubernetes cluster version. </summary>
         public string Version { get; set; }
+        /// <summary> ComponentType of the Kubernetes node. </summary>
+        public KubernetesComponentType? ComponentType { get; }
     }
 }

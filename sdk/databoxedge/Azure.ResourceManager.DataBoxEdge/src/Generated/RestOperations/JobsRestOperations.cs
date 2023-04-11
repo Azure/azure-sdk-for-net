@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         public JobsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _endpoint = endpoint ?? new Uri("management.azure.com");
+            _apiVersion = apiVersion ?? "2023-01-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
         }

@@ -26,26 +26,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Role type. </param>
-        /// <param name="connectionString"> Activation key of the MEC. </param>
-        /// <param name="controllerEndpoint"> Controller Endpoint. </param>
-        /// <param name="resourceUniqueId"> Unique Id of the Resource. </param>
-        /// <param name="roleStatus"> Role status. </param>
-        internal MecRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, AsymmetricEncryptedSecret connectionString, string controllerEndpoint, string resourceUniqueId, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        /// <param name="properties"> MEC role properties. </param>
+        internal MecRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, MecRoleProperties properties) : base(id, name, resourceType, systemData, kind)
         {
-            ConnectionString = connectionString;
-            ControllerEndpoint = controllerEndpoint;
-            ResourceUniqueId = resourceUniqueId;
-            RoleStatus = roleStatus;
+            Properties = properties;
             Kind = kind;
         }
 
-        /// <summary> Activation key of the MEC. </summary>
-        public AsymmetricEncryptedSecret ConnectionString { get; set; }
-        /// <summary> Controller Endpoint. </summary>
-        public string ControllerEndpoint { get; set; }
-        /// <summary> Unique Id of the Resource. </summary>
-        public string ResourceUniqueId { get; set; }
-        /// <summary> Role status. </summary>
-        public DataBoxEdgeRoleStatus? RoleStatus { get; set; }
+        /// <summary> MEC role properties. </summary>
+        public MecRoleProperties Properties { get; set; }
     }
 }

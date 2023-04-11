@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string UnknownValue = "Unknown";
         private const string InitialValue = "Initial";
         private const string ScanStartedValue = "ScanStarted";
         private const string ScanCompleteValue = "ScanComplete";
@@ -39,9 +38,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private const string RescanStartedValue = "RescanStarted";
         private const string RescanCompleteValue = "RescanComplete";
         private const string RescanFailedValue = "RescanFailed";
+        private const string UnknownValue = "Unknown";
 
-        /// <summary> Unknown. </summary>
-        public static UpdateOperationStage Unknown { get; } = new UpdateOperationStage(UnknownValue);
         /// <summary> Initial. </summary>
         public static UpdateOperationStage Initial { get; } = new UpdateOperationStage(InitialValue);
         /// <summary> ScanStarted. </summary>
@@ -74,6 +72,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static UpdateOperationStage RescanComplete { get; } = new UpdateOperationStage(RescanCompleteValue);
         /// <summary> RescanFailed. </summary>
         public static UpdateOperationStage RescanFailed { get; } = new UpdateOperationStage(RescanFailedValue);
+        /// <summary> Unknown. </summary>
+        public static UpdateOperationStage Unknown { get; } = new UpdateOperationStage(UnknownValue);
         /// <summary> Determines if two <see cref="UpdateOperationStage"/> values are the same. </summary>
         public static bool operator ==(UpdateOperationStage left, UpdateOperationStage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpdateOperationStage"/> values are not the same. </summary>

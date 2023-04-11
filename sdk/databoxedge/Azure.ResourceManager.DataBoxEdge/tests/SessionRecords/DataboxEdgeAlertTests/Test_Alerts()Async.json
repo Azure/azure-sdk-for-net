@@ -1,0 +1,167 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a73281c5b14dbe2e354aa554b67b84b7-c071466ad7b39789-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d6688b31c7822e0de47c4fd5b12eb4ae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "397",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Mar 2023 08:30:07 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "78dbe100-6373-41a6-8fed-1d33499dfc77",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "78dbe100-6373-41a6-8fed-1d33499dfc77",
+        "x-ms-routing-request-id": "CENTRALINDIA:20230329T083008Z:78dbe100-6373-41a6-8fed-1d33499dfc77"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "db4e2fdb-6d80-4e6e-b7cd-736098270664",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Edge Gateway Test",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk6-2023/alerts?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "604a5582c25af7a370558a068fd73fd0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2545",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Mar 2023 08:30:07 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "604a5582c25af7a370558a068fd73fd0",
+        "x-ms-correlation-request-id": "dccb6863-0c2f-4230-942b-0f3987e3dee1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "dccb6863-0c2f-4230-942b-0f3987e3dee1",
+        "x-ms-routing-request-id": "CENTRALINDIA:20230329T083008Z:dccb6863-0c2f-4230-942b-0f3987e3dee1"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "title": "Lost heartbeat from your device.",
+              "alertType": "DeviceHeartBeat",
+              "appearedAtDateTime": "2023-03-17T11:46:31.9379967Z",
+              "recommendation": "If your device is offline, then the device is not able to communicate with the Azure service. This could be due to one of the following reasons: \u003Cbr/\u003E \u0026nbsp;1. The Internet connectivity is broken. Check your internet connection. In the local web UI of the device, go to Troubleshooting \u003E Diagnostic tests. Run the diagnostic tests. Resolve the reported issues.\u003Cbr/\u003E \u0026nbsp;2. The device is turned off or paused on the hypervisor. Turn on your device! For more information, go to \u003Ca href=\u0022https://aka.ms/dbe-device-local-mgmt\u0022 target=\u0022_blank\u0022\u003ETurn on your device\u003C/a\u003E. \u003Cbr/\u003E\u0026nbsp;3. Your device could have rebooted due to an update. Wait a few minutes and try to reconnect.",
+              "severity": "Critical",
+              "errorDetails": {
+                "errorCode": "",
+                "errorMessage": "",
+                "occurrences": 1
+              },
+              "detailedInformation": {}
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk6-2023/alerts/b117940e-4e3d-4d45-b83c-27234eb2d6cd",
+            "name": "b117940e-4e3d-4d45-b83c-27234eb2d6cd",
+            "type": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/alerts"
+          },
+          {
+            "properties": {
+              "title": "Cluster resource \u0027demouser\u0027 is down. You device will continue to run IO, but you cannot use the local web UI to manage the device.",
+              "alertType": "HcsClusterResource.ReplicatedLocalUserFaulted",
+              "appearedAtDateTime": "2019-06-13T20:56:32.8546114Z",
+              "recommendation": "If the issue persists, collect a log package and contact Microsoft Support. For more information, go to \u003Ca href=\u0022https://aka.ms/collect-logs\u0022\u003EUse the local web UI to collect a log package\u003C/a\u003E.",
+              "severity": "Warning",
+              "errorDetails": {
+                "errorCode": "",
+                "errorMessage": "",
+                "occurrences": 1
+              },
+              "detailedInformation": {}
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk6-2023/alerts/389258e9-5547-4018-97c1-24ef20ac1a1c",
+            "name": "389258e9-5547-4018-97c1-24ef20ac1a1c",
+            "type": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/alerts"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk6-2023/alerts/b117940e-4e3d-4d45-b83c-27234eb2d6cd?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e54985f65ef110abdfc206c95d6a43ce-1f53d6482096d771-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bc0fd0225e05f14da0431b512ef1e677",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1363",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 29 Mar 2023 08:30:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "bc0fd0225e05f14da0431b512ef1e677",
+        "x-ms-correlation-request-id": "aa901058-cc6f-4d9c-9bbf-271c4947e798",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "aa901058-cc6f-4d9c-9bbf-271c4947e798",
+        "x-ms-routing-request-id": "CENTRALINDIA:20230329T083009Z:aa901058-cc6f-4d9c-9bbf-271c4947e798"
+      },
+      "ResponseBody": {
+        "properties": {
+          "title": "Lost heartbeat from your device.",
+          "alertType": "DeviceHeartBeat",
+          "appearedAtDateTime": "2023-03-17T11:46:31.9379967Z",
+          "recommendation": "If your device is offline, then the device is not able to communicate with the Azure service. This could be due to one of the following reasons: \u003Cbr/\u003E \u0026nbsp;1. The Internet connectivity is broken. Check your internet connection. In the local web UI of the device, go to Troubleshooting \u003E Diagnostic tests. Run the diagnostic tests. Resolve the reported issues.\u003Cbr/\u003E \u0026nbsp;2. The device is turned off or paused on the hypervisor. Turn on your device! For more information, go to \u003Ca href=\u0022https://aka.ms/dbe-device-local-mgmt\u0022 target=\u0022_blank\u0022\u003ETurn on your device\u003C/a\u003E. \u003Cbr/\u003E\u0026nbsp;3. Your device could have rebooted due to an update. Wait a few minutes and try to reconnect.",
+          "severity": "Critical",
+          "errorDetails": {
+            "errorCode": "",
+            "errorMessage": "",
+            "occurrences": 1
+          },
+          "detailedInformation": {}
+        },
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk6-2023/alerts/b117940e-4e3d-4d45-b83c-27234eb2d6cd",
+        "name": "b117940e-4e3d-4d45-b83c-27234eb2d6cd",
+        "type": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/alerts"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "2100547275",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db4e2fdb-6d80-4e6e-b7cd-736098270664"
+  }
+}

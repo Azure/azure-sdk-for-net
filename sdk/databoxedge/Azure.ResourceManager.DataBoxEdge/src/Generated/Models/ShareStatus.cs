@@ -22,12 +22,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string OnlineValue = "Online";
         private const string OfflineValue = "Offline";
         private const string UnknownValue = "Unknown";
         private const string OKValue = "OK";
         private const string UpdatingValue = "Updating";
         private const string NeedsAttentionValue = "NeedsAttention";
 
+        /// <summary> Online. </summary>
+        public static ShareStatus Online { get; } = new ShareStatus(OnlineValue);
         /// <summary> Offline. </summary>
         public static ShareStatus Offline { get; } = new ShareStatus(OfflineValue);
         /// <summary> Unknown. </summary>

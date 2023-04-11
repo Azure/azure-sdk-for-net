@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="deviceId"> ID of the IoT device/edge device. </param>
         /// <param name="iotHostHub"> Host name for the IoT hub associated to the device. </param>
         /// <param name="iotHostHubId"> Id for the IoT hub associated to the device. </param>
-        /// <param name="authentication"> Encrypted IoT device/IoT edge device connection string. </param>
+        /// <param name="authentication"> Authentication mechanism for IoT devices. </param>
         internal EdgeIotDeviceInfo(string deviceId, string iotHostHub, ResourceIdentifier iotHostHubId, Authentication authentication)
         {
             DeviceId = deviceId;
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string IotHostHub { get; set; }
         /// <summary> Id for the IoT hub associated to the device. </summary>
         public ResourceIdentifier IotHostHubId { get; set; }
-        /// <summary> Encrypted IoT device/IoT edge device connection string. </summary>
+        /// <summary> Authentication mechanism for IoT devices. </summary>
         internal Authentication Authentication { get; set; }
-        /// <summary> Connection string based on the symmetric key. </summary>
+        /// <summary> Represent the secrets intended for encryption with asymmetric key pair. </summary>
         public AsymmetricEncryptedSecret SymmetricKeyConnectionString
         {
             get => Authentication is null ? default : Authentication.SymmetricKeyConnectionString;

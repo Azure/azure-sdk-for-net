@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
@@ -21,13 +20,13 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class MonitoringMetricConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of MonitoringMetricConfigurationData. </summary>
-        /// <param name="metricConfigurations"> The metrics configuration details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricConfigurations"/> is null. </exception>
-        public MonitoringMetricConfigurationData(IEnumerable<DataBoxEdgeMetricConfiguration> metricConfigurations)
+        /// <param name="properties"> Metrics properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public MonitoringMetricConfigurationData(MonitoringMetricConfigurationProperties properties)
         {
-            Argument.AssertNotNull(metricConfigurations, nameof(metricConfigurations));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            MetricConfigurations = metricConfigurations.ToList();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of MonitoringMetricConfigurationData. </summary>
@@ -35,13 +34,19 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="metricConfigurations"> The metrics configuration details. </param>
-        internal MonitoringMetricConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<DataBoxEdgeMetricConfiguration> metricConfigurations) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Metrics properties. </param>
+        internal MonitoringMetricConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitoringMetricConfigurationProperties properties) : base(id, name, resourceType, systemData)
         {
-            MetricConfigurations = metricConfigurations;
+            Properties = properties;
         }
 
+        /// <summary> Metrics properties. </summary>
+        internal MonitoringMetricConfigurationProperties Properties { get; set; }
         /// <summary> The metrics configuration details. </summary>
-        public IList<DataBoxEdgeMetricConfiguration> MetricConfigurations { get; }
+        public IList<DataBoxEdgeMetricConfiguration> MetricConfigurations
+        {
+            get => Properties is null ? default : Properties.MetricConfigurations;
+            set => Properties = new MonitoringMetricConfigurationProperties(value);
+        }
     }
 }

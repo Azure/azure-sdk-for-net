@@ -16,13 +16,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeDataCenterAccessCode. </summary>
-        /// <param name="authCode"> DCAccess Code for the Self Managed shipment. </param>
-        internal DataBoxEdgeDataCenterAccessCode(string authCode)
+        /// <param name="properties"> DCAccessCode Properties. </param>
+        internal DataBoxEdgeDataCenterAccessCode(DCAccessCodeProperties properties)
         {
-            AuthCode = authCode;
+            Properties = properties;
         }
 
+        /// <summary> DCAccessCode Properties. </summary>
+        internal DCAccessCodeProperties Properties { get; }
         /// <summary> DCAccess Code for the Self Managed shipment. </summary>
-        public string AuthCode { get; }
+        public string AuthCode
+        {
+            get => Properties?.AuthCode;
+        }
     }
 }

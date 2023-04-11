@@ -17,11 +17,8 @@ namespace Azure.ResourceManager.DataBoxEdge
     }
     public partial class BandwidthScheduleData : Azure.ResourceManager.Models.ResourceData
     {
-        public BandwidthScheduleData(System.TimeSpan startOn, System.TimeSpan stopOn, int rateInMbps, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek> days) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek> Days { get { throw null; } }
-        public int RateInMbps { get { throw null; } set { } }
-        public System.TimeSpan StartOn { get { throw null; } set { } }
-        public System.TimeSpan StopOn { get { throw null; } set { } }
+        public BandwidthScheduleData(Azure.ResourceManager.DataBoxEdge.Models.BandwidthScheduleProperties properties) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.BandwidthScheduleProperties Properties { get { throw null; } set { } }
     }
     public partial class BandwidthScheduleResource : Azure.ResourceManager.ArmResource
     {
@@ -53,13 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DataBoxEdgeAlertData : Azure.ResourceManager.Models.ResourceData
     {
         public DataBoxEdgeAlertData() { }
-        public string AlertType { get { throw null; } }
-        public System.DateTimeOffset? AppearedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> DetailedInformation { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails ErrorDetails { get { throw null; } }
-        public string Recommendation { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity? Severity { get { throw null; } }
-        public string Title { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.AlertProperties Properties { get { throw null; } set { } }
     }
     public partial class DataBoxEdgeAlertResource : Azure.ResourceManager.ArmResource
     {
@@ -89,27 +80,11 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DataBoxEdgeDeviceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DataBoxEdgeDeviceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType> ConfiguredRoleTypes { get { throw null; } }
-        public string Culture { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus? DataBoxEdgeDeviceStatus { get { throw null; } }
-        public string Description { get { throw null; } }
-        public string DeviceHcsVersion { get { throw null; } }
-        public long? DeviceLocalCapacity { get { throw null; } }
-        public string DeviceModel { get { throw null; } }
-        public string DeviceSoftwareVersion { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType? DeviceType { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription EdgeSubscription { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } set { } }
-        public string FriendlyName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind? Kind { get { throw null; } }
-        public string ModelDescription { get { throw null; } }
-        public int? NodeCount { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType? ResidencyType { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails ResourceMoveDetails { get { throw null; } }
-        public string SerialNumber { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku Sku { get { throw null; } set { } }
-        public string TimeZone { get { throw null; } }
     }
     public partial class DataBoxEdgeDeviceResource : Azure.ResourceManager.ArmResource
     {
@@ -119,10 +94,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation CheckResourceCreationFeasibility(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent content, string capacityName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CheckResourceCreationFeasibilityAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent content, string capacityName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation CreateOrUpdateSecuritySettings(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings securitySettings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CreateOrUpdateSecuritySettingsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings securitySettings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation CheckResourceCreationFeasibility(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent content = null, string capacityName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CheckResourceCreationFeasibilityAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent content = null, string capacityName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation CreateOrUpdateSecuritySettings(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CreateOrUpdateSecuritySettingsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -168,8 +143,19 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode> GetEdgeNodesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo> GetExtendedInformation(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo>> GetExtendedInformationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource> GetMarketplaceImageVersion(string publisherName, string offerName, string skuName, string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource>> GetMarketplaceImageVersionAsync(string publisherName, string offerName, string skuName, string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionCollection GetMarketplaceImageVersions(string publisherName, string offerName, string skuName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings> GetNetworkSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings>> GetNetworkSettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.Models.MarketplaceImageOffer> GetOffersbyPublisherMarketplaceImageOffers(string publisherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.Models.MarketplaceImageOffer> GetOffersbyPublisherMarketplaceImageOffersAsync(string publisherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.Models.MarketplaceImageOffer> GetOffersMarketplaceImageOffers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.Models.MarketplaceImageOffer> GetOffersMarketplaceImageOffersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.Models.MarketplaceImagePublisher> GetPublishersMarketplaceImagePublishers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.Models.MarketplaceImagePublisher> GetPublishersMarketplaceImagePublishersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.Models.MarketplaceImageSku> GetSKUsWithinOfferMarketplaceImageSkus(string publisherName, string offerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.Models.MarketplaceImageSku> GetSKUsWithinOfferMarketplaceImageSkusAsync(string publisherName, string offerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary> GetUpdateSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary>> GetUpdateSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation InstallUpdates(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -180,14 +166,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ScanForUpdatesAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation TriggerSupportPackage(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerSupportPackageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation TriggerSupportPackage(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerSupportPackageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> Update(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>> UpdateAsync(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo> UpdateExtendedInformation(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo>> UpdateExtendedInformationAsync(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse> UploadCertificate(Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse>> UploadCertificateAsync(Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo> UpdateExtendedInformation(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch patch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo>> UpdateExtendedInformationAsync(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch patch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse> UploadCertificate(Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse>> UploadCertificateAsync(Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class DataBoxEdgeExtensions
     {
@@ -213,6 +199,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource GetDataBoxEdgeUserResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource GetMarketplaceImageVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationResource GetMonitoringMetricConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class DataBoxEdgeJobCollection : Azure.ResourceManager.ArmCollection
@@ -226,19 +213,12 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DataBoxEdgeJobData : Azure.ResourceManager.Models.ResourceData
     {
         internal DataBoxEdgeJobData() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage? CurrentStage { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress DownloadProgress { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails Error { get { throw null; } }
-        public string ErrorManifestFile { get { throw null; } }
-        public string Folder { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress InstallProgress { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType? JobType { get { throw null; } }
         public int? PercentComplete { get { throw null; } }
-        public Azure.Core.ResourceIdentifier RefreshedEntityId { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.JobProperties Properties { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? Status { get { throw null; } }
-        public int? TotalRefreshErrors { get { throw null; } }
     }
     public partial class DataBoxEdgeJobResource : Azure.ResourceManager.ArmResource
     {
@@ -253,16 +233,8 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DataBoxEdgeOrderData : Azure.ResourceManager.Models.ResourceData
     {
         public DataBoxEdgeOrderData() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails ContactInformation { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus CurrentStatus { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo> DeliveryTrackingInfo { get { throw null; } }
         public string Kind { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus> OrderHistory { get { throw null; } }
-        public string OrderId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo> ReturnTrackingInfo { get { throw null; } }
-        public string SerialNumber { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType? ShipmentType { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress ShippingAddress { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.OrderProperties Properties { get { throw null; } set { } }
     }
     public partial class DataBoxEdgeOrderResource : Azure.ResourceManager.ArmResource
     {
@@ -347,6 +319,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource>> GetDataBoxEdgeRoleAddonAsync(string addonName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonCollection GetDataBoxEdgeRoleAddons() { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationResource GetMonitoringMetricConfiguration() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource> Migrate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource>> MigrateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -367,17 +341,8 @@ namespace Azure.ResourceManager.DataBoxEdge
     }
     public partial class DataBoxEdgeShareData : Azure.ResourceManager.Models.ResourceData
     {
-        public DataBoxEdgeShareData(Azure.ResourceManager.DataBoxEdge.Models.ShareStatus shareStatus, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus monitoringStatus, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol accessProtocol) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol AccessProtocol { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo AzureContainerInfo { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight> ClientAccessRights { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy? DataPolicy { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus MonitoringStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails RefreshDetails { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> ShareMappings { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.ShareStatus ShareStatus { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight> UserAccessRights { get { throw null; } }
+        public DataBoxEdgeShareData(Azure.ResourceManager.DataBoxEdge.Models.ShareProperties properties) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.ShareProperties Properties { get { throw null; } set { } }
     }
     public partial class DataBoxEdgeShareResource : Azure.ResourceManager.ArmResource
     {
@@ -427,15 +392,8 @@ namespace Azure.ResourceManager.DataBoxEdge
     }
     public partial class DataBoxEdgeStorageAccountCredentialData : Azure.ResourceManager.Models.ResourceData
     {
-        public DataBoxEdgeStorageAccountCredentialData(string alias, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus sslStatus, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType accountType) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret AccountKey { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType AccountType { get { throw null; } set { } }
-        public string Alias { get { throw null; } set { } }
-        public string BlobDomainName { get { throw null; } set { } }
-        public string ConnectionString { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus SslStatus { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
-        public string UserName { get { throw null; } set { } }
+        public DataBoxEdgeStorageAccountCredentialData(Azure.ResourceManager.DataBoxEdge.Models.StorageAccountCredentialProperties properties) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.StorageAccountCredentialProperties Properties { get { throw null; } set { } }
     }
     public partial class DataBoxEdgeStorageAccountCredentialResource : Azure.ResourceManager.ArmResource
     {
@@ -453,13 +411,8 @@ namespace Azure.ResourceManager.DataBoxEdge
     }
     public partial class DataBoxEdgeStorageAccountData : Azure.ResourceManager.Models.ResourceData
     {
-        public DataBoxEdgeStorageAccountData(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy dataPolicy) { }
-        public string BlobEndpoint { get { throw null; } }
-        public int? ContainerCount { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy DataPolicy { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier StorageAccountCredentialId { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus? StorageAccountStatus { get { throw null; } set { } }
+        public DataBoxEdgeStorageAccountData(Azure.ResourceManager.DataBoxEdge.Models.StorageAccountProperties properties) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.StorageAccountProperties Properties { get { throw null; } set { } }
     }
     public partial class DataBoxEdgeStorageAccountResource : Azure.ResourceManager.ArmResource
     {
@@ -495,11 +448,8 @@ namespace Azure.ResourceManager.DataBoxEdge
     }
     public partial class DataBoxEdgeStorageContainerData : Azure.ResourceManager.Models.ResourceData
     {
-        public DataBoxEdgeStorageContainerData(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat dataFormat) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus? ContainerStatus { get { throw null; } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat DataFormat { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails RefreshDetails { get { throw null; } }
+        public DataBoxEdgeStorageContainerData(Azure.ResourceManager.DataBoxEdge.Models.ContainerProperties properties) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.ContainerProperties Properties { get { throw null; } set { } }
     }
     public partial class DataBoxEdgeStorageContainerResource : Azure.ResourceManager.ArmResource
     {
@@ -567,10 +517,8 @@ namespace Azure.ResourceManager.DataBoxEdge
     }
     public partial class DataBoxEdgeUserData : Azure.ResourceManager.Models.ResourceData
     {
-        public DataBoxEdgeUserData(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType userType) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret EncryptedPassword { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight> ShareAccessRights { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType UserType { get { throw null; } set { } }
+        public DataBoxEdgeUserData(Azure.ResourceManager.DataBoxEdge.Models.UserProperties properties) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.UserProperties Properties { get { throw null; } set { } }
     }
     public partial class DataBoxEdgeUserResource : Azure.ResourceManager.ArmResource
     {
@@ -588,8 +536,8 @@ namespace Azure.ResourceManager.DataBoxEdge
     }
     public partial class DiagnosticProactiveLogCollectionSettingData : Azure.ResourceManager.Models.ResourceData
     {
-        public DiagnosticProactiveLogCollectionSettingData(Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent userConsent) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent UserConsent { get { throw null; } set { } }
+        public DiagnosticProactiveLogCollectionSettingData(Azure.ResourceManager.DataBoxEdge.Models.ProactiveLogCollectionSettingsProperties properties) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent? ProactiveLogCollectionUserConsent { get { throw null; } set { } }
     }
     public partial class DiagnosticProactiveLogCollectionSettingResource : Azure.ResourceManager.ArmResource
     {
@@ -605,8 +553,8 @@ namespace Azure.ResourceManager.DataBoxEdge
     }
     public partial class DiagnosticRemoteSupportSettingData : Azure.ResourceManager.Models.ResourceData
     {
-        public DiagnosticRemoteSupportSettingData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings> RemoteSupportSettingsList { get { throw null; } }
+        public DiagnosticRemoteSupportSettingData(Azure.ResourceManager.DataBoxEdge.Models.DiagnosticRemoteSupportSettingsProperties properties) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings> RemoteSupportSettingsList { get { throw null; } set { } }
     }
     public partial class DiagnosticRemoteSupportSettingResource : Azure.ResourceManager.ArmResource
     {
@@ -620,10 +568,40 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class MarketplaceImageVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource>, System.Collections.IEnumerable
+    {
+        protected MarketplaceImageVersionCollection() { }
+        public virtual Azure.Response<bool> Exists(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource> Get(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource>> GetAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class MarketplaceImageVersionData : Azure.ResourceManager.Models.ResourceData
+    {
+        public MarketplaceImageVersionData() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.MarketplaceImageVersionProperties Properties { get { throw null; } set { } }
+    }
+    public partial class MarketplaceImageVersionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MarketplaceImageVersionResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string publisherName, string offerName, string skuName, string versionName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.MarketplaceImageVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.Models.MarketplaceSasToken> GetSASTokenMarketplaceImageSasToken(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBoxEdge.Models.MarketplaceSasToken>> GetSASTokenMarketplaceImageSasTokenAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class MonitoringMetricConfigurationData : Azure.ResourceManager.Models.ResourceData
     {
-        public MonitoringMetricConfigurationData(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration> metricConfigurations) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration> MetricConfigurations { get { throw null; } }
+        public MonitoringMetricConfigurationData(Azure.ResourceManager.DataBoxEdge.Models.MonitoringMetricConfigurationProperties properties) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration> MetricConfigurations { get { throw null; } set { } }
     }
     public partial class MonitoringMetricConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -642,6 +620,56 @@ namespace Azure.ResourceManager.DataBoxEdge
 }
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
+    public partial class AlertProperties
+    {
+        public AlertProperties() { }
+        public string AlertType { get { throw null; } }
+        public System.DateTimeOffset? AppearedAtOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> DetailedInformation { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails ErrorDetails { get { throw null; } set { } }
+        public string Recommendation { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity? Severity { get { throw null; } }
+        public string Title { get { throw null; } }
+    }
+    public partial class ArcAddonProperties
+    {
+        public ArcAddonProperties(string subscriptionId, string resourceGroupName, string resourceName, Azure.Core.AzureLocation resourceLocation) { }
+        public string CustomLocationsObjectId { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? HostPlatform { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? HostPlatformType { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState? ProvisioningState { get { throw null; } }
+        public string ResourceGroupName { get { throw null; } set { } }
+        public Azure.Core.AzureLocation ResourceLocation { get { throw null; } set { } }
+        public string ResourceName { get { throw null; } set { } }
+        public string SubscriptionId { get { throw null; } set { } }
+        public string Version { get { throw null; } }
+    }
+    public partial class ASEKubernetesRole : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData
+    {
+        public ASEKubernetesRole() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.ASEKubernetesRoleProperties Properties { get { throw null; } set { } }
+    }
+    public partial class ASEKubernetesRoleCompute
+    {
+        public ASEKubernetesRoleCompute() { }
+        public long? MemoryInBytes { get { throw null; } }
+        public int? ProcessorCount { get { throw null; } }
+    }
+    public partial class ASEKubernetesRoleProperties
+    {
+        public ASEKubernetesRoleProperties(Azure.ResourceManager.DataBoxEdge.Models.ASEKubernetesRoleResources kubernetesRoleResources, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus roleStatus) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? HostPlatform { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? HostPlatformType { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.ASEKubernetesRoleResources KubernetesRoleResources { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus RoleStatus { get { throw null; } set { } }
+    }
+    public partial class ASEKubernetesRoleResources
+    {
+        public ASEKubernetesRoleResources() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.ASEKubernetesRoleCompute Compute { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> StorageEndpoints { get { throw null; } set { } }
+    }
     public partial class AsymmetricEncryptedSecret
     {
         public AsymmetricEncryptedSecret(string value, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm encryptionAlgorithm) { }
@@ -659,7 +687,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Family { get { throw null; } }
         public string Kind { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo> LocationInfo { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName? Name { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType> ShipmentTypes { get { throw null; } }
@@ -667,6 +695,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Size { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier? Tier { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion? Version { get { throw null; } }
+    }
+    public partial class BandwidthScheduleProperties
+    {
+        public BandwidthScheduleProperties(string start, string stop, int rateInMbps, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek> days) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek> Days { get { throw null; } }
+        public int RateInMbps { get { throw null; } set { } }
+        public string Start { get { throw null; } set { } }
+        public string Stop { get { throw null; } set { } }
     }
     public partial class ClientAccessRight
     {
@@ -677,21 +713,42 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class CloudEdgeManagementRole : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData
     {
         public CloudEdgeManagementRole() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription EdgeSubscription { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.CloudEdgeManagementRoleProperties Properties { get { throw null; } set { } }
+    }
+    public partial class CloudEdgeManagementRoleProperties
+    {
+        public CloudEdgeManagementRoleProperties(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus roleStatus) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription EdgeSubscription { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? LocalManagementStatus { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? RoleStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus RoleStatus { get { throw null; } set { } }
     }
     public partial class CniConfig
     {
-        internal CniConfig() { }
+        public CniConfig() { }
         public string CniConfigType { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType? ComponentType { get { throw null; } }
         public string PodSubnet { get { throw null; } }
         public string ServiceSubnet { get { throw null; } }
         public string Version { get { throw null; } }
     }
+    public partial class ComputeVersionInformation
+    {
+        public ComputeVersionInformation() { }
+        public string AzureArcVersion { get { throw null; } set { } }
+        public string IotEdgeVersion { get { throw null; } set { } }
+        public string KubernetesVersion { get { throw null; } set { } }
+    }
+    public partial class ContainerProperties
+    {
+        public ContainerProperties(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat dataFormat) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus? ContainerStatus { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat DataFormat { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails RefreshDetails { get { throw null; } set { } }
+    }
     public partial class DataBoxEdgeAlertErrorDetails
     {
-        internal DataBoxEdgeAlertErrorDetails() { }
+        public DataBoxEdgeAlertErrorDetails() { }
         public string ErrorCode { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public int? Occurrences { get { throw null; } }
@@ -808,14 +865,25 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class DataBoxEdgeDeviceCapacityInfo : Azure.ResourceManager.Models.ResourceData
     {
         public DataBoxEdgeDeviceCapacityInfo() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo ClusterComputeCapacityInfo { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo ClusterStorageCapacityInfo { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.HostCapacity> NodeCapacityInfos { get { throw null; } }
-        public System.DateTimeOffset? TimeStamp { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityInfoProperties Properties { get { throw null; } set { } }
     }
     public partial class DataBoxEdgeDeviceExtendedInfo : Azure.ResourceManager.Models.ResourceData
     {
         public DataBoxEdgeDeviceExtendedInfo() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoProperties Properties { get { throw null; } set { } }
+    }
+    public partial class DataBoxEdgeDeviceExtendedInfoPatch
+    {
+        public DataBoxEdgeDeviceExtendedInfoPatch() { }
+        public string ChannelIntegrityKeyName { get { throw null; } set { } }
+        public string ChannelIntegrityKeyVersion { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ClientSecretStoreId { get { throw null; } set { } }
+        public System.Uri ClientSecretStoreUri { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus? SyncStatus { get { throw null; } set { } }
+    }
+    public partial class DataBoxEdgeDeviceExtendedInfoProperties
+    {
+        public DataBoxEdgeDeviceExtendedInfoProperties() { }
         public string ChannelIntegrityKeyName { get { throw null; } set { } }
         public string ChannelIntegrityKeyVersion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ClientSecretStoreId { get { throw null; } set { } }
@@ -831,15 +899,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string FileShareWitnessUsername { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus? KeyVaultSyncStatus { get { throw null; } set { } }
         public string ResourceKey { get { throw null; } }
-    }
-    public partial class DataBoxEdgeDeviceExtendedInfoPatch
-    {
-        public DataBoxEdgeDeviceExtendedInfoPatch() { }
-        public string ChannelIntegrityKeyName { get { throw null; } set { } }
-        public string ChannelIntegrityKeyVersion { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ClientSecretStoreId { get { throw null; } set { } }
-        public System.Uri ClientSecretStoreUri { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus? SyncStatus { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataBoxEdgeDeviceKind : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind>
@@ -871,7 +930,31 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeDevicePatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubscriptionId { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+    }
+    public partial class DataBoxEdgeDeviceProperties
+    {
+        public DataBoxEdgeDeviceProperties() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.ComputeVersionInformation ComputeVersionInformation { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType> ConfiguredRoleTypes { get { throw null; } }
+        public string Culture { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus? DataBoxEdgeDeviceStatus { get { throw null; } }
+        public string Description { get { throw null; } }
+        public string DeviceHcsVersion { get { throw null; } }
+        public long? DeviceLocalCapacity { get { throw null; } }
+        public string DeviceModel { get { throw null; } }
+        public string DeviceSoftwareVersion { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType? DeviceType { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription EdgeSubscription { get { throw null; } set { } }
+        public string FriendlyName { get { throw null; } }
+        public bool? IsIotRoleAllowed { get { throw null; } }
+        public string KubernetesPlatform { get { throw null; } }
+        public string ModelDescription { get { throw null; } }
+        public int? NodeCount { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType? ResidencyType { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails ResourceMoveDetails { get { throw null; } set { } }
+        public string SerialNumber { get { throw null; } }
+        public string TimeZone { get { throw null; } }
     }
     public partial class DataBoxEdgeDeviceSecret
     {
@@ -922,31 +1005,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class DataBoxEdgeDeviceUpdateSummary : Azure.ResourceManager.Models.ResourceData
     {
         public DataBoxEdgeDeviceUpdateSummary() { }
-        public System.DateTimeOffset? DeviceLastScannedOn { get { throw null; } set { } }
-        public string DeviceVersionNumber { get { throw null; } set { } }
-        public string FriendlyDeviceVersionName { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier InProgressDownloadJobId { get { throw null; } }
-        public System.DateTimeOffset? InProgressDownloadJobStartedOn { get { throw null; } }
-        public Azure.Core.ResourceIdentifier InProgressInstallJobId { get { throw null; } }
-        public System.DateTimeOffset? InProgressInstallJobStartedOn { get { throw null; } }
-        public Azure.Core.ResourceIdentifier LastCompletedDownloadJobId { get { throw null; } }
-        public System.DateTimeOffset? LastCompletedDownloadJobOn { get { throw null; } }
-        public Azure.Core.ResourceIdentifier LastCompletedInstallJobId { get { throw null; } }
-        public System.DateTimeOffset? LastCompletedInstallJobOn { get { throw null; } }
-        public System.DateTimeOffset? LastCompletedScanJobOn { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? LastDownloadJobStatus { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? LastInstallJobStatus { get { throw null; } }
-        public System.DateTimeOffset? LastSuccessfulInstallJobOn { get { throw null; } set { } }
-        public System.DateTimeOffset? LastSuccessfulScanJobOn { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation? OngoingUpdateOperation { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? RebootBehavior { get { throw null; } }
-        public int? TotalNumberOfUpdatesAvailable { get { throw null; } }
-        public int? TotalNumberOfUpdatesPendingDownload { get { throw null; } }
-        public int? TotalNumberOfUpdatesPendingInstall { get { throw null; } }
-        public int? TotalTimeInMinutes { get { throw null; } }
-        public double? TotalUpdateSizeInBytes { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails> Updates { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> UpdateTitles { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.UpdateSummaryProperties Properties { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataBoxEdgeDownloadPhase : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase>
@@ -989,7 +1048,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeEtcdInfo
     {
-        internal DataBoxEdgeEtcdInfo() { }
+        public DataBoxEdgeEtcdInfo() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType? ComponentType { get { throw null; } }
         public string EtcdInfoType { get { throw null; } }
         public string Version { get { throw null; } }
     }
@@ -1071,7 +1131,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeLoadBalancerConfig
     {
-        internal DataBoxEdgeLoadBalancerConfig() { }
+        public DataBoxEdgeLoadBalancerConfig() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType? ComponentType { get { throw null; } }
         public string LoadBalancerConfigType { get { throw null; } }
         public string Version { get { throw null; } }
     }
@@ -1086,8 +1147,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class DataBoxEdgeMetricCounter
     {
         public DataBoxEdgeMetricCounter(string name) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension> AdditionalDimensions { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension> DimensionFilter { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension> AdditionalDimensions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension> DimensionFilter { get { throw null; } set { } }
         public string Instance { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
@@ -1230,13 +1291,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class DataBoxEdgeNode : Azure.ResourceManager.Models.ResourceData
     {
         public DataBoxEdgeNode() { }
-        public string NodeChassisSerialNumber { get { throw null; } }
-        public string NodeDisplayName { get { throw null; } }
-        public string NodeFriendlySoftwareVersion { get { throw null; } }
-        public string NodeHcsVersion { get { throw null; } }
-        public System.Guid? NodeInstanceId { get { throw null; } }
-        public string NodeSerialNumber { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus? NodeStatus { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.NodeProperties Properties { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataBoxEdgeNodeStatus : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus>
@@ -1267,7 +1322,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeOrderState(string value) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState Arriving { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState AwaitingDrop { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState AwaitingFulfillment { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState AwaitingFulfilment { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState AwaitingPickup { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState AwaitingPreparation { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState AwaitingReturnShipment { get { throw null; } }
@@ -1294,11 +1349,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeOrderStatus
     {
-        internal DataBoxEdgeOrderStatus() { }
+        public DataBoxEdgeOrderStatus(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState status) { }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> AdditionalOrderDetails { get { throw null; } }
-        public string Comments { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState Status { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo TrackingInformation { get { throw null; } }
+        public string Comments { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState Status { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo TrackingInformation { get { throw null; } set { } }
         public System.DateTimeOffset? UpdateOn { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1329,9 +1384,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeResourceMoveDetails
     {
-        internal DataBoxEdgeResourceMoveDetails() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus? OperationInProgress { get { throw null; } }
-        public System.DateTimeOffset? OperationInProgressLockTimeoutInUtc { get { throw null; } }
+        public DataBoxEdgeResourceMoveDetails() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus? OperationInProgress { get { throw null; } set { } }
+        public System.DateTimeOffset? OperationInProgressLockTimeoutInUtc { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataBoxEdgeResourceMoveStatus : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus>
@@ -1405,6 +1460,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private readonly int _dummyPrimitive;
         public DataBoxEdgeRoleType(string value) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType Asa { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType ASEKubernetes { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType CloudEdgeManagement { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType Cognitive { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType Functions { get { throw null; } }
@@ -1423,8 +1479,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeSecuritySettings : Azure.ResourceManager.Models.ResourceData
     {
-        public DataBoxEdgeSecuritySettings(Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret deviceAdminPassword) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret DeviceAdminPassword { get { throw null; } set { } }
+        public DataBoxEdgeSecuritySettings(Azure.ResourceManager.DataBoxEdge.Models.SecuritySettingsProperties properties) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret SecurityDeviceAdminPassword { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataBoxEdgeShareMonitoringStatus : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus>
@@ -1743,11 +1799,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeTrackingInfo
     {
-        internal DataBoxEdgeTrackingInfo() { }
-        public string CarrierName { get { throw null; } }
-        public string SerialNumber { get { throw null; } }
-        public string TrackingId { get { throw null; } }
-        public System.Uri TrackingUri { get { throw null; } }
+        public DataBoxEdgeTrackingInfo() { }
+        public string CarrierName { get { throw null; } set { } }
+        public string SerialNumber { get { throw null; } set { } }
+        public string TrackingId { get { throw null; } set { } }
+        public System.Uri TrackingUri { get { throw null; } set { } }
     }
     public partial class DataBoxEdgeUpdateDetails
     {
@@ -1847,23 +1903,35 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public long? CurrentMemoryUsageInMB { get { throw null; } set { } }
         public long? StartupMemoryInMB { get { throw null; } set { } }
     }
+    public partial class DeviceCapacityInfoProperties
+    {
+        public DeviceCapacityInfoProperties() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo ClusterComputeCapacityInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo ClusterStorageCapacityInfo { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.HostCapacity> NodeCapacityInfos { get { throw null; } set { } }
+        public System.DateTimeOffset? TimeStamp { get { throw null; } set { } }
+    }
     public partial class DeviceCapacityRequestContent
     {
-        public DeviceCapacityRequestContent(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> vmPlacementQuery) { }
+        public DeviceCapacityRequestContent(Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestInfoProperties properties) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestInfoProperties Properties { get { throw null; } }
+    }
+    public partial class DeviceCapacityRequestInfoProperties
+    {
+        public DeviceCapacityRequestInfoProperties(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> vmPlacementQuery) { }
+        public string DeviceCapacityRequestType { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> VmPlacementQuery { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult> VmPlacementResults { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult> VmPlacementResults { get { throw null; } set { } }
+    }
+    public partial class DiagnosticRemoteSupportSettingsProperties
+    {
+        public DiagnosticRemoteSupportSettingsProperties() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings> RemoteSupportSettingsList { get { throw null; } set { } }
     }
     public partial class EdgeArcAddon : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData
     {
-        public EdgeArcAddon(string subscriptionId, string resourceGroupName, string resourceName, Azure.Core.AzureLocation resourceLocation) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? HostPlatform { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? HostPlatformType { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGroupName { get { throw null; } set { } }
-        public Azure.Core.AzureLocation ResourceLocation { get { throw null; } set { } }
-        public string ResourceName { get { throw null; } set { } }
-        public string SubscriptionId { get { throw null; } set { } }
-        public string Version { get { throw null; } }
+        public EdgeArcAddon(Azure.ResourceManager.DataBoxEdge.Models.ArcAddonProperties properties) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.ArcAddonProperties Properties { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EdgeClientPermissionType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType>
@@ -1948,25 +2016,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class EdgeFileEventTrigger : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData
     {
-        public EdgeFileEventTrigger(Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo sourceInfo, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo sinkInfo) { }
-        public string CustomContextTag { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SinkInfoRoleId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SourceInfoShareId { get { throw null; } set { } }
+        public EdgeFileEventTrigger(Azure.ResourceManager.DataBoxEdge.Models.FileTriggerProperties properties) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.FileTriggerProperties Properties { get { throw null; } set { } }
     }
     public partial class EdgeFileSourceInfo
     {
         public EdgeFileSourceInfo(Azure.Core.ResourceIdentifier shareId) { }
         public Azure.Core.ResourceIdentifier ShareId { get { throw null; } set { } }
-    }
-    public partial class EdgeIotAddon : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData
-    {
-        public EdgeIotAddon(Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo iotDeviceDetails, Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo iotEdgeDeviceDetails) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? HostPlatform { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? HostPlatformType { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo IotDeviceDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo IotEdgeDeviceDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState? ProvisioningState { get { throw null; } }
-        public string Version { get { throw null; } }
     }
     public partial class EdgeIotDeviceInfo
     {
@@ -1979,14 +2035,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class EdgeIotRole : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData
     {
         public EdgeIotRole() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo ComputeResource { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? HostPlatform { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? HostPlatformType { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo IotDeviceDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo IotEdgeAgentInfo { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo IotEdgeDeviceDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? RoleStatus { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> ShareMappings { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.IotRoleProperties Properties { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EdgeKeyVaultSyncStatus : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus>
@@ -2013,7 +2062,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class EdgeKubernetesClusterInfo
     {
         public EdgeKubernetesClusterInfo(string version) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo EtcdInfo { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType? ComponentType { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo EtcdInfo { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo> Nodes { get { throw null; } }
         public string Version { get { throw null; } set { } }
     }
@@ -2026,6 +2076,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class EdgeKubernetesNodeInfo
     {
         internal EdgeKubernetesNodeInfo() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType? ComponentType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration> IPConfiguration { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType? NodeType { get { throw null; } }
@@ -2036,8 +2087,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public EdgeKubernetesNodeType(string value) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType ControlPlane { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType Invalid { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType ManagementCluster { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType Master { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType NodePool { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType Worker { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -2052,37 +2106,34 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class EdgeKubernetesRole : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData
     {
         public EdgeKubernetesRole() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? HostPlatform { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? HostPlatformType { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo KubernetesClusterInfo { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources KubernetesRoleResources { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? RoleStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.KubernetesRoleProperties Properties { get { throw null; } set { } }
     }
     public partial class EdgeKubernetesRoleCompute
     {
         public EdgeKubernetesRoleCompute(string vmProfile) { }
+        public int? HugePage1G { get { throw null; } }
+        public int? HugePage2M { get { throw null; } }
         public long? MemoryInBytes { get { throw null; } }
         public int? ProcessorCount { get { throw null; } }
         public string VmProfile { get { throw null; } set { } }
     }
     public partial class EdgeKubernetesRoleNetwork
     {
-        internal EdgeKubernetesRoleNetwork() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.CniConfig CniConfig { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig LoadBalancerConfig { get { throw null; } }
+        public EdgeKubernetesRoleNetwork() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.CniConfig CniConfig { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig LoadBalancerConfig { get { throw null; } set { } }
     }
     public partial class EdgeKubernetesRoleResources
     {
         public EdgeKubernetesRoleResources(Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute compute) { }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute Compute { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork Network { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork Network { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage Storage { get { throw null; } set { } }
     }
     public partial class EdgeKubernetesRoleStorage
     {
         public EdgeKubernetesRoleStorage() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> Endpoints { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> Endpoints { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo> StorageClasses { get { throw null; } }
     }
     public partial class EdgeKubernetesRoleStorageClassInfo
@@ -2117,17 +2168,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class EdgeProfileSubscription
     {
-        internal EdgeProfileSubscription() { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public string LocationPlacementId { get { throw null; } }
-        public string QuotaId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures> RegisteredFeatures { get { throw null; } }
-        public string RegistrationDate { get { throw null; } }
-        public System.Guid? RegistrationId { get { throw null; } }
-        public string SerializedDetails { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState? State { get { throw null; } }
-        public string SubscriptionId { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
+        public EdgeProfileSubscription() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.SubscriptionProperties Properties { get { throw null; } set { } }
+        public string RegistrationDate { get { throw null; } set { } }
+        public System.Guid? RegistrationId { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState? State { get { throw null; } set { } }
+        public string SubscriptionId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EdgeRemoteApplicationAccessLevel : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel>
@@ -2176,10 +2223,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType? RemoteApplicationType { get { throw null; } set { } }
     }
+    public partial class FileTriggerProperties
+    {
+        public FileTriggerProperties(Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo sourceInfo, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo sinkInfo) { }
+        public string CustomContextTag { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SinkInfoRoleId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceInfoShareId { get { throw null; } set { } }
+    }
     public partial class GenerateCertResult
     {
         internal GenerateCertResult() { }
-        public System.DateTimeOffset? ExpireOn { get { throw null; } }
+        public string ExpireOn { get { throw null; } }
         public string PrivateKey { get { throw null; } }
         public string PublicKey { get { throw null; } }
     }
@@ -2190,8 +2244,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public long? EffectiveAvailableMemoryInMBOnHost { get { throw null; } set { } }
         public string GpuType { get { throw null; } set { } }
         public string HostName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo> NumaNodesData { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory> VmUsedMemory { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo> NumaNodesData { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory> VmUsedMemory { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HostPlatformType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType>
@@ -2225,8 +2279,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private readonly int _dummyPrimitive;
         public InstallationImpact(string value) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact DeviceRebooted { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact KubernetesDisruptive { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact KubernetesOptimized { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact KubernetesWorkloadsDown { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact None { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact SoftwareDisruptive { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact SoftwareOptimized { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -2263,28 +2321,173 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential ImageRepository { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
     }
+    public partial class IotRoleProperties
+    {
+        public IotRoleProperties(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType hostPlatform, Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo iotDeviceDetails, Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo iotEdgeDeviceDetails, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus roleStatus) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo ComputeResource { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType HostPlatform { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? HostPlatformType { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo IotDeviceDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo IotEdgeAgentInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo IotEdgeDeviceDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus RoleStatus { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> ShareMappings { get { throw null; } set { } }
+    }
+    public partial class JobProperties
+    {
+        internal JobProperties() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage? CurrentStage { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress DownloadProgress { get { throw null; } }
+        public string ErrorManifestFile { get { throw null; } }
+        public string Folder { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress InstallProgress { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType? JobType { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RefreshedEntityId { get { throw null; } }
+        public int? TotalRefreshErrors { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KubernetesComponentType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KubernetesComponentType(string value) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType Cluster { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType CNI { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType Etcd { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType Invalid { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType LoadBalancer { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType Node { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType left, Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType left, Azure.ResourceManager.DataBoxEdge.Models.KubernetesComponentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class KubernetesRoleProperties
+    {
+        public KubernetesRoleProperties(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType hostPlatform, Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo kubernetesClusterInfo, Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources kubernetesRoleResources, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus roleStatus) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType HostPlatform { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? HostPlatformType { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo KubernetesClusterInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources KubernetesRoleResources { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus RoleStatus { get { throw null; } set { } }
+    }
+    public partial class MarketplaceImageOffer : Azure.ResourceManager.Models.ResourceData
+    {
+        public MarketplaceImageOffer() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.MarketplaceImageOfferProperties Properties { get { throw null; } set { } }
+    }
+    public partial class MarketplaceImageOfferProperties
+    {
+        public MarketplaceImageOfferProperties() { }
+        public string Content { get { throw null; } set { } }
+        public string ContentVersion { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } set { } }
+        public string PublisherId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.SkuMapping> SkuMappings { get { throw null; } set { } }
+    }
+    public partial class MarketplaceImagePublisher : Azure.ResourceManager.Models.ResourceData
+    {
+        public MarketplaceImagePublisher() { }
+        public string MarketplaceImagePublisherProvisioningState { get { throw null; } set { } }
+    }
+    public partial class MarketplaceImageSku : Azure.ResourceManager.Models.ResourceData
+    {
+        public MarketplaceImageSku() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.MarketplaceImageSkuProperties Properties { get { throw null; } set { } }
+    }
+    public partial class MarketplaceImageSkuProperties
+    {
+        public MarketplaceImageSkuProperties() { }
+        public string Content { get { throw null; } set { } }
+        public string ContentVersion { get { throw null; } set { } }
+        public string OfferId { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } set { } }
+        public string PublisherId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.SkuMapping> SkuMappings { get { throw null; } set { } }
+    }
+    public partial class MarketplaceImageVersionProperties
+    {
+        public MarketplaceImageVersionProperties() { }
+        public string Content { get { throw null; } set { } }
+        public string ContentVersion { get { throw null; } set { } }
+        public string OfferId { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } set { } }
+        public string PublisherId { get { throw null; } set { } }
+        public string SkuId { get { throw null; } set { } }
+    }
+    public partial class MarketplaceSasToken
+    {
+        internal MarketplaceSasToken() { }
+        public System.Uri SasUri { get { throw null; } }
+        public string Status { get { throw null; } }
+    }
     public partial class MecRole : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData
     {
         public MecRole() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.MecRoleProperties Properties { get { throw null; } set { } }
+    }
+    public partial class MecRoleProperties
+    {
+        public MecRoleProperties(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus roleStatus) { }
         public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret ConnectionString { get { throw null; } set { } }
         public string ControllerEndpoint { get { throw null; } set { } }
         public string ResourceUniqueId { get { throw null; } set { } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? RoleStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus RoleStatus { get { throw null; } set { } }
+    }
+    public partial class MonitoringMetricConfigurationProperties
+    {
+        public MonitoringMetricConfigurationProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration> metricConfigurations) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration> MetricConfigurations { get { throw null; } }
+    }
+    public partial class NodeProperties
+    {
+        public NodeProperties() { }
+        public string NodeChassisSerialNumber { get { throw null; } }
+        public string NodeDisplayName { get { throw null; } }
+        public string NodeFriendlySoftwareVersion { get { throw null; } }
+        public string NodeHcsVersion { get { throw null; } }
+        public System.Guid? NodeInstanceId { get { throw null; } }
+        public string NodeSerialNumber { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus? NodeStatus { get { throw null; } }
     }
     public partial class NumaNodeInfo
     {
         public NumaNodeInfo() { }
         public long? EffectiveAvailableMemoryInMB { get { throw null; } set { } }
-        public System.Collections.Generic.IList<int> FreeVCpuIndexesForHpn { get { throw null; } }
+        public System.Collections.Generic.IList<int> FreeVCpuIndexesForHpn { get { throw null; } set { } }
         public int? LogicalCoreCountPerCore { get { throw null; } set { } }
         public int? NumaNodeIndex { get { throw null; } set { } }
         public long? TotalMemoryInMB { get { throw null; } set { } }
-        public System.Collections.Generic.IList<int> VCpuIndexesForHpn { get { throw null; } }
-        public System.Collections.Generic.IList<int> VCpuIndexesForRoot { get { throw null; } }
+        public System.Collections.Generic.IList<int> VCpuIndexesForHpn { get { throw null; } set { } }
+        public System.Collections.Generic.IList<int> VCpuIndexesForRoot { get { throw null; } set { } }
+    }
+    public partial class OrderProperties
+    {
+        public OrderProperties() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails ContactInformation { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus CurrentStatus { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo> DeliveryTrackingInfo { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus> OrderHistory { get { throw null; } }
+        public string OrderId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo> ReturnTrackingInfo { get { throw null; } }
+        public string SerialNumber { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType? ShipmentType { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress ShippingAddress { get { throw null; } set { } }
     }
     public partial class PeriodicTimerEventTrigger : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData
     {
-        public PeriodicTimerEventTrigger(Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo sourceInfo, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo sinkInfo) { }
+        public PeriodicTimerEventTrigger(Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerProperties properties) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerProperties Properties { get { throw null; } set { } }
+    }
+    public partial class PeriodicTimerProperties
+    {
+        public PeriodicTimerProperties(Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo sourceInfo, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo sinkInfo) { }
         public string CustomContextTag { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SinkInfoRoleId { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo SourceInfo { get { throw null; } set { } }
@@ -2333,6 +2536,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent left, Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ProactiveLogCollectionSettingsProperties
+    {
+        public ProactiveLogCollectionSettingsProperties(Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent userConsent) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent UserConsent { get { throw null; } set { } }
+    }
+    public partial class RawCertificateData
+    {
+        public RawCertificateData(string certificate) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public string Certificate { get { throw null; } }
+    }
+    public partial class SecuritySettingsProperties
+    {
+        public SecuritySettingsProperties(Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret deviceAdminPassword) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret DeviceAdminPassword { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ShareAccessProtocol : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol>
     {
@@ -2376,6 +2595,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType left, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ShareProperties
+    {
+        public ShareProperties(Azure.ResourceManager.DataBoxEdge.Models.ShareStatus shareStatus, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus monitoringStatus, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol accessProtocol) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol AccessProtocol { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo AzureContainerInfo { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight> ClientAccessRights { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy? DataPolicy { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus MonitoringStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails RefreshDetails { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> ShareMappings { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.ShareStatus ShareStatus { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight> UserAccessRights { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ShareStatus : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.ShareStatus>
     {
@@ -2385,6 +2618,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.ShareStatus NeedsAttention { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.ShareStatus Offline { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.ShareStatus OK { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.ShareStatus Online { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.ShareStatus Unknown { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.ShareStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.ShareStatus other) { throw null; }
@@ -2397,18 +2631,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.ShareStatus left, Azure.ResourceManager.DataBoxEdge.Models.ShareStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SkuMapping
+    {
+        public SkuMapping() { }
+        public string CatalogPlanId { get { throw null; } set { } }
+        public string MarketplaceSkuId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> MarketplaceSkuVersions { get { throw null; } set { } }
+    }
+    public partial class StorageAccountCredentialProperties
+    {
+        public StorageAccountCredentialProperties(string alias, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus sslStatus, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType accountType) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret AccountKey { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType AccountType { get { throw null; } set { } }
+        public string Alias { get { throw null; } set { } }
+        public string BlobDomainName { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus SslStatus { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
+        public string UserName { get { throw null; } set { } }
+    }
+    public partial class StorageAccountProperties
+    {
+        public StorageAccountProperties(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy dataPolicy) { }
+        public string BlobEndpoint { get { throw null; } }
+        public int? ContainerCount { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy DataPolicy { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountCredentialId { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus? StorageAccountStatus { get { throw null; } set { } }
+    }
+    public partial class SubscriptionProperties
+    {
+        public SubscriptionProperties() { }
+        public string LocationPlacementId { get { throw null; } set { } }
+        public string QuotaId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures> RegisteredFeatures { get { throw null; } set { } }
+        public string SerializedDetails { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
+    }
     public partial class SubscriptionRegisteredFeatures
     {
-        internal SubscriptionRegisteredFeatures() { }
-        public string Name { get { throw null; } }
-        public string State { get { throw null; } }
+        public SubscriptionRegisteredFeatures() { }
+        public string Name { get { throw null; } set { } }
+        public string State { get { throw null; } set { } }
     }
-    public partial class TriggerSupportPackageContent : Azure.ResourceManager.Models.ResourceData
+    public partial class SupportPackageRequestProperties
     {
-        public TriggerSupportPackageContent() { }
+        public SupportPackageRequestProperties() { }
         public string Include { get { throw null; } set { } }
         public System.DateTimeOffset? MaximumTimeStamp { get { throw null; } set { } }
         public System.DateTimeOffset? MinimumTimeStamp { get { throw null; } set { } }
+    }
+    public partial class TriggerSupportPackageContent : Azure.ResourceManager.Models.ResourceData
+    {
+        public TriggerSupportPackageContent(Azure.ResourceManager.DataBoxEdge.Models.SupportPackageRequestProperties properties) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.SupportPackageRequestProperties Properties { get { throw null; } set { } }
     }
     public partial class UpdateDownloadProgress
     {
@@ -2460,11 +2737,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage left, Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class UpdateSummaryProperties
+    {
+        public UpdateSummaryProperties() { }
+        public System.DateTimeOffset? DeviceLastScannedOn { get { throw null; } set { } }
+        public string DeviceVersionNumber { get { throw null; } set { } }
+        public string FriendlyDeviceVersionName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier InProgressDownloadJobId { get { throw null; } }
+        public System.DateTimeOffset? InProgressDownloadJobStartedOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier InProgressInstallJobId { get { throw null; } }
+        public System.DateTimeOffset? InProgressInstallJobStartedOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier LastCompletedDownloadJobId { get { throw null; } }
+        public System.DateTimeOffset? LastCompletedDownloadJobOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier LastCompletedInstallJobId { get { throw null; } }
+        public System.DateTimeOffset? LastCompletedInstallJobOn { get { throw null; } }
+        public System.DateTimeOffset? LastCompletedScanJobOn { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? LastDownloadJobStatus { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? LastInstallJobStatus { get { throw null; } }
+        public System.DateTimeOffset? LastSuccessfulInstallJobOn { get { throw null; } set { } }
+        public System.DateTimeOffset? LastSuccessfulScanJobOn { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation? OngoingUpdateOperation { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? RebootBehavior { get { throw null; } }
+        public int? TotalNumberOfUpdatesAvailable { get { throw null; } }
+        public int? TotalNumberOfUpdatesPendingDownload { get { throw null; } }
+        public int? TotalNumberOfUpdatesPendingInstall { get { throw null; } }
+        public double? TotalUpdateSizeInBytes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails> Updates { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> UpdateTitles { get { throw null; } }
+    }
     public partial class UploadCertificateContent
     {
-        public UploadCertificateContent(string certificate) { }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType? AuthenticationType { get { throw null; } set { } }
-        public string Certificate { get { throw null; } }
+        public UploadCertificateContent(Azure.ResourceManager.DataBoxEdge.Models.RawCertificateData properties) { }
+        public Azure.ResourceManager.DataBoxEdge.Models.RawCertificateData Properties { get { throw null; } }
     }
     public partial class UploadCertificateResponse
     {
@@ -2484,12 +2788,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType AccessType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier UserId { get { throw null; } set { } }
     }
+    public partial class UserProperties
+    {
+        public UserProperties() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret EncryptedPassword { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight> ShareAccessRights { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType? UserType { get { throw null; } set { } }
+    }
     public partial class VmPlacementRequestResult
     {
         public VmPlacementRequestResult() { }
         public bool? IsFeasible { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
         public string MessageCode { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> VmSize { get { throw null; } }
+        public System.Collections.Generic.IList<string> VmSize { get { throw null; } set { } }
     }
 }

@@ -24,11 +24,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("name"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        name = null;
+                        continue;
+                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        value = null;
+                        continue;
+                    }
                     value = property.Value.GetString();
                     continue;
                 }

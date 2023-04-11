@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -19,9 +17,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WriteEndObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties);
+            }
             writer.WriteEndObject();
         }
 
@@ -31,19 +31,23 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
+            Optional<AlertProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> title = default;
-            Optional<string> alertType = default;
-            Optional<DateTimeOffset> appearedAtDateTime = default;
-            Optional<string> recommendation = default;
-            Optional<DataBoxEdgeAlertSeverity> severity = default;
-            Optional<DataBoxEdgeAlertErrorDetails> errorDetails = default;
-            Optional<IReadOnlyDictionary<string, string>> detailedInformation = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = AlertProperties.DeserializeAlertProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -69,80 +73,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("title"u8))
-                        {
-                            title = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("alertType"u8))
-                        {
-                            alertType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("appearedAtDateTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            appearedAtDateTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("recommendation"u8))
-                        {
-                            recommendation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("severity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            severity = new DataBoxEdgeAlertSeverity(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("errorDetails"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            errorDetails = DataBoxEdgeAlertErrorDetails.DeserializeDataBoxEdgeAlertErrorDetails(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("detailedInformation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            detailedInformation = dictionary;
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new DataBoxEdgeAlertData(id, name, type, systemData.Value, title.Value, alertType.Value, Optional.ToNullable(appearedAtDateTime), recommendation.Value, Optional.ToNullable(severity), errorDetails.Value, Optional.ToDictionary(detailedInformation));
+            return new DataBoxEdgeAlertData(id, name, type, systemData.Value, properties.Value);
         }
     }
 }

@@ -32,243 +32,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         public DevicesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _endpoint = endpoint ?? new Uri("management.azure.com");
+            _apiVersion = apiVersion ?? "2023-01-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, string expand)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets all the Data Box Edge/Data Box Gateway devices in a subscription. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataBoxEdgeDeviceList>> ListBySubscriptionAsync(string subscriptionId, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionRequest(subscriptionId, expand);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataBoxEdgeDeviceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets all the Data Box Edge/Data Box Gateway devices in a subscription. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataBoxEdgeDeviceList> ListBySubscription(string subscriptionId, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionRequest(subscriptionId, expand);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataBoxEdgeDeviceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, string expand)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets all the Data Box Edge/Data Box Gateway devices in a resource group. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataBoxEdgeDeviceList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, expand);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataBoxEdgeDeviceList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets all the Data Box Edge/Data Box Gateway devices in a resource group. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataBoxEdgeDeviceList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, expand);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataBoxEdgeDeviceList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string deviceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the properties of the Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataBoxEdgeDeviceData>> GetAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, deviceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataBoxEdgeDeviceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DataBoxEdgeDeviceData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the properties of the Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataBoxEdgeDeviceData> Get(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, deviceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataBoxEdgeDeviceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DataBoxEdgeDeviceData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceData data)
@@ -286,8 +52,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(deviceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "application/json-patch+json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
@@ -357,6 +123,88 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the properties of the Data Box Edge/Data Box Gateway device. </summary>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="deviceName"> The device name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DataBoxEdgeDeviceData>> GetAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, deviceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataBoxEdgeDeviceData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((DataBoxEdgeDeviceData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the properties of the Data Box Edge/Data Box Gateway device. </summary>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="deviceName"> The device name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DataBoxEdgeDeviceData> Get(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, deviceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataBoxEdgeDeviceData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((DataBoxEdgeDeviceData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string deviceName)
         {
             var message = _pipeline.CreateMessage();
@@ -395,7 +243,6 @@ namespace Azure.ResourceManager.DataBoxEdge
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -421,7 +268,6 @@ namespace Azure.ResourceManager.DataBoxEdge
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -444,8 +290,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(deviceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Content-Type", "application/json-patch+json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
@@ -515,120 +361,50 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        internal HttpMessage CreateDownloadUpdatesRequest(string subscriptionId, string resourceGroupName, string deviceName)
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendPath("/downloadUpdates", false);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Downloads the updates on a Data Box Edge/Data Box Gateway device. </summary>
+        /// <summary> Gets all the Data Box Edge/Data Box Gateway devices in a resource group. </summary>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
+        /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DownloadUpdatesAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DataBoxEdgeDeviceList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
-            using var message = CreateDownloadUpdatesRequest(subscriptionId, resourceGroupName, deviceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Downloads the updates on a Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DownloadUpdates(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
-            using var message = CreateDownloadUpdatesRequest(subscriptionId, resourceGroupName, deviceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGenerateCertificateRequest(string subscriptionId, string resourceGroupName, string deviceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendPath("/generateCertificate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Generates certificate for activation key. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GenerateCertResult>> GenerateCertificateAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
-            using var message = CreateGenerateCertificateRequest(subscriptionId, resourceGroupName, deviceName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GenerateCertResult value = default;
+                        DataBoxEdgeDeviceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GenerateCertResult.DeserializeGenerateCertResult(document.RootElement);
+                        value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -636,28 +412,100 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        /// <summary> Generates certificate for activation key. </summary>
+        /// <summary> Gets all the Data Box Edge/Data Box Gateway devices in a resource group. </summary>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
+        /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GenerateCertResult> GenerateCertificate(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DataBoxEdgeDeviceList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
-            using var message = CreateGenerateCertificateRequest(subscriptionId, resourceGroupName, deviceName);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GenerateCertResult value = default;
+                        DataBoxEdgeDeviceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GenerateCertResult.DeserializeGenerateCertResult(document.RootElement);
+                        value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, string expand)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets all the Data Box Edge/Data Box Gateway devices in a subscription. </summary>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DataBoxEdgeDeviceList>> ListBySubscriptionAsync(string subscriptionId, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId, expand);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataBoxEdgeDeviceList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets all the Data Box Edge/Data Box Gateway devices in a subscription. </summary>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DataBoxEdgeDeviceList> ListBySubscription(string subscriptionId, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId, expand);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataBoxEdgeDeviceList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -681,7 +529,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/getExtendedInformation", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -744,7 +592,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        internal HttpMessage CreateInstallUpdatesRequest(string subscriptionId, string resourceGroupName, string deviceName)
+        internal HttpMessage CreateUpdateExtendedInformationRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceExtendedInfoPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -757,59 +605,76 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
-            uri.AppendPath("/installUpdates", false);
+            uri.AppendPath("/updateExtendedInformation", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
+            if (patch != null)
+            {
+                request.Headers.Add("Content-Type", "application/json-patch+json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(patch);
+                request.Content = content;
+            }
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Installs the updates on the Data Box Edge/Data Box Gateway device. </summary>
+        /// <summary> Gets additional information for the specified Data Box Edge/Data Box Gateway device. </summary>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="deviceName"> The device name. </param>
+        /// <param name="patch"> The patch object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> InstallUpdatesAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataBoxEdgeDeviceExtendedInfo>> UpdateExtendedInformationAsync(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceExtendedInfoPatch patch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
-            using var message = CreateInstallUpdatesRequest(subscriptionId, resourceGroupName, deviceName);
+            using var message = CreateUpdateExtendedInformationRequest(subscriptionId, resourceGroupName, deviceName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
-                    return message.Response;
+                    {
+                        DataBoxEdgeDeviceExtendedInfo value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DataBoxEdgeDeviceExtendedInfo.DeserializeDataBoxEdgeDeviceExtendedInfo(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Installs the updates on the Data Box Edge/Data Box Gateway device. </summary>
+        /// <summary> Gets additional information for the specified Data Box Edge/Data Box Gateway device. </summary>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="deviceName"> The device name. </param>
+        /// <param name="patch"> The patch object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response InstallUpdates(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public Response<DataBoxEdgeDeviceExtendedInfo> UpdateExtendedInformation(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceExtendedInfoPatch patch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
-            using var message = CreateInstallUpdatesRequest(subscriptionId, resourceGroupName, deviceName);
+            using var message = CreateUpdateExtendedInformationRequest(subscriptionId, resourceGroupName, deviceName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
-                    return message.Response;
+                    {
+                        DataBoxEdgeDeviceExtendedInfo value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DataBoxEdgeDeviceExtendedInfo.DeserializeDataBoxEdgeDeviceExtendedInfo(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -831,7 +696,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/networkSettings/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -887,6 +752,165 @@ namespace Azure.ResourceManager.DataBoxEdge
                         DataBoxEdgeDeviceNetworkSettings value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = DataBoxEdgeDeviceNetworkSettings.DeserializeDataBoxEdgeDeviceNetworkSettings(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCreateOrUpdateSecuritySettingsRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/securitySettings/default/update", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (body != null)
+            {
+                request.Headers.Add("Content-Type", "application/json-patch+json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Updates the security settings on a Data Box Edge/Data Box Gateway device. </summary>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="deviceName"> The device name. </param>
+        /// <param name="body"> The security settings. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateSecuritySettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings body = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+
+            using var message = CreateCreateOrUpdateSecuritySettingsRequest(subscriptionId, resourceGroupName, deviceName, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Updates the security settings on a Data Box Edge/Data Box Gateway device. </summary>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="deviceName"> The device name. </param>
+        /// <param name="body"> The security settings. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdateSecuritySettings(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings body = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+
+            using var message = CreateCreateOrUpdateSecuritySettingsRequest(subscriptionId, resourceGroupName, deviceName, body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetUpdateSummaryRequest(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/updateSummary/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets information about the availability of updates based on the last scan of the device. It also gets information about any ongoing download or install jobs on the device. </summary>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="deviceName"> The device name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DataBoxEdgeDeviceUpdateSummary>> GetUpdateSummaryAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+
+            using var message = CreateGetUpdateSummaryRequest(subscriptionId, resourceGroupName, deviceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataBoxEdgeDeviceUpdateSummary value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DataBoxEdgeDeviceUpdateSummary.DeserializeDataBoxEdgeDeviceUpdateSummary(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets information about the availability of updates based on the last scan of the device. It also gets information about any ongoing download or install jobs on the device. </summary>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="deviceName"> The device name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DataBoxEdgeDeviceUpdateSummary> GetUpdateSummary(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+
+            using var message = CreateGetUpdateSummaryRequest(subscriptionId, resourceGroupName, deviceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataBoxEdgeDeviceUpdateSummary value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DataBoxEdgeDeviceUpdateSummary.DeserializeDataBoxEdgeDeviceUpdateSummary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -965,7 +989,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateSecuritySettingsRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings)
+        internal HttpMessage CreateDownloadUpdatesRequest(string subscriptionId, string resourceGroupName, string deviceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -978,73 +1002,65 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
-            uri.AppendPath("/securitySettings/default/update", false);
+            uri.AppendPath("/downloadUpdates", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(securitySettings);
-            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Updates the security settings on a Data Box Edge/Data Box Gateway device. </summary>
+        /// <summary> Downloads the updates on a Data Box Edge/Data Box Gateway device. </summary>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="deviceName"> The device name. </param>
-        /// <param name="securitySettings"> The security settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="securitySettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateSecuritySettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings, CancellationToken cancellationToken = default)
+        public async Task<Response> DownloadUpdatesAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(securitySettings, nameof(securitySettings));
 
-            using var message = CreateCreateOrUpdateSecuritySettingsRequest(subscriptionId, resourceGroupName, deviceName, securitySettings);
+            using var message = CreateDownloadUpdatesRequest(subscriptionId, resourceGroupName, deviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Updates the security settings on a Data Box Edge/Data Box Gateway device. </summary>
+        /// <summary> Downloads the updates on a Data Box Edge/Data Box Gateway device. </summary>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="deviceName"> The device name. </param>
-        /// <param name="securitySettings"> The security settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="securitySettings"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdateSecuritySettings(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings, CancellationToken cancellationToken = default)
+        public Response DownloadUpdates(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(securitySettings, nameof(securitySettings));
 
-            using var message = CreateCreateOrUpdateSecuritySettingsRequest(subscriptionId, resourceGroupName, deviceName, securitySettings);
+            using var message = CreateDownloadUpdatesRequest(subscriptionId, resourceGroupName, deviceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateExtendedInformationRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceExtendedInfoPatch patch)
+        internal HttpMessage CreateInstallUpdatesRequest(string subscriptionId, string resourceGroupName, string deviceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1057,94 +1073,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
-            uri.AppendPath("/updateExtendedInformation", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets additional information for the specified Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="patch"> The patch object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataBoxEdgeDeviceExtendedInfo>> UpdateExtendedInformationAsync(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceExtendedInfoPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateExtendedInformationRequest(subscriptionId, resourceGroupName, deviceName, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataBoxEdgeDeviceExtendedInfo value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataBoxEdgeDeviceExtendedInfo.DeserializeDataBoxEdgeDeviceExtendedInfo(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets additional information for the specified Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="patch"> The patch object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataBoxEdgeDeviceExtendedInfo> UpdateExtendedInformation(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceExtendedInfoPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateExtendedInformationRequest(subscriptionId, resourceGroupName, deviceName, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataBoxEdgeDeviceExtendedInfo value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataBoxEdgeDeviceExtendedInfo.DeserializeDataBoxEdgeDeviceExtendedInfo(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetUpdateSummaryRequest(string subscriptionId, string resourceGroupName, string deviceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendPath("/updateSummary/default", false);
+            uri.AppendPath("/installUpdates", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1152,59 +1081,51 @@ namespace Azure.ResourceManager.DataBoxEdge
             return message;
         }
 
-        /// <summary> Gets information about the availability of updates based on the last scan of the device. It also gets information about any ongoing download or install jobs on the device. </summary>
+        /// <summary> Installs the updates on the Data Box Edge/Data Box Gateway device. </summary>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataBoxEdgeDeviceUpdateSummary>> GetUpdateSummaryAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public async Task<Response> InstallUpdatesAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
-            using var message = CreateGetUpdateSummaryRequest(subscriptionId, resourceGroupName, deviceName);
+            using var message = CreateInstallUpdatesRequest(subscriptionId, resourceGroupName, deviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        DataBoxEdgeDeviceUpdateSummary value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataBoxEdgeDeviceUpdateSummary.DeserializeDataBoxEdgeDeviceUpdateSummary(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets information about the availability of updates based on the last scan of the device. It also gets information about any ongoing download or install jobs on the device. </summary>
+        /// <summary> Installs the updates on the Data Box Edge/Data Box Gateway device. </summary>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="deviceName"> The device name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataBoxEdgeDeviceUpdateSummary> GetUpdateSummary(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        public Response InstallUpdates(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
-            using var message = CreateGetUpdateSummaryRequest(subscriptionId, resourceGroupName, deviceName);
+            using var message = CreateInstallUpdatesRequest(subscriptionId, resourceGroupName, deviceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        DataBoxEdgeDeviceUpdateSummary value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataBoxEdgeDeviceUpdateSummary.DeserializeDataBoxEdgeDeviceUpdateSummary(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1226,11 +1147,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath("/uploadCertificate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
+            request.Headers.Add("Accept", "application/json, text/json");
+            if (content != null)
+            {
+                request.Headers.Add("Content-Type", "application/json-patch+json");
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
+            }
             _userAgent.Apply(message);
             return message;
         }
@@ -1241,14 +1165,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="deviceName"> The device name. </param>
         /// <param name="content"> The upload certificate request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UploadCertificateResponse>> UploadCertificateAsync(string subscriptionId, string resourceGroupName, string deviceName, UploadCertificateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<UploadCertificateResponse>> UploadCertificateAsync(string subscriptionId, string resourceGroupName, string deviceName, UploadCertificateContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUploadCertificateRequest(subscriptionId, resourceGroupName, deviceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1272,14 +1195,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="deviceName"> The device name. </param>
         /// <param name="content"> The upload certificate request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UploadCertificateResponse> UploadCertificate(string subscriptionId, string resourceGroupName, string deviceName, UploadCertificateContent content, CancellationToken cancellationToken = default)
+        public Response<UploadCertificateResponse> UploadCertificate(string subscriptionId, string resourceGroupName, string deviceName, UploadCertificateContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUploadCertificateRequest(subscriptionId, resourceGroupName, deviceName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1297,41 +1219,49 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, string expand)
+        internal HttpMessage CreateGenerateCertificateRequest(string subscriptionId, string resourceGroupName, string deviceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Get;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/generateCertificate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Gets all the Data Box Edge/Data Box Gateway devices in a subscription. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <summary> Generates certificate for activation key. </summary>
         /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
+        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="deviceName"> The device name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataBoxEdgeDeviceList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<GenerateCertResult>> GenerateCertificateAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, expand);
+            using var message = CreateGenerateCertificateRequest(subscriptionId, resourceGroupName, deviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DataBoxEdgeDeviceList value = default;
+                        GenerateCertResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
+                        value = GenerateCertResult.DeserializeGenerateCertResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1339,27 +1269,28 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        /// <summary> Gets all the Data Box Edge/Data Box Gateway devices in a subscription. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <summary> Generates certificate for activation key. </summary>
         /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
+        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="deviceName"> The device name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataBoxEdgeDeviceList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<GenerateCertResult> GenerateCertificate(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, expand);
+            using var message = CreateGenerateCertificateRequest(subscriptionId, resourceGroupName, deviceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DataBoxEdgeDeviceList value = default;
+                        GenerateCertResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
+                        value = GenerateCertResult.DeserializeGenerateCertResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1376,7 +1307,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json, text/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -1426,6 +1357,76 @@ namespace Azure.ResourceManager.DataBoxEdge
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, expand);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataBoxEdgeDeviceList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, string expand)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets all the Data Box Edge/Data Box Gateway devices in a subscription. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DataBoxEdgeDeviceList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, expand);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DataBoxEdgeDeviceList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DataBoxEdgeDeviceList.DeserializeDataBoxEdgeDeviceList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets all the Data Box Edge/Data Box Gateway devices in a subscription. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DataBoxEdgeDeviceList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

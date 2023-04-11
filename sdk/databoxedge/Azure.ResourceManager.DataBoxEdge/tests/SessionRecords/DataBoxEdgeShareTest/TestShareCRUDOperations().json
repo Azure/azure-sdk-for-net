@@ -1,0 +1,544 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c445408e0191a2a30cdee463cce6bd61-0d8daaf361aef74a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c6f829c0927637615fa87ddf34e2455b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "397",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Apr 2023 12:34:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "fb888d7d-e72a-4bec-8975-118c1dab5c73",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "fb888d7d-e72a-4bec-8975-118c1dab5c73",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230407T123426Z:fb888d7d-e72a-4bec-8975-118c1dab5c73"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "db4e2fdb-6d80-4e6e-b7cd-736098270664",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Edge Gateway Test",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-707ace51a1e3a2bf60a5282502bb51eb-05ed1db7cd854576-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e67758e59071f64db6d254752b516a65",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1237",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Apr 2023 12:34:30 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e67758e59071f64db6d254752b516a65",
+        "x-ms-correlation-request-id": "88aa5340-c10a-43e8-ac04-f90b796b8a17",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "88aa5340-c10a-43e8-ac04-f90b796b8a17",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230407T123431Z:88aa5340-c10a-43e8-ac04-f90b796b8a17"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "description": "",
+              "shareStatus": "OK",
+              "monitoringStatus": "Enabled",
+              "azureContainerInfo": {
+                "storageAccountCredentialId": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/storageAccountCredentials/testdk2",
+                "containerName": "smb1",
+                "dataFormat": "BlockBlob"
+              },
+              "accessProtocol": "SMB",
+              "userAccessRights": [
+                {
+                  "userId": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/users/user1",
+                  "accessType": "Change"
+                }
+              ],
+              "clientAccessRights": [],
+              "refreshDetails": {},
+              "shareMappings": [],
+              "dataPolicy": "Cloud"
+            },
+            "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/smb1",
+            "name": "smb1",
+            "type": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/shares"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/share1?api-version=2023-01-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "370",
+        "Content-Type": "application/json-patch\u002Bjson",
+        "traceparent": "00-915a4af59901d929435997e4bebd4bcf-8f8f82af7939ea50-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "edd207b61fe839e4f38bcea7fe7ab70d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "description": "It\u0027s a share Object",
+          "shareStatus": "OK",
+          "monitoringStatus": "Enabled",
+          "accessProtocol": "SMB",
+          "userAccessRights": [
+            {
+              "userId": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk8-2023/users/user1",
+              "accessType": "Change"
+            }
+          ],
+          "dataPolicy": "Local"
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Fri, 07 Apr 2023 12:34:44 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/share1/operationResults/1bb9bd5a-482f-4c05-842b-0e6e2c24abc0?api-version=2023-01-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4a92cdde-d2f3-4056-9185-25bed6de3748",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230407T123445Z:4a92cdde-d2f3-4056-9185-25bed6de3748"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/share1/operationResults/1bb9bd5a-482f-4c05-842b-0e6e2c24abc0?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-915a4af59901d929435997e4bebd4bcf-8d7580246180a11c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2d29173d5810c673743df3e5c1a6f73c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Fri, 07 Apr 2023 12:34:45 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/share1/operationResults/1bb9bd5a-482f-4c05-842b-0e6e2c24abc0?api-version=2023-01-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2d29173d5810c673743df3e5c1a6f73c",
+        "x-ms-correlation-request-id": "151e35eb-f76c-439d-bc4f-9af5b6655458",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "151e35eb-f76c-439d-bc4f-9af5b6655458",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230407T123446Z:151e35eb-f76c-439d-bc4f-9af5b6655458"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/share1/operationResults/1bb9bd5a-482f-4c05-842b-0e6e2c24abc0?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-915a4af59901d929435997e4bebd4bcf-425684eeb7933cdf-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c87e471af2a9cd745da211e50f40fb07",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Fri, 07 Apr 2023 12:34:56 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/share1?api-version=2023-01-01-preview",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c87e471af2a9cd745da211e50f40fb07",
+        "x-ms-correlation-request-id": "898d0fa8-da7c-4257-9475-f23f806a235b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "898d0fa8-da7c-4257-9475-f23f806a235b",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230407T123456Z:898d0fa8-da7c-4257-9475-f23f806a235b"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/share1?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-915a4af59901d929435997e4bebd4bcf-4a3eb54c23a70af3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e669bf7f8a519ffdefe103b3f5c56f35",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "804",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Apr 2023 12:34:58 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e669bf7f8a519ffdefe103b3f5c56f35",
+        "x-ms-correlation-request-id": "7d4e2dc7-6cfb-4e3e-9e3b-cbdfb1b180d8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "7d4e2dc7-6cfb-4e3e-9e3b-cbdfb1b180d8",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230407T123458Z:7d4e2dc7-6cfb-4e3e-9e3b-cbdfb1b180d8"
+      },
+      "ResponseBody": {
+        "properties": {
+          "description": "It\u0027s a share Object",
+          "shareStatus": "OK",
+          "monitoringStatus": "Enabled",
+          "accessProtocol": "SMB",
+          "userAccessRights": [
+            {
+              "userId": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/users/user1",
+              "accessType": "Change"
+            }
+          ],
+          "clientAccessRights": [],
+          "refreshDetails": {},
+          "shareMappings": [],
+          "dataPolicy": "Local"
+        },
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/share1",
+        "name": "share1",
+        "type": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/shares"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/smb1?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-23e1587537445f4780f39b743da02a9b-5b51c40cd7d81ffa-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f689d30b436d4a65a35bcf6e468eb634",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Apr 2023 12:35:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f689d30b436d4a65a35bcf6e468eb634",
+        "x-ms-correlation-request-id": "23945aaa-04d8-42f3-9f53-8e36d310ef1d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "23945aaa-04d8-42f3-9f53-8e36d310ef1d",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230407T123504Z:23945aaa-04d8-42f3-9f53-8e36d310ef1d"
+      },
+      "ResponseBody": {
+        "properties": {
+          "description": "",
+          "shareStatus": "OK",
+          "monitoringStatus": "Enabled",
+          "azureContainerInfo": {
+            "storageAccountCredentialId": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/storageAccountCredentials/testdk2",
+            "containerName": "smb1",
+            "dataFormat": "BlockBlob"
+          },
+          "accessProtocol": "SMB",
+          "userAccessRights": [
+            {
+              "userId": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/users/user1",
+              "accessType": "Change"
+            }
+          ],
+          "clientAccessRights": [],
+          "refreshDetails": {},
+          "shareMappings": [],
+          "dataPolicy": "Cloud"
+        },
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/smb1",
+        "name": "smb1",
+        "type": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/shares"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/smb1/refresh?api-version=2023-01-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-ba08e7394d9fab2157385c51595ccc15-759eeff4a9cb5514-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0165eb42103c90ea4aded9c8eec1d897",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Fri, 07 Apr 2023 12:35:11 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/smb1/operationResults/443ba839-4e17-47a2-8f31-701b646f2ec1?api-version=2023-01-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0165eb42103c90ea4aded9c8eec1d897",
+        "x-ms-correlation-request-id": "c9bb8c14-0678-4536-bac1-ef304167507e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "c9bb8c14-0678-4536-bac1-ef304167507e",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230407T123511Z:c9bb8c14-0678-4536-bac1-ef304167507e"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/smb1/operationResults/443ba839-4e17-47a2-8f31-701b646f2ec1?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ba08e7394d9fab2157385c51595ccc15-428341cebd4c8ab6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0a70cf2a6d5ffaf8e9f9ac8e6a9c5be1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Fri, 07 Apr 2023 12:35:12 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/smb1/operationResults/443ba839-4e17-47a2-8f31-701b646f2ec1?api-version=2023-01-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0a70cf2a6d5ffaf8e9f9ac8e6a9c5be1",
+        "x-ms-correlation-request-id": "225c0de1-7512-427f-a097-4fb5ee51d367",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "225c0de1-7512-427f-a097-4fb5ee51d367",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230407T123512Z:225c0de1-7512-427f-a097-4fb5ee51d367"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/smb1/operationResults/443ba839-4e17-47a2-8f31-701b646f2ec1?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ba08e7394d9fab2157385c51595ccc15-8974daea1f6a91fb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "693b38837bb33d7d5029a61ccdf5d5bb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/operationsStatus/443ba839-4e17-47a2-8f31-701b646f2ec1?api-version=2019-07-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Fri, 07 Apr 2023 12:35:22 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/operationsStatus/443ba839-4e17-47a2-8f31-701b646f2ec1?api-version=2019-07-01",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "693b38837bb33d7d5029a61ccdf5d5bb",
+        "x-ms-correlation-request-id": "7b3ce9ef-8516-4b41-93dc-b7c632ebdb76",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "7b3ce9ef-8516-4b41-93dc-b7c632ebdb76",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230407T123522Z:7b3ce9ef-8516-4b41-93dc-b7c632ebdb76"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/operationsStatus/443ba839-4e17-47a2-8f31-701b646f2ec1?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ba08e7394d9fab2157385c51595ccc15-08b4735f5f74a0a3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1f9e7785ce50c538e3e052bd590cd1be",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "749",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Apr 2023 12:35:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1f9e7785ce50c538e3e052bd590cd1be",
+        "x-ms-correlation-request-id": "6175cba8-890c-4196-86b3-4ec11fa92ccb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "6175cba8-890c-4196-86b3-4ec11fa92ccb",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230407T123533Z:6175cba8-890c-4196-86b3-4ec11fa92ccb"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/operationsStatus/443ba839-4e17-47a2-8f31-701b646f2ec1",
+        "name": "443ba839-4e17-47a2-8f31-701b646f2ec1",
+        "type": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs",
+        "status": "Running",
+        "startTime": "2023-04-07T12:35:13Z",
+        "percentComplete": 0,
+        "properties": {
+          "jobType": "RefreshShare",
+          "currentStage": "Unknown",
+          "totalRefreshErrors": 0,
+          "refreshedEntityId": "/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/smb1",
+          "folder": ""
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/smb1?api-version=2023-01-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-20324f970b679d9c6e602d2b7e7968c4-2bbf3e30faacba8f-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "827162c3ef54afad5233b935c7db2cf3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Fri, 07 Apr 2023 12:35:37 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/smb1/operationResults/c1f2c3c0-1395-44bb-92bf-0b62adc6ce19?api-version=2023-01-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "30",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "827162c3ef54afad5233b935c7db2cf3",
+        "x-ms-correlation-request-id": "15832a1d-6b4e-4f3c-a306-03d522430ea8",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "15832a1d-6b4e-4f3c-a306-03d522430ea8",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230407T123537Z:15832a1d-6b4e-4f3c-a306-03d522430ea8"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/smb1/operationResults/c1f2c3c0-1395-44bb-92bf-0b62adc6ce19?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-20324f970b679d9c6e602d2b7e7968c4-b2c396c8fd8c3f67-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6a59e85853839567caeecd1d1403fe08",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Fri, 07 Apr 2023 12:35:37 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/smb1/operationResults/c1f2c3c0-1395-44bb-92bf-0b62adc6ce19?api-version=2023-01-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6a59e85853839567caeecd1d1403fe08",
+        "x-ms-correlation-request-id": "eb33a7c1-8084-4e18-81c2-bbc1e046516c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "eb33a7c1-8084-4e18-81c2-bbc1e046516c",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230407T123538Z:eb33a7c1-8084-4e18-81c2-bbc1e046516c"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db4e2fdb-6d80-4e6e-b7cd-736098270664/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-sdk-resource/shares/smb1/operationResults/c1f2c3c0-1395-44bb-92bf-0b62adc6ce19?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-20324f970b679d9c6e602d2b7e7968c4-3564c39ae7814571-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "689a5eb3de0487bfd1bb82de6ada8693",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Date": "Fri, 07 Apr 2023 12:35:47 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "689a5eb3de0487bfd1bb82de6ada8693",
+        "x-ms-correlation-request-id": "6fb5eaf7-86d3-43e6-8069-899252468395",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "6fb5eaf7-86d3-43e6-8069-899252468395",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230407T123548Z:6fb5eaf7-86d3-43e6-8069-899252468395"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1490389611",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db4e2fdb-6d80-4e6e-b7cd-736098270664"
+  }
+}

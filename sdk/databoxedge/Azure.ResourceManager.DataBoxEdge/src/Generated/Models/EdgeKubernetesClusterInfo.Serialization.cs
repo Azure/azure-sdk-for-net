@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(EtcdInfo))
+            {
+                writer.WritePropertyName("etcdInfo"u8);
+                writer.WriteObjectValue(EtcdInfo);
+            }
             writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version);
             writer.WriteEndObject();
@@ -30,6 +35,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeEtcdInfo> etcdInfo = default;
             Optional<IReadOnlyList<EdgeKubernetesNodeInfo>> nodes = default;
             string version = default;
+            Optional<KubernetesComponentType> componentType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etcdInfo"u8))
@@ -46,7 +52,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        nodes = null;
                         continue;
                     }
                     List<EdgeKubernetesNodeInfo> array = new List<EdgeKubernetesNodeInfo>();
@@ -62,8 +68,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     version = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("componentType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    componentType = new KubernetesComponentType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new EdgeKubernetesClusterInfo(etcdInfo.Value, Optional.ToList(nodes), version);
+            return new EdgeKubernetesClusterInfo(etcdInfo.Value, Optional.ToList(nodes), version, Optional.ToNullable(componentType));
         }
     }
 }

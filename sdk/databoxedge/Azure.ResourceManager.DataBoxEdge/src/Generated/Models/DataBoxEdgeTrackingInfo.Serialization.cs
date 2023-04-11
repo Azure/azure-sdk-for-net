@@ -11,8 +11,62 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeTrackingInfo
+    public partial class DataBoxEdgeTrackingInfo : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SerialNumber))
+            {
+                if (SerialNumber != null)
+                {
+                    writer.WritePropertyName("serialNumber"u8);
+                    writer.WriteStringValue(SerialNumber);
+                }
+                else
+                {
+                    writer.WriteNull("serialNumber");
+                }
+            }
+            if (Optional.IsDefined(CarrierName))
+            {
+                if (CarrierName != null)
+                {
+                    writer.WritePropertyName("carrierName"u8);
+                    writer.WriteStringValue(CarrierName);
+                }
+                else
+                {
+                    writer.WriteNull("carrierName");
+                }
+            }
+            if (Optional.IsDefined(TrackingId))
+            {
+                if (TrackingId != null)
+                {
+                    writer.WritePropertyName("trackingId"u8);
+                    writer.WriteStringValue(TrackingId);
+                }
+                else
+                {
+                    writer.WriteNull("trackingId");
+                }
+            }
+            if (Optional.IsDefined(TrackingUri))
+            {
+                if (TrackingUri != null)
+                {
+                    writer.WritePropertyName("trackingUrl"u8);
+                    writer.WriteStringValue(TrackingUri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("trackingUrl");
+                }
+            }
+            writer.WriteEndObject();
+        }
+
         internal static DataBoxEdgeTrackingInfo DeserializeDataBoxEdgeTrackingInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -27,16 +81,31 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("serialNumber"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        serialNumber = null;
+                        continue;
+                    }
                     serialNumber = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("carrierName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        carrierName = null;
+                        continue;
+                    }
                     carrierName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("trackingId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        trackingId = null;
+                        continue;
+                    }
                     trackingId = property.Value.GetString();
                     continue;
                 }

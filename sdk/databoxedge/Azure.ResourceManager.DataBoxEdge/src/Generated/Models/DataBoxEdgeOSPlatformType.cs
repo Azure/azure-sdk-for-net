@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> Host OS supported by the Arc addon. </summary>
+    /// <summary> Platform where the runtime is hosted. </summary>
     public readonly partial struct DataBoxEdgeOSPlatformType : IEquatable<DataBoxEdgeOSPlatformType>
     {
         private readonly string _value;

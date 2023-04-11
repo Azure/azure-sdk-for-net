@@ -6,37 +6,96 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeProfileSubscription
+    public partial class EdgeProfileSubscription : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RegistrationId))
+            {
+                if (RegistrationId != null)
+                {
+                    writer.WritePropertyName("registrationId"u8);
+                    writer.WriteStringValue(RegistrationId.Value);
+                }
+                else
+                {
+                    writer.WriteNull("registrationId");
+                }
+            }
+            if (Optional.IsDefined(Id))
+            {
+                if (Id != null)
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNull("id");
+                }
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(RegistrationDate))
+            {
+                if (RegistrationDate != null)
+                {
+                    writer.WritePropertyName("registrationDate"u8);
+                    writer.WriteStringValue(RegistrationDate);
+                }
+                else
+                {
+                    writer.WriteNull("registrationDate");
+                }
+            }
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                if (SubscriptionId != null)
+                {
+                    writer.WritePropertyName("subscriptionId"u8);
+                    writer.WriteStringValue(SubscriptionId);
+                }
+                else
+                {
+                    writer.WriteNull("subscriptionId");
+                }
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static EdgeProfileSubscription DeserializeEdgeProfileSubscription(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Guid> registrationId = default;
+            Optional<Guid?> registrationId = default;
             Optional<ResourceIdentifier> id = default;
             Optional<DataBoxEdgeSubscriptionState> state = default;
             Optional<string> registrationDate = default;
             Optional<string> subscriptionId = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> locationPlacementId = default;
-            Optional<string> quotaId = default;
-            Optional<string> serializedDetails = default;
-            Optional<IReadOnlyList<SubscriptionRegisteredFeatures>> registeredFeatures = default;
+            Optional<SubscriptionProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registrationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        registrationId = null;
                         continue;
                     }
                     registrationId = property.Value.GetGuid();
@@ -46,7 +105,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        id = null;
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -64,11 +123,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("registrationDate"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        registrationDate = null;
+                        continue;
+                    }
                     registrationDate = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        subscriptionId = null;
+                        continue;
+                    }
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
@@ -79,53 +148,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("tenantId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            tenantId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("locationPlacementId"u8))
-                        {
-                            locationPlacementId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("quotaId"u8))
-                        {
-                            quotaId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("serializedDetails"u8))
-                        {
-                            serializedDetails = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("registeredFeatures"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<SubscriptionRegisteredFeatures> array = new List<SubscriptionRegisteredFeatures>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(SubscriptionRegisteredFeatures.DeserializeSubscriptionRegisteredFeatures(item));
-                            }
-                            registeredFeatures = array;
-                            continue;
-                        }
-                    }
+                    properties = SubscriptionProperties.DeserializeSubscriptionProperties(property.Value);
                     continue;
                 }
             }
-            return new EdgeProfileSubscription(Optional.ToNullable(registrationId), id.Value, Optional.ToNullable(state), registrationDate.Value, subscriptionId.Value, Optional.ToNullable(tenantId), locationPlacementId.Value, quotaId.Value, serializedDetails.Value, Optional.ToList(registeredFeatures));
+            return new EdgeProfileSubscription(Optional.ToNullable(registrationId), id.Value, Optional.ToNullable(state), registrationDate.Value, subscriptionId.Value, properties.Value);
         }
     }
 }

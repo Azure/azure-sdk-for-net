@@ -18,23 +18,51 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(InProgressRefreshJobId))
             {
-                writer.WritePropertyName("inProgressRefreshJobId"u8);
-                writer.WriteStringValue(InProgressRefreshJobId);
+                if (InProgressRefreshJobId != null)
+                {
+                    writer.WritePropertyName("inProgressRefreshJobId"u8);
+                    writer.WriteStringValue(InProgressRefreshJobId);
+                }
+                else
+                {
+                    writer.WriteNull("inProgressRefreshJobId");
+                }
             }
             if (Optional.IsDefined(LastCompletedRefreshJobTimeInUtc))
             {
-                writer.WritePropertyName("lastCompletedRefreshJobTimeInUTC"u8);
-                writer.WriteStringValue(LastCompletedRefreshJobTimeInUtc.Value, "O");
+                if (LastCompletedRefreshJobTimeInUtc != null)
+                {
+                    writer.WritePropertyName("lastCompletedRefreshJobTimeInUTC"u8);
+                    writer.WriteStringValue(LastCompletedRefreshJobTimeInUtc.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("lastCompletedRefreshJobTimeInUTC");
+                }
             }
             if (Optional.IsDefined(ErrorManifestFile))
             {
-                writer.WritePropertyName("errorManifestFile"u8);
-                writer.WriteStringValue(ErrorManifestFile);
+                if (ErrorManifestFile != null)
+                {
+                    writer.WritePropertyName("errorManifestFile"u8);
+                    writer.WriteStringValue(ErrorManifestFile);
+                }
+                else
+                {
+                    writer.WriteNull("errorManifestFile");
+                }
             }
             if (Optional.IsDefined(LastJob))
             {
-                writer.WritePropertyName("lastJob"u8);
-                writer.WriteStringValue(LastJob);
+                if (LastJob != null)
+                {
+                    writer.WritePropertyName("lastJob"u8);
+                    writer.WriteStringValue(LastJob);
+                }
+                else
+                {
+                    writer.WriteNull("lastJob");
+                }
             }
             writer.WriteEndObject();
         }
@@ -46,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             Optional<ResourceIdentifier> inProgressRefreshJobId = default;
-            Optional<DateTimeOffset> lastCompletedRefreshJobTimeInUtc = default;
+            Optional<DateTimeOffset?> lastCompletedRefreshJobTimeInUtc = default;
             Optional<string> errorManifestFile = default;
             Optional<string> lastJob = default;
             foreach (var property in element.EnumerateObject())
@@ -55,7 +83,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        inProgressRefreshJobId = null;
                         continue;
                     }
                     inProgressRefreshJobId = new ResourceIdentifier(property.Value.GetString());
@@ -65,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        lastCompletedRefreshJobTimeInUtc = null;
                         continue;
                     }
                     lastCompletedRefreshJobTimeInUtc = property.Value.GetDateTimeOffset("O");
@@ -73,11 +101,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("errorManifestFile"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        errorManifestFile = null;
+                        continue;
+                    }
                     errorManifestFile = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastJob"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        lastJob = null;
+                        continue;
+                    }
                     lastJob = property.Value.GetString();
                     continue;
                 }

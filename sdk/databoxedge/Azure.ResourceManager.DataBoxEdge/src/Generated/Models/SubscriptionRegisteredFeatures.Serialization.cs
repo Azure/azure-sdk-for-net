@@ -10,8 +10,38 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class SubscriptionRegisteredFeatures
+    public partial class SubscriptionRegisteredFeatures : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                if (Name != null)
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+                else
+                {
+                    writer.WriteNull("name");
+                }
+            }
+            if (Optional.IsDefined(State))
+            {
+                if (State != null)
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State);
+                }
+                else
+                {
+                    writer.WriteNull("state");
+                }
+            }
+            writer.WriteEndObject();
+        }
+
         internal static SubscriptionRegisteredFeatures DeserializeSubscriptionRegisteredFeatures(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -24,11 +54,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("name"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        name = null;
+                        continue;
+                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("state"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        state = null;
+                        continue;
+                    }
                     state = property.Value.GetString();
                     continue;
                 }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier shareId = default;
             Optional<ResourceIdentifier> roleId = default;
             Optional<string> mountPoint = default;
-            Optional<DataBoxEdgeMountType> mountType = default;
+            Optional<DataBoxEdgeMountType?> mountType = default;
             Optional<DataBoxEdgeRoleType> roleType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        roleId = null;
                         continue;
                     }
                     roleId = new ResourceIdentifier(property.Value.GetString());
@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("mountPoint"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        mountPoint = null;
+                        continue;
+                    }
                     mountPoint = property.Value.GetString();
                     continue;
                 }
@@ -57,7 +62,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        mountType = null;
                         continue;
                     }
                     mountType = new DataBoxEdgeMountType(property.Value.GetString());

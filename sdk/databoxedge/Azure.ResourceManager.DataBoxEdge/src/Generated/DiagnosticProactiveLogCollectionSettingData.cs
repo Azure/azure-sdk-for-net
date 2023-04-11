@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
@@ -18,10 +19,13 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DiagnosticProactiveLogCollectionSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of DiagnosticProactiveLogCollectionSettingData. </summary>
-        /// <param name="userConsent"> Proactive diagnostic collection consent flag. </param>
-        public DiagnosticProactiveLogCollectionSettingData(ProactiveDiagnosticsConsent userConsent)
+        /// <param name="properties"> The properties of proactive log collection settings. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DiagnosticProactiveLogCollectionSettingData(ProactiveLogCollectionSettingsProperties properties)
         {
-            UserConsent = userConsent;
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of DiagnosticProactiveLogCollectionSettingData. </summary>
@@ -29,13 +33,22 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="userConsent"> Proactive diagnostic collection consent flag. </param>
-        internal DiagnosticProactiveLogCollectionSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProactiveDiagnosticsConsent userConsent) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The properties of proactive log collection settings. </param>
+        internal DiagnosticProactiveLogCollectionSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProactiveLogCollectionSettingsProperties properties) : base(id, name, resourceType, systemData)
         {
-            UserConsent = userConsent;
+            Properties = properties;
         }
 
+        /// <summary> The properties of proactive log collection settings. </summary>
+        internal ProactiveLogCollectionSettingsProperties Properties { get; set; }
         /// <summary> Proactive diagnostic collection consent flag. </summary>
-        public ProactiveDiagnosticsConsent UserConsent { get; set; }
+        public ProactiveDiagnosticsConsent? ProactiveLogCollectionUserConsent
+        {
+            get => Properties is null ? default(ProactiveDiagnosticsConsent?) : Properties.UserConsent;
+            set
+            {
+                Properties = value.HasValue ? new ProactiveLogCollectionSettingsProperties(value.Value) : null;
+            }
+        }
     }
 }

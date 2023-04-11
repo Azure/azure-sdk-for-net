@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         private const string UntrackedValue = "Untracked";
-        private const string AwaitingFulfillmentValue = "AwaitingFulfillment";
+        private const string AwaitingFulfilmentValue = "AwaitingFulfilment";
         private const string AwaitingPreparationValue = "AwaitingPreparation";
         private const string AwaitingShipmentValue = "AwaitingShipment";
         private const string ShippedValue = "Shipped";
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Untracked. </summary>
         public static DataBoxEdgeOrderState Untracked { get; } = new DataBoxEdgeOrderState(UntrackedValue);
-        /// <summary> AwaitingFulfillment. </summary>
-        public static DataBoxEdgeOrderState AwaitingFulfillment { get; } = new DataBoxEdgeOrderState(AwaitingFulfillmentValue);
+        /// <summary> AwaitingFulfilment. </summary>
+        public static DataBoxEdgeOrderState AwaitingFulfilment { get; } = new DataBoxEdgeOrderState(AwaitingFulfilmentValue);
         /// <summary> AwaitingPreparation. </summary>
         public static DataBoxEdgeOrderState AwaitingPreparation { get; } = new DataBoxEdgeOrderState(AwaitingPreparationValue);
         /// <summary> AwaitingShipment. </summary>

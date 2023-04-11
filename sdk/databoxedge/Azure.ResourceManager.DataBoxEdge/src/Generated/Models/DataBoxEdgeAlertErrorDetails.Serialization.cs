@@ -10,8 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeAlertErrorDetails
+    public partial class DataBoxEdgeAlertErrorDetails : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+        }
+
         internal static DataBoxEdgeAlertErrorDetails DeserializeDataBoxEdgeAlertErrorDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -25,11 +31,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("errorCode"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        errorCode = null;
+                        continue;
+                    }
                     errorCode = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("errorMessage"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        errorMessage = null;
+                        continue;
+                    }
                     errorMessage = property.Value.GetString();
                     continue;
                 }

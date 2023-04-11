@@ -22,8 +22,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(Schedule);
             if (Optional.IsDefined(Topic))
             {
-                writer.WritePropertyName("topic"u8);
-                writer.WriteStringValue(Topic);
+                if (Topic != null)
+                {
+                    writer.WritePropertyName("topic"u8);
+                    writer.WriteStringValue(Topic);
+                }
+                else
+                {
+                    writer.WriteNull("topic");
+                }
             }
             writer.WriteEndObject();
         }
@@ -51,6 +58,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("topic"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        topic = null;
+                        continue;
+                    }
                     topic = property.Value.GetString();
                     continue;
                 }

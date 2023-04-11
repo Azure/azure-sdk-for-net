@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,35 +16,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(TimeStamp))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("timeStamp"u8);
-                writer.WriteStringValue(TimeStamp.Value, "O");
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(ClusterStorageCapacityInfo))
-            {
-                writer.WritePropertyName("clusterStorageCapacityInfo"u8);
-                writer.WriteObjectValue(ClusterStorageCapacityInfo);
-            }
-            if (Optional.IsDefined(ClusterComputeCapacityInfo))
-            {
-                writer.WritePropertyName("clusterComputeCapacityInfo"u8);
-                writer.WriteObjectValue(ClusterComputeCapacityInfo);
-            }
-            if (Optional.IsCollectionDefined(NodeCapacityInfos))
-            {
-                writer.WritePropertyName("nodeCapacityInfos"u8);
-                writer.WriteStartObject();
-                foreach (var item in NodeCapacityInfos)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -56,16 +30,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
+            Optional<DeviceCapacityInfoProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> timeStamp = default;
-            Optional<EdgeClusterStorageViewInfo> clusterStorageCapacityInfo = default;
-            Optional<EdgeClusterCapacityViewInfo> clusterComputeCapacityInfo = default;
-            Optional<IDictionary<string, HostCapacity>> nodeCapacityInfos = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = DeviceCapacityInfoProperties.DeserializeDeviceCapacityInfoProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -91,65 +72,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("timeStamp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            timeStamp = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterStorageCapacityInfo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            clusterStorageCapacityInfo = EdgeClusterStorageViewInfo.DeserializeEdgeClusterStorageViewInfo(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterComputeCapacityInfo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            clusterComputeCapacityInfo = EdgeClusterCapacityViewInfo.DeserializeEdgeClusterCapacityViewInfo(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("nodeCapacityInfos"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            Dictionary<string, HostCapacity> dictionary = new Dictionary<string, HostCapacity>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, HostCapacity.DeserializeHostCapacity(property1.Value));
-                            }
-                            nodeCapacityInfos = dictionary;
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new DataBoxEdgeDeviceCapacityInfo(id, name, type, systemData.Value, Optional.ToNullable(timeStamp), clusterStorageCapacityInfo.Value, clusterComputeCapacityInfo.Value, Optional.ToDictionary(nodeCapacityInfos));
+            return new DataBoxEdgeDeviceCapacityInfo(id, name, type, systemData.Value, properties.Value);
         }
     }
 }

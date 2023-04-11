@@ -24,11 +24,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("port"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        port = null;
+                        continue;
+                    }
                     port = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("ipAddress"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        ipAddress = null;
+                        continue;
+                    }
                     ipAddress = property.Value.GetString();
                     continue;
                 }

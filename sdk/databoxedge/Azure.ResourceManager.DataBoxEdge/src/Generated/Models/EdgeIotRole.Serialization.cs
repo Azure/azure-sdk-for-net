@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,51 +16,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties);
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(HostPlatform))
-            {
-                writer.WritePropertyName("hostPlatform"u8);
-                writer.WriteStringValue(HostPlatform.Value.ToString());
-            }
-            if (Optional.IsDefined(IotDeviceDetails))
-            {
-                writer.WritePropertyName("ioTDeviceDetails"u8);
-                writer.WriteObjectValue(IotDeviceDetails);
-            }
-            if (Optional.IsDefined(IotEdgeDeviceDetails))
-            {
-                writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
-                writer.WriteObjectValue(IotEdgeDeviceDetails);
-            }
-            if (Optional.IsCollectionDefined(ShareMappings))
-            {
-                writer.WritePropertyName("shareMappings"u8);
-                writer.WriteStartArray();
-                foreach (var item in ShareMappings)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IotEdgeAgentInfo))
-            {
-                writer.WritePropertyName("ioTEdgeAgentInfo"u8);
-                writer.WriteObjectValue(IotEdgeAgentInfo);
-            }
-            if (Optional.IsDefined(ComputeResource))
-            {
-                writer.WritePropertyName("computeResource"u8);
-                writer.WriteObjectValue(ComputeResource);
-            }
-            if (Optional.IsDefined(RoleStatus))
-            {
-                writer.WritePropertyName("roleStatus"u8);
-                writer.WriteStringValue(RoleStatus.Value.ToString());
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -71,21 +32,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
+            Optional<IotRoleProperties> properties = default;
             DataBoxEdgeRoleType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
-            Optional<EdgeIotDeviceInfo> iotDeviceDetails = default;
-            Optional<EdgeIotDeviceInfo> iotEdgeDeviceDetails = default;
-            Optional<IList<DataBoxEdgeMountPointMap>> shareMappings = default;
-            Optional<IotEdgeAgentInfo> iotEdgeAgentInfo = default;
-            Optional<HostPlatformType> hostPlatformType = default;
-            Optional<EdgeComputeResourceInfo> computeResource = default;
-            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = IotRoleProperties.DeserializeIotRoleProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = new DataBoxEdgeRoleType(property.Value.GetString());
@@ -116,105 +80,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("hostPlatform"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            hostPlatform = new DataBoxEdgeOSPlatformType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("ioTDeviceDetails"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            iotDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("ioTEdgeDeviceDetails"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            iotEdgeDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("shareMappings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item));
-                            }
-                            shareMappings = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("ioTEdgeAgentInfo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            iotEdgeAgentInfo = IotEdgeAgentInfo.DeserializeIotEdgeAgentInfo(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("hostPlatformType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            hostPlatformType = new HostPlatformType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("computeResource"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            computeResource = EdgeComputeResourceInfo.DeserializeEdgeComputeResourceInfo(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("roleStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            roleStatus = new DataBoxEdgeRoleStatus(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new EdgeIotRole(id, name, type, systemData.Value, kind, Optional.ToNullable(hostPlatform), iotDeviceDetails.Value, iotEdgeDeviceDetails.Value, Optional.ToList(shareMappings), iotEdgeAgentInfo.Value, Optional.ToNullable(hostPlatformType), computeResource.Value, Optional.ToNullable(roleStatus));
+            return new EdgeIotRole(id, name, type, systemData.Value, kind, properties.Value);
         }
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -18,24 +17,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ContactInformation))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("contactInformation"u8);
-                writer.WriteObjectValue(ContactInformation);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(ShippingAddress))
-            {
-                writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
-            }
-            if (Optional.IsDefined(ShipmentType))
-            {
-                writer.WritePropertyName("shipmentType"u8);
-                writer.WriteStringValue(ShipmentType.Value.ToString());
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -46,24 +32,31 @@ namespace Azure.ResourceManager.DataBoxEdge
                 return null;
             }
             Optional<string> kind = default;
+            Optional<OrderProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> orderId = default;
-            Optional<DataBoxEdgeContactDetails> contactInformation = default;
-            Optional<DataBoxEdgeShippingAddress> shippingAddress = default;
-            Optional<DataBoxEdgeOrderStatus> currentStatus = default;
-            Optional<IReadOnlyList<DataBoxEdgeOrderStatus>> orderHistory = default;
-            Optional<string> serialNumber = default;
-            Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> deliveryTrackingInfo = default;
-            Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> returnTrackingInfo = default;
-            Optional<DataBoxEdgeShipmentType> shipmentType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        kind = null;
+                        continue;
+                    }
                     kind = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = OrderProperties.DeserializeOrderProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -91,115 +84,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("orderId"u8))
-                        {
-                            orderId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("contactInformation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            contactInformation = DataBoxEdgeContactDetails.DeserializeDataBoxEdgeContactDetails(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("shippingAddress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            shippingAddress = DataBoxEdgeShippingAddress.DeserializeDataBoxEdgeShippingAddress(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("currentStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            currentStatus = DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("orderHistory"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<DataBoxEdgeOrderStatus> array = new List<DataBoxEdgeOrderStatus>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(item));
-                            }
-                            orderHistory = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("serialNumber"u8))
-                        {
-                            serialNumber = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("deliveryTrackingInfo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<DataBoxEdgeTrackingInfo> array = new List<DataBoxEdgeTrackingInfo>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item));
-                            }
-                            deliveryTrackingInfo = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("returnTrackingInfo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<DataBoxEdgeTrackingInfo> array = new List<DataBoxEdgeTrackingInfo>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item));
-                            }
-                            returnTrackingInfo = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("shipmentType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            shipmentType = new DataBoxEdgeShipmentType(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new DataBoxEdgeOrderData(id, name, type, systemData.Value, kind.Value, orderId.Value, contactInformation.Value, shippingAddress.Value, currentStatus.Value, Optional.ToList(orderHistory), serialNumber.Value, Optional.ToList(deliveryTrackingInfo), Optional.ToList(returnTrackingInfo), Optional.ToNullable(shipmentType));
+            return new DataBoxEdgeOrderData(id, name, type, systemData.Value, kind.Value, properties.Value);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
@@ -18,10 +19,13 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DataBoxEdgeStorageAccountData : ResourceData
     {
         /// <summary> Initializes a new instance of DataBoxEdgeStorageAccountData. </summary>
-        /// <param name="dataPolicy"> Data policy of the storage Account. </param>
-        public DataBoxEdgeStorageAccountData(DataBoxEdgeDataPolicy dataPolicy)
+        /// <param name="properties"> The storage account properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DataBoxEdgeStorageAccountData(StorageAccountProperties properties)
         {
-            DataPolicy = dataPolicy;
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeStorageAccountData. </summary>
@@ -29,33 +33,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description for the storage Account. </param>
-        /// <param name="storageAccountStatus"> Current status of the storage account. </param>
-        /// <param name="dataPolicy"> Data policy of the storage Account. </param>
-        /// <param name="storageAccountCredentialId"> Storage Account Credential Id. </param>
-        /// <param name="blobEndpoint"> BlobEndpoint of Storage Account. </param>
-        /// <param name="containerCount"> The Container Count. Present only for Storage Accounts with DataPolicy set to Cloud. </param>
-        internal DataBoxEdgeStorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, DataBoxEdgeStorageAccountStatus? storageAccountStatus, DataBoxEdgeDataPolicy dataPolicy, ResourceIdentifier storageAccountCredentialId, string blobEndpoint, int? containerCount) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The storage account properties. </param>
+        internal DataBoxEdgeStorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageAccountProperties properties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            StorageAccountStatus = storageAccountStatus;
-            DataPolicy = dataPolicy;
-            StorageAccountCredentialId = storageAccountCredentialId;
-            BlobEndpoint = blobEndpoint;
-            ContainerCount = containerCount;
+            Properties = properties;
         }
 
-        /// <summary> Description for the storage Account. </summary>
-        public string Description { get; set; }
-        /// <summary> Current status of the storage account. </summary>
-        public DataBoxEdgeStorageAccountStatus? StorageAccountStatus { get; set; }
-        /// <summary> Data policy of the storage Account. </summary>
-        public DataBoxEdgeDataPolicy DataPolicy { get; set; }
-        /// <summary> Storage Account Credential Id. </summary>
-        public ResourceIdentifier StorageAccountCredentialId { get; set; }
-        /// <summary> BlobEndpoint of Storage Account. </summary>
-        public string BlobEndpoint { get; }
-        /// <summary> The Container Count. Present only for Storage Accounts with DataPolicy set to Cloud. </summary>
-        public int? ContainerCount { get; }
+        /// <summary> The storage account properties. </summary>
+        public StorageAccountProperties Properties { get; set; }
     }
 }

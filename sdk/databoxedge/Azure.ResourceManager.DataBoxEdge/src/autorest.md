@@ -8,7 +8,7 @@ generate-model-factory: false
 csharp: true
 library-name: DataBoxEdge
 namespace: Azure.ResourceManager.DataBoxEdge
-require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/databoxedge/resource-manager/readme.md
+require: https://github.com/gachauhan/azure-rest-api-specs/blob/ed4df9b1a05cfc8080506ce827f04d11660e7e6d/specification/databoxedge/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

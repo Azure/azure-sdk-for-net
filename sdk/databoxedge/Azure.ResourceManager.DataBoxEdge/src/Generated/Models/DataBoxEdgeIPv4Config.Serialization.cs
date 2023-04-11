@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        ipAddress = null;
                         continue;
                     }
                     ipAddress = IPAddress.Parse(property.Value.GetString());
@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("subnet"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        subnet = null;
+                        continue;
+                    }
                     subnet = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("gateway"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        gateway = null;
+                        continue;
+                    }
                     gateway = property.Value.GetString();
                     continue;
                 }

@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("updateTitle"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        updateTitle = null;
+                        continue;
+                    }
                     updateTitle = property.Value.GetString();
                     continue;
                 }
@@ -56,11 +61,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("targetVersion"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        targetVersion = null;
+                        continue;
+                    }
                     targetVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("friendlyVersionNumber"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        friendlyVersionNumber = null;
+                        continue;
+                    }
                     friendlyVersionNumber = property.Value.GetString();
                     continue;
                 }

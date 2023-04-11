@@ -27,11 +27,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="vmProfile"> VM profile. </param>
         /// <param name="memoryInBytes"> Memory in bytes. </param>
         /// <param name="processorCount"> Processor count. </param>
-        internal EdgeKubernetesRoleCompute(string vmProfile, long? memoryInBytes, int? processorCount)
+        /// <param name="hugePage2M"> Count of huge pages. </param>
+        /// <param name="hugePage1G"> Count of huge pages. </param>
+        internal EdgeKubernetesRoleCompute(string vmProfile, long? memoryInBytes, int? processorCount, int? hugePage2M, int? hugePage1G)
         {
             VmProfile = vmProfile;
             MemoryInBytes = memoryInBytes;
             ProcessorCount = processorCount;
+            HugePage2M = hugePage2M;
+            HugePage1G = hugePage1G;
         }
 
         /// <summary> VM profile. </summary>
@@ -40,5 +44,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public long? MemoryInBytes { get; }
         /// <summary> Processor count. </summary>
         public int? ProcessorCount { get; }
+        /// <summary> Count of huge pages. </summary>
+        public int? HugePage2M { get; }
+        /// <summary> Count of huge pages. </summary>
+        public int? HugePage1G { get; }
     }
 }

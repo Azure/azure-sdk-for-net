@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("userConsent"u8);
-            writer.WriteStringValue(UserConsent.ToString());
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
 
@@ -31,13 +28,18 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
+            ProactiveLogCollectionSettingsProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            ProactiveDiagnosticsConsent userConsent = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = ProactiveLogCollectionSettingsProperties.DeserializeProactiveLogCollectionSettingsProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -63,25 +65,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("userConsent"u8))
-                        {
-                            userConsent = new ProactiveDiagnosticsConsent(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new DiagnosticProactiveLogCollectionSettingData(id, name, type, systemData.Value, userConsent);
+            return new DiagnosticProactiveLogCollectionSettingData(id, name, type, systemData.Value, properties);
         }
     }
 }

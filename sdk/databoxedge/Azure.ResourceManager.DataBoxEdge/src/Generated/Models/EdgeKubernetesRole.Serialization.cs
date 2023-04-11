@@ -16,31 +16,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties);
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(HostPlatform))
-            {
-                writer.WritePropertyName("hostPlatform"u8);
-                writer.WriteStringValue(HostPlatform.Value.ToString());
-            }
-            if (Optional.IsDefined(KubernetesClusterInfo))
-            {
-                writer.WritePropertyName("kubernetesClusterInfo"u8);
-                writer.WriteObjectValue(KubernetesClusterInfo);
-            }
-            if (Optional.IsDefined(KubernetesRoleResources))
-            {
-                writer.WritePropertyName("kubernetesRoleResources"u8);
-                writer.WriteObjectValue(KubernetesRoleResources);
-            }
-            if (Optional.IsDefined(RoleStatus))
-            {
-                writer.WritePropertyName("roleStatus"u8);
-                writer.WriteStringValue(RoleStatus.Value.ToString());
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -50,19 +32,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
+            Optional<KubernetesRoleProperties> properties = default;
             DataBoxEdgeRoleType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
-            Optional<EdgeKubernetesState> provisioningState = default;
-            Optional<HostPlatformType> hostPlatformType = default;
-            Optional<EdgeKubernetesClusterInfo> kubernetesClusterInfo = default;
-            Optional<EdgeKubernetesRoleResources> kubernetesRoleResources = default;
-            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = KubernetesRoleProperties.DeserializeKubernetesRoleProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = new DataBoxEdgeRoleType(property.Value.GetString());
@@ -93,80 +80,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("hostPlatform"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            hostPlatform = new DataBoxEdgeOSPlatformType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            provisioningState = new EdgeKubernetesState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("hostPlatformType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            hostPlatformType = new HostPlatformType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("kubernetesClusterInfo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            kubernetesClusterInfo = EdgeKubernetesClusterInfo.DeserializeEdgeKubernetesClusterInfo(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("kubernetesRoleResources"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            kubernetesRoleResources = EdgeKubernetesRoleResources.DeserializeEdgeKubernetesRoleResources(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("roleStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            roleStatus = new DataBoxEdgeRoleStatus(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new EdgeKubernetesRole(id, name, type, systemData.Value, kind, Optional.ToNullable(hostPlatform), Optional.ToNullable(provisioningState), Optional.ToNullable(hostPlatformType), kubernetesClusterInfo.Value, kubernetesRoleResources.Value, Optional.ToNullable(roleStatus));
+            return new EdgeKubernetesRole(id, name, type, systemData.Value, kind, properties.Value);
         }
     }
 }

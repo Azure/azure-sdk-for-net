@@ -17,28 +17,63 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientSecretStoreId))
             {
-                writer.WritePropertyName("clientSecretStoreId"u8);
-                writer.WriteStringValue(ClientSecretStoreId);
+                if (ClientSecretStoreId != null)
+                {
+                    writer.WritePropertyName("clientSecretStoreId"u8);
+                    writer.WriteStringValue(ClientSecretStoreId);
+                }
+                else
+                {
+                    writer.WriteNull("clientSecretStoreId");
+                }
             }
             if (Optional.IsDefined(ClientSecretStoreUri))
             {
-                writer.WritePropertyName("clientSecretStoreUrl"u8);
-                writer.WriteStringValue(ClientSecretStoreUri.AbsoluteUri);
+                if (ClientSecretStoreUri != null)
+                {
+                    writer.WritePropertyName("clientSecretStoreUrl"u8);
+                    writer.WriteStringValue(ClientSecretStoreUri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("clientSecretStoreUrl");
+                }
             }
             if (Optional.IsDefined(ChannelIntegrityKeyName))
             {
-                writer.WritePropertyName("channelIntegrityKeyName"u8);
-                writer.WriteStringValue(ChannelIntegrityKeyName);
+                if (ChannelIntegrityKeyName != null)
+                {
+                    writer.WritePropertyName("channelIntegrityKeyName"u8);
+                    writer.WriteStringValue(ChannelIntegrityKeyName);
+                }
+                else
+                {
+                    writer.WriteNull("channelIntegrityKeyName");
+                }
             }
             if (Optional.IsDefined(ChannelIntegrityKeyVersion))
             {
-                writer.WritePropertyName("channelIntegrityKeyVersion"u8);
-                writer.WriteStringValue(ChannelIntegrityKeyVersion);
+                if (ChannelIntegrityKeyVersion != null)
+                {
+                    writer.WritePropertyName("channelIntegrityKeyVersion"u8);
+                    writer.WriteStringValue(ChannelIntegrityKeyVersion);
+                }
+                else
+                {
+                    writer.WriteNull("channelIntegrityKeyVersion");
+                }
             }
             if (Optional.IsDefined(SyncStatus))
             {
-                writer.WritePropertyName("syncStatus"u8);
-                writer.WriteStringValue(SyncStatus.Value.ToString());
+                if (SyncStatus != null)
+                {
+                    writer.WritePropertyName("syncStatus"u8);
+                    writer.WriteStringValue(SyncStatus.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("syncStatus");
+                }
             }
             writer.WriteEndObject();
         }

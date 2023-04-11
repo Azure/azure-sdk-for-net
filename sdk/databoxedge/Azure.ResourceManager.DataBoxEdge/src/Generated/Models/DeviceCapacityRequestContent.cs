@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -16,19 +14,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class DeviceCapacityRequestContent
     {
         /// <summary> Initializes a new instance of DeviceCapacityRequestContent. </summary>
-        /// <param name="vmPlacementQuery"> Array containing the sizes of the VMs for checking if its feasible to create them on the appliance. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmPlacementQuery"/> is null. </exception>
-        public DeviceCapacityRequestContent(IEnumerable<IList<string>> vmPlacementQuery)
+        /// <param name="properties"> Properties of Device Capacity Request Info containing VM&apos;s to be checked and their corresponding results. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DeviceCapacityRequestContent(DeviceCapacityRequestInfoProperties properties)
         {
-            Argument.AssertNotNull(vmPlacementQuery, nameof(vmPlacementQuery));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            VmPlacementQuery = vmPlacementQuery.ToList();
-            VmPlacementResults = new ChangeTrackingList<VmPlacementRequestResult>();
+            Properties = properties;
         }
 
-        /// <summary> Array containing the sizes of the VMs for checking if its feasible to create them on the appliance. </summary>
-        public IList<IList<string>> VmPlacementQuery { get; }
-        /// <summary> Array of the VMs of the sizes in VmSizes can be provisioned on the appliance. </summary>
-        public IList<VmPlacementRequestResult> VmPlacementResults { get; }
+        /// <summary> Properties of Device Capacity Request Info containing VM&apos;s to be checked and their corresponding results. </summary>
+        public DeviceCapacityRequestInfoProperties Properties { get; }
     }
 }

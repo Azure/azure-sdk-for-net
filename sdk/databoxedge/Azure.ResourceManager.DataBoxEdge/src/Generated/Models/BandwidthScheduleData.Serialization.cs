@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -20,21 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("start"u8);
-            writer.WriteStringValue(StartOn, "T");
-            writer.WritePropertyName("stop"u8);
-            writer.WriteStringValue(StopOn, "T");
-            writer.WritePropertyName("rateInMbps"u8);
-            writer.WriteNumberValue(RateInMbps);
-            writer.WritePropertyName("days"u8);
-            writer.WriteStartArray();
-            foreach (var item in Days)
-            {
-                writer.WriteStringValue(item.ToString());
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
 
@@ -44,16 +28,18 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
+            BandwidthScheduleProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            TimeSpan start = default;
-            TimeSpan stop = default;
-            int rateInMbps = default;
-            IList<DataBoxEdgeDayOfWeek> days = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = BandwidthScheduleProperties.DeserializeBandwidthScheduleProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -79,45 +65,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("start"u8))
-                        {
-                            start = property0.Value.GetTimeSpan("T");
-                            continue;
-                        }
-                        if (property0.NameEquals("stop"u8))
-                        {
-                            stop = property0.Value.GetTimeSpan("T");
-                            continue;
-                        }
-                        if (property0.NameEquals("rateInMbps"u8))
-                        {
-                            rateInMbps = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("days"u8))
-                        {
-                            List<DataBoxEdgeDayOfWeek> array = new List<DataBoxEdgeDayOfWeek>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new DataBoxEdgeDayOfWeek(item.GetString()));
-                            }
-                            days = array;
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new BandwidthScheduleData(id, name, type, systemData.Value, start, stop, rateInMbps, days);
+            return new BandwidthScheduleData(id, name, type, systemData.Value, properties);
         }
     }
 }

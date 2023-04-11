@@ -16,15 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(AuthenticationType))
-            {
-                writer.WritePropertyName("authenticationType"u8);
-                writer.WriteStringValue(AuthenticationType.Value.ToString());
-            }
-            writer.WritePropertyName("certificate"u8);
-            writer.WriteStringValue(Certificate);
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
     }

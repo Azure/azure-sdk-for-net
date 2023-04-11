@@ -10,8 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeLoadBalancerConfig
+    public partial class DataBoxEdgeLoadBalancerConfig : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+        }
+
         internal static DataBoxEdgeLoadBalancerConfig DeserializeDataBoxEdgeLoadBalancerConfig(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -20,20 +26,41 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             Optional<string> type = default;
             Optional<string> version = default;
+            Optional<KubernetesComponentType> componentType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        type = null;
+                        continue;
+                    }
                     type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("version"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        version = null;
+                        continue;
+                    }
                     version = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("componentType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    componentType = new KubernetesComponentType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new DataBoxEdgeLoadBalancerConfig(type.Value, version.Value);
+            return new DataBoxEdgeLoadBalancerConfig(type.Value, version.Value, Optional.ToNullable(componentType));
         }
     }
 }

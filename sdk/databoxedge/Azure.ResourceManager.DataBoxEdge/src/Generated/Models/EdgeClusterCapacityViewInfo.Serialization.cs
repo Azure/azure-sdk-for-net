@@ -18,8 +18,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Fqdn))
             {
-                writer.WritePropertyName("fqdn"u8);
-                writer.WriteStringValue(Fqdn);
+                if (Fqdn != null)
+                {
+                    writer.WritePropertyName("fqdn"u8);
+                    writer.WriteStringValue(Fqdn);
+                }
+                else
+                {
+                    writer.WriteNull("fqdn");
+                }
             }
             if (Optional.IsDefined(GpuCapacity))
             {
@@ -59,6 +66,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("fqdn"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        fqdn = null;
+                        continue;
+                    }
                     fqdn = property.Value.GetString();
                     continue;
                 }

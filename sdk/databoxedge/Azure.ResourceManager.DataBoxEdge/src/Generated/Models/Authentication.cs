@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Symmetric key for authentication. </summary>
         internal DataBoxEdgeSymmetricKey SymmetricKey { get; set; }
-        /// <summary> Connection string based on the symmetric key. </summary>
+        /// <summary> Represent the secrets intended for encryption with asymmetric key pair. </summary>
         public AsymmetricEncryptedSecret SymmetricKeyConnectionString
         {
             get => SymmetricKey is null ? default : SymmetricKey.ConnectionString;

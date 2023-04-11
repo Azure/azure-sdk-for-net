@@ -19,10 +19,13 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DataBoxEdgeStorageContainerData : ResourceData
     {
         /// <summary> Initializes a new instance of DataBoxEdgeStorageContainerData. </summary>
-        /// <param name="dataFormat"> DataFormat for Container. </param>
-        public DataBoxEdgeStorageContainerData(DataBoxEdgeStorageContainerDataFormat dataFormat)
+        /// <param name="properties"> The container properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DataBoxEdgeStorageContainerData(ContainerProperties properties)
         {
-            DataFormat = dataFormat;
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeStorageContainerData. </summary>
@@ -30,25 +33,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="containerStatus"> Current status of the container. </param>
-        /// <param name="dataFormat"> DataFormat for Container. </param>
-        /// <param name="refreshDetails"> Details of the refresh job on this container. </param>
-        /// <param name="createdOn"> The UTC time when container got created. </param>
-        internal DataBoxEdgeStorageContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeStorageContainerStatus? containerStatus, DataBoxEdgeStorageContainerDataFormat dataFormat, DataBoxEdgeRefreshDetails refreshDetails, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The container properties. </param>
+        internal DataBoxEdgeStorageContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerProperties properties) : base(id, name, resourceType, systemData)
         {
-            ContainerStatus = containerStatus;
-            DataFormat = dataFormat;
-            RefreshDetails = refreshDetails;
-            CreatedOn = createdOn;
+            Properties = properties;
         }
 
-        /// <summary> Current status of the container. </summary>
-        public DataBoxEdgeStorageContainerStatus? ContainerStatus { get; }
-        /// <summary> DataFormat for Container. </summary>
-        public DataBoxEdgeStorageContainerDataFormat DataFormat { get; set; }
-        /// <summary> Details of the refresh job on this container. </summary>
-        public DataBoxEdgeRefreshDetails RefreshDetails { get; }
-        /// <summary> The UTC time when container got created. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> The container properties. </summary>
+        public ContainerProperties Properties { get; set; }
     }
 }

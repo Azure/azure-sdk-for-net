@@ -11,22 +11,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class DataBoxEdgeLoadBalancerConfig
     {
         /// <summary> Initializes a new instance of DataBoxEdgeLoadBalancerConfig. </summary>
-        internal DataBoxEdgeLoadBalancerConfig()
+        public DataBoxEdgeLoadBalancerConfig()
         {
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeLoadBalancerConfig. </summary>
         /// <param name="loadBalancerConfigType"> Load balancer type. </param>
         /// <param name="version"> Load balancer version. </param>
-        internal DataBoxEdgeLoadBalancerConfig(string loadBalancerConfigType, string version)
+        /// <param name="componentType"> ComponentType of the Kubernetes node. </param>
+        internal DataBoxEdgeLoadBalancerConfig(string loadBalancerConfigType, string version, KubernetesComponentType? componentType)
         {
             LoadBalancerConfigType = loadBalancerConfigType;
             Version = version;
+            ComponentType = componentType;
         }
 
         /// <summary> Load balancer type. </summary>
         public string LoadBalancerConfigType { get; }
         /// <summary> Load balancer version. </summary>
         public string Version { get; }
+        /// <summary> ComponentType of the Kubernetes node. </summary>
+        public KubernetesComponentType? ComponentType { get; }
     }
 }

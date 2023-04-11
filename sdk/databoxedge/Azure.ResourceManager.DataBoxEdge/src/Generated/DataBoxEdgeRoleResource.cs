@@ -353,5 +353,65 @@ namespace Azure.ResourceManager.DataBoxEdge
                 throw;
             }
         }
+
+        /// <summary>
+        /// Migrates the IOT Role To NewK8 experience
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{name}/migrate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Roles_Migrate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DataBoxEdgeRoleResource>> MigrateAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _dataBoxEdgeRoleRolesClientDiagnostics.CreateScope("DataBoxEdgeRoleResource.Migrate");
+            scope.Start();
+            try
+            {
+                var response = await _dataBoxEdgeRoleRolesRestClient.MigrateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DataBoxEdgeRoleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Migrates the IOT Role To NewK8 experience
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{name}/migrate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Roles_Migrate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DataBoxEdgeRoleResource> Migrate(CancellationToken cancellationToken = default)
+        {
+            using var scope = _dataBoxEdgeRoleRolesClientDiagnostics.CreateScope("DataBoxEdgeRoleResource.Migrate");
+            scope.Start();
+            try
+            {
+                var response = _dataBoxEdgeRoleRolesRestClient.Migrate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new DataBoxEdgeRoleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

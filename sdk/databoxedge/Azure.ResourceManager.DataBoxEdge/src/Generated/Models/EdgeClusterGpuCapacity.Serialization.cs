@@ -17,8 +17,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GpuType))
             {
-                writer.WritePropertyName("gpuType"u8);
-                writer.WriteStringValue(GpuType);
+                if (GpuType != null)
+                {
+                    writer.WritePropertyName("gpuType"u8);
+                    writer.WriteStringValue(GpuType);
+                }
+                else
+                {
+                    writer.WriteNull("gpuType");
+                }
             }
             if (Optional.IsDefined(GpuUsedUnitsCount))
             {
@@ -58,6 +65,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 if (property.NameEquals("gpuType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        gpuType = null;
+                        continue;
+                    }
                     gpuType = property.Value.GetString();
                     continue;
                 }

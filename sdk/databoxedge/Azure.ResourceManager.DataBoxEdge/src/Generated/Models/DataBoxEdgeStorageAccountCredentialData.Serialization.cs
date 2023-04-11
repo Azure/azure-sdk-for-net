@@ -18,39 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("alias"u8);
-            writer.WriteStringValue(Alias);
-            if (Optional.IsDefined(UserName))
-            {
-                writer.WritePropertyName("userName"u8);
-                writer.WriteStringValue(UserName);
-            }
-            if (Optional.IsDefined(AccountKey))
-            {
-                writer.WritePropertyName("accountKey"u8);
-                writer.WriteObjectValue(AccountKey);
-            }
-            if (Optional.IsDefined(ConnectionString))
-            {
-                writer.WritePropertyName("connectionString"u8);
-                writer.WriteStringValue(ConnectionString);
-            }
-            writer.WritePropertyName("sslStatus"u8);
-            writer.WriteStringValue(SslStatus.ToString());
-            if (Optional.IsDefined(BlobDomainName))
-            {
-                writer.WritePropertyName("blobDomainName"u8);
-                writer.WriteStringValue(BlobDomainName);
-            }
-            writer.WritePropertyName("accountType"u8);
-            writer.WriteStringValue(AccountType.ToString());
-            if (Optional.IsDefined(StorageAccountId))
-            {
-                writer.WritePropertyName("storageAccountId"u8);
-                writer.WriteStringValue(StorageAccountId);
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
 
@@ -60,20 +28,18 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
+            StorageAccountCredentialProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            string @alias = default;
-            Optional<string> userName = default;
-            Optional<AsymmetricEncryptedSecret> accountKey = default;
-            Optional<string> connectionString = default;
-            DataBoxEdgeStorageAccountSslStatus sslStatus = default;
-            Optional<string> blobDomainName = default;
-            DataBoxEdgeStorageAccountType accountType = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = StorageAccountCredentialProperties.DeserializeStorageAccountCredentialProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -99,70 +65,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("alias"u8))
-                        {
-                            @alias = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("userName"u8))
-                        {
-                            userName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("accountKey"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            accountKey = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("connectionString"u8))
-                        {
-                            connectionString = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sslStatus"u8))
-                        {
-                            sslStatus = new DataBoxEdgeStorageAccountSslStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("blobDomainName"u8))
-                        {
-                            blobDomainName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("accountType"u8))
-                        {
-                            accountType = new DataBoxEdgeStorageAccountType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("storageAccountId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            storageAccountId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new DataBoxEdgeStorageAccountCredentialData(id, name, type, systemData.Value, @alias, userName.Value, accountKey.Value, connectionString.Value, sslStatus, blobDomainName.Value, accountType, storageAccountId.Value);
+            return new DataBoxEdgeStorageAccountCredentialData(id, name, type, systemData.Value, properties);
         }
     }
 }

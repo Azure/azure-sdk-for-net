@@ -16,21 +16,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class EdgeArcAddon : DataBoxEdgeRoleAddonData
     {
         /// <summary> Initializes a new instance of EdgeArcAddon. </summary>
-        /// <param name="subscriptionId"> Arc resource subscription Id. </param>
-        /// <param name="resourceGroupName"> Arc resource group name. </param>
-        /// <param name="resourceName"> Arc resource Name. </param>
-        /// <param name="resourceLocation"> Arc resource location. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        public EdgeArcAddon(string subscriptionId, string resourceGroupName, string resourceName, AzureLocation resourceLocation)
+        /// <param name="properties"> Arc addon properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public EdgeArcAddon(ArcAddonProperties properties)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            SubscriptionId = subscriptionId;
-            ResourceGroupName = resourceGroupName;
-            ResourceName = resourceName;
-            ResourceLocation = resourceLocation;
+            Properties = properties;
             Kind = AddonType.ArcForKubernetes;
         }
 
@@ -40,42 +32,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Addon type. </param>
-        /// <param name="subscriptionId"> Arc resource subscription Id. </param>
-        /// <param name="resourceGroupName"> Arc resource group name. </param>
-        /// <param name="resourceName"> Arc resource Name. </param>
-        /// <param name="resourceLocation"> Arc resource location. </param>
-        /// <param name="version"> Arc resource version. </param>
-        /// <param name="hostPlatform"> Host OS supported by the Arc addon. </param>
-        /// <param name="hostPlatformType"> Platform where the runtime is hosted. </param>
-        /// <param name="provisioningState"> Addon Provisioning State. </param>
-        internal EdgeArcAddon(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AddonType kind, string subscriptionId, string resourceGroupName, string resourceName, AzureLocation resourceLocation, string version, DataBoxEdgeOSPlatformType? hostPlatform, HostPlatformType? hostPlatformType, DataBoxEdgeRoleAddonProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind)
+        /// <param name="properties"> Arc addon properties. </param>
+        internal EdgeArcAddon(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AddonType kind, ArcAddonProperties properties) : base(id, name, resourceType, systemData, kind)
         {
-            SubscriptionId = subscriptionId;
-            ResourceGroupName = resourceGroupName;
-            ResourceName = resourceName;
-            ResourceLocation = resourceLocation;
-            Version = version;
-            HostPlatform = hostPlatform;
-            HostPlatformType = hostPlatformType;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             Kind = kind;
         }
 
-        /// <summary> Arc resource subscription Id. </summary>
-        public string SubscriptionId { get; set; }
-        /// <summary> Arc resource group name. </summary>
-        public string ResourceGroupName { get; set; }
-        /// <summary> Arc resource Name. </summary>
-        public string ResourceName { get; set; }
-        /// <summary> Arc resource location. </summary>
-        public AzureLocation ResourceLocation { get; set; }
-        /// <summary> Arc resource version. </summary>
-        public string Version { get; }
-        /// <summary> Host OS supported by the Arc addon. </summary>
-        public DataBoxEdgeOSPlatformType? HostPlatform { get; }
-        /// <summary> Platform where the runtime is hosted. </summary>
-        public HostPlatformType? HostPlatformType { get; }
-        /// <summary> Addon Provisioning State. </summary>
-        public DataBoxEdgeRoleAddonProvisioningState? ProvisioningState { get; }
+        /// <summary> Arc addon properties. </summary>
+        public ArcAddonProperties Properties { get; set; }
     }
 }

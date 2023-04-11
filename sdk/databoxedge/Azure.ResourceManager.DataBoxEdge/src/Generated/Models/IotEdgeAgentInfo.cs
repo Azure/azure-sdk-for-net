@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of IotEdgeAgentInfo. </summary>
         /// <param name="imageName"> Name of the IoT edge agent image. </param>
         /// <param name="tag"> Image Tag. </param>
-        /// <param name="imageRepository"> Image repository details. </param>
+        /// <param name="imageRepository"> Image repository credential. </param>
         internal IotEdgeAgentInfo(string imageName, string tag, ImageRepositoryCredential imageRepository)
         {
             ImageName = imageName;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ImageName { get; set; }
         /// <summary> Image Tag. </summary>
         public string Tag { get; set; }
-        /// <summary> Image repository details. </summary>
+        /// <summary> Image repository credential. </summary>
         public ImageRepositoryCredential ImageRepository { get; set; }
     }
 }

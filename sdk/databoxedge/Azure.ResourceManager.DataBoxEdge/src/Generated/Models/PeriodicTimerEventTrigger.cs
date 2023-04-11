@@ -16,16 +16,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class PeriodicTimerEventTrigger : DataBoxEdgeTriggerData
     {
         /// <summary> Initializes a new instance of PeriodicTimerEventTrigger. </summary>
-        /// <param name="sourceInfo"> Periodic timer details. </param>
-        /// <param name="sinkInfo"> Role Sink information. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceInfo"/> or <paramref name="sinkInfo"/> is null. </exception>
-        public PeriodicTimerEventTrigger(PeriodicTimerSourceInfo sourceInfo, DataBoxEdgeRoleSinkInfo sinkInfo)
+        /// <param name="properties"> Periodic timer trigger properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public PeriodicTimerEventTrigger(PeriodicTimerProperties properties)
         {
-            Argument.AssertNotNull(sourceInfo, nameof(sourceInfo));
-            Argument.AssertNotNull(sinkInfo, nameof(sinkInfo));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            SourceInfo = sourceInfo;
-            SinkInfo = sinkInfo;
+            Properties = properties;
             Kind = TriggerEventType.PeriodicTimerEvent;
         }
 
@@ -35,29 +32,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Trigger Kind. </param>
-        /// <param name="sourceInfo"> Periodic timer details. </param>
-        /// <param name="sinkInfo"> Role Sink information. </param>
-        /// <param name="customContextTag"> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </param>
-        internal PeriodicTimerEventTrigger(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggerEventType kind, PeriodicTimerSourceInfo sourceInfo, DataBoxEdgeRoleSinkInfo sinkInfo, string customContextTag) : base(id, name, resourceType, systemData, kind)
+        /// <param name="properties"> Periodic timer trigger properties. </param>
+        internal PeriodicTimerEventTrigger(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggerEventType kind, PeriodicTimerProperties properties) : base(id, name, resourceType, systemData, kind)
         {
-            SourceInfo = sourceInfo;
-            SinkInfo = sinkInfo;
-            CustomContextTag = customContextTag;
+            Properties = properties;
             Kind = kind;
         }
 
-        /// <summary> Periodic timer details. </summary>
-        public PeriodicTimerSourceInfo SourceInfo { get; set; }
-        /// <summary> Role Sink information. </summary>
-        internal DataBoxEdgeRoleSinkInfo SinkInfo { get; set; }
-        /// <summary> Compute role ID. </summary>
-        public ResourceIdentifier SinkInfoRoleId
-        {
-            get => SinkInfo is null ? default : SinkInfo.RoleId;
-            set => SinkInfo = new DataBoxEdgeRoleSinkInfo(value);
-        }
-
-        /// <summary> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </summary>
-        public string CustomContextTag { get; set; }
+        /// <summary> Periodic timer trigger properties. </summary>
+        public PeriodicTimerProperties Properties { get; set; }
     }
 }

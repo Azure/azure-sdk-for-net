@@ -12,8 +12,33 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeOrderStatus
+    public partial class DataBoxEdgeOrderStatus : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(Comments))
+            {
+                if (Comments != null)
+                {
+                    writer.WritePropertyName("comments"u8);
+                    writer.WriteStringValue(Comments);
+                }
+                else
+                {
+                    writer.WriteNull("comments");
+                }
+            }
+            if (Optional.IsDefined(TrackingInformation))
+            {
+                writer.WritePropertyName("trackingInformation"u8);
+                writer.WriteObjectValue(TrackingInformation);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static DataBoxEdgeOrderStatus DeserializeDataBoxEdgeOrderStatus(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -44,6 +69,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("comments"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        comments = null;
+                        continue;
+                    }
                     comments = property.Value.GetString();
                     continue;
                 }
@@ -61,7 +91,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        additionalOrderDetails = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

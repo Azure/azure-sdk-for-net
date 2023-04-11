@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The instance from which counter should be collected. </summary>
         public string Instance { get; set; }
         /// <summary> The dimension filter. </summary>
-        public IList<DataBoxEdgeMetricDimension> DimensionFilter { get; }
+        public IList<DataBoxEdgeMetricDimension> DimensionFilter { get; set; }
         /// <summary> The additional dimensions to be added to metric. </summary>
-        public IList<DataBoxEdgeMetricDimension> AdditionalDimensions { get; }
+        public IList<DataBoxEdgeMetricDimension> AdditionalDimensions { get; set; }
     }
 }

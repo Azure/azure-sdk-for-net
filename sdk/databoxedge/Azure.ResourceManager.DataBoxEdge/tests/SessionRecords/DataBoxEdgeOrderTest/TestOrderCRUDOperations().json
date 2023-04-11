@@ -1,0 +1,241 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/0d44739e-0563-474f-97e7-24a0cdb23b29?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-3a2b43e708f382dfc13631bb32e67dad-ce0af9648e48d6ba-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "57eb4178de3dd73b356031d57619d60b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "411",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 06 Apr 2023 10:39:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "97c40c89-f487-4b70-a2d8-841e4f237e84",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "97c40c89-f487-4b70-a2d8-841e4f237e84",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230406T103902Z:97c40c89-f487-4b70-a2d8-841e4f237e84"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/0d44739e-0563-474f-97e7-24a0cdb23b29",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {},
+        "subscriptionId": "0d44739e-0563-474f-97e7-24a0cdb23b29",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Fleet Manager Dogfood",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+	{
+      "RequestUri": "/subscriptions/706c087b-4c6c-46bf-8adf-766ae266d5bf/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/demo-edge-sdk-2021/orders?api-version=2021-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzA2YzA4N2ItNGM2Yy00NmJmLThhZGYtNzY2YWUyNjZkNWJmL3Jlc291cmNlR3JvdXBzL2RlbW8tcmVzb3VyY2VzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveEVkZ2UvZGF0YUJveEVkZ2VEZXZpY2VzL2RlbW8tZWRnZS1zZGstMjAyMS9vcmRlcnM/YXBpLXZlcnNpb249MjAyMS0wMi0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3d6c8887-afa7-45e1-ae62-6fb59b7c892b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.DataBoxEdge.DataBoxEdgeManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "abac3653-103a-4b78-96ef-d6ea8e25541f"
+        ],
+        "x-ms-client-request-id": [
+          "3d6c8887-afa7-45e1-ae62-6fb59b7c892b"
+        ],
+        "x-ms-correlation-request-id": [
+          "abac3653-103a-4b78-96ef-d6ea8e25541f"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20210914T054418Z:abac3653-103a-4b78-96ef-d6ea8e25541f"
+        ],
+        "Date": [
+          "Tue, 14 Sep 2021 05:44:17 GMT"
+        ],
+        "Content-Length": [
+          "19"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/0d44739e-0563-474f-97e7-24a0cdb23b29/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/ordertest/orders/default?api-version=2023-01-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "201",
+        "Content-Type": "application/json-patch\u002Bjson",
+        "traceparent": "00-9ceb00a4873c8ee656956b05bd2e0a31-1e9914fb91a13c57-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "93fa0816946d33cef1d57a4d63141386",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "contactInformation": {
+            "contactPerson": "John Mcclane",
+            "companyName": "Microsoft",
+            "phone": "8004269400",
+            "emailList": [
+              "example@microsoft.com"
+            ]
+          },
+          "shippingAddress": {
+            "country": "United States"
+          }
+        }
+      },
+      "StatusCode": 405,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "202",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 06 Apr 2023 10:39:06 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "93fa0816946d33cef1d57a4d63141386",
+        "x-ms-correlation-request-id": "db3b848a-09b8-4cd1-8a21-20f6108f4571",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "db3b848a-09b8-4cd1-8a21-20f6108f4571",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230406T103907Z:db3b848a-09b8-4cd1-8a21-20f6108f4571"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "GatewayUserErrorOrderingPutNotSupported",
+          "message": "Create or Update order is not supported. For creation of a new order use the Azure Edge Hardware Center."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/0d44739e-0563-474f-97e7-24a0cdb23b29/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/ordertest/orders/default?api-version=2023-01-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-35aeb966e2a0c2e232a436a0e286ea8d-4b33b1e535736499-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "91b02978ec303c41376628e2c3ceccf8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "505",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 06 Apr 2023 10:39:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "91b02978ec303c41376628e2c3ceccf8",
+        "x-ms-correlation-request-id": "bb00482f-5e9e-4a62-8340-3518c1476bc5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "bb00482f-5e9e-4a62-8340-3518c1476bc5",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230406T103917Z:bb00482f-5e9e-4a62-8340-3518c1476bc5"
+      },
+      "ResponseBody": {
+        "kind": "V2",
+        "properties": {
+          "orderId": "/subscriptions/0d44739e-0563-474f-97e7-24a0cdb23b29/resourcegroups/OrderingV2-BVT-rg/providers/Microsoft.EdgeOrder/orderItems/TEST-MOCKAPPL-EdgePBase",
+          "shipmentType": "NotApplicable"
+        },
+        "id": "/subscriptions/0d44739e-0563-474f-97e7-24a0cdb23b29/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/ordertest/orders/default",
+        "name": "default",
+        "type": "Microsoft.DataBoxEdge/dataBoxEdgeDevices/orders"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/0d44739e-0563-474f-97e7-24a0cdb23b29/resourceGroups/demo-resources/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/ordertest/orders/default?api-version=2023-01-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b73a0277b0dadb32fad2e7270b81add2-72c3ddc62160c41e-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataBoxEdge/1.1.0-alpha.20230329.1 (.NET 6.0.15; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b7707502db23e4bc73b8656763ed7321",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 405,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "125",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 06 Apr 2023 10:39:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b7707502db23e4bc73b8656763ed7321",
+        "x-ms-correlation-request-id": "fa7652ac-892c-4e29-8649-59a11528a31a",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14999",
+        "x-ms-request-id": "fa7652ac-892c-4e29-8649-59a11528a31a",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20230406T103921Z:fa7652ac-892c-4e29-8649-59a11528a31a"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "GatewayUserErrorOrderingV2NotSupported",
+          "message": "OrderingV2 is not supported."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "947702982",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "0d44739e-0563-474f-97e7-24a0cdb23b29"
+  }
+}

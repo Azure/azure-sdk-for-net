@@ -22,10 +22,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> name = default;
             Optional<EdgeKubernetesNodeType> type = default;
             Optional<IReadOnlyList<EdgeKubernetesIPConfiguration>> ipConfiguration = default;
+            Optional<KubernetesComponentType> componentType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        name = null;
+                        continue;
+                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -43,7 +49,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        ipConfiguration = null;
                         continue;
                     }
                     List<EdgeKubernetesIPConfiguration> array = new List<EdgeKubernetesIPConfiguration>();
@@ -54,8 +60,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     ipConfiguration = array;
                     continue;
                 }
+                if (property.NameEquals("componentType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    componentType = new KubernetesComponentType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new EdgeKubernetesNodeInfo(name.Value, Optional.ToNullable(type), Optional.ToList(ipConfiguration));
+            return new EdgeKubernetesNodeInfo(name.Value, Optional.ToNullable(type), Optional.ToList(ipConfiguration), Optional.ToNullable(componentType));
         }
     }
 }

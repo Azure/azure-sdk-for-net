@@ -16,19 +16,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("subscriptionId"u8);
-            writer.WriteStringValue(SubscriptionId);
-            writer.WritePropertyName("resourceGroupName"u8);
-            writer.WriteStringValue(ResourceGroupName);
-            writer.WritePropertyName("resourceName"u8);
-            writer.WriteStringValue(ResourceName);
-            writer.WritePropertyName("resourceLocation"u8);
-            writer.WriteStringValue(ResourceLocation);
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -38,21 +29,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
+            ArcAddonProperties properties = default;
             AddonType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            string subscriptionId = default;
-            string resourceGroupName = default;
-            string resourceName = default;
-            AzureLocation resourceLocation = default;
-            Optional<string> version = default;
-            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
-            Optional<HostPlatformType> hostPlatformType = default;
-            Optional<DataBoxEdgeRoleAddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = ArcAddonProperties.DeserializeArcAddonProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = new AddonType(property.Value.GetString());
@@ -83,75 +72,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("subscriptionId"u8))
-                        {
-                            subscriptionId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceGroupName"u8))
-                        {
-                            resourceGroupName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceName"u8))
-                        {
-                            resourceName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceLocation"u8))
-                        {
-                            resourceLocation = new AzureLocation(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("version"u8))
-                        {
-                            version = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("hostPlatform"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            hostPlatform = new DataBoxEdgeOSPlatformType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("hostPlatformType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            hostPlatformType = new HostPlatformType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            provisioningState = new DataBoxEdgeRoleAddonProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new EdgeArcAddon(id, name, type, systemData.Value, kind, subscriptionId, resourceGroupName, resourceName, resourceLocation, version.Value, Optional.ToNullable(hostPlatform), Optional.ToNullable(hostPlatformType), Optional.ToNullable(provisioningState));
+            return new EdgeArcAddon(id, name, type, systemData.Value, kind, properties);
         }
     }
 }

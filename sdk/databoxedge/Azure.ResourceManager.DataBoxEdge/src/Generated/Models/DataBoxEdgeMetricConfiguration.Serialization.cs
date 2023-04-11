@@ -20,13 +20,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(ResourceId);
             if (Optional.IsDefined(MdmAccount))
             {
-                writer.WritePropertyName("mdmAccount"u8);
-                writer.WriteStringValue(MdmAccount);
+                if (MdmAccount != null)
+                {
+                    writer.WritePropertyName("mdmAccount"u8);
+                    writer.WriteStringValue(MdmAccount);
+                }
+                else
+                {
+                    writer.WriteNull("mdmAccount");
+                }
             }
             if (Optional.IsDefined(MetricNameSpace))
             {
-                writer.WritePropertyName("metricNameSpace"u8);
-                writer.WriteStringValue(MetricNameSpace);
+                if (MetricNameSpace != null)
+                {
+                    writer.WritePropertyName("metricNameSpace"u8);
+                    writer.WriteStringValue(MetricNameSpace);
+                }
+                else
+                {
+                    writer.WriteNull("metricNameSpace");
+                }
             }
             writer.WritePropertyName("counterSets"u8);
             writer.WriteStartArray();
@@ -57,11 +71,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("mdmAccount"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        mdmAccount = null;
+                        continue;
+                    }
                     mdmAccount = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("metricNameSpace"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        metricNameSpace = null;
+                        continue;
+                    }
                     metricNameSpace = property.Value.GetString();
                     continue;
                 }

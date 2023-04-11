@@ -16,31 +16,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties);
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionString))
-            {
-                writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString);
-            }
-            if (Optional.IsDefined(ControllerEndpoint))
-            {
-                writer.WritePropertyName("controllerEndpoint"u8);
-                writer.WriteStringValue(ControllerEndpoint);
-            }
-            if (Optional.IsDefined(ResourceUniqueId))
-            {
-                writer.WritePropertyName("resourceUniqueId"u8);
-                writer.WriteStringValue(ResourceUniqueId);
-            }
-            if (Optional.IsDefined(RoleStatus))
-            {
-                writer.WritePropertyName("roleStatus"u8);
-                writer.WriteStringValue(RoleStatus.Value.ToString());
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -50,17 +32,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
+            Optional<MecRoleProperties> properties = default;
             DataBoxEdgeRoleType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<AsymmetricEncryptedSecret> connectionString = default;
-            Optional<string> controllerEndpoint = default;
-            Optional<string> resourceUniqueId = default;
-            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = MecRoleProperties.DeserializeMecRoleProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = new DataBoxEdgeRoleType(property.Value.GetString());
@@ -91,50 +80,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("connectionString"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            connectionString = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("controllerEndpoint"u8))
-                        {
-                            controllerEndpoint = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceUniqueId"u8))
-                        {
-                            resourceUniqueId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("roleStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            roleStatus = new DataBoxEdgeRoleStatus(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new MecRole(id, name, type, systemData.Value, kind, connectionString.Value, controllerEndpoint.Value, resourceUniqueId.Value, Optional.ToNullable(roleStatus));
+            return new MecRole(id, name, type, systemData.Value, kind, properties.Value);
         }
     }
 }

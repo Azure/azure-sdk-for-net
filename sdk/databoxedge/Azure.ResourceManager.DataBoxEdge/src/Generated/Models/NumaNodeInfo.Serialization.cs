@@ -38,33 +38,54 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             if (Optional.IsCollectionDefined(FreeVCpuIndexesForHpn))
             {
-                writer.WritePropertyName("freeVCpuIndexesForHpn"u8);
-                writer.WriteStartArray();
-                foreach (var item in FreeVCpuIndexesForHpn)
+                if (FreeVCpuIndexesForHpn != null)
                 {
-                    writer.WriteNumberValue(item);
+                    writer.WritePropertyName("freeVCpuIndexesForHpn"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in FreeVCpuIndexesForHpn)
+                    {
+                        writer.WriteNumberValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("freeVCpuIndexesForHpn");
+                }
             }
             if (Optional.IsCollectionDefined(VCpuIndexesForHpn))
             {
-                writer.WritePropertyName("vCpuIndexesForHpn"u8);
-                writer.WriteStartArray();
-                foreach (var item in VCpuIndexesForHpn)
+                if (VCpuIndexesForHpn != null)
                 {
-                    writer.WriteNumberValue(item);
+                    writer.WritePropertyName("vCpuIndexesForHpn"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in VCpuIndexesForHpn)
+                    {
+                        writer.WriteNumberValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("vCpuIndexesForHpn");
+                }
             }
             if (Optional.IsCollectionDefined(VCpuIndexesForRoot))
             {
-                writer.WritePropertyName("vCpuIndexesForRoot"u8);
-                writer.WriteStartArray();
-                foreach (var item in VCpuIndexesForRoot)
+                if (VCpuIndexesForRoot != null)
                 {
-                    writer.WriteNumberValue(item);
+                    writer.WritePropertyName("vCpuIndexesForRoot"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in VCpuIndexesForRoot)
+                    {
+                        writer.WriteNumberValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("vCpuIndexesForRoot");
+                }
             }
             writer.WriteEndObject();
         }
@@ -128,7 +149,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        freeVCpuIndexesForHpn = null;
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -143,7 +164,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        vCpuIndexesForHpn = null;
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -158,7 +179,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        vCpuIndexesForRoot = null;
                         continue;
                     }
                     List<int> array = new List<int>();

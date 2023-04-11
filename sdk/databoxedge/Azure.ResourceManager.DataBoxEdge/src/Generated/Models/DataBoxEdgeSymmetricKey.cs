@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeSymmetricKey. </summary>
-        /// <param name="connectionString"> Connection string based on the symmetric key. </param>
+        /// <param name="connectionString"> Represent the secrets intended for encryption with asymmetric key pair. </param>
         internal DataBoxEdgeSymmetricKey(AsymmetricEncryptedSecret connectionString)
         {
             ConnectionString = connectionString;
         }
 
-        /// <summary> Connection string based on the symmetric key. </summary>
+        /// <summary> Represent the secrets intended for encryption with asymmetric key pair. </summary>
         public AsymmetricEncryptedSecret ConnectionString { get; set; }
     }
 }

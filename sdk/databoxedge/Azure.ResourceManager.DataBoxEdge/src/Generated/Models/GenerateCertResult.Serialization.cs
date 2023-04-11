@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,16 +20,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             Optional<string> publicKey = default;
             Optional<string> privateKey = default;
-            Optional<DateTimeOffset> expiryTimeInUtc = default;
+            Optional<string> expiryTimeInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicKey"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        publicKey = null;
+                        continue;
+                    }
                     publicKey = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateKey"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        privateKey = null;
+                        continue;
+                    }
                     privateKey = property.Value.GetString();
                     continue;
                 }
@@ -38,14 +47,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        expiryTimeInUtc = null;
                         continue;
                     }
-                    expiryTimeInUtc = property.Value.GetDateTimeOffset("O");
+                    expiryTimeInUtc = property.Value.GetString();
                     continue;
                 }
             }
-            return new GenerateCertResult(publicKey.Value, privateKey.Value, Optional.ToNullable(expiryTimeInUtc));
+            return new GenerateCertResult(publicKey.Value, privateKey.Value, expiryTimeInUtc.Value);
         }
     }
 }

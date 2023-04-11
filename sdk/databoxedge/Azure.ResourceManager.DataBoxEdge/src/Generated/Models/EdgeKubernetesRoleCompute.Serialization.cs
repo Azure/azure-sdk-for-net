@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string vmProfile = default;
             Optional<long> memoryInBytes = default;
             Optional<int> processorCount = default;
+            Optional<int?> hugePage2M = default;
+            Optional<int?> hugePage1G = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmProfile"u8))
@@ -56,8 +58,28 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     processorCount = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("hugePage2M"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        hugePage2M = null;
+                        continue;
+                    }
+                    hugePage2M = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("hugePage1G"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        hugePage1G = null;
+                        continue;
+                    }
+                    hugePage1G = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new EdgeKubernetesRoleCompute(vmProfile, Optional.ToNullable(memoryInBytes), Optional.ToNullable(processorCount));
+            return new EdgeKubernetesRoleCompute(vmProfile, Optional.ToNullable(memoryInBytes), Optional.ToNullable(processorCount), Optional.ToNullable(hugePage2M), Optional.ToNullable(hugePage1G));
         }
     }
 }

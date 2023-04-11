@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -15,9 +14,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class EdgeProfileSubscription
     {
         /// <summary> Initializes a new instance of EdgeProfileSubscription. </summary>
-        internal EdgeProfileSubscription()
+        public EdgeProfileSubscription()
         {
-            RegisteredFeatures = new ChangeTrackingList<SubscriptionRegisteredFeatures>();
         }
 
         /// <summary> Initializes a new instance of EdgeProfileSubscription. </summary>
@@ -26,44 +24,28 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="state"></param>
         /// <param name="registrationDate"></param>
         /// <param name="subscriptionId"></param>
-        /// <param name="tenantId"></param>
-        /// <param name="locationPlacementId"></param>
-        /// <param name="quotaId"></param>
-        /// <param name="serializedDetails"></param>
-        /// <param name="registeredFeatures"></param>
-        internal EdgeProfileSubscription(Guid? registrationId, ResourceIdentifier id, DataBoxEdgeSubscriptionState? state, string registrationDate, string subscriptionId, Guid? tenantId, string locationPlacementId, string quotaId, string serializedDetails, IReadOnlyList<SubscriptionRegisteredFeatures> registeredFeatures)
+        /// <param name="properties"></param>
+        internal EdgeProfileSubscription(Guid? registrationId, ResourceIdentifier id, DataBoxEdgeSubscriptionState? state, string registrationDate, string subscriptionId, SubscriptionProperties properties)
         {
             RegistrationId = registrationId;
             Id = id;
             State = state;
             RegistrationDate = registrationDate;
             SubscriptionId = subscriptionId;
-            TenantId = tenantId;
-            LocationPlacementId = locationPlacementId;
-            QuotaId = quotaId;
-            SerializedDetails = serializedDetails;
-            RegisteredFeatures = registeredFeatures;
+            Properties = properties;
         }
 
         /// <summary> Edge Subscription Registration ID. </summary>
-        public Guid? RegistrationId { get; }
+        public Guid? RegistrationId { get; set; }
         /// <summary> ARM ID of the subscription. </summary>
-        public ResourceIdentifier Id { get; }
-        /// <summary> Gets the state. </summary>
-        public DataBoxEdgeSubscriptionState? State { get; }
-        /// <summary> Gets the registration date. </summary>
-        public string RegistrationDate { get; }
-        /// <summary> Gets the subscription id. </summary>
-        public string SubscriptionId { get; }
-        /// <summary> Gets the tenant id. </summary>
-        public Guid? TenantId { get; }
-        /// <summary> Gets the location placement id. </summary>
-        public string LocationPlacementId { get; }
-        /// <summary> Gets the quota id. </summary>
-        public string QuotaId { get; }
-        /// <summary> Gets the serialized details. </summary>
-        public string SerializedDetails { get; }
-        /// <summary> Gets the registered features. </summary>
-        public IReadOnlyList<SubscriptionRegisteredFeatures> RegisteredFeatures { get; }
+        public ResourceIdentifier Id { get; set; }
+        /// <summary> Gets or sets the state. </summary>
+        public DataBoxEdgeSubscriptionState? State { get; set; }
+        /// <summary> Gets or sets the registration date. </summary>
+        public string RegistrationDate { get; set; }
+        /// <summary> Gets or sets the subscription id. </summary>
+        public string SubscriptionId { get; set; }
+        /// <summary> Gets or sets the properties. </summary>
+        public SubscriptionProperties Properties { get; set; }
     }
 }

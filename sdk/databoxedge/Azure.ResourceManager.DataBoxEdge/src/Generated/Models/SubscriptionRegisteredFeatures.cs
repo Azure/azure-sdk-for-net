@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class SubscriptionRegisteredFeatures
     {
         /// <summary> Initializes a new instance of SubscriptionRegisteredFeatures. </summary>
-        internal SubscriptionRegisteredFeatures()
+        public SubscriptionRegisteredFeatures()
         {
         }
 
@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             State = state;
         }
 
-        /// <summary> Gets the name. </summary>
-        public string Name { get; }
-        /// <summary> Gets the state. </summary>
-        public string State { get; }
+        /// <summary> Gets or sets the name. </summary>
+        public string Name { get; set; }
+        /// <summary> Gets or sets the state. </summary>
+        public string State { get; set; }
     }
 }

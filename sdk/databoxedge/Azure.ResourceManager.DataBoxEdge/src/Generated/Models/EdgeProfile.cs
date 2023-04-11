@@ -11,18 +11,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     internal partial class EdgeProfile
     {
         /// <summary> Initializes a new instance of EdgeProfile. </summary>
-        internal EdgeProfile()
+        public EdgeProfile()
         {
         }
 
         /// <summary> Initializes a new instance of EdgeProfile. </summary>
-        /// <param name="subscription"> Edge Profile Subscription. </param>
+        /// <param name="subscription"> Subscription details for the Edge Profile. </param>
         internal EdgeProfile(EdgeProfileSubscription subscription)
         {
             Subscription = subscription;
         }
 
-        /// <summary> Edge Profile Subscription. </summary>
-        public EdgeProfileSubscription Subscription { get; }
+        /// <summary> Subscription details for the Edge Profile. </summary>
+        public EdgeProfileSubscription Subscription { get; set; }
     }
 }

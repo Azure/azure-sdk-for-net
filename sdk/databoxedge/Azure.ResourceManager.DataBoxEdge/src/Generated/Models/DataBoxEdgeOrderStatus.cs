@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         /// <summary> Initializes a new instance of DataBoxEdgeOrderStatus. </summary>
         /// <param name="status"> Status of the order as per the allowed status types. </param>
-        internal DataBoxEdgeOrderStatus(DataBoxEdgeOrderState status)
+        public DataBoxEdgeOrderStatus(DataBoxEdgeOrderState status)
         {
             Status = status;
             AdditionalOrderDetails = new ChangeTrackingDictionary<string, string>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="status"> Status of the order as per the allowed status types. </param>
         /// <param name="updateOn"> Time of status update. </param>
         /// <param name="comments"> Comments related to this status change. </param>
-        /// <param name="trackingInformation"> Tracking information related to the state in the ordering flow. </param>
+        /// <param name="trackingInformation"> Tracking courier information. </param>
         /// <param name="additionalOrderDetails">
         /// Dictionary to hold generic information which is not stored
         /// by the already existing properties
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Status of the order as per the allowed status types. </summary>
-        public DataBoxEdgeOrderState Status { get; }
+        public DataBoxEdgeOrderState Status { get; set; }
         /// <summary> Time of status update. </summary>
         public DateTimeOffset? UpdateOn { get; }
         /// <summary> Comments related to this status change. </summary>
-        public string Comments { get; }
-        /// <summary> Tracking information related to the state in the ordering flow. </summary>
-        public DataBoxEdgeTrackingInfo TrackingInformation { get; }
+        public string Comments { get; set; }
+        /// <summary> Tracking courier information. </summary>
+        public DataBoxEdgeTrackingInfo TrackingInformation { get; set; }
         /// <summary>
         /// Dictionary to hold generic information which is not stored
         /// by the already existing properties

@@ -15,8 +15,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class TriggerSupportPackageContent : ResourceData
     {
         /// <summary> Initializes a new instance of TriggerSupportPackageContent. </summary>
-        public TriggerSupportPackageContent()
+        /// <param name="properties"> The share properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public TriggerSupportPackageContent(SupportPackageRequestProperties properties)
         {
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of TriggerSupportPackageContent. </summary>
@@ -24,29 +29,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="minimumTimeStamp"> MinimumTimeStamp from where logs need to be collected. </param>
-        /// <param name="maximumTimeStamp"> Start of the timespan of the log collection. </param>
-        /// <param name="include">
-        /// Type of files, which need to be included in the logs
-        /// This will contain the type of logs (Default/DefaultWithDumps/None/All/DefaultWithArchived)
-        /// or a comma separated list of log types that are required
-        /// </param>
-        internal TriggerSupportPackageContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? minimumTimeStamp, DateTimeOffset? maximumTimeStamp, string include) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The share properties. </param>
+        internal TriggerSupportPackageContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SupportPackageRequestProperties properties) : base(id, name, resourceType, systemData)
         {
-            MinimumTimeStamp = minimumTimeStamp;
-            MaximumTimeStamp = maximumTimeStamp;
-            Include = include;
+            Properties = properties;
         }
 
-        /// <summary> MinimumTimeStamp from where logs need to be collected. </summary>
-        public DateTimeOffset? MinimumTimeStamp { get; set; }
-        /// <summary> Start of the timespan of the log collection. </summary>
-        public DateTimeOffset? MaximumTimeStamp { get; set; }
-        /// <summary>
-        /// Type of files, which need to be included in the logs
-        /// This will contain the type of logs (Default/DefaultWithDumps/None/All/DefaultWithArchived)
-        /// or a comma separated list of log types that are required
-        /// </summary>
-        public string Include { get; set; }
+        /// <summary> The share properties. </summary>
+        public SupportPackageRequestProperties Properties { get; set; }
     }
 }

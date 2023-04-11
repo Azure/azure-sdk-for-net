@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,23 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(MinimumTimeStamp))
-            {
-                writer.WritePropertyName("minimumTimeStamp"u8);
-                writer.WriteStringValue(MinimumTimeStamp.Value, "O");
-            }
-            if (Optional.IsDefined(MaximumTimeStamp))
-            {
-                writer.WritePropertyName("maximumTimeStamp"u8);
-                writer.WriteStringValue(MaximumTimeStamp.Value, "O");
-            }
-            if (Optional.IsDefined(Include))
-            {
-                writer.WritePropertyName("include"u8);
-                writer.WriteStringValue(Include);
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
 
@@ -44,15 +27,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
+            SupportPackageRequestProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> minimumTimeStamp = default;
-            Optional<DateTimeOffset> maximumTimeStamp = default;
-            Optional<string> include = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = SupportPackageRequestProperties.DeserializeSupportPackageRequestProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -78,45 +64,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("minimumTimeStamp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            minimumTimeStamp = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("maximumTimeStamp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            maximumTimeStamp = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("include"u8))
-                        {
-                            include = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new TriggerSupportPackageContent(id, name, type, systemData.Value, Optional.ToNullable(minimumTimeStamp), Optional.ToNullable(maximumTimeStamp), include.Value);
+            return new TriggerSupportPackageContent(id, name, type, systemData.Value, properties);
         }
     }
 }

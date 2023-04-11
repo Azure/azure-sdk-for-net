@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class DataBoxEdgeResourceMoveDetails
     {
         /// <summary> Initializes a new instance of DataBoxEdgeResourceMoveDetails. </summary>
-        internal DataBoxEdgeResourceMoveDetails()
+        public DataBoxEdgeResourceMoveDetails()
         {
         }
 
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Denotes whether move operation is in progress. </summary>
-        public DataBoxEdgeResourceMoveStatus? OperationInProgress { get; }
+        public DataBoxEdgeResourceMoveStatus? OperationInProgress { get; set; }
         /// <summary> Denotes the timeout of the operation to finish. </summary>
-        public DateTimeOffset? OperationInProgressLockTimeoutInUtc { get; }
+        public DateTimeOffset? OperationInProgressLockTimeoutInUtc { get; set; }
     }
 }

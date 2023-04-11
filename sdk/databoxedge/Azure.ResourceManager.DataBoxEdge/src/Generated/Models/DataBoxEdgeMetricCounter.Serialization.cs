@@ -20,28 +20,49 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Instance))
             {
-                writer.WritePropertyName("instance"u8);
-                writer.WriteStringValue(Instance);
+                if (Instance != null)
+                {
+                    writer.WritePropertyName("instance"u8);
+                    writer.WriteStringValue(Instance);
+                }
+                else
+                {
+                    writer.WriteNull("instance");
+                }
             }
             if (Optional.IsCollectionDefined(DimensionFilter))
             {
-                writer.WritePropertyName("dimensionFilter"u8);
-                writer.WriteStartArray();
-                foreach (var item in DimensionFilter)
+                if (DimensionFilter != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("dimensionFilter"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in DimensionFilter)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("dimensionFilter");
+                }
             }
             if (Optional.IsCollectionDefined(AdditionalDimensions))
             {
-                writer.WritePropertyName("additionalDimensions"u8);
-                writer.WriteStartArray();
-                foreach (var item in AdditionalDimensions)
+                if (AdditionalDimensions != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("additionalDimensions"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in AdditionalDimensions)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("additionalDimensions");
+                }
             }
             writer.WriteEndObject();
         }
@@ -65,6 +86,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("instance"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        instance = null;
+                        continue;
+                    }
                     instance = property.Value.GetString();
                     continue;
                 }
@@ -72,7 +98,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        dimensionFilter = null;
                         continue;
                     }
                     List<DataBoxEdgeMetricDimension> array = new List<DataBoxEdgeMetricDimension>();
@@ -87,7 +113,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        additionalDimensions = null;
                         continue;
                     }
                     List<DataBoxEdgeMetricDimension> array = new List<DataBoxEdgeMetricDimension>();

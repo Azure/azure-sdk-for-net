@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 switch (discriminator.GetString())
                 {
+                    case "ASEKubernetes": return ASEKubernetesRole.DeserializeASEKubernetesRole(element);
                     case "CloudEdgeManagement": return CloudEdgeManagementRole.DeserializeCloudEdgeManagementRole(element);
                     case "IOT": return EdgeIotRole.DeserializeEdgeIotRole(element);
                     case "Kubernetes": return EdgeKubernetesRole.DeserializeEdgeKubernetesRole(element);
