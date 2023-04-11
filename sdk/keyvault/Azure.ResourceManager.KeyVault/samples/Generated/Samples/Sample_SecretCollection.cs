@@ -16,15 +16,15 @@ using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault.Samples
 {
-    public partial class Sample_KeyVaultPrivateEndpointConnectionCollection
+    public partial class Sample_SecretCollection
     {
-        // KeyVaultGetPrivateEndpointConnection
+        // Create a secret
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_KeyVaultGetPrivateEndpointConnection()
+        public async Task CreateOrUpdate_CreateASecret()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/examples/getPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/examples/createSecret.json
+            // this example is just showing the usage of "Secrets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,27 +39,32 @@ namespace Azure.ResourceManager.KeyVault.Samples
             ResourceIdentifier keyVaultResourceId = KeyVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
             KeyVaultResource keyVault = client.GetKeyVaultResource(keyVaultResourceId);
 
-            // get the collection of this KeyVaultPrivateEndpointConnectionResource
-            KeyVaultPrivateEndpointConnectionCollection collection = keyVault.GetKeyVaultPrivateEndpointConnections();
+            // get the collection of this SecretResource
+            SecretCollection collection = keyVault.GetSecrets();
 
             // invoke the operation
-            string privateEndpointConnectionName = "sample-pec";
-            KeyVaultPrivateEndpointConnectionResource result = await collection.GetAsync(privateEndpointConnectionName);
+            string secretName = "secret-name";
+            SecretCreateOrUpdateContent content = new SecretCreateOrUpdateContent(new SecretProperties()
+            {
+                Value = "secret-value",
+            });
+            ArmOperation<SecretResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, secretName, content);
+            SecretResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            KeyVaultPrivateEndpointConnectionData resourceData = result.Data;
+            SecretData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // KeyVaultGetPrivateEndpointConnection
+        // Get a secret
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_KeyVaultGetPrivateEndpointConnection()
+        public async Task Get_GetASecret()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/examples/getPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/examples/getSecret.json
+            // this example is just showing the usage of "Secrets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -74,23 +79,58 @@ namespace Azure.ResourceManager.KeyVault.Samples
             ResourceIdentifier keyVaultResourceId = KeyVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
             KeyVaultResource keyVault = client.GetKeyVaultResource(keyVaultResourceId);
 
-            // get the collection of this KeyVaultPrivateEndpointConnectionResource
-            KeyVaultPrivateEndpointConnectionCollection collection = keyVault.GetKeyVaultPrivateEndpointConnections();
+            // get the collection of this SecretResource
+            SecretCollection collection = keyVault.GetSecrets();
 
             // invoke the operation
-            string privateEndpointConnectionName = "sample-pec";
-            bool result = await collection.ExistsAsync(privateEndpointConnectionName);
+            string secretName = "secret-name";
+            SecretResource result = await collection.GetAsync(secretName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SecretData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Get a secret
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Exists_GetASecret()
+        {
+            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/examples/getSecret.json
+            // this example is just showing the usage of "Secrets_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this KeyVaultResource created on azure
+            // for more information of creating KeyVaultResource, please refer to the document of KeyVaultResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "sample-group";
+            string vaultName = "sample-vault";
+            ResourceIdentifier keyVaultResourceId = KeyVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
+            KeyVaultResource keyVault = client.GetKeyVaultResource(keyVaultResourceId);
+
+            // get the collection of this SecretResource
+            SecretCollection collection = keyVault.GetSecrets();
+
+            // invoke the operation
+            string secretName = "secret-name";
+            bool result = await collection.ExistsAsync(secretName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // KeyVaultPutPrivateEndpointConnection
+        // List secrets in the vault
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_KeyVaultPutPrivateEndpointConnection()
+        public async Task GetAll_ListSecretsInTheVault()
         {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/examples/putPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Put" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/examples/listSecrets.json
+            // this example is just showing the usage of "Secrets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -105,60 +145,15 @@ namespace Azure.ResourceManager.KeyVault.Samples
             ResourceIdentifier keyVaultResourceId = KeyVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
             KeyVaultResource keyVault = client.GetKeyVaultResource(keyVaultResourceId);
 
-            // get the collection of this KeyVaultPrivateEndpointConnectionResource
-            KeyVaultPrivateEndpointConnectionCollection collection = keyVault.GetKeyVaultPrivateEndpointConnections();
-
-            // invoke the operation
-            string privateEndpointConnectionName = "sample-pec";
-            KeyVaultPrivateEndpointConnectionData data = new KeyVaultPrivateEndpointConnectionData()
-            {
-                ETag = new ETag(""),
-                ConnectionState = new KeyVaultPrivateLinkServiceConnectionState()
-                {
-                    Status = KeyVaultPrivateEndpointServiceConnectionStatus.Approved,
-                    Description = "My name is Joe and I'm approving this.",
-                },
-            };
-            ArmOperation<KeyVaultPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
-            KeyVaultPrivateEndpointConnectionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            KeyVaultPrivateEndpointConnectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // KeyVaultListPrivateEndpointConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_KeyVaultListPrivateEndpointConnection()
-        {
-            // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/examples/listPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_ListByResource" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this KeyVaultResource created on azure
-            // for more information of creating KeyVaultResource, please refer to the document of KeyVaultResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "sample-group";
-            string vaultName = "sample-vault";
-            ResourceIdentifier keyVaultResourceId = KeyVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            KeyVaultResource keyVault = client.GetKeyVaultResource(keyVaultResourceId);
-
-            // get the collection of this KeyVaultPrivateEndpointConnectionResource
-            KeyVaultPrivateEndpointConnectionCollection collection = keyVault.GetKeyVaultPrivateEndpointConnections();
+            // get the collection of this SecretResource
+            SecretCollection collection = keyVault.GetSecrets();
 
             // invoke the operation and iterate over the result
-            await foreach (KeyVaultPrivateEndpointConnectionResource item in collection.GetAllAsync())
+            await foreach (SecretResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                KeyVaultPrivateEndpointConnectionData resourceData = item.Data;
+                SecretData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
