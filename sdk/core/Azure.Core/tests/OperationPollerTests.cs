@@ -22,18 +22,18 @@ namespace Azure.Core.Tests.DelayStrategies
             var delayStrategy = poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(poller);
 
             Assert.IsNotNull(delayStrategy);
-            Assert.AreEqual(typeof(FixedDelayWithNoJitter), delayStrategy.GetType());
+            Assert.AreEqual(typeof(FixedDelayWithNoJitterStrategy), delayStrategy.GetType());
         }
 
         [Test]
         public void CanOverrideFallbackStrategy()
         {
-            SequentialDelay sequentialDelay = new SequentialDelay();
+            SequentialDelayStrategy sequentialDelay = new SequentialDelayStrategy();
             OperationPoller poller = new OperationPoller(sequentialDelay);
             var delayStrategy = poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(poller);
 
             Assert.IsNotNull(delayStrategy);
-            Assert.AreEqual(typeof(SequentialDelay), delayStrategy.GetType());
+            Assert.AreEqual(typeof(SequentialDelayStrategy), delayStrategy.GetType());
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Azure.Core.Tests.DelayStrategies
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => new(OperationState.Pending(new MockResponse(200)));
         }
 
-        private class TestDelayStrategy : Delay
+        private class TestDelayStrategy : DelayStrategy
         {
             private readonly TimeSpan _delay;
             private readonly TimeSpan _cancelAfter;

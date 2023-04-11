@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Tests.TestClients
 {
-    internal class MockDelayStrategy : Delay
+    internal class MockDelayStrategy : DelayStrategy
     {
         public int CallCount { get; private set; }
 

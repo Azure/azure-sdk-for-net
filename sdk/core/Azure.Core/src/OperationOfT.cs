@@ -112,7 +112,7 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public virtual Response<T> WaitForCompletion(Delay delayStrategy, CancellationToken cancellationToken)
+        public virtual Response<T> WaitForCompletion(DelayStrategy delayStrategy, CancellationToken cancellationToken)
         {
             OperationPoller poller = new OperationPoller(delayStrategy);
             return poller.WaitForCompletion(this, default, cancellationToken);
@@ -121,7 +121,7 @@ namespace Azure
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
         /// </summary>
-        /// <param name="delay">
+        /// <param name="delayStrategy">
         /// The strategy to use to determine the delay between status requests to the server. If the server returns retry-after header,
         /// the delay used will be the maximum specified by the strategy and the header value.
         /// </param>
@@ -130,9 +130,9 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public virtual async ValueTask<Response<T>> WaitForCompletionAsync(Delay delay, CancellationToken cancellationToken)
+        public virtual async ValueTask<Response<T>> WaitForCompletionAsync(DelayStrategy delayStrategy, CancellationToken cancellationToken)
         {
-            OperationPoller poller = new OperationPoller(delay);
+            OperationPoller poller = new OperationPoller(delayStrategy);
             return await poller.WaitForCompletionAsync(this, default, cancellationToken).ConfigureAwait(false);
         }
 

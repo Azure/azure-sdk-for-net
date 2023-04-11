@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 namespace Azure.Core
 {
     /// <summary>
-    /// Implementation of a <see cref="Delay"/>. Polling interval is based on the specified sequence.
+    /// Implementation of a <see cref="DelayStrategy"/>. Polling interval is based on the specified sequence.
     /// Defaults to {1s, 1s, 1s, 2s, 4s, 8s, 16s, 32s}.
     /// </summary>
     /// <remarks>Polling interval always follows the given sequence.</remarks>
-    internal class SequentialDelay : Delay
+    internal class SequentialDelayStrategy : DelayStrategy
     {
         private static readonly TimeSpan[] _pollingSequence = new TimeSpan[]
         {
@@ -29,7 +29,7 @@ namespace Azure.Core
         };
         private static readonly TimeSpan _maxDelay = _pollingSequence[_pollingSequence.Length - 1];
 
-        public SequentialDelay() : base(_maxDelay, 0)
+        public SequentialDelayStrategy() : base(_maxDelay, 0)
         {
         }
 

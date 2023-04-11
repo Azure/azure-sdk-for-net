@@ -13,7 +13,7 @@ namespace Azure.Core
     /// Implementation of a <see cref="Delay"/> with 0 interval.
     /// This is normally used for testing, like record playback.
     /// </summary>
-    internal class ZeroPollingStrategy : Delay
+    internal class ZeroPollingStrategy : DelayStrategy
     {
         protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber) => TimeSpan.Zero;
     }

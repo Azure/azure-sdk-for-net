@@ -93,7 +93,7 @@ namespace Azure
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
         /// </summary>
-        /// <param name="delay">
+        /// <param name="delayStrategy">
         /// The interval between status requests to the server.
         /// The interval can change based on information returned from the server.
         /// For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
@@ -103,9 +103,9 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final response of the operation.
         /// </remarks>
-        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(Delay delay, CancellationToken cancellationToken = default)
+        public virtual async ValueTask<Response> WaitForCompletionResponseAsync(DelayStrategy delayStrategy, CancellationToken cancellationToken = default)
         {
-            OperationPoller poller = new OperationPoller(delay);
+            OperationPoller poller = new OperationPoller(delayStrategy);
             return await poller.WaitForCompletionResponseAsync(this, default, cancellationToken).ConfigureAwait(false);
         }
 
@@ -145,7 +145,7 @@ namespace Azure
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
         /// </summary>
-        /// <param name="delay">
+        /// <param name="delayStrategy">
         /// The interval between status requests to the server.
         /// The interval can change based on information returned from the server.
         /// For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
@@ -155,9 +155,9 @@ namespace Azure
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final response of the operation.
         /// </remarks>
-        public virtual Response WaitForCompletionResponse(Delay delay, CancellationToken cancellationToken = default)
+        public virtual Response WaitForCompletionResponse(DelayStrategy delayStrategy, CancellationToken cancellationToken = default)
         {
-            OperationPoller poller = new OperationPoller(delay);
+            OperationPoller poller = new OperationPoller(delayStrategy);
             return poller.WaitForCompletionResponse(this, default, cancellationToken);
         }
 

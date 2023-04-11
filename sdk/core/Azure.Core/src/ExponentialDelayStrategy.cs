@@ -5,11 +5,11 @@ using System;
 
 namespace Azure.Core
 {
-    internal class ExponentialDelayStrategyInternal : DelayStrategy
+    internal class ExponentialDelayStrategy : DelayStrategy
     {
         private readonly TimeSpan _delay;
 
-        public ExponentialDelayStrategyInternal(
+        public ExponentialDelayStrategy(
             TimeSpan delay,
             TimeSpan maxDelay) : base(maxDelay)
         {

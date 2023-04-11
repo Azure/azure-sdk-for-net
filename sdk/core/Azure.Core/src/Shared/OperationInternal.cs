@@ -77,34 +77,22 @@ namespace Azure.Core
         ///         </item>
         ///     </list>
         /// </param>
-        /// <param name="strategy">Optional delay strategy to use. Default is <see cref="FixedDelay"/>.</param>
+        /// <param name="strategy">Optional delay strategy to use. Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
         /// <param name="operationTypeName">
         ///     The type name of the long-running operation making use of this class. Used when creating diagnostic scopes. If left <c>null</c>, the type name will be inferred based on the
         ///     parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
-        public OperationInternal(ClientDiagnostics clientDiagnostics,
-            IOperation operation,
-            Response rawResponse,
-            Delay? strategy,
-            string? operationTypeName = null,
-            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
-            :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, strategy)
-        {
-            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, strategy, operationTypeName ?? operation.GetType().Name, scopeAttributes);
-        }
-
-        // TEMP for back compat
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
             IOperation operation,
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategyInternal? fallbackStrategy = null)
-            :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+            DelayStrategy? strategy = null)
+            :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, strategy)
         {
-            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
+            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, strategy, operationTypeName ?? operation.GetType().Name, scopeAttributes);
         }
 
         private OperationInternal(OperationState finalState)

@@ -16,8 +16,7 @@ namespace Azure.Core
     {
         private readonly ClientDiagnostics _diagnostics;
         private readonly IReadOnlyDictionary<string, string>? _scopeAttributes;
-        private readonly Delay? _strategy;
-        private readonly DelayStrategy? _fallbackStrategy;
+        private readonly DelayStrategy? _strategy;
         private readonly AsyncLockWithValue<Response> _responseLock;
 
         private readonly string _waitForCompletionResponseScopeName;
@@ -35,7 +34,7 @@ namespace Azure.Core
             _responseLock = new AsyncLockWithValue<Response>(rawResponse);
         }
 
-        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, Delay? strategy = null)
+        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? strategy = null)
         {
             _diagnostics = clientDiagnostics;
             _updateStatusScopeName = $"{operationTypeName}.{nameof(UpdateStatus)}";
@@ -43,18 +42,6 @@ namespace Azure.Core
             _waitForCompletionScopeName = $"{operationTypeName}.WaitForCompletion";
             _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             _strategy = strategy;
-            _responseLock = new AsyncLockWithValue<Response>();
-        }
-
-        // TEMP - backcompat
-        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? fallbackStrategy = null)
-        {
-            _diagnostics = clientDiagnostics;
-            _updateStatusScopeName = $"{operationTypeName}.{nameof(UpdateStatus)}";
-            _waitForCompletionResponseScopeName = $"{operationTypeName}.{nameof(WaitForCompletionResponse)}";
-            _waitForCompletionScopeName = $"{operationTypeName}.WaitForCompletion";
-            _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            _fallbackStrategy = fallbackStrategy;
             _responseLock = new AsyncLockWithValue<Response>();
         }
 
@@ -120,7 +107,7 @@ namespace Azure.Core
         /// <summary>
         /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes.
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="Delay"/>
+        /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategy"/>
         /// is then used as the wait interval.
         /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms",
         /// <example>Usage example:
@@ -160,7 +147,7 @@ namespace Azure.Core
         /// <summary>
         /// Periodically calls <see cref="UpdateStatus(CancellationToken)"/> until the long-running operation completes.
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="Delay"/>
+        /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategy"/>
         /// is then used as the wait interval.
         /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms",
         /// and "x-ms-retry-after-ms".

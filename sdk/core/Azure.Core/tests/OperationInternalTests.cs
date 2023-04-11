@@ -440,7 +440,7 @@ namespace Azure.Core.Tests
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => _updateStateAsyncHandler(async, cancellationToken);
         }
 
-        private class CallCountStrategy : Delay
+        private class CallCountStrategy : DelayStrategy
         {
             public int CallCount { get; private set; }
 

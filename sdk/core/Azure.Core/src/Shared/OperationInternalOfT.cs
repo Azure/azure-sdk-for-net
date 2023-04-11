@@ -87,7 +87,7 @@ namespace Azure.Core
         ///     </list>
         /// </param>
         /// <param name="strategy">The fallback delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used.
-        ///     Default is <see cref="FixedDelay"/>.</param>
+        ///     Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
         /// <param name="operationTypeName">
         ///     The type name of the long-running operation making use of this class. Used when creating diagnostic scopes. If left <c>null</c>, the type name will be inferred based on the
         ///     parameter <paramref name="operation"/>.
@@ -96,7 +96,7 @@ namespace Azure.Core
         public OperationInternal(ClientDiagnostics clientDiagnostics,
             IOperation<T> operation,
             Response rawResponse,
-            Delay? strategy,
+            DelayStrategy? strategy,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null)
             : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, strategy)
@@ -231,7 +231,7 @@ namespace Azure.Core
 
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatus(CancellationToken)"/> until the long-running operation completes. The interval
-        /// between calls is defined by the <see cref="FixedDelay"/>, which takes into account any retry-after header that is returned
+        /// between calls is defined by the <see cref="FixedDelayWithNoJitterStrategy"/>, which takes into account any retry-after header that is returned
         /// from the server.
         /// <example>Usage example:
         /// <code>
