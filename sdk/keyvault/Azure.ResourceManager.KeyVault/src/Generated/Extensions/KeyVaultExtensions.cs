@@ -364,6 +364,54 @@ namespace Azure.ResourceManager.KeyVault
             return GetExtensionClient(subscriptionResource).GetDeletedManagedHsms(cancellationToken);
         }
 
+        /// <summary>
+        /// Checks that the managed hsm name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkMhsmNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedHsms_CheckMhsmNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The name of the managed hsm. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CheckManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityManagedHsmAsync(this SubscriptionResource subscriptionResource, CheckManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetExtensionClient(subscriptionResource).CheckManagedHsmNameAvailabilityManagedHsmAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks that the managed hsm name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/checkMhsmNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedHsms_CheckMhsmNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The name of the managed hsm. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<CheckManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailabilityManagedHsm(this SubscriptionResource subscriptionResource, CheckManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetExtensionClient(subscriptionResource).CheckManagedHsmNameAvailabilityManagedHsm(content, cancellationToken);
+        }
+
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
             return resourceGroupResource.GetCachedClient((client) =>
