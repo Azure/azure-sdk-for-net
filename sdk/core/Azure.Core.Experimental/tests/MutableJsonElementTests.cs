@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
+using System;
 using System.Text.Json;
 using Azure.Core.Json;
 using NUnit.Framework;
@@ -14,15 +16,21 @@ namespace Azure.Core.Experimental.Tests
         {
             string json = """
                 {
-                  "Bar" : "Hi!"
+                  "Bar" : "Hi!",
+                  "Foo" : "\"+"
                 }
                 """;
 
-            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            MutableJsonElement element = MutableJsonDocument.Parse(json).RootElement;
 
-            Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(json),
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(mdoc.RootElement.ToString()));
+            ValidateToString(json, element);
+        }
+
+        private static void ValidateToString(string json, MutableJsonElement element)
+        {
+            // Validate that MutableJsonElement.ToString() has the same behavior as JsonElement.
+
+            Assert.AreEqual(JsonDocument.Parse(json).RootElement.ToString(), element.ToString());
         }
 
         [Test]
@@ -37,13 +45,16 @@ namespace Azure.Core.Experimental.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
             mdoc.RootElement.GetProperty("Bar").Set(null);
 
-            Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
+            string expected = """
                 {
                   "Bar" : null
                 }
-                """),
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(mdoc.RootElement.ToString()));
+                """;
+
+            Assert.AreEqual(
+				MutableJsonDocumentWriteToTests.RemoveWhiteSpace(expected),
+				MutableJsonDocumentWriteToTests.RemoveWhiteSpace(mdoc.RootElement.ToString())
+			);
         }
 
         [Test]
@@ -55,17 +66,20 @@ namespace Azure.Core.Experimental.Tests
                 }
                 """;
 
-            var jd = MutableJsonDocument.Parse(json);
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            jd.RootElement.GetProperty("Bar").Set("hello");
+            mdoc.RootElement.GetProperty("Bar").Set("hello");
 
-            Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
+            string expected = """
                 {
                   "Bar" : "hello"
                 }
-                """),
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(jd.RootElement.ToString()));
+                """;
+
+            Assert.AreEqual(
+				MutableJsonDocumentWriteToTests.RemoveWhiteSpace(expected),
+				MutableJsonDocumentWriteToTests.RemoveWhiteSpace(mdoc.RootElement.ToString())
+			);
         }
 
         [Test]
@@ -77,21 +91,25 @@ namespace Azure.Core.Experimental.Tests
                 }
                 """;
 
-            var jd = MutableJsonDocument.Parse(json);
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            jd.RootElement.GetProperty("Bar").Set("hello");
+            mdoc.RootElement.GetProperty("Bar").Set("hello");
 
-            JsonElement barElement = jd.RootElement.GetProperty("Bar").GetJsonElement();
+            JsonElement barElement = mdoc.RootElement.GetProperty("Bar").GetJsonElement();
             Assert.AreEqual("hello", barElement.GetString());
 
-            JsonElement rootElement = jd.RootElement.GetJsonElement();
-            Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
+            JsonElement rootElement = mdoc.RootElement.GetJsonElement();
+
+            string expected = """
                 {
                   "Bar" : "hello"
                 }
-                """),
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(rootElement.ToString()));
+                """;
+
+            Assert.AreEqual(
+				MutableJsonDocumentWriteToTests.RemoveWhiteSpace(expected),
+				MutableJsonDocumentWriteToTests.RemoveWhiteSpace(rootElement.ToString())
+			);
         }
 
         [Test]
@@ -146,6 +164,8 @@ namespace Azure.Core.Experimental.Tests
             {
                 Assert.AreEqual(expected++, el.GetInt32());
             }
+
+            Assert.AreEqual(4, expected);
         }
 
         [Test]
@@ -167,6 +187,8 @@ namespace Azure.Core.Experimental.Tests
             {
                 Assert.AreEqual(expected++, el.GetInt32());
             }
+
+            Assert.AreEqual(5, expected);
         }
 
         [Test]
@@ -213,6 +235,8 @@ namespace Azure.Core.Experimental.Tests
                 Assert.AreEqual(expected, property.Value.GetInt32());
                 expected++;
             }
+
+            Assert.AreEqual(4, expected);
         }
 
         [Test]
@@ -245,6 +269,8 @@ namespace Azure.Core.Experimental.Tests
                 Assert.AreEqual(index + 1, property.Value.GetInt32());
                 index++;
             }
+
+            Assert.AreEqual(4, index);
         }
 
         [Test]

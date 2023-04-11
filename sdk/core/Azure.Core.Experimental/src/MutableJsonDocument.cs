@@ -72,20 +72,6 @@ namespace Azure.Core.Json
             RootElement.WriteTo(writer);
         }
 
-        private static void Write(Stream stream, ReadOnlySpan<byte> buffer)
-        {
-            byte[] sharedBuffer = ArrayPool<byte>.Shared.Rent(buffer.Length);
-            try
-            {
-                buffer.CopyTo(sharedBuffer);
-                stream.Write(sharedBuffer, 0, buffer.Length);
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(sharedBuffer);
-            }
-        }
-
         /// <summary>
         /// Parses a UTF-8 encoded string representing a single JSON value into a <see cref="MutableJsonDocument"/>.
         /// </summary>
