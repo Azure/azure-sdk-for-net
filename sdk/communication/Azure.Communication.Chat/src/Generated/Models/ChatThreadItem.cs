@@ -33,10 +33,10 @@ namespace Azure.Communication.Chat
         /// <param name="lastMessageReceivedOn"> The timestamp when the last message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="retentionPolicy">
         /// Data retention policy for auto deletion. It&apos;s not updatable after creation.
-        /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ChatRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ThreadCreationDateRetentionPolicy"/>.
         /// </param>
-        internal ChatThreadItem(string id, string topic, DateTimeOffset? deletedOn, DateTimeOffset? lastMessageReceivedOn, RetentionPolicy retentionPolicy)
+        internal ChatThreadItem(string id, string topic, DateTimeOffset? deletedOn, DateTimeOffset? lastMessageReceivedOn, ChatRetentionPolicy retentionPolicy)
         {
             Id = id;
             Topic = topic;
@@ -55,9 +55,9 @@ namespace Azure.Communication.Chat
         public DateTimeOffset? LastMessageReceivedOn { get; }
         /// <summary>
         /// Data retention policy for auto deletion. It&apos;s not updatable after creation.
-        /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ChatRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ThreadCreationDateRetentionPolicy"/>.
         /// </summary>
-        public RetentionPolicy RetentionPolicy { get; }
+        public ChatRetentionPolicy RetentionPolicy { get; }
     }
 }

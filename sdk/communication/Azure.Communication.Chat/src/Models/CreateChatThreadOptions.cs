@@ -10,12 +10,16 @@ namespace Azure.Communication.Chat
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class CreateChatThreadOptions
     {
-        public string Topic { get; set; }
+        public CreateChatThreadOptions(string topic)
+        {
+            Topic = topic;
+        }
+        public string Topic { get; }
 
-        public IEnumerable<ChatParticipant> Participants { get; set; }
+        public IList<ChatParticipant> Participants { get; }
 
         public string IdempotencyToken { get; set; }
 
-        public RetentionPolicy RetentionPolicy { get; set; }
+        public ChatRetentionPolicy RetentionPolicy { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.Communication.Chat
             string topic = default;
             Optional<DateTimeOffset> deletedOn = default;
             Optional<DateTimeOffset> lastMessageReceivedOn = default;
-            Optional<RetentionPolicy> retentionPolicy = default;
+            Optional<ChatRetentionPolicy> retentionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -63,7 +63,7 @@ namespace Azure.Communication.Chat
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property.Value);
+                    retentionPolicy = ChatRetentionPolicy.DeserializeChatRetentionPolicy(property.Value);
                     continue;
                 }
             }

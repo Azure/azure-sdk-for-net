@@ -10,30 +10,30 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class RetentionPolicy : IUtf8JsonSerializable
+    public partial class ChatRetentionPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("policyType"u8);
-            writer.WriteStringValue(PolicyType.ToString());
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
-        internal static RetentionPolicy DeserializeRetentionPolicy(JsonElement element)
+        internal static ChatRetentionPolicy DeserializeChatRetentionPolicy(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("policyType", out JsonElement discriminator))
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
                     case "threadCreationDate": return ThreadCreationDateRetentionPolicy.DeserializeThreadCreationDateRetentionPolicy(element);
                 }
             }
-            return UnknownRetentionPolicy.DeserializeUnknownRetentionPolicy(element);
+            return UnknownChatRetentionPolicy.DeserializeUnknownChatRetentionPolicy(element);
         }
     }
 }

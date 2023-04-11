@@ -6,36 +6,37 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.Chat.Models;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class UnknownRetentionPolicy : IUtf8JsonSerializable
+    internal partial class UnknownChatRetentionPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("policyType"u8);
-            writer.WriteStringValue(PolicyType.ToString());
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
-        internal static UnknownRetentionPolicy DeserializeUnknownRetentionPolicy(JsonElement element)
+        internal static UnknownChatRetentionPolicy DeserializeUnknownChatRetentionPolicy(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            PolicyType policyType = "Unknown";
+            ChatRetentionPolicyKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyType"u8))
+                if (property.NameEquals("kind"u8))
                 {
-                    policyType = new PolicyType(property.Value.GetString());
+                    kind = new ChatRetentionPolicyKind(property.Value.GetString());
                     continue;
                 }
             }
-            return new UnknownRetentionPolicy(policyType);
+            return new UnknownChatRetentionPolicy(kind);
         }
     }
 }

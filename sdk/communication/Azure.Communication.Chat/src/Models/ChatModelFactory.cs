@@ -78,7 +78,7 @@ namespace Azure.Communication.Chat
         public static ChatMessageReadReceipt ChatMessageReadReceipt(CommunicationIdentifier sender, string chatMessageId, DateTimeOffset readOn)
             => new ChatMessageReadReceipt(sender, chatMessageId, readOn);
 
-        public static ChatThreadItem ChatThreadItem(string id = null, string topic = null, DateTimeOffset? deletedOn = null, DateTimeOffset? lastMessageReceivedOn = null, RetentionPolicy retentionPolicy = null)
+        public static ChatThreadItem ChatThreadItem(string id = null, string topic = null, DateTimeOffset? deletedOn = null, DateTimeOffset? lastMessageReceivedOn = null, ChatRetentionPolicy retentionPolicy = null)
         {
             return new ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn, retentionPolicy);
         }

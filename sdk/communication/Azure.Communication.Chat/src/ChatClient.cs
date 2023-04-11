@@ -54,7 +54,7 @@ namespace Azure.Communication.Chat
         /// <param name = "createChatThreadOptions" > CreateChatThreadOptions </param>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<CreateChatThreadResult>> CreateChatThreadAsync(CreateChatThreadOptions  createChatThreadOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateChatThreadResult>> CreateChatThreadAsync(CreateChatThreadOptions  createChatThreadOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(CreateChatThread)}");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.Communication.Chat
         /// <param name = "createChatThreadOptions" > Retention policy</param>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<CreateChatThreadResult> CreateChatThread(CreateChatThreadOptions createChatThreadOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<CreateChatThreadResult> CreateChatThread(CreateChatThreadOptions createChatThreadOptions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(CreateChatThread)}");
             scope.Start();

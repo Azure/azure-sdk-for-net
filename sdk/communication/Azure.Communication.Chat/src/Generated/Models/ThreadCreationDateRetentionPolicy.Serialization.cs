@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.Chat.Models;
 using Azure.Core;
 
 namespace Azure.Communication.Chat
@@ -15,10 +16,10 @@ namespace Azure.Communication.Chat
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("daysAfterCreation"u8);
-            writer.WriteNumberValue(DaysAfterCreation);
-            writer.WritePropertyName("policyType"u8);
-            writer.WriteStringValue(PolicyType.ToString());
+            writer.WritePropertyName("deleteThreadAfterDays"u8);
+            writer.WriteNumberValue(DeleteThreadAfterDays);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
@@ -28,22 +29,22 @@ namespace Azure.Communication.Chat
             {
                 return null;
             }
-            int daysAfterCreation = default;
-            PolicyType policyType = default;
+            int deleteThreadAfterDays = default;
+            ChatRetentionPolicyKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("daysAfterCreation"u8))
+                if (property.NameEquals("deleteThreadAfterDays"u8))
                 {
-                    daysAfterCreation = property.Value.GetInt32();
+                    deleteThreadAfterDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("policyType"u8))
+                if (property.NameEquals("kind"u8))
                 {
-                    policyType = new PolicyType(property.Value.GetString());
+                    kind = new ChatRetentionPolicyKind(property.Value.GetString());
                     continue;
                 }
             }
-            return new ThreadCreationDateRetentionPolicy(policyType, daysAfterCreation);
+            return new ThreadCreationDateRetentionPolicy(kind, deleteThreadAfterDays);
         }
     }
 }

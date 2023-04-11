@@ -14,7 +14,7 @@ namespace Azure.Communication
         public CommunicationIdentifierModelKind? Kind { get; set; }
 
         public CommunicationIdentifierModel(string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, CommunicationIdentifierModelKind? kind)
-        : this(rawId, communicationUser, phoneNumber, microsoftTeamsUser)
+        : this(kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser)
         {
             Kind = kind;
         }
