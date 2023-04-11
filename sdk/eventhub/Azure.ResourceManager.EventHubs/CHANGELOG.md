@@ -197,7 +197,6 @@ EventHubsNamespaceResource eventHubNamespace = eHNamespaceCollection.CreateOrUpd
 EventHubCollection eventHubCollection = eventHubNamespace.GetEventHubs();
 EventHubData eventHubData = new EventHubData()
 {
-    // MessageRetentionInDays = 4,
     PartitionCount = 4,
     Status = EventHubEntityStatus.Active,
     CaptureDescription = new CaptureDescription()
