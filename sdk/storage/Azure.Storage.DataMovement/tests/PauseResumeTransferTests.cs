@@ -155,6 +155,7 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, singleTransferOptions);
         }
 
+        [LiveOnly]
         [Test]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -172,7 +173,6 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
-                MaximumConcurrency = 4
             };
             TransferManager transferManager = new TransferManager(options);
             SingleTransferOptions singleTransferOptions = new SingleTransferOptions();
@@ -206,6 +206,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
+        [LiveOnly]
         [Test]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -272,6 +273,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.CatchAsync( async () => await transferManager.TryPauseTransferAsync("bad transfer Id"));
         }
 
+        [LiveOnly]
         [Test]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -327,6 +329,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
+        [LiveOnly]
         [Test]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
@@ -340,7 +343,7 @@ namespace Azure.Storage.DataMovement.Tests
             DisposingLocalDirectory localDirectory = GetTestLocalDirectory();
             DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
             DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
-            ;
+
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
@@ -366,7 +369,6 @@ namespace Azure.Storage.DataMovement.Tests
                 manager: transferManager,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                size: Constants.MB * 100,
                 singleTransferOptions: singleTransferOptions);
 
             // Act - Pause Job
@@ -388,8 +390,7 @@ namespace Azure.Storage.DataMovement.Tests
                 manager: transferManager,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                singleTransferOptions: resumeOptions,
-                size: Constants.MB * 4);
+                singleTransferOptions: resumeOptions);
 
             CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);

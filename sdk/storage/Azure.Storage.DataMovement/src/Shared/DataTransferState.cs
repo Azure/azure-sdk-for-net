@@ -167,14 +167,14 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        public async Task<bool> TryPauseAsync(CancellationToken cancellationToken)
+        public Task<bool> TryPauseAsync(CancellationToken cancellationToken)
         {
             if (StorageTransferStatus.Paused == _status ||
                 StorageTransferStatus.Completed == _status ||
                 StorageTransferStatus.CompletedWithSkippedTransfers == _status ||
                 StorageTransferStatus.CompletedWithFailedTransfers == _status)
             {
-                return false;
+                return Task.FromResult(false);
             }
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             // Call the inner cancellation token to stop the transfer job
@@ -182,11 +182,11 @@ namespace Azure.Storage.DataMovement
             if (TriggerCancellation())
             {
                 // Wait until full pause has completed.
-                cancellationToken.Register(() => CompletionSource.TrySetCanceled(cancellationToken), useSynchronizationContext: false);
-                await CompletionSource.Task.ConfigureAwait(false);
-                return true;
+                //cancellationToken.Register(() => CompletionSource.TrySetCanceled(cancellationToken), useSynchronizationContext: false);
+                CompletionSource.Task.Wait(cancellationToken);
+                return Task.FromResult(true);
             }
-            return false;
+            return Task.FromResult(false);
         }
 
         internal bool TriggerCancellation()
