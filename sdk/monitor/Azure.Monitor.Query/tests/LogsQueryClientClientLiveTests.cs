@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
 using NUnit.Framework;
@@ -681,7 +682,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryResourceAsync(TestEnvironment.StorageAccountId,
+            var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
                 "search *",
                 _logsTestData.DataTimeRange);
 
@@ -723,7 +724,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryResourceAsync(TestEnvironment.StorageAccountId.Substring(1),
+            var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId.Substring(1)),
                 "search *",
                 _logsTestData.DataTimeRange);
 
@@ -765,7 +766,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryResourceAsync("///" + TestEnvironment.StorageAccountId,
+            var results = await client.QueryResourceAsync(new ResourceIdentifier("///" + TestEnvironment.StorageAccountId),
                 "search *",
                 _logsTestData.DataTimeRange);
 

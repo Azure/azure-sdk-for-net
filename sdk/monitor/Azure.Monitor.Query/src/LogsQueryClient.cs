@@ -350,17 +350,18 @@ namespace Azure.Monitor.Query
         /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
         /// <param name="cancellationToken"></param>
         /// <returns>The logs matching the query.</returns>
-        public virtual Response<LogsQueryResult> QueryResource(string resourceId, string query, QueryTimeRange timeRange, CancellationToken cancellationToken = default)
+        public virtual Response<LogsQueryResult> QueryResource(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, CancellationToken cancellationToken = default)
         {
+            string resource = resourceId.ToString();
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
             scope.Start();
             try
             {
-                while (resourceId.StartsWith("/"))
+                while (resource.StartsWith("/"))
                 {
-                    resourceId = resourceId.Substring(1);
+                    resource = resource.Substring(1);
                 }
-                return _queryClient.ResourceGet(resourceId, query, timeRange.Duration, cancellationToken);
+                return _queryClient.ResourceGet(resource, query, timeRange.Duration, cancellationToken);
             }
             catch (Exception e)
             {
@@ -401,17 +402,18 @@ namespace Azure.Monitor.Query
         /// <param name="timeRange"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<LogsQueryResult>> QueryResourceAsync(string resourceId, string query, QueryTimeRange timeRange, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogsQueryResult>> QueryResourceAsync(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, CancellationToken cancellationToken = default)
         {
+            string resource = resourceId.ToString();
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
             scope.Start();
             try
             {
-                while (resourceId.StartsWith("/"))
+                while (resource.StartsWith("/"))
                 {
-                    resourceId = resourceId.Substring(1);
+                    resource = resource.Substring(1);
                 }
-                return await _queryClient.ResourceGetAsync(resourceId, query, timeRange.Duration, cancellationToken).ConfigureAwait(false);
+                return await _queryClient.ResourceGetAsync(resource, query, timeRange.Duration, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
