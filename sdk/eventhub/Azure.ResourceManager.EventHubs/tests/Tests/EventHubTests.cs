@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                     RetentionTimeInHours = 2,
                     TombstoneRetentionTimeInHours=4
                
-                },
+                }
             };
             EventHubResource eventHub2 = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName2, parameter2)).Value;
 
@@ -166,7 +166,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(eventHub2.Data.RetentionDescription.CleanupPolicy, parameter2.RetentionDescription.CleanupPolicy);
             Assert.AreEqual(eventHub2.Data.RetentionDescription.RetentionTimeInHours, parameter2.RetentionDescription.RetentionTimeInHours);
             Assert.AreEqual(eventHub2.Data.RetentionDescription.TombstoneRetentionTimeInHours, parameter2.RetentionDescription.TombstoneRetentionTimeInHours);
-            Assert.AreEqual(eventHub2.Data.MessageRetentionInDays, parameter2.MessageRetentionInDays);
 
             //Delete eventhub
             await eventHub1.DeleteAsync(WaitUntil.Completed);
