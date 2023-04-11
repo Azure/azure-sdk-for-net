@@ -818,21 +818,29 @@ namespace Azure.Core.Tests
             var transport = CreateMockTransport(responses);
 
             string tenantId = null;
+            int callCount = 0;
             var credential = new TokenCredentialStub((r, c) =>
             {
                 tenantId = r.TenantId;
+                Interlocked.Increment(ref callCount);
+
                 return new(Guid.NewGuid().ToString(), DateTimeOffset.Now.AddHours(2));
             }, IsAsync);
             var policy = new ChallengeBasedAuthenticationTestPolicy(credential, "scope");
 
             await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
             Assert.AreEqual("de763a21-49f7-4b08-a8e1-52c8fbc103b4", tenantId);
+            // This is initially 2 because the pipeline tries to pre-authenticate, then again when the test policy authenticates on a 401.
+            Assert.AreEqual(2, callCount);
 
             await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
             Assert.AreEqual("de763a21-49f7-4b08-a8e1-52c8fbc103b4", tenantId);
+            Assert.AreEqual(2, callCount);
 
             await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", tenantId);
+            // An additional call to TokenCredential.GetTokenAsync is expected now that the tenant has changed.
+            Assert.AreEqual(3, callCount);
         }
 
         private class ChallengeBasedAuthenticationTestPolicy : BearerTokenAuthenticationPolicy
