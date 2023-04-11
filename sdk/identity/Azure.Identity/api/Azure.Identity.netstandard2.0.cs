@@ -422,8 +422,8 @@ namespace Azure.Identity
     {
         public VisualStudioCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public string TenantId { get { throw null; } set { } }
         public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
     }
     public partial class WorkloadIdentityCredential : Azure.Core.TokenCredential
     {
