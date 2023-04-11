@@ -88,7 +88,7 @@
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.25" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.5.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.8.1" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.9.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.14.1" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.13.1" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.2.0" />
@@ -186,7 +186,6 @@
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Identity" Version="1.7.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.8.1" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.14.1" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.13.1" />
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0" />
