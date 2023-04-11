@@ -88,7 +88,7 @@ namespace Azure.Identity.Tests
             {
                 CreateHandler = pi =>
                 {
-                    switch (pi.Arguments.Last())
+                    switch (pi.Arguments.First())
                     {
                         case '0':
                             return testProcess1;
@@ -109,6 +109,32 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(token.Token, expectedToken);
             Assert.AreEqual(token.ExpiresOn, expectedExpiresOn);
+        }
+
+        [Test]
+        public async Task AuthenticateWithVsCredential_ArgumentOrder([Values(null, TenantIdHint)] string tenantId)
+        {
+            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio(2064);
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();
+            var testProcess = new TestProcess { Output = processOutput };
+            var options = new VisualStudioCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint } };
+            var credential = InstrumentClient(new VisualStudioCredential(TenantId, default, fileSystem, new TestProcessService(testProcess, true), options));
+            var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+
+            var token = await credential.GetTokenAsync(context, default);
+
+            Assert.AreEqual(token.Token, expectedToken);
+            Assert.AreEqual(token.ExpiresOn, expectedExpiresOn);
+
+            // Ensure that the argument from the json file comes first
+            Assert.That(testProcess.StartInfo.Arguments, Does.StartWith("2064"));
+
+            // If a TenantId was provided check that it is present
+            if (expectedTenantId != null)
+            {
+                Assert.That(testProcess.StartInfo.Arguments, Does.Contain(expectedTenantId));
+            }
         }
 
         [Test]
