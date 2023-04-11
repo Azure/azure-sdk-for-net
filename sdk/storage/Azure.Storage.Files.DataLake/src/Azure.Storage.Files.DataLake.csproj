@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
     <!-- Remove this line when Azure.Core is released for net6.0  -->
@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="..\..\Azure.Storage.Blobs\src\Sas\SasQueryParametersExtensions.cs" Link="Shared\Sas\KeySasQueryParametersExtensions.cs" />
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ChecksumCalculatingStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)CompatSwitches.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ContentHasher.cs" LinkBase="Shared" />
@@ -57,7 +58,6 @@
     <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SasQueryParametersInternals.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureStorageSharedSources)SlicedStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageClientConfiguration.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageClientOptions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared" />
@@ -78,6 +78,7 @@
     <Compile Include="$(AzureStorageSharedSources)UserDelegationKeyProperties.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StreamExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)\StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared" />
   </ItemGroup>

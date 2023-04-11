@@ -530,7 +530,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
-                options?.TransferValidation,
+                options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return uploader.UploadInternal(
@@ -587,7 +587,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
-                options?.TransferValidation,
+                options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(

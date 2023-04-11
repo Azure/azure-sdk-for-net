@@ -50,9 +50,8 @@ namespace Azure.Storage.Shared
             else
             {
                 _buffer = new PooledMemoryStream(
-                arrayPool: ArrayPool<byte>.Shared,
-                absolutePosition: 0,
-                maxArraySize: (int)Math.Min(Constants.MB, bufferSize));
+                    arrayPool: ArrayPool<byte>.Shared,
+                    maxArraySize: (int)Math.Min(Constants.MB, bufferSize));
                 _shouldDisposeBuffer = true;
             }
         }

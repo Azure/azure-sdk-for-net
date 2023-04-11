@@ -15,9 +15,9 @@ namespace Azure.Core
     /// </summary>
     internal sealed class OperationPoller
     {
-        private readonly DelayStrategy _delayStrategy;
+        private readonly DelayStrategyInternal _delayStrategy;
 
-        public OperationPoller(DelayStrategy? fallbackStrategy = null)
+        public OperationPoller(DelayStrategyInternal? fallbackStrategy = null)
         {
             _delayStrategy = new RetryAfterDelayStrategy(fallbackStrategy);
         }

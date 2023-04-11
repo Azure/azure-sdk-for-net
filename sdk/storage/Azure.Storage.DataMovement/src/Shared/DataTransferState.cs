@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -23,7 +20,9 @@ namespace Azure.Storage.DataMovement
         private long _currentTransferredBytes;
         private object _lockCurrentBytes = new object();
 
-        public TaskCompletionSource<StorageTransferStatus> _completionSource;
+        public TaskCompletionSource<StorageTransferStatus> CompletionSource;
+
+        public CancellationTokenSource CancellationTokenSource { get; internal set; }
 
         public StorageTransferStatus Status => _status;
 
@@ -43,15 +42,16 @@ namespace Azure.Storage.DataMovement
             _id = Guid.NewGuid().ToString();
             _status = status;
             _currentTransferredBytes = 0;
-            _completionSource = new TaskCompletionSource<StorageTransferStatus>(
+            CompletionSource = new TaskCompletionSource<StorageTransferStatus>(
                 _status,
                 TaskCreationOptions.RunContinuationsAsynchronously);
             if (StorageTransferStatus.Completed == status ||
                         StorageTransferStatus.CompletedWithSkippedTransfers == status ||
                         StorageTransferStatus.CompletedWithFailedTransfers == status)
             {
-                _completionSource.TrySetResult(status);
+                CompletionSource.TrySetResult(status);
             }
+            CancellationTokenSource = new CancellationTokenSource();
         }
 
         /// <summary>
@@ -62,9 +62,10 @@ namespace Azure.Storage.DataMovement
             _id = id;
             _status = StorageTransferStatus.Queued;
             _currentTransferredBytes = bytesTransferred;
-            _completionSource = new TaskCompletionSource<StorageTransferStatus>(
+            CompletionSource = new TaskCompletionSource<StorageTransferStatus>(
                 _status,
                 TaskCreationOptions.RunContinuationsAsynchronously);
+            CancellationTokenSource = new CancellationTokenSource();
         }
 
         /// <summary>
@@ -104,26 +105,42 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// Gets the status of the transfer
+        /// </summary>
+        /// <returns></returns>
+        public StorageTransferStatus GetTransferStatus()
+        {
+            lock (_statusLock)
+            {
+                return _status;
+            }
+        }
+
+        /// <summary>
         /// Sets the completion status
         /// </summary>
         /// <param name="status"></param>
-        public void SetTransferStatus(StorageTransferStatus status)
+        /// <returns>Returns whether or not the status has been changed/set</returns>
+        public bool TrySetTransferStatus(StorageTransferStatus status)
         {
             lock (_statusLock)
             {
                 if (_status != status)
                 {
                     _status = status;
-                    if (StorageTransferStatus.Completed == status ||
+                    if (StorageTransferStatus.Paused == status ||
+                        StorageTransferStatus.Completed == status ||
                         StorageTransferStatus.CompletedWithSkippedTransfers == status ||
                         StorageTransferStatus.CompletedWithFailedTransfers == status)
                     {
                         // If the _completionSource has been cancelled or the exception
                         // has been set, we don't need to check if TrySetResult returns false
                         // because it's acceptable to cancel or have an error occur before then.
-                        _completionSource.TrySetResult(status);
+                        CompletionSource.TrySetResult(status);
                     }
+                    return true;
                 }
+                return false;
             }
         }
 
@@ -148,6 +165,38 @@ namespace Azure.Storage.DataMovement
             {
                 Interlocked.Add(ref _currentTransferredBytes, transferredBytes);
             }
+        }
+
+        public async Task<bool> TryPauseAsync(CancellationToken cancellationToken)
+        {
+            if (StorageTransferStatus.Paused == _status ||
+                StorageTransferStatus.Completed == _status ||
+                StorageTransferStatus.CompletedWithSkippedTransfers == _status ||
+                StorageTransferStatus.CompletedWithFailedTransfers == _status)
+            {
+                return false;
+            }
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            // Call the inner cancellation token to stop the transfer job
+            TrySetTransferStatus(StorageTransferStatus.PauseInProgress);
+            if (TriggerCancellation())
+            {
+                // Wait until full pause has completed.
+                cancellationToken.Register(() => CompletionSource.TrySetCanceled(cancellationToken), useSynchronizationContext: false);
+                await CompletionSource.Task.ConfigureAwait(false);
+                return true;
+            }
+            return false;
+        }
+
+        internal bool TriggerCancellation()
+        {
+            if (!CancellationTokenSource.IsCancellationRequested)
+            {
+                CancellationTokenSource.Cancel();
+                return true;
+            }
+            return false;
         }
     }
 }

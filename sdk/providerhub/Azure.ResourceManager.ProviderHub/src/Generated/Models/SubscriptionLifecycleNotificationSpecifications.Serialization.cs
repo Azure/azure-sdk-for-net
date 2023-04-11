@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SoftDeleteTTL))
+            if (Optional.IsDefined(SoftDeleteTtl))
             {
                 writer.WritePropertyName("softDeleteTTL"u8);
-                writer.WriteStringValue(SoftDeleteTTL.Value, "P");
+                writer.WriteStringValue(SoftDeleteTtl.Value, "P");
             }
             writer.WriteEndObject();
         }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             Optional<IList<SubscriptionStateOverrideAction>> subscriptionStateOverrideActions = default;
-            Optional<TimeSpan> softDeleteTTL = default;
+            Optional<TimeSpan> softDeleteTtl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionStateOverrideActions"u8))
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    softDeleteTTL = property.Value.GetTimeSpan("P");
+                    softDeleteTtl = property.Value.GetTimeSpan("P");
                     continue;
                 }
             }
-            return new SubscriptionLifecycleNotificationSpecifications(Optional.ToList(subscriptionStateOverrideActions), Optional.ToNullable(softDeleteTTL));
+            return new SubscriptionLifecycleNotificationSpecifications(Optional.ToList(subscriptionStateOverrideActions), Optional.ToNullable(softDeleteTtl));
         }
     }
 }

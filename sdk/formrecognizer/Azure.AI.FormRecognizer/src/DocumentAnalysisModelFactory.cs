@@ -98,6 +98,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence);
         }
 
+        /// <summary> Initializes a new instance of DocumentClassifierBuildOperationDetails. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document classifier. </param>
+        /// <param name="error"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentClassifierBuildOperationDetails"/> instance for mocking. </returns>
+        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, IReadOnlyDictionary<string, string> tags = null, ResponseError error = null, DocumentClassifierDetails result = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentClassifierBuildOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, resourceLocation, apiVersion: null, tags, error, result);
+        }
+
         /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
