@@ -488,7 +488,7 @@
 /sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit
 
 # PRLabel: %Monitor - Query
-/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit
+/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit 
 /sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit
 
 # PRLabel: %Monitor - ApplicationInsights
