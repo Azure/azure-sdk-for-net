@@ -16,7 +16,7 @@ namespace Azure.Core
     {
         private readonly ClientDiagnostics _diagnostics;
         private readonly IReadOnlyDictionary<string, string>? _scopeAttributes;
-        private readonly DelayStrategy? _strategy;
+        private readonly DelayStrategy? _fallbackStrategy;
         private readonly AsyncLockWithValue<Response> _responseLock;
 
         private readonly string _waitForCompletionResponseScopeName;
@@ -30,18 +30,18 @@ namespace Azure.Core
             _waitForCompletionResponseScopeName = string.Empty;
             _waitForCompletionScopeName = string.Empty;
             _scopeAttributes = default;
-            _strategy = default;
+            _fallbackStrategy = default;
             _responseLock = new AsyncLockWithValue<Response>(rawResponse);
         }
 
-        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? strategy = null)
+        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? fallbackStrategy = null)
         {
             _diagnostics = clientDiagnostics;
             _updateStatusScopeName = $"{operationTypeName}.{nameof(UpdateStatus)}";
             _waitForCompletionResponseScopeName = $"{operationTypeName}.{nameof(WaitForCompletionResponse)}";
             _waitForCompletionScopeName = $"{operationTypeName}.WaitForCompletion";
             _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            _strategy = strategy;
+            _fallbackStrategy = fallbackStrategy;
             _responseLock = new AsyncLockWithValue<Response>();
         }
 
@@ -198,7 +198,7 @@ namespace Azure.Core
             using var scope = CreateScope(scopeName);
             try
             {
-                var poller = new OperationPoller(_strategy);
+                var poller = new OperationPoller(_fallbackStrategy);
                 var response = async
                     ? await poller.WaitForCompletionResponseAsync(this, pollingInterval, cancellationToken).ConfigureAwait(false)
                     : poller.WaitForCompletionResponse(this, pollingInterval, cancellationToken);

@@ -77,7 +77,7 @@ namespace Azure.Core
         ///         </item>
         ///     </list>
         /// </param>
-        /// <param name="strategy">Optional delay strategy to use. Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
+        /// <param name="fallbackStrategy"> The delay strategy to use. Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
         /// <param name="operationTypeName">
         ///     The type name of the long-running operation making use of this class. Used when creating diagnostic scopes. If left <c>null</c>, the type name will be inferred based on the
         ///     parameter <paramref name="operation"/>.
@@ -89,10 +89,10 @@ namespace Azure.Core
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? strategy = null)
-            :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, strategy)
+            DelayStrategy? fallbackStrategy = null)
+            :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
-            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, strategy, operationTypeName ?? operation.GetType().Name, scopeAttributes);
+            _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
         }
 
         private OperationInternal(OperationState finalState)
