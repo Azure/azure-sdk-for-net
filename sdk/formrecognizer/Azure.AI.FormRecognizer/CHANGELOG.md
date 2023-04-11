@@ -1,9 +1,10 @@
 # Release History
 
-## 4.1.0-beta.1 (Unreleased)
+## 4.1.0-beta.1 (2023-04-13)
 
 ### Features Added
-- Added property `Features` in `AnalyzeDocumentOptions` to support add-on capabilities.
+- Added property `QueryFields` to `AnalyzeDocumentOptions` to support field extraction without the need for added training.
+- Added property `Features` to `AnalyzeDocumentOptions` to support add-on capabilities.
 - Added properties `SimilarFontFamily`, `FontStyle`, `FontWeight`, `Color`, and `BackgroundColor` to `DocumentStyle`. These properties can only be populated when `DocumentAnalysisFeature.OcrFont` is enabled.
 - Added properties `Annotations`, `Barcodes`, `Formulas`, `Images`, and `Kind` to `DocumentPage`. `Formulas` can only be populated when `DocumentAnalysisFeature.OcrFormula` is enabled.
 - Added member `FormulaBlock` to `ParagraphRole`.
@@ -13,11 +14,11 @@
 - Added member `DocumentClassifierBuild` to `DocumentOperationKind`.
 - Added member `Boolean` to `DocumentFieldType`.
 - Added method `AsBoolean` to `DocumentFieldValue` to support extracting values of boolean fields.
+- Added property `Code` to the `CurrencyValue` class.
 - Added properties `Unit`, `CityDistrict`, `StateDistrict`, `Suburb`, `House`, and `Level` to the `AddressValue` class.
-
-### Breaking Changes
-
-### Bugs Fixed
+- Added property `CommonName` to the `DocumentKeyValuePair` class.
+- Added property `ExpiresOn` to the `DocumentModelDetails` and `DocumentModelSummary` classes.
+- Added property `CustomNeuralDocumentModelBuilds` to the `ResourceDetails` class.
 
 ### Other Changes
 - `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target service API version `2023-02-28-preview` by default. Version `2022-08-31` can still be targeted if specified in the `DocumentAnalysisClientOptions`.

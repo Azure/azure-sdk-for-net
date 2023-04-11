@@ -38,8 +38,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
     internal partial class InnerError { }
 
-    internal partial class QuotaDetails { }
-
     [CodeGenModel("ResourceDetails")]
     internal partial class ServiceResourceDetails { }
 

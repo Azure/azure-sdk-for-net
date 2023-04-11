@@ -17,8 +17,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// properties.
     /// </summary>
     /// <remarks>
-    /// This client only works with <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31"/> and newer.
-    /// If you want to use a lower version, please use the <see cref="Training.FormTrainingClient"/>.
+    /// This client only supports <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31"/> and newer.
+    /// To use an older service version, see <see cref="Training.FormTrainingClient"/>.
     /// </remarks>
     public class DocumentModelAdministrationClient
     {

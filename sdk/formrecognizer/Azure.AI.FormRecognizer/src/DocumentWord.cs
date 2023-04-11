@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             get => throw new InvalidOperationException();
             set
             {
-                BoundingPolygon = ClientCommon.CovertToListOfPointF(value);
+                BoundingPolygon = ClientCommon.ConvertToListOfPointF(value);
             }
         }
     }

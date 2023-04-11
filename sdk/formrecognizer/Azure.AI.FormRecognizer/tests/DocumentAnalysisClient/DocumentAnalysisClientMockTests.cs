@@ -284,6 +284,86 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
+        public async Task AnalyzeDocumentSendsSingleQueryField()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            var analyzeOptions = new AnalyzeDocumentOptions { QueryFields = { "field1" } };
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"queryFields=field1";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentFromUriSendsSingleQueryField()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var analyzeOptions = new AnalyzeDocumentOptions { QueryFields = { "field1" } };
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"queryFields=field1";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentSendsMultipleQueryFields()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            var analyzeOptions = new AnalyzeDocumentOptions { QueryFields = { "field1", "field2" } };
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"queryFields=field1%2Cfield2";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentFromUriSendsMultipleQueryFields()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var analyzeOptions = new AnalyzeDocumentOptions { QueryFields = { "field1", "field2" } };
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"queryFields=field1%2Cfield2";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
         public async Task AnalyzeDocumentFromUriEncodesBlankSpaces()
         {
             var mockResponse = new MockResponse(202);

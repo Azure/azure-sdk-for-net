@@ -17,8 +17,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// documents with models built on custom document types.
     /// </summary>
     /// <remarks>
-    /// Client is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31"/> and higher.
-    /// If you want to use a lower version, please use the <see cref="FormRecognizer.FormRecognizerClient"/>.
+    /// This client only supports <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31"/> and newer.
+    /// To use an older service version, see <see cref="FormRecognizerClient"/>.
     /// </remarks>
     public class DocumentAnalysisClient
     {
@@ -154,7 +154,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     options.Locale,
                     Constants.DefaultStringIndexType,
                     options.Features.Count == 0 ? null : options.Features,
-                    queryFields: null,
+                    options.QueryFields.Count == 0 ? null : options.QueryFields,
                     document,
                     cancellationToken).ConfigureAwait(false);
 
@@ -217,7 +217,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     options.Locale,
                     Constants.DefaultStringIndexType,
                     options.Features.Count == 0 ? null : options.Features,
-                    queryFields: null,
+                    options.QueryFields.Count == 0 ? null : options.QueryFields,
                     document,
                     cancellationToken);
 
@@ -280,7 +280,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     options.Locale,
                     Constants.DefaultStringIndexType,
                     options.Features.Count == 0 ? null : options.Features,
-                    queryFields: null,
+                    options.QueryFields.Count == 0 ? null : options.QueryFields,
                     request,
                     cancellationToken).ConfigureAwait(false);
 
@@ -343,7 +343,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     options.Locale,
                     Constants.DefaultStringIndexType,
                     options.Features.Count == 0 ? null : options.Features,
-                    queryFields: null,
+                    options.QueryFields.Count == 0 ? null : options.QueryFields,
                     request,
                     cancellationToken);
 
