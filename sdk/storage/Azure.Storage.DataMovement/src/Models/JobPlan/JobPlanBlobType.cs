@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-namespace Azure.Storage.DataMovement.JobPlanModels
+
+namespace Azure.Storage.DataMovement.Models.JobPlan
 {
     internal enum JobPlanBlobType
     {
