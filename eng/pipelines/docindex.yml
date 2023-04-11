@@ -16,7 +16,7 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
         parameters:
           SkipCheckoutNone: true
-          Paths: 
+          Paths:
             # This is for retrieving code owners for service level readme metadata
             - .github/CODEOWNERS
 
@@ -31,6 +31,8 @@ jobs:
           Repositories:
             - Name: $(DocRepoOwner)/$(DocRepoName)
               WorkingDirectory: $(DocRepoLocation)
+              Commitish: refs/pull/2307/merge
+
       # Install the tool for toc step to use
       - task: NuGetToolInstaller@1
         inputs:
@@ -69,7 +71,7 @@ jobs:
 
       - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
         parameters:
-          BaseRepoBranch: $(DefaultBranch)
+          BaseRepoBranch: "JimSuplizio-Test-MetadataUpdates"
           BaseRepoOwner: $(DocRepoOwner)
           CommitMsg: "Update docs CI configuration"
           TargetRepoName: $(DocRepoName)
@@ -77,74 +79,74 @@ jobs:
           WorkingDirectory: $(DocRepoLocation)
 
       # Prepare daily docs CI
-      - template: /eng/common/pipelines/templates/steps/set-daily-docs-branch-name.yml
-        parameters:
-          DailyBranchVariableName: DailyDocsBranchName
-      - pwsh: |
-          $ErrorActionPreference = "Continue"
-          git checkout "origin/$(DailyDocsBranchName)" 2>&1 | Out-Null
-          $LASTEXITCODE = 0 # This ignores any error from git checkout
-          git status
-        displayName: Checkout daily branch if it exists
-        workingDirectory: $(DocRepoLocation)
+      # - template: /eng/common/pipelines/templates/steps/set-daily-docs-branch-name.yml
+      #   parameters:
+      #     DailyBranchVariableName: DailyDocsBranchName
+      # - pwsh: |
+      #     $ErrorActionPreference = "Continue"
+      #     git checkout "origin/$(DailyDocsBranchName)" 2>&1 | Out-Null
+      #     $LASTEXITCODE = 0 # This ignores any error from git checkout
+      #     git status
+      #   displayName: Checkout daily branch if it exists
+      #   workingDirectory: $(DocRepoLocation)
 
-      - pwsh: |
-          $publicFeedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"
-          Write-Host "##vso[task.setvariable variable=PackageSourceOverride]$publicFeedUrl"
-        displayName: Set package source variable
-        workingDirectory: $(DocRepoLocation)
-        
-      - task: Powershell@2
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Update-DocsMsPackages.ps1
-          # Use the dotnet public daily package preview feed as the source for
-          # updated packages.
-          arguments: >
-            -DocRepoLocation $(DocRepoLocation)
-            -PackageSourceOverride $(PackageSourceOverride)
-        displayName: Update Docs Onboarding for Daily docs
-      - task: Powershell@2
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
-          arguments: >-
-            -DocRepoLocation $(DocRepoLocation)
-            -TenantId '$(opensource-aad-tenant-id)'
-            -ClientId '$(opensource-aad-app-id)'
-            -ClientSecret '$(opensource-aad-secret)'
-            -ReadmeFolderRoot 'api/overview/azure'
-        displayName: Generate Service Level Readme for Daily docs
-      - task: Powershell@2
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Update-DocsMsToc.ps1
-          arguments: >-
-            -DocRepoLocation $(DocRepoLocation)
-            -OutputLocation $(DocRepoLocation)/docs-ref-toc/reference-unified.yml
-            -ReadmeFolderRoot "api/overview/azure"
-            -PackageSourceOverride $(PackageSourceOverride)
-        displayName: Generate ToC for Daily docs
+      # - pwsh: |
+      #     $publicFeedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"
+      #     Write-Host "##vso[task.setvariable variable=PackageSourceOverride]$publicFeedUrl"
+      #   displayName: Set package source variable
+      #   workingDirectory: $(DocRepoLocation)
 
-      - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
-        parameters:
-          BaseRepoBranch: $(DailyDocsBranchName)
-          BaseRepoOwner: $(DocRepoOwner)
-          CommitMsg: "Update targeting packages based on release metadata. (Daily docs)"
-          TargetRepoName: $(DocRepoName)
-          TargetRepoOwner: $(DocRepoOwner)
-          WorkingDirectory: $(DocRepoLocation)
-          ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
-          PushArgs: -f
+      # - task: Powershell@2
+      #   inputs:
+      #     pwsh: true
+      #     filePath: eng/common/scripts/Update-DocsMsPackages.ps1
+      #     # Use the dotnet public daily package preview feed as the source for
+      #     # updated packages.
+      #     arguments: >
+      #       -DocRepoLocation $(DocRepoLocation)
+      #       -PackageSourceOverride $(PackageSourceOverride)
+      #   displayName: Update Docs Onboarding for Daily docs
+      # - task: Powershell@2
+      #   inputs:
+      #     pwsh: true
+      #     filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
+      #     arguments: >-
+      #       -DocRepoLocation $(DocRepoLocation)
+      #       -TenantId '$(opensource-aad-tenant-id)'
+      #       -ClientId '$(opensource-aad-app-id)'
+      #       -ClientSecret '$(opensource-aad-secret)'
+      #       -ReadmeFolderRoot 'api/overview/azure'
+      #   displayName: Generate Service Level Readme for Daily docs
+      # - task: Powershell@2
+      #   inputs:
+      #     pwsh: true
+      #     filePath: eng/common/scripts/Update-DocsMsToc.ps1
+      #     arguments: >-
+      #       -DocRepoLocation $(DocRepoLocation)
+      #       -OutputLocation $(DocRepoLocation)/docs-ref-toc/reference-unified.yml
+      #       -ReadmeFolderRoot "api/overview/azure"
+      #       -PackageSourceOverride $(PackageSourceOverride)
+      #   displayName: Generate ToC for Daily docs
 
-      - task: PowerShell@2
-        displayName: Queue Docs CI build
-        inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Queue-Pipeline.ps1
-          arguments: >
-            -Organization "apidrop"
-            -Project "Content%20CI"
-            -DefinitionId 397
-            -Base64EncodedAuthToken "$(azuresdk-apidrop-devops-queue-build-pat)"
-            -BuildParametersJson (@{ params = (Get-Content ./eng/dailydocsconfig.json -Raw) -replace '%%DailyDocsBranchName%%', "$(DailyDocsBranchName)" } | ConvertTo-Json)
+      # - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+      #   parameters:
+      #     BaseRepoBranch: $(DailyDocsBranchName)
+      #     BaseRepoOwner: $(DocRepoOwner)
+      #     CommitMsg: "Update targeting packages based on release metadata. (Daily docs)"
+      #     TargetRepoName: $(DocRepoName)
+      #     TargetRepoOwner: $(DocRepoOwner)
+      #     WorkingDirectory: $(DocRepoLocation)
+      #     ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
+      #     PushArgs: -f
+
+      # - task: PowerShell@2
+      #   displayName: Queue Docs CI build
+      #   inputs:
+      #     pwsh: true
+      #     filePath: eng/common/scripts/Queue-Pipeline.ps1
+      #     arguments: >
+      #       -Organization "apidrop"
+      #       -Project "Content%20CI"
+      #       -DefinitionId 397
+      #       -Base64EncodedAuthToken "$(azuresdk-apidrop-devops-queue-build-pat)"
+      #       -BuildParametersJson (@{ params = (Get-Content ./eng/dailydocsconfig.json -Raw) -replace '%%DailyDocsBranchName%%', "$(DailyDocsBranchName)" } | ConvertTo-Json)
