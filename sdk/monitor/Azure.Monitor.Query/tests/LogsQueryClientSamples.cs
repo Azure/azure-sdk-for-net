@@ -387,7 +387,7 @@ namespace Azure.Monitor.Query.Tests
             #region Snippet:QueryResource
             var client = new LogsQueryClient(new DefaultAzureCredential());
 
-            var results = await client.QueryResourceAsync(TestEnvironment.StorageAccountId,
+            var results = await client.QueryResourceAsync(new ResourceIdentifier(TestEnvironment.StorageAccountId),
                 "search *",
                 new QueryTimeRange(TimeSpan.FromDays(5)));
 

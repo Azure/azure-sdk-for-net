@@ -18,7 +18,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private LogsTestData _logsTestData;
 
-        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
+        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -676,7 +676,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.True(response.Value.Single());
         }
 
-        [LiveOnly]
+        //[LiveOnly]
         [Test]
         public async Task CanQueryResource()
         {
@@ -760,7 +760,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.IsTrue(verifyColumn1 && verifyColumn2);
         }
 
-        [LiveOnly]
+        //[LiveOnly]
         [Test]
         public async Task CanQueryResourceCheckMultipleBackslash()
         {
