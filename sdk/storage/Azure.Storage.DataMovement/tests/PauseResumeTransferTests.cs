@@ -10,6 +10,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.DataMovement.Models;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Models.JobPlan;
 using Azure.Core;
 using System.Drawing;
@@ -174,6 +175,8 @@ namespace Azure.Storage.DataMovement.Tests
                 MaximumConcurrency = 4
             };
             TransferManager transferManager = new TransferManager(options);
+            SingleTransferOptions singleTransferOptions = new SingleTransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(singleTransferOptions);
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -183,15 +186,17 @@ namespace Azure.Storage.DataMovement.Tests
                 localDirectory: localDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB * 100);
+                size: Constants.MB * 100,
+                singleTransferOptions: singleTransferOptions);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
-            Assert.IsTrue(pauseSuccess);
+            failureTransferHolder.AssertFailureCheck();
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+            Assert.IsTrue(pauseSuccess);
 
             // Check if Job Plan File exists in checkpointer path.
             JobPartPlanFileName fileName = new JobPartPlanFileName(
@@ -219,6 +224,8 @@ namespace Azure.Storage.DataMovement.Tests
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
+            SingleTransferOptions singleTransferOptions = new SingleTransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(singleTransferOptions);
             TransferManager transferManager = new TransferManager(options);
 
             // Add long-running job to pause, if the job is not big enough
@@ -229,15 +236,17 @@ namespace Azure.Storage.DataMovement.Tests
                 localDirectory: localDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB * 100);
+                size: Constants.MB * 100,
+                singleTransferOptions: singleTransferOptions);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer, cancellationTokenSource.Token);
 
             // Assert
-            Assert.IsTrue(pauseSuccess);
+            failureTransferHolder.AssertFailureCheck();
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+            Assert.IsTrue(pauseSuccess);
 
             // Check if Job Plan File exists in checkpointer path.
             JobPartPlanFileName fileName = new JobPartPlanFileName(
@@ -247,7 +256,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [Test]
+        [RecordedTest]
         public void TryPauseTransferAsync_Error()
         {
             // Arrange
@@ -281,6 +290,8 @@ namespace Azure.Storage.DataMovement.Tests
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
+            SingleTransferOptions singleTransferOptions = new SingleTransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(singleTransferOptions);
             TransferManager transferManager = new TransferManager(options);
 
             // Add long-running job to pause, if the job is not big enough
@@ -291,15 +302,17 @@ namespace Azure.Storage.DataMovement.Tests
                 localDirectory: localDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB * 100);
+                size: Constants.MB * 100,
+                singleTransferOptions: singleTransferOptions);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer, cancellationTokenSource.Token);
 
             // Assert
-            Assert.IsTrue(pauseSuccess);
+            failureTransferHolder.AssertFailureCheck();
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+            Assert.IsTrue(pauseSuccess);
 
             CancellationTokenSource cancellationTokenSource2 = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             bool pauseFailure = await transferManager.TryPauseTransferAsync(transfer, cancellationTokenSource2.Token);
@@ -333,6 +346,8 @@ namespace Azure.Storage.DataMovement.Tests
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
+            SingleTransferOptions singleTransferOptions = new SingleTransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(singleTransferOptions);
             TransferManager transferManager = new TransferManager(options);
             long size = Constants.MB * 100;
 
@@ -350,31 +365,38 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransfer transfer = await CreateSingleLongTransferAsync(
                 manager: transferManager,
                 sourceResource: sourceResource,
-                destinationResource: destinationResource);
+                destinationResource: destinationResource,
+                size: Constants.MB * 100,
+                singleTransferOptions: singleTransferOptions);
 
             // Act - Pause Job
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert - Confirm we've paused
+            Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+            failureTransferHolder.AssertFailureCheck();
             Assert.IsTrue(pauseSuccess);
 
             // Act - Resume Job
-            SingleTransferOptions singleTransferOptions = new SingleTransferOptions()
+            SingleTransferOptions resumeOptions = new SingleTransferOptions()
             {
                 ResumeFromCheckpointId = transfer.Id
             };
+            FailureTransferHolder resumeFailureHolder = new FailureTransferHolder(resumeOptions);
             DataTransfer resumeTransfer = await CreateSingleLongTransferAsync(
                 manager: transferManager,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                singleTransferOptions: singleTransferOptions);
+                singleTransferOptions: resumeOptions,
+                size: Constants.MB * 4);
 
             CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
 
-            Assert.IsTrue(resumeTransfer.HasCompleted);
+            resumeFailureHolder.AssertFailureCheck();
             Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
+            Assert.IsTrue(resumeTransfer.HasCompleted);
         }
     }
 }
