@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Immutable;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
@@ -35,11 +37,23 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
             ResourceGroupResource resourceGroup = await ResourceGroups.GetAsync(resourceGroupName);
 
             // create key vault
-            KeyVaultCollection vaults = resourceGroup.GetKeyVaults();
-            var vaultProperties = new KeyVaultProperties(new Guid(TestEnvironment.TenantId), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
-            vaultProperties.AccessPolicies.Clear();
-            await vaults.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, new KeyVaultCreateOrUpdateContent(DefaultLocation, vaultProperties));
-            KeyVaultResource vault = await vaults.GetAsync(vaultName);
+            KeyVaultResource vault;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                var keyVaultId = KeyVaultResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroupName, vaultName);
+                vault = Client.GetKeyVaultResource(keyVaultId);
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    KeyVaultCollection vaults = resourceGroup.GetKeyVaults();
+                    var vaultProperties = new KeyVaultProperties(new Guid(TestEnvironment.TenantId), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+                    vaultProperties.AccessPolicies.Clear();
+                    await vaults.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, new KeyVaultCreateOrUpdateContent(DefaultLocation, vaultProperties));
+                    vault = await vaults.GetAsync(vaultName);
+                }
+            }
 
             // list linkers by key vault
             LinkerResourceCollection linkers = vault.GetLinkerResources();

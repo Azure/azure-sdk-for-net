@@ -44,11 +44,23 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
             WebSiteResource webapp = await webSites.GetAsync(webAppName);
 
             // create key vault
-            KeyVaultCollection vaults = resourceGroup.GetKeyVaults();
-            var vaultProperties = new KeyVaultProperties(new Guid(TestEnvironment.TenantId), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
-            vaultProperties.AccessPolicies.Clear();
-            await vaults.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, new KeyVaultCreateOrUpdateContent(DefaultLocation, vaultProperties));
-            KeyVaultResource vault = await vaults.GetAsync(vaultName);
+            KeyVaultResource vault;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                var keyVaultId = KeyVaultResource.CreateResourceIdentifier(resourceGroup.Id.SubscriptionId, resourceGroupName, vaultName);
+                vault = Client.GetKeyVaultResource(keyVaultId);
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    KeyVaultCollection vaults = resourceGroup.GetKeyVaults();
+                    var vaultProperties = new KeyVaultProperties(new Guid(TestEnvironment.TenantId), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+                    vaultProperties.AccessPolicies.Clear();
+                    await vaults.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, new KeyVaultCreateOrUpdateContent(DefaultLocation, vaultProperties));
+                    vault = await vaults.GetAsync(vaultName);
+                }
+            }
 
             // create service linker
             LinkerResourceCollection linkers = webapp.GetLinkerResources();
