@@ -598,5 +598,24 @@ namespace Azure.ResourceManager.KeyVault
             );
         }
         #endregion
+
+        #region SecretResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SecretResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecretResource.CreateResourceIdentifier" /> to create a <see cref="SecretResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecretResource" /> object. </returns>
+        public static SecretResource GetSecretResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SecretResource.ValidateResourceId(id);
+                return new SecretResource(client, id);
+            }
+            );
+        }
+        #endregion
     }
 }

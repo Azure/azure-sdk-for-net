@@ -146,6 +146,59 @@ namespace Azure.ResourceManager.KeyVault
             return GetKeyVaultPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of SecretResources in the KeyVault. </summary>
+        /// <returns> An object representing collection of SecretResources and their operations over a SecretResource. </returns>
+        public virtual SecretCollection GetSecrets()
+        {
+            return GetCachedClient(Client => new SecretCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified secret.  NOTE: This API is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Secrets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="secretName"> The name of the secret. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecretResource>> GetSecretAsync(string secretName, CancellationToken cancellationToken = default)
+        {
+            return await GetSecrets().GetAsync(secretName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified secret.  NOTE: This API is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Secrets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="secretName"> The name of the secret. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecretResource> GetSecret(string secretName, CancellationToken cancellationToken = default)
+        {
+            return GetSecrets().Get(secretName, cancellationToken);
+        }
+
         /// <summary>
         /// Gets the specified Azure key vault.
         /// <list type="bullet">

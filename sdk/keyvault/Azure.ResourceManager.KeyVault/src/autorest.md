@@ -8,7 +8,7 @@ generate-model-factory: false
 csharp: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
-tag: package-2021-10
+tag: package-2023-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -157,4 +157,21 @@ input-file:
     - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/keyvault.json
     - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/managedHsm.json
     - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/providers.json
+```
+
+### Tag: package-2023-02
+
+These settings apply only when `--tag=package-2023-02` is specified on the command line.
+
+```yaml $(tag) == 'package-2023-02'
+input-file:
+    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/common.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/keyvault.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/managedHsm.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/providers.json
+    # - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/common.json
+    # - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/keyvault.json
+    # - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/managedHsm.json
+    # - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/providers.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/33f06ff82a4c751bcbc842b7ed4da2e81b0717b6/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/secrets.json
 ```
