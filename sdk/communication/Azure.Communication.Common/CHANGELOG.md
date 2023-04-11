@@ -1,16 +1,22 @@
 # Release History
 
-## 2.0.0-beta.1 (Unreleased)
+## 2.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 2.0.0-beta.1 (2023-03-29)
 
 ### Features Added
 - Added support for a new communication identifier `MicrosoftBotIdentifier`.
 - 
 ### Breaking Changes
 - Introduction of `MicrosoftBotIdentifier` is a breaking change. It will affect code that relied on using `UnknownIdentifier` with a rawID starting with `28:`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.1 (2022-11-01)
 

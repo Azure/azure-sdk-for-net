@@ -19,19 +19,19 @@ namespace Azure.Core.Pipeline
         private readonly int _maxRetries;
 
         /// <summary>
-        ///
+        /// Gets the delay to use for computing the interval between retry attempts.
         /// </summary>
-        protected Delay Delay { get; }
+        private readonly DelayStrategy _delayStrategy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
         /// </summary>
-        /// <param name="maxRetries"></param>
-        /// <param name="delay">The delay strategy to use</param>
-        public RetryPolicy(int maxRetries = 3, Delay? delay = default)
+        /// <param name="maxRetries">The maximum number of retries to attempt.</param>
+        /// <param name="delayStrategy">The delay to use for computing the interval between retry attempts.</param>
+        public RetryPolicy(int maxRetries = 3, DelayStrategy? delayStrategy = default)
         {
             _maxRetries = maxRetries;
-            Delay = delay ?? Delay.CreateExponentialDelay();
+            _delayStrategy = delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
         }
 
         /// <summary>
@@ -121,7 +121,8 @@ namespace Azure.Core.Pipeline
 
                 if (shouldRetry)
                 {
-                    TimeSpan delay = async ? await GetNextDelayAsync(message).ConfigureAwait(false) : GetNextDelay(message);
+                    var retryAfter = message.HasResponse ? message.Response.Headers.RetryAfter : default;
+                    TimeSpan delay = async ? await GetNextDelayAsync(message, retryAfter).ConfigureAwait(false) : GetNextDelay(message, retryAfter);
                     if (delay > TimeSpan.Zero)
                     {
                         if (async)
@@ -215,15 +216,17 @@ namespace Azure.Core.Pipeline
         /// This method can be overriden to control how long to delay before retrying. This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
+        /// <param name="retryAfter">The Retry-After header value, if any, returned from the service.</param>
         /// <returns>The amount of time to delay before retrying.</returns>
-        protected virtual TimeSpan GetNextDelay(HttpMessage message) => GetNextDelayInternal(message);
+        internal TimeSpan GetNextDelay(HttpMessage message, TimeSpan? retryAfter) => GetNextDelayInternal(message);
 
         /// <summary>
         /// This method can be overriden to control how long to delay before retrying. This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
+        /// <param name="retryAfter">The Retry-After header value, if any, returned from the service.</param>
         /// <returns>The amount of time to delay before retrying.</returns>
-        protected virtual ValueTask<TimeSpan> GetNextDelayAsync(HttpMessage message) => new(GetNextDelayInternal(message));
+        internal ValueTask<TimeSpan> GetNextDelayAsync(HttpMessage message, TimeSpan? retryAfter) => new(GetNextDelayInternal(message));
 
         /// <summary>
         /// This method can be overridden to introduce logic before each request attempt is sent. This will run even for the first attempt.
@@ -259,7 +262,7 @@ namespace Azure.Core.Pipeline
 
         private TimeSpan GetNextDelayInternal(HttpMessage message)
         {
-            return Delay.GetNextDelay(
+            return _delayStrategy.GetNextDelay(
                 message.HasResponse ? message.Response : default,
                 message.RetryNumber);
         }

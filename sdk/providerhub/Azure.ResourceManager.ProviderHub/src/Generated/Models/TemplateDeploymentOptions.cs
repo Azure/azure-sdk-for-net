@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of TemplateDeploymentOptions. </summary>
-        /// <param name="preflightSupported"></param>
+        /// <param name="isPreflightSupported"></param>
         /// <param name="preflightOptions"></param>
-        internal TemplateDeploymentOptions(bool? preflightSupported, IList<PreflightOption> preflightOptions)
+        internal TemplateDeploymentOptions(bool? isPreflightSupported, IList<PreflightOption> preflightOptions)
         {
-            PreflightSupported = preflightSupported;
+            IsPreflightSupported = isPreflightSupported;
             PreflightOptions = preflightOptions;
         }
 
-        /// <summary> Gets or sets the preflight supported. </summary>
-        public bool? PreflightSupported { get; set; }
+        /// <summary> Gets or sets the is preflight supported. </summary>
+        public bool? IsPreflightSupported { get; set; }
         /// <summary> Gets the preflight options. </summary>
         public IList<PreflightOption> PreflightOptions { get; }
     }

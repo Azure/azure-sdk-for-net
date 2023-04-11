@@ -9,11 +9,11 @@ using System.Linq;
 namespace Azure.Core
 {
     /// <summary>
-    /// Implementation of a <see cref="DelayStrategy"/>. Polling interval changes according to
+    /// Implementation of a <see cref="DelayStrategyInternal"/>. Polling interval changes according to
     /// the sequence {1, 1, 1, 2, 4, ...32}.
     /// </summary>
     /// <remarks>Polling interval always follows the given sequence.</remarks>
-    internal class ExponentialDelayStrategy : DelayStrategy
+    internal class ExponentialDelayStrategy : DelayStrategyInternal
     {
         private static readonly TimeSpan[] _pollingSequence = new TimeSpan[]
         {

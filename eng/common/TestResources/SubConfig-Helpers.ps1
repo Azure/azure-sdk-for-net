@@ -23,6 +23,12 @@ function GetBaseAndResourceGroupNames(
     [string]$serviceDirectoryName,
     [bool]$CI
 ) {
+    if ($baseNameDefault) {
+        $base = $baseNameDefault.ToLowerInvariant()
+        $group = $resourceGroupNameDefault ? $resourceGroupNameDefault : ("rg-$baseNameDefault".ToLowerInvariant())
+        return $base, $group
+    }
+
     if ($CI) {
         $base = 't' + (New-Guid).ToString('n').Substring(0, 16)
         # Format the resource group name based on resource group naming recommendations and limitations.
@@ -34,12 +40,6 @@ function GetBaseAndResourceGroupNames(
 
         Log "Generated resource base name '$base' and resource group name '$group' for CI build"
 
-        return $base, $group
-    }
-
-    if ($baseNameDefault) {
-        $base = $baseNameDefault.ToLowerInvariant()
-        $group = $resourceGroupNameDefault ? $resourceGroupNameDefault : ("rg-$baseNameDefault".ToLowerInvariant())
         return $base, $group
     }
 

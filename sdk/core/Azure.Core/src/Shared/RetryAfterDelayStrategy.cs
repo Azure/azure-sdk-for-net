@@ -8,23 +8,23 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// Implementation of a <see cref="DelayStrategy"/> of which the interval is from
+    /// Implementation of a <see cref="DelayStrategyInternal"/> of which the interval is from
     /// retry-after header of service response.
     /// </summary>
-    internal class RetryAfterDelayStrategy : DelayStrategy
+    internal class RetryAfterDelayStrategy : DelayStrategyInternal
     {
         protected const string RetryAfterHeaderName = "Retry-After";
         protected const string RetryAfterMsHeaderName = "retry-after-ms";
         protected const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
 
-        private DelayStrategy _fallbackStrategy;
+        private DelayStrategyInternal _fallbackStrategy;
 
         /// <summary>
         /// Create a <see cref="RetryAfterDelayStrategy"/> with a default retry-after value which normally
         /// comes from the initial response of an LRO operation.
         /// </summary>
         /// <param name="fallbackStrategy"> Fallback strategy if retry after is not present. </param>
-        public RetryAfterDelayStrategy(DelayStrategy? fallbackStrategy = null)
+        public RetryAfterDelayStrategy(DelayStrategyInternal? fallbackStrategy = null)
         {
             _fallbackStrategy = fallbackStrategy ?? new ConstantDelayStrategy();
         }

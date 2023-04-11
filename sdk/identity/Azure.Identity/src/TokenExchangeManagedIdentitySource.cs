@@ -29,7 +29,7 @@ namespace Azure.Identity
             string tenantId = EnvironmentVariables.TenantId;
             string clientId = options.ClientId ?? EnvironmentVariables.ClientId;
 
-            if (string.IsNullOrEmpty(tokenFilePath) || string.IsNullOrEmpty(tenantId) || string.IsNullOrEmpty(clientId))
+            if (options.ExcludeTokenExchangeManagedIdentitySource || string.IsNullOrEmpty(tokenFilePath) || string.IsNullOrEmpty(tenantId) || string.IsNullOrEmpty(clientId))
             {
                 return default;
             }

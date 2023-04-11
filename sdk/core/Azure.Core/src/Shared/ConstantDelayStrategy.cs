@@ -8,10 +8,10 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// Implementation of a <see cref="DelayStrategy"/> with constant polling interval.
+    /// Implementation of a <see cref="DelayStrategyInternal"/> with constant polling interval.
     /// </summary>
     /// <remarks>Polling interval is always equal to the given polling interval.</remarks>
-    internal class ConstantDelayStrategy : DelayStrategy
+    internal class ConstantDelayStrategy : DelayStrategyInternal
     {
         internal static readonly TimeSpan DefaultPollingInterval = TimeSpan.FromSeconds(1);
 

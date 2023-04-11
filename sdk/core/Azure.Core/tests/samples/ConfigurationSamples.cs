@@ -105,10 +105,10 @@ namespace Azure.Core.Samples
         {
             #region Snippet:SetGlobalTimeoutRetryPolicy
 
-            var delay = Delay.CreateFixedDelay(TimeSpan.FromSeconds(2));
+            var delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromSeconds(2));
             SecretClientOptions options = new SecretClientOptions()
             {
-                RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delay: delay, timeout: TimeSpan.FromSeconds(30))
+                RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delayStrategy: delay, timeout: TimeSpan.FromSeconds(30))
             };
             #endregion
         }
@@ -119,12 +119,12 @@ namespace Azure.Core.Samples
             #region Snippet:CustomizeExponentialDelay
             SecretClientOptions options = new SecretClientOptions()
             {
-                RetryPolicy = new RetryPolicy(delay: new MyCustomDelay())
+                RetryPolicy = new RetryPolicy(delayStrategy: new MyCustomDelayStrategy())
             };
             #endregion
         }
 
-        private class MyCustomDelay : Delay
+        private class MyCustomDelayStrategy : DelayStrategy
         {
             protected override TimeSpan GetNextDelayCore(Response response, int retryNumber)
             {

@@ -139,10 +139,8 @@ namespace Azure
         public override string? ToString() { throw null; }
         public abstract Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public virtual Azure.Response WaitForCompletionResponse(Azure.Core.Delay delay, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response WaitForCompletionResponse(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response WaitForCompletionResponse(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(Azure.Core.Delay delay, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -151,10 +149,8 @@ namespace Azure
         protected Operation() { }
         public abstract bool HasValue { get; }
         public abstract T Value { get; }
-        public virtual Azure.Response<T> WaitForCompletion(Azure.Core.Delay delayStrategy, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<T> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<T> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(Azure.Core.Delay delay, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask<Azure.Response<T>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -402,17 +398,15 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class Delay
+    public abstract partial class DelayStrategy
     {
-        protected Delay(System.TimeSpan? maxDelay = default(System.TimeSpan?), double jitterFactor = 0.2) { }
-        public static Azure.Core.Delay CreateExponentialDelay(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { throw null; }
-        public static Azure.Core.Delay CreateFixedDelay(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
-        public System.TimeSpan GetNextDelay(Azure.Response? response, int retryNumber, System.TimeSpan? serverDelayHint) { throw null; }
-        public System.Threading.Tasks.ValueTask<System.TimeSpan> GetNextDelayAsync(Azure.Response? response, int retryNumber, System.TimeSpan? serverDelayHint) { throw null; }
+        protected DelayStrategy(System.TimeSpan? maxDelay = default(System.TimeSpan?), double jitterFactor = 0.2) { }
+        public static Azure.Core.DelayStrategy CreateExponentialDelayStrategy(System.TimeSpan? initialDelay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Core.DelayStrategy CreateFixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { throw null; }
+        public System.TimeSpan GetNextDelay(Azure.Response? response, int retryNumber) { throw null; }
         protected abstract System.TimeSpan GetNextDelayCore(Azure.Response? response, int retryNumber);
-        protected abstract System.Threading.Tasks.ValueTask<System.TimeSpan> GetNextDelayCoreAsync(Azure.Response? response, int retryNumber);
-        protected static System.TimeSpan Max(System.TimeSpan t1, System.TimeSpan t2) { throw null; }
-        protected static System.TimeSpan Min(System.TimeSpan t1, System.TimeSpan t2) { throw null; }
+        protected static System.TimeSpan Max(System.TimeSpan val1, System.TimeSpan val2) { throw null; }
+        protected static System.TimeSpan Min(System.TimeSpan val1, System.TimeSpan val2) { throw null; }
     }
     public static partial class DelegatedTokenCredential
     {
@@ -687,7 +681,6 @@ namespace Azure.Core
         public System.DateTimeOffset? Date { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public string? RequestId { get { throw null; } }
-        public System.TimeSpan? RetryAfter { get { throw null; } }
         public bool Contains(string name) { throw null; }
         public System.Collections.Generic.IEnumerator<Azure.Core.HttpHeader> GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -1042,10 +1035,7 @@ namespace Azure.Core.Pipeline
     }
     public partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
-        public RetryPolicy(int maxRetries = 3, Azure.Core.Delay? delay = null) { }
-        protected Azure.Core.Delay Delay { get { throw null; } }
-        protected virtual System.TimeSpan GetNextDelay(Azure.Core.HttpMessage message) { throw null; }
-        protected virtual System.Threading.Tasks.ValueTask<System.TimeSpan> GetNextDelayAsync(Azure.Core.HttpMessage message) { throw null; }
+        public RetryPolicy(int maxRetries = 3, Azure.Core.DelayStrategy? delayStrategy = null) { }
         protected internal virtual void OnRequestSent(Azure.Core.HttpMessage message) { }
         protected internal virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(Azure.Core.HttpMessage message) { throw null; }
         protected internal virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }
