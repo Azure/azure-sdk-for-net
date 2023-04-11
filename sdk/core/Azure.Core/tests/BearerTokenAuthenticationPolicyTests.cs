@@ -817,20 +817,25 @@ namespace Azure.Core.Tests
 
             var transport = CreateMockTransport(responses);
 
-            var credential = new TokenCredentialStub((r, c) => new(Guid.NewGuid().ToString(), DateTimeOffset.Now.AddHours(2)), IsAsync);
-            var policy = new ChallengeBasedAuthenticationPolicy(credential, "scope");
+            string tenantId = null;
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                tenantId = r.TenantId;
+                return new(Guid.NewGuid().ToString(), DateTimeOffset.Now.AddHours(2));
+            }, IsAsync);
+            var policy = new ChallengeBasedAuthenticationTestPolicy(credential, "scope");
 
             await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
-            Assert.AreEqual("de763a21-49f7-4b08-a8e1-52c8fbc103b4", policy.TenantId);
+            Assert.AreEqual("de763a21-49f7-4b08-a8e1-52c8fbc103b4", tenantId);
 
             await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
-            Assert.AreEqual("de763a21-49f7-4b08-a8e1-52c8fbc103b4", policy.TenantId);
+            Assert.AreEqual("de763a21-49f7-4b08-a8e1-52c8fbc103b4", tenantId);
 
             await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
-            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", policy.TenantId);
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", tenantId);
         }
 
-        private class ChallengeBasedAuthenticationPolicy : BearerTokenAuthenticationPolicy
+        private class ChallengeBasedAuthenticationTestPolicy : BearerTokenAuthenticationPolicy
         {
             public string TenantId { get; private set; }
 
@@ -841,7 +846,7 @@ namespace Azure.Core.Tests
                     "72f988bf-86f1-41af-91ab-2d7cd011db47",
                 });
 
-            public ChallengeBasedAuthenticationPolicy(TokenCredential credential, string scope) : base(credential, scope)
+            public ChallengeBasedAuthenticationTestPolicy(TokenCredential credential, string scope) : base(credential, scope)
             {
             }
 
