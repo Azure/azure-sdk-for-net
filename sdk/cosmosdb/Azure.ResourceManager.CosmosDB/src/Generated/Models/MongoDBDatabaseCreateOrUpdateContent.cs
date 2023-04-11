@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The standard JSON format of a MongoDB database. </summary>
         public MongoDBDatabaseResourceInfo Resource { get; set; }
-
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
         public CosmosDBCreateUpdateConfig Options { get; set; }
         /// <summary> Identity for the resource. </summary>

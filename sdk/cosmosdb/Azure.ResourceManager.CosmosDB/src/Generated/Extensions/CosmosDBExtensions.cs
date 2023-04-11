@@ -632,25 +632,6 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
-        #region CosmosDBSqlContainerResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CosmosDBSqlContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosDBSqlContainerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBSqlContainerResource" /> object. </returns>
-        public static CosmosDBSqlContainerResource GetCosmosDBSqlContainerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlContainerResource.ValidateResourceId(id);
-                return new CosmosDBSqlContainerResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region CosmosDBSqlClientEncryptionKeyResource
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBSqlClientEncryptionKeyResource" /> along with the instance operations that can be performed on it but with no data.
@@ -665,6 +646,25 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 CosmosDBSqlClientEncryptionKeyResource.ValidateResourceId(id);
                 return new CosmosDBSqlClientEncryptionKeyResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region CosmosDBSqlContainerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CosmosDBSqlContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlContainerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CosmosDBSqlContainerResource" /> object. </returns>
+        public static CosmosDBSqlContainerResource GetCosmosDBSqlContainerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CosmosDBSqlContainerResource.ValidateResourceId(id);
+                return new CosmosDBSqlContainerResource(client, id);
             }
             );
         }

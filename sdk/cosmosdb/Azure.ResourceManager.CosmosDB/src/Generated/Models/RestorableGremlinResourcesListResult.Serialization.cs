@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    
                     List<RestorableGremlinResourceData> array = new List<RestorableGremlinResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
