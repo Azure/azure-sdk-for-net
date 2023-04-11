@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.Core.Tests.TestClients
 {
-    internal class MockDelayStrategy : DelayStrategy
+    internal class MockDelayStrategy : DelayStrategyInternal
     {
         public int CallCount { get; private set; }
 

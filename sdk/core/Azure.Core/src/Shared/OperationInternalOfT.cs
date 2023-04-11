@@ -98,7 +98,7 @@ namespace Azure.Core
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null)
+            DelayStrategyInternal? fallbackStrategy = null)
             : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
             _operation = operation;
@@ -160,7 +160,7 @@ namespace Azure.Core
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes.
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategy"/>
+        /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategyInternal"/>
         /// is then used as the wait interval.
         /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms",
         /// <example>Usage example:
@@ -200,7 +200,7 @@ namespace Azure.Core
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatus(CancellationToken)"/> until the long-running operation completes.
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategy"/>
+        /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategyInternal"/>
         /// is then use as the wait interval.
         /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms",
         /// <example>Usage example:

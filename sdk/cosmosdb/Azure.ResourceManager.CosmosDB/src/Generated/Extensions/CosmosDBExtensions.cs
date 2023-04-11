@@ -613,6 +613,25 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
+        #region CosmosDBSqlClientEncryptionKeyResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CosmosDBSqlClientEncryptionKeyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBSqlClientEncryptionKeyResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlClientEncryptionKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CosmosDBSqlClientEncryptionKeyResource" /> object. </returns>
+        public static CosmosDBSqlClientEncryptionKeyResource GetCosmosDBSqlClientEncryptionKeyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CosmosDBSqlClientEncryptionKeyResource.ValidateResourceId(id);
+                return new CosmosDBSqlClientEncryptionKeyResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region CosmosDBSqlStoredProcedureResource
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBSqlStoredProcedureResource" /> along with the instance operations that can be performed on it but with no data.

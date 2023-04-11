@@ -257,6 +257,30 @@ namespace Azure.Storage
             };
         }
 
+        public delegate int GetFinalStreamHash(Span<byte> destination);
+
+        public static (Stream Stream, GetFinalStreamHash GetCurrentStreamHash, int HashSize, IDisposable Disposable) SetupChecksumCalculatingReadStream(
+            Stream stream, StorageChecksumAlgorithm algorithmIdentifier)
+        {
+            IHasher hasher = GetHasher(algorithmIdentifier);
+            return (
+                ChecksumCalculatingStream.GetReadStream(stream, hasher.AppendHash),
+                hasher.GetFinalHash,
+                hasher.HashSize,
+                hasher
+            );
+        }
+
+        private static IHasher GetHasher(StorageChecksumAlgorithm algorithmIdentifier)
+            => algorithmIdentifier.ResolveAuto() switch
+            {
+                StorageChecksumAlgorithm.StorageCrc64 => new NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm.Create()),
+#pragma warning disable CA5351 // Do Not Use Broken Cryptographic Algorithms; MD5 being used for content integrity check, not encryption
+                StorageChecksumAlgorithm.MD5 => new HashAlgorithmHasher(MD5.Create()),
+#pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
+                _ => throw Errors.InvalidArgument(nameof(algorithmIdentifier))
+            };
+
         /// <summary>
         /// Compute hash on a stream and reset stream to original position.
         /// </summary>

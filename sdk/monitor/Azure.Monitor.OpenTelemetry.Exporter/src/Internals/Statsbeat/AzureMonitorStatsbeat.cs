@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             s_operatingSystem = platform.GetOSPlatformName();
 
-            _statsbeat_ConnectionString = GetStatsbeatConnectionString(connectionStringVars?.IngestionEndpoint);
+            _statsbeat_ConnectionString = GetStatsbeatConnectionString(connectionStringVars.IngestionEndpoint);
 
             // Initialize only if we are able to determine the correct region to send the data to.
             if (_statsbeat_ConnectionString == null)
@@ -75,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 .Build();
         }
 
-        internal static string? GetStatsbeatConnectionString(string? ingestionEndpoint)
+        internal static string? GetStatsbeatConnectionString(string ingestionEndpoint)
         {
             var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
             string? statsbeatConnectionString = null;

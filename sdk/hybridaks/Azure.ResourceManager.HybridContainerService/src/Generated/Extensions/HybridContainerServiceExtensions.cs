@@ -70,48 +70,6 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Lists the Hybrid AKS virtual networks by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>virtualNetworks_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetHybridContainerServiceVirtualNetworksAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the Hybrid AKS virtual networks by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>virtualNetworks_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetHybridContainerServiceVirtualNetworks(cancellationToken);
-        }
-
-        /// <summary>
         /// List the Hybrid AKS storage object by subscription
         /// <list type="bullet">
         /// <item>
@@ -153,6 +111,48 @@ namespace Azure.ResourceManager.HybridContainerService
             return GetExtensionClient(subscriptionResource).GetStorageSpaces(cancellationToken);
         }
 
+        /// <summary>
+        /// Lists the Hybrid AKS virtual networks by subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>virtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetHybridContainerServiceVirtualNetworksAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the Hybrid AKS virtual networks by subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>virtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetHybridContainerServiceVirtualNetworks(cancellationToken);
+        }
+
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
             return resourceGroupResource.GetCachedClient((client) =>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{provisionedClustersName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -184,14 +184,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
+        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="provisionedClustersName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="provisionedClustersName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ProvisionedClusterResource>> GetProvisionedClusterAsync(this ResourceGroupResource resourceGroupResource, string provisionedClustersName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ProvisionedClusterResource>> GetProvisionedClusterAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetProvisionedClusters().GetAsync(provisionedClustersName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetProvisionedClusters().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{provisionedClustersName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -208,70 +208,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="provisionedClustersName"> Parameter for the name of the provisioned cluster. </param>
+        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="provisionedClustersName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="provisionedClustersName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ProvisionedClusterResource> GetProvisionedCluster(this ResourceGroupResource resourceGroupResource, string provisionedClustersName, CancellationToken cancellationToken = default)
+        public static Response<ProvisionedClusterResource> GetProvisionedCluster(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetProvisionedClusters().Get(provisionedClustersName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of HybridContainerServiceVirtualNetworkResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of HybridContainerServiceVirtualNetworkResources and their operations over a HybridContainerServiceVirtualNetworkResource. </returns>
-        public static HybridContainerServiceVirtualNetworkCollection GetHybridContainerServiceVirtualNetworks(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetHybridContainerServiceVirtualNetworks();
-        }
-
-        /// <summary>
-        /// Gets the Hybrid AKS virtual network
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworksName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>virtualNetworks_Retrieve</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworksName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworksName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<HybridContainerServiceVirtualNetworkResource>> GetHybridContainerServiceVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworksName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetHybridContainerServiceVirtualNetworks().GetAsync(virtualNetworksName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the Hybrid AKS virtual network
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworksName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>virtualNetworks_Retrieve</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworksName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworksName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworksName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetHybridContainerServiceVirtualNetworks().Get(virtualNetworksName, cancellationToken);
+            return resourceGroupResource.GetProvisionedClusters().Get(resourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of StorageSpaceResources in the ResourceGroupResource. </summary>
@@ -330,6 +274,62 @@ namespace Azure.ResourceManager.HybridContainerService
             return resourceGroupResource.GetStorageSpaces().Get(storageSpacesName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of HybridContainerServiceVirtualNetworkResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of HybridContainerServiceVirtualNetworkResources and their operations over a HybridContainerServiceVirtualNetworkResource. </returns>
+        public static HybridContainerServiceVirtualNetworkCollection GetHybridContainerServiceVirtualNetworks(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetExtensionClient(resourceGroupResource).GetHybridContainerServiceVirtualNetworks();
+        }
+
+        /// <summary>
+        /// Gets the Hybrid AKS virtual network
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworksName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>virtualNetworks_Retrieve</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworksName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworksName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HybridContainerServiceVirtualNetworkResource>> GetHybridContainerServiceVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworksName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetHybridContainerServiceVirtualNetworks().GetAsync(virtualNetworksName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the Hybrid AKS virtual network
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworksName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>virtualNetworks_Retrieve</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworksName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworksName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworksName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetHybridContainerServiceVirtualNetworks().Get(virtualNetworksName, cancellationToken);
+        }
+
         #region ProvisionedClusterResource
         /// <summary>
         /// Gets an object representing a <see cref="ProvisionedClusterResource" /> along with the instance operations that can be performed on it but with no data.
@@ -344,6 +344,25 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 ProvisionedClusterResource.ValidateResourceId(id);
                 return new ProvisionedClusterResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ProvisionedClusterUpgradeProfileResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ProvisionedClusterUpgradeProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProvisionedClusterUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedClusterUpgradeProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource" /> object. </returns>
+        public static ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfileResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ProvisionedClusterUpgradeProfileResource.ValidateResourceId(id);
+                return new ProvisionedClusterUpgradeProfileResource(client, id);
             }
             );
         }
@@ -387,25 +406,6 @@ namespace Azure.ResourceManager.HybridContainerService
         }
         #endregion
 
-        #region HybridContainerServiceVirtualNetworkResource
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridContainerServiceVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridContainerServiceVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridContainerServiceVirtualNetworkResource" /> object. </returns>
-        public static HybridContainerServiceVirtualNetworkResource GetHybridContainerServiceVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                HybridContainerServiceVirtualNetworkResource.ValidateResourceId(id);
-                return new HybridContainerServiceVirtualNetworkResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region StorageSpaceResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageSpaceResource" /> along with the instance operations that can be performed on it but with no data.
@@ -420,6 +420,25 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 StorageSpaceResource.ValidateResourceId(id);
                 return new StorageSpaceResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region HybridContainerServiceVirtualNetworkResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HybridContainerServiceVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridContainerServiceVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HybridContainerServiceVirtualNetworkResource" /> object. </returns>
+        public static HybridContainerServiceVirtualNetworkResource GetHybridContainerServiceVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HybridContainerServiceVirtualNetworkResource.ValidateResourceId(id);
+                return new HybridContainerServiceVirtualNetworkResource(client, id);
             }
             );
         }

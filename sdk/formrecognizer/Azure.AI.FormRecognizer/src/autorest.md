@@ -19,6 +19,7 @@ These settings apply only when `--tag=release_2_1` is specified on the command l
 require:
   - https://github.com/Azure/azure-rest-api-specs/blob/64484dc8760571a2de7f5cfbc96861e4a0985a54/specification/cognitiveservices/data-plane/FormRecognizer/readme.md
 
+generate-model-factory: false
 generation1-convenience-client: true
 
 directive:
@@ -105,6 +106,7 @@ These settings apply only when `--tag=2023-02-28-preview` is specified on the co
 require:
   - https://github.com/Azure/azure-rest-api-specs/blob/543f1920ac96303cc244d60e1c12f0b56fc646db/specification/cognitiveservices/data-plane/FormRecognizer/readme.md
 
+generate-model-factory: false
 generation1-convenience-client: true
 suppress-abstract-base-class: OperationDetails
 

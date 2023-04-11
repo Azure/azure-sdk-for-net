@@ -64,7 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 if (!string.IsNullOrWhiteSpace(connectionString))
                 {
-                    return ConnectionStringParser.GetValues(connectionString);
+                    return ConnectionStringParser.GetValues(connectionString!);
                 }
             }
             else

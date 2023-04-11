@@ -11,10 +11,10 @@ using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddOpenTelemetry().WithAzureMonitor();
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
 
 /*
-builder.Services.AddOpenTelemetry().WithAzureMonitor(o =>
+builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
 {
     o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-00000000CODE";
     // Set the Credential property to enable AAD based authentication:
