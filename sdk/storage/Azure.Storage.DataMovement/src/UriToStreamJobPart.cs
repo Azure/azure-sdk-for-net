@@ -145,11 +145,6 @@ namespace Azure.Storage.DataMovement
                     await LengthKnownDownloadInternal().ConfigureAwait(false);
                 }
             }
-            catch (OperationCanceledException)
-            {
-                // Job was cancelled
-                await OnTransferStatusChanged(StorageTransferStatus.None).ConfigureAwait(false);
-            }
             catch (Exception ex)
             {
                 // The file either does not exist any more, got moved, or renamed.
@@ -342,11 +337,6 @@ namespace Azure.Storage.DataMovement
                     false,
                     _cancellationToken)).ConfigureAwait(false);
             }
-            catch (OperationCanceledException)
-            {
-                // Job was cancelled
-                await OnTransferStatusChanged(StorageTransferStatus.None).ConfigureAwait(false);
-            }
             catch (Exception ex)
             {
                 // Unexpected exception
@@ -382,11 +372,6 @@ namespace Azure.Storage.DataMovement
                 // Skip file that already exsits on the destination.
                 await InvokeSkippedArg().ConfigureAwait(false);
             }
-            catch (OperationCanceledException)
-            {
-                // Job was cancelled
-                await OnTransferStatusChanged(StorageTransferStatus.None).ConfigureAwait(false);
-            }
             catch (Exception ex)
             {
                 await InvokeFailedArg(ex).ConfigureAwait(false);
@@ -409,11 +394,6 @@ namespace Azure.Storage.DataMovement
                         .ConfigureAwait(false);
                 }
             }
-            catch (OperationCanceledException)
-            {
-                // Job was cancelled
-                await OnTransferStatusChanged(StorageTransferStatus.None).ConfigureAwait(false);
-            }
             catch (Exception ex)
             {
                 await InvokeFailedArg(ex).ConfigureAwait(false);
@@ -429,11 +409,6 @@ namespace Azure.Storage.DataMovement
             try
             {
                 await _destinationResource.CompleteTransferAsync(_cancellationToken).ConfigureAwait(false);
-            }
-            catch (OperationCanceledException)
-            {
-                // Job was cancelled
-                await OnTransferStatusChanged(StorageTransferStatus.None).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
