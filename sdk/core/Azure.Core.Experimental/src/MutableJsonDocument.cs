@@ -56,9 +56,15 @@ namespace Azure.Core.Json
                 throw new ArgumentOutOfRangeException(nameof(format));
             }
 
+            if (!Changes.HasChanges)
+            {
+                Write(stream, _original.Span);
+                stream.Flush();
+                return;
+            }
+
             Utf8JsonWriter writer = new(stream);
-            WriteTo(writer);
-            writer.Flush();
+            RootElement.WriteTo(writer);
         }
 
         internal void WriteTo(Utf8JsonWriter writer)
@@ -70,6 +76,20 @@ namespace Azure.Core.Json
             }
 
             RootElement.WriteTo(writer);
+        }
+
+        private static void Write(Stream stream, ReadOnlySpan<byte> buffer)
+        {
+            byte[] sharedBuffer = ArrayPool<byte>.Shared.Rent(buffer.Length);
+            try
+            {
+                buffer.CopyTo(sharedBuffer);
+                stream.Write(sharedBuffer, 0, buffer.Length);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(sharedBuffer);
+            }
         }
 
         /// <summary>
