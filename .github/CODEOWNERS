@@ -488,7 +488,7 @@
 /sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit
 
 # PRLabel: %Monitor - Query
-/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit 
+/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit
 /sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit
 
 # PRLabel: %Monitor - ApplicationInsights
@@ -503,11 +503,11 @@
 
 # PRLabel: %Monitor - Exporter
 # ServiceLabel: %Monitor - Exporter %Service Attention
-/sdk/monitor/Azure.Monitor.OpenTelemetry.*/                        @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
 # PRLabel: %Monitor - Distro
 # ServiceLabel: %Monitor - Distro %Service Attention
-/sdk/monitor/Azure.Monitor.OpenTelemetry/     @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
 # ServiceLabel: %Monitor - Metrics %Service Attention
 #/<NotInRepo>/                                                     @AzMonEssential
