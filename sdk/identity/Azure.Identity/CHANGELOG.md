@@ -1,6 +1,6 @@
 # Release History
 
-## 1.9.0-beta.3 (2023-04-11)
+## 1.9.0-beta.3 (2023-04-12)
 
 ### Breaking Changes
 - Renamed the developer credential options timeout settings as follows:
