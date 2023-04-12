@@ -60,9 +60,9 @@ var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Va
 
 var validFrom = DateTimeOffset.UtcNow;
 var validUntil = validFrom.AddDays(1);
-InvitedRoomParticipant participant1 = new InvitedRoomParticipant(communicationUser1); // If role is not provided, then it is set as Attendee by default
-InvitedRoomParticipant participant2 = new InvitedRoomParticipant(communicationUser2) { Role = ParticipantRole.Presenter};
-List<InvitedRoomParticipant> invitedParticipants = new List<InvitedRoomParticipant>
+RoomParticipant participant1 = new RoomParticipant(communicationUser1); // If role is not provided, then it is set as Attendee by default
+RoomParticipant participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Presenter};
+List<RoomParticipant> invitedParticipants = new List<RoomParticipant>
 {
     participant1,
     participant2
@@ -100,12 +100,12 @@ In order to insert new participants or update existing participants, call the `U
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_Samples_UpsertParticipants
 CommunicationIdentifier communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
-InvitedRoomParticipant newParticipant = new InvitedRoomParticipant(communicationUser3) { Role = ParticipantRole.Consumer };
+RoomParticipant newParticipant = new RoomParticipant(communicationUser3) { Role = ParticipantRole.Consumer };
 
 // Previous snippet for create room added participant2 as Presenter
-participant2 = new InvitedRoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
+participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
 
-List<InvitedRoomParticipant> participantsToUpsert = new List<InvitedRoomParticipant>
+List<RoomParticipant> participantsToUpsert = new List<RoomParticipant>
 {
     participant2,   // participant2 updated from Presenter to Attendee
     newParticipant, // newParticipant added to the room
@@ -149,9 +149,9 @@ try
     CommunicationUserIdentifier communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
     var validFrom = DateTimeOffset.UtcNow;
     var validUntil = validFrom.AddDays(1);
-    List<InvitedRoomParticipant> createRoomParticipants = new List<InvitedRoomParticipant>();
-    InvitedRoomParticipant participant1 = new InvitedRoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
-    InvitedRoomParticipant participant2 = new InvitedRoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
+    List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>();
+    RoomParticipant participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
+    RoomParticipant participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
     Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, createRoomParticipants);
     CommunicationRoom createRoomResult = createRoomResponse.Value;
 }
@@ -180,7 +180,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
-[nextsteps]: https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/rooms/get-started-rooms
+[nextsteps]: https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/rooms/get-started-rooms?tabs=windows&pivots=programming-language-csharp
 [nuget]: https://www.nuget.org/
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Rooms/src

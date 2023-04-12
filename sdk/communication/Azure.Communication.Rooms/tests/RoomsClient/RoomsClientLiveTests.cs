@@ -91,11 +91,11 @@ namespace Azure.Communication.Rooms.Tests
 
             try
             {
-                InvitedRoomParticipant participant1 = new InvitedRoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
-                InvitedRoomParticipant participant2 = new InvitedRoomParticipant(communicationUser2);
-                InvitedRoomParticipant participant3 = new InvitedRoomParticipant(communicationUser3) { Role = ParticipantRole.Consumer };
+                RoomParticipant participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
+                RoomParticipant participant2 = new RoomParticipant(communicationUser2);
+                RoomParticipant participant3 = new RoomParticipant(communicationUser3) { Role = ParticipantRole.Consumer };
 
-                List<InvitedRoomParticipant> createRoomParticipants = new List<InvitedRoomParticipant>
+                List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>
                 {
                     participant1,
                     participant2
@@ -163,9 +163,9 @@ namespace Azure.Communication.Rooms.Tests
 
             RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
 
-            InvitedRoomParticipant participant1 = new InvitedRoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
-            InvitedRoomParticipant participant2 = new InvitedRoomParticipant(communicationUser2) { Role = ParticipantRole.Presenter };
-            InvitedRoomParticipant participant3 = new InvitedRoomParticipant(communicationUser3) { Role = ParticipantRole.Attendee };
+            RoomParticipant participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
+            RoomParticipant participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Presenter };
+            RoomParticipant participant3 = new RoomParticipant(communicationUser3) { Role = ParticipantRole.Attendee };
 
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(1);
@@ -173,7 +173,7 @@ namespace Azure.Communication.Rooms.Tests
             try
             {
                 // Create room with participants
-                List<InvitedRoomParticipant> createRoomParticipants = new List<InvitedRoomParticipant>
+                List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>
                 {
                     participant1,
                     participant2
@@ -185,12 +185,12 @@ namespace Azure.Communication.Rooms.Tests
                 Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
 
                 var createdRoomId = createCommunicationRoom.Id;
-                participant2 = new InvitedRoomParticipant(communicationUser2) { Role = ParticipantRole.Consumer };
+                participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Consumer };
 
                 // Act: Upsert room participants
                 // participant2 updated from Presenter -> Consumer
                 // participant3 added to the list
-                List<InvitedRoomParticipant> toUpsertCommunicationUsers = new List<InvitedRoomParticipant>()
+                List<RoomParticipant> toUpsertCommunicationUsers = new List<RoomParticipant>()
                 {
                     participant2,
                     participant3
@@ -249,9 +249,9 @@ namespace Azure.Communication.Rooms.Tests
 
             RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
 
-            InvitedRoomParticipant participant1 = new InvitedRoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
-            InvitedRoomParticipant participant2 = new InvitedRoomParticipant(communicationUser2);
-            InvitedRoomParticipant participant3 = new InvitedRoomParticipant(communicationUser3) { Role = null };
+            RoomParticipant participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
+            RoomParticipant participant2 = new RoomParticipant(communicationUser2);
+            RoomParticipant participant3 = new RoomParticipant(communicationUser3) { Role = ParticipantRole.Presenter };
 
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(1);
@@ -259,7 +259,7 @@ namespace Azure.Communication.Rooms.Tests
             try
             {
                 // Create room with participants with null roles or roles undefined
-                List<InvitedRoomParticipant> createRoomParticipants = new List<InvitedRoomParticipant>
+                List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>
                 {
                     participant1,
                     participant2,
@@ -286,8 +286,8 @@ namespace Azure.Communication.Rooms.Tests
                     x => (x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
                     "Expected participant2 to have Attendee role.");
                 Assert.IsTrue(roomParticipantsResult.Any(
-                   x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
-                   "Expected participant3 to have Attendee role.");
+                   x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Presenter)),
+                   "Expected participant3 to have Presenter role.");
                 Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
 
                 // Arrange
@@ -296,17 +296,14 @@ namespace Azure.Communication.Rooms.Tests
                 // participant4 added to the list as Attendee
                 // participant5 added to the list as Attendee
                 var communicationUser4 = communicationIdentityClient.CreateUserAsync().Result.Value;
-                var communicationUser5 = communicationIdentityClient.CreateUserAsync().Result.Value;
-                participant1 = new InvitedRoomParticipant(communicationUser1);
-                participant2 = new InvitedRoomParticipant(communicationUser2) { Role = ParticipantRole.Consumer };
-                InvitedRoomParticipant participant4 = new InvitedRoomParticipant(communicationUser4);
-                InvitedRoomParticipant participant5 = new InvitedRoomParticipant(communicationUser5) { Role = null };
-                List<InvitedRoomParticipant> toUpsertCommunicationUsers = new List<InvitedRoomParticipant>()
+                participant1 = new RoomParticipant(communicationUser1);
+                participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Consumer };
+                RoomParticipant participant4 = new RoomParticipant(communicationUser4);
+                List<RoomParticipant> toUpsertCommunicationUsers = new List<RoomParticipant>()
                 {
                     participant1,
                     participant2,
-                    participant4,
-                    participant5
+                    participant4
                 };
 
                 // Act
@@ -317,28 +314,24 @@ namespace Azure.Communication.Rooms.Tests
                 List<RoomParticipant> upsertRoomParticipantsResult = await allParticipants.ToEnumerableAsync();
 
                 // Assert
-                Assert.AreEqual(5, upsertRoomParticipantsResult.Count, "Expected Room participants count to be 5");
+                Assert.AreEqual(4, upsertRoomParticipantsResult.Count, "Expected Room participants count to be 4");
                 Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), "Expected UpsertParticipants to contain user1");
                 Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), "Expected UpsertParticipants to contain user2");
                 Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), "Expected UpsertParticipants to contain user3");
                 Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier)), "Expected UpsertParticipants to contain user4");
-                Assert.IsTrue(upsertRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant5.CommunicationIdentifier)), "Expected UpsertParticipants to contain user5");
 
                 Assert.IsTrue(upsertRoomParticipantsResult.Any(
-                   x => (x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier) && x.Role == ParticipantRole.Presenter)),
-                   "Expected participant1 to have Presenter role.");
+                   x => (x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
+                   "Expected participant1 to have Attendee role.");
                 Assert.IsTrue(upsertRoomParticipantsResult.Any(
                     x => (x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier) && x.Role == ParticipantRole.Consumer)),
                     "Expected participant2 to have Consumer role.");
                 Assert.IsTrue(upsertRoomParticipantsResult.Any(
-                  x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
-                  "Expected participant3 to have Attendee role.");
+                  x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Presenter)),
+                  "Expected participant3 to have Presenter role.");
                 Assert.IsTrue(upsertRoomParticipantsResult.Any(
                    x => (x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
                    "Expected participant4 to have Attendee role.");
-                Assert.IsTrue(upsertRoomParticipantsResult.Any(
-                    x => (x.CommunicationIdentifier.Equals(participant5.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
-                    "Expected participant5 to have Attendee role.");
 
                 // Act Remove participants
                 List<CommunicationIdentifier> toRemoveCommunicationUsers = new List<CommunicationIdentifier>
@@ -352,21 +345,17 @@ namespace Azure.Communication.Rooms.Tests
 
                 // Assert
                 Assert.AreEqual(200, removeParticipantsResponse.GetRawResponse().Status);
-                Assert.AreEqual(3, allParticipantsAfterDeleteResult.Count, "Expected Room participants count to be 3");
+                Assert.AreEqual(2, allParticipantsAfterDeleteResult.Count, "Expected Room participants count to be 2");
                 Assert.IsFalse(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant1.CommunicationIdentifier)), "Expected UpsertParticipants to contain user1");
                 Assert.IsFalse(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant2.CommunicationIdentifier)), "Expected UpsertParticipants to contain user2");
                 Assert.IsTrue(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), "Expected UpsertParticipants to contain user3");
                 Assert.IsTrue(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier)), "Expected UpsertParticipants to contain user4");
-                Assert.IsTrue(allParticipantsAfterDeleteResult.Any(x => x.CommunicationIdentifier.Equals(participant5.CommunicationIdentifier)), "Expected UpsertParticipants to contain user5");
                 Assert.IsTrue(allParticipantsAfterDeleteResult.Any(
-                  x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
-                  "Expected participant3 to have Attendee role.");
+                  x => (x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier) && x.Role == ParticipantRole.Presenter)),
+                  "Expected participant3 to have Presenter role.");
                 Assert.IsTrue(allParticipantsAfterDeleteResult.Any(
                    x => (x.CommunicationIdentifier.Equals(participant4.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
                    "Expected participant4 to have Attendee role.");
-                Assert.IsTrue(allParticipantsAfterDeleteResult.Any(
-                    x => (x.CommunicationIdentifier.Equals(participant5.CommunicationIdentifier) && x.Role == ParticipantRole.Attendee)),
-                    "Expected participant5 to have Attendee role.");
 
                 // Clean up
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);

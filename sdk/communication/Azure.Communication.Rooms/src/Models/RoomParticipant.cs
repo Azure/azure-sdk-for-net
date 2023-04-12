@@ -11,6 +11,15 @@ namespace Azure.Communication.Rooms
     public partial class RoomParticipant
     {
         /// <summary> Initializes a new instance of RoomParticipant. </summary>
+        /// <param name="communicationIdentifier"> The communication identifier.</param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationIdentifier"/> is null. </exception>
+        public RoomParticipant(CommunicationIdentifier communicationIdentifier)
+        {
+            Argument.AssertNotNull(communicationIdentifier, nameof(communicationIdentifier));
+            CommunicationIdentifier = communicationIdentifier;
+        }
+
+        /// <summary> Initializes a new instance of RoomParticipant. </summary>
         /// <param name="rawId"> Raw ID representation of the communication identifier. Please refer to the following document for additional information on Raw ID. &lt;br&gt; https://learn.microsoft.com/azure/communication-services/concepts/identifiers?pivots=programming-language-rest#raw-id-representation. </param>
         /// <param name="role"> The role of a room participant. The default value is Attendee. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rawId"/> is null. </exception>
@@ -26,7 +35,7 @@ namespace Azure.Communication.Rooms
         public CommunicationIdentifier CommunicationIdentifier { get;}
 
         /// <summary> Role Name. </summary>
-        public ParticipantRole Role { get; }
+        public ParticipantRole Role { get; set; } = ParticipantRole.Attendee;
 
         /// <summary> Raw ID representation of the communication identifier. Please refer to the following document for additional information on Raw ID. &lt;br&gt; https://learn.microsoft.com/azure/communication-services/concepts/identifiers?pivots=programming-language-rest#raw-id-representation. </summary>
         internal string RawId { get; }

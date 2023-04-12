@@ -114,7 +114,7 @@ namespace Azure.Communication.Rooms
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
 #nullable enable
-        public virtual async Task<Response<CommunicationRoom>> CreateRoomAsync(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<InvitedRoomParticipant>? participants = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationRoom>> CreateRoomAsync(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<RoomParticipant>? participants = default, CancellationToken cancellationToken = default)
         {
 #nullable disable
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(CreateRoom)}");
@@ -141,7 +141,7 @@ namespace Azure.Communication.Rooms
         /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
 #nullable enable
-        public virtual Response<CommunicationRoom> CreateRoom(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<InvitedRoomParticipant>? participants = default, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationRoom> CreateRoom(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<RoomParticipant>? participants = default, CancellationToken cancellationToken = default)
         {
 #nullable disable
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(CreateRoom)}");
@@ -471,7 +471,7 @@ namespace Azure.Communication.Rooms
         /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response<UpsertParticipantsResult>> UpsertParticipantsAsync(string roomId, IEnumerable<InvitedRoomParticipant> participants = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UpsertParticipantsResult>> UpsertParticipantsAsync(string roomId, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(UpsertParticipants)}");
             scope.Start();
@@ -494,7 +494,7 @@ namespace Azure.Communication.Rooms
         /// <param name="roomId"></param>
         /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
-        public virtual Response<UpsertParticipantsResult> UpsertParticipants(string roomId, IEnumerable<InvitedRoomParticipant> participants = default, CancellationToken cancellationToken = default)
+        public virtual Response<UpsertParticipantsResult> UpsertParticipants(string roomId, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(UpsertParticipants)}");
             scope.Start();
@@ -558,7 +558,7 @@ namespace Azure.Communication.Rooms
         }
 
 #nullable enable
-        private static Dictionary<string, ParticipantProperties?> ConvertRoomParticipantsToDictionaryForUpsert(IEnumerable<InvitedRoomParticipant>? participants)
+        private static Dictionary<string, ParticipantProperties?> ConvertRoomParticipantsToDictionaryForUpsert(IEnumerable<RoomParticipant>? participants)
         {
             var participantDictionary = new Dictionary<string, ParticipantProperties?>() { };
 #nullable disable

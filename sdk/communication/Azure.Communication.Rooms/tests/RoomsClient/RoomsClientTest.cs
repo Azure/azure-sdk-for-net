@@ -26,10 +26,10 @@ namespace Azure.Communication.Rooms.Tests
             var communicationUser1 = new CommunicationUserIdentifier(mri1);
             var communicationUser2 = new CommunicationUserIdentifier(mri2);
 
-            var participant1 = new InvitedRoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
-            var participant2 = new InvitedRoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
+            var participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
+            var participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
 
-            List<InvitedRoomParticipant> createRoomParticipants = new List<InvitedRoomParticipant>
+            List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>
             {
                 participant1,
                 participant2
@@ -54,12 +54,12 @@ namespace Azure.Communication.Rooms.Tests
             Mock<RoomsClient> mockRoomsClient = new Mock<RoomsClient>();
             var validFrom = DateTime.UtcNow;
             var validUntil = validFrom.AddDays(1);
-            List<InvitedRoomParticipant> createRoomParticipants = new List<InvitedRoomParticipant>();
+            List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>();
             string communicationUser1 = "mockAcsUserIdentityString1";
             string communicationUser2 = "mockAcsUserIdentityString2";
 
-            createRoomParticipants.Add(new InvitedRoomParticipant(new CommunicationUserIdentifier(communicationUser1)) { Role = ParticipantRole.Presenter });
-            createRoomParticipants.Add(new InvitedRoomParticipant(new CommunicationUserIdentifier(communicationUser2)) { Role = ParticipantRole.Attendee });
+            createRoomParticipants.Add(new RoomParticipant(new CommunicationUserIdentifier(communicationUser1)) { Role = ParticipantRole.Presenter });
+            createRoomParticipants.Add(new RoomParticipant(new CommunicationUserIdentifier(communicationUser2)) { Role = ParticipantRole.Attendee });
             Response<CommunicationRoom>? expectedRoomResult = new Mock<Response<CommunicationRoom>>().Object;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
 
@@ -197,10 +197,10 @@ namespace Azure.Communication.Rooms.Tests
             var communicationUser1 = new CommunicationUserIdentifier(mri1);
             var communicationUser2 = new CommunicationUserIdentifier(mri2);
 
-            var participant1 = new InvitedRoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
-            var participant2 = new InvitedRoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
+            var participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
+            var participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
 
-            List<InvitedRoomParticipant> participants = new List<InvitedRoomParticipant>
+            List<RoomParticipant> participants = new List<RoomParticipant>
             {
                 participant1,
                 participant2
@@ -231,12 +231,12 @@ namespace Azure.Communication.Rooms.Tests
             string communicationUser3 = "mockAcsUserIdentityString3";
             string communicationUser4 = "mockAcsUserIdentityString4";
 
-            InvitedRoomParticipant participant1 = new InvitedRoomParticipant(new CommunicationUserIdentifier(communicationUser1)) { Role = ParticipantRole.Presenter };
-            InvitedRoomParticipant participant2 = new InvitedRoomParticipant(new CommunicationUserIdentifier(communicationUser2)) { Role = ParticipantRole.Attendee };
-            InvitedRoomParticipant participant3 = new InvitedRoomParticipant(new CommunicationUserIdentifier(communicationUser3));
-            InvitedRoomParticipant participant4 = new InvitedRoomParticipant(new CommunicationUserIdentifier(communicationUser4)) { Role = ParticipantRole.Consumer };
+            RoomParticipant participant1 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser1)) { Role = ParticipantRole.Presenter };
+            RoomParticipant participant2 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser2)) { Role = ParticipantRole.Attendee };
+            RoomParticipant participant3 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser3));
+            RoomParticipant participant4 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser4)) { Role = ParticipantRole.Consumer };
 
-            List<InvitedRoomParticipant> communicationUsers = new List<InvitedRoomParticipant>
+            List<RoomParticipant> communicationUsers = new List<RoomParticipant>
             {
                 participant1,
                 participant2,
