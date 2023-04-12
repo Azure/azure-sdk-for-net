@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StorageSyncServiceData> array = new List<StorageSyncServiceData>();
