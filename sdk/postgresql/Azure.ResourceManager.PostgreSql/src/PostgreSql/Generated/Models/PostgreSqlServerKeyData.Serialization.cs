@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.PostgreSql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -93,7 +92,6 @@ namespace Azure.ResourceManager.PostgreSql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serverKeyType = new PostgreSqlServerKeyType(property0.Value.GetString());
@@ -103,7 +101,6 @@ namespace Azure.ResourceManager.PostgreSql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                uri = null;
                                 continue;
                             }
                             uri = new Uri(property0.Value.GetString());
@@ -113,7 +110,6 @@ namespace Azure.ResourceManager.PostgreSql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationDate = property0.Value.GetDateTimeOffset("O");

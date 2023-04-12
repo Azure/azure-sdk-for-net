@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vnetConfiguration = VnetConfiguration.DeserializeVnetConfiguration(property.Value);
@@ -78,7 +77,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vwanConfiguration = VwanConfiguration.DeserializeVwanConfiguration(property.Value);
@@ -108,7 +106,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IPAddress> array = new List<IPAddress>();
