@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using System.Collections.Generic;
 
-namespace Azure.Storage.DataMovement.JobPlanModels
+namespace Azure.Storage.DataMovement.Models.JobPlan
 {
     /// <summary>
     /// Describes the structure of a destination blob.
@@ -168,7 +168,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             JobPartPlanBlockBlobTier blockBlobTier,
             JobPartPlanPageBlobTier pageBlobTier,
             bool putMd5,
-            IDictionary<string,string> metadata,
+            IDictionary<string, string> metadata,
             IDictionary<string, string> blobTags,
             bool isSourceEncrypted,
             string cpkScopeInfo,
@@ -306,7 +306,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
             foreach (KeyValuePair<string, string> kv in dict)
             {
                 // e.g. store like "header=value;"
-                concatStr = string.Concat(concatStr,$"{kv.Key}={kv.Value};");
+                concatStr = string.Concat(concatStr, $"{kv.Key}={kv.Value};");
             }
             return concatStr;
         }

@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using Azure.Core;
 
-namespace Azure.Storage.DataMovement.JobPlanModels
+namespace Azure.Storage.DataMovement.Models.JobPlan
 {
     /// <summary>
     /// Stores the Job Part Header information to resume from.
@@ -816,7 +816,7 @@ namespace Azure.Storage.DataMovement.JobPlanModels
         {
             writer.Write(value.ToCharArray());
 
-            int padding =  setSizeInBytes - value.Length;
+            int padding = setSizeInBytes - value.Length;
             if (padding > 0)
             {
                 char[] paddingArray = new char[padding];
