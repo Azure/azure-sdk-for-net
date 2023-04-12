@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of ManagedHSMSecurityDomainProperties. </summary>
         /// <param name="activationStatus"> Activation Status. </param>
         /// <param name="activationStatusMessage"> Activation Status Message. </param>
-        internal ManagedHSMSecurityDomainProperties(ActivationStatus? activationStatus, string activationStatusMessage)
+        internal ManagedHSMSecurityDomainProperties(ManagedHSMSecurityDomainActivationStatus? activationStatus, string activationStatusMessage)
         {
             ActivationStatus = activationStatus;
             ActivationStatusMessage = activationStatusMessage;
         }
 
         /// <summary> Activation Status. </summary>
-        public ActivationStatus? ActivationStatus { get; }
+        public ManagedHSMSecurityDomainActivationStatus? ActivationStatus { get; }
         /// <summary> Activation Status Message. </summary>
         public string ActivationStatusMessage { get; }
     }

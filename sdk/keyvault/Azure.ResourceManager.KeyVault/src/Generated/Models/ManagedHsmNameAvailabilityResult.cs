@@ -8,28 +8,28 @@
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The CheckMhsmNameAvailability operation response. </summary>
-    public partial class CheckManagedHsmNameAvailabilityResult
+    public partial class ManagedHsmNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CheckManagedHsmNameAvailabilityResult. </summary>
-        internal CheckManagedHsmNameAvailabilityResult()
+        /// <summary> Initializes a new instance of ManagedHsmNameAvailabilityResult. </summary>
+        internal ManagedHsmNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckManagedHsmNameAvailabilityResult. </summary>
-        /// <param name="nameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
+        /// <summary> Initializes a new instance of ManagedHsmNameAvailabilityResult. </summary>
+        /// <param name="isNameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> The reason that a managed hsm name could not be used. The reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> An error message explaining the Reason value in more detail. </param>
-        internal CheckManagedHsmNameAvailabilityResult(bool? nameAvailable, Reason? reason, string message)
+        internal ManagedHsmNameAvailabilityResult(bool? isNameAvailable, ManagedHsmNameUnavailableReason? reason, string message)
         {
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
         }
 
         /// <summary> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
         /// <summary> The reason that a managed hsm name could not be used. The reason element is only returned if NameAvailable is false. </summary>
-        public Reason? Reason { get; }
+        public ManagedHsmNameUnavailableReason? Reason { get; }
         /// <summary> An error message explaining the Reason value in more detail. </summary>
         public string Message { get; }
     }

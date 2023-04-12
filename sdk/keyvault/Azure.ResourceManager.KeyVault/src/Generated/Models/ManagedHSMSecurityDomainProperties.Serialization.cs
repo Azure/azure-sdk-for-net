@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<ActivationStatus> activationStatus = default;
+            Optional<ManagedHSMSecurityDomainActivationStatus> activationStatus = default;
             Optional<string> activationStatusMessage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    activationStatus = new ActivationStatus(property.Value.GetString());
+                    activationStatus = new ManagedHSMSecurityDomainActivationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("activationStatusMessage"u8))

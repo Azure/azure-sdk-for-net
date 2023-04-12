@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="name"> Name of the geo replicated region. </param>
         /// <param name="provisioningState"> Provisioning state of the geo replicated region. </param>
         /// <param name="isPrimary"> A boolean value that indicates whether the region is the primary region or a secondary region. </param>
-        internal ManagedHsmGeoReplicatedRegion(string name, GeoReplicationRegionProvisioningState? provisioningState, bool? isPrimary)
+        internal ManagedHsmGeoReplicatedRegion(string name, ManagedHsmGeoReplicatedRegionProvisioningState? provisioningState, bool? isPrimary)
         {
             Name = name;
             ProvisioningState = provisioningState;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Name of the geo replicated region. </summary>
         public string Name { get; set; }
         /// <summary> Provisioning state of the geo replicated region. </summary>
-        public GeoReplicationRegionProvisioningState? ProvisioningState { get; }
+        public ManagedHsmGeoReplicatedRegionProvisioningState? ProvisioningState { get; }
         /// <summary> A boolean value that indicates whether the region is the primary region or a secondary region. </summary>
         public bool? IsPrimary { get; set; }
     }

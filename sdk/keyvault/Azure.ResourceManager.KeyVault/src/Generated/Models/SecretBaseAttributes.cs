@@ -10,20 +10,20 @@ using System;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The object attributes managed by the KeyVault service. </summary>
-    public partial class Attributes
+    public partial class SecretBaseAttributes
     {
-        /// <summary> Initializes a new instance of Attributes. </summary>
-        public Attributes()
+        /// <summary> Initializes a new instance of SecretBaseAttributes. </summary>
+        public SecretBaseAttributes()
         {
         }
 
-        /// <summary> Initializes a new instance of Attributes. </summary>
+        /// <summary> Initializes a new instance of SecretBaseAttributes. </summary>
         /// <param name="enabled"> Determines whether the object is enabled. </param>
         /// <param name="notBefore"> Not before date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="created"> Creation time in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="updated"> Last updated time in seconds since 1970-01-01T00:00:00Z. </param>
-        internal Attributes(bool? enabled, DateTimeOffset? notBefore, DateTimeOffset? expires, DateTimeOffset? created, DateTimeOffset? updated)
+        internal SecretBaseAttributes(bool? enabled, DateTimeOffset? notBefore, DateTimeOffset? expires, DateTimeOffset? created, DateTimeOffset? updated)
         {
             Enabled = enabled;
             NotBefore = notBefore;

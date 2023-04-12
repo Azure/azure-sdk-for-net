@@ -326,9 +326,9 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="content"> The name of the managed hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityManagedHsmAsync(CheckManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityAsync(CheckManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ManagedHsmClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckManagedHsmNameAvailabilityManagedHsm");
+            using var scope = ManagedHsmClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckManagedHsmNameAvailability");
             scope.Start();
             try
             {
@@ -357,9 +357,9 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="content"> The name of the managed hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailabilityManagedHsm(CheckManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(CheckManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ManagedHsmClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckManagedHsmNameAvailabilityManagedHsm");
+            using var scope = ManagedHsmClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckManagedHsmNameAvailability");
             scope.Start();
             try
             {

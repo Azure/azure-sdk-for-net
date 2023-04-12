@@ -381,11 +381,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="content"> The name of the managed hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityManagedHsmAsync(this SubscriptionResource subscriptionResource, CheckManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckManagedHsmNameAvailabilityManagedHsmAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckManagedHsmNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -405,11 +405,11 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="content"> The name of the managed hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailabilityManagedHsm(this SubscriptionResource subscriptionResource, CheckManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(this SubscriptionResource subscriptionResource, CheckManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckManagedHsmNameAvailabilityManagedHsm(content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckManagedHsmNameAvailability(content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)

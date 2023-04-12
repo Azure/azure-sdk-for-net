@@ -18,6 +18,7 @@ modelerfour:
 override-operation-name:
   Vaults_CheckNameAvailability: CheckKeyVaultNameAvailability
   MHSMPrivateLinkResources_ListByMhsmResource: GetManagedHsmPrivateLinkResources
+  ManagedHsms_CheckMhsmNameAvailability: CheckManagedHsmNameAvailability
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}
@@ -67,6 +68,15 @@ rename-rules:
   Setsas: SetSas
   Mhsm: ManagedHsm
 
+rename-mapping:
+  CheckMhsmNameAvailabilityResult: ManagedHsmNameAvailabilityResult
+  CheckMhsmNameAvailabilityResult.nameAvailable : IsNameAvailable 
+  Reason: ManagedHsmNameUnavailableReason
+  ActivationStatus: ManagedHSMSecurityDomainActivationStatus
+  Attributes: SecretBaseAttributes
+  GeoReplicationRegionProvisioningState: ManagedHsmGeoReplicatedRegionProvisioningState
+  ManagedHsmPrivateEndpointConnectionItemData.id: -|arm-id
+  
 prompted-enum-values: Default
 
 directive:
@@ -145,18 +155,6 @@ directive:
       $.DeletedVaultProperties['x-ms-client-name'] = 'DeletedKeyVaultProperties';
       $.DeletedVault['x-ms-client-name'] = 'DeletedKeyVault';
       $.DeletedVaultListResult['x-ms-client-name'] = 'DeletedKeyVaultListResult';
-```
-
-### Tag: package-2021-10
-
-These settings apply only when `--tag=package-2021-10` is specified on the command line.
-
-```yaml $(tag) == 'package-2021-10'
-input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/common.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/keyvault.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/managedHsm.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/providers.json
 ```
 
 ### Tag: package-2023-02

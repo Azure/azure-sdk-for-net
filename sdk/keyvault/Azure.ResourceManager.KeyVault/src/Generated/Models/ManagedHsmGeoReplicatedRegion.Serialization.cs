@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<GeoReplicationRegionProvisioningState> provisioningState = default;
+            Optional<ManagedHsmGeoReplicatedRegionProvisioningState> provisioningState = default;
             Optional<bool> isPrimary = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new GeoReplicationRegionProvisioningState(property.Value.GetString());
+                    provisioningState = new ManagedHsmGeoReplicatedRegionProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isPrimary"u8))

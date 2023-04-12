@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class CheckManagedHsmNameAvailabilityResult
+    public partial class ManagedHsmNameAvailabilityResult
     {
-        internal static CheckManagedHsmNameAvailabilityResult DeserializeCheckManagedHsmNameAvailabilityResult(JsonElement element)
+        internal static ManagedHsmNameAvailabilityResult DeserializeManagedHsmNameAvailabilityResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> nameAvailable = default;
-            Optional<Reason> reason = default;
+            Optional<ManagedHsmNameUnavailableReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = new Reason(property.Value.GetString());
+                    reason = new ManagedHsmNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new CheckManagedHsmNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            return new ManagedHsmNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
         }
     }
 }
