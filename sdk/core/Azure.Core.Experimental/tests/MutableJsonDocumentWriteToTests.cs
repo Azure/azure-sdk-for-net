@@ -426,6 +426,44 @@ namespace Azure.Core.Experimental.Tests
             MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
         }
 
+        [Test]
+        public void CanWriteArrayWithChangedElements()
+        {
+            string json = """
+                {
+                  "Foo" :  true,
+                  "Bar" : [ 0, 1, 2 ]
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("Bar").GetIndexElement(0).Set(2);
+            mdoc.RootElement.GetProperty("Bar").GetIndexElement(1).Set(4);
+            mdoc.RootElement.GetProperty("Bar").GetIndexElement(2).Set(6);
+
+            string expected = """
+                {
+                  "Foo" :  true,
+                  "Bar" : [ 2, 4, 6 ]
+                }
+                """;
+
+            MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
+
+            mdoc.RootElement.GetProperty("Bar").Set(new int[] { 0, 1, 2, 3 });
+            mdoc.RootElement.GetProperty("Bar").GetIndexElement(3).Set(4);
+
+            expected = """
+                {
+                  "Foo" :  true,
+                  "Bar" : [ 0, 1, 2, 4 ]
+                }
+                """;
+
+            MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
+        }
+
         [TestCaseSource(nameof(TestCases))]
         public void WriteToBehaviorMatchesJsonDocument(dynamic json)
         {
