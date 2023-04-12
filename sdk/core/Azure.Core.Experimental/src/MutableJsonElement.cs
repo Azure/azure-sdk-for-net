@@ -121,18 +121,32 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                switch (change.Value)
+                return change.Value switch
                 {
-                    case double d:
-                        return d;
-                    case JsonElement element:
-                        return element.GetDouble();
-                    default:
-                        throw new InvalidOperationException($"Element at {_path} is not a double.");
-                }
+                    double d => d,
+                    JsonElement element => element.GetDouble(),
+                    _ => throw new InvalidCastException(GetInvalidCastExceptionText(typeof(double), _path, change)),
+                };
             }
 
-            return _element.GetDouble();
+            try
+            {
+                return _element.GetDouble();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(double), _path, _element, e));
+            }
+        }
+
+        private string GetInvalidCastExceptionText(Type target, string path, MutableJsonChange change)
+        {
+            return $"Unable to get element as {target}.  Element at {path} has type {change.Value?.GetType()}.";
+        }
+
+        private string GetInvalidCastExceptionText(Type target, string path, JsonElement element, Exception innerException)
+        {
+            return $"Unable to get element as {target}.  Element at {path} has kind {element.ValueKind}.";
         }
 
         /// <summary>
