@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace AzureMessagingEventGrid.Models
+namespace Azure.Messaging.EventGridMessaging.Models
 {
     public partial class LockToken : IUtf8JsonSerializable
     {
@@ -17,7 +17,7 @@ namespace AzureMessagingEventGrid.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("lockToken"u8);
-            writer.WriteStringValue(LockToken);
+            writer.WriteStringValue(Value);
             writer.WriteEndObject();
         }
 

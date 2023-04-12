@@ -8,22 +8,22 @@
 using System;
 using Azure.Core;
 
-namespace AzureMessagingEventGrid.Models
+namespace Azure.Messaging.EventGridMessaging.Models
 {
     /// <summary> LockToken information. </summary>
     public partial class LockToken
     {
         /// <summary> Initializes a new instance of LockToken. </summary>
-        /// <param name="lockToken"> The token used to lock the event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockToken"/> is null. </exception>
-        public LockToken(string lockToken)
+        /// <param name="value"> The token used to lock the event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LockToken(string value)
         {
-            Argument.AssertNotNull(lockToken, nameof(lockToken));
+            Argument.AssertNotNull(value, nameof(value));
 
-            LockToken = lockToken;
+            Value = value;
         }
 
         /// <summary> The token used to lock the event. </summary>
-        public string LockToken { get; set; }
+        public string Value { get; set; }
     }
 }

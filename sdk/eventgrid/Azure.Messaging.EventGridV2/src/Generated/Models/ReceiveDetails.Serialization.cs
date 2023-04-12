@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace AzureMessagingEventGrid.Models
+namespace Azure.Messaging.EventGridMessaging.Models
 {
     public partial class ReceiveDetails
     {
@@ -20,7 +20,7 @@ namespace AzureMessagingEventGrid.Models
                 return null;
             }
             BrokerProperties brokerProperties = default;
-            CloudEventEvent @event = default;
+            CloudEvent @event = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("brokerProperties"u8))
@@ -30,7 +30,7 @@ namespace AzureMessagingEventGrid.Models
                 }
                 if (property.NameEquals("event"u8))
                 {
-                    @event = CloudEventEvent.DeserializeCloudEventEvent(property.Value);
+                    // @event = CloudEvent.DeserializeCloudEventEvent(property.Value);
                     continue;
                 }
             }

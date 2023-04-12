@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace AzureMessagingEventGrid.Models
+namespace Azure.Messaging.EventGridMessaging.Models
 {
     /// <summary> Properties of the Event Broker operation. </summary>
     public partial class BrokerProperties
