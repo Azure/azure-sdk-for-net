@@ -96,6 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Need to rerun once the null timestamp value from the collection resource fixed")]
         public async Task MongoDBCollectionRestoreTest()
         {
             var collection = await CreateMongoDBCollection(null);
