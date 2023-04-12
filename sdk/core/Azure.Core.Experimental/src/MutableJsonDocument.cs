@@ -63,7 +63,7 @@ namespace Azure.Core.Json
                 return;
             }
 
-            Utf8JsonWriter writer = new(stream);
+            using Utf8JsonWriter writer = new(stream);
             RootElement.WriteTo(writer);
         }
 
