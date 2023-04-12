@@ -64,62 +64,70 @@ namespace Azure.Storage.DataMovement
             internal const string SchemaVersion = "b1"; // TODO: remove b for beta
             internal const int JobPartLength = 5;
             internal const int IdSize = 36; // Size of a guid with hyphens
-            // TODO: might change the value
-            internal const long MemoryMappedFileSize = 4 * Constants.MB;
             internal const int CustomHeaderMaxBytes = 256;
             internal const int Padding = 8;
 
-            internal const int LongSizeInBytes = 8; // 8 bytes
-            internal const int VersionStrMaxSize = 2; // 2 chars
-            internal const int TransferIdStrMaxSize = 36; // 36 chars
-            internal const int PathStrMaxSize = 4096; // 8182 bytes
-            internal const int ExtraQueryMaxSize = 1000; // 1000 char
-            internal const int HeaderValueMaxSize = 1000; // 1000 char
-            internal const int OneByte = 1; // 1 byte (bool's are one byte)
-            internal const int MetadataStrMaxSize = 4096; // 8182 bytes (can update to be larger if needed)
-            internal const int BlobTagsStrMaxSize = 4096; // 8182 bytes (can update to be larger if needed)
+            internal const int OneByte = 1;
+            internal const int LongSizeInBytes = 8;
+            internal const int UShortSizeInBytes = 2;
+
+            // UTF-8 encoding, so 2 bytes per char
+            internal const int VersionStrLength = 2;
+            internal const int VersionStrNumBytes = VersionStrLength * 2;
+            internal const int TransferIdStrLength = 36;
+            internal const int TransferIdStrNumBytes = TransferIdStrLength * 2;
+            internal const int PathStrMaxLength = 4096;
+            internal const int PathStrNumBytes = PathStrMaxLength * 2;
+            internal const int ExtraQueryMaxLength = 1000;
+            internal const int ExtraQueryNumBytes = ExtraQueryMaxLength * 2;
+            internal const int HeaderValueMaxLength = 1000;
+            internal const int HeaderValueNumBytes = HeaderValueMaxLength * 2;
+            internal const int MetadataStrMaxLength = 4096;
+            internal const int MetadataStrNumBytes = MetadataStrMaxLength * 2;
+            internal const int BlobTagsStrMaxLength = 4096;
+            internal const int BlobTagsStrNumBytes = BlobTagsStrMaxLength * 2;
 
             /// <summary>Index: 0</summary>
             internal const int VersionIndex = 0; // Index: 0
-            /// <summary>Index: 2</summary>
-            internal const int StartTimeIndex = VersionIndex + VersionStrMaxSize;
-            /// <summary>Index: 10</summary>
+            /// <summary>Index: 4</summary>
+            internal const int StartTimeIndex = VersionIndex + VersionStrNumBytes;
+            /// <summary>Index: 12</summary>
             internal const int TransferIdIndex = StartTimeIndex + LongSizeInBytes;
-            /// <summary>Index: 46</summary>
-            internal const int PartNumberIndex = TransferIdIndex + TransferIdStrMaxSize;
-            /// <summary>Index: 54</summary>
+            /// <summary>Index: 84</summary>
+            internal const int PartNumberIndex = TransferIdIndex + TransferIdStrNumBytes;
+            /// <summary>Index: 92</summary>
             internal const int SourcePathLengthIndex = PartNumberIndex + LongSizeInBytes;
-            /// <summary>Index: 62</summary>
-            internal const int SourcePathIndex = SourcePathLengthIndex + LongSizeInBytes;
-            /// <summary>Index: 4,158</summary>
-            internal const int SourceExtraQueryLengthIndex = SourcePathIndex + PathStrMaxSize;
-            /// <summary>Index: 4,166</summary>
-            internal const int SourceExtraQueryIndex = SourceExtraQueryLengthIndex + LongSizeInBytes;
-            /// <summary>Index: 5,164</summary>
-            internal const int DestinationPathLengthIndex = SourceExtraQueryIndex + ExtraQueryMaxSize;
-            /// <summary>Index: 5,172</summary>
-            internal const int DestinationPathIndex = DestinationPathLengthIndex + LongSizeInBytes;
-            /// <summary>Index: 9,268</summary>
-            internal const int DestinationExtraQueryLengthIndex = DestinationPathIndex + PathStrMaxSize;
-            /// <summary>Index: 9,276</summary>
-            internal const int DestinationExtraQueryIndex = DestinationExtraQueryLengthIndex + LongSizeInBytes;
-            /// <summary>Index: 10,276</summary>
-            internal const int IsFinalPartIndex = DestinationExtraQueryIndex + ExtraQueryMaxSize;
-            /// <summary>Index: 10,277</summary>
-            internal const int ForceWriteIndex = IsFinalPartIndex + OneByte;
-            /// <summary>Index: 10,278</summary>
-            internal const int ForceIfReadOnlyIndex = ForceWriteIndex + OneByte;
-            /// <summary>Index: 10,279</summary>
-            internal const int AutoDecompressIndex = ForceIfReadOnlyIndex + OneByte;
-            /// <summary>Index: 10,280</summary>
-            internal const int PriorityIndex = AutoDecompressIndex + OneByte;
-            /// <summary>Index: 10,281</summary>
-            internal const int TTLAfterCompletionIndex = PriorityIndex + OneByte;
-            /// <summary>Index: 10,289</summary>
-            internal const int FromToIndex = TTLAfterCompletionIndex + LongSizeInBytes;
+            /// <summary>Index: 94</summary>
+            internal const int SourcePathIndex = SourcePathLengthIndex + UShortSizeInBytes;
+            /// <summary>Index: 8,286</summary>
+            internal const int SourceExtraQueryLengthIndex = SourcePathIndex + PathStrNumBytes;
+            /// <summary>Index: 8,288</summary>
+            internal const int SourceExtraQueryIndex = SourceExtraQueryLengthIndex + UShortSizeInBytes;
+            /// <summary>Index: 10,288</summary>
+            internal const int DestinationPathLengthIndex = SourceExtraQueryIndex + ExtraQueryNumBytes;
             /// <summary>Index: 10,290</summary>
+            internal const int DestinationPathIndex = DestinationPathLengthIndex + UShortSizeInBytes;
+            /// <summary>Index: 18,482</summary>
+            internal const int DestinationExtraQueryLengthIndex = DestinationPathIndex + PathStrNumBytes;
+            /// <summary>Index: 18,484</summary>
+            internal const int DestinationExtraQueryIndex = DestinationExtraQueryLengthIndex + UShortSizeInBytes;
+            /// <summary>Index: 20,484</summary>
+            internal const int IsFinalPartIndex = DestinationExtraQueryIndex + ExtraQueryNumBytes;
+            /// <summary>Index: 20,485</summary>
+            internal const int ForceWriteIndex = IsFinalPartIndex + OneByte;
+            /// <summary>Index: 20,486</summary>
+            internal const int ForceIfReadOnlyIndex = ForceWriteIndex + OneByte;
+            /// <summary>Index: 20,487</summary>
+            internal const int AutoDecompressIndex = ForceIfReadOnlyIndex + OneByte;
+            /// <summary>Index: 20,488</summary>
+            internal const int PriorityIndex = AutoDecompressIndex + OneByte;
+            /// <summary>Index: 20,489</summary>
+            internal const int TTLAfterCompletionIndex = PriorityIndex + OneByte;
+            /// <summary>Index: 20,497</summary>
+            internal const int FromToIndex = TTLAfterCompletionIndex + LongSizeInBytes;
+            /// <summary>Index: 20,498</summary>
             internal const int FolderPropertyModeIndex = FromToIndex + OneByte;
-            /// <summary>Index: 10,291</summary>
+            /// <summary>Index: 20,499</summary>
             internal const int NumberChunksIndex = FolderPropertyModeIndex + OneByte;
 
             // JobPartPlanDestinationBlob Indexes
@@ -130,30 +138,30 @@ namespace Azure.Storage.DataMovement
             /// <summary>Index: 10,301</summary>
             internal const int DstBlobContentTypeLengthIndex = DstBlobNoGuessMimeTypeIndex + OneByte;
             /// <summary>Index: 10,309</summary>
-            internal const int DstBlobContentTypeIndex = DstBlobContentTypeLengthIndex + LongSizeInBytes;
+            internal const int DstBlobContentTypeIndex = DstBlobContentTypeLengthIndex + UShortSizeInBytes;
             /// <summary>Index: 11,309</summary>
-            internal const int DstBlobContentEncodingLengthIndex = DstBlobContentTypeIndex + HeaderValueMaxSize;
+            internal const int DstBlobContentEncodingLengthIndex = DstBlobContentTypeIndex + HeaderValueNumBytes;
             /// <summary>Index: 11,317</summary>
-            internal const int DstBlobContentEncodingIndex = DstBlobContentEncodingLengthIndex + LongSizeInBytes;
+            internal const int DstBlobContentEncodingIndex = DstBlobContentEncodingLengthIndex + UShortSizeInBytes;
             /// <summary>Index: 12,317</summary>
-            internal const int DstBlobContentLanguageLengthIndex = DstBlobContentEncodingIndex + HeaderValueMaxSize;
+            internal const int DstBlobContentLanguageLengthIndex = DstBlobContentEncodingIndex + HeaderValueNumBytes;
             /// <summary>Index: 12,325</summary>
-            internal const int DstBlobContentLanguageIndex = DstBlobContentLanguageLengthIndex + LongSizeInBytes;
-            internal const int DstBlobContentDispositionLengthIndex = DstBlobContentLanguageIndex + HeaderValueMaxSize;
-            internal const int DstBlobContentDispositionIndex = DstBlobContentDispositionLengthIndex + LongSizeInBytes;
-            internal const int DstBlobCacheControlLengthIndex = DstBlobContentDispositionIndex + HeaderValueMaxSize;
-            internal const int DstBlobCacheControlIndex = DstBlobCacheControlLengthIndex + LongSizeInBytes;
-            internal const int DstBlobBlockBlobTierIndex = DstBlobCacheControlIndex + HeaderValueMaxSize;
+            internal const int DstBlobContentLanguageIndex = DstBlobContentLanguageLengthIndex + UShortSizeInBytes;
+            internal const int DstBlobContentDispositionLengthIndex = DstBlobContentLanguageIndex + HeaderValueNumBytes;
+            internal const int DstBlobContentDispositionIndex = DstBlobContentDispositionLengthIndex + UShortSizeInBytes;
+            internal const int DstBlobCacheControlLengthIndex = DstBlobContentDispositionIndex + HeaderValueNumBytes;
+            internal const int DstBlobCacheControlIndex = DstBlobCacheControlLengthIndex + UShortSizeInBytes;
+            internal const int DstBlobBlockBlobTierIndex = DstBlobCacheControlIndex + HeaderValueNumBytes;
             internal const int DstBlobPageBlobTierIndex = DstBlobBlockBlobTierIndex + OneByte;
             internal const int DstBlobPutMd5Index = DstBlobPageBlobTierIndex + OneByte;
             internal const int DstBlobMetadataLengthIndex = DstBlobPutMd5Index + OneByte;
-            internal const int DstBlobMetadataIndex = DstBlobMetadataLengthIndex + LongSizeInBytes;
-            internal const int DstBlobTagsLengthIndex = DstBlobMetadataIndex + MetadataStrMaxSize;
+            internal const int DstBlobMetadataIndex = DstBlobMetadataLengthIndex + UShortSizeInBytes;
+            internal const int DstBlobTagsLengthIndex = DstBlobMetadataIndex + MetadataStrNumBytes;
             internal const int DstBlobTagsIndex = DstBlobTagsLengthIndex + LongSizeInBytes;
-            internal const int DstBlobIsSourceEncrypted = DstBlobTagsIndex + BlobTagsStrMaxSize;
+            internal const int DstBlobIsSourceEncrypted = DstBlobTagsIndex + BlobTagsStrNumBytes;
             internal const int DstBlobCpkScopeInfoLengthIndex = DstBlobIsSourceEncrypted + OneByte;
-            internal const int DstBlobCpkScopeInfoIndex = DstBlobCpkScopeInfoLengthIndex + LongSizeInBytes;
-            internal const int DstBlobBlockSizeIndex = DstBlobCpkScopeInfoIndex + HeaderValueMaxSize;
+            internal const int DstBlobCpkScopeInfoIndex = DstBlobCpkScopeInfoLengthIndex + UShortSizeInBytes;
+            internal const int DstBlobBlockSizeIndex = DstBlobCpkScopeInfoIndex + HeaderValueNumBytes;
 
             // JobPartPlanDestinationLocal Indexes
             internal const int DstLocalPreserveLastModifiedTimeIndex = DstBlobBlockSizeIndex + LongSizeInBytes;
