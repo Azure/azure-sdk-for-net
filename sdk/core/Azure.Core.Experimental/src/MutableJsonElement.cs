@@ -527,9 +527,10 @@ namespace Azure.Core.Json
         private byte[] GetRawBytes()
         {
             using MemoryStream changedElementStream = new();
-            using Utf8JsonWriter changedElementWriter = new(changedElementStream);
-            WriteTo(changedElementWriter);
-            changedElementWriter.Flush();
+            using (Utf8JsonWriter changedElementWriter = new(changedElementStream))
+            {
+                WriteTo(changedElementWriter);
+            }
 
             return changedElementStream.ToArray();
         }
@@ -537,9 +538,11 @@ namespace Azure.Core.Json
         internal static Utf8JsonReader GetReaderForElement(JsonElement element)
         {
             using MemoryStream stream = new();
-            using Utf8JsonWriter writer = new(stream);
-            element.WriteTo(writer);
-            writer.Flush();
+            using (Utf8JsonWriter writer = new(stream))
+            {
+                element.WriteTo(writer);
+            }
+
             return new Utf8JsonReader(stream.GetBuffer().AsSpan().Slice(0, (int)stream.Position));
         }
 
