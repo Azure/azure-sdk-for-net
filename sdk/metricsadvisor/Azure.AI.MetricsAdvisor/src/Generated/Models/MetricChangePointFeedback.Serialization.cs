@@ -78,7 +78,6 @@ namespace Azure.AI.MetricsAdvisor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdTime = property.Value.GetDateTimeOffset("O");
