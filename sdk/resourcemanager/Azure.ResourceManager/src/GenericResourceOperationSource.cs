@@ -34,7 +34,7 @@ namespace Azure.ResourceManager
             var model = _resource.DataBag;
             var memoryStream = new MemoryStream();
             response.ContentStream.CopyTo(memoryStream);
-            model.TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
+            model.TryDeserialize(memoryStream, out int bytesConsumed);
             return (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { _client, model }, null);
         }
     }

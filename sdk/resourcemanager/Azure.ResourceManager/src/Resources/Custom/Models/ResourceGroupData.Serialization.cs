@@ -21,19 +21,19 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        bool ISerializable.TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format)
+        bool ISerializable.TryDeserialize(Stream data, out int bytesConsumed, StandardFormat format)
         {
-            using var document = JsonDocument.Parse(BinaryData.FromBytes(data.ToArray()).ToString());
+            using var document = JsonDocument.Parse(BinaryData.FromStream(data).ToString());
             Deserialize(document.RootElement);
-            bytesConsumed = data.Length;
+            bytesConsumed = (int)data.Length;
             return true;
         }
 
-        bool ISerializable.TrySerialize(Span<byte> buffer, out int bytesWritten, StandardFormat format)
+        bool ISerializable.TrySerialize(Stream buffer, out int bytesWritten, StandardFormat format)
         {
-            var writer = new Utf8JsonWriter(new MemoryStream(buffer.ToArray()));
+            var writer = new Utf8JsonWriter(buffer);
             ((IUtf8JsonSerializable)this).Write(writer);
-            bytesWritten = buffer.Length;
+            bytesWritten = (int)buffer.Length;
             return true;
         }
 

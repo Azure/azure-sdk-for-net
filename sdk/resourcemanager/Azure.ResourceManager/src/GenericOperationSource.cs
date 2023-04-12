@@ -28,7 +28,7 @@ namespace Azure.ResourceManager
             var model = Activator.CreateInstance(typeof(T));
             var memoryStream = new MemoryStream();
             response.ContentStream.CopyTo(memoryStream);
-            ((ISerializable)model).TryDeserialize(new ReadOnlySpan<byte>(memoryStream.ToArray()), out int bytesConsumed);
+            ((ISerializable)model).TryDeserialize(memoryStream, out int bytesConsumed);
             return (T)model;
         }
     }

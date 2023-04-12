@@ -5,6 +5,7 @@
 
 using System;
 using System.Buffers;
+using System.IO;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="format"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public bool TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format = default)
+        public bool TryDeserialize(Stream data, out int bytesConsumed, StandardFormat format = default)
         {
             throw new NotImplementedException();
         }
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="format"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public bool TrySerialize(Span<byte> buffer, out int bytesWritten, StandardFormat format = default)
+        public bool TrySerialize(Stream buffer, out int bytesWritten, StandardFormat format = default)
         {
             throw new NotImplementedException();
         }

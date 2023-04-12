@@ -3,8 +3,8 @@
 
 #nullable enable
 
-using System;
 using System.Buffers;
+using System.IO;
 
 namespace Azure.ResourceManager
 {
@@ -12,9 +12,9 @@ namespace Azure.ResourceManager
     public interface ISerializable
     {
         /// <summary> Try to serialize the object into a buffer. </summary>
-        bool TrySerialize(Span<byte> buffer, out int bytesWritten, StandardFormat format = default);
+        bool TrySerialize(Stream buffer, out int bytesWritten, StandardFormat format = default);
 
         /// <summary> Try to deserialize the object from a buffer. </summary>
-        bool TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format = default);
+        bool TryDeserialize(Stream data, out int bytesConsumed, StandardFormat format = default);
     }
 }
