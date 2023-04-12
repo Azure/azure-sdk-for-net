@@ -3,6 +3,8 @@
 
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Storage
 {
@@ -21,7 +23,9 @@ namespace Azure.Storage
         /// Hashes the contents of the stream.
         /// </summary>
         /// <param name="stream">Content</param>
-        byte[] ComputeHash(Stream stream);
+        /// <param name="async">Whether to perform the operation asynchronously.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        Task<byte[]> ComputeHashInternal(Stream stream, bool async, CancellationToken cancellationToken);
 
         /// <summary>
         /// Appends content to hash calculation.
