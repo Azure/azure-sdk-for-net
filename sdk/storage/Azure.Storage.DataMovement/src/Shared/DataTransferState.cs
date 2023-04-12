@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using static Azure.Core.Pipeline.TaskExtensions;
 
 namespace Azure.Storage.DataMovement
 {
@@ -167,14 +168,14 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        public Task<bool> TryPauseAsync(CancellationToken cancellationToken)
+        public async Task<bool> TryPauseAsync(CancellationToken cancellationToken)
         {
             if (StorageTransferStatus.Paused == _status ||
                 StorageTransferStatus.Completed == _status ||
                 StorageTransferStatus.CompletedWithSkippedTransfers == _status ||
                 StorageTransferStatus.CompletedWithFailedTransfers == _status)
             {
-                return Task.FromResult(false);
+                return false;
             }
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             // Call the inner cancellation token to stop the transfer job
@@ -182,11 +183,10 @@ namespace Azure.Storage.DataMovement
             if (TriggerCancellation())
             {
                 // Wait until full pause has completed.
-                //cancellationToken.Register(() => CompletionSource.TrySetCanceled(cancellationToken), useSynchronizationContext: false);
-                CompletionSource.Task.Wait(cancellationToken);
-                return Task.FromResult(true);
+                await CompletionSource.Task.AwaitWithCancellation(cancellationToken);
+                return true;
             }
-            return Task.FromResult(false);
+            return false;
         }
 
         internal bool TriggerCancellation()

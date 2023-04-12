@@ -159,14 +159,14 @@ namespace Azure.Storage.DataMovement
                         length: _initialTransferSize,
                         _cancellationToken);
 
-            ReadStreamStorageResourceResult initialResult = default;
             try
             {
+                ReadStreamStorageResourceResult initialResult = default;
                 try
                 {
                     initialResult = await initialTask.ConfigureAwait(false);
                 }
-                catch // TODO: only catch initial range error.
+                catch
                 {
                     // Range not accepted, we need to attempt to use a default range
                     initialResult = await _sourceResource.ReadStreamAsync(

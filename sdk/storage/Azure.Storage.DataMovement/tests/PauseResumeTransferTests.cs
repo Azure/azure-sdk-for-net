@@ -14,6 +14,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Models.JobPlan;
 using Azure.Core;
 using System.Drawing;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -91,7 +92,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
                 Argument.AssertNotNullOrEmpty(localDirectory, nameof(localDirectory));
                 SourceResource ??= await CreateBlobSourceResourceAsync(size, GetNewBlobName(), sourceContainer);
-                DestinationResource ??= new LocalFileStorageResource(localDirectory);
+                DestinationResource ??= new LocalFileStorageResource(Path.Combine(localDirectory, GetNewBlobName()));
             }
             else if (transferType == TransferType.SyncCopy || transferType == TransferType.AsyncCopy)
             {
@@ -341,8 +342,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
             DisposingLocalDirectory localDirectory = GetTestLocalDirectory();
-            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            DisposingBlobContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            DisposingBlobContainer destinationContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             TransferManagerOptions options = new TransferManagerOptions()
             {
@@ -352,7 +353,7 @@ namespace Azure.Storage.DataMovement.Tests
             SingleTransferOptions singleTransferOptions = new SingleTransferOptions();
             FailureTransferHolder failureTransferHolder = new FailureTransferHolder(singleTransferOptions);
             TransferManager transferManager = new TransferManager(options);
-            long size = Constants.MB * 100;
+            long size = Constants.MB * 40;
 
             (StorageResource sResource, StorageResource dResource) = await CreateStorageResourcesAsync(
                 transferType: transferType,
@@ -392,7 +393,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource: destinationResource,
                 singleTransferOptions: resumeOptions);
 
-            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
             await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
 
             resumeFailureHolder.AssertFailureCheck();

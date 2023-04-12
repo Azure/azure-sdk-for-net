@@ -310,5 +310,18 @@ namespace Azure.Storage.DataMovement.Blobs
                 _blocks.Clear();
             }
         }
+
+        /// <summary>
+        /// Deletes the respective storage resource.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns>
+        /// If the storage resource exists and is deleted, true will be returned.
+        /// Otherwise if the storage resource does not exist, false will be returned.
+        /// </returns>
+        public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
+        {
+            return await _blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
     }
 }
