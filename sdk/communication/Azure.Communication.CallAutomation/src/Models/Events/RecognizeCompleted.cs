@@ -9,11 +9,11 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The Recognize Canceled event.
+    /// Recognize completed event.
     /// </summary>
     public partial class RecognizeCompleted : CallAutomationEventBase
     {
-        /// <summary> The recognize Dtmf result. </summary>
+        /// <summary> The abstract recognize result. </summary>
         public RecognizeResult RecognizeResult { get; }
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The Recognize Choice completed event.
     /// </summary>
-    public class RecognizeChoiceCompleted : RecognizeCompleted
+    internal class RecognizeChoiceCompleted : RecognizeCompleted
     {
         /// <summary> The recognize choice result. </summary>
         public ChoiceResult ChoiceResult { get; }

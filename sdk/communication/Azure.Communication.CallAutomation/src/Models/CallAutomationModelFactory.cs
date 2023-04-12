@@ -172,7 +172,7 @@ namespace Azure.Communication.CallAutomation
         /// </param>
         /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
         /// <returns> A new <see cref="CallAutomation.RecognizeChoiceCompleted"/> instance for mocking. </returns>
-        public static RecognizeChoiceCompleted RecognizeChoiceCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, ChoiceResult choiceResult = null)
+        internal static RecognizeChoiceCompleted RecognizeChoiceCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, ChoiceResult choiceResult = null)
         {
             return new RecognizeChoiceCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, choiceResult);
         }
@@ -189,7 +189,7 @@ namespace Azure.Communication.CallAutomation
         /// </param>
         /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
         /// <returns> A new <see cref="CallAutomation.RecognizeDtmfCompleted"/> instance for mocking. </returns>
-        public static RecognizeDtmfCompleted RecognizeDtmfCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null)
+        internal static RecognizeDtmfCompleted RecognizeDtmfCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null)
         {
             return new RecognizeDtmfCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, collectTonesResult);
         }
