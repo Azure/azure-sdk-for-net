@@ -30,7 +30,7 @@ This common record/playback server also has the ability to restore and retrieve 
 
 For usage of the azure-sdk `test-proxy` to store and retrieve recordings, please reference [this readme](https://github.com/Azure/azure-sdk-tools/tree/main/tools/test-proxy/documentation/asset-sync#asset-sync-retrieve-external-test-recordings).
 
-For detailed reading on _why_ the azure-sdk team is storing their assets in an external repository, please read [this document](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/README.md) for additional detail.
+For detailed reading on _why_ the azure-sdk team is storing their assets in an external repository, please read [this document](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/documentation/test-proxy/initial-investigation.md) for additional detail.
 
 ## Contributing
 
