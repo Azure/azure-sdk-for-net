@@ -58,10 +58,12 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal static class PlanFile
         {
+            internal const string SchemaVersion_b1 = "b1";
+            internal const string SchemaVersion = SchemaVersion_b1; // TODO: remove b for beta
+
             // Job Plan file extension. e.g. the file extension will look like {transferid}--{jobpartNumber}.steV{schemaVersion}
             internal const string FileExtension = ".steV";
             internal const string JobPlanFileNameDelimiter = "--";
-            internal const string SchemaVersion = "b1"; // TODO: remove b for beta
             internal const int JobPartLength = 5;
             internal const int IdSize = 36; // Size of a guid with hyphens
             internal const int CustomHeaderMaxBytes = 256;

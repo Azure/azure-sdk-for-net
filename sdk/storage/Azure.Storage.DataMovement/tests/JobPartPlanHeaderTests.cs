@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Azure.Storage.DataMovement.JobPlanModels;
+using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -408,69 +409,20 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 header.Serialize(stream);
 
-                // Act
-                JobPartPlanHeader deserializedHeader = JobPartPlanHeader.Deserialize(stream);
+                // Act / Assert
+                DeserializeAndVerify(stream, DataMovementConstants.PlanFile.SchemaVersion, metadata, blobTags);
+            }
+        }
 
-                // Assert
-                Assert.AreEqual(deserializedHeader.Version, DataMovementConstants.PlanFile.SchemaVersion);
-                Assert.AreEqual(deserializedHeader.StartTime, _testStartTime);
-                Assert.AreEqual(deserializedHeader.TransferId, _testTransferId);
-                Assert.AreEqual(deserializedHeader.PartNumber, _testPartNumber);
-                Assert.AreEqual(deserializedHeader.SourcePath, _testSourcePath);
-                Assert.AreEqual(deserializedHeader.SourcePathLength, _testSourcePath.Length);
-                Assert.AreEqual(deserializedHeader.SourceExtraQuery, _testSourceQuery);
-                Assert.AreEqual(deserializedHeader.SourceExtraQueryLength, _testSourceQuery.Length);
-                Assert.AreEqual(deserializedHeader.DestinationPath, _testDestinationPath);
-                Assert.AreEqual(deserializedHeader.DestinationPathLength, _testDestinationPath.Length);
-                Assert.AreEqual(deserializedHeader.DestinationExtraQuery, _testDestinationQuery);
-                Assert.AreEqual(deserializedHeader.DestinationExtraQueryLength, _testDestinationQuery.Length);
-                Assert.IsFalse(deserializedHeader.IsFinalPart);
-                Assert.IsFalse(deserializedHeader.ForceWrite);
-                Assert.IsFalse(deserializedHeader.ForceIfReadOnly);
-                Assert.IsFalse(deserializedHeader.AutoDecompress);
-                Assert.AreEqual(deserializedHeader.Priority, _testPriority);
-                Assert.AreEqual(deserializedHeader.TTLAfterCompletion, _testTtlAfterCompletion);
-                Assert.AreEqual(deserializedHeader.JobPlanOperation, _testJobPlanOperation);
-                Assert.AreEqual(deserializedHeader.FolderPropertyMode, _testFolderPropertiesMode);
-                Assert.AreEqual(deserializedHeader.NumberChunks, _testNumberChunks);
-                Assert.AreEqual(deserializedHeader.DstBlobData.BlobType, _testBlobType);
-                Assert.IsFalse(deserializedHeader.DstBlobData.NoGuessMimeType);
-                Assert.AreEqual(deserializedHeader.DstBlobData.ContentType, _testContentType);
-                Assert.AreEqual(deserializedHeader.DstBlobData.ContentTypeLength, _testContentType.Length);
-                Assert.AreEqual(deserializedHeader.DstBlobData.ContentEncoding, _testContentEncoding);
-                Assert.AreEqual(deserializedHeader.DstBlobData.ContentEncodingLength, _testContentEncoding.Length);
-                Assert.AreEqual(deserializedHeader.DstBlobData.ContentLanguage, _testContentLanguage);
-                Assert.AreEqual(deserializedHeader.DstBlobData.ContentLanguageLength, _testContentLanguage.Length);
-                Assert.AreEqual(deserializedHeader.DstBlobData.ContentDisposition, _testContentDisposition);
-                Assert.AreEqual(deserializedHeader.DstBlobData.ContentDispositionLength, _testContentDisposition.Length);
-                Assert.AreEqual(deserializedHeader.DstBlobData.CacheControl, _testCacheControl);
-                Assert.AreEqual(deserializedHeader.DstBlobData.CacheControlLength, _testCacheControl.Length);
-                Assert.AreEqual(deserializedHeader.DstBlobData.BlockBlobTier, _testBlockBlobTier);
-                Assert.AreEqual(deserializedHeader.DstBlobData.PageBlobTier, _testPageBlobTier);
-                Assert.IsFalse(deserializedHeader.DstBlobData.PutMd5);
-                string metadataStr = DictionaryToString(metadata);
-                Assert.AreEqual(deserializedHeader.DstBlobData.Metadata, metadataStr);
-                Assert.AreEqual(deserializedHeader.DstBlobData.MetadataLength, metadataStr.Length);
-                string blobTagsStr = DictionaryToString(blobTags);
-                Assert.AreEqual(deserializedHeader.DstBlobData.BlobTags, blobTagsStr);
-                Assert.AreEqual(deserializedHeader.DstBlobData.BlobTagsLength, blobTagsStr.Length);
-                Assert.IsFalse(deserializedHeader.DstBlobData.IsSourceEncrypted);
-                Assert.AreEqual(deserializedHeader.DstBlobData.CpkScopeInfo, _testCpkScopeInfo);
-                Assert.AreEqual(deserializedHeader.DstBlobData.CpkScopeInfoLength, _testCpkScopeInfo.Length);
-                Assert.AreEqual(deserializedHeader.DstBlobData.BlockSize, _testBlockSize);
-                Assert.IsFalse(deserializedHeader.DstLocalData.PreserveLastModifiedTime);
-                Assert.AreEqual(deserializedHeader.DstLocalData.MD5VerificationOption, _testMd5VerificationOption);
-                Assert.IsFalse(deserializedHeader.PreserveSMBPermissions);
-                Assert.IsFalse(deserializedHeader.PreserveSMBInfo);
-                Assert.IsFalse(deserializedHeader.S2SGetPropertiesInBackend);
-                Assert.IsFalse(deserializedHeader.S2SSourceChangeValidation);
-                Assert.IsFalse(deserializedHeader.DestLengthValidation);
-                Assert.AreEqual(deserializedHeader.S2SInvalidMetadataHandleOption, _testS2sInvalidMetadataHandleOption);
-                Assert.AreEqual(deserializedHeader.DeleteSnapshotsOption, _testDeleteSnapshotsOption);
-                Assert.AreEqual(deserializedHeader.PermanentDeleteOption, _testPermanentDeleteOption);
-                Assert.AreEqual(deserializedHeader.RehydratePriorityType, _testRehydratePriorityType);
-                Assert.AreEqual(deserializedHeader.AtomicJobStatus, _testJobStatus);
-                Assert.AreEqual(deserializedHeader.AtomicPartStatus, _testPartStatus);
+        [Test]
+        public void Deserialize_File_Version_b1()
+        {
+            // Arrange
+            string samplePath = Path.Combine("Resources", "SampleJobPartPlanFile.steVb1");
+            using (FileStream stream = File.OpenRead(samplePath))
+            {
+                // Act / Assert
+                DeserializeAndVerify(stream, DataMovementConstants.PlanFile.SchemaVersion_b1, BuildMetadata(), BuildTags());
             }
         }
 
@@ -483,6 +435,76 @@ namespace Azure.Storage.DataMovement.Tests
             // Act / Assert
             Assert.Catch<ArgumentNullException>(
                 () => JobPartPlanHeader.Deserialize(default));
+        }
+
+        private void DeserializeAndVerify(
+            Stream stream,
+            string schemaVersion,
+            IDictionary<string, string> metadata,
+            IDictionary<string, string> blobTags)
+        {
+            JobPartPlanHeader deserializedHeader = JobPartPlanHeader.Deserialize(stream);
+
+            // Assert
+            Assert.AreEqual(deserializedHeader.Version, schemaVersion);
+            Assert.AreEqual(deserializedHeader.StartTime, _testStartTime);
+            Assert.AreEqual(deserializedHeader.TransferId, _testTransferId);
+            Assert.AreEqual(deserializedHeader.PartNumber, _testPartNumber);
+            Assert.AreEqual(deserializedHeader.SourcePath, _testSourcePath);
+            Assert.AreEqual(deserializedHeader.SourcePathLength, _testSourcePath.Length);
+            Assert.AreEqual(deserializedHeader.SourceExtraQuery, _testSourceQuery);
+            Assert.AreEqual(deserializedHeader.SourceExtraQueryLength, _testSourceQuery.Length);
+            Assert.AreEqual(deserializedHeader.DestinationPath, _testDestinationPath);
+            Assert.AreEqual(deserializedHeader.DestinationPathLength, _testDestinationPath.Length);
+            Assert.AreEqual(deserializedHeader.DestinationExtraQuery, _testDestinationQuery);
+            Assert.AreEqual(deserializedHeader.DestinationExtraQueryLength, _testDestinationQuery.Length);
+            Assert.IsFalse(deserializedHeader.IsFinalPart);
+            Assert.IsFalse(deserializedHeader.ForceWrite);
+            Assert.IsFalse(deserializedHeader.ForceIfReadOnly);
+            Assert.IsFalse(deserializedHeader.AutoDecompress);
+            Assert.AreEqual(deserializedHeader.Priority, _testPriority);
+            Assert.AreEqual(deserializedHeader.TTLAfterCompletion, _testTtlAfterCompletion);
+            Assert.AreEqual(deserializedHeader.JobPlanOperation, _testJobPlanOperation);
+            Assert.AreEqual(deserializedHeader.FolderPropertyMode, _testFolderPropertiesMode);
+            Assert.AreEqual(deserializedHeader.NumberChunks, _testNumberChunks);
+            Assert.AreEqual(deserializedHeader.DstBlobData.BlobType, _testBlobType);
+            Assert.IsFalse(deserializedHeader.DstBlobData.NoGuessMimeType);
+            Assert.AreEqual(deserializedHeader.DstBlobData.ContentType, _testContentType);
+            Assert.AreEqual(deserializedHeader.DstBlobData.ContentTypeLength, _testContentType.Length);
+            Assert.AreEqual(deserializedHeader.DstBlobData.ContentEncoding, _testContentEncoding);
+            Assert.AreEqual(deserializedHeader.DstBlobData.ContentEncodingLength, _testContentEncoding.Length);
+            Assert.AreEqual(deserializedHeader.DstBlobData.ContentLanguage, _testContentLanguage);
+            Assert.AreEqual(deserializedHeader.DstBlobData.ContentLanguageLength, _testContentLanguage.Length);
+            Assert.AreEqual(deserializedHeader.DstBlobData.ContentDisposition, _testContentDisposition);
+            Assert.AreEqual(deserializedHeader.DstBlobData.ContentDispositionLength, _testContentDisposition.Length);
+            Assert.AreEqual(deserializedHeader.DstBlobData.CacheControl, _testCacheControl);
+            Assert.AreEqual(deserializedHeader.DstBlobData.CacheControlLength, _testCacheControl.Length);
+            Assert.AreEqual(deserializedHeader.DstBlobData.BlockBlobTier, _testBlockBlobTier);
+            Assert.AreEqual(deserializedHeader.DstBlobData.PageBlobTier, _testPageBlobTier);
+            Assert.IsFalse(deserializedHeader.DstBlobData.PutMd5);
+            string metadataStr = DictionaryToString(metadata);
+            Assert.AreEqual(deserializedHeader.DstBlobData.Metadata, metadataStr);
+            Assert.AreEqual(deserializedHeader.DstBlobData.MetadataLength, metadataStr.Length);
+            string blobTagsStr = DictionaryToString(blobTags);
+            Assert.AreEqual(deserializedHeader.DstBlobData.BlobTags, blobTagsStr);
+            Assert.AreEqual(deserializedHeader.DstBlobData.BlobTagsLength, blobTagsStr.Length);
+            Assert.IsFalse(deserializedHeader.DstBlobData.IsSourceEncrypted);
+            Assert.AreEqual(deserializedHeader.DstBlobData.CpkScopeInfo, _testCpkScopeInfo);
+            Assert.AreEqual(deserializedHeader.DstBlobData.CpkScopeInfoLength, _testCpkScopeInfo.Length);
+            Assert.AreEqual(deserializedHeader.DstBlobData.BlockSize, _testBlockSize);
+            Assert.IsFalse(deserializedHeader.DstLocalData.PreserveLastModifiedTime);
+            Assert.AreEqual(deserializedHeader.DstLocalData.MD5VerificationOption, _testMd5VerificationOption);
+            Assert.IsFalse(deserializedHeader.PreserveSMBPermissions);
+            Assert.IsFalse(deserializedHeader.PreserveSMBInfo);
+            Assert.IsFalse(deserializedHeader.S2SGetPropertiesInBackend);
+            Assert.IsFalse(deserializedHeader.S2SSourceChangeValidation);
+            Assert.IsFalse(deserializedHeader.DestLengthValidation);
+            Assert.AreEqual(deserializedHeader.S2SInvalidMetadataHandleOption, _testS2sInvalidMetadataHandleOption);
+            Assert.AreEqual(deserializedHeader.DeleteSnapshotsOption, _testDeleteSnapshotsOption);
+            Assert.AreEqual(deserializedHeader.PermanentDeleteOption, _testPermanentDeleteOption);
+            Assert.AreEqual(deserializedHeader.RehydratePriorityType, _testRehydratePriorityType);
+            Assert.AreEqual(deserializedHeader.AtomicJobStatus, _testJobStatus);
+            Assert.AreEqual(deserializedHeader.AtomicPartStatus, _testPartStatus);
         }
     }
 }
