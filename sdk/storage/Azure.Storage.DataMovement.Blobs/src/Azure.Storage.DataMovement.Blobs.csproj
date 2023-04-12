@@ -99,8 +99,6 @@
     <Compile Include="$(AzureStorageDataMovementSharedSources)ProgressMultipleParititonedStream.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)PathScanner.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)PathScannerFactory.cs" LinkBase="Shared\DataMovement" />
-    <Compile Include="$(AzureStorageDataMovementSharedSources)PlanJobWriter.cs" LinkBase="Shared\DataMovement" />
-    <Compile Include="$(AzureStorageDataMovementSharedSources)PlanJobWriterFactory.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)StorageManagerTransferStatus.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>

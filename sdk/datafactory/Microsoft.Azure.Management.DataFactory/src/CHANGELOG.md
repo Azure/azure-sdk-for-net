@@ -1,5 +1,9 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 9.3.0
+###  Feature Additions
+- Added support customProperties in IntegrationRuntimeDataFlow
+
 ## Version 9.2.0
 ###  Feature Additions
 - Added AzureBlobFS sasUri and sasToken properties in ADF
