@@ -9149,8 +9149,8 @@
           "resource": {
             "id": "sql-container-3570",
             "restoreParameters": {
-              "restoreSource": "/subscriptions/23587e98-b6ac-4328-a753-03bcd3c8e744/providers/Microsoft.DocumentDB/locations/westus2/restorableDatabaseAccounts/f1fea970-b37e-493b-a790-84179e554b2d",
-              "restoreTimestampInUtc": "2023-04-11T17:36:22.0754903Z"
+                "restoreSource": "/subscriptions/23587e98-b6ac-4328-a753-03bcd3c8e744/providers/Microsoft.DocumentDB/locations/westus2/restorableDatabaseAccounts/f1fea970-b37e-493b-a790-84179e554b2d",
+                "restoreTimestampInUtc": "2023-04-11T17:37:00.0000000Z"
             },
             "createMode": "Restore"
           }

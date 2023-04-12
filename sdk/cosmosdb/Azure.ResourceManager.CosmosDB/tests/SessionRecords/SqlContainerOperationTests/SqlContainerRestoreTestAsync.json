@@ -9168,8 +9168,8 @@
           "resource": {
             "id": "sql-container-138",
             "restoreParameters": {
-              "restoreSource": "/subscriptions/23587e98-b6ac-4328-a753-03bcd3c8e744/providers/Microsoft.DocumentDB/locations/westus2/restorableDatabaseAccounts/90589cce-c1d5-46cc-a2ea-7387690a0813",
-              "restoreTimestampInUtc": "2023-04-11T17:51:28.1889705Z"
+                "restoreSource": "/subscriptions/23587e98-b6ac-4328-a753-03bcd3c8e744/providers/Microsoft.DocumentDB/locations/westus2/restorableDatabaseAccounts/90589cce-c1d5-46cc-a2ea-7387690a0813",
+                "restoreTimestampInUtc": "2023-04-11T17:51:56.0000000Z"
             },
             "createMode": "Restore"
           }
