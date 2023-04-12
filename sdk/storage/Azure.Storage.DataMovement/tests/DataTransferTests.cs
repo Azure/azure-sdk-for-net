@@ -27,6 +27,29 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [TestCase(StorageTransferStatus.None)]
+        [TestCase(StorageTransferStatus.Queued)]
+        [TestCase(StorageTransferStatus.InProgress)]
+        [TestCase(StorageTransferStatus.PauseInProgress)]
+        [TestCase(StorageTransferStatus.CancellationInProgress)]
+        public void HasCompleted_False(StorageTransferStatus status)
+        {
+            DataTransfer transfer = new DataTransfer(status);
+            Assert.IsFalse(transfer.HasCompleted);
+        }
+
+        [Test]
+        [TestCase(StorageTransferStatus.Paused)]
+        [TestCase(StorageTransferStatus.Completed)]
+        [TestCase(StorageTransferStatus.CompletedWithSkippedTransfers)]
+        [TestCase(StorageTransferStatus.CompletedWithFailedTransfers)]
+        public void HasCompleted_True(StorageTransferStatus status)
+        {
+            DataTransfer transfer = new DataTransfer(status);
+            Assert.IsTrue(transfer.HasCompleted);
+        }
+
+        [Test]
         public void EnsureCompleted()
         {
             DataTransfer transfer = new DataTransfer(StorageTransferStatus.Completed);
@@ -65,6 +88,59 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 Assert.AreEqual(exception.Message, "A task was canceled.");
             }
+        }
+
+        [Test]
+        public async Task TryPauseAsync()
+        {
+            DataTransfer transfer = new DataTransfer(StorageTransferStatus.InProgress);
+
+            Task<bool> pauseTask = transfer.TryPauseAsync();
+
+            Assert.AreEqual(StorageTransferStatus.PauseInProgress, transfer.TransferStatus);
+
+            if (!transfer._state.TrySetTransferStatus(StorageTransferStatus.Paused))
+            {
+                Assert.Fail("Unable to set the transfer status internally to the DataTransfer.");
+            }
+
+            bool pauseResult = await pauseTask;
+
+            Assert.IsTrue(pauseResult);
+            Assert.IsTrue(transfer.HasCompleted);
+        }
+
+        [Test]
+        [TestCase(StorageTransferStatus.Paused)]
+        [TestCase(StorageTransferStatus.Completed)]
+        [TestCase(StorageTransferStatus.CompletedWithSkippedTransfers)]
+        [TestCase(StorageTransferStatus.CompletedWithFailedTransfers)]
+        public async Task TryPauseAsync_AlreadyPaused(StorageTransferStatus status)
+        {
+            DataTransfer transfer = new DataTransfer(status);
+
+            bool pauseResult = await transfer.TryPauseAsync();
+
+            Assert.IsFalse(pauseResult);
+            Assert.IsTrue(transfer.HasCompleted);
+        }
+
+        [Test]
+        public async Task TryPauseAsync_CancellationToken()
+        {
+            DataTransfer transfer = new DataTransfer(StorageTransferStatus.InProgress);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
+
+            try
+            {
+                await transfer.TryPauseAsync(cancellationTokenSource.Token);
+            }
+            catch (TaskCanceledException exception)
+            {
+                Assert.AreEqual(exception.Message, "A task was canceled.");
+            }
+            Assert.AreEqual(StorageTransferStatus.PauseInProgress, transfer.TransferStatus);
+            Assert.IsFalse(transfer.HasCompleted);
         }
     }
 }
