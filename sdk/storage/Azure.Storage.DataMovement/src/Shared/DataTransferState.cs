@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using static Azure.Core.Pipeline.TaskExtensions;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement
 {
