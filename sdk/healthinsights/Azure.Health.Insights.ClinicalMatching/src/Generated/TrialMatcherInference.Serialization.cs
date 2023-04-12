@@ -59,7 +59,6 @@ namespace Azure.Health.Insights.ClinicalMatching
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TrialMatcherInferenceEvidence> array = new List<TrialMatcherInferenceEvidence>();
@@ -89,7 +88,6 @@ namespace Azure.Health.Insights.ClinicalMatching
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = ClinicalTrialMetadata.DeserializeClinicalTrialMetadata(property.Value);

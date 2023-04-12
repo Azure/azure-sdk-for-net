@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.IotCentral.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     order = property.Value.GetInt32();
@@ -73,7 +72,6 @@ namespace Azure.ResourceManager.IotCentral.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IotCentralAppTemplateLocation> array = new List<IotCentralAppTemplateLocation>();

@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accessEndpoint = IntegrationServiceEnvironmentAccessEndpoint.DeserializeIntegrationServiceEnvironmentAccessEndpoint(property.Value);
@@ -69,7 +68,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LogicResourceReference> array = new List<LogicResourceReference>();
