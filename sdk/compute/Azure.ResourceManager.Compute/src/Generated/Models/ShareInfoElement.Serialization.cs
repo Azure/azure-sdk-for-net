@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        vmUri = null;
                         continue;
                     }
                     vmUri = new Uri(property.Value.GetString());
