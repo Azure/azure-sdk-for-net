@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/f07297ce913bfc911470a86436e73c9aceec0587/specification/monitor/data-plane/ingestion/stable/2023-01-01/DataCollectionRules.json
+require:
+- /mnt/vss/_work/1/s/azure-rest-api-specs/specification/monitor/data-plane/readme.md
 security: AADToken
 security-scopes: https://monitor.azure.com//.default
 ```
@@ -33,3 +33,4 @@ directive:
   where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post.parameters[3]
   transform: $["description"] = "If content is already gzipped, put \"gzip\". Default behavior is to gzip all input";
 ```
+

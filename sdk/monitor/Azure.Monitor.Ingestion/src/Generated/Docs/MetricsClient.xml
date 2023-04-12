@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="BatchAsync(String,String,String,IEnumerable,RequestContent,String,TimeSpan,String,Int32,String,String,RequestContext)">
+<example>
+This sample shows how to call BatchAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MetricsClient(credential);
+
+var data = new {};
+
+Response response = await client.BatchAsync("<baseUrl>", "<subscriptionId>", "<metricnamespace>", new String[]{"<metricnames>"}, RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call BatchAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MetricsClient(credential);
+
+var data = new {
+    resourceids = new[] {
+        new {}
+    },
+};
+
+Response response = await client.BatchAsync("<baseUrl>", "<subscriptionId>", "<metricnamespace>", new String[]{"<metricnames>"}, RequestContent.Create(data), "<timespan>", new TimeSpan(1, 2, 3), "<aggregation>", 1234, "<orderby>", "<filter>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("timespan").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("interval").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("namespace").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("resourceregion").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("resourceid").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("name").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("name").GetProperty("localizedValue").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("displayDescription").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("metadatavalues")[0].GetProperty("name").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("metadatavalues")[0].GetProperty("name").GetProperty("localizedValue").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("metadatavalues")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("timeStamp").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("average").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("minimum").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("maximum").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("count").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("errorMessage").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>ResourceIdList</c>:
+<code>{
+  resourceids: [ResourceIdentifier], # Optional. The list of resource IDs to query metrics for.
+}
+</code>
+
+Response Body:
+
+Schema for <c>MetricResultsResponse</c>:
+<code>{
+  values: [
+    {
+      timespan: string, # Required. The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested.
+      interval: string (duration ISO 8601 Format), # Optional. The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. &apos;P1D&apos; for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made.
+      namespace: string, # Optional. The namespace of the metrics been queried
+      resourceregion: string, # Optional. The region of the resource been queried for metrics.
+      resourceid: string, # Optional. The resource that has been queried for metrics.
+      value: [
+        {
+          id: string, # Required. The metric Id.
+          name: {
+            value: string, # Required. The invariant value.
+            localizedValue: string, # Optional. The display name.
+          }, # Required. The name and the display name of the metric, i.e. it is localizable string.
+          displayDescription: string, # Required. Description of this metric
+          type: string, # Required. The resource type of the metric resource.
+          unit: &quot;Count&quot; | &quot;Bytes&quot; | &quot;Seconds&quot; | &quot;CountPerSecond&quot; | &quot;BytesPerSecond&quot; | &quot;Percent&quot; | &quot;MilliSeconds&quot; | &quot;ByteSeconds&quot; | &quot;Unspecified&quot; | &quot;Cores&quot; | &quot;MilliCores&quot; | &quot;NanoCores&quot; | &quot;BitsPerSecond&quot;, # Required. The unit of the metric.
+          timeseries: [
+            {
+              metadatavalues: [
+                {
+                  name: LocalizableString, # Optional. The name of the metadata.
+                  value: string, # Optional. The value of the metadata.
+                }
+              ], # Optional. The metadata values returned if filter was specified in the call.
+              data: [
+                {
+                  timeStamp: string (ISO 8601 Format), # Required. The timestamp for the metric value in ISO 8601 format.
+                  average: number, # Optional. The average value in the time range.
+                  minimum: number, # Optional. The least value in the time range.
+                  maximum: number, # Optional. The greatest value in the time range.
+                  total: number, # Optional. The sum of all of the values in the time range.
+                  count: number, # Optional. The number of samples in the time range. Can be used to determine the number of values that contributed to the average value.
+                }
+              ], # Optional. An array of data points representing the metric values.  This is only returned if a result type of data is specified.
+            }
+          ], # Required. The time series returned when a data query is performed.
+          errorCode: string, # Optional. &apos;Success&apos; or the error details on query failures for this metric.
+          errorMessage: string, # Optional. Error message encountered querying this specific metric.
+        }
+      ], # Required. The value of the collection.
+    }
+  ], # Optional. The collection of metric data responses per resource, per metric.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Batch(String,String,String,IEnumerable,RequestContent,String,TimeSpan,String,Int32,String,String,RequestContext)">
+<example>
+This sample shows how to call Batch with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MetricsClient(credential);
+
+var data = new {};
+
+Response response = client.Batch("<baseUrl>", "<subscriptionId>", "<metricnamespace>", new String[]{"<metricnames>"}, RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Batch with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MetricsClient(credential);
+
+var data = new {
+    resourceids = new[] {
+        new {}
+    },
+};
+
+Response response = client.Batch("<baseUrl>", "<subscriptionId>", "<metricnamespace>", new String[]{"<metricnames>"}, RequestContent.Create(data), "<timespan>", new TimeSpan(1, 2, 3), "<aggregation>", 1234, "<orderby>", "<filter>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("timespan").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("interval").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("namespace").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("resourceregion").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("resourceid").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("name").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("name").GetProperty("localizedValue").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("displayDescription").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("metadatavalues")[0].GetProperty("name").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("metadatavalues")[0].GetProperty("name").GetProperty("localizedValue").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("metadatavalues")[0].GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("timeStamp").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("average").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("minimum").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("maximum").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("count").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("values")[0].GetProperty("value")[0].GetProperty("errorMessage").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>ResourceIdList</c>:
+<code>{
+  resourceids: [ResourceIdentifier], # Optional. The list of resource IDs to query metrics for.
+}
+</code>
+
+Response Body:
+
+Schema for <c>MetricResultsResponse</c>:
+<code>{
+  values: [
+    {
+      timespan: string, # Required. The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested.
+      interval: string (duration ISO 8601 Format), # Optional. The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. &apos;P1D&apos; for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made.
+      namespace: string, # Optional. The namespace of the metrics been queried
+      resourceregion: string, # Optional. The region of the resource been queried for metrics.
+      resourceid: string, # Optional. The resource that has been queried for metrics.
+      value: [
+        {
+          id: string, # Required. The metric Id.
+          name: {
+            value: string, # Required. The invariant value.
+            localizedValue: string, # Optional. The display name.
+          }, # Required. The name and the display name of the metric, i.e. it is localizable string.
+          displayDescription: string, # Required. Description of this metric
+          type: string, # Required. The resource type of the metric resource.
+          unit: &quot;Count&quot; | &quot;Bytes&quot; | &quot;Seconds&quot; | &quot;CountPerSecond&quot; | &quot;BytesPerSecond&quot; | &quot;Percent&quot; | &quot;MilliSeconds&quot; | &quot;ByteSeconds&quot; | &quot;Unspecified&quot; | &quot;Cores&quot; | &quot;MilliCores&quot; | &quot;NanoCores&quot; | &quot;BitsPerSecond&quot;, # Required. The unit of the metric.
+          timeseries: [
+            {
+              metadatavalues: [
+                {
+                  name: LocalizableString, # Optional. The name of the metadata.
+                  value: string, # Optional. The value of the metadata.
+                }
+              ], # Optional. The metadata values returned if filter was specified in the call.
+              data: [
+                {
+                  timeStamp: string (ISO 8601 Format), # Required. The timestamp for the metric value in ISO 8601 format.
+                  average: number, # Optional. The average value in the time range.
+                  minimum: number, # Optional. The least value in the time range.
+                  maximum: number, # Optional. The greatest value in the time range.
+                  total: number, # Optional. The sum of all of the values in the time range.
+                  count: number, # Optional. The number of samples in the time range. Can be used to determine the number of values that contributed to the average value.
+                }
+              ], # Optional. An array of data points representing the metric values.  This is only returned if a result type of data is specified.
+            }
+          ], # Required. The time series returned when a data query is performed.
+          errorCode: string, # Optional. &apos;Success&apos; or the error details on query failures for this metric.
+          errorMessage: string, # Optional. Error message encountered querying this specific metric.
+        }
+      ], # Required. The value of the collection.
+    }
+  ], # Optional. The collection of metric data responses per resource, per metric.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateAsync(String,String,String,String,String,String,Int32,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MetricsClient(credential);
+
+var data = new {
+    time = "<time>",
+    data = new {
+        baseData = new {
+            metric = "<metric>",
+            namespace = "<namespace>",
+            series = new[] {
+                new {
+                    min = 123.45d,
+                    max = 123.45d,
+                    sum = 123.45d,
+                    count = 1234,
+                }
+            },
+        },
+    },
+};
+
+Response response = await client.CreateAsync("<subscriptionId>", "<resourceGroupName>", "<resourceProvider>", "<resourceTypeName>", "<resourceName>", "<contentType>", 1234, "<authorization>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MetricsClient(credential);
+
+var data = new {
+    time = "<time>",
+    data = new {
+        baseData = new {
+            metric = "<metric>",
+            namespace = "<namespace>",
+            dimNames = new[] {
+                "<String>"
+            },
+            series = new[] {
+                new {
+                    dimValues = new[] {
+                        "<String>"
+                    },
+                    min = 123.45d,
+                    max = 123.45d,
+                    sum = 123.45d,
+                    count = 1234,
+                }
+            },
+        },
+    },
+};
+
+Response response = await client.CreateAsync("<subscriptionId>", "<resourceGroupName>", "<resourceProvider>", "<resourceTypeName>", "<resourceName>", "<contentType>", 1234, "<authorization>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("statusCode").ToString());
+Console.WriteLine(result.GetProperty("apiFailureResponse").GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("apiFailureResponse").GetProperty("error").GetProperty("message").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>AzureMetricsDocument</c>:
+<code>{
+  time: string, # Required. Gets or sets Time property (in ISO 8601 format)
+  data: {
+    baseData: {
+      metric: string, # Required. Gets or sets the Metric name
+      namespace: string, # Required. Gets or sets the Metric namespace
+      dimNames: [string], # Optional. Gets or sets the list of dimension names (optional)
+      series: [
+        {
+          dimValues: [string], # Optional. Gets or sets dimension values
+          min: number, # Required. Gets or sets Min value
+          max: number, # Required. Gets or sets Max value
+          sum: number, # Required. Gets or sets Sum value
+          count: number, # Required. Gets or sets Count value
+        }
+      ], # Required. Gets or sets the list of time series data for the metric (one per unique dimension combination)
+    }, # Required.
+  }, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>AzureMetricsResult</c>:
+<code>{
+  statusCode: number, # Optional. Http status code response 
+  apiFailureResponse: {
+    error: {
+      code: string, # Optional. Gets or sets the azure metrics error code
+      message: string, # Optional. Gets or sets the azure metrics error message
+    }, # Optional.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Create(String,String,String,String,String,String,Int32,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call Create with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MetricsClient(credential);
+
+var data = new {
+    time = "<time>",
+    data = new {
+        baseData = new {
+            metric = "<metric>",
+            namespace = "<namespace>",
+            series = new[] {
+                new {
+                    min = 123.45d,
+                    max = 123.45d,
+                    sum = 123.45d,
+                    count = 1234,
+                }
+            },
+        },
+    },
+};
+
+Response response = client.Create("<subscriptionId>", "<resourceGroupName>", "<resourceProvider>", "<resourceTypeName>", "<resourceName>", "<contentType>", 1234, "<authorization>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Create with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new MetricsClient(credential);
+
+var data = new {
+    time = "<time>",
+    data = new {
+        baseData = new {
+            metric = "<metric>",
+            namespace = "<namespace>",
+            dimNames = new[] {
+                "<String>"
+            },
+            series = new[] {
+                new {
+                    dimValues = new[] {
+                        "<String>"
+                    },
+                    min = 123.45d,
+                    max = 123.45d,
+                    sum = 123.45d,
+                    count = 1234,
+                }
+            },
+        },
+    },
+};
+
+Response response = client.Create("<subscriptionId>", "<resourceGroupName>", "<resourceProvider>", "<resourceTypeName>", "<resourceName>", "<contentType>", 1234, "<authorization>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("statusCode").ToString());
+Console.WriteLine(result.GetProperty("apiFailureResponse").GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("apiFailureResponse").GetProperty("error").GetProperty("message").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>AzureMetricsDocument</c>:
+<code>{
+  time: string, # Required. Gets or sets Time property (in ISO 8601 format)
+  data: {
+    baseData: {
+      metric: string, # Required. Gets or sets the Metric name
+      namespace: string, # Required. Gets or sets the Metric namespace
+      dimNames: [string], # Optional. Gets or sets the list of dimension names (optional)
+      series: [
+        {
+          dimValues: [string], # Optional. Gets or sets dimension values
+          min: number, # Required. Gets or sets Min value
+          max: number, # Required. Gets or sets Max value
+          sum: number, # Required. Gets or sets Sum value
+          count: number, # Required. Gets or sets Count value
+        }
+      ], # Required. Gets or sets the list of time series data for the metric (one per unique dimension combination)
+    }, # Required.
+  }, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>AzureMetricsResult</c>:
+<code>{
+  statusCode: number, # Optional. Http status code response 
+  apiFailureResponse: {
+    error: {
+      code: string, # Optional. Gets or sets the azure metrics error code
+      message: string, # Optional. Gets or sets the azure metrics error message
+    }, # Optional.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>
