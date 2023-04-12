@@ -219,6 +219,38 @@ namespace Azure.Core.Experimental.Tests
             MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
         }
 
+        [Test]
+        public void CanWriteObjectWhereTwoPrimitivePropertiesChanged()
+        {
+            string json = """
+                {
+                  "Foo" :  true,
+                  "Bar" : {
+                      "a" : 1.1,
+                      "b" : 2
+                  }
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            // Change two primitives in Bar
+            mdoc.RootElement.GetProperty("Bar").GetProperty("a").Set(1.2);
+            mdoc.RootElement.GetProperty("Bar").GetProperty("b").Set(3);
+
+            string expected = """
+                {
+                  "Foo" :  true,
+                  "Bar" : {
+                      "a" : 1.2,
+                      "b" : 3
+                  }
+                }
+                """;
+
+            MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
+        }
+
         [TestCaseSource(nameof(TestCases))]
         public void WriteToBehaviorMatchesJsonDocument(dynamic json)
         {
