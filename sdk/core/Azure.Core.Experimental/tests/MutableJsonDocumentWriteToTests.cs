@@ -251,6 +251,62 @@ namespace Azure.Core.Experimental.Tests
             MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
         }
 
+        [Test]
+        public void CanWriteObjectWithPropertyAddedAtRoot()
+        {
+            string json = """
+                {
+                  "Foo" :  true
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            // Add a property to the root element
+            mdoc.RootElement.SetProperty("Bar", "new");
+
+            string expected = """
+                {
+                  "Foo" :  true,
+                  "Bar" : "new"
+                }
+                """;
+
+            MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
+        }
+
+        [Test]
+        public void CanWriteObjectWithAddedProperty()
+        {
+            string json = """
+                {
+                  "Foo" :  true,
+                  "Bar" : {
+                      "a" : 1.1,
+                      "b" : 2
+                  }
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            // Add a property to Bar
+            mdoc.RootElement.GetProperty("Bar").SetProperty("c", "new");
+
+            string expected = """
+                {
+                  "Foo" :  true,
+                  "Bar" : {
+                      "a" : 1.1,
+                      "b" : 2,
+                      "c" : "new"
+                  }
+                }
+                """;
+
+            MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
+        }
+
         [TestCaseSource(nameof(TestCases))]
         public void WriteToBehaviorMatchesJsonDocument(dynamic json)
         {
