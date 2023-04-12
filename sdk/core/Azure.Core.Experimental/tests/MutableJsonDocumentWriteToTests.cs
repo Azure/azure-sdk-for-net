@@ -307,6 +307,125 @@ namespace Azure.Core.Experimental.Tests
             MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
         }
 
+        [Test]
+        public void CanWriteObjectWithChangesAndAdditions()
+        {
+            string json = """
+                {
+                  "Foo" :  true,
+                  "Bar" : {
+                      "a" : 1.1,
+                      "b" : 2
+                  }
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("Bar").SetProperty("c", "new");
+            mdoc.RootElement.GetProperty("Bar").GetProperty("a").Set(1.2);
+
+            string expected = """
+                {
+                  "Foo" :  true,
+                  "Bar" : {
+                      "a" : 1.2,
+                      "b" : 2,
+                      "c" : "new"
+                  }
+                }
+                """;
+
+            MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
+
+            mdoc.RootElement.SetProperty("Baz", new int[] { 1, 2, 3 });
+
+            expected = """
+                {
+                  "Foo" :  true,
+                  "Bar" : {
+                      "a" : 1.2,
+                      "b" : 2,
+                      "c" : "new"
+                  },
+                  "Baz" : [ 1, 2, 3 ]
+                }
+                """;
+
+            MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
+        }
+
+        [Test]
+        public void CanWriteChangesInterleavedAcrossBranches()
+        {
+            string json = """
+                {
+                  "Foo" : {
+                    "a" : 1,
+                    "b" : 2
+                  },
+                  "Bar" : {
+                    "a" : 1,
+                    "b" : 2
+                  }
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("Bar").SetProperty("c", "new");
+            mdoc.RootElement.GetProperty("Bar").GetProperty("a").Set(1.2);
+
+            mdoc.RootElement.GetProperty("Foo").GetProperty("b").Set(3);
+
+            mdoc.RootElement.GetProperty("Bar").GetProperty("b").Set(4);
+
+            string expected = """
+                {
+                  "Foo" :  {
+                    "a" : 1,
+                    "b" : 3
+                  },
+                  "Bar" : {
+                      "a" : 1.2,
+                      "b" : 4,
+                      "c" : "new"
+                  }
+                }
+                """;
+
+            MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
+
+            var value = new
+            {
+                Foo = new
+                {
+                    a = 6
+                },
+                Bar = new
+                {
+                    b = 4,
+                    c = "new"
+                }
+            };
+
+            mdoc.RootElement.Set(value);
+
+            expected = """
+                {
+                  "Foo" :  {
+                    "a" : 6
+                  },
+                  "Bar" : {
+                      "b" : 4,
+                      "c" : "new"
+                  }
+                }
+                """;
+
+            MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
+        }
+
         [TestCaseSource(nameof(TestCases))]
         public void WriteToBehaviorMatchesJsonDocument(dynamic json)
         {

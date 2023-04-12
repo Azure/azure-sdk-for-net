@@ -14,23 +14,23 @@ namespace Azure.Core.Json
             writer.Flush();
         }
 
-        private void WriteElement(string path, int highWaterMark, JsonElement originalElement, Utf8JsonWriter writer)
+        private void WriteElement(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
             if (Changes.TryGetChange(path, highWaterMark, out MutableJsonChange change))
             {
-                change.AsJsonElement().WriteTo(writer);
-                return;
+                element = change.AsJsonElement();
+                highWaterMark = change.Index;
             }
 
             if (Changes.DescendantChanged(path, highWaterMark))
             {
-                switch (originalElement.ValueKind)
+                switch (element.ValueKind)
                 {
                     case JsonValueKind.Object:
-                        WriteObject(path, highWaterMark, originalElement, writer);
+                        WriteObject(path, highWaterMark, element, writer);
                         break;
                     case JsonValueKind.Array:
-                        WriteArray(path, highWaterMark, originalElement, writer);
+                        WriteArray(path, highWaterMark, element, writer);
                         break;
                     default:
                         throw new InvalidOperationException("Element doesn't have descendants.");
@@ -39,50 +39,30 @@ namespace Azure.Core.Json
                 return;
             }
 
-            originalElement.WriteTo(writer);
+            element.WriteTo(writer);
         }
 
-        private void WriteObject(string path, int highWaterMark, JsonElement originalElement, Utf8JsonWriter writer)
+        private void WriteObject(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
 
-            foreach (JsonProperty property in originalElement.EnumerateObject())
+            foreach (JsonProperty property in element.EnumerateObject())
             {
                 string propertyPath = MutableJsonDocument.ChangeTracker.PushProperty(path, property.Name);
 
-                if (Changes.TryGetChange(propertyPath, highWaterMark, out MutableJsonChange change))
-                {
-                    writer.WritePropertyName(property.Name);
-                    change.AsJsonElement().WriteTo(writer);
-                    continue;
-                }
-
-                if (Changes.DescendantChanged(propertyPath, highWaterMark))
-                {
-                    writer.WritePropertyName(property.Name);
-                    WriteElement(propertyPath, highWaterMark, property.Value, writer);
-                    continue;
-                }
-
-                property.WriteTo(writer);
+                writer.WritePropertyName(property.Name);
+                WriteElement(propertyPath, highWaterMark, property.Value, writer);
             }
 
             writer.WriteEndObject();
         }
 
-        private void WriteArray(string path, int highWaterMark, JsonElement originalElement, Utf8JsonWriter writer)
+        private void WriteArray(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
-            if (Changes.TryGetChange(path, highWaterMark, out MutableJsonChange change))
-            {
-                JsonElement changedElement = change.AsJsonElement();
-                changedElement.WriteTo(writer);
-                return;
-            }
-
             writer.WriteStartArray();
 
             int arrayIndex = 0;
-            foreach (JsonElement arrayElement in originalElement.EnumerateArray())
+            foreach (JsonElement arrayElement in element.EnumerateArray())
             {
                 string arrayElementPath = MutableJsonDocument.ChangeTracker.PushIndex(path, arrayIndex++);
                 WriteElement(arrayElementPath, highWaterMark, arrayElement, writer);
