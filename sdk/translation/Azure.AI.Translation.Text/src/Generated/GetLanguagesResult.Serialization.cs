@@ -29,7 +29,6 @@ namespace Azure.AI.Translation.Text
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, TranslationLanguage> dictionary0 = new Dictionary<string, TranslationLanguage>();
@@ -44,7 +43,6 @@ namespace Azure.AI.Translation.Text
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, TransliterationLanguage> dictionary0 = new Dictionary<string, TransliterationLanguage>();
@@ -59,7 +57,6 @@ namespace Azure.AI.Translation.Text
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, SourceDictionaryLanguage> dictionary0 = new Dictionary<string, SourceDictionaryLanguage>();

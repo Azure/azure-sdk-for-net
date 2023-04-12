@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.Synapse.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             licenseKey = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value);
