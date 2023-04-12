@@ -59,7 +59,6 @@ namespace Azure.Core.Json
             if (!Changes.HasChanges)
             {
                 Write(stream, _original.Span);
-                stream.Flush();
                 return;
             }
 

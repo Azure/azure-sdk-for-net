@@ -11,7 +11,6 @@ namespace Azure.Core.Json
         internal void WriteTo(Utf8JsonWriter writer)
         {
             WriteElement(_path, _highWaterMark, _element, writer);
-            writer.Flush();
         }
 
         private void WriteElement(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
