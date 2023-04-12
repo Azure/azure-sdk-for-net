@@ -47,7 +47,6 @@ namespace Azure.Communication.CallingServer
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
