@@ -153,6 +153,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                     CleanupPolicy = "Compact",
                     RetentionTimeInHours = 2,
                     TombstoneRetentionTimeInHours=4
+               
                 }
             };
             EventHubResource eventHub2 = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName2, parameter2)).Value;
