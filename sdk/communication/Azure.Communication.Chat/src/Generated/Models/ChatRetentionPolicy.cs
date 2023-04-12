@@ -27,8 +27,5 @@ namespace Azure.Communication.Chat
         {
             Kind = kind;
         }
-
-        /// <summary> Retention Policy Type. </summary>
-        internal ChatRetentionPolicyKind Kind { get; set; }
     }
 }

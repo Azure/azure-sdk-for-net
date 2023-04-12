@@ -8,10 +8,12 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.Communication
 {
     /// <summary> Type of CommunicationIdentifierModel. </summary>
+    [CodeGenModel("CommunicationIdentifierModelKind")]
     internal readonly partial struct CommunicationIdentifierModelKind : IEquatable<CommunicationIdentifierModelKind>
     {
         private readonly string _value;
