@@ -8,22 +8,24 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ContinuousDtmfRecognitionStopped. </summary>
-    internal partial class ContinuousDtmfRecognitionStopped
+    public partial class ContinuousDtmfRecognitionStopped
     {
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionStopped. </summary>
         internal ContinuousDtmfRecognitionStopped()
         {
         }
 
-        /// <summary> Call connection ID. </summary>
-        public string CallConnectionId { get; }
-        /// <summary> Server call ID. </summary>
-        public string ServerCallId { get; }
-        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
-        public string CorrelationId { get; }
-        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
-        public string OperationContext { get; }
-        /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
-        public ResultInformation ResultInformation { get; }
+        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionStopped. </summary>
+        /// <param name="callConnectionId"> CallconnectionID. </param>
+        /// <param name="serverCallId"> ServercallID. </param>
+        /// <param name="correlationId"> CorrelationIDforeventtocallcorrelation.AlsocalledChainIdforskypechainID. </param>
+        /// <param name="resultInformation"> ContainstheresultingSIPcode/sub-codeandmessagefromNGCservices. </param>
+        internal ContinuousDtmfRecognitionStopped(string callConnectionId, string serverCallId, string correlationId, ResultInformation resultInformation)
+        {
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
+            ResultInformation = resultInformation;
+        }
     }
 }

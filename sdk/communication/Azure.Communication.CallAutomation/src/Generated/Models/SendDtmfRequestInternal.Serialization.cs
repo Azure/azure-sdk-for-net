@@ -15,8 +15,15 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sendDtmfOptions"u8);
-            writer.WriteObjectValue(SendDtmfOptions);
+            writer.WritePropertyName("targetParticipant"u8);
+            writer.WriteObjectValue(TargetParticipant);
+            writer.WritePropertyName("tones"u8);
+            writer.WriteStartArray();
+            foreach (var item in Tones)
+            {
+                writer.WriteStringValue(item.ToString());
+            }
+            writer.WriteEndArray();
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

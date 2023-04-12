@@ -455,8 +455,8 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.GetCallMedia().SendDtmf(new(new CommunicationUserIdentifier("targetUserId"),
-            new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound }));
+            var response = callConnection.GetCallMedia().SendDtmf(new CommunicationUserIdentifier("targetUserId"),
+            new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
@@ -482,8 +482,8 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.GetCallMedia().SendDtmf(new(new CommunicationUserIdentifier("targetUserId"),
-            new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound }));
+            var response = callConnection.GetCallMedia().SendDtmf(new CommunicationUserIdentifier("targetUserId"),
+            new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor

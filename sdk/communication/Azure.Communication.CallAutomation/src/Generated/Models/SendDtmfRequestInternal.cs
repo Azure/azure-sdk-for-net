@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -14,17 +17,22 @@ namespace Azure.Communication.CallAutomation
     internal partial class SendDtmfRequestInternal
     {
         /// <summary> Initializes a new instance of SendDtmfRequestInternal. </summary>
-        /// <param name="sendDtmfOptions"> Defines options for sending dtmf tones. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sendDtmfOptions"/> is null. </exception>
-        public SendDtmfRequestInternal(SendDtmfOptionsInternal sendDtmfOptions)
+        /// <param name="targetParticipant"> Target participant of Send DTMF tone. </param>
+        /// <param name="tones"> The captured tones. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> or <paramref name="tones"/> is null. </exception>
+        public SendDtmfRequestInternal(CommunicationIdentifierModel targetParticipant, IEnumerable<DtmfTone> tones)
         {
-            Argument.AssertNotNull(sendDtmfOptions, nameof(sendDtmfOptions));
+            Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
+            Argument.AssertNotNull(tones, nameof(tones));
 
-            SendDtmfOptions = sendDtmfOptions;
+            TargetParticipant = targetParticipant;
+            Tones = tones.ToList();
         }
 
-        /// <summary> Defines options for sending dtmf tones. </summary>
-        public SendDtmfOptionsInternal SendDtmfOptions { get; }
+        /// <summary> Target participant of Send DTMF tone. </summary>
+        public CommunicationIdentifierModel TargetParticipant { get; }
+        /// <summary> The captured tones. </summary>
+        public IList<DtmfTone> Tones { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
     }

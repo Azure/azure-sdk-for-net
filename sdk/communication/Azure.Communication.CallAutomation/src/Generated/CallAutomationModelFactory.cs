@@ -47,6 +47,17 @@ namespace Azure.Communication.CallAutomation
             return new RecordingStateResult(recordingId, recordingState);
         }
 
+        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>
+        /// <param name="callConnectionId"> CallconnectionID. </param>
+        /// <param name="serverCallId"> ServercallID. </param>
+        /// <param name="correlationId"> CorrelationIDforeventtocallcorrelation.AlsocalledChainIdforskypechainID. </param>
+        /// <param name="resultInformation"> ContainstheresultingSIPcode/sub-codeandmessagefromNGCservices. </param>
+        /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionToneFailed"/> instance for mocking. </returns>
+        public static ContinuousDtmfRecognitionToneFailed ContinuousDtmfRecognitionToneFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, ResultInformation resultInformation = null)
+        {
+            return new ContinuousDtmfRecognitionToneFailed(callConnectionId, serverCallId, correlationId, resultInformation);
+        }
+
         /// <summary> Initializes a new instance of ResultInformation. </summary>
         /// <param name="code"></param>
         /// <param name="subCode"></param>
@@ -55,6 +66,39 @@ namespace Azure.Communication.CallAutomation
         public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null)
         {
             return new ResultInformation(code, subCode, message);
+        }
+
+        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
+        /// <param name="toneInfo"> InformationaboutTone. </param>
+        /// <param name="callConnectionId"> CallconnectionID. </param>
+        /// <param name="serverCallId"> ServercallID. </param>
+        /// <param name="correlationId"> CorrelationIDforeventtocallcorrelation.AlsocalledChainIdorskypechainID. </param>
+        /// <param name="resultInformation"> ContainstheresultingSIPcode/sub-codeandmessagefromNGCservices. </param>
+        /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionToneReceived"/> instance for mocking. </returns>
+        public static ContinuousDtmfRecognitionToneReceived ContinuousDtmfRecognitionToneReceived(ToneInfo toneInfo = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, ResultInformation resultInformation = null)
+        {
+            return new ContinuousDtmfRecognitionToneReceived(toneInfo, callConnectionId, serverCallId, correlationId, resultInformation);
+        }
+
+        /// <summary> Initializes a new instance of ToneInfo. </summary>
+        /// <param name="sequenceId"> Thesequenceidwhichcanbeusedtodetermineifthesametonewasplayedmultipletimesorifanytonesweremissed. </param>
+        /// <param name="tone"></param>
+        /// <param name="participantId"> Theidofparticipant. </param>
+        /// <returns> A new <see cref="CallAutomation.ToneInfo"/> instance for mocking. </returns>
+        public static ToneInfo ToneInfo(int sequenceId = default, DtmfTone tone = default, string participantId = null)
+        {
+            return new ToneInfo(sequenceId, tone, participantId);
+        }
+
+        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionStopped. </summary>
+        /// <param name="callConnectionId"> CallconnectionID. </param>
+        /// <param name="serverCallId"> ServercallID. </param>
+        /// <param name="correlationId"> CorrelationIDforeventtocallcorrelation.AlsocalledChainIdforskypechainID. </param>
+        /// <param name="resultInformation"> ContainstheresultingSIPcode/sub-codeandmessagefromNGCservices. </param>
+        /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionStopped"/> instance for mocking. </returns>
+        public static ContinuousDtmfRecognitionStopped ContinuousDtmfRecognitionStopped(string callConnectionId = null, string serverCallId = null, string correlationId = null, ResultInformation resultInformation = null)
+        {
+            return new ContinuousDtmfRecognitionStopped(callConnectionId, serverCallId, correlationId, resultInformation);
         }
 
         /// <summary> Initializes a new instance of CallConnected. </summary>

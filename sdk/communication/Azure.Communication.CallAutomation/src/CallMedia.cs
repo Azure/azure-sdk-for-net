@@ -438,17 +438,18 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Send Dtmf tones in async mode.
         /// </summary>
-        /// <param name="sendDtmfOptions">Configuration attributes for SendDtmf.</param>
+        /// <param name="targetParticipant">Target participants for start continuous Dtmf Recognition.</param>
+        /// <param name="tones">List of Tones to be sent.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<SendDtmfResult>> SendDtmfAsync(SendDtmfOptions sendDtmfOptions,
+        public virtual async Task<Response<SendDtmfResult>> SendDtmfAsync(CommunicationIdentifier targetParticipant, IReadOnlyList<DtmfTone> tones,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
             scope.Start();
             try
             {
-                SendDtmfRequestInternal request = CreateSendDtmfRequest(sendDtmfOptions);
+                SendDtmfRequestInternal request = request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant), tones);
 
                 var response = await CallMediaRestClient.SendDtmfAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
@@ -467,17 +468,18 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Send Dtmf tones.
         /// </summary>
-        /// <param name="sendDtmfOptions">Configuration attributes for SendDtmf.</param>
+        /// <param name="targetParticipant">Target participants for start continuous Dtmf Recognition.</param>
+        /// <param name="tones">List of Tones to be sent.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<SendDtmfResult> SendDtmf(SendDtmfOptions sendDtmfOptions,
+        public virtual Response<SendDtmfResult> SendDtmf(CommunicationIdentifier targetParticipant, IReadOnlyList<DtmfTone> tones,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
             scope.Start();
             try
             {
-                SendDtmfRequestInternal request = CreateSendDtmfRequest(sendDtmfOptions);
+                SendDtmfRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant), tones);
 
                 var response = CallMediaRestClient.SendDtmf(CallConnectionId, request, cancellationToken);
 
@@ -491,19 +493,6 @@ namespace Azure.Communication.CallAutomation
                 scope.Failed(ex);
                 throw;
             }
-        }
-
-        private static SendDtmfRequestInternal CreateSendDtmfRequest(SendDtmfOptions sendDtmfOptions)
-        {
-            if (sendDtmfOptions == null)
-            {
-                throw new ArgumentNullException(nameof(sendDtmfOptions));
-            }
-
-            SendDtmfOptionsInternal optionsInternal = new SendDtmfOptionsInternal
-                (CommunicationIdentifierSerializer.Serialize(sendDtmfOptions.TargetParticipant), sendDtmfOptions.Tones);
-
-            return new SendDtmfRequestInternal(optionsInternal);
         }
     }
 }

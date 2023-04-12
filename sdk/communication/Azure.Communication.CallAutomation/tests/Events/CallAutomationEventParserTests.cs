@@ -785,7 +785,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         public void ContinuousDtmfRecognitionToneFailedEventParsed_Test()
         {
             ContinuousDtmfRecognitionToneFailed @event = CallAutomationModelFactory.ContinuousDtmfRecognitionToneFailed(
-                toneInfo: new ToneInfo(sequenceId: 1, DtmfTone.A, participantId: "participantId"),
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
@@ -795,13 +794,34 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.ContinuousDtmfRecognitionToneFailed");
             if (parsedEvent is ContinuousDtmfRecognitionToneFailed continuousDtmfRecognitionToneFailed)
             {
-                Assert.AreEqual("participantId", continuousDtmfRecognitionToneFailed.ToneInfo.ParticipantId);
-                Assert.AreEqual(DtmfTone.A, continuousDtmfRecognitionToneFailed.ToneInfo.Tone);
-                Assert.AreEqual(1, continuousDtmfRecognitionToneFailed.ToneInfo.SequenceId);
                 Assert.AreEqual("callConnectionId", continuousDtmfRecognitionToneFailed.CallConnectionId);
                 Assert.AreEqual("correlationId", continuousDtmfRecognitionToneFailed.CorrelationId);
                 Assert.AreEqual("serverCallId", continuousDtmfRecognitionToneFailed.ServerCallId);
                 Assert.AreEqual(400, continuousDtmfRecognitionToneFailed.ResultInformation?.Code);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void ContinuousDtmfRecognitionStoppedEventParsed_Test()
+        {
+            ContinuousDtmfRecognitionStopped @event = CallAutomationModelFactory.ContinuousDtmfRecognitionStopped(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"));
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.ContinuousDtmfRecognitionStopped");
+            if (parsedEvent is ContinuousDtmfRecognitionStopped continuousDtmfRecognitionStopped)
+            {
+                Assert.AreEqual("callConnectionId", continuousDtmfRecognitionStopped.CallConnectionId);
+                Assert.AreEqual("correlationId", continuousDtmfRecognitionStopped.CorrelationId);
+                Assert.AreEqual("serverCallId", continuousDtmfRecognitionStopped.ServerCallId);
+                Assert.AreEqual(200, continuousDtmfRecognitionStopped.ResultInformation?.Code);
             }
             else
             {
