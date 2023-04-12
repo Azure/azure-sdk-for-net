@@ -7,9 +7,9 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Connection": "keep-alive",
-        "traceparent": "00-5e1d2c28cf9ae24bb98e2946c8a3c777-edb67d75dc123c46-00",
+        "traceparent": "00-6c9f369b6984e241a4d7c469bbd1f18e-02d49a749da5cd42-00",
         "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "bcac4eb0f1255ddd384481fd06f7bbb4",
+        "x-ms-client-request-id": "c8141065e436ee51d171bf5646102706",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,15 +18,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "443",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Apr 2023 04:58:15 GMT",
+        "Date": "Wed, 12 Apr 2023 12:57:44 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "5d21ec52-bb80-4ec6-9771-e811ee0ca95c",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "5d21ec52-bb80-4ec6-9771-e811ee0ca95c",
-        "x-ms-routing-request-id": "SOUTHINDIA:20230407T045815Z:5d21ec52-bb80-4ec6-9771-e811ee0ca95c"
+        "x-ms-correlation-request-id": "2bd3566a-6efa-42ea-be0c-27970d7927ab",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "2bd3566a-6efa-42ea-be0c-27970d7927ab",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230412T125745Z:2bd3566a-6efa-42ea-be0c-27970d7927ab"
       },
       "ResponseBody": {
         "id": "/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb",
@@ -48,16 +48,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourcegroups/hci-cluster-rg3954?api-version=**",
+      "RequestUri": "https://management.azure.com/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourcegroups/hci-cluster-rg9753?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "21",
         "Content-Type": "application/json",
-        "traceparent": "00-59126ac2b0267342a79834fd3cb35f02-df3635f897bf004f-00",
+        "traceparent": "00-9cde484fd6ff0a4893995a06b76d9e18-c56bea228fdbd04e-00",
         "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "6b6359c7429b82be89dfda6c1cdb192c",
+        "x-ms-client-request-id": "faf4fbf8140da211a8a4bd76f2aa94ac",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -68,19 +68,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "233",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Apr 2023 04:58:19 GMT",
+        "Date": "Wed, 12 Apr 2023 12:57:48 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d010eaf5-3c37-4778-85ca-9af300282e07",
+        "x-ms-correlation-request-id": "1a0d6807-6c79-4ab2-bbe4-74abe342d698",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "d010eaf5-3c37-4778-85ca-9af300282e07",
-        "x-ms-routing-request-id": "SOUTHINDIA:20230407T045819Z:d010eaf5-3c37-4778-85ca-9af300282e07"
+        "x-ms-request-id": "1a0d6807-6c79-4ab2-bbe4-74abe342d698",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230412T125748Z:1a0d6807-6c79-4ab2-bbe4-74abe342d698"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg3954",
-        "name": "hci-cluster-rg3954",
+        "id": "/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg9753",
+        "name": "hci-cluster-rg9753",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus",
         "properties": {
@@ -89,16 +89,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg3954/providers/Microsoft.AzureStackHCI/clusters/hci-cluster4515?api-version=2023-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg9753/providers/Microsoft.AzureStackHCI/clusters/hci-cluster7368?api-version=2023-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "179",
         "Content-Type": "application/json",
-        "traceparent": "00-62dfa03551608c4d82f2520790e8daef-778dbc6ce784eb41-00",
-        "User-Agent": "azsdk-net-ResourceManager.Hci/1.1.0-alpha.20230407.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "8af603d1e10756564430653d2fe8ca08",
+        "traceparent": "00-14ce3837f5137d4a9c174476d544c9e6-46782d0eea5d6f4d-00",
+        "User-Agent": "azsdk-net-ResourceManager.Hci/1.1.0-alpha.20230412.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "6d693ad7b5210bda753847a16229df17",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -115,35 +115,35 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1146",
+        "Content-Length": "1148",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Apr 2023 04:58:25 GMT",
-        "ETag": "\u00222b00330b-0000-0100-0000-642fa2ef0000\u0022",
+        "Date": "Wed, 12 Apr 2023 12:57:54 GMT",
+        "ETag": "\u002212050234-0000-0100-0000-6436aad10000\u0022",
         "Expires": "-1",
-        "mise-correlation-id": "4cb87653-342b-4681-ac56-e98e3e64c6cb",
+        "mise-correlation-id": "3e7637e4-ee9a-4027-a78d-eecd5779b78c",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "8af603d1e10756564430653d2fe8ca08",
-        "x-ms-correlation-request-id": "c1c1a926-bb0d-4f5b-ada6-0f162decfe2f",
+        "x-ms-client-request-id": "6d693ad7b5210bda753847a16229df17",
+        "x-ms-correlation-request-id": "0e610e95-d348-4c69-b80a-5dc3ebd33c89",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "fa78019f-dc59-4393-9c12-8ddb24a8663f",
-        "x-ms-routing-request-id": "SOUTHINDIA:20230407T045825Z:c1c1a926-bb0d-4f5b-ada6-0f162decfe2f"
+        "x-ms-request-id": "4aac3534-3ae9-4eac-9a6d-18f4a287cb5d",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230412T125754Z:0e610e95-d348-4c69-b80a-5dc3ebd33c89"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg3954/providers/Microsoft.AzureStackHCI/clusters/hci-cluster4515",
-        "name": "hci-cluster4515",
+        "id": "/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg9753/providers/Microsoft.AzureStackHCI/clusters/hci-cluster7368",
+        "name": "hci-cluster7368",
         "type": "microsoft.azurestackhci/clusters",
         "location": "eastus",
         "tags": {},
         "systemData": {
           "createdBy": "2565ed7c-4b2b-4fd5-a9ac-49b4611844e9",
           "createdByType": "Application",
-          "createdAt": "2023-04-07T04:58:23.435431Z",
+          "createdAt": "2023-04-12T12:57:52.6136288Z",
           "lastModifiedBy": "2565ed7c-4b2b-4fd5-a9ac-49b4611844e9",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-04-07T04:58:23.435431Z"
+          "lastModifiedAt": "2023-04-12T12:57:52.6136288Z"
         },
         "identity": {
           "type": "None"
@@ -151,7 +151,7 @@
         "properties": {
           "provisioningState": "Succeeded",
           "status": "NotYetRegistered",
-          "cloudId": "43e1a36c-4875-4559-bfb1-f04bbf201b17",
+          "cloudId": "39734da8-5603-44cf-9f4e-d63c4590cfe0",
           "aadClientId": "2565ed7c-4b2b-4fd5-a9ac-49b4611844e9",
           "aadTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
           "softwareAssuranceProperties": {
@@ -170,16 +170,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg3954/providers/Microsoft.AzureStackHCI/clusters/hci-cluster4515/arcSettings/default?api-version=2023-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg9753/providers/Microsoft.AzureStackHCI/clusters/hci-cluster7368/arcSettings/default?api-version=2023-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "17",
         "Content-Type": "application/json",
-        "traceparent": "00-48cccaeba820f84fac255af900d4d035-cbd79f02e0dba047-00",
-        "User-Agent": "azsdk-net-ResourceManager.Hci/1.1.0-alpha.20230407.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "787f14651431ee0c3a9c1103f01c6867",
+        "traceparent": "00-2621685ac075d740b68c575d83516a4f-451d3ecd40565a44-00",
+        "User-Agent": "azsdk-net-ResourceManager.Hci/1.1.0-alpha.20230412.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "aaeeebc658f803fb268e3f9477dec62a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -188,55 +188,55 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "737",
+        "Content-Length": "739",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Apr 2023 04:58:26 GMT",
-        "ETag": "\u00223a00e79d-0000-0100-0000-642fa2f20000\u0022",
+        "Date": "Wed, 12 Apr 2023 12:57:55 GMT",
+        "ETag": "\u0022c900411d-0000-0100-0000-6436aad30000\u0022",
         "Expires": "-1",
-        "mise-correlation-id": "608ce0da-85f7-427f-9f04-f18b2cb5961f",
+        "mise-correlation-id": "d8d816a0-9628-4d47-8ef2-5db5ba09abfd",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "787f14651431ee0c3a9c1103f01c6867",
-        "x-ms-correlation-request-id": "a9d534ef-c84a-4598-8eed-df760bcef729",
+        "x-ms-client-request-id": "aaeeebc658f803fb268e3f9477dec62a",
+        "x-ms-correlation-request-id": "1ba83a26-c742-41cd-8bea-3c191c9eddfd",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-writes": "1197",
-        "x-ms-request-id": "52e9c5fb-c68f-4c52-a973-74d276e23df4",
-        "x-ms-routing-request-id": "SOUTHINDIA:20230407T045826Z:a9d534ef-c84a-4598-8eed-df760bcef729"
+        "x-ms-request-id": "205c43b3-e116-4dac-86f8-e7d424618daa",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230412T125755Z:1ba83a26-c742-41cd-8bea-3c191c9eddfd"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg3954/providers/Microsoft.AzureStackHCI/clusters/hci-cluster4515/arcSettings/default",
+        "id": "/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg9753/providers/Microsoft.AzureStackHCI/clusters/hci-cluster7368/arcSettings/default",
         "name": "default",
         "type": "microsoft.azurestackhci/clusters/arcsettings",
         "systemData": {
           "createdBy": "2565ed7c-4b2b-4fd5-a9ac-49b4611844e9",
           "createdByType": "Application",
-          "createdAt": "2023-04-07T04:58:25.763586Z",
+          "createdAt": "2023-04-12T12:57:54.9574766Z",
           "lastModifiedBy": "2565ed7c-4b2b-4fd5-a9ac-49b4611844e9",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-04-07T04:58:25.763586Z"
+          "lastModifiedAt": "2023-04-12T12:57:54.9574766Z"
         },
         "properties": {
           "connectivityProperties": {
             "enabled": false
           },
           "provisioningState": "Succeeded",
-          "arcInstanceResourceGroup": "hci-cluster4515-43e1a36c-4875-4559-bfb1-f04bbf201b17-Arc-Infra-RG",
+          "arcInstanceResourceGroup": "hci-cluster7368-39734da8-5603-44cf-9f4e-d63c4590cfe0-Arc-Infra-RG",
           "aggregateState": "NotSpecified"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg3954/providers/Microsoft.AzureStackHCI/clusters/hci-cluster4515/arcSettings/default/extensions/MicrosoftMonitoringAgent?api-version=2023-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg9753/providers/Microsoft.AzureStackHCI/clusters/hci-cluster7368/arcSettings/default/extensions/MicrosoftMonitoringAgent?api-version=2023-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "268",
         "Content-Type": "application/json",
-        "traceparent": "00-7d1d2bafe7568a42a30f15140a677265-c65fb0e2e787aa46-00",
-        "User-Agent": "azsdk-net-ResourceManager.Hci/1.1.0-alpha.20230407.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "b72586d071bd77c00c15571159445af7",
+        "traceparent": "00-0e54bbd36b33974ca9800393a706ca08-0cd7da41ff485342-00",
+        "User-Agent": "azsdk-net-ResourceManager.Hci/1.1.0-alpha.20230412.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ec38ffaa809c45d719ef98dcc901457b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -259,31 +259,31 @@
         "Cache-Control": "no-cache",
         "Content-Length": "875",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Apr 2023 04:58:27 GMT",
-        "ETag": "\u00220d00472a-0000-0100-0000-642fa2f30000\u0022",
+        "Date": "Wed, 12 Apr 2023 12:57:56 GMT",
+        "ETag": "\u0022b300280f-0000-0100-0000-6436aad40000\u0022",
         "Expires": "-1",
-        "mise-correlation-id": "354bb93c-e86c-4e06-be31-9bc488444756",
+        "mise-correlation-id": "499f01b3-385c-446b-8054-60a7abe712c6",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "b72586d071bd77c00c15571159445af7",
-        "x-ms-correlation-request-id": "d107bed0-2be6-4148-835a-7d7515b29715",
+        "x-ms-client-request-id": "ec38ffaa809c45d719ef98dcc901457b",
+        "x-ms-correlation-request-id": "a31f382f-bb5f-4a27-8f2e-f14572292335",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-writes": "1196",
-        "x-ms-request-id": "b229747c-0009-4476-8163-12166d0a4a71",
-        "x-ms-routing-request-id": "SOUTHINDIA:20230407T045827Z:d107bed0-2be6-4148-835a-7d7515b29715"
+        "x-ms-request-id": "685dec80-7090-48f4-b8d3-4d24a3fe5fc3",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230412T125757Z:a31f382f-bb5f-4a27-8f2e-f14572292335"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg3954/providers/Microsoft.AzureStackHCI/clusters/hci-cluster4515/arcSettings/default/extensions/MicrosoftMonitoringAgent",
+        "id": "/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg9753/providers/Microsoft.AzureStackHCI/clusters/hci-cluster7368/arcSettings/default/extensions/MicrosoftMonitoringAgent",
         "name": "MicrosoftMonitoringAgent",
         "type": "microsoft.azurestackhci/clusters/arcsettings/extensions",
         "systemData": {
           "createdBy": "2565ed7c-4b2b-4fd5-a9ac-49b4611844e9",
           "createdByType": "Application",
-          "createdAt": "2023-04-07T04:58:26.9354936Z",
+          "createdAt": "2023-04-12T12:57:56.1606629Z",
           "lastModifiedBy": "2565ed7c-4b2b-4fd5-a9ac-49b4611844e9",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-04-07T04:58:26.9354936Z"
+          "lastModifiedAt": "2023-04-12T12:57:56.1606629Z"
         },
         "properties": {
           "provisioningState": "Succeeded",
@@ -301,14 +301,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg3954/providers/Microsoft.AzureStackHCI/clusters/hci-cluster4515/arcSettings/default/extensions/MicrosoftMonitoringAgent?api-version=2023-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg9753/providers/Microsoft.AzureStackHCI/clusters/hci-cluster7368/arcSettings/default/extensions/MicrosoftMonitoringAgent?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5f126263dc7e114884c1c7229e0fc058-6a08b28e5646b645-00",
-        "User-Agent": "azsdk-net-ResourceManager.Hci/1.1.0-alpha.20230407.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "a86cfdc713c3f44a53076b1cbdfb94f6",
+        "traceparent": "00-d460495bcd20b742bb5a5c215846d972-55d5fa90a62b0548-00",
+        "User-Agent": "azsdk-net-ResourceManager.Hci/1.1.0-alpha.20230412.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "63f71c71f3f0457a13a89009c01f3a25",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -317,22 +317,22 @@
         "Cache-Control": "no-cache",
         "Content-Length": "626",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Apr 2023 04:58:28 GMT",
-        "ETag": "\u00220d00472a-0000-0100-0000-642fa2f30000\u0022",
+        "Date": "Wed, 12 Apr 2023 12:57:57 GMT",
+        "ETag": "\u0022b300280f-0000-0100-0000-6436aad40000\u0022",
         "Expires": "-1",
-        "mise-correlation-id": "bcb1f666-3dcc-4d0a-9810-b596490d2c47",
+        "mise-correlation-id": "54dd2494-f761-4a47-9dfa-3cc01c90744f",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "a86cfdc713c3f44a53076b1cbdfb94f6",
-        "x-ms-correlation-request-id": "7dad2190-4d3d-4952-9571-c087ea5ccee2",
+        "x-ms-client-request-id": "63f71c71f3f0457a13a89009c01f3a25",
+        "x-ms-correlation-request-id": "849ea95a-bafa-4acd-b3f4-dfe8703afc0f",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "3dd220c0-76c0-41bb-a858-693c31801fa9",
-        "x-ms-routing-request-id": "SOUTHINDIA:20230407T045828Z:7dad2190-4d3d-4952-9571-c087ea5ccee2"
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "5d6e3ff3-9b31-4cfd-8dfb-bd4825d39628",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230412T125758Z:849ea95a-bafa-4acd-b3f4-dfe8703afc0f"
       },
       "ResponseBody": {
-        "id": "/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg3954/providers/Microsoft.AzureStackHCI/clusters/hci-cluster4515/arcSettings/default/extensions/MicrosoftMonitoringAgent",
+        "id": "/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg9753/providers/Microsoft.AzureStackHCI/clusters/hci-cluster7368/arcSettings/default/extensions/MicrosoftMonitoringAgent",
         "name": "MicrosoftMonitoringAgent",
         "type": "microsoft.azurestackhci/clusters/arcsettings/extensions",
         "properties": {
@@ -352,14 +352,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg3954/providers/Microsoft.AzureStackHCI/clusters/hci-cluster4515/arcSettings/default/extensions?api-version=2023-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg9753/providers/Microsoft.AzureStackHCI/clusters/hci-cluster7368/arcSettings/default/extensions?api-version=2023-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-ed2bb68432f29d4ea59cbe673da26b19-fcd1790f0ef20b48-00",
-        "User-Agent": "azsdk-net-ResourceManager.Hci/1.1.0-alpha.20230407.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "8cf31942a1651ccd3968c0b52155a6b9",
+        "traceparent": "00-e4c61d919e96174fa65c1ff3ba42c192-5e2ea83180191f4e-00",
+        "User-Agent": "azsdk-net-ResourceManager.Hci/1.1.0-alpha.20230412.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "17b6c44907b2a784b0b9ad373945d0d4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -368,23 +368,23 @@
         "Cache-Control": "no-cache",
         "Content-Length": "638",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Apr 2023 04:58:29 GMT",
+        "Date": "Wed, 12 Apr 2023 12:57:58 GMT",
         "Expires": "-1",
-        "mise-correlation-id": "3d0699ce-1aa4-4ba3-b0a1-6605c7975c8b",
+        "mise-correlation-id": "bc3fa804-6f31-4f5d-ba19-dfb5b10a8c69",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "8cf31942a1651ccd3968c0b52155a6b9",
-        "x-ms-correlation-request-id": "5fd69823-ea60-4751-92c8-3a5dd0ccb23c",
+        "x-ms-client-request-id": "17b6c44907b2a784b0b9ad373945d0d4",
+        "x-ms-correlation-request-id": "39faca38-0ce6-40aa-a0de-1abb34b452e4",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "55ef5d1a-9e16-47b3-9201-a0e16efffcde",
-        "x-ms-routing-request-id": "SOUTHINDIA:20230407T045829Z:5fd69823-ea60-4751-92c8-3a5dd0ccb23c"
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "4a51ac98-76ff-40a1-9a94-752b4c907fc4",
+        "x-ms-routing-request-id": "SOUTHINDIA:20230412T125758Z:39faca38-0ce6-40aa-a0de-1abb34b452e4"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg3954/providers/Microsoft.AzureStackHCI/clusters/hci-cluster4515/arcSettings/default/extensions/MicrosoftMonitoringAgent",
+            "id": "/subscriptions/ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb/resourceGroups/hci-cluster-rg9753/providers/Microsoft.AzureStackHCI/clusters/hci-cluster7368/arcSettings/default/extensions/MicrosoftMonitoringAgent",
             "name": "MicrosoftMonitoringAgent",
             "type": "microsoft.azurestackhci/clusters/arcsettings/extensions",
             "properties": {
@@ -409,7 +409,7 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "CLIENT_ID": "2565ed7c-4b2b-4fd5-a9ac-49b4611844e9",
-    "RandomSeed": "272661526",
+    "RandomSeed": "1855343994",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "ff0aa6da-20f8-44fe-9aee-381c8e8a4aeb",
     "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
