@@ -51,7 +51,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryAzureStorageAccountCustomInput = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value);
@@ -61,7 +60,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryStagingStorageAccountCustomInput = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value);

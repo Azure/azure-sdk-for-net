@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     iops = property.Value.GetInt64();
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isBaseline = property.Value.GetBoolean();
