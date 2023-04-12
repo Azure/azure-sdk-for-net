@@ -89,7 +89,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             supportedCloud = new CustomAssessmentAutomationSupportedCloud(property0.Value.GetString());
@@ -123,7 +121,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             severity = new CustomAssessmentSeverity(property0.Value.GetString());
