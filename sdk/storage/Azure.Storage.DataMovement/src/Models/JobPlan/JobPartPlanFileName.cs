@@ -6,7 +6,7 @@ using System.Globalization;
 using System.IO;
 using Azure.Core;
 
-namespace Azure.Storage.DataMovement.JobPlanModels
+namespace Azure.Storage.DataMovement.Models.JobPlan
 {
     /// <summary>
     /// Saved Job Part Plan File

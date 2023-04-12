@@ -1,14 +1,7 @@
 # Release History
 
-## 12.14.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 12.14.0 (2023-04-11)
+- Includes all features from 12.14.0-beta.1.
 
 ## 12.14.0-beta.1 (2023-03-28)
 - Fixed bug where sticky bit and execution bit were not formed and parsed correctly in PathPermissions

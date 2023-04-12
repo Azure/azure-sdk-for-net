@@ -5,6 +5,11 @@
 ### Features Added
 
 ### Breaking Changes
+- Renamed the developer credential options timeout settings as follows:
+  - `AzureCliCredential` to `AzureCliCredentialOptions.ProcessTimeout`
+  - `AzurePowerShellCredential` to `AzurePowerShellCredentialOptions.ProcessTimeout`
+  - `VisualStudioCredential` to `VisualStudioCredentialOptions.ProcessTimeout`
+  - `AzureDeveloperCliCredential` to `AzureDeveloperCliCredentialOptions.ProcessTimeout`
 
 ### Bugs Fixed
 - Setting `DefaultAzureCredentialOptions.ExcludeWorkloadIdentityCredential` to `true` also excludes `TokenExchangeManagedIdentitySource` when using `DefaultAzureCredential` selects the `ManagedIdentityCredential`
