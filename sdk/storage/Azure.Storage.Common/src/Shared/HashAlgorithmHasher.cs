@@ -14,7 +14,7 @@ namespace Azure.Storage
     {
         private readonly HashAlgorithm _hashAlgorithm;
 
-        public int HashSizeInBytes => _hashAlgorithm.HashSize >> 3;
+        public int HashSizeInBytes => BitsToBytes(_hashAlgorithm.HashSize);
 
         public HashAlgorithmHasher(HashAlgorithm hashAlgorithm)
         {
@@ -39,5 +39,7 @@ namespace Azure.Storage
         {
             _hashAlgorithm.Dispose();
         }
+
+        private static int BitsToBytes(int bits) => bits >> 3;
     }
 }

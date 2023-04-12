@@ -48,7 +48,7 @@ namespace Azure.Storage.Shared
             {
                 if (buffer.Position != 0)
                 {
-                    throw new ArgumentException("Buffer must be empty if provided.", nameof(buffer));
+                    throw Errors.CannotInitializeWriteStreamWithData();
                 }
                 _buffer = buffer;
                 _shouldDisposeBuffer = false;
