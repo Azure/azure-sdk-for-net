@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetPortalPort = property.Value.GetInt32();
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ElasticSanProvisioningState(property.Value.GetString());
@@ -59,7 +57,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new ResourceOperationalStatus(property.Value.GetString());

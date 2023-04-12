@@ -116,7 +116,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filePattern = BinaryData.FromString(property.Value.GetRawText());
@@ -126,7 +125,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nestingSeparator = BinaryData.FromString(property.Value.GetRawText());
@@ -136,7 +134,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encodingName = BinaryData.FromString(property.Value.GetRawText());
@@ -146,7 +143,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jsonNodeReference = BinaryData.FromString(property.Value.GetRawText());
@@ -156,7 +152,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jsonPathDefinition = BinaryData.FromString(property.Value.GetRawText());
@@ -171,7 +166,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     serializer = BinaryData.FromString(property.Value.GetRawText());
@@ -181,7 +175,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deserializer = BinaryData.FromString(property.Value.GetRawText());
