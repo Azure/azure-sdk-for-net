@@ -27,7 +27,6 @@ namespace Azure.Maps.Geolocation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     countryRegion = Geolocation.CountryRegion.DeserializeCountryRegion(property.Value);
@@ -37,7 +36,6 @@ namespace Azure.Maps.Geolocation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ipAddress = IPAddress.Parse(property.Value.GetString());

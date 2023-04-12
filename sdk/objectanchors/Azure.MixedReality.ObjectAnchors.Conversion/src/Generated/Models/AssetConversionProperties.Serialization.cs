@@ -73,7 +73,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorCode = new ConversionErrorCode(property.Value.GetString());
@@ -83,7 +82,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jobId = property.Value.GetGuid();
@@ -98,7 +96,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jobStatus = property.Value.GetString().ToAssetConversionStatus();
@@ -118,7 +115,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accountId = property.Value.GetGuid();
@@ -128,7 +124,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ingestionConfiguration = AssetConversionConfiguration.DeserializeAssetConversionConfiguration(property.Value);
