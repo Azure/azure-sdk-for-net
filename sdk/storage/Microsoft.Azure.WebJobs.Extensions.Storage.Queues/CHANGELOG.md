@@ -3,6 +3,7 @@
 ## 5.2.0-beta.1 (Unreleased)
 
 ### Features Added
+- Trigger binding support for ParameterBindingData reference type
 
 ### Breaking Changes
 
