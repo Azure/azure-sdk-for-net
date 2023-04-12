@@ -15,7 +15,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
-        private readonly AzureMonitorPersistentStorage? _persistentStorage;
         private AzureMonitorResource? _resource;
         private bool _disposed;
 
@@ -27,11 +26,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
-
-            if (transmitter is AzureMonitorTransmitter azureMonitorTransmitter && azureMonitorTransmitter._fileBlobProvider != null)
-            {
-                _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
-            }
         }
 
         internal AzureMonitorResource? MetricResource => _resource ??= ParentProvider?.GetResource().UpdateRoleNameAndInstance();
@@ -39,8 +33,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<Metric> batch)
         {
-            _persistentStorage?.StartExporterTimer();
-
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
 
@@ -62,8 +54,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 {
                     exportResult = ExportResult.Success;
                 }
-
-                _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
             }
             catch (Exception ex)
             {

@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.IO;
+using System.IO.Hashing;
 
 namespace Azure.Storage
 {
@@ -14,9 +15,11 @@ namespace Azure.Storage
     {
         private const int _streamBufferSize = 4 * Constants.MB;
 
-        private readonly StorageCrc64HashAlgorithm _nonCryptographicHashAlgorithm;
+        private readonly NonCryptographicHashAlgorithm _nonCryptographicHashAlgorithm;
 
-        public NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm nonCryptographicHashAlgorithm)
+        public int HashSize => _nonCryptographicHashAlgorithm.HashLengthInBytes;
+
+        public NonCryptographicHashAlgorithmHasher(NonCryptographicHashAlgorithm nonCryptographicHashAlgorithm)
         {
             _nonCryptographicHashAlgorithm = nonCryptographicHashAlgorithm;
         }
@@ -43,6 +46,21 @@ namespace Azure.Storage
             ArrayPool<byte>.Shared.Return(buffer);
 
             return _nonCryptographicHashAlgorithm.GetCurrentHash();
+        }
+
+        public void AppendHash(ReadOnlySpan<byte> content)
+        {
+            _nonCryptographicHashAlgorithm.Append(content);
+        }
+
+        public int GetFinalHash(Span<byte> hashDestination)
+        {
+            return _nonCryptographicHashAlgorithm.GetCurrentHash(hashDestination);
+        }
+
+        public void Dispose()
+        {
+            // NonCryptographicHashAlgorithm is not disposable
         }
     }
 }

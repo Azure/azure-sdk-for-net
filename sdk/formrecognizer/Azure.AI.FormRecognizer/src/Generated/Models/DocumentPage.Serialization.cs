@@ -19,6 +19,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
+            DocumentPageKind kind = default;
             int pageNumber = default;
             Optional<float> angle = default;
             Optional<float> width = default;
@@ -28,8 +29,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<IReadOnlyList<DocumentWord>> words = default;
             Optional<IReadOnlyList<DocumentSelectionMark>> selectionMarks = default;
             Optional<IReadOnlyList<DocumentLine>> lines = default;
+            Optional<IReadOnlyList<DocumentAnnotation>> annotations = default;
+            Optional<IReadOnlyList<DocumentBarcode>> barcodes = default;
+            Optional<IReadOnlyList<DocumentFormula>> formulas = default;
+            Optional<IReadOnlyList<DocumentImage>> images = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new DocumentPageKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("pageNumber"u8))
                 {
                     pageNumber = property.Value.GetInt32();
@@ -130,8 +140,68 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     lines = array;
                     continue;
                 }
+                if (property.NameEquals("annotations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DocumentAnnotation> array = new List<DocumentAnnotation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentAnnotation.DeserializeDocumentAnnotation(item));
+                    }
+                    annotations = array;
+                    continue;
+                }
+                if (property.NameEquals("barcodes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DocumentBarcode> array = new List<DocumentBarcode>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentBarcode.DeserializeDocumentBarcode(item));
+                    }
+                    barcodes = array;
+                    continue;
+                }
+                if (property.NameEquals("formulas"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DocumentFormula> array = new List<DocumentFormula>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentFormula.DeserializeDocumentFormula(item));
+                    }
+                    formulas = array;
+                    continue;
+                }
+                if (property.NameEquals("images"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DocumentImage> array = new List<DocumentImage>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentImage.DeserializeDocumentImage(item));
+                    }
+                    images = array;
+                    continue;
+                }
             }
-            return new DocumentPage(pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(lines));
+            return new DocumentPage(kind, pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(lines), Optional.ToList(annotations), Optional.ToList(barcodes), Optional.ToList(formulas), Optional.ToList(images));
         }
     }
 }

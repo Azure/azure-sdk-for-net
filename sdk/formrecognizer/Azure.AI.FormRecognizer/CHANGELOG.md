@@ -3,12 +3,17 @@
 ## 4.1.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added methods in `DocumentAnalysisClient` to support custom document classification: `ClassifyDocument` and `ClassifyDocumentFromUri`.
+- Added methods in `DocumentModelAdministrationClient` to support custom document classification: `BuildDocumentClassifier`, `GetDocumentClassifier`, `GetDocumentClassifiers`, and `DeleteDocumentClassifier`.
+- Added a new `DocumentClassifierBuildOperationDetails` class. Instances of this class can now be returned in calls to `DocumentModelAdministrationClient.GetOperation`.
+- Added the `DocumentClassifierBuild` member to `DocumentOperationKind`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+- `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target service API version `2023-02-28-preview` by default. Version `2022-08-31` can still be targeted if specified in the `DocumentAnalysisClientOptions`.
 
 ## 4.0.0 (2022-09-08)
 

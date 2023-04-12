@@ -1,17 +1,11 @@
 # Release History
 
-## 1.0.0-beta.10 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.10 (2023-04-11)
 
 ### Bugs Fixed
 
 - Fixed an issue of when using ILogger to log an Exception a custom message would override the exception message.
   ([#33860](https://github.com/Azure/azure-sdk-for-net/pull/33860))
-
-### Other Changes
 
 ## 1.0.0-beta.9 (2023-03-14)
 

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2023-03-22)
+
+### Features Added
+
+- Added MediaServicesMinimumTlsVersion property to MediaServicesAccount
+- Added EncryptionScope property to MediaAsset
 
 ## 1.1.0 (2023-01-27)
 
