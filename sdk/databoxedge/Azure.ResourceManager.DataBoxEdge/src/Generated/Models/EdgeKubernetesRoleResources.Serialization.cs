@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storage = EdgeKubernetesRoleStorage.DeserializeEdgeKubernetesRoleStorage(property.Value);
@@ -55,7 +54,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     network = EdgeKubernetesRoleNetwork.DeserializeEdgeKubernetesRoleNetwork(property.Value);
