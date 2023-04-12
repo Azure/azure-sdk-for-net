@@ -9066,8 +9066,8 @@
           "resource": {
             "id": "sql-db-647",
             "restoreParameters": {
-              "restoreSource": "/subscriptions/23587e98-b6ac-4328-a753-03bcd3c8e744/providers/Microsoft.DocumentDB/locations/westus2/restorableDatabaseAccounts/3af77e0c-6f7a-40ef-8756-29e2e675aff8",
-              "restoreTimestampInUtc": "2023-04-11T18:07:01.5927154Z"
+                "restoreSource": "/subscriptions/23587e98-b6ac-4328-a753-03bcd3c8e744/providers/Microsoft.DocumentDB/locations/westus2/restorableDatabaseAccounts/3af77e0c-6f7a-40ef-8756-29e2e675aff8",
+                "restoreTimestampInUtc": "2023-04-11T18:06:52.0000000Z"
             },
             "createMode": "Restore"
           }

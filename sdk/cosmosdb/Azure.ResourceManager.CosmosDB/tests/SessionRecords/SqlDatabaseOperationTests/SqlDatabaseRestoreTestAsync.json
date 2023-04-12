@@ -9123,8 +9123,8 @@
           "resource": {
             "id": "sql-db-7274",
             "restoreParameters": {
-              "restoreSource": "/subscriptions/23587e98-b6ac-4328-a753-03bcd3c8e744/providers/Microsoft.DocumentDB/locations/westus2/restorableDatabaseAccounts/7e6adced-8572-4646-8f54-7cc77c74000a",
-              "restoreTimestampInUtc": "2023-04-11T18:20:39.0853920Z"
+                "restoreSource": "/subscriptions/23587e98-b6ac-4328-a753-03bcd3c8e744/providers/Microsoft.DocumentDB/locations/westus2/restorableDatabaseAccounts/7e6adced-8572-4646-8f54-7cc77c74000a",
+                "restoreTimestampInUtc": "2023-04-11T18:21:48.0000000Z"
             },
             "createMode": "Restore"
           }
