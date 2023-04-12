@@ -17,7 +17,7 @@ generation1-convenience-client: true
 include-csproj: disable
 ```
 
-## Swagger customization
+## Swagger customizations
 
 These changes should eventually be included in the swagger or at least centralized in Azure/azure-rest-api-specs.
 
@@ -72,14 +72,19 @@ directive:
     to: Settings_GetSettings
 ```
 
-#### Fix GetSettings response based actual response
-
-See https://github.com/Azure/azure-rest-api-specs/issues/21334
+## C# customizations
 
 ``` yaml
 directive:
-- where-model: SettingsListResult
-  rename-property:
-    from: value
-    to: settings
+# [CodeGenMember("Type")] yields errors, so we have to rename via autorest transform.
+- where: $.definitions.Setting.properties.type
+  from: swagger-document
+  transform: >
+    $["x-ms-client-name"] = "SettingType";
+
+# [CodeGenSuppress("Value")] yields errors, so we have to rename via autorest transforms.
+- where: $.definitions.Setting.properties.value
+  from: swagger-document
+  transform: >
+    $["x-ms-client-name"] = "content";
 ```

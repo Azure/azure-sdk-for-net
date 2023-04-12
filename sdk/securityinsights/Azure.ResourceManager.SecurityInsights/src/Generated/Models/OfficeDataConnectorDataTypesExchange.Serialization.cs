@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static OfficeDataConnectorDataTypesExchange DeserializeOfficeDataConnectorDataTypesExchange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SecurityInsightsDataTypeConnectionState> state = default;
             foreach (var property in element.EnumerateObject())
             {

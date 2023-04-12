@@ -15,6 +15,10 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         internal static SasDefinitionListResult DeserializeSasDefinitionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SasDefinitionItem>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

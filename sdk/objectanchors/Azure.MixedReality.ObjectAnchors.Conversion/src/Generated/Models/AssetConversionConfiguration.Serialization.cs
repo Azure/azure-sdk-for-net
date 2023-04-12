@@ -116,6 +116,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
 
         internal static AssetConversionConfiguration DeserializeAssetConversionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Vector3> dimensions = default;
             Optional<Vector3> boundingBoxCenter = default;
             Vector3 gravity = default;

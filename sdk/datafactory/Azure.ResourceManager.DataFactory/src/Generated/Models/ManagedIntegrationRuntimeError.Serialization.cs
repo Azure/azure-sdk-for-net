@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static ManagedIntegrationRuntimeError DeserializeManagedIntegrationRuntimeError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> time = default;
             Optional<string> code = default;
             Optional<IReadOnlyList<string>> parameters = default;

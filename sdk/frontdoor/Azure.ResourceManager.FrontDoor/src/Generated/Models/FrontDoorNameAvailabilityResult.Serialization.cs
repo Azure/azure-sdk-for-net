@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         internal static FrontDoorNameAvailabilityResult DeserializeFrontDoorNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FrontDoorNameAvailabilityState> nameAvailability = default;
             Optional<string> reason = default;
             Optional<string> message = default;

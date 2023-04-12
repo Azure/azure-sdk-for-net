@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformStorageData DeserializeAppPlatformStorageData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformStorageProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

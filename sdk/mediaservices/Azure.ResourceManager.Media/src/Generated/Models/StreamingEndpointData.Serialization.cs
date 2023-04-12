@@ -121,6 +121,10 @@ namespace Azure.ResourceManager.Media
 
         internal static StreamingEndpointData DeserializeStreamingEndpointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamingEndpointCurrentSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

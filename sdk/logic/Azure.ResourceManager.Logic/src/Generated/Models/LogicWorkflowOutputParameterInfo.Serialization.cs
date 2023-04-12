@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowOutputParameterInfo DeserializeLogicWorkflowOutputParameterInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> error = default;
             Optional<LogicWorkflowParameterType> type = default;
             Optional<BinaryData> value = default;

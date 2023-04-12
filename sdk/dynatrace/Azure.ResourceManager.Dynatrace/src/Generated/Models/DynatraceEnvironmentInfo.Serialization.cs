@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceEnvironmentInfo DeserializeDynatraceEnvironmentInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> environmentId = default;
             Optional<string> ingestionKey = default;
             Optional<Uri> logsIngestionEndpoint = default;

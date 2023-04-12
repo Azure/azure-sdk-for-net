@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.DataMigration
 
         internal static DataMigrationServiceData DeserializeDataMigrationServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<string> kind = default;
             Optional<ServiceSku> sku = default;

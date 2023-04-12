@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ManagedClusterRunCommandResult DeserializeManagedClusterRunCommandResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> provisioningState = default;
             Optional<int> exitCode = default;

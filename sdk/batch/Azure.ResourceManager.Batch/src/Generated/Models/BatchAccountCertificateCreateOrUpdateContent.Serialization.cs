@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAccountCertificateCreateOrUpdateContent DeserializeBatchAccountCertificateCreateOrUpdateContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;

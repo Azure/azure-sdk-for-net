@@ -1,14 +1,20 @@
 # Release History
 
-## 4.5.0-beta.2 (Unreleased)
+## 4.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Service version "7.4-preview.1" is not supported.
-
 ### Bugs Fixed
+
+### Other Changes
+
+## 4.5.0 (2023-03-14)
+
+### Breaking Changes
+
+- Service version "7.4-preview.1" is not supported.
 
 ### Other Changes
 

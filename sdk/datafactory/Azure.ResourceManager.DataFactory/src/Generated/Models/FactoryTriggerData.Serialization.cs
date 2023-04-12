@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static FactoryTriggerData DeserializeFactoryTriggerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FactoryTriggerDefinition properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

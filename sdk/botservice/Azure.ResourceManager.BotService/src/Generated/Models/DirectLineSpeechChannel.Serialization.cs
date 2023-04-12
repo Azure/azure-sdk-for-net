@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static DirectLineSpeechChannel DeserializeDirectLineSpeechChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DirectLineSpeechChannelProperties> properties = default;
             string channelName = default;
             Optional<ETag?> etag = default;

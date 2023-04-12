@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static BgpPeerStatus DeserializeBgpPeerStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> localAddress = default;
             Optional<string> neighbor = default;
             Optional<long> asn = default;

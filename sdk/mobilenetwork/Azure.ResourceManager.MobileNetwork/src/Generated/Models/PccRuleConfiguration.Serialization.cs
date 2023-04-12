@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PccRuleConfiguration DeserializePccRuleConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleName = default;
             int rulePrecedence = default;
             Optional<PccRuleQosPolicy> ruleQosPolicy = default;

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterVerticalPodAutoscaler DeserializeManagedClusterVerticalPodAutoscaler(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             ManagedClusterWorkloadAutoScalerControlledValue controlledValues = default;
             ManagedClusterVerticalPodAutoscalerUpdateMode updateMode = default;

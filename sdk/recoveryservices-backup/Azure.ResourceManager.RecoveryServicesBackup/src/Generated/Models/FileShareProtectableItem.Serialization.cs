@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static FileShareProtectableItem DeserializeFileShareProtectableItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> parentContainerFabricId = default;
             Optional<string> parentContainerFriendlyName = default;
             Optional<BackupFileShareType> azureFileShareType = default;

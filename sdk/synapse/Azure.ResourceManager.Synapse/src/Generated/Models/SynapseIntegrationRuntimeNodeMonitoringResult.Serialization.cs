@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseIntegrationRuntimeNodeMonitoringResult DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nodeName = default;
             Optional<int> availableMemoryInMB = default;
             Optional<int> cpuUtilization = default;

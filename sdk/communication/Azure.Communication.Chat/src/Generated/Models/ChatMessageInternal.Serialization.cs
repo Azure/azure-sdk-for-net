@@ -17,6 +17,10 @@ namespace Azure.Communication.Chat
     {
         internal static ChatMessageInternal DeserializeChatMessageInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             ChatMessageType type = default;
             string sequenceId = default;

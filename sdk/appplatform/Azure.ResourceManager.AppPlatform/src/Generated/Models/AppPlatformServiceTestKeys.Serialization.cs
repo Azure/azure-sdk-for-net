@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformServiceTestKeys DeserializeAppPlatformServiceTestKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             Optional<string> primaryTestEndpoint = default;

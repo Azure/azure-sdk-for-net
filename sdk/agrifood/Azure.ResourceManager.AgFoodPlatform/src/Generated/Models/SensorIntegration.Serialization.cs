@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 
         internal static SensorIntegration DeserializeSensorIntegration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> enabled = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<ErrorResponse> provisioningInfo = default;

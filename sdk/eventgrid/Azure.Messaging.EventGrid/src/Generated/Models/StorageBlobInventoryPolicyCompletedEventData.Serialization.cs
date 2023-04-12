@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static StorageBlobInventoryPolicyCompletedEventData DeserializeStorageBlobInventoryPolicyCompletedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> scheduleDateTime = default;
             Optional<string> accountName = default;
             Optional<string> ruleName = default;

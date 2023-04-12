@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventSubscriptionFilter DeserializeEventSubscriptionFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subjectBeginsWith = default;
             Optional<string> subjectEndsWith = default;
             Optional<IList<string>> includedEventTypes = default;

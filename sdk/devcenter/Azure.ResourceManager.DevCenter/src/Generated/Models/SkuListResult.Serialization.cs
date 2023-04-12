@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static SkuListResult DeserializeSkuListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DevCenterSkuDetails>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

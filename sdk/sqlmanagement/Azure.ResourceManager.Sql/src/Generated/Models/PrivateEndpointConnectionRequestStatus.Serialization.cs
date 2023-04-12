@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static PrivateEndpointConnectionRequestStatus DeserializePrivateEndpointConnectionRequestStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> privateLinkServiceId = default;
             Optional<string> privateEndpointConnectionName = default;
             Optional<string> status = default;

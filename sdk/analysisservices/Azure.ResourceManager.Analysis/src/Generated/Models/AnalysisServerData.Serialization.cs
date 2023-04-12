@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Analysis
             if (Optional.IsDefined(ManagedMode))
             {
                 writer.WritePropertyName("managedMode"u8);
-                writer.WriteStringValue(ManagedMode.Value.ToString());
+                writer.WriteNumberValue(ManagedMode.Value.ToSerialInt32());
             }
             if (Optional.IsDefined(ServerMonitorMode))
             {
                 writer.WritePropertyName("serverMonitorMode"u8);
-                writer.WriteStringValue(ServerMonitorMode.Value.ToString());
+                writer.WriteNumberValue(ServerMonitorMode.Value.ToSerialInt32());
             }
             if (Optional.IsDefined(AnalysisServerSku))
             {
@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Analysis
 
         internal static AnalysisServerData DeserializeAnalysisServerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnalysisResourceSku sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

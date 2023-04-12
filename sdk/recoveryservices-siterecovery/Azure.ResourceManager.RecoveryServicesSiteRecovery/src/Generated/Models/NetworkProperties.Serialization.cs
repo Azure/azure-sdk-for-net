@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static NetworkProperties DeserializeNetworkProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fabricType = default;
             Optional<IReadOnlyList<Subnet>> subnets = default;
             Optional<string> friendlyName = default;

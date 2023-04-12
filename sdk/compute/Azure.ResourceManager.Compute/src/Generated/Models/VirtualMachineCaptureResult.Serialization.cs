@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineCaptureResult DeserializeVirtualMachineCaptureResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> schema = default;
             Optional<string> contentVersion = default;
             Optional<BinaryData> parameters = default;
@@ -64,7 +68,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     resources = array;
                     continue;

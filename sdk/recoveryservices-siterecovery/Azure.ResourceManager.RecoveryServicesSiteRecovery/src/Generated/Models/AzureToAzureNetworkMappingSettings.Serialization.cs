@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static AzureToAzureNetworkMappingSettings DeserializeAzureToAzureNetworkMappingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryFabricLocation = default;
             Optional<string> recoveryFabricLocation = default;
             string instanceType = default;

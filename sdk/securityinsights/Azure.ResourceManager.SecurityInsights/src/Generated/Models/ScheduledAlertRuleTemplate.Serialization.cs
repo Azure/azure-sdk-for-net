@@ -144,6 +144,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static ScheduledAlertRuleTemplate DeserializeScheduledAlertRuleTemplate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AlertRuleKind kind = default;
             ResourceIdentifier id = default;
             string name = default;

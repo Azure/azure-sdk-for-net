@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static LabVmList DeserializeLabVmList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DevTestLabVmData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

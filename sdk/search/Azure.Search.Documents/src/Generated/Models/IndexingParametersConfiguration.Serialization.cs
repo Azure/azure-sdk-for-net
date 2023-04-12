@@ -106,6 +106,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static IndexingParametersConfiguration DeserializeIndexingParametersConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BlobIndexerParsingMode> parsingMode = default;
             Optional<string> excludedFileNameExtensions = default;
             Optional<string> indexedFileNameExtensions = default;

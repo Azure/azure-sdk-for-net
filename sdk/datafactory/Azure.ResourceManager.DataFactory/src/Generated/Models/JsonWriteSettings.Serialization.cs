@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static JsonWriteSettings DeserializeJsonWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> filePattern = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;

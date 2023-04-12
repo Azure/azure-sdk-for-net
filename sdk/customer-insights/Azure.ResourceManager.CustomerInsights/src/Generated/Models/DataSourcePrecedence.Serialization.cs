@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static DataSourcePrecedence DeserializeDataSourcePrecedence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> precedence = default;
             Optional<string> name = default;
             Optional<DataSourceType> dataSourceType = default;

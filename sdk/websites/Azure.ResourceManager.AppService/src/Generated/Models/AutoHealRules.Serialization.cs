@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AutoHealRules DeserializeAutoHealRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutoHealTriggers> triggers = default;
             Optional<AutoHealActions> actions = default;
             foreach (var property in element.EnumerateObject())

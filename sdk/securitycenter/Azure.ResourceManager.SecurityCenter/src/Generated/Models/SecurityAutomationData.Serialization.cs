@@ -90,6 +90,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecurityAutomationData DeserializeSecurityAutomationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;

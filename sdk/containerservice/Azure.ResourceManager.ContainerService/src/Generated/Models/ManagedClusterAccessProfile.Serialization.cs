@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterAccessProfile DeserializeManagedClusterAccessProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;

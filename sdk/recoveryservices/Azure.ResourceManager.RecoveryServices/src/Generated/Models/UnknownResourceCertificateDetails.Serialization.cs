@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static UnknownResourceCertificateDetails DeserializeUnknownResourceCertificateDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string authType = "Unknown";
             Optional<byte[]> certificate = default;
             Optional<string> friendlyName = default;

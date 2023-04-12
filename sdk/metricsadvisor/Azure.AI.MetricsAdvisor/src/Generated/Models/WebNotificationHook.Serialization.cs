@@ -48,6 +48,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         internal static WebNotificationHook DeserializeWebNotificationHook(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WebhookHookParameter hookParameter = default;
             NotificationHookKind hookType = default;
             Optional<string> hookId = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static RunbookTestJob DeserializeRunbookTestJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> creationTime = default;
             Optional<string> status = default;
             Optional<string> statusDetails = default;

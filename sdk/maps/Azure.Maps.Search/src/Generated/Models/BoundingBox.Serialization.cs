@@ -14,6 +14,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static BoundingBox DeserializeBoundingBox(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LatLongPairAbbreviated> topLeftPoint = default;
             Optional<LatLongPairAbbreviated> btmRightPoint = default;
             foreach (var property in element.EnumerateObject())

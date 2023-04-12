@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesSku DeserializeCognitiveServicesSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<CognitiveServicesSkuTier> tier = default;
             Optional<string> size = default;

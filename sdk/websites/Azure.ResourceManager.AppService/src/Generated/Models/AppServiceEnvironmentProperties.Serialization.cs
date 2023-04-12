@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceEnvironmentProperties DeserializeAppServiceEnvironmentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<HostingEnvironmentStatus> status = default;
             AppServiceVirtualNetworkProfile virtualNetwork = default;

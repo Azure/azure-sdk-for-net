@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static WafPolicyManagedRuleSet DeserializeWafPolicyManagedRuleSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleSetType = default;
             string ruleSetVersion = default;
             Optional<int> anomalyScore = default;

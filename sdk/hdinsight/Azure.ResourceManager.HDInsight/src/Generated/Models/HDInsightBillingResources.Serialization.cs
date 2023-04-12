@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightBillingResources DeserializeHDInsightBillingResources(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> region = default;
             Optional<IReadOnlyList<HDInsightBillingMeters>> billingMeters = default;
             Optional<IReadOnlyList<HDInsightDiskBillingMeters>> diskBillingMeters = default;

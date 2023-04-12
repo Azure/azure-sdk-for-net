@@ -98,6 +98,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesAccountProperties DeserializeCognitiveServicesAccountProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceAccountProvisioningState> provisioningState = default;
             Optional<string> endpoint = default;
             Optional<IReadOnlyList<CognitiveServicesSkuCapability>> capabilities = default;

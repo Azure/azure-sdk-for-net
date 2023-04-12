@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static RoleManagementPrincipal DeserializeRoleManagementPrincipal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> displayName = default;
             Optional<RoleManagementPrincipalType> type = default;

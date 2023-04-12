@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.HDInsight
 
         internal static HDInsightApplicationData DeserializeHDInsightApplicationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<HDInsightApplicationProperties> properties = default;

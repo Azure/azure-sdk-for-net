@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsAscDataConnector DeserializeSecurityInsightsAscDataConnector(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataConnectorKind kind = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlStorageProfile DeserializeMySqlStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> backupRetentionDays = default;
             Optional<MySqlGeoRedundantBackup> geoRedundantBackup = default;
             Optional<int> storageMB = default;

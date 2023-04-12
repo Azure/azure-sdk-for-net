@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static RemediationFilters DeserializeRemediationFilters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AzureLocation>> locations = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -14,6 +14,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberAreaCode DeserializePhoneNumberAreaCode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> areaCode = default;
             foreach (var property in element.EnumerateObject())
             {

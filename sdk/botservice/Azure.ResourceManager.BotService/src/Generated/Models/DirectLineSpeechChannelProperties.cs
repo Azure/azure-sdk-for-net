@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The parameters to provide for the DirectLine Speech channel. </summary>
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="customVoiceDeploymentId"> Custom speech model id (optional). </param>
         /// <param name="customSpeechModelId"> Custom voice deployment id (optional). </param>
         /// <param name="isDefaultBotForCogSvcAccount"> Make this a default bot for chosen cognitive service account. </param>
-        internal DirectLineSpeechChannelProperties(string cognitiveServiceResourceId, string cognitiveServiceRegion, string cognitiveServiceSubscriptionKey, bool? isEnabled, string customVoiceDeploymentId, string customSpeechModelId, bool? isDefaultBotForCogSvcAccount)
+        internal DirectLineSpeechChannelProperties(ResourceIdentifier cognitiveServiceResourceId, string cognitiveServiceRegion, string cognitiveServiceSubscriptionKey, bool? isEnabled, string customVoiceDeploymentId, string customSpeechModelId, bool? isDefaultBotForCogSvcAccount)
         {
             CognitiveServiceResourceId = cognitiveServiceResourceId;
             CognitiveServiceRegion = cognitiveServiceRegion;
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.BotService.Models
         }
 
         /// <summary> The cognitive service id with this channel registration. </summary>
-        public string CognitiveServiceResourceId { get; set; }
+        public ResourceIdentifier CognitiveServiceResourceId { get; set; }
         /// <summary> The cognitive service region with this channel registration. </summary>
         public string CognitiveServiceRegion { get; set; }
         /// <summary> The cognitive service subscription key to use with this channel registration. </summary>

@@ -50,6 +50,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static StopwordsTokenFilter DeserializeStopwordsTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> stopwords = default;
             Optional<StopwordsList> stopwordsList = default;
             Optional<bool> ignoreCase = default;

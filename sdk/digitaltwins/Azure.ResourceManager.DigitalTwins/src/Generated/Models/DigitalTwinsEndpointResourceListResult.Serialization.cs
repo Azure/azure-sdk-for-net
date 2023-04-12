@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static DigitalTwinsEndpointResourceListResult DeserializeDigitalTwinsEndpointResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<DigitalTwinsEndpointResourceData>> value = default;
             foreach (var property in element.EnumerateObject())

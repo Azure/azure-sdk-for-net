@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformMonitoringSettingData DeserializeAppPlatformMonitoringSettingData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformMonitoringSettingProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

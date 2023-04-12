@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmDependency DeserializeArmDependency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BasicArmDependency>> dependsOn = default;
             Optional<string> id = default;
             Optional<ResourceType> resourceType = default;

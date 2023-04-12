@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static InstancePoolUsageListResult DeserializeInstancePoolUsageListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<InstancePoolUsage>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

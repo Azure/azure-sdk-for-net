@@ -36,6 +36,10 @@ namespace Azure.Communication.JobRouter.Models
 
         internal static DistributionPolicy DeserializeDistributionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<double> offerTtlSeconds = default;

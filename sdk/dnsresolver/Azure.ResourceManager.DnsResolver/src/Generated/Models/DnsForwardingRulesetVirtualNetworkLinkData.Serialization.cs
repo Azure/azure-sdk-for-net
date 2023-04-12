@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.DnsResolver
 
         internal static DnsForwardingRulesetVirtualNetworkLinkData DeserializeDnsForwardingRulesetVirtualNetworkLinkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;

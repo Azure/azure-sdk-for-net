@@ -176,6 +176,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkAclBypassResourceIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -194,6 +199,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("enablePartitionMerge"u8);
                 writer.WriteBooleanValue(EnablePartitionMerge.Value);
+            }
+            if (Optional.IsDefined(MinimalTlsVersion))
+            {
+                writer.WritePropertyName("minimalTlsVersion"u8);
+                writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

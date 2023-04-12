@@ -16,6 +16,10 @@ namespace Azure.Communication.Chat
     {
         internal static ChatMessageContentInternal DeserializeChatMessageContentInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<string> topic = default;
             Optional<IReadOnlyList<ChatParticipantInternal>> participants = default;

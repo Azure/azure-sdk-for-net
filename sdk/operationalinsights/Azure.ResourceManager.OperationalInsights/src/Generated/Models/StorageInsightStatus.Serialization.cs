@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static StorageInsightStatus DeserializeStorageInsightStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             StorageInsightState state = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())

@@ -48,6 +48,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static GrpcExtension DeserializeGrpcExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             GrpcExtensionDataTransfer dataTransfer = default;
             Optional<string> extensionConfiguration = default;
             EndpointBase endpoint = default;

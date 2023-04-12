@@ -17,6 +17,10 @@ namespace Azure.Security.Attestation
     {
         internal static PolicyModificationResult DeserializePolicyModificationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolicyModification> xMsPolicyResult = default;
             Optional<string> xMsPolicyTokenHash = default;
             Optional<JsonWebKey> xMsPolicySigner = default;

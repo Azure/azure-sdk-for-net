@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
 
         internal static LoadTestingQuotaBucketDimensions DeserializeLoadTestingQuotaBucketDimensions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subscriptionId = default;
             Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())

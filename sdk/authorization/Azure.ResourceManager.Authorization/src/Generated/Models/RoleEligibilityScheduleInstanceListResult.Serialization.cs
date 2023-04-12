@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static RoleEligibilityScheduleInstanceListResult DeserializeRoleEligibilityScheduleInstanceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RoleEligibilityScheduleInstanceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

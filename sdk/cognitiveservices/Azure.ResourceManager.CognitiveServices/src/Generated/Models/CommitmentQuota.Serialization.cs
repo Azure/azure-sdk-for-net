@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CommitmentQuota DeserializeCommitmentQuota(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> quantity = default;
             Optional<string> unit = default;
             foreach (var property in element.EnumerateObject())

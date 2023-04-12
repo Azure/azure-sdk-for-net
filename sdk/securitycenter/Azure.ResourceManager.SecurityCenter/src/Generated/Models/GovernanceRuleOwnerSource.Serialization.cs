@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GovernanceRuleOwnerSource DeserializeGovernanceRuleOwnerSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GovernanceRuleOwnerSourceType> type = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

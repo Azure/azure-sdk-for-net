@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningTargetUtilizationScaleSettings DeserializeMachineLearningTargetUtilizationScaleSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxInstances = default;
             Optional<int> minInstances = default;
             Optional<TimeSpan> pollingInterval = default;

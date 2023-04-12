@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightAutoScaleConfiguration DeserializeHDInsightAutoScaleConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HDInsightAutoScaleCapacity> capacity = default;
             Optional<HDInsightAutoScaleRecurrence> recurrence = default;
             foreach (var property in element.EnumerateObject())

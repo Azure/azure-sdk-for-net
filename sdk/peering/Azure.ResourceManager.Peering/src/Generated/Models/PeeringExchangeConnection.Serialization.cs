@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringExchangeConnection DeserializePeeringExchangeConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> peeringDBFacilityId = default;
             Optional<PeeringConnectionState> connectionState = default;
             Optional<PeeringBgpSession> bgpSession = default;

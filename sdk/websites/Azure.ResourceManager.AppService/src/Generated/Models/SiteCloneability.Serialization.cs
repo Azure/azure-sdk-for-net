@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static SiteCloneability DeserializeSiteCloneability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CloneAbilityResult> result = default;
             Optional<IReadOnlyList<SiteCloneabilityCriterion>> blockingFeatures = default;
             Optional<IReadOnlyList<SiteCloneabilityCriterion>> unsupportedFeatures = default;

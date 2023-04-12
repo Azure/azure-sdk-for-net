@@ -42,6 +42,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MetricSeriesGroupDetectionCondition DeserializeMetricSeriesGroupDetectionCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DimensionKey group = default;
             Optional<DetectionConditionOperator> conditionOperator = default;
             Optional<SmartDetectionCondition> smartDetectionCondition = default;

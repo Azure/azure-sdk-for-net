@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static StorageQueueEventSubscriptionDestination DeserializeStorageQueueEventSubscriptionDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EndpointType endpointType = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> queueName = default;

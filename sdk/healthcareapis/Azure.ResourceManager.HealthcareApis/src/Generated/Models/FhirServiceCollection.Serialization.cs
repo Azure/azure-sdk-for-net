@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     {
         internal static FhirServiceCollection DeserializeFhirServiceCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<FhirServiceData>> value = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute
     {
         internal static CloudServiceOSVersionData DeserializeCloudServiceOSVersionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;

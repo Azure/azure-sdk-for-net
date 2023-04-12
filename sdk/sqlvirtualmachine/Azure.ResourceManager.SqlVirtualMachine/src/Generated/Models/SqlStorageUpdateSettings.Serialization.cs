@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlStorageUpdateSettings DeserializeSqlStorageUpdateSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> diskCount = default;
             Optional<int> startingDeviceId = default;
             Optional<SqlVmDiskConfigurationType> diskConfigurationType = default;

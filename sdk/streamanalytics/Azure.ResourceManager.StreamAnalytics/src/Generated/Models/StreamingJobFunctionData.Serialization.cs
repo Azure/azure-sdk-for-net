@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         internal static StreamingJobFunctionData DeserializeStreamingJobFunctionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamingJobFunctionProperties> properties = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;

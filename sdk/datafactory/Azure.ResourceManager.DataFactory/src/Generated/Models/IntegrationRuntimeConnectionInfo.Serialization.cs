@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static IntegrationRuntimeConnectionInfo DeserializeIntegrationRuntimeConnectionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceToken = default;
             Optional<string> identityCertThumbprint = default;
             Optional<Uri> hostServiceUri = default;

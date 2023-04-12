@@ -40,6 +40,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static CjkBigramTokenFilter DeserializeCjkBigramTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<CjkBigramTokenFilterScripts>> ignoreScripts = default;
             Optional<bool> outputUnigrams = default;
             string odataType = default;

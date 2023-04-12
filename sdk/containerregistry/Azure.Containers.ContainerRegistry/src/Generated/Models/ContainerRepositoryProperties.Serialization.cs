@@ -15,6 +15,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ContainerRepositoryProperties DeserializeContainerRepositoryProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string registry = default;
             string imageName = default;
             DateTimeOffset createdTime = default;

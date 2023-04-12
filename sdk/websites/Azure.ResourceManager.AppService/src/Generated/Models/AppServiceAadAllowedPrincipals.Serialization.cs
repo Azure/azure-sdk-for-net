@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceAadAllowedPrincipals DeserializeAppServiceAadAllowedPrincipals(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> groups = default;
             Optional<IList<string>> identities = default;
             foreach (var property in element.EnumerateObject())

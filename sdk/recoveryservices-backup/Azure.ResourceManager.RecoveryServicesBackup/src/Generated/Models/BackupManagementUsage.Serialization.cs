@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static BackupManagementUsage DeserializeBackupManagementUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupUsagesUnit> unit = default;
             Optional<string> quotaPeriod = default;
             Optional<DateTimeOffset> nextResetTime = default;

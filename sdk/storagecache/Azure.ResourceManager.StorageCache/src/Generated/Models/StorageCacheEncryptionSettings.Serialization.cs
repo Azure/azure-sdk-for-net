@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheEncryptionSettings DeserializeStorageCacheEncryptionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageCacheEncryptionKeyVaultKeyReference> keyEncryptionKey = default;
             Optional<bool> rotationToLatestKeyVersionEnabled = default;
             foreach (var property in element.EnumerateObject())

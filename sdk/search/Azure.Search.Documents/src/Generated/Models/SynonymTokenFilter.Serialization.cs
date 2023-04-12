@@ -42,6 +42,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SynonymTokenFilter DeserializeSynonymTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> synonyms = default;
             Optional<bool> ignoreCase = default;
             Optional<bool> expand = default;

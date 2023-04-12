@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterIngressProfileWebAppRouting DeserializeManagedClusterIngressProfileWebAppRouting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<ResourceIdentifier> dnsZoneResourceId = default;
             foreach (var property in element.EnumerateObject())

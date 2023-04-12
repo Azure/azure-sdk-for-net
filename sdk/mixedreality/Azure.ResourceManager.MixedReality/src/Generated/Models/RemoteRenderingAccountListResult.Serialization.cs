@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MixedReality.Models
     {
         internal static RemoteRenderingAccountListResult DeserializeRemoteRenderingAccountListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RemoteRenderingAccountData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

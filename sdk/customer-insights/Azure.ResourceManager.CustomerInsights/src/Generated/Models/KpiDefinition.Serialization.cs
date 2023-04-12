@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static KpiDefinition DeserializeKpiDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EntityType entityType = default;
             string entityTypeName = default;
             Optional<Guid> tenantId = default;

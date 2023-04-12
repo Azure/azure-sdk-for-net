@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static DesktopVirtualizationMigrationProperties DeserializeDesktopVirtualizationMigrationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigrationOperation> operation = default;
             Optional<string> migrationPath = default;
             foreach (var property in element.EnumerateObject())

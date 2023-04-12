@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static StorageSpacesPropertiesVmwareStorageProfile DeserializeStorageSpacesPropertiesVmwareStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> datacenter = default;
             Optional<string> datastore = default;
             Optional<string> folder = default;

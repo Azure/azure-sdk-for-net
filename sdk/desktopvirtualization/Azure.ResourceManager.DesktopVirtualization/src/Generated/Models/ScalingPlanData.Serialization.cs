@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static ScalingPlanData DeserializeScalingPlanData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> managedBy = default;
             Optional<string> kind = default;
             Optional<ETag> etag = default;

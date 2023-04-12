@@ -128,6 +128,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         internal static KubernetesClusterExtensionData DeserializeKubernetesClusterExtensionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ArmPlan> plan = default;
             ResourceIdentifier id = default;

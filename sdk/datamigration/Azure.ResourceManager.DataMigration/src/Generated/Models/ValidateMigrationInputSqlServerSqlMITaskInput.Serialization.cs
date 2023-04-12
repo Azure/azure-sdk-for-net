@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ValidateMigrationInputSqlServerSqlMITaskInput DeserializeValidateMigrationInputSqlServerSqlMITaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         internal static TargetTypeListResult DeserializeTargetTypeListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TargetTypeData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

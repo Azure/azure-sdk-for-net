@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static SupportedOSDetails DeserializeSupportedOSDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> osName = default;
             Optional<string> osType = default;
             Optional<IReadOnlyList<OSVersionWrapper>> osVersions = default;

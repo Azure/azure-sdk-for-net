@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.SignalR.Models
     {
         internal static SignalRSku DeserializeSignalRSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceType> resourceType = default;
             Optional<SignalRResourceSku> sku = default;
             Optional<SignalRSkuCapacity> capacity = default;

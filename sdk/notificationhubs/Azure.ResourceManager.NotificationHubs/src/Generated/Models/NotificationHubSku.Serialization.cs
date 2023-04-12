@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubSku DeserializeNotificationHubSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NotificationHubSkuName name = default;
             Optional<string> tier = default;
             Optional<string> size = default;

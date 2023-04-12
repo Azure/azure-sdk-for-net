@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.IotCentral.Models
     {
         internal static IotCentralAppListResult DeserializeIotCentralAppListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<IotCentralAppData>> value = default;
             foreach (var property in element.EnumerateObject())

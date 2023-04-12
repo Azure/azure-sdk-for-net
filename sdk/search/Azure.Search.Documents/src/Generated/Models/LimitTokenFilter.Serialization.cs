@@ -34,6 +34,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static LimitTokenFilter DeserializeLimitTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxTokenCount = default;
             Optional<bool> consumeAllTokens = default;
             string odataType = default;

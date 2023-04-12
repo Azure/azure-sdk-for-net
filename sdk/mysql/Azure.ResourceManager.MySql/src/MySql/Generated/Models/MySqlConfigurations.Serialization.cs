@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlConfigurations DeserializeMySqlConfigurations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<MySqlConfigurationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformServiceRegistryData DeserializeAppPlatformServiceRegistryData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformServiceRegistryProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

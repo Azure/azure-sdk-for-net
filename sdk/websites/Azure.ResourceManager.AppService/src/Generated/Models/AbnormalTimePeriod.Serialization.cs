@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AbnormalTimePeriod DeserializeAbnormalTimePeriod(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<IList<DetectorAbnormalTimePeriod>> events = default;

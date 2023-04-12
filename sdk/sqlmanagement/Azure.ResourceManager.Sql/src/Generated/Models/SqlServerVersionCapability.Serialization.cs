@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SqlServerVersionCapability DeserializeSqlServerVersionCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<EditionCapability>> supportedEditions = default;
             Optional<IReadOnlyList<ElasticPoolEditionCapability>> supportedElasticPoolEditions = default;

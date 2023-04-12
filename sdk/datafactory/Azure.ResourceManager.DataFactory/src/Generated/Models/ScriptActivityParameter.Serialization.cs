@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ScriptActivityParameter DeserializeScriptActivityParameter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> name = default;
             Optional<ScriptActivityParameterType> type = default;
             Optional<BinaryData> value = default;

@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceStorageAccessInfo DeserializeAppServiceStorageAccessInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppServiceStorageType> type = default;
             Optional<string> accountName = default;
             Optional<string> shareName = default;

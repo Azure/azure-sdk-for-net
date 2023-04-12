@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppScaleRuleAuth DeserializeContainerAppScaleRuleAuth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> secretRef = default;
             Optional<string> triggerParameter = default;
             foreach (var property in element.EnumerateObject())

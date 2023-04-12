@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryImageVersionSafetyProfile DeserializeGalleryImageVersionSafetyProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> reportedForPolicyViolation = default;
             Optional<IReadOnlyList<GalleryImageVersionPolicyViolation>> policyViolations = default;
             Optional<bool> allowDeletionOfReplicatedLocations = default;

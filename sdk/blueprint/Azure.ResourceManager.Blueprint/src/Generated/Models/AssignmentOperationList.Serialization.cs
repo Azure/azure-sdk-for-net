@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Blueprint.Models
     {
         internal static AssignmentOperationList DeserializeAssignmentOperationList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AssignmentOperationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

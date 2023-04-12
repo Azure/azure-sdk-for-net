@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2ValidationSettings DeserializeAS2ValidationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool overrideMessageProperties = default;
             bool encryptMessage = default;
             bool signMessage = default;

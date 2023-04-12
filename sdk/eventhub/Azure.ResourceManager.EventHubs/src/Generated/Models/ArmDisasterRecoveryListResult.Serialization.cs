@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static ArmDisasterRecoveryListResult DeserializeArmDisasterRecoveryListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EventHubsDisasterRecoveryData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

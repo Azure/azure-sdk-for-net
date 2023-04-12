@@ -13,17 +13,17 @@ namespace Azure.Core.Dynamic
         /// </summary>
         public static readonly DynamicJsonOptions AzureDefault = new()
         {
-            PropertyNameCasing = DynamicJsonNameMapping.PascalCaseGettersCamelCaseSetters
+            PropertyNameCasing = DynamicDataNameMapping.PascalCaseGettersCamelCaseSetters
         };
 
         /// <summary>
-        /// Creates a new instance of DynamicJsonOptions.
+        /// Creates a new instance of DynamicDataOptions.
         /// </summary>
         public DynamicJsonOptions() { }
 
         /// <summary>
-        /// Specifies how properties on <see cref="DynamicJson"/> will be accessed in the underlying JSON buffer.
+        /// Specifies how properties on <see cref="DynamicData"/> will be accessed in the underlying data buffer.
         /// </summary>
-        public DynamicJsonNameMapping PropertyNameCasing { get; set; }
+        public DynamicDataNameMapping PropertyNameCasing { get; set; }
     }
 }

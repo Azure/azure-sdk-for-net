@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         internal static JobData DeserializeJobData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JobProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

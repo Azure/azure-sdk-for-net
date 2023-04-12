@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoverUnresolvedDependency DeserializeMoverUnresolvedDependency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> count = default;
             Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())

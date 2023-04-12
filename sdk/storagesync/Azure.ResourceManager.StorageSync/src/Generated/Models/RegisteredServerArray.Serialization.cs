@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static RegisteredServerArray DeserializeRegisteredServerArray(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StorageSyncRegisteredServerData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

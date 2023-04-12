@@ -1,19 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/8dc700b5-3709-41b5-9958-a1c52bb46555/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "97",
         "Content-Type": "application/json",
-        "traceparent": "00-c56033ddc907e6459d2d2b18ddf9dd61-889ea4145a832c4c-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.1.0-alpha.20211103.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "ed86c8abd218fe67cb2d627a1a645b0e",
+        "traceparent": "00-e5fcbc055f2da846807f091ee7286d8a-a2a6448f31a2c34d-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "bde397b1c0b0be5d2ab0e0a472bbe345",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,17 +21,13 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "81",
         "Connection": "keep-alive",
         "Content-Length": "263",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 03 Nov 2021 22:43:39 GMT",
+        "Date": "Tue, 14 Mar 2023 22:25:54 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Vary": [
-          "Accept-Encoding",
-          "Accept-Encoding"
-        ],
-        "Via": "1.1 draft-oms-579cbf9c9c-2cnxr",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-85c67bc895-9bc4r",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -78,9 +71,10 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-11-03T15:43:39.9005390-07:00",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DateTimeOffsetNow": "2023-03-14T15:25:51.5805996-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "2085596011",
-    "WORKSPACE_ID": "8dc700b5-3709-41b5-9958-a1c52bb46555"
+    "RandomSeed": "2068132902",
+    "WORKSPACE_ID": "314be15c-6065-462b-a0dc-8fe1213796f2"
   }
 }

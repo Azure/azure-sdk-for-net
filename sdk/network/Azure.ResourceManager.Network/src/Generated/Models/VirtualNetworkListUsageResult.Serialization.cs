@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VirtualNetworkListUsageResult DeserializeVirtualNetworkListUsageResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<VirtualNetworkUsage>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

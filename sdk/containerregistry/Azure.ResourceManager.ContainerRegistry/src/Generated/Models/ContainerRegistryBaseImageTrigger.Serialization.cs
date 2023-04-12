@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryBaseImageTrigger DeserializeContainerRegistryBaseImageTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ContainerRegistryBaseImageTriggerType baseImageTriggerType = default;
             Optional<string> updateTriggerEndpoint = default;
             Optional<ContainerRegistryUpdateTriggerPayloadType> updateTriggerPayloadType = default;

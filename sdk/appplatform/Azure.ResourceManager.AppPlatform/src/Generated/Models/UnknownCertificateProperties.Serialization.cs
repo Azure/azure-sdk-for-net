@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static UnknownCertificateProperties DeserializeUnknownCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             Optional<string> thumbprint = default;
             Optional<string> issuer = default;

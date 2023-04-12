@@ -35,6 +35,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static OutputSelector DeserializeOutputSelector(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OutputSelectorProperty> property = default;
             Optional<OutputSelectorOperator> @operator = default;
             Optional<string> value = default;

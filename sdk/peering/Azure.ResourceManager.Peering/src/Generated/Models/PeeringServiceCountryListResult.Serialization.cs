@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Peering.Models
     {
         internal static PeeringServiceCountryListResult DeserializePeeringServiceCountryListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PeeringServiceCountry>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

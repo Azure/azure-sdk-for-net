@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static VideoOverlay DeserializeVideoOverlay(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RectangularWindow> position = default;
             Optional<double> opacity = default;
             Optional<RectangularWindow> cropRectangle = default;

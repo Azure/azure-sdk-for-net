@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static DataConnectorList DeserializeDataConnectorList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             IReadOnlyList<SecurityInsightsDataConnectorData> value = default;
             foreach (var property in element.EnumerateObject())

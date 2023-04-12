@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network
     {
         internal static AzureWebCategoryData DeserializeAzureWebCategoryData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;

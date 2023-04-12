@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterManagedOutboundIPProfile DeserializeManagedClusterManagedOutboundIPProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> count = default;
             foreach (var property in element.EnumerateObject())
             {

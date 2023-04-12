@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusKeyVaultProperties DeserializeServiceBusKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyName = default;
             Optional<Uri> keyVaultUri = default;
             Optional<string> keyVersion = default;

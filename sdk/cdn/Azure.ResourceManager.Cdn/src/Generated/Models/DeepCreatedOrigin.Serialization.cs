@@ -115,6 +115,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeepCreatedOrigin DeserializeDeepCreatedOrigin(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> hostName = default;
             Optional<int?> httpPort = default;

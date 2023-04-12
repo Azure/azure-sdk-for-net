@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automanage.Models
     {
         internal static ConfigurationProfileList DeserializeConfigurationProfileList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AutomanageConfigurationProfileData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static MachineExtensionInstanceView DeserializeMachineExtensionInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> typeHandlerVersion = default;

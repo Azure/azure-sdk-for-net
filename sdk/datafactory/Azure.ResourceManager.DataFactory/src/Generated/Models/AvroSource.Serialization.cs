@@ -83,6 +83,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AvroSource DeserializeAvroSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoreReadSettings> storeSettings = default;
             Optional<BinaryData> additionalColumns = default;
             string type = default;

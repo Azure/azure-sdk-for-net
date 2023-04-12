@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabUserSecretStore DeserializeDevTestLabUserSecretStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> keyVaultUri = default;
             Optional<ResourceIdentifier> keyVaultId = default;
             foreach (var property in element.EnumerateObject())

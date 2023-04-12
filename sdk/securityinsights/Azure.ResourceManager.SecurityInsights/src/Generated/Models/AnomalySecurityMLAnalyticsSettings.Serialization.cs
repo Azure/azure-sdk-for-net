@@ -118,6 +118,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AnomalySecurityMLAnalyticsSettings DeserializeAnomalySecurityMLAnalyticsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SecurityMLAnalyticsSettingsKind kind = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

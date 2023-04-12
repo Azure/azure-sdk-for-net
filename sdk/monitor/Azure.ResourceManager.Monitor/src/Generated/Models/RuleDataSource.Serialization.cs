@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static RuleDataSource DeserializeRuleDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

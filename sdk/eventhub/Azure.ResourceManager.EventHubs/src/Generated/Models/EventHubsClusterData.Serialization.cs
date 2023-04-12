@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static EventHubsClusterData DeserializeEventHubsClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventHubsClusterSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static ArmTemplateList DeserializeArmTemplateList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DevTestLabArmTemplateData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

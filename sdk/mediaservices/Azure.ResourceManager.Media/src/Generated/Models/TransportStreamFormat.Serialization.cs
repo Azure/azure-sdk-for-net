@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static TransportStreamFormat DeserializeTransportStreamFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<MediaOutputFile>> outputFiles = default;
             string odataType = default;
             string filenamePattern = default;

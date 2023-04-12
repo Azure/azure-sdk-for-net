@@ -1,0 +1,71 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.openai.com/v1/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "71",
+        "Content-Type": "application/json",
+        "traceparent": "00-7d089979c9eb04aab01f30cc57206cea-c2c10583b7b9518e-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "b594f0fb8e69a6f2ed5dbfd828691aad",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world!"
+        ],
+        "max_tokens": 100,
+        "model": "text-davinci-002"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Connection": "keep-alive",
+        "Content-Length": "397",
+        "Content-Type": "application/json",
+        "Date": "Tue, 21 Mar 2023 00:36:39 GMT",
+        "Openai-Model": "text-davinci-002",
+        "Openai-Organization": "msft-finetuning-2",
+        "Openai-Processing-Ms": "898",
+        "Openai-Version": "2020-10-01",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Ratelimit-Limit-Requests": "3000",
+        "X-Ratelimit-Limit-Tokens": "250000",
+        "X-Ratelimit-Remaining-Requests": "2999",
+        "X-Ratelimit-Remaining-Tokens": "249900",
+        "X-Ratelimit-Reset-Requests": "20ms",
+        "X-Ratelimit-Reset-Tokens": "24ms",
+        "X-Request-ID": "125b6e2f3d6e99bb041d6b45003e65e8"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6wKHOA3rEknkXll3DMAWJOfhmQmlb",
+        "object": "text_completion",
+        "created": 1679358998,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "\n\nWelcome to our website. This is our first post.\n\nWe are excited to share our news and thoughts with you.\n\nThank you for reading!",
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 3,
+          "completion_tokens": 34,
+          "total_tokens": 37
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "456374272"
+  }
+}

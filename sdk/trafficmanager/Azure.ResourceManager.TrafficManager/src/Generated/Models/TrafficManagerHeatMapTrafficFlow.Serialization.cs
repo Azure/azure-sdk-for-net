@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerHeatMapTrafficFlow DeserializeTrafficManagerHeatMapTrafficFlow(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IPAddress> sourceIP = default;
             Optional<double> latitude = default;
             Optional<double> longitude = default;

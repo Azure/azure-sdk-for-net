@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static MigrationRecoveryPointProperties DeserializeMigrationRecoveryPointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> recoveryPointTime = default;
             Optional<MigrationRecoveryPointType> recoveryPointType = default;
             foreach (var property in element.EnumerateObject())

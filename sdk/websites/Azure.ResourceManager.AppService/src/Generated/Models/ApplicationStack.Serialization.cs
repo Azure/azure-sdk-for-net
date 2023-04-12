@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ApplicationStack DeserializeApplicationStack(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> display = default;
             Optional<string> dependency = default;

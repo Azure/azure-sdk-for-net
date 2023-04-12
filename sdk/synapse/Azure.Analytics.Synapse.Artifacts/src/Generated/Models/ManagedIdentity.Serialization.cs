@@ -28,6 +28,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ManagedIdentity DeserializeManagedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> principalId = default;
             Optional<Guid> tenantId = default;
             Optional<ResourceIdentityType> type = default;

@@ -54,6 +54,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ActivityPolicy DeserializeActivityPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> timeout = default;
             Optional<object> retry = default;
             Optional<int> retryIntervalInSeconds = default;

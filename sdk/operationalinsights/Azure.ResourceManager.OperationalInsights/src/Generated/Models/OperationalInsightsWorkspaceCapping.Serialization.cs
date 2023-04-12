@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsWorkspaceCapping DeserializeOperationalInsightsWorkspaceCapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> dailyQuotaGb = default;
             Optional<string> quotaNextResetTime = default;
             Optional<OperationalInsightsDataIngestionStatus> dataIngestionStatus = default;

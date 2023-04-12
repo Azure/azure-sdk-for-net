@@ -32,6 +32,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareLROTask DeserializeHealthcareLROTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthcareTaskParameters> parameters = default;
             AnalyzeTextLROTaskKind kind = default;
             Optional<string> taskName = default;

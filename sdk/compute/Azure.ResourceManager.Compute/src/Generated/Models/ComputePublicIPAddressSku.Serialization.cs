@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ComputePublicIPAddressSku DeserializeComputePublicIPAddressSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ComputePublicIPAddressSkuName> name = default;
             Optional<ComputePublicIPAddressSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())

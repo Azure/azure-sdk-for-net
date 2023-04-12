@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyTokenRestriction DeserializeContentKeyPolicyTokenRestriction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string issuer = default;
             string audience = default;
             ContentKeyPolicyRestrictionTokenKey primaryVerificationKey = default;

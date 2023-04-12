@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationJobListResultV2 DeserializeAutomationJobListResultV2(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AutomationJobCollectionItemData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

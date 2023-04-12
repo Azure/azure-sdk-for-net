@@ -37,6 +37,10 @@ namespace Azure.Communication.NetworkTraversal
 
         internal static CommunicationIceServer DeserializeCommunicationIceServer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> urls = default;
             string username = default;
             string credential = default;

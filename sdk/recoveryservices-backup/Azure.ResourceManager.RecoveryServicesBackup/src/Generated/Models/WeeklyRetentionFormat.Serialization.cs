@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WeeklyRetentionFormat DeserializeWeeklyRetentionFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<BackupDayOfWeek>> daysOfTheWeek = default;
             Optional<IList<BackupWeekOfMonth>> weeksOfTheMonth = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Billing.Models
     {
         internal static BillingAmount DeserializeBillingAmount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> currency = default;
             Optional<float> value = default;
             foreach (var property in element.EnumerateObject())

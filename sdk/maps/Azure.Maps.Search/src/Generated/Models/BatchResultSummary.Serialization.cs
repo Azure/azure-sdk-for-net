@@ -14,6 +14,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static BatchResultSummary DeserializeBatchResultSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> successfulRequests = default;
             Optional<int> totalRequests = default;
             foreach (var property in element.EnumerateObject())

@@ -41,7 +41,7 @@ namespace Azure.Communication.Email
         {
             get
             {
-                string valueToReturn = Convert.ToBase64String(Encoding.UTF8.GetBytes(Content.ToString()));
+                string valueToReturn = Convert.ToBase64String(Content.ToArray());
                 if (string.IsNullOrWhiteSpace(valueToReturn))
                 {
                     throw new ArgumentException(ErrorMessages.InvalidAttachmentContent);

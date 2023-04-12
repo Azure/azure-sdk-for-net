@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static UnknownMultiMetricCriteria DeserializeUnknownMultiMetricCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CriterionType criterionType = "Unknown";
             string name = default;
             string metricName = default;

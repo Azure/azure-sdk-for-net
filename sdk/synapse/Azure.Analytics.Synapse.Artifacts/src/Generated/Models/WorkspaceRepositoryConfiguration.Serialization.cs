@@ -78,6 +78,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static WorkspaceRepositoryConfiguration DeserializeWorkspaceRepositoryConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<string> hostName = default;
             Optional<string> accountName = default;

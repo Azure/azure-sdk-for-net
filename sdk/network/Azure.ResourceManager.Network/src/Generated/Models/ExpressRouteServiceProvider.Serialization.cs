@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteServiceProvider DeserializeExpressRouteServiceProvider(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;

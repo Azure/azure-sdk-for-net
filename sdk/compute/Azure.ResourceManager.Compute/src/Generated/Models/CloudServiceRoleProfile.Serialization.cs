@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceRoleProfile DeserializeCloudServiceRoleProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<CloudServiceRoleProfileProperties>> roles = default;
             foreach (var property in element.EnumerateObject())
             {

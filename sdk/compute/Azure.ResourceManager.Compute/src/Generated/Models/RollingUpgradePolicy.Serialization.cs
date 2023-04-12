@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RollingUpgradePolicy DeserializeRollingUpgradePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxBatchInstancePercent = default;
             Optional<int> maxUnhealthyInstancePercent = default;
             Optional<int> maxUnhealthyUpgradedInstancePercent = default;

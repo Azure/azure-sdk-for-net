@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRUpstreamTemplate DeserializeSignalRUpstreamTemplate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hubPattern = default;
             Optional<string> eventPattern = default;
             Optional<string> categoryPattern = default;

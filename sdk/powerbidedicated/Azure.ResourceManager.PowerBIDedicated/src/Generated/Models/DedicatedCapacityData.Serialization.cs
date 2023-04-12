@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         internal static DedicatedCapacityData DeserializeDedicatedCapacityData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CapacitySku sku = default;
             Optional<string> id = default;
             Optional<string> name = default;

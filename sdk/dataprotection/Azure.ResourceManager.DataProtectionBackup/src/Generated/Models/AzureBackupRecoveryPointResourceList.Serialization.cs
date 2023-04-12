@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static AzureBackupRecoveryPointResourceList DeserializeAzureBackupRecoveryPointResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataProtectionBackupRecoveryPointData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

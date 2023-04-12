@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static PolicyDefinitionSummary DeserializePolicyDefinitionSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> policyDefinitionId = default;
             Optional<string> policyDefinitionReferenceId = default;
             Optional<IReadOnlyList<string>> policyDefinitionGroupNames = default;

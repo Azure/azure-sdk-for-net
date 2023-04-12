@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static EventHubCaptureFileCreatedEventData DeserializeEventHubCaptureFileCreatedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fileUrl = default;
             Optional<string> fileType = default;
             Optional<string> partitionId = default;

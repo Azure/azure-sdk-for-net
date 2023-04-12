@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static BotServicePrivateLinkServiceConnectionState DeserializeBotServicePrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BotServicePrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;

@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.NetApp
 
         internal static NetAppBackupData DeserializeNetAppBackupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;

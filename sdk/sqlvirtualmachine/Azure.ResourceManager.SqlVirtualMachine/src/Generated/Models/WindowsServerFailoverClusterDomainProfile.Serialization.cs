@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static WindowsServerFailoverClusterDomainProfile DeserializeWindowsServerFailoverClusterDomainProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> domainFqdn = default;
             Optional<string> ouPath = default;
             Optional<string> clusterBootstrapAccount = default;

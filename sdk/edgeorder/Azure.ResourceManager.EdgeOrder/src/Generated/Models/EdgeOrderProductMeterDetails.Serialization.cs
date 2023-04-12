@@ -13,6 +13,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static EdgeOrderProductMeterDetails DeserializeEdgeOrderProductMeterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("billingType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

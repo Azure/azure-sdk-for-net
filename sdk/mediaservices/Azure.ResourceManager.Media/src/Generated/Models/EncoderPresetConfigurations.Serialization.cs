@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static EncoderPresetConfigurations DeserializeEncoderPresetConfigurations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EncodingComplexity> complexity = default;
             Optional<InterleaveOutput> interleaveOutput = default;
             Optional<float> keyFrameIntervalInSeconds = default;

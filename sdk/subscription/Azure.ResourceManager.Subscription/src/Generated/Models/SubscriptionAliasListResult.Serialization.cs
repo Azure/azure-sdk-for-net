@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static SubscriptionAliasListResult DeserializeSubscriptionAliasListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SubscriptionAliasData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

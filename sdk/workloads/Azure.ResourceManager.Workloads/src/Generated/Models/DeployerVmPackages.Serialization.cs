@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static DeployerVmPackages DeserializeDeployerVmPackages(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> url = default;
             Optional<string> storageAccountId = default;
             foreach (var property in element.EnumerateObject())

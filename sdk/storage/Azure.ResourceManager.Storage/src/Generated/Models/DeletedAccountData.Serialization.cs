@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Storage
 
         internal static DeletedAccountData DeserializeDeletedAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

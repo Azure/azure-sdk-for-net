@@ -56,6 +56,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AvroSource DeserializeAvroSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoreReadSettings> storeSettings = default;
             Optional<object> additionalColumns = default;
             string type = default;

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Maintenance.Models
     {
         internal static MaintenanceConfigurationListResult DeserializeMaintenanceConfigurationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MaintenanceConfigurationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

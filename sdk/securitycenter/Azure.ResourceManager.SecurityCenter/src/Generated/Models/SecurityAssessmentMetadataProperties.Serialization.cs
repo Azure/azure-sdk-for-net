@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAssessmentMetadataProperties DeserializeSecurityAssessmentMetadataProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string displayName = default;
             Optional<ResourceIdentifier> policyDefinitionId = default;
             Optional<string> description = default;

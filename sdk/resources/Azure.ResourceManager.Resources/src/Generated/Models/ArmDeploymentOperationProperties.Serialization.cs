@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmDeploymentOperationProperties DeserializeArmDeploymentOperationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningOperationKind> provisioningOperation = default;
             Optional<string> provisioningState = default;
             Optional<DateTimeOffset> timestamp = default;

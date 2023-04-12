@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistrySourceTrigger DeserializeContainerRegistrySourceTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SourceCodeRepoProperties sourceRepository = default;
             IList<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents = default;
             Optional<ContainerRegistryTriggerStatus> status = default;

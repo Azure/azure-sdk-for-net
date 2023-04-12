@@ -181,6 +181,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabVmCreationContent DeserializeDevTestLabVmCreationContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;

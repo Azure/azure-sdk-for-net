@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static BlobRestoreStatus DeserializeBlobRestoreStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BlobRestoreProgressStatus> status = default;
             Optional<string> failureReason = default;
             Optional<string> restoreId = default;

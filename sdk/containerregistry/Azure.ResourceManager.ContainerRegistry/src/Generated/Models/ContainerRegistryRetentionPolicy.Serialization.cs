@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryRetentionPolicy DeserializeContainerRegistryRetentionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> days = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<ContainerRegistryPolicyStatus> status = default;

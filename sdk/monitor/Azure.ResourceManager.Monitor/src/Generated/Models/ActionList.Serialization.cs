@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ActionList DeserializeActionList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ActivityLogAlertActionGroup>> actionGroups = default;
             foreach (var property in element.EnumerateObject())
             {

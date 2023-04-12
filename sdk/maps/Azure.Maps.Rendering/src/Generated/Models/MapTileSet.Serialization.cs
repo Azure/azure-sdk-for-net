@@ -15,6 +15,10 @@ namespace Azure.Maps.Rendering
     {
         internal static MapTileSet DeserializeMapTileSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tilejson = default;
             Optional<string> name = default;
             Optional<string> description = default;

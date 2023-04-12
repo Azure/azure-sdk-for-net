@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityContactPropertiesNotificationsByRole DeserializeSecurityContactPropertiesNotificationsByRole(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SecurityAlertNotificationByRoleState> state = default;
             Optional<IList<SecurityAlertReceivingRole>> roles = default;
             foreach (var property in element.EnumerateObject())

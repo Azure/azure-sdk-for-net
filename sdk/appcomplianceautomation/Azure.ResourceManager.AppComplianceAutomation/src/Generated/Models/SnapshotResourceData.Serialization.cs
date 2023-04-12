@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         internal static SnapshotResourceData DeserializeSnapshotResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SnapshotProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

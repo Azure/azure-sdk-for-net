@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static BillingInformation DeserializeBillingInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PurchasePrice> billingCurrencyTotalPaidAmount = default;
             Optional<PurchasePrice> billingCurrencyProratedAmount = default;
             Optional<PurchasePrice> billingCurrencyRemainingCommitmentAmount = default;

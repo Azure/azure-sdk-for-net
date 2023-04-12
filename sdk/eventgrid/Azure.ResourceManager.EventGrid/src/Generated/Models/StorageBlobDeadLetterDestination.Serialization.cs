@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static StorageBlobDeadLetterDestination DeserializeStorageBlobDeadLetterDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DeadLetterEndPointType endpointType = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> blobContainerName = default;

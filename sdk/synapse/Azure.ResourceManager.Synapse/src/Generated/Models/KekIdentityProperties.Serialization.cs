@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static KekIdentityProperties DeserializeKekIdentityProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> userAssignedIdentity = default;
             Optional<BinaryData> useSystemAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())

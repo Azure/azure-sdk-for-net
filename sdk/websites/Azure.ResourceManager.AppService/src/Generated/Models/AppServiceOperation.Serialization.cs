@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServiceOperation DeserializeAppServiceOperation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<AppServiceOperationStatus> status = default;

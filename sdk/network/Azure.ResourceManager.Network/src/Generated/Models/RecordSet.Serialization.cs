@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static RecordSet DeserializeRecordSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recordType = default;
             Optional<string> recordSetName = default;
             Optional<string> fqdn = default;

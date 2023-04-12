@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static WorkloadNetworkDhcpServer DeserializeWorkloadNetworkDhcpServer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serverAddress = default;
             Optional<long> leaseTime = default;
             DhcpTypeEnum dhcpType = default;

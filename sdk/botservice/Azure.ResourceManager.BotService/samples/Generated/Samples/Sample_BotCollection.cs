@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.BotService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateBot()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/CreateBot.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/CreateBot.json
             // this example is just showing the usage of "Bots_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.BotService.Samples
             string resourceName = "samplebotname";
             BotData data = new BotData(new AzureLocation("West US"))
             {
-                Properties = new BotProperties("The Name of the bot", "http://mybot.coffee", "exampleappid")
+                Properties = new BotProperties("The Name of the bot", new Uri("http://mybot.coffee"), "exampleappid")
                 {
                     Description = "The description of the bot",
                     IconUri = new Uri("http://myicon"),
-                    MsaAppType = MsaAppType.UserAssignedMSI,
+                    MsaAppType = BotMsaAppType.UserAssignedMSI,
                     MsaAppTenantId = "exampleapptenantid",
-                    MsaAppMSIResourceId = "/subscriptions/foo/resourcegroups/bar/providers/microsoft.managedidentity/userassignedidentities/sampleId",
+                    MsaAppMSIResourceId = new ResourceIdentifier("/subscriptions/foo/resourcegroups/bar/providers/microsoft.managedidentity/userassignedidentities/sampleId"),
                     DeveloperAppInsightKey = "appinsightskey",
                     DeveloperAppInsightsApiKey = "appinsightsapikey",
                     DeveloperAppInsightsApplicationId = "appinsightsappid",
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.BotService.Samples
                     LuisKey = "luiskey",
                     IsCmekEnabled = true,
                     CmekKeyVaultUri = new Uri("https://myCmekKey"),
-                    PublicNetworkAccess = PublicNetworkAccess.Enabled,
-                    DisableLocalAuth = true,
+                    PublicNetworkAccess = BotServicePublicNetworkAccess.Enabled,
+                    IsLocalAuthDisabled = true,
                     SchemaTransformationVersion = "1.0",
                 },
                 Sku = new BotServiceSku(BotServiceSkuName.S1),
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.BotService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetBot()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/GetBot.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetBot.json
             // this example is just showing the usage of "Bots_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.BotService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetBot()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/GetBot.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/GetBot.json
             // this example is just showing the usage of "Bots_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.BotService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListBotsByResourceGroup()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2022-06-15-preview/examples/ListBotsByResourceGroup.json
+            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/stable/2022-09-15/examples/ListBotsByResourceGroup.json
             // this example is just showing the usage of "Bots_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBuildpackBindingProperties DeserializeAppPlatformBuildpackBindingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BuildpackBindingType> bindingType = default;
             Optional<BuildpackBindingProvisioningState> provisioningState = default;
             Optional<BuildpackBindingLaunchProperties> launchProperties = default;

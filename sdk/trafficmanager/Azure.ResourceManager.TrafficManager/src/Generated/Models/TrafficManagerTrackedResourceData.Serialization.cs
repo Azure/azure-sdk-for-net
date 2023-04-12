@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerTrackedResourceData DeserializeTrafficManagerTrackedResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<AzureLocation> location = default;
             Optional<ResourceIdentifier> id = default;

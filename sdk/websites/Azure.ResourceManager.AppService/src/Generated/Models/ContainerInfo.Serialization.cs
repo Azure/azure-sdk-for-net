@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ContainerInfo DeserializeContainerInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> currentTimeStamp = default;
             Optional<DateTimeOffset> previousTimeStamp = default;
             Optional<ContainerCpuStatistics> currentCpuStats = default;

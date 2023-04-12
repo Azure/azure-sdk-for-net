@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.Grafana
 
         internal static ManagedGrafanaData DeserializeManagedGrafanaData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedGrafanaSku> sku = default;
             Optional<ManagedGrafanaProperties> properties = default;
             Optional<ManagedServiceIdentity> identity = default;

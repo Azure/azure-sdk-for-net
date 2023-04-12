@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupDay DeserializeDataProtectionBackupDay(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> date = default;
             Optional<bool> isLast = default;
             foreach (var property in element.EnumerateObject())

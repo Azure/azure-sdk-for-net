@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownCompute DeserializeUnknownCompute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ComputeType computeType = "Unknown";
             Optional<string> computeLocation = default;
             Optional<MachineLearningProvisioningState> provisioningState = default;

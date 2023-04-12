@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.Automation
 
         internal static AutomationAccountData DeserializeAutomationAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

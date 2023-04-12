@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Nginx.Models
     {
         internal static NginxConfigurationListResponse DeserializeNginxConfigurationListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NginxConfigurationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

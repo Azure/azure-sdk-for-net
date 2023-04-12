@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoverOperationErrorAdditionalInfo DeserializeMoverOperationErrorAdditionalInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<MoveErrorInfo> info = default;
             foreach (var property in element.EnumerateObject())

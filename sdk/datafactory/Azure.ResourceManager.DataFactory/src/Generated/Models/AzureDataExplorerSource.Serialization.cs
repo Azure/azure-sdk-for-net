@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureDataExplorerSource DeserializeAzureDataExplorerSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData query = default;
             Optional<BinaryData> noTruncation = default;
             Optional<BinaryData> queryTimeout = default;

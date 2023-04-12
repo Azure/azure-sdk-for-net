@@ -18,6 +18,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsChatMessageReceivedEventData DeserializeAcsChatMessageReceivedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> messageBody = default;
             Optional<IReadOnlyDictionary<string, string>> metadata = default;
             Optional<string> messageId = default;

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static MachineLearningScheduleData DeserializeMachineLearningScheduleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningScheduleProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;

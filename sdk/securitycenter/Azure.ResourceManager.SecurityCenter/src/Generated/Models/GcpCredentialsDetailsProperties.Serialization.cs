@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GcpCredentialsDetailsProperties DeserializeGcpCredentialsDetailsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string organizationId = default;
             string type = default;
             string projectId = default;

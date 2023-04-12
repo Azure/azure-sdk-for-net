@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Automanage.Models
 
         internal static AutomanageServicePrincipalData DeserializeAutomanageServicePrincipalData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

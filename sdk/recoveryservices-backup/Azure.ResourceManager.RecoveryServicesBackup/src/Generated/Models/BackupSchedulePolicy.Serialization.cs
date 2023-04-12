@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupSchedulePolicy DeserializeBackupSchedulePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("schedulePolicyType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

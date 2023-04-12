@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static SqlBackupSetInfo DeserializeSqlBackupSetInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> backupSetId = default;
             Optional<string> firstLSN = default;
             Optional<string> lastLSN = default;

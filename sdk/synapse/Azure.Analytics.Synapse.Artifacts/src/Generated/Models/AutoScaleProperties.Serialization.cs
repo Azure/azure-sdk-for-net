@@ -38,6 +38,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AutoScaleProperties DeserializeAutoScaleProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minNodeCount = default;
             Optional<bool> enabled = default;
             Optional<int> maxNodeCount = default;

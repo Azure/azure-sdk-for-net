@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Network
 
         internal static RouteFilterRuleData DeserializeRouteFilterRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;

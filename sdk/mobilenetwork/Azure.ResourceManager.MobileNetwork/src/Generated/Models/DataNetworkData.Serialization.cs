@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal static DataNetworkData DeserializeDataNetworkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;

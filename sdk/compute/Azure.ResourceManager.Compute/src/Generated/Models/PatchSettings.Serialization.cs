@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static PatchSettings DeserializePatchSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WindowsVmGuestPatchMode> patchMode = default;
             Optional<bool> enableHotpatching = default;
             Optional<WindowsPatchAssessmentMode> assessmentMode = default;

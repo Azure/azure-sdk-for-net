@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static NamedAgentPoolProfile DeserializeNamedAgentPoolProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> count = default;
             Optional<IList<string>> availabilityZones = default;

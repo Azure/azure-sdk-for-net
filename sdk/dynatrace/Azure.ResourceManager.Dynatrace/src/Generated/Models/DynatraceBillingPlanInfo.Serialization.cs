@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceBillingPlanInfo DeserializeDynatraceBillingPlanInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> usageType = default;
             Optional<string> billingCycle = default;
             Optional<string> planDetails = default;

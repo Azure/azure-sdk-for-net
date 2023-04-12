@@ -15,6 +15,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkSessionState DeserializeSparkSessionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset?> notStartedAt = default;
             Optional<DateTimeOffset?> startingAt = default;
             Optional<DateTimeOffset?> idleAt = default;

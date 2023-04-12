@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.PostgreSql
 
         internal static PostgreSqlServerSecurityAlertPolicyData DeserializePostgreSqlServerSecurityAlertPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

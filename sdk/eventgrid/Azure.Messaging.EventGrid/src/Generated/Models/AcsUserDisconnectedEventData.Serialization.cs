@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsUserDisconnectedEventData DeserializeAcsUserDisconnectedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CommunicationIdentifierModel> userCommunicationIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {

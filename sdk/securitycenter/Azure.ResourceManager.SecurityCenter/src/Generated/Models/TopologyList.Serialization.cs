@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static TopologyList DeserializeTopologyList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SecurityTopologyResource>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

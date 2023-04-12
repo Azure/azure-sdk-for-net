@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryGlobalParameterSpecification DeserializeFactoryGlobalParameterSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FactoryGlobalParameterType type = default;
             BinaryData value = default;
             foreach (var property in element.EnumerateObject())

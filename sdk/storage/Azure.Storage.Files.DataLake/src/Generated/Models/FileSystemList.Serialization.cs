@@ -15,6 +15,10 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         internal static FileSystemList DeserializeFileSystemList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FileSystem>> filesystems = default;
             foreach (var property in element.EnumerateObject())
             {

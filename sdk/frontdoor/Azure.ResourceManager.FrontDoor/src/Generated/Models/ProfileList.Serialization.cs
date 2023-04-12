@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         internal static ProfileList DeserializeProfileList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FrontDoorNetworkExperimentProfileData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

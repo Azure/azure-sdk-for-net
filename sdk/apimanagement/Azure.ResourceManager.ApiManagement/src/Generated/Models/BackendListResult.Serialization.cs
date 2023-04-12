@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static BackendListResult DeserializeBackendListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ApiManagementBackendData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;

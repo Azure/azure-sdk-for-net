@@ -15,6 +15,10 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static RestoreDetailsInternal DeserializeRestoreDetailsInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> statusDetails = default;
             Optional<KeyVaultServiceError> error = default;

@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Quota.Models
 
         internal static UnknownLimitJsonObject DeserializeUnknownLimitJsonObject(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LimitType limitObjectType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

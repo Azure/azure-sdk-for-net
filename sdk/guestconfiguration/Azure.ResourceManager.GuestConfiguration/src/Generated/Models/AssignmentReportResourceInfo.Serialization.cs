@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static AssignmentReportResourceInfo DeserializeAssignmentReportResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
             Optional<string> resourceId = default;
             Optional<IList<AssignmentReportResourceComplianceReason>> reasons = default;

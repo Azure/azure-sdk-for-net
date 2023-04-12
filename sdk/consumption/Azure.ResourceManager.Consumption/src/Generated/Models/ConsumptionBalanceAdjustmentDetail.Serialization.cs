@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionBalanceAdjustmentDetail DeserializeConsumptionBalanceAdjustmentDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<decimal> value = default;
             foreach (var property in element.EnumerateObject())

@@ -80,7 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedTraceId: null);
         }
 
-        [Theory(Skip = "Bug: ILogger message is overwriting the Exception.Message.")]
+        [Theory]
         [InlineData(LogLevel.Information, "Information")]
         [InlineData(LogLevel.Warning, "Warning")]
         [InlineData(LogLevel.Error, "Error")]
@@ -134,7 +134,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertLog_As_ExceptionTelemetry(
                 telemetryItem: telemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
-                expectedMessage: "Test Exception", // TODO: this fails. Currently the ILogger message is overwriting the Exception.Message.
+                expectedMessage: "Test Exception",
                 expectedTypeName: "System.Exception");
         }
     }

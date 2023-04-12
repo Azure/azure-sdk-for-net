@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static UniformInt64RangePartitionScheme DeserializeUniformInt64RangePartitionScheme(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int count = default;
             long lowKey = default;
             long highKey = default;

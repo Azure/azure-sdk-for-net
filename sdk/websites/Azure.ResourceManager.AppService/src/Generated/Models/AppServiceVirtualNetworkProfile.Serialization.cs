@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceVirtualNetworkProfile DeserializeAppServiceVirtualNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;

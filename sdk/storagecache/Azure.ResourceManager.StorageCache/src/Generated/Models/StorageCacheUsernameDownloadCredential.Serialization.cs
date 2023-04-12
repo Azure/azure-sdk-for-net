@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheUsernameDownloadCredential DeserializeStorageCacheUsernameDownloadCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> bindDn = default;
             Optional<string> bindPassword = default;
             foreach (var property in element.EnumerateObject())

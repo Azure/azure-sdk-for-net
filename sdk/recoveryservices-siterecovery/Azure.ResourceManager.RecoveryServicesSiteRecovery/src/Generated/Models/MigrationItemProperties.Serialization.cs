@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static MigrationItemProperties DeserializeMigrationItemProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> machineName = default;
             Optional<string> policyId = default;
             Optional<string> policyFriendlyName = default;

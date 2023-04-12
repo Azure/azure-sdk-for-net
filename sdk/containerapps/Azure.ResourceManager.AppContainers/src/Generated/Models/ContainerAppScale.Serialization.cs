@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppScale DeserializeContainerAppScale(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minReplicas = default;
             Optional<int> maxReplicas = default;
             Optional<IList<ContainerAppScaleRule>> rules = default;

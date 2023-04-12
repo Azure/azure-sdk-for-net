@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static ListPoolsResult DeserializeListPoolsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<BatchAccountPoolData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

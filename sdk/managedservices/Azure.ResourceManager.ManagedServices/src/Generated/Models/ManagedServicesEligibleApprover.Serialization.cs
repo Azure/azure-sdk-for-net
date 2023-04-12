@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
 
         internal static ManagedServicesEligibleApprover DeserializeManagedServicesEligibleApprover(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid principalId = default;
             Optional<string> principalIdDisplayName = default;
             foreach (var property in element.EnumerateObject())

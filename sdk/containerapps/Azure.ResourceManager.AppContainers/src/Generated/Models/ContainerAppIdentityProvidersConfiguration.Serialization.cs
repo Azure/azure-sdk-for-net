@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppIdentityProvidersConfiguration DeserializeContainerAppIdentityProvidersConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppAzureActiveDirectoryConfiguration> azureActiveDirectory = default;
             Optional<ContainerAppFacebookConfiguration> facebook = default;
             Optional<ContainerAppGitHubConfiguration> gitHub = default;

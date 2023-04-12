@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubAvailabilityResult DeserializeNotificationHubAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isAvailiable = default;
             Optional<NotificationHubSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;

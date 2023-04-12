@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static SourceCodeRepoAuthInfo DeserializeSourceCodeRepoAuthInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SourceCodeRepoAuthTokenType tokenType = default;
             string token = default;
             Optional<string> refreshToken = default;

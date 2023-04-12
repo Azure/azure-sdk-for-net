@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static KustoAvailableSkuDetails DeserializeKustoAvailableSkuDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<KustoSku> sku = default;
             Optional<KustoCapacity> capacity = default;

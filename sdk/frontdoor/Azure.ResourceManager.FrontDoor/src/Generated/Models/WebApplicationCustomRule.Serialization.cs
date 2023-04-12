@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static WebApplicationCustomRule DeserializeWebApplicationCustomRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             int priority = default;
             Optional<CustomRuleEnabledState> enabledState = default;

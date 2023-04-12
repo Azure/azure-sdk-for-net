@@ -88,6 +88,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static Notebook DeserializeNotebook(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<BigDataPoolReference> bigDataPool = default;
             Optional<SparkConfigurationReference> targetSparkConfiguration = default;

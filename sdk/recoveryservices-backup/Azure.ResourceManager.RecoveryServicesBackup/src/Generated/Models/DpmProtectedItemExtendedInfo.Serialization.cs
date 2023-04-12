@@ -98,6 +98,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DpmProtectedItemExtendedInfo DeserializeDpmProtectedItemExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> protectableObjectLoadPath = default;
             Optional<bool> @protected = default;
             Optional<bool> isPresentOnCloud = default;

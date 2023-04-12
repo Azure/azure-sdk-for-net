@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static Disallowed DeserializeDisallowed(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> diskTypes = default;
             foreach (var property in element.EnumerateObject())
             {

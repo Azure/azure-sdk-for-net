@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowRecurrenceScheduleOccurrence DeserializeLogicWorkflowRecurrenceScheduleOccurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogicWorkflowDayOfWeek> day = default;
             Optional<int> occurrence = default;
             foreach (var property in element.EnumerateObject())

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static BodyDiagnosticSettings DeserializeBodyDiagnosticSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> bytes = default;
             foreach (var property in element.EnumerateObject())
             {

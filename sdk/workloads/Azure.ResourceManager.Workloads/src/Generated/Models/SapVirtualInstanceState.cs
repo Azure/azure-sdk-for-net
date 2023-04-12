@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.Workloads.Models
         private const string SoftwareInstallationPendingValue = "SoftwareInstallationPending";
         private const string SoftwareInstallationInProgressValue = "SoftwareInstallationInProgress";
         private const string SoftwareInstallationFailedValue = "SoftwareInstallationFailed";
+        private const string SoftwareDetectionInProgressValue = "SoftwareDetectionInProgress";
+        private const string SoftwareDetectionFailedValue = "SoftwareDetectionFailed";
         private const string DiscoveryPendingValue = "DiscoveryPending";
         private const string DiscoveryInProgressValue = "DiscoveryInProgress";
         private const string DiscoveryFailedValue = "DiscoveryFailed";
@@ -45,6 +47,10 @@ namespace Azure.ResourceManager.Workloads.Models
         public static SapVirtualInstanceState SoftwareInstallationInProgress { get; } = new SapVirtualInstanceState(SoftwareInstallationInProgressValue);
         /// <summary> SoftwareInstallationFailed. </summary>
         public static SapVirtualInstanceState SoftwareInstallationFailed { get; } = new SapVirtualInstanceState(SoftwareInstallationFailedValue);
+        /// <summary> SoftwareDetectionInProgress. </summary>
+        public static SapVirtualInstanceState SoftwareDetectionInProgress { get; } = new SapVirtualInstanceState(SoftwareDetectionInProgressValue);
+        /// <summary> SoftwareDetectionFailed. </summary>
+        public static SapVirtualInstanceState SoftwareDetectionFailed { get; } = new SapVirtualInstanceState(SoftwareDetectionFailedValue);
         /// <summary> DiscoveryPending. </summary>
         public static SapVirtualInstanceState DiscoveryPending { get; } = new SapVirtualInstanceState(DiscoveryPendingValue);
         /// <summary> DiscoveryInProgress. </summary>

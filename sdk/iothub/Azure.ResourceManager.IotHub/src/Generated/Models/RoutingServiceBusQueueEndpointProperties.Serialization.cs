@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static RoutingServiceBusQueueEndpointProperties DeserializeRoutingServiceBusQueueEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> id = default;
             Optional<string> connectionString = default;
             Optional<string> endpointUri = default;

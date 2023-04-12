@@ -71,6 +71,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureDataExplorerSink DeserializeAzureDataExplorerSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> ingestionMappingName = default;
             Optional<object> ingestionMappingAsJson = default;
             Optional<object> flushImmediately = default;

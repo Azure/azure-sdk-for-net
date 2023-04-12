@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupRetentionTag DeserializeDataProtectionBackupRetentionTag(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> eTag = default;
             Optional<string> id = default;
             string tagName = default;

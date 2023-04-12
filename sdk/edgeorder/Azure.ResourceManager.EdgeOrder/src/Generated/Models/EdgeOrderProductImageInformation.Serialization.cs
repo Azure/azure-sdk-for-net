@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static EdgeOrderProductImageInformation DeserializeEdgeOrderProductImageInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EdgeOrderProductImageType> imageType = default;
             Optional<Uri> imageUrl = default;
             foreach (var property in element.EnumerateObject())

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ServiceManagedResourcesSettings DeserializeServiceManagedResourcesSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CosmosDbSettings> cosmosDb = default;
             foreach (var property in element.EnumerateObject())
             {

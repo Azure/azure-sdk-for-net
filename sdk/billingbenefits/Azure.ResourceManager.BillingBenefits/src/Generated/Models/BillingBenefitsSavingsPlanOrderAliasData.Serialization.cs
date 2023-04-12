@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.BillingBenefits
 
         internal static BillingBenefitsSavingsPlanOrderAliasData DeserializeBillingBenefitsSavingsPlanOrderAliasData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BillingBenefitsSku sku = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;

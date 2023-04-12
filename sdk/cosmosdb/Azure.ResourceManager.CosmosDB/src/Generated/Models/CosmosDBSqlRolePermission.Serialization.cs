@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBSqlRolePermission DeserializeCosmosDBSqlRolePermission(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> dataActions = default;
             Optional<IList<string>> notDataActions = default;
             foreach (var property in element.EnumerateObject())

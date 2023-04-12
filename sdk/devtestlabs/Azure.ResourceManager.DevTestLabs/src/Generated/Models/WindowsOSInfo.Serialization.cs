@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static WindowsOSInfo DeserializeWindowsOSInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WindowsOSState> windowsOSState = default;
             foreach (var property in element.EnumerateObject())
             {

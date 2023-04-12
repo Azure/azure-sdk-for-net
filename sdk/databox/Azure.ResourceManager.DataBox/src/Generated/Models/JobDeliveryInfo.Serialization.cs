@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static JobDeliveryInfo DeserializeJobDeliveryInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> scheduledDateTime = default;
             foreach (var property in element.EnumerateObject())
             {

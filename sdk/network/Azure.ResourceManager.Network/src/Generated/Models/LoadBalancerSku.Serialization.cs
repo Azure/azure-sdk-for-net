@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static LoadBalancerSku DeserializeLoadBalancerSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LoadBalancerSkuName> name = default;
             Optional<LoadBalancerSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())

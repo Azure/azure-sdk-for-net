@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static FabricProperties DeserializeFabricProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<EncryptionDetails> encryptionDetails = default;
             Optional<EncryptionDetails> rolloverEncryptionDetails = default;

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecuritySettingData DeserializeSecuritySettingData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

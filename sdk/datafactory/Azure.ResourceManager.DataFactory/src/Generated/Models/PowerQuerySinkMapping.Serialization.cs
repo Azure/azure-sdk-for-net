@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PowerQuerySinkMapping DeserializePowerQuerySinkMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> queryName = default;
             Optional<IList<PowerQuerySink>> dataflowSinks = default;
             foreach (var property in element.EnumerateObject())

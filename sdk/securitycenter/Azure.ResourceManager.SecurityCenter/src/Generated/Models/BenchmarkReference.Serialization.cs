@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static BenchmarkReference DeserializeBenchmarkReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> benchmark = default;
             Optional<string> reference = default;
             foreach (var property in element.EnumerateObject())

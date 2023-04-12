@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineNetworkInterfaceReference DeserializeVirtualMachineNetworkInterfaceReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<bool> primary = default;
             Optional<ComputeDeleteOption> deleteOption = default;

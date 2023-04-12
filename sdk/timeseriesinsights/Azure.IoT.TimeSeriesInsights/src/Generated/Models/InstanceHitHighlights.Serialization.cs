@@ -15,6 +15,10 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static InstanceHitHighlights DeserializeInstanceHitHighlights(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> timeSeriesId = default;
             Optional<string> typeName = default;
             Optional<string> name = default;

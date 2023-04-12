@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformAppData DeserializeAppPlatformAppData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformAppProperties> properties = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;

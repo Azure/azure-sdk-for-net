@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static ResourceCertificateAndAadDetails DeserializeResourceCertificateAndAadDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string aadAuthority = default;
             Guid aadTenantId = default;
             string servicePrincipalClientId = default;

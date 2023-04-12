@@ -31,6 +31,10 @@ namespace Azure.Communication.JobRouter
 
         internal static UnknownDistributionMode DeserializeUnknownDistributionMode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string kind = "Unknown";
             int minConcurrentOffers = default;
             int maxConcurrentOffers = default;

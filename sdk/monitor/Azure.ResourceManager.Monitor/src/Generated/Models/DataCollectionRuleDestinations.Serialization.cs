@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataCollectionRuleDestinations DeserializeDataCollectionRuleDestinations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<LogAnalyticsDestination>> logAnalytics = default;
             Optional<DestinationsSpecAzureMonitorMetrics> azureMonitorMetrics = default;
             foreach (var property in element.EnumerateObject())

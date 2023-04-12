@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SapVirtualInstanceErrorDetail DeserializeSapVirtualInstanceErrorDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<IReadOnlyList<SapVirtualInstanceErrorDetail>> details = default;

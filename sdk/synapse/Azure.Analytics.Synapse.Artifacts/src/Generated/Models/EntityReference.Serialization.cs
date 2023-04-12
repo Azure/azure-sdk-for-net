@@ -33,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static EntityReference DeserializeEntityReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationRuntimeEntityReferenceType> type = default;
             Optional<string> referenceName = default;
             foreach (var property in element.EnumerateObject())

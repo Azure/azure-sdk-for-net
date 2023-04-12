@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static GremlinGraphPropertiesConfig DeserializeGremlinGraphPropertiesConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> throughput = default;
             Optional<AutoscaleSettings> autoscaleSettings = default;
             foreach (var property in element.EnumerateObject())

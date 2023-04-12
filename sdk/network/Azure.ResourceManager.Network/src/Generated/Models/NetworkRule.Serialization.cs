@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkRule DeserializeNetworkRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<FirewallPolicyRuleNetworkProtocol>> ipProtocols = default;
             Optional<IList<string>> sourceAddresses = default;
             Optional<IList<string>> destinationAddresses = default;

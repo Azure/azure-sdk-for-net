@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static OutboundNetworkDependenciesEndpoint DeserializeOutboundNetworkDependenciesEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;

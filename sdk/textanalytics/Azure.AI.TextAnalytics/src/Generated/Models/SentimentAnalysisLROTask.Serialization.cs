@@ -32,6 +32,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static SentimentAnalysisLROTask DeserializeSentimentAnalysisLROTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SentimentAnalysisTaskParameters> parameters = default;
             AnalyzeTextLROTaskKind kind = default;
             Optional<string> taskName = default;

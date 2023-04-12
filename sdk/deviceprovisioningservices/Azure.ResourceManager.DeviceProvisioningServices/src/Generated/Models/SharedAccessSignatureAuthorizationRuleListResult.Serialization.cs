@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     {
         internal static SharedAccessSignatureAuthorizationRuleListResult DeserializeSharedAccessSignatureAuthorizationRuleListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DeviceProvisioningServicesSharedAccessKey>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

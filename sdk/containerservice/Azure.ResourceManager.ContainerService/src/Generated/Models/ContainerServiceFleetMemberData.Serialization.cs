@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ContainerService
 
         internal static ContainerServiceFleetMemberData DeserializeContainerServiceFleetMemberData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;

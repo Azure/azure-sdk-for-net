@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ApplicationHealthPolicy DeserializeApplicationHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool considerWarningAsError = default;
             int maxPercentUnhealthyDeployedApplications = default;
             Optional<ServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;

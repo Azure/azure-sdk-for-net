@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupCommonSettings DeserializeBackupCommonSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> timeZone = default;
             Optional<bool> isSqlCompression = default;
             Optional<bool> isCompression = default;

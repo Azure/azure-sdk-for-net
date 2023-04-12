@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ReplicationEligibilityResultsProperties DeserializeReplicationEligibilityResultsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientRequestId = default;
             Optional<IReadOnlyList<ReplicationEligibilityResultsErrorInfo>> errors = default;
             foreach (var property in element.EnumerateObject())

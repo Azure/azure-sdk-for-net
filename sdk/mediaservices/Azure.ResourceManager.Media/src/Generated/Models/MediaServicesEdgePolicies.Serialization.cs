@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static MediaServicesEdgePolicies DeserializeMediaServicesEdgePolicies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EdgeUsageDataCollectionPolicy> usageDataCollectionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {

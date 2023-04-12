@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static HyperVReplicaAzurePolicyDetails DeserializeHyperVReplicaAzurePolicyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> recoveryPointHistoryDurationInHours = default;
             Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
             Optional<int> replicationInterval = default;

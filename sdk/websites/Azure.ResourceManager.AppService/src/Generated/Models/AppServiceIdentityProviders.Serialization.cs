@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceIdentityProviders DeserializeAppServiceIdentityProviders(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppServiceAadProvider> azureActiveDirectory = default;
             Optional<AppServiceFacebookProvider> facebook = default;
             Optional<AppServiceGitHubProvider> gitHub = default;

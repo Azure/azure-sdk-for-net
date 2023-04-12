@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RequestMethodMatchCondition DeserializeRequestMethodMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RequestMethodMatchConditionType typeName = default;
             RequestMethodOperator @operator = default;
             Optional<bool> negateCondition = default;

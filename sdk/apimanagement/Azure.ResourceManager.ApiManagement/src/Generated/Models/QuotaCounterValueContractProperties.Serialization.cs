@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static QuotaCounterValueContractProperties DeserializeQuotaCounterValueContractProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> callsCount = default;
             Optional<double> kbTransferred = default;
             foreach (var property in element.EnumerateObject())

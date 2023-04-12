@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ManagedInstanceVersionCapability DeserializeManagedInstanceVersionCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<ManagedInstanceEditionCapability>> supportedEditions = default;
             Optional<IReadOnlyList<InstancePoolEditionCapability>> supportedInstancePoolEditions = default;

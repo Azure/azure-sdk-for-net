@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static MabFileFolderProtectedItemExtendedInfo DeserializeMabFileFolderProtectedItemExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastRefreshedAt = default;
             Optional<DateTimeOffset> oldestRecoveryPoint = default;
             Optional<int> recoveryPointCount = default;

@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlVmStorageConfigurationSettings DeserializeSqlVmStorageConfigurationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlStorageSettings> sqlDataSettings = default;
             Optional<SqlStorageSettings> sqlLogSettings = default;
             Optional<SqlTempDBSettings> sqlTempDBSettings = default;

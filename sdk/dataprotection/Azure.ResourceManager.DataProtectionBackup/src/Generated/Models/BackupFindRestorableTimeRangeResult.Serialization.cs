@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BackupFindRestorableTimeRangeResult DeserializeBackupFindRestorableTimeRangeResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupFindRestorableTimeRangeResultProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

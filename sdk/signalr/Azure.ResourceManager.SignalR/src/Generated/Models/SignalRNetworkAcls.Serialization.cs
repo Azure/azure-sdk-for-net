@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRNetworkAcls DeserializeSignalRNetworkAcls(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SignalRNetworkAclAction> defaultAction = default;
             Optional<SignalRNetworkAcl> publicNetwork = default;
             Optional<IList<SignalRPrivateEndpointAcl>> privateEndpoints = default;

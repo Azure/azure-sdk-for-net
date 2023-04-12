@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static KubeletConfig DeserializeKubeletConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cpuManagerPolicy = default;
             Optional<bool> cpuCfsQuota = default;
             Optional<string> cpuCfsQuotaPeriod = default;

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerUserAssignedIdentity DeserializePostgreSqlFlexibleServerUserAssignedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             PostgreSqlFlexibleServerIdentityType type = default;
             foreach (var property in element.EnumerateObject())

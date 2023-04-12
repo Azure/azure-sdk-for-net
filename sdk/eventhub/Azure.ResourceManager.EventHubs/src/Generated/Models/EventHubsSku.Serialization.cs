@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsSku DeserializeEventHubsSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EventHubsSkuName name = default;
             Optional<EventHubsSkuTier> tier = default;
             Optional<int> capacity = default;

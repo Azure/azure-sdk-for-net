@@ -15,6 +15,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteDirectionsBatchItemResponse DeserializeRouteDirectionsBatchItemResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ErrorDetail> error = default;
             Optional<string> formatVersion = default;
             Optional<IReadOnlyList<RouteData>> routes = default;

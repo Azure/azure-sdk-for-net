@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static UserAssignedIdentityProperties DeserializeUserAssignedIdentityProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiManagementSkuLocationInfo DeserializeApiManagementSkuLocationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<string>> zones = default;
             Optional<IReadOnlyList<ApiManagementSkuZoneDetails>> zoneDetails = default;

@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationJitAccessPolicy DeserializeArmApplicationJitAccessPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool jitAccessEnabled = default;
             Optional<JitApprovalMode> jitApprovalMode = default;
             Optional<IList<JitApprover>> jitApprovers = default;

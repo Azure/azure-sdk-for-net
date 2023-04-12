@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static UserList DeserializeUserList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataBoxEdgeUserData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

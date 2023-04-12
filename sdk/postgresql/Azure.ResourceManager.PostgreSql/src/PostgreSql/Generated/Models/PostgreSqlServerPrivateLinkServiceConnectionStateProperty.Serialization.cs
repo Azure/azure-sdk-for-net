@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
     {
         internal static PostgreSqlServerPrivateLinkServiceConnectionStateProperty DeserializePostgreSqlServerPrivateLinkServiceConnectionStateProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PostgreSqlPrivateLinkServiceConnectionStateStatus status = default;
             string description = default;
             Optional<PostgreSqlPrivateLinkServiceConnectionStateRequiredAction> actionsRequired = default;

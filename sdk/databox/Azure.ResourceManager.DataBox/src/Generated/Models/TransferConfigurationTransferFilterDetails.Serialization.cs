@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static TransferConfigurationTransferFilterDetails DeserializeTransferConfigurationTransferFilterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TransferFilterDetails> include = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RunCommandDocument DeserializeRunCommandDocument(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<string> script = default;
             Optional<IReadOnlyList<RunCommandParameterDefinition>> parameters = default;
             string schema = default;

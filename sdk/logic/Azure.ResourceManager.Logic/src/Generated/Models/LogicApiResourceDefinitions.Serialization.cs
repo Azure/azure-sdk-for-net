@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicApiResourceDefinitions DeserializeLogicApiResourceDefinitions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> originalSwaggerUrl = default;
             Optional<Uri> modifiedSwaggerUrl = default;
             foreach (var property in element.EnumerateObject())

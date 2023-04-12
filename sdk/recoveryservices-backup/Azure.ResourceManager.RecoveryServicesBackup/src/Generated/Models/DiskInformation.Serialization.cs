@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DiskInformation DeserializeDiskInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> lun = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())

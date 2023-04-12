@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static FunctionAppRuntimeSettings DeserializeFunctionAppRuntimeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> runtimeVersion = default;
             Optional<bool> remoteDebuggingSupported = default;
             Optional<AppInsightsWebAppStackSettings> appInsightsSettings = default;

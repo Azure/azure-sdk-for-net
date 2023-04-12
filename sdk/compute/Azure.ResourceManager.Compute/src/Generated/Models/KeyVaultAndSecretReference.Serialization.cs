@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static KeyVaultAndSecretReference DeserializeKeyVaultAndSecretReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WritableSubResource sourceVault = default;
             Uri secretUrl = default;
             foreach (var property in element.EnumerateObject())

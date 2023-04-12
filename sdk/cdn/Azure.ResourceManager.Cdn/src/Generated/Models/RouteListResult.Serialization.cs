@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static RouteListResult DeserializeRouteListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<FrontDoorRouteData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

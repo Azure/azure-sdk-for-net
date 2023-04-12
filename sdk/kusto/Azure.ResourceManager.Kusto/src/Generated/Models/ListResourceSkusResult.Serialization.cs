@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static ListResourceSkusResult DeserializeListResourceSkusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<KustoAvailableSkuDetails>> value = default;
             foreach (var property in element.EnumerateObject())
             {

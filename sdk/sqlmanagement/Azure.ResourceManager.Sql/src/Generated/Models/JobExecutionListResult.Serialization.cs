@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static JobExecutionListResult DeserializeJobExecutionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SqlServerJobExecutionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

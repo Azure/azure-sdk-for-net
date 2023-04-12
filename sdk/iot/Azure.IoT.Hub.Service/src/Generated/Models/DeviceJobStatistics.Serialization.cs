@@ -14,6 +14,10 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static DeviceJobStatistics DeserializeDeviceJobStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> deviceCount = default;
             Optional<int> failedCount = default;
             Optional<int> succeededCount = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRouteServiceProviderListResult DeserializeExpressRouteServiceProviderListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ExpressRouteServiceProvider>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

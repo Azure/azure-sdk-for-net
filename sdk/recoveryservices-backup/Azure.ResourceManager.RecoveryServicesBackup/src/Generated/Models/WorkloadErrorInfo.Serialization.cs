@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadErrorInfo DeserializeWorkloadErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> errorCode = default;
             Optional<string> errorString = default;
             Optional<string> errorTitle = default;

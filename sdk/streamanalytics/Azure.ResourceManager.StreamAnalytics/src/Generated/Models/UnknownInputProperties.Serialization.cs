@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static UnknownInputProperties DeserializeUnknownInputProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             Optional<StreamAnalyticsDataSerialization> serialization = default;
             Optional<StreamingJobDiagnostics> diagnostics = default;

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.BotService
         /// <param name="data"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BotChannelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ChannelName channelName, BotChannelData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BotChannelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BotChannelName channelName, BotChannelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.BotService
         /// <param name="data"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BotChannelResource> CreateOrUpdate(WaitUntil waitUntil, ChannelName channelName, BotChannelData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BotChannelResource> CreateOrUpdate(WaitUntil waitUntil, BotChannelName channelName, BotChannelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.BotService
         /// </summary>
         /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BotChannelResource>> GetAsync(ChannelName channelName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotChannelResource>> GetAsync(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
             using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.Get");
             scope.Start();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.BotService
         /// </summary>
         /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BotChannelResource> Get(ChannelName channelName, CancellationToken cancellationToken = default)
+        public virtual Response<BotChannelResource> Get(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
             using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.Get");
             scope.Start();
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.BotService
         /// </summary>
         /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(ChannelName channelName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
             using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.Exists");
             scope.Start();
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.BotService
         /// </summary>
         /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(ChannelName channelName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
             using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.Exists");
             scope.Start();

@@ -15,6 +15,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteDirections DeserializeRouteDirections(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> formatVersion = default;
             Optional<IReadOnlyList<RouteData>> routes = default;
             Optional<IReadOnlyList<RouteOptimizedWaypoint>> optimizedWaypoints = default;

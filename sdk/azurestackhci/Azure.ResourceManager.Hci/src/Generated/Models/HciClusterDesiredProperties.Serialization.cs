@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static HciClusterDesiredProperties DeserializeHciClusterDesiredProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WindowsServerSubscription> windowsServerSubscription = default;
             Optional<HciClusterDiagnosticLevel> diagnosticLevel = default;
             foreach (var property in element.EnumerateObject())

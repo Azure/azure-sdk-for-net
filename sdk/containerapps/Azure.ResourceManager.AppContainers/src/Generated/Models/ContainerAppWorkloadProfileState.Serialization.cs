@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppWorkloadProfileState DeserializeContainerAppWorkloadProfileState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppWorkloadProfileStateProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

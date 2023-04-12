@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabPort DeserializeDevTestLabPort(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DevTestLabTransportProtocol> transportProtocol = default;
             Optional<int> backendPort = default;
             foreach (var property in element.EnumerateObject())

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         internal static TrafficControllerData DeserializeTrafficControllerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;

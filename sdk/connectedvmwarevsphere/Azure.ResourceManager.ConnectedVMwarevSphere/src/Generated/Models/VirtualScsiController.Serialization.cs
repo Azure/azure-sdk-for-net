@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         internal static VirtualScsiController DeserializeVirtualScsiController(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ScsiControllerType> type = default;
             Optional<int> controllerKey = default;
             Optional<int> busNumber = default;

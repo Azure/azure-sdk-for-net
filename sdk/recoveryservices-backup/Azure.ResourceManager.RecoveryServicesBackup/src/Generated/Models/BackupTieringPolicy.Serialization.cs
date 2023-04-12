@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupTieringPolicy DeserializeBackupTieringPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TieringMode> tieringMode = default;
             Optional<int> duration = default;
             Optional<RetentionDurationType> durationType = default;

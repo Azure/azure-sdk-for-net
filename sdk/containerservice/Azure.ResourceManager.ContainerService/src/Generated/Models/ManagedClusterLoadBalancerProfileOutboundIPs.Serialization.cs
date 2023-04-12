@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterLoadBalancerProfileOutboundIPs DeserializeManagedClusterLoadBalancerProfileOutboundIPs(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WritableSubResource>> publicIPs = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlDWUpsertSettings DeserializeSqlDWUpsertSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> interimSchemaName = default;
             Optional<BinaryData> keys = default;
             foreach (var property in element.EnumerateObject())

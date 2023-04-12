@@ -14,6 +14,10 @@ namespace Azure.Communication.Sms
     {
         internal static SmsSendResult DeserializeSmsSendResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string to = default;
             Optional<string> messageId = default;
             int httpStatusCode = default;

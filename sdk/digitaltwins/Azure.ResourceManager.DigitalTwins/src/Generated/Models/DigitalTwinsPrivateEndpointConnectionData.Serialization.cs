@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DigitalTwins
 
         internal static DigitalTwinsPrivateEndpointConnectionData DeserializeDigitalTwinsPrivateEndpointConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DigitalTwinsPrivateEndpointConnectionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;

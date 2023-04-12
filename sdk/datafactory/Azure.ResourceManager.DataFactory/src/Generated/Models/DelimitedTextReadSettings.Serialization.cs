@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DelimitedTextReadSettings DeserializeDelimitedTextReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> skipLineCount = default;
             Optional<CompressionReadSettings> compressionProperties = default;
             string type = default;

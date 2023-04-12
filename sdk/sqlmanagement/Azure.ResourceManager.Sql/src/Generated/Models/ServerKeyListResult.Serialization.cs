@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServerKeyListResult DeserializeServerKeyListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SqlServerKeyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

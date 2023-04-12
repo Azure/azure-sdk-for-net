@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static SecurityPolicyWebApplicationFirewallAssociation DeserializeSecurityPolicyWebApplicationFirewallAssociation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<FrontDoorActivatedResourceInfo>> domains = default;
             Optional<IList<string>> patternsToMatch = default;
             foreach (var property in element.EnumerateObject())

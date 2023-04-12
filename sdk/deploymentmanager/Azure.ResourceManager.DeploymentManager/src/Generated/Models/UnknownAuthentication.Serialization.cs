@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static UnknownAuthentication DeserializeUnknownAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

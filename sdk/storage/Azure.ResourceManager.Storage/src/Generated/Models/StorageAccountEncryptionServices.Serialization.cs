@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountEncryptionServices DeserializeStorageAccountEncryptionServices(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageEncryptionService> blob = default;
             Optional<StorageEncryptionService> file = default;
             Optional<StorageEncryptionService> table = default;

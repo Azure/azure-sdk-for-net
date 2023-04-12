@@ -143,6 +143,10 @@ namespace Azure.ResourceManager.Batch
 
         internal static BatchAccountPoolData DeserializeBatchAccountPoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

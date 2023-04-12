@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static ImageListResult DeserializeImageListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ImageData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static SupportedBuildpacksList DeserializeSupportedBuildpacksList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AppPlatformSupportedBuildpackData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

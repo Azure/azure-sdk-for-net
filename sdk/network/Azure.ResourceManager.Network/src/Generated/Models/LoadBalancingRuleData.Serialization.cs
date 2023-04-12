@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.Network
 
         internal static LoadBalancingRuleData DeserializeLoadBalancingRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;

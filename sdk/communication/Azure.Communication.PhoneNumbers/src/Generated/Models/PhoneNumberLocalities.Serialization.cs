@@ -15,6 +15,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberLocalities DeserializePhoneNumberLocalities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PhoneNumberLocality>> phoneNumberLocalities = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

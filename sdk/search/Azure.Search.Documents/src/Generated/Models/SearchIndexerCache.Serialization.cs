@@ -37,6 +37,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchIndexerCache DeserializeSearchIndexerCache(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> storageConnectionString = default;
             Optional<bool?> enableReprocessing = default;
             foreach (var property in element.EnumerateObject())

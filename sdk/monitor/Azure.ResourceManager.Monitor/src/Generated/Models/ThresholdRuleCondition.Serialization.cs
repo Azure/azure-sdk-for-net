@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ThresholdRuleCondition DeserializeThresholdRuleCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MonitorConditionOperator @operator = default;
             double threshold = default;
             Optional<TimeSpan> windowSize = default;

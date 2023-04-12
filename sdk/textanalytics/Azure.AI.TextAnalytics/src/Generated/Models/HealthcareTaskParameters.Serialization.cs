@@ -46,6 +46,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareTaskParameters DeserializeHealthcareTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FhirVersion> fhirVersion = default;
             Optional<HealthcareDocumentType> documentType = default;
             Optional<StringIndexType> stringIndexType = default;

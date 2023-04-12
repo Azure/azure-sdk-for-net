@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ServiceTagsListResult DeserializeServiceTagsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> changeNumber = default;
             Optional<string> cloud = default;
             Optional<IReadOnlyList<ServiceTagInformation>> values = default;

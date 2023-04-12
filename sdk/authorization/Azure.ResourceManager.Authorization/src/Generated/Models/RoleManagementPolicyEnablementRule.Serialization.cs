@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementPolicyEnablementRule DeserializeRoleManagementPolicyEnablementRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<RoleAssignmentEnablementRuleType>> enabledRules = default;
             Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;

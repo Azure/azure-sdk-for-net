@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static KustoPoolSkuDescriptionListResult DeserializeKustoPoolSkuDescriptionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<KustoPoolSkuDescription>> value = default;
             foreach (var property in element.EnumerateObject())
             {

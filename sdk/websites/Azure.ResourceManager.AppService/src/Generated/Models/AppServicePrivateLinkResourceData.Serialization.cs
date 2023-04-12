@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServicePrivateLinkResourceData DeserializeAppServicePrivateLinkResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AppServicePrivateLinkResourceProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;

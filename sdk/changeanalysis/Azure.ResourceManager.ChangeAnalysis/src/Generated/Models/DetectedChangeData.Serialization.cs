@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     {
         internal static DetectedChangeData DeserializeDetectedChangeData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ChangeProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

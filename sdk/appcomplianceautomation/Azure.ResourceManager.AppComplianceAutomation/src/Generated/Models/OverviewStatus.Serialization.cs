@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static OverviewStatus DeserializeOverviewStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> passedCount = default;
             Optional<int> failedCount = default;
             Optional<int> manualCount = default;

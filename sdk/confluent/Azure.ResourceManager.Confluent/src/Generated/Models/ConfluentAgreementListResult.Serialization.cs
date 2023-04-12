@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Confluent.Models
     {
         internal static ConfluentAgreementListResult DeserializeConfluentAgreementListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ConfluentAgreement>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

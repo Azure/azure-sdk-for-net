@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AutoApprovedPrivateLinkServicesResult DeserializeAutoApprovedPrivateLinkServicesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AutoApprovedPrivateLinkService>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

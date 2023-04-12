@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     {
         internal static CheckCapacityNameAvailabilityResult DeserializeCheckCapacityNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
             Optional<string> message = default;

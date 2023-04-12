@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static UnknownFunctionProperties DeserializeUnknownFunctionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             Optional<ETag> etag = default;
             Optional<IList<StreamingJobFunctionInput>> inputs = default;

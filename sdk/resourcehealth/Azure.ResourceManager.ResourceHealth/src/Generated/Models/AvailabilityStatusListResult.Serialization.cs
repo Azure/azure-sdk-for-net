@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static AvailabilityStatusListResult DeserializeAvailabilityStatusListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AvailabilityStatusData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyBaseBlob DeserializeManagementPolicyBaseBlob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateAfterModification> tierToCool = default;
             Optional<DateAfterModification> tierToArchive = default;
             Optional<DateAfterModification> tierToCold = default;

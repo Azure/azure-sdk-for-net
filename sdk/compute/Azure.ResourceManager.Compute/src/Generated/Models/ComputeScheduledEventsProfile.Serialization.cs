@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ComputeScheduledEventsProfile DeserializeComputeScheduledEventsProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TerminateNotificationProfile> terminateNotificationProfile = default;
             Optional<OSImageNotificationProfile> osImageNotificationProfile = default;
             foreach (var property in element.EnumerateObject())

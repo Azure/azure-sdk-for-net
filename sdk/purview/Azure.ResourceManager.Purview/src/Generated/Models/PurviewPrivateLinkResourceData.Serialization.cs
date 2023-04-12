@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Purview
     {
         internal static PurviewPrivateLinkResourceData DeserializePurviewPrivateLinkResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PurviewPrivateLinkResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

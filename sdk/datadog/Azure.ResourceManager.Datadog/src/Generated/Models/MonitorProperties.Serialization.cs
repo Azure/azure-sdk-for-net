@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static MonitorProperties DeserializeMonitorProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<MonitoringStatus> monitoringStatus = default;
             Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;

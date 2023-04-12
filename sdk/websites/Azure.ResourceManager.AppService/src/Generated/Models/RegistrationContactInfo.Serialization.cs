@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static RegistrationContactInfo DeserializeRegistrationContactInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RegistrationAddressInfo> addressMailing = default;
             string email = default;
             Optional<string> fax = default;

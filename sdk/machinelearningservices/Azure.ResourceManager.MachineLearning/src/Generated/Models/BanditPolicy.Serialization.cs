@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static BanditPolicy DeserializeBanditPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> slackAmount = default;
             Optional<float> slackFactor = default;
             Optional<int> delayEvaluation = default;

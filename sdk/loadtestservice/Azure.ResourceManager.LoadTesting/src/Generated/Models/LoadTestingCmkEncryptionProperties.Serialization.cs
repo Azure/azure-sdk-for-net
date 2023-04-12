@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
 
         internal static LoadTestingCmkEncryptionProperties DeserializeLoadTestingCmkEncryptionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LoadTestingCmkIdentity> identity = default;
             Optional<Uri> keyUrl = default;
             foreach (var property in element.EnumerateObject())

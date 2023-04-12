@@ -43,6 +43,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static AbstractiveSummarizationResult DeserializeAbstractiveSummarizationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<InputError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;

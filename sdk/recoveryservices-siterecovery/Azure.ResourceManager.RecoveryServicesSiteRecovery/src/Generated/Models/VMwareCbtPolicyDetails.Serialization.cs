@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VMwareCbtPolicyDetails DeserializeVMwareCbtPolicyDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> recoveryPointHistoryInMinutes = default;
             Optional<int> appConsistentFrequencyInMinutes = default;
             Optional<int> crashConsistentFrequencyInMinutes = default;

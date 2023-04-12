@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static PredefinedTagsListResult DeserializePredefinedTagsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PredefinedTag>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

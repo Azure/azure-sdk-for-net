@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapsePrivateLinkResourceData DeserializeSynapsePrivateLinkResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SynapsePrivateLinkResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

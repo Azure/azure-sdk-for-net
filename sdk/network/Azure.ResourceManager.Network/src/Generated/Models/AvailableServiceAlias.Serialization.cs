@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AvailableServiceAlias DeserializeAvailableServiceAlias(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceName = default;
             ResourceIdentifier id = default;
             string name = default;

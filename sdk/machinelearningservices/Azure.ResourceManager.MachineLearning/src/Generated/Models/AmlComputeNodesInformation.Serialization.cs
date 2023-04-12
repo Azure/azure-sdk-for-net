@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static AmlComputeNodesInformation DeserializeAmlComputeNodesInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AmlComputeNodeInformation>> nodes = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

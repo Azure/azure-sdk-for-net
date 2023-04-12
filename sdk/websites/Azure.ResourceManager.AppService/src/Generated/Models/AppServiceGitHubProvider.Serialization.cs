@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceGitHubProvider DeserializeAppServiceGitHubProvider(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<ClientRegistration> registration = default;
             Optional<LoginScopes> login = default;

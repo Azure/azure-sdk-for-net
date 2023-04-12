@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedClusterIPTag DeserializeManagedClusterIPTag(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ipTagType = default;
             string tag = default;
             foreach (var property in element.EnumerateObject())

@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HttpFileSource DeserializeHttpFileSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> httpRequestTimeout = default;
             string type = default;
             Optional<BinaryData> sourceRetryCount = default;

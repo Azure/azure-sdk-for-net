@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GcpProjectEnvironment DeserializeGcpProjectEnvironment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GcpOrganizationalInfo> organizationalData = default;
             Optional<GcpProjectDetails> projectDetails = default;
             EnvironmentType environmentType = default;

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCertificateProperties DeserializeContainerAppCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
             Optional<string> password = default;
             Optional<string> subjectName = default;

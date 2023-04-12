@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ResourceHealthSummary DeserializeResourceHealthSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> resourceCount = default;
             Optional<IReadOnlyList<HealthErrorSummary>> issues = default;
             Optional<IReadOnlyDictionary<string, int>> categorizedResourceCounts = default;

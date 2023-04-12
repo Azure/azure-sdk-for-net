@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformServiceNetworkProfile DeserializeAppPlatformServiceNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> serviceRuntimeSubnetId = default;
             Optional<ResourceIdentifier> appSubnetId = default;
             Optional<string> serviceCidr = default;

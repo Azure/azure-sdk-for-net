@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevSpaces.Models
     {
         internal static ControllerConnectionDetailsList DeserializeControllerConnectionDetailsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ControllerConnectionDetails>> connectionDetailsList = default;
             foreach (var property in element.EnumerateObject())
             {

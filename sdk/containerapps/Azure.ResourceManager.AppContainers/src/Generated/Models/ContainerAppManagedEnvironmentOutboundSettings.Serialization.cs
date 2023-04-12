@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppManagedEnvironmentOutboundSettings DeserializeContainerAppManagedEnvironmentOutboundSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppManagedEnvironmentOutBoundType> outBoundType = default;
             Optional<IPAddress> virtualNetworkApplianceIP = default;
             foreach (var property in element.EnumerateObject())

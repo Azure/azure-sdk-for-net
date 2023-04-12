@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppIngressSettings DeserializeAppIngressSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> readTimeoutInSeconds = default;
             Optional<int> sendTimeoutInSeconds = default;
             Optional<AppSessionAffinity> sessionAffinity = default;

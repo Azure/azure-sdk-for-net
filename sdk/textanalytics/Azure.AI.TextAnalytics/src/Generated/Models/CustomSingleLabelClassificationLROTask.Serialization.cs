@@ -32,6 +32,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomSingleLabelClassificationLROTask DeserializeCustomSingleLabelClassificationLROTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CustomSingleLabelClassificationTaskParameters> parameters = default;
             AnalyzeTextLROTaskKind kind = default;
             Optional<string> taskName = default;

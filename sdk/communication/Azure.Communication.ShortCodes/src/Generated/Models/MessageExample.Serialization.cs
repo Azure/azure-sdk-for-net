@@ -30,6 +30,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static MessageExample DeserializeMessageExample(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MessageDirection> direction = default;
             Optional<string> text = default;
             foreach (var property in element.EnumerateObject())

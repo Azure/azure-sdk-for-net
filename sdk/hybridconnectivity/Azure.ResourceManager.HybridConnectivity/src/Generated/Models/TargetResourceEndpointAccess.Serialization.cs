@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     {
         internal static TargetResourceEndpointAccess DeserializeTargetResourceEndpointAccess(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> namespaceName = default;
             Optional<string> namespaceNameSuffix = default;
             Optional<string> hybridConnectionName = default;

@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmEncryptionDetails DeserializeVmEncryptionDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> encryptionEnabled = default;
             Optional<Uri> kekUrl = default;
             Optional<Uri> secretKeyUrl = default;

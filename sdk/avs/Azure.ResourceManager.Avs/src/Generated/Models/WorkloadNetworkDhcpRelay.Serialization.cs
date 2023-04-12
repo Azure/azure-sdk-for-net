@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static WorkloadNetworkDhcpRelay DeserializeWorkloadNetworkDhcpRelay(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> serverAddresses = default;
             DhcpTypeEnum dhcpType = default;
             Optional<string> displayName = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VpnGatewayIPConfiguration DeserializeVpnGatewayIPConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> publicIPAddress = default;
             Optional<string> privateIPAddress = default;

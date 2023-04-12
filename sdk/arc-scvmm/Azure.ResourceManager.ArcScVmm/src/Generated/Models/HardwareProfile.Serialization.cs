@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static HardwareProfile DeserializeHardwareProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> memoryMB = default;
             Optional<int> cpuCount = default;
             Optional<LimitCpuForMigration> limitCpuForMigration = default;

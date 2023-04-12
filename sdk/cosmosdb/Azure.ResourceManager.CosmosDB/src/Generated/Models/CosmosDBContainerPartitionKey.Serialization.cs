@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBContainerPartitionKey DeserializeCosmosDBContainerPartitionKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> paths = default;
             Optional<CosmosDBPartitionKind> kind = default;
             Optional<int> version = default;

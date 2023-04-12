@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlServerKeyData DeserializeSqlServerKeyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
