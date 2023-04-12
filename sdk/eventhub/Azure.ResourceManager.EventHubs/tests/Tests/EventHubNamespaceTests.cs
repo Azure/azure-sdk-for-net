@@ -386,7 +386,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             ResourceGroupResource _sdk_Resource_Group = await GetResourceGroupAsync("ps-testing");
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-            KeyVaultCollection kvCollection = _sdk_Resource_Group.GetKeyVaults();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
 
             EventHubsNamespaceData namespaceData = new EventHubsNamespaceData(DefaultLocation)
@@ -412,12 +411,25 @@ namespace Azure.ResourceManager.EventHubs.Tests
             identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.UnwrapKey);
             identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.Get);
 
-            KeyVaultAccessPolicy property = new KeyVaultAccessPolicy((Guid)namespaceData.Identity.TenantId, namespaceData.Identity.PrincipalId.ToString(), identityAccessPermissions);
-            Response<KeyVaultResource> kvResponse = await kvCollection.GetAsync(VaultName).ConfigureAwait(false);
-            KeyVaultData kvData = kvResponse.Value.Data;
-            kvData.Properties.AccessPolicies.Add(property);
-            KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.EastUS, kvData.Properties);
-            ArmOperation<KeyVaultResource> rawUpdateVault = await kvCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+            Uri keyVaultUri;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                keyVaultUri = keyVaultUri = new Uri($"https://{VaultName}.vault.azure.net/");
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    KeyVaultCollection kvCollection = _sdk_Resource_Group.GetKeyVaults();
+                    KeyVaultAccessPolicy property = new KeyVaultAccessPolicy((Guid)namespaceData.Identity.TenantId, namespaceData.Identity.PrincipalId.ToString(), identityAccessPermissions);
+                    Response<KeyVaultResource> kvResponse = await kvCollection.GetAsync(VaultName).ConfigureAwait(false);
+                    KeyVaultData kvData = kvResponse.Value.Data;
+                    kvData.Properties.AccessPolicies.Add(property);
+                    KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.EastUS, kvData.Properties);
+                    ArmOperation<KeyVaultResource> rawUpdateVault = await kvCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+                    keyVaultUri = kvData.Properties.VaultUri;
+                }
+            }
 
             namespaceData.Encryption = new EventHubsEncryption()
             {
@@ -427,13 +439,13 @@ namespace Azure.ResourceManager.EventHubs.Tests
             namespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
             {
                 KeyName = Key1,
-                KeyVaultUri = kvData.Properties.VaultUri
+                KeyVaultUri = keyVaultUri
             });
 
             namespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
             {
                 KeyName = Key2,
-                KeyVaultUri = kvData.Properties.VaultUri
+                KeyVaultUri = keyVaultUri
             });
 
             resource = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, namespaceData).ConfigureAwait(false)).Value;
@@ -452,7 +464,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             ResourceGroupResource _sdk_Resource_Group = await GetResourceGroupAsync("ps-testing");
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-            KeyVaultCollection kvCollection = _sdk_Resource_Group.GetKeyVaults();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
 
             string identityName_1 = Recording.GenerateAssetName("identity1");
@@ -467,12 +478,25 @@ namespace Azure.ResourceManager.EventHubs.Tests
             identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.UnwrapKey);
             identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.Get);
 
-            KeyVaultAccessPolicy property = new KeyVaultAccessPolicy((Guid)identityResponse_1.Value.Data.TenantId, identityResponse_1.Value.Data.PrincipalId.ToString(), identityAccessPermissions);
-            Response<KeyVaultResource> kvResponse = await kvCollection.GetAsync(VaultName).ConfigureAwait(false);
-            KeyVaultData kvData = kvResponse.Value.Data;
-            kvData.Properties.AccessPolicies.Add(property);
-            KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.EastUS, kvData.Properties);
-            ArmOperation<KeyVaultResource> rawUpdateVault = await kvCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+            Uri keyVaultUri;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                keyVaultUri = keyVaultUri = new Uri($"https://{VaultName}.vault.azure.net/");
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    KeyVaultCollection kvCollection = _sdk_Resource_Group.GetKeyVaults();
+                    KeyVaultAccessPolicy property = new KeyVaultAccessPolicy((Guid)identityResponse_1.Value.Data.TenantId, identityResponse_1.Value.Data.PrincipalId.ToString(), identityAccessPermissions);
+                    Response<KeyVaultResource> kvResponse = await kvCollection.GetAsync(VaultName).ConfigureAwait(false);
+                    KeyVaultData kvData = kvResponse.Value.Data;
+                    kvData.Properties.AccessPolicies.Add(property);
+                    KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.EastUS, kvData.Properties);
+                    ArmOperation<KeyVaultResource> rawUpdateVault = await kvCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+                    keyVaultUri = kvData.Properties.VaultUri;
+                }
+            }
 
             EventHubsNamespaceData eventHubsNamespaceData = new EventHubsNamespaceData(DefaultLocation)
             {
@@ -495,14 +519,14 @@ namespace Azure.ResourceManager.EventHubs.Tests
             eventHubsNamespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
             {
                 KeyName = Key1,
-                KeyVaultUri = kvData.Properties.VaultUri,
+                KeyVaultUri = keyVaultUri,
                 Identity = new UserAssignedIdentityProperties(identityResponse_1.Value.Data.Id.ToString())
             });
 
             eventHubsNamespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
             {
                 KeyName = Key2,
-                KeyVaultUri = kvData.Properties.VaultUri,
+                KeyVaultUri = keyVaultUri,
                 Identity = new UserAssignedIdentityProperties(identityResponse_1.Value.Data.Id.ToString())
             });
 
