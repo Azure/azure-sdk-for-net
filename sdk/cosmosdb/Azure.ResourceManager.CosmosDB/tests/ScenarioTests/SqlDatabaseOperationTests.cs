@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -101,10 +103,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             bool ifExists = await SqlDatabaseContainer.ExistsAsync(_databaseName);
             Assert.True(ifExists);
-            DateTime restoreTimestampInUtc = DateTime.UtcNow;
             var databases = await SqlDatabaseContainer.GetAllAsync().ToEnumerableAsync();
             Assert.That(databases, Has.Count.EqualTo(1));
             Assert.AreEqual(database.Data.Name, databases[0].Data.Name);
+            DateTimeOffset timestampInUtc = DateTimeOffset.FromUnixTimeSeconds((int)database.Data.Resource.Timestamp.Value);
+            AddDelayInSeconds(60);
 
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
             var restorableDatabaseAccount = restorableAccounts.SingleOrDefault(account => account.Data.AccountName == _databaseAccount.Data.Name);
@@ -117,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             ResourceRestoreParameters RestoreParameters = new ResourceRestoreParameters
             {
                 RestoreSource = restoreSource,
-                RestoreTimestampInUtc = restoreTimestampInUtc
+                RestoreTimestampInUtc = timestampInUtc.AddSeconds(60)
             };
             CosmosDBSqlDatabaseResourceInfo resource = new CosmosDBSqlDatabaseResourceInfo(_databaseName, RestoreParameters, CosmosDBAccountCreateMode.Restore);
 
@@ -237,6 +240,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Assert.AreEqual(expectedValue.Data.Resource.ETag, actualValue.Data.Resource.ETag);
                 Assert.AreEqual(expectedValue.Data.Resource.Timestamp, actualValue.Data.Resource.Timestamp);
+            }
+        }
+
+        private void AddDelayInSeconds(int delayInSeconds)
+        {
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Thread.Sleep(delayInSeconds * 1000);
             }
         }
     }
