@@ -46,7 +46,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new NetworkProvisioningState(property.Value.GetString());
@@ -56,7 +55,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ttl = property.Value.GetInt32();
@@ -66,7 +64,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
