@@ -115,7 +115,6 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -126,7 +125,6 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
@@ -136,7 +134,6 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -171,7 +168,6 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -195,7 +191,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createTime = property0.Value.GetDateTimeOffset("O");
@@ -210,7 +205,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             purviewConfiguration = FactoryPurviewConfiguration.DeserializeFactoryPurviewConfiguration(property0.Value);
@@ -220,7 +214,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property0.Value);
@@ -230,7 +223,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, FactoryGlobalParameterSpecification> dictionary = new Dictionary<string, FactoryGlobalParameterSpecification>();
@@ -245,7 +237,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryption = FactoryEncryptionConfiguration.DeserializeFactoryEncryptionConfiguration(property0.Value);
@@ -255,7 +246,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new FactoryPublicNetworkAccess(property0.Value.GetString());

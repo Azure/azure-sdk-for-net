@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.Elastic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     elasticCloudUser = ElasticCloudUser.DeserializeElasticCloudUser(property.Value);
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.Elastic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     elasticCloudDeployment = ElasticCloudDeployment.DeserializeElasticCloudDeployment(property.Value);
