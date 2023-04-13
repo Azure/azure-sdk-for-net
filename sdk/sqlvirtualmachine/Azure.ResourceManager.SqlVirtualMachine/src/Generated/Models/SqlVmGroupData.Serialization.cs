@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -112,7 +111,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -141,7 +139,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sqlImageSku = new SqlVmGroupImageSku(property0.Value.GetString());
@@ -151,7 +148,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scaleType = new SqlVmGroupScaleType(property0.Value.GetString());
@@ -161,7 +157,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterManagerType = new SqlVmClusterManagerType(property0.Value.GetString());
@@ -171,7 +166,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterConfiguration = new SqlVmClusterConfiguration(property0.Value.GetString());
@@ -181,7 +175,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             windowsServerFailoverClusterDomainProfile = WindowsServerFailoverClusterDomainProfile.DeserializeWindowsServerFailoverClusterDomainProfile(property0.Value);

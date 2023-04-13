@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ExperimentStatusData> array = new List<ExperimentStatusData>();

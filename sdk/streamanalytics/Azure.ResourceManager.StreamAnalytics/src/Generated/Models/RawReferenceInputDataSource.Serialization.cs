@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             payload = BinaryData.FromString(property0.Value.GetRawText());
@@ -77,7 +76,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                payloadUri = null;
                                 continue;
                             }
                             payloadUri = new Uri(property0.Value.GetString());

@@ -15,7 +15,7 @@ namespace Azure.Storage
         /// <summary>
         /// Hash length in bytes.
         /// </summary>
-        int HashSize { get; }
+        int HashSizeInBytes { get; }
 
         /// <summary>
         /// Hashes the contents of the stream.
@@ -31,6 +31,8 @@ namespace Azure.Storage
 
         /// <summary>
         /// Writes the current hash calculation to the given buffer.
+        /// Note that some implementations have an explicit hash finalization step.
+        /// Therefore this method should NOT be called to observe a partial calculation.
         /// </summary>
         /// <param name="hashDestination">Buffer to write hash value to.</param>
         /// <returns>Number of bytes written to buffer.</returns>
