@@ -57,7 +57,7 @@ namespace Azure.Core.Tests.Public
         public void CannotConvertIntLeafToString()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.Throws<InvalidOperationException>(
+            Assert.Throws<InvalidCastException>(
                 () => { var s = (string)data; }
             );
         }
@@ -66,7 +66,7 @@ namespace Azure.Core.Tests.Public
         public void CannotConvertIntLeafPropertyToString()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-            Assert.Throws<InvalidOperationException>(
+            Assert.Throws<InvalidCastException>(
                 () => { var s = (string)data.value; }
             );
         }
@@ -75,7 +75,7 @@ namespace Azure.Core.Tests.Public
         public void CannotConvertIntLeafToBoolean()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.Throws<InvalidOperationException>(
+            Assert.Throws<InvalidCastException>(
                 () => { var b = (bool)data; }
             );
         }
@@ -84,7 +84,7 @@ namespace Azure.Core.Tests.Public
         public void CannotConvertIntLeafPropertyToBoolean()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-            Assert.Throws<InvalidOperationException>(
+            Assert.Throws<InvalidCastException>(
                 () => { var b = (bool)data.value; }
             );
         }
@@ -93,11 +93,7 @@ namespace Azure.Core.Tests.Public
         public void CannotConvertIntLeafToModel()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-
-            // TODO: Throws JsonException - is that preferred over
-            // InvalidOperationException?
-
-            Assert.Throws<JsonException>(
+            Assert.Throws<InvalidCastException>(
                 () => { var model = (SampleModel)data; }
             );
         }
@@ -106,11 +102,7 @@ namespace Azure.Core.Tests.Public
         public void CannotConvertIntLeafPropertyToModel()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-
-            // TODO: Throws JsonException - is that preferred over
-            // InvalidOperationException?
-
-            Assert.Throws<JsonException>(
+            Assert.Throws<InvalidCastException>(
                 () => { var model = (SampleModel)data.value; }
             );
         }
@@ -276,10 +268,8 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotEnumerateLeaf()
         {
-            // TODO: This exception says "exepcted kind to be object" - improve this.
-
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.Throws<InvalidOperationException>(
+            Assert.Throws<InvalidCastException>(
                 () => { foreach (var item in data) { } }
             );
         }
@@ -287,10 +277,8 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotEnumerateLeafProperty()
         {
-            // TODO: This exception says "exepcted kind to be object" - improve this.
-
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-            Assert.Throws<InvalidOperationException>(
+            Assert.Throws<InvalidCastException>(
                 () => { foreach (var item in data.value) { } }
             );
         }

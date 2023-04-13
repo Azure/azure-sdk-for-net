@@ -268,8 +268,8 @@ namespace Azure.Core.Tests.Public
         {
             var json = new BinaryData("[1,3]").ToDynamicFromJson();
             dynamic jsonData = json;
-            Assert.Throws<InvalidOperationException>(() => _ = (int)json);
-            Assert.Throws<InvalidOperationException>(() => _ = (int)jsonData);
+            Assert.Throws<InvalidCastException>(() => _ = (int)json);
+            Assert.Throws<InvalidCastException>(() => _ = (int)jsonData);
         }
 
         [Test]

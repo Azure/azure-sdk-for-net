@@ -17,11 +17,10 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
 
-            // TODO: Standardize Exception types.
-            Assert.Throws<InvalidOperationException>(() => { var i = (int)data; });
-            Assert.Throws<InvalidOperationException>(() => { var b = (bool)data; });
-            Assert.Throws<InvalidOperationException>(() => { var s = (string)data; });
-            Assert.Throws<JsonException>(() => { var time = (DateTime)data; });
+            Assert.Throws<InvalidCastException>(() => { var i = (int)data; });
+            Assert.Throws<InvalidCastException>(() => { var b = (bool)data; });
+            Assert.Throws<InvalidCastException>(() => { var s = (string)data; });
+            Assert.Throws<InvalidCastException>(() => { var time = (DateTime)data; });
         }
 
         [Test]
