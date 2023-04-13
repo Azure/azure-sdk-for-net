@@ -68,17 +68,14 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         {
             var data = new DscConfigurationCreateOrUpdateContent(new AutomationContentSource()
             {
-                Hash = new AutomationContentHash("algorithm", "sha256"),
-                Value = "A9E5DB56BA21513F61E0B3868816FDC6D4DF5131F5617D7FF0D769674BD5072F",
+                Hash = new AutomationContentHash("sha256", "A9E5DB56BA21513F61E0B3868816FDC6D4DF5131F5617D7FF0D769674BD5072F"),
+                Value = "Configuration " + name + " {\r\n    Node localhost {\r\n                               WindowsFeature IIS {\r\n                               Name = \"Web-Server\";\r\n            Ensure = \"Present\"\r\n        }\r\n    }\r\n}",
                 SourceType = AutomationContentSourceType.EmbeddedContent,
                 Version = "1.0.0"
             })
             {
                 Description= "new sample configuration test",
                 Location = AzureLocation.EastUS,
-                Name = name,
-                IsLogProgressEnabled = true,
-                IsLogVerboseEnabled = true
             };
             return data;
         }
@@ -98,16 +95,18 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         {
             var data = new DscNodeConfigurationCreateOrUpdateContent()
             {
-                Source= new AutomationContentSource()
+                /*Source= new AutomationContentSource()
                 {
                     Hash = new AutomationContentHash("sha256", "6DE256A57F01BFA29B88696D5E77A383D6E61484C7686E8DB955FA10ACE9FFE5"),
+                    Value = "Configuration " + dscconfigurationName + " {\r\n    Node localhost {\r\n                               WindowsFeature IIS {\r\n                               Name = \"Web-Server\";\r\n            Ensure = \"Present\"\r\n        }\r\n    }\r\n}",
                     SourceType = AutomationContentSourceType.EmbeddedContent,
                     Version = "1.0.0"
-                },
+                },*/
                 Configuration = new DscConfigurationAssociationProperty()
                 {
                     ConfigurationName = dscconfigurationName
-                }
+                },
+                IsIncrementNodeConfigurationBuildRequired = false
             };
             return data;
         }

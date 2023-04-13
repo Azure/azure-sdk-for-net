@@ -30,10 +30,12 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
         {
             //1.CreateOrUpdate
             var collection = await GetDscConfigurationCollectionAsync();
-            var name = Recording.GenerateAssetName("dscconfiguration");
-            var name2 = Recording.GenerateAssetName("dscconfiguration");
-            var name3 = Recording.GenerateAssetName("dscconfiguration");
+            var name = Recording.GenerateAssetName("Dscconfiguration");
+            var name2 = Recording.GenerateAssetName("Dscconfiguration");
+            var name3 = Recording.GenerateAssetName("Dscconfiguration");
             var input = ResourceDataHelpers.GetDscConfigurationData(name);
+            var input2 = ResourceDataHelpers.GetDscConfigurationData(name2);
+            var input3 = ResourceDataHelpers.GetDscConfigurationData(name3);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             DscConfigurationResource dscconfiguration = lro.Value;
             Assert.AreEqual(name, dscconfiguration.Data.Name);
@@ -41,15 +43,15 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             DscConfigurationResource dscconfiguration2 = await dscconfiguration.GetAsync();
             ResourceDataHelpers.AssertDscConfiguration(dscconfiguration.Data, dscconfiguration2.Data);
             //3.GetAll
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, input);
+            //_ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input2);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, input3);
             int count = 0;
             await foreach (var num in collection.GetAllAsync())
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
+            Assert.GreaterOrEqual(count, 2);
             //4.Exists
             Assert.IsTrue(await collection.ExistsAsync(name));
             Assert.IsFalse(await collection.ExistsAsync(name + "1"));

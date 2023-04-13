@@ -44,13 +44,16 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             var configurationName = Recording.GenerateAssetName("dscconfiguration");
             var dscinput = ResourceDataHelpers.GetDscConfigurationData(configurationName);
             var dsclro = await dscCollection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, dscinput);
+            DscConfigurationResource dscconfiguriationResource = dsclro.Value;
             //1.CreateOrUpdate
             var collection = await GetDscNodeConfigurationCollectionAsync();
             var name = Recording.GenerateAssetName(".dscnodeconfiguration");
             var name2 = Recording.GenerateAssetName(".dscnodeconfiguration");
             var name3 = Recording.GenerateAssetName(".dscnodeconfiguration");
-            var input = ResourceDataHelpers.GetDscNodeConfigurationData(configurationName);
-            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName+name, input);
+            var dscName = dscconfiguriationResource.Data.Name;
+            var finalName = dscName + name;
+            var input = ResourceDataHelpers.GetDscNodeConfigurationData(dscName);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, finalName, input);
             //2.Get
             DscNodeConfigurationResource dscconfiguration2 = (await collection.GetAsync(name)).Value;
             Assert.AreEqual(name, dscconfiguration2.Data.Name);
