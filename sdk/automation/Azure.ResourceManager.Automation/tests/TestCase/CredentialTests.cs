@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
     public class CredentialTests : AutomationManagementTestBase
     {
         public CredentialTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

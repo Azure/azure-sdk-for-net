@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
     public class DscConfigurationTests : AutomationManagementTestBase
     {
         public DscConfigurationTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

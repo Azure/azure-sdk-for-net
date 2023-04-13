@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
     public class RunbookTests : AutomationManagementTestBase
     {
         public RunbookTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
     public class AccountTests : AutomationManagementTestBase
     {
         public AccountTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
