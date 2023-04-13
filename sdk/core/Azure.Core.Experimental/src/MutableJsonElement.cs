@@ -520,12 +520,6 @@ namespace Azure.Core.Json
             Changes.AddChange(_path, element, true);
         }
 
-        internal void WriteTo(Utf8JsonWriter writer)
-        {
-            Utf8JsonReader reader = GetReaderForElement(_element);
-            _root.WriteElement(_path, _highWaterMark, ref reader, writer);
-        }
-
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -569,12 +563,11 @@ namespace Azure.Core.Json
 
         private byte[] GetRawBytes()
         {
-            Utf8JsonReader reader = GetReaderForElement(_element);
-
             using MemoryStream changedElementStream = new();
-            Utf8JsonWriter changedElementWriter = new(changedElementStream);
-            _root.WriteElement(_path, _highWaterMark, ref reader, changedElementWriter);
-            changedElementWriter.Flush();
+            using (Utf8JsonWriter changedElementWriter = new(changedElementStream))
+            {
+                WriteTo(changedElementWriter);
+            }
 
             return changedElementStream.ToArray();
         }
@@ -582,9 +575,11 @@ namespace Azure.Core.Json
         internal static Utf8JsonReader GetReaderForElement(JsonElement element)
         {
             using MemoryStream stream = new();
-            Utf8JsonWriter writer = new(stream);
-            element.WriteTo(writer);
-            writer.Flush();
+            using (Utf8JsonWriter writer = new(stream))
+            {
+                element.WriteTo(writer);
+            }
+
             return new Utf8JsonReader(stream.GetBuffer().AsSpan().Slice(0, (int)stream.Position));
         }
 

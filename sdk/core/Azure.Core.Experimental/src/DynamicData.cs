@@ -38,9 +38,8 @@ namespace Azure.Core.Dynamic
 
         internal void WriteTo(Stream stream)
         {
-            Utf8JsonWriter writer = new(stream);
+            using Utf8JsonWriter writer = new(stream);
             _element.WriteTo(writer);
-            writer.Flush();
         }
 
         private object? GetProperty(string name)

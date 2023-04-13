@@ -229,7 +229,151 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
         }
 
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentFieldWithBooleanValue()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "documents": [
+                            {
+                                "fields": {
+                                    "booleanField": {
+                                        "type": "boolean",
+                                        "valueBoolean": true
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var field = result.Documents[0].Fields["booleanField"];
+
+            Assert.AreEqual(DocumentFieldType.Boolean, field.FieldType);
+            Assert.AreEqual(DocumentFieldType.Boolean, field.ExpectedFieldType);
+
+            var fieldValue = field.Value.AsBoolean();
+
+            Assert.True(fieldValue);
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentFieldWithAddressValueAndV410Properties()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "documents": [
+                            {
+                                "fields": {
+                                    "addressField": {
+                                        "type": "address",
+                                        "valueAddress": {
+                                            "unit": "unitValue",
+                                            "cityDistrict": "cityDistrictValue",
+                                            "stateDistrict": "stateDistrictValue",
+                                            "suburb": "suburbValue",
+                                            "house": "houseValue",
+                                            "level": "levelValue"
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var field = result.Documents[0].Fields["addressField"];
+
+            Assert.AreEqual(DocumentFieldType.Address, field.FieldType);
+            Assert.AreEqual(DocumentFieldType.Address, field.ExpectedFieldType);
+
+            var fieldValue = field.Value.AsAddress();
+
+            Assert.AreEqual("unitValue", fieldValue.Unit);
+            Assert.AreEqual("cityDistrictValue", fieldValue.CityDistrict);
+            Assert.AreEqual("stateDistrictValue", fieldValue.StateDistrict);
+            Assert.AreEqual("suburbValue", fieldValue.Suburb);
+            Assert.AreEqual("houseValue", fieldValue.House);
+            Assert.AreEqual("levelValue", fieldValue.Level);
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentStyleWithV410Properties()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "styles": [
+                            {
+                                "similarFontFamily": "similarFontFamilyValue",
+                                "fontStyle": "italic",
+                                "fontWeight": "bold",
+                                "color": "colorValue",
+                                "backgroundColor": "backgroundColorValue"
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var style = result.Styles[0];
+
+            Assert.AreEqual("similarFontFamilyValue", style.SimilarFontFamily);
+            Assert.AreEqual(FontStyle.Italic, style.FontStyle);
+            Assert.AreEqual(FontWeight.Bold, style.FontWeight);
+            Assert.AreEqual("colorValue", style.Color);
+            Assert.AreEqual("backgroundColorValue", style.BackgroundColor);
+        }
+
         #endregion
+
+        /// <summary>
+        /// Creates a fake <see cref="DocumentAnalysisClient" /> with the specified set of options.
+        /// </summary>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        /// <returns>The fake <see cref="DocumentAnalysisClient" />.</returns>
+        private DocumentAnalysisClient CreateDocumentAnalysisClient(DocumentAnalysisClientOptions options = default)
+        {
+            var fakeEndpoint = new Uri("http://localhost");
+            var fakeCredential = new AzureKeyCredential("fakeKey");
+            options ??= new DocumentAnalysisClientOptions();
+
+            return new DocumentAnalysisClient(fakeEndpoint, fakeCredential, options);
+        }
 
         private static string GetString(RequestContent content)
         {
