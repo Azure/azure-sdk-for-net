@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -203,6 +204,166 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
+        public async Task AnalyzeDocumentSendsSingleFeature()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.OcrFormula } };
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"features=ocr.formula";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentFromUriSendsSingleFeature()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.OcrFormula } };
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"features=ocr.formula";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentSendsMultipleFeatures()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.OcrFormula, DocumentAnalysisFeature.OcrFont } };
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"features=ocr.formula%2Cocr.font";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentFromUriSendsMultipleFeatures()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.OcrFormula, DocumentAnalysisFeature.OcrFont } };
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"features=ocr.formula%2Cocr.font";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentSendsSingleQueryField()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            var analyzeOptions = new AnalyzeDocumentOptions { QueryFields = { "field1" } };
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"queryFields=field1";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentFromUriSendsSingleQueryField()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var analyzeOptions = new AnalyzeDocumentOptions { QueryFields = { "field1" } };
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"queryFields=field1";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentSendsMultipleQueryFields()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            var analyzeOptions = new AnalyzeDocumentOptions { QueryFields = { "field1", "field2" } };
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"queryFields=field1%2Cfield2";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentFromUriSendsMultipleQueryFields()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var analyzeOptions = new AnalyzeDocumentOptions { QueryFields = { "field1", "field2" } };
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"queryFields=field1%2Cfield2";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
         public async Task AnalyzeDocumentFromUriEncodesBlankSpaces()
         {
             var mockResponse = new MockResponse(202);
@@ -229,7 +390,356 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
         }
 
+        [Test]
+        public async Task ClassifyDocumentFromUriEncodesBlankSpaces()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var encodedUriString = "https://fakeuri.com/blank%20space";
+            var decodedUriString = "https://fakeuri.com/blank space";
+
+            await client.ClassifyDocumentFromUriAsync(WaitUntil.Started, FakeGuid, new Uri(encodedUriString));
+            await client.ClassifyDocumentFromUriAsync(WaitUntil.Started, FakeGuid, new Uri(decodedUriString));
+
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+
+            foreach (var request in mockTransport.Requests)
+            {
+                var requestBody = GetString(request.Content);
+
+                Assert.True(requestBody.Contains(encodedUriString));
+                Assert.False(requestBody.Contains(decodedUriString));
+            }
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentFieldWithBooleanValue()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "documents": [
+                            {
+                                "fields": {
+                                    "booleanField": {
+                                        "type": "boolean",
+                                        "valueBoolean": true
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var field = result.Documents[0].Fields["booleanField"];
+
+            Assert.AreEqual(DocumentFieldType.Boolean, field.FieldType);
+            Assert.AreEqual(DocumentFieldType.Boolean, field.ExpectedFieldType);
+
+            var fieldValue = field.Value.AsBoolean();
+
+            Assert.True(fieldValue);
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentFieldWithAddressValueAndV410Properties()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "documents": [
+                            {
+                                "fields": {
+                                    "addressField": {
+                                        "type": "address",
+                                        "valueAddress": {
+                                            "unit": "unitValue",
+                                            "cityDistrict": "cityDistrictValue",
+                                            "stateDistrict": "stateDistrictValue",
+                                            "suburb": "suburbValue",
+                                            "house": "houseValue",
+                                            "level": "levelValue"
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var field = result.Documents[0].Fields["addressField"];
+
+            Assert.AreEqual(DocumentFieldType.Address, field.FieldType);
+            Assert.AreEqual(DocumentFieldType.Address, field.ExpectedFieldType);
+
+            var fieldValue = field.Value.AsAddress();
+
+            Assert.AreEqual("unitValue", fieldValue.Unit);
+            Assert.AreEqual("cityDistrictValue", fieldValue.CityDistrict);
+            Assert.AreEqual("stateDistrictValue", fieldValue.StateDistrict);
+            Assert.AreEqual("suburbValue", fieldValue.Suburb);
+            Assert.AreEqual("houseValue", fieldValue.House);
+            Assert.AreEqual("levelValue", fieldValue.Level);
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentStyleWithV410Properties()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "styles": [
+                            {
+                                "similarFontFamily": "similarFontFamilyValue",
+                                "fontStyle": "italic",
+                                "fontWeight": "bold",
+                                "color": "colorValue",
+                                "backgroundColor": "backgroundColorValue"
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var style = result.Styles[0];
+
+            Assert.AreEqual("similarFontFamilyValue", style.SimilarFontFamily);
+            Assert.AreEqual(FontStyle.Italic, style.FontStyle);
+            Assert.AreEqual(FontWeight.Bold, style.FontWeight);
+            Assert.AreEqual("colorValue", style.Color);
+            Assert.AreEqual("backgroundColorValue", style.BackgroundColor);
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentAnnotation()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "pages": [
+                            {
+                                "annotations": [
+                                    {
+                                        "kind": "cross",
+                                        "polygon": [1, 2, 3, 4, 5, 6, 7, 8],
+                                        "confidence": 0.75
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var annotation = result.Pages[0].Annotations[0];
+            var expectedPolygon = new PointF[] { new(1, 2), new(3, 4), new(5, 6), new(7, 8) };
+
+            Assert.AreEqual(DocumentAnnotationKind.Cross, annotation.Kind);
+            CollectionAssert.AreEqual(expectedPolygon, annotation.BoundingPolygon);
+            Assert.AreEqual(0.75f, annotation.Confidence);
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentBarcode()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "pages": [
+                            {
+                                "barcodes": [
+                                    {
+                                        "kind": "QRCode",
+                                        "value": "barcodeValue",
+                                        "polygon": [1, 2, 3, 4, 5, 6, 7, 8],
+                                        "span": {
+                                            "offset": 10,
+                                            "length": 12
+                                        },
+                                        "confidence": 0.75
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var barcode = result.Pages[0].Barcodes[0];
+            var expectedPolygon = new PointF[] { new(1, 2), new(3, 4), new(5, 6), new(7, 8) };
+
+            Assert.AreEqual(DocumentBarcodeKind.QRCode, barcode.Kind);
+            Assert.AreEqual("barcodeValue", barcode.Value);
+            CollectionAssert.AreEqual(expectedPolygon, barcode.BoundingPolygon);
+            Assert.AreEqual(10, barcode.Span.Index);
+            Assert.AreEqual(12, barcode.Span.Length);
+            Assert.AreEqual(0.75f, barcode.Confidence);
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentFormula()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "pages": [
+                            {
+                                "formulas": [
+                                    {
+                                        "kind": "display",
+                                        "value": "formulaValue",
+                                        "polygon": [1, 2, 3, 4, 5, 6, 7, 8],
+                                        "span": {
+                                            "offset": 10,
+                                            "length": 12
+                                        },
+                                        "confidence": 0.75
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var formula = result.Pages[0].Formulas[0];
+            var expectedPolygon = new PointF[] { new(1, 2), new(3, 4), new(5, 6), new(7, 8) };
+
+            Assert.AreEqual(DocumentFormulaKind.Display, formula.Kind);
+            Assert.AreEqual("formulaValue", formula.Value);
+            CollectionAssert.AreEqual(expectedPolygon, formula.BoundingPolygon);
+            Assert.AreEqual(10, formula.Span.Index);
+            Assert.AreEqual(12, formula.Span.Length);
+            Assert.AreEqual(0.75f, formula.Confidence);
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentImage()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "pages": [
+                            {
+                                "images": [
+                                    {
+                                        "polygon": [1, 2, 3, 4, 5, 6, 7, 8],
+                                        "span": {
+                                            "offset": 10,
+                                            "length": 12
+                                        },
+                                        "pageNumber": 1,
+                                        "confidence": 0.75
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var image = result.Pages[0].Images[0];
+            var expectedPolygon = new PointF[] { new(1, 2), new(3, 4), new(5, 6), new(7, 8) };
+
+            CollectionAssert.AreEqual(expectedPolygon, image.BoundingPolygon);
+            Assert.AreEqual(10, image.Span.Index);
+            Assert.AreEqual(12, image.Span.Length);
+            Assert.AreEqual(1, image.PageNumber);
+            Assert.AreEqual(0.75f, image.Confidence);
+        }
+
         #endregion
+
+        /// <summary>
+        /// Creates a fake <see cref="DocumentAnalysisClient" /> with the specified set of options.
+        /// </summary>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        /// <returns>The fake <see cref="DocumentAnalysisClient" />.</returns>
+        private DocumentAnalysisClient CreateDocumentAnalysisClient(DocumentAnalysisClientOptions options = default)
+        {
+            var fakeEndpoint = new Uri("http://localhost");
+            var fakeCredential = new AzureKeyCredential("fakeKey");
+            options ??= new DocumentAnalysisClientOptions();
+
+            return new DocumentAnalysisClient(fakeEndpoint, fakeCredential, options);
+        }
 
         private static string GetString(RequestContent content)
         {

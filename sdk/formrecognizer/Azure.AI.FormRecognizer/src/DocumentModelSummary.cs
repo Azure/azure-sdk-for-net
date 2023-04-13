@@ -18,7 +18,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Date and time (UTC) when the document model will expire.
         /// </summary>
-        internal DateTimeOffset? ExpirationDateTime { get; }
+        [CodeGenMember("ExpirationDateTime")]
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> API version used to create this model. </summary>
         internal string ApiVersion { get; }

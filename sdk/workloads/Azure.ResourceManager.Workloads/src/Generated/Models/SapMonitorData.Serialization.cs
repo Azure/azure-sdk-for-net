@@ -102,7 +102,6 @@ namespace Azure.ResourceManager.Workloads
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = UserAssignedServiceIdentity.DeserializeUserAssignedServiceIdentity(property.Value);
@@ -112,7 +111,6 @@ namespace Azure.ResourceManager.Workloads
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -147,7 +145,6 @@ namespace Azure.ResourceManager.Workloads
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -166,7 +163,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new WorkloadMonitorProvisioningState(property0.Value.GetString());
@@ -176,7 +172,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             errors = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
@@ -186,7 +181,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             appLocation = new AzureLocation(property0.Value.GetString());
@@ -196,7 +190,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             routingPreference = new RoutingPreference(property0.Value.GetString());
@@ -211,7 +204,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             managedResourceGroupConfiguration = ManagedRGConfiguration.DeserializeManagedRGConfiguration(property0.Value);
@@ -221,7 +213,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             logAnalyticsWorkspaceArmId = new ResourceIdentifier(property0.Value.GetString());
@@ -231,7 +222,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             monitorSubnet = new ResourceIdentifier(property0.Value.GetString());
@@ -241,7 +231,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             msiArmId = new ResourceIdentifier(property0.Value.GetString());

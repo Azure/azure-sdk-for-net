@@ -6,7 +6,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Blobs client library</AssemblyTitle>
-    <Version>12.16.0-beta.2</Version>
+    <Version>12.16.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>12.15.1</ApiCompatVersion>
     <DefineConstants>BlobSDK;$(DefineConstants)</DefineConstants>
@@ -58,6 +58,7 @@
     <Compile Include="$(AzureStorageSharedSources)HashAlgorithmHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)IDownloadedContent.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)IHasher.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)IHasherExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)LoggingExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)NonCryptographicHashAlgorithmHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)NonDisposingStream.cs" LinkBase="Shared" />

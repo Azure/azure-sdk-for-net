@@ -19,7 +19,8 @@ namespace Azure.AI.FormRecognizer
     /// In order to use later versions and their new features, see <see cref="DocumentAnalysis.DocumentAnalysisClient"/>.
     /// </summary>
     /// <remarks>
-    /// Client is only available for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and older.
+    /// This client only supports <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and older.
+    /// To use a newer service version, see <see cref="DocumentAnalysis.DocumentAnalysisClient"/>.
     /// </remarks>
     public class FormRecognizerClient
     {

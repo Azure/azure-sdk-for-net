@@ -7,9 +7,9 @@ using Azure.Storage.Test.Shared;
 using System.IO;
 using System.Collections.Generic;
 using System;
-using Azure.Storage.DataMovement.JobPlanModels;
 using Azure.Storage.Test;
 using System.Threading.Tasks;
+using Azure.Storage.DataMovement.Models.JobPlan;
 
 namespace Azure.Storage.DataMovement.Tests
 {
