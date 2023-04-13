@@ -166,6 +166,7 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor()
                                    {
                                        b.SetSampler(new ApplicationInsightsSampler(0.9F));
                                    });
+```
 
 (or)
 
