@@ -8,12 +8,6 @@ namespace Azure.Communication.Rooms
         public System.DateTimeOffset ValidFrom { get { throw null; } }
         public System.DateTimeOffset ValidUntil { get { throw null; } }
     }
-    public partial class InvitedRoomParticipant
-    {
-        public InvitedRoomParticipant(Azure.Communication.CommunicationIdentifier communicationIdentifier) { }
-        public Azure.Communication.CommunicationIdentifier CommunicationIdentifier { get { throw null; } }
-        public Azure.Communication.Rooms.ParticipantRole? Role { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ParticipantRole : System.IEquatable<Azure.Communication.Rooms.ParticipantRole>
     {
@@ -39,9 +33,9 @@ namespace Azure.Communication.Rooms
     }
     public partial class RoomParticipant
     {
-        internal RoomParticipant() { }
+        public RoomParticipant(Azure.Communication.CommunicationIdentifier communicationIdentifier) { }
         public Azure.Communication.CommunicationIdentifier CommunicationIdentifier { get { throw null; } }
-        public Azure.Communication.Rooms.ParticipantRole Role { get { throw null; } }
+        public Azure.Communication.Rooms.ParticipantRole Role { get { throw null; } set { } }
     }
     public partial class RoomsClient
     {
@@ -50,8 +44,8 @@ namespace Azure.Communication.Rooms
         public RoomsClient(string connectionString, Azure.Communication.Rooms.RoomsClientOptions options) { }
         public RoomsClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.Rooms.RoomsClientOptions options = null) { }
         public RoomsClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.Rooms.RoomsClientOptions options = null) { }
-        public virtual Azure.Response<Azure.Communication.Rooms.CommunicationRoom> CreateRoom(System.DateTimeOffset? validFrom = default(System.DateTimeOffset?), System.DateTimeOffset? validUntil = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Communication.Rooms.InvitedRoomParticipant>? participants = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Rooms.CommunicationRoom>> CreateRoomAsync(System.DateTimeOffset? validFrom = default(System.DateTimeOffset?), System.DateTimeOffset? validUntil = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Communication.Rooms.InvitedRoomParticipant>? participants = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Rooms.CommunicationRoom> CreateRoom(System.DateTimeOffset? validFrom = default(System.DateTimeOffset?), System.DateTimeOffset? validUntil = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Communication.Rooms.RoomParticipant>? participants = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Rooms.CommunicationRoom>> CreateRoomAsync(System.DateTimeOffset? validFrom = default(System.DateTimeOffset?), System.DateTimeOffset? validUntil = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Communication.Rooms.RoomParticipant>? participants = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteRoom(string roomId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteRoomAsync(string roomId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.Rooms.RoomParticipant> GetParticipants(string roomId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -64,8 +58,8 @@ namespace Azure.Communication.Rooms
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Rooms.RemoveParticipantsResult>> RemoveParticipantsAsync(string roomId, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> communicationIdentifiers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.Rooms.CommunicationRoom> UpdateRoom(string roomId, System.DateTimeOffset? validFrom = default(System.DateTimeOffset?), System.DateTimeOffset? validUntil = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Rooms.CommunicationRoom>> UpdateRoomAsync(string roomId, System.DateTimeOffset? validFrom = default(System.DateTimeOffset?), System.DateTimeOffset? validUntil = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Rooms.UpsertParticipantsResult> UpsertParticipants(string roomId, System.Collections.Generic.IEnumerable<Azure.Communication.Rooms.InvitedRoomParticipant> participants = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Rooms.UpsertParticipantsResult>> UpsertParticipantsAsync(string roomId, System.Collections.Generic.IEnumerable<Azure.Communication.Rooms.InvitedRoomParticipant> participants = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Rooms.UpsertParticipantsResult> UpsertParticipants(string roomId, System.Collections.Generic.IEnumerable<Azure.Communication.Rooms.RoomParticipant> participants = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Rooms.UpsertParticipantsResult>> UpsertParticipantsAsync(string roomId, System.Collections.Generic.IEnumerable<Azure.Communication.Rooms.RoomParticipant> participants = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RoomsClientOptions : Azure.Core.ClientOptions
     {
