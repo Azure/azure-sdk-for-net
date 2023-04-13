@@ -69,3 +69,11 @@ directive:
   transform: >
     $.required = ["name", "type"]
 ```
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.ResourceIdParameter
+  transform: 
+    $["x-ms-format"] = "arm-id"
+```

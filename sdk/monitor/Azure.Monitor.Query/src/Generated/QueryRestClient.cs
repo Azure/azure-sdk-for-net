@@ -215,7 +215,7 @@ namespace Azure.Monitor.Query
             }
         }
 
-        internal HttpMessage CreateResourceGetRequest(string resourceId, string query, TimeSpan? timespan)
+        internal HttpMessage CreateResourceGetRequest(ResourceIdentifier resourceId, string query, TimeSpan? timespan)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -242,7 +242,7 @@ namespace Azure.Monitor.Query
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="query"/> is null. </exception>
         /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
-        public async Task<Response<LogsQueryResult>> ResourceGetAsync(string resourceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogsQueryResult>> ResourceGetAsync(ResourceIdentifier resourceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -276,7 +276,7 @@ namespace Azure.Monitor.Query
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="query"/> is null. </exception>
         /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
-        public Response<LogsQueryResult> ResourceGet(string resourceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
+        public Response<LogsQueryResult> ResourceGet(ResourceIdentifier resourceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -303,7 +303,7 @@ namespace Azure.Monitor.Query
             }
         }
 
-        internal HttpMessage CreateResourceExecuteRequest(string resourceId, QueryBody body, string prefer)
+        internal HttpMessage CreateResourceExecuteRequest(ResourceIdentifier resourceId, QueryBody body, string prefer)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -333,7 +333,7 @@ namespace Azure.Monitor.Query
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="body"/> is null. </exception>
         /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
-        public async Task<Response<LogsQueryResult>> ResourceExecuteAsync(string resourceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogsQueryResult>> ResourceExecuteAsync(ResourceIdentifier resourceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -367,7 +367,7 @@ namespace Azure.Monitor.Query
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="body"/> is null. </exception>
         /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
-        public Response<LogsQueryResult> ResourceExecute(string resourceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
+        public Response<LogsQueryResult> ResourceExecute(ResourceIdentifier resourceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -467,7 +467,7 @@ namespace Azure.Monitor.Query
             }
         }
 
-        internal HttpMessage CreateResourceGetXmsRequest(string resourceId, string query, TimeSpan? timespan)
+        internal HttpMessage CreateResourceGetXmsRequest(ResourceIdentifier resourceId, string query, TimeSpan? timespan)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -494,7 +494,7 @@ namespace Azure.Monitor.Query
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="query"/> is null. </exception>
         /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
-        public async Task<Response<LogsQueryResult>> ResourceGetXmsAsync(string resourceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogsQueryResult>> ResourceGetXmsAsync(ResourceIdentifier resourceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -528,7 +528,7 @@ namespace Azure.Monitor.Query
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="query"/> is null. </exception>
         /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
-        public Response<LogsQueryResult> ResourceGetXms(string resourceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
+        public Response<LogsQueryResult> ResourceGetXms(ResourceIdentifier resourceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -555,7 +555,7 @@ namespace Azure.Monitor.Query
             }
         }
 
-        internal HttpMessage CreateResourceExecuteXmsRequest(string resourceId, QueryBody body, string prefer)
+        internal HttpMessage CreateResourceExecuteXmsRequest(ResourceIdentifier resourceId, QueryBody body, string prefer)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -585,7 +585,7 @@ namespace Azure.Monitor.Query
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="body"/> is null. </exception>
         /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
-        public async Task<Response<LogsQueryResult>> ResourceExecuteXmsAsync(string resourceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogsQueryResult>> ResourceExecuteXmsAsync(ResourceIdentifier resourceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {
@@ -619,7 +619,7 @@ namespace Azure.Monitor.Query
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="body"/> is null. </exception>
         /// <remarks> Executes an Analytics query for data in the context of a resource. [Here](https://docs.microsoft.com/azure/azure-monitor/logs/api/azure-resource-queries) is an example for using POST with an Analytics query. </remarks>
-        public Response<LogsQueryResult> ResourceExecuteXms(string resourceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
+        public Response<LogsQueryResult> ResourceExecuteXms(ResourceIdentifier resourceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
         {
             if (resourceId == null)
             {

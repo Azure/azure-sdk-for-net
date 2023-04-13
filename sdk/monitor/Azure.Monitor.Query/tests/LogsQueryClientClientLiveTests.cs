@@ -766,7 +766,7 @@ namespace Azure.Monitor.Query.Tests
         {
             var client = CreateClient();
 
-            var results = await client.QueryResourceAsync(new ResourceIdentifier("///" + TestEnvironment.StorageAccountId),
+            var results = await client.QueryResourceAsync(ResourceIdentifier.Parse("///" + TestEnvironment.StorageAccountId),
                 "search *",
                 _logsTestData.DataTimeRange);
 
