@@ -31,7 +31,7 @@ namespace Azure
         /// <param name="response">The <see cref="Response{T}"/> instance.</param>
         public static implicit operator T(Response<T> response)
         {
-            if (response == null || !response.HasValue)
+            if (response == null)
             {
 #pragma warning disable CA1065 // Don't throw from cast operators
                 throw new ArgumentNullException(nameof(response), $"The implicit cast from Response<{typeof(T)}> to {typeof(T)} failed because the Response<{typeof(T)}> was null.");
