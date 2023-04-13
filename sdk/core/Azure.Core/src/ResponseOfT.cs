@@ -20,7 +20,10 @@ namespace Azure
     {
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool HasValue => true;
+        public override bool HasValue => Value != null;
+
+        /// <inheritdoc />
+        public override T Value => Value!;
 
         /// <summary>
         /// Returns the value of this <see cref="Response{T}"/> object.
@@ -28,14 +31,14 @@ namespace Azure
         /// <param name="response">The <see cref="Response{T}"/> instance.</param>
         public static implicit operator T(Response<T> response)
         {
-            if (response == null)
+            if (response == null || !response.HasValue)
             {
 #pragma warning disable CA1065 // Don't throw from cast operators
                 throw new ArgumentNullException(nameof(response), $"The implicit cast from Response<{typeof(T)}> to {typeof(T)} failed because the Response<{typeof(T)}> was null.");
 #pragma warning restore CA1065
             }
 
-            return response.Value;
+            return response.Value!;
         }
 
         /// <inheritdoc />
