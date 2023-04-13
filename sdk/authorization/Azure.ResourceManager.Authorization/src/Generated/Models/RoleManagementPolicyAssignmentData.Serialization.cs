@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.Authorization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
@@ -109,7 +107,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             policyId = new ResourceIdentifier(property0.Value.GetString());
@@ -119,7 +116,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RoleManagementPolicyRule> array = new List<RoleManagementPolicyRule>();
@@ -134,7 +130,6 @@ namespace Azure.ResourceManager.Authorization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             policyAssignmentProperties = PolicyAssignmentProperties.DeserializePolicyAssignmentProperties(property0.Value);

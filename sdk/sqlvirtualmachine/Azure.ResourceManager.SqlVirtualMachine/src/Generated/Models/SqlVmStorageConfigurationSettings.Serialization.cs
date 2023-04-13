@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sqlDataSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value);
@@ -76,7 +75,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sqlLogSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value);
@@ -86,7 +84,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sqlTempDBSettings = SqlTempDBSettings.DeserializeSqlTempDBSettings(property.Value);
@@ -96,7 +93,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sqlSystemDBOnDataDisk = property.Value.GetBoolean();
@@ -106,7 +102,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskConfigurationType = new SqlVmDiskConfigurationType(property.Value.GetString());
@@ -116,7 +111,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageWorkloadType = new SqlVmStorageWorkloadType(property.Value.GetString());

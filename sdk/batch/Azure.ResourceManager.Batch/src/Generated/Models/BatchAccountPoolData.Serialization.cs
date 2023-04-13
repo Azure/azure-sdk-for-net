@@ -186,7 +186,6 @@ namespace Azure.ResourceManager.Batch
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -196,7 +195,6 @@ namespace Azure.ResourceManager.Batch
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -221,7 +219,6 @@ namespace Azure.ResourceManager.Batch
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -245,7 +242,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModified = property0.Value.GetDateTimeOffset("O");
@@ -255,7 +251,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationTime = property0.Value.GetDateTimeOffset("O");
@@ -265,7 +260,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new BatchAccountPoolProvisioningState(property0.Value.GetString());
@@ -275,7 +269,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningStateTransitionTime = property0.Value.GetDateTimeOffset("O");
@@ -285,7 +278,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allocationState = property0.Value.GetString().ToBatchAccountPoolAllocationState();
@@ -295,7 +287,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allocationStateTransitionTime = property0.Value.GetDateTimeOffset("O");
@@ -310,7 +301,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deploymentConfiguration = BatchDeploymentConfiguration.DeserializeBatchDeploymentConfiguration(property0.Value);
@@ -320,7 +310,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             currentDedicatedNodes = property0.Value.GetInt32();
@@ -330,7 +319,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             currentLowPriorityNodes = property0.Value.GetInt32();
@@ -340,7 +328,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scaleSettings = BatchAccountPoolScaleSettings.DeserializeBatchAccountPoolScaleSettings(property0.Value);
@@ -350,7 +337,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoScaleRun = BatchAccountPoolAutoScaleRun.DeserializeBatchAccountPoolAutoScaleRun(property0.Value);
@@ -360,7 +346,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             interNodeCommunication = property0.Value.GetString().ToInterNodeCommunicationState();
@@ -370,7 +355,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkConfiguration = BatchNetworkConfiguration.DeserializeBatchNetworkConfiguration(property0.Value);
@@ -380,7 +364,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             taskSlotsPerNode = property0.Value.GetInt32();
@@ -390,7 +373,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             taskSchedulingPolicy = TaskSchedulingPolicy.DeserializeTaskSchedulingPolicy(property0.Value);
@@ -400,7 +382,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BatchUserAccount> array = new List<BatchUserAccount>();
@@ -415,7 +396,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BatchAccountPoolMetadataItem> array = new List<BatchAccountPoolMetadataItem>();
@@ -430,7 +410,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTask = BatchAccountPoolStartTask.DeserializeBatchAccountPoolStartTask(property0.Value);
@@ -440,7 +419,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BatchCertificateReference> array = new List<BatchCertificateReference>();
@@ -455,7 +433,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BatchApplicationPackageReference> array = new List<BatchApplicationPackageReference>();
@@ -470,7 +447,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -485,7 +461,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resizeOperationStatus = BatchResizeOperationStatus.DeserializeBatchResizeOperationStatus(property0.Value);
@@ -495,7 +470,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<BatchMountConfiguration> array = new List<BatchMountConfiguration>();
@@ -510,7 +484,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetNodeCommunicationMode = property0.Value.GetString().ToNodeCommunicationMode();

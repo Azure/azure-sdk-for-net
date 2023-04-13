@@ -73,7 +73,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osType = new OSType(property.Value.GetString());
