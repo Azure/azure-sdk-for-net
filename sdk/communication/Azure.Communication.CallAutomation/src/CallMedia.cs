@@ -440,16 +440,19 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="targetParticipant">Target participants for start continuous Dtmf Recognition.</param>
         /// <param name="tones">List of Tones to be sent.</param>
+        /// <param name="operationContext"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<Response<SendDtmfResult>> SendDtmfAsync(CommunicationIdentifier targetParticipant, IReadOnlyList<DtmfTone> tones,
-            CancellationToken cancellationToken = default)
+            string operationContext, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
             scope.Start();
             try
             {
                 SendDtmfRequestInternal request = request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant), tones);
+
+                request.OperationContext = operationContext;
 
                 var response = await CallMediaRestClient.SendDtmfAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
@@ -470,16 +473,19 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="targetParticipant">Target participants for start continuous Dtmf Recognition.</param>
         /// <param name="tones">List of Tones to be sent.</param>
+        /// <param name="operationContext"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual Response<SendDtmfResult> SendDtmf(CommunicationIdentifier targetParticipant, IReadOnlyList<DtmfTone> tones,
-            CancellationToken cancellationToken = default)
+            string operationContext, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
             scope.Start();
             try
             {
                 SendDtmfRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant), tones);
+
+                request.OperationContext = operationContext;
 
                 var response = CallMediaRestClient.SendDtmf(CallConnectionId, request, cancellationToken);
 
