@@ -130,20 +130,20 @@ builder.Services.Configure<SqlClientInstrumentationOptions>(options =>
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor()
-									.WithTracing(b =>
-									{
-										b.AddSource("MyCompany.MyProduct.MyLibrary");
-									});
+                                   .WithTracing(b =>
+                                   {
+                                       b.AddSource("MyCompany.MyProduct.MyLibrary");
+                                   });
 ```
 
 #### Adding Custom Meter to Metrics
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor()
-									.WithMetrics(b =>
-									{
-										b.AddMeter("MyCompany.MyProduct.MyLibrary");
-									});
+                                   .WithMetrics(b =>
+                                   {
+                                       b.AddMeter("MyCompany.MyProduct.MyLibrary");
+                                   });
 ```
 
 #### Adding Additional Instrumentation
@@ -152,27 +152,27 @@ If you need to instrument a library or framework that isn't included in the Azur
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor()
-									.WithTracing(b =>
-									{
-										b.AddGrpcClientInstrumentation();
-									});
+                                   .WithTracing(b =>
+                                   {
+                                       b.AddGrpcClientInstrumentation();
+                                   });
 ```
 
 #### Modifying Sampling Percentage
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor()
-									.WithTracing(b =>
-                                     {
-                                         b.SetSampler(new ApplicationInsightsSampler(0.9F));
-                                     });
-```
+                                   .WithTracing(b =>
+                                   {
+                                       b.SetSampler(new ApplicationInsightsSampler(0.9F));
+                                   });
 
 (or)
 
 ```
 builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.SetSampler(new ApplicationInsightsSampler(0.9F)));
 ```
+
 
 ## Key concepts
 
