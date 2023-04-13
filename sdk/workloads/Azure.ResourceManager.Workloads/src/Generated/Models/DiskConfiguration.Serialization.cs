@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, DiskVolumeConfiguration> dictionary = new Dictionary<string, DiskVolumeConfiguration>();

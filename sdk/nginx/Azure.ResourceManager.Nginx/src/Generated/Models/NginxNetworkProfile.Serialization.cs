@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     frontEndIPConfiguration = NginxFrontendIPConfiguration.DeserializeNginxFrontendIPConfiguration(property.Value);
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkInterfaceConfiguration = NginxNetworkInterfaceConfiguration.DeserializeNginxNetworkInterfaceConfiguration(property.Value);

@@ -52,7 +52,6 @@ namespace Azure.Communication.PhoneNumbers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = CommunicationError.DeserializeCommunicationError(property.Value);
@@ -67,7 +66,6 @@ namespace Azure.Communication.PhoneNumbers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastActionDateTime = property.Value.GetDateTimeOffset("O");

@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        profileUrl = null;
                         continue;
                     }
                     profileUrl = new Uri(property.Value.GetString());

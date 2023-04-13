@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -87,7 +86,6 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -122,7 +120,6 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -141,7 +138,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -151,7 +147,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             registrationEnabled = property0.Value.GetBoolean();
@@ -161,7 +156,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualNetworkLinkState = new VirtualNetworkLinkState(property0.Value.GetString());
@@ -171,7 +165,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateDnsProvisioningState = new PrivateDnsProvisioningState(property0.Value.GetString());

@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new DeviceUpdatePrivateEndpointServiceConnectionStatus(property.Value.GetString());

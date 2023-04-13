@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recommendedConfiguration = DiskVolumeConfiguration.DeserializeDiskVolumeConfiguration(property.Value);
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SupportedConfigurationsDiskDetails> array = new List<SupportedConfigurationsDiskDetails>();

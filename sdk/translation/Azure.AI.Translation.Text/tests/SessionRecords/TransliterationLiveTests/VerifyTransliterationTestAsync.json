@@ -1,0 +1,41 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.cognitive.microsofttranslator.com/transliterate?language=zh-Hans\u0026fromScript=Hans\u0026toScript=Latn\u0026api-version=3.0",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "56",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "Ocp-Apim-Subscription-Region": "westus",
+        "traceparent": "00-f76c4370371d5372eaa6e0a103d47577-1141a1dd932ddcfa-00",
+        "User-Agent": "azsdk-net-AI.Translation.Text/1.0.0-alpha.20230403.1 (.NET 6.0.15; Microsoft Windows 10.0.22624)",
+        "x-ms-client-request-id": "348406db74bd909307f9996bd72d436a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022Text\u0022:\u0022\\u8FD9\\u91CC\\u600E\\u4E48\\u4E00\\u56DE\\u4E8B?\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "X-RequestId",
+          "X-Metered-Usage"
+        ],
+        "Content-Length": "56",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 03 Apr 2023 21:50:16 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Metered-Usage": "8",
+        "X-RequestId": "TLIT.MW1P.99BF.0403T2150.2F0895B"
+      },
+      "ResponseBody": "[{\u0022text\u0022:\u0022zh\u00E8l\u01D0 z\u011Bnme y\u00EChu\u00EDsh\u00EC?\u0022,\u0022script\u0022:\u0022Latn\u0022}]"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "116707324",
+    "TEXT_TRANSLATION_API_KEY": "Sanitized",
+    "TEXT_TRANSLATION_ENDPOINT": "https://api.cognitive.microsofttranslator.com",
+    "TEXT_TRANSLATION_REGION": "westus"
+  }
+}

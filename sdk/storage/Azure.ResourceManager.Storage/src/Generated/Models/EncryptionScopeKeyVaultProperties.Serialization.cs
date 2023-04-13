@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyUri = null;
                         continue;
                     }
                     keyUri = new Uri(property.Value.GetString());
@@ -54,7 +53,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastKeyRotationTimestamp = property.Value.GetDateTimeOffset("O");

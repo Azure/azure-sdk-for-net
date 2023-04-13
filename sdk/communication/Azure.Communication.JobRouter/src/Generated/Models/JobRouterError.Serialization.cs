@@ -45,7 +45,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<JobRouterError> array = new List<JobRouterError>();
@@ -60,7 +59,6 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     innererror = DeserializeJobRouterError(property.Value);
