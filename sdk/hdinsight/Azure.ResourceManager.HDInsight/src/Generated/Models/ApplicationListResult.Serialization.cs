@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HDInsightApplicationData> array = new List<HDInsightApplicationData>();

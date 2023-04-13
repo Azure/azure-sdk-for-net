@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -110,7 +109,6 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -129,7 +127,6 @@ namespace Azure.ResourceManager.ServiceNetworking
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             mode = new FrontendMode(property0.Value.GetString());
@@ -139,7 +136,6 @@ namespace Azure.ResourceManager.ServiceNetworking
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ipAddressVersion = property0.Value.GetString().ToFrontendIPAddressVersion();
@@ -149,7 +145,6 @@ namespace Azure.ResourceManager.ServiceNetworking
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicIPAddress = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -159,7 +154,6 @@ namespace Azure.ResourceManager.ServiceNetworking
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());

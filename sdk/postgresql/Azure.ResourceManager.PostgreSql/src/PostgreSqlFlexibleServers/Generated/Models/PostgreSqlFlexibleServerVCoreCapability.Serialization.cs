@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vCores = property.Value.GetInt64();
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportedIops = property.Value.GetInt64();
@@ -54,7 +52,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportedMemoryPerVcoreMB = property.Value.GetInt64();

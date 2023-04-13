@@ -121,6 +121,7 @@ namespace Azure.Core.Tests
         public void ActivityShouldBeStoppedWhenTransportThrows()
         {
             Activity activity = null;
+            Exception exception = new Exception();
             (string Key, object Value, DiagnosticListener) startEvent = default;
             using var testListener = new TestDiagnosticListener("Azure.Core");
 
@@ -128,7 +129,7 @@ namespace Azure.Core.Tests
             {
                 activity = Activity.Current;
                 startEvent = testListener.Events.Dequeue();
-                throw new Exception();
+                throw exception;
             });
 
             string clientRequestId = null;
@@ -140,9 +141,13 @@ namespace Azure.Core.Tests
                 clientRequestId = request.ClientRequestId;
             }, s_enabledPolicy));
 
-            (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
+            (string Key, object Value, DiagnosticListener) exceptionEvent = testListener.Events.Dequeue();
 
             Assert.AreEqual("Azure.Core.Http.Request.Start", startEvent.Key);
+            Assert.AreEqual("Azure.Core.Http.Request.Exception", exceptionEvent.Key);
+            Assert.AreEqual(exception, exceptionEvent.Value);
+
+            (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
             Assert.AreEqual("Azure.Core.Http.Request.Stop", stopEvent.Key);
 
             Assert.AreEqual("Azure.Core.Http.Request", activity.OperationName);
@@ -393,6 +398,56 @@ namespace Azure.Core.Tests
             {
                 Activity.DefaultIdFormat = previousFormat;
             }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void ActivityShouldBeStoppedWhenTransportThrowsActivitySource()
+        {
+            using var _ = SetAppConfigSwitch();
+            ActivityIdFormat previousFormat = Activity.DefaultIdFormat;
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+
+            Exception exception = new Exception("Test exception");
+            using var clientListener = new TestActivitySourceListener("Azure.Core.Http");
+
+            MockTransport mockTransport = CreateMockTransport(_ => throw exception);
+
+            Assert.ThrowsAsync<Exception>(async () => await SendRequestAsync(mockTransport, request =>
+            {
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(new Uri("http://example.com"));
+                request.Headers.Add("User-Agent", "agent");
+            }, s_enabledPolicy));
+
+            var activity = clientListener.AssertAndRemoveActivity("Azure.Core.Http.Request");
+
+            Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
+            StringAssert.Contains("Test exception", activity.StatusDescription);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task ActivityMarkedAsErrorForErrorResponseActivitySource()
+        {
+            using var _ = SetAppConfigSwitch();
+            ActivityIdFormat previousFormat = Activity.DefaultIdFormat;
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            using var clientListener = new TestActivitySourceListener("Azure.Core.Http");
+
+            MockTransport mockTransport = CreateMockTransport(_ =>
+            {
+                MockResponse mockResponse = new MockResponse(500);
+                return mockResponse;
+            });
+
+            await SendGetRequest(mockTransport, s_enabledPolicy);
+
+            var activity = clientListener.AssertAndRemoveActivity("Azure.Core.Http.Request");
+
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "ERROR"));
+            Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
+            Assert.IsNull(activity.StatusDescription);
         }
 #endif
     }

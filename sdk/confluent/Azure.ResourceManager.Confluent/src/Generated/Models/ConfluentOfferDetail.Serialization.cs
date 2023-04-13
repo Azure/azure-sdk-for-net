@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.Confluent.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new ConfluentSaaSOfferStatus(property.Value.GetString());

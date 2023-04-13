@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        ledgerUri = null;
                         continue;
                     }
                     ledgerUri = new Uri(property.Value.GetString());
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        identityServiceUri = null;
                         continue;
                     }
                     identityServiceUri = new Uri(property.Value.GetString());
@@ -95,7 +93,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ledgerType = new ConfidentialLedgerType(property.Value.GetString());
@@ -105,7 +102,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ConfidentialLedgerProvisioningState(property.Value.GetString());
@@ -115,7 +111,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AadBasedSecurityPrincipal> array = new List<AadBasedSecurityPrincipal>();
@@ -130,7 +125,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CertBasedSecurityPrincipal> array = new List<CertBasedSecurityPrincipal>();

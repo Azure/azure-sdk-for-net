@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value);

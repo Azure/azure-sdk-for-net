@@ -25,7 +25,6 @@ namespace Azure.AI.Translation.Document.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = TranslationError.DeserializeTranslationError(property.Value);

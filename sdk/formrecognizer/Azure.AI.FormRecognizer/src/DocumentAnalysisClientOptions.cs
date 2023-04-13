@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// </summary>
     public class DocumentAnalysisClientOptions : ClientOptions
     {
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2022_08_31;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_02_28_Preview;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DocumentAnalysisClientOptions"/> class which allows
@@ -21,10 +21,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="version">The version of the service to send requests to.</param>
         public DocumentAnalysisClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version switch
+            Version = version;
+            VersionString = version switch
             {
-                ServiceVersion.V2022_08_31 => version,
-                _ => throw new NotSupportedException($"The service version {version} is not supported.")
+                ServiceVersion.V2022_08_31 => "2022-08-31",
+                ServiceVersion.V2023_02_28_Preview => "2023-02-28-preview",
+                _ => throw new NotSupportedException($"The service version {version} is not supported by this library."),
             };
 
             AddLoggedHeadersAndQueryParameters();
@@ -35,11 +37,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         public enum ServiceVersion
         {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
             /// The version 2022-08-31 of the service.
             /// </summary>
-#pragma warning disable CA1707 // Identifiers should not contain underscores
             V2022_08_31 = 1,
+
+            /// <summary>
+            /// The version 2023-02-28-preview of the service.
+            /// </summary>
+            V2023_02_28_Preview
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -54,14 +61,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         public ServiceVersion Version { get; }
 
-        internal static string GetVersionString(ServiceVersion version)
-        {
-            return version switch
-            {
-                ServiceVersion.V2022_08_31 => "2022_08_31",
-                _ => throw new NotSupportedException($"The service version {version} is not supported."),
-            };
-        }
+        internal string VersionString { get; }
 
         /// <summary>
         /// Add headers and query parameters that are considered safe for logging or including in

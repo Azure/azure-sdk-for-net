@@ -31,14 +31,14 @@ The following examples demonstrate how to integrate the Azure Monitor Distro int
 
 #### Example 1
 
-To enable Azure Monitor Distro, add `AddAzureMonitor()` to your `Program.cs` file and set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to the connection string from your Application Insights resource.
+To enable Azure Monitor Distro, add `UseAzureMonitor()` to your `Program.cs` file and set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to the connection string from your Application Insights resource.
 
 ```C#
 // This method gets called by the runtime. Use this method to add services to the container.
 var builder = WebApplication.CreateBuilder(args);
 
 // The following line enables Azure Monitor Distro.
-builder.Services.AddAzureMonitor();
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
 
 // This code adds other services for your application.
 builder.Services.AddMvc();
@@ -48,14 +48,14 @@ var app = builder.Build();
 
 #### Example 2
 
-To enable Azure Monitor Distro with a hard-coded connection string, add `AddAzureMonitor()` to your `Program.cs` with the `AzureMonitorOptions` containing the connection string.
+To enable Azure Monitor Distro with a hard-coded connection string, add `UseAzureMonitor()` to your `Program.cs` with the `AzureMonitorOptions` containing the connection string.
 
 ```C#
 // This method gets called by the runtime. Use this method to add services to the container.
 var builder = WebApplication.CreateBuilder(args);
 
 // The following line enables Azure Monitor Distro with hard-coded connection string.
-builder.Services.AddAzureMonitor(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
+builder.Services.AddOpenTelemetry().UseAzureMonitor(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
 
 // This code adds other services for your application.
 builder.Services.AddMvc();
@@ -63,15 +63,15 @@ builder.Services.AddMvc();
 var app = builder.Build();
 ```
 
-Note that in the examples above, `AddAzureMonitor` is added to the `IServiceCollection` in the `Program.cs` file. You can also add it in the `ConfigureServices` method of your `Startup.cs` file.
+Note that in the examples above, `UseAzureMonitor` is added to the `IServiceCollection` in the `Program.cs` file. You can also add it in the `ConfigureServices` method of your `Startup.cs` file.
 
 ### Authenticate the client
 
 Azure Active Directory (AAD) authentication is an optional feature that can be used with Azure Monitor Distro. To enable AAD authentication, set the `Credential` property in `AzureMonitorOptions`. This is made easy with the [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md), which provides support for authenticating Azure SDK clients with their corresponding Azure services.
 
 ```C#
-// Call AddAzureMonitor and set Credential to authenticate through Active Directory.
-builder.Services.AddAzureMonitor(o =>
+// Call UseAzureMonitor and set Credential to authenticate through Active Directory.
+builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
 {
     o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
     o.Credential = new DefaultAzureCredential();

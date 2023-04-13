@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        blobUri = null;
                         continue;
                     }
                     blobUri = new Uri(property.Value.GetString());

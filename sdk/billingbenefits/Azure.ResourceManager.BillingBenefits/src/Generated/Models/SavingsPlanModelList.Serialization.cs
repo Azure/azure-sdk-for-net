@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BillingBenefitsSavingsPlanData> array = new List<BillingBenefitsSavingsPlanData>();

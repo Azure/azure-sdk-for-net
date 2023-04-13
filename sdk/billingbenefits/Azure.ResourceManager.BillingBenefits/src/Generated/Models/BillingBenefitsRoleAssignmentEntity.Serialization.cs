@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -58,7 +57,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
@@ -68,7 +66,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scope = new ResourceIdentifier(property0.Value.GetString());

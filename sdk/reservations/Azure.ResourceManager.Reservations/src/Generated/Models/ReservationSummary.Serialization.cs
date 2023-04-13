@@ -25,13 +25,14 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<float> pendingCount = default;
             Optional<float> cancelledCount = default;
             Optional<float> processingCount = default;
+            Optional<float> warningCount = default;
+            Optional<float> noBenefitCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("succeededCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     succeededCount = property.Value.GetSingle();
@@ -41,7 +42,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failedCount = property.Value.GetSingle();
@@ -51,7 +51,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiringCount = property.Value.GetSingle();
@@ -61,7 +60,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiredCount = property.Value.GetSingle();
@@ -71,7 +69,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pendingCount = property.Value.GetSingle();
@@ -81,7 +78,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cancelledCount = property.Value.GetSingle();
@@ -91,14 +87,31 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     processingCount = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("warningCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    warningCount = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("noBenefitCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    noBenefitCount = property.Value.GetSingle();
+                    continue;
+                }
             }
-            return new ReservationSummary(Optional.ToNullable(succeededCount), Optional.ToNullable(failedCount), Optional.ToNullable(expiringCount), Optional.ToNullable(expiredCount), Optional.ToNullable(pendingCount), Optional.ToNullable(cancelledCount), Optional.ToNullable(processingCount));
+            return new ReservationSummary(Optional.ToNullable(succeededCount), Optional.ToNullable(failedCount), Optional.ToNullable(expiringCount), Optional.ToNullable(expiredCount), Optional.ToNullable(pendingCount), Optional.ToNullable(cancelledCount), Optional.ToNullable(processingCount), Optional.ToNullable(warningCount), Optional.ToNullable(noBenefitCount));
         }
     }
 }

@@ -115,7 +115,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        storageAccountUrl = null;
                         continue;
                     }
                     storageAccountUrl = new Uri(property.Value.GetString());
@@ -130,7 +129,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterSubnetType = new SqlVmClusterSubnetType(property.Value.GetString());

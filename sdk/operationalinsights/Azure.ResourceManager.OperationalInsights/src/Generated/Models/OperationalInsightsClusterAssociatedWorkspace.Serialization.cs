@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workspaceId = property.Value.GetGuid();
@@ -50,7 +49,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
@@ -60,7 +58,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     associateDate = property.Value.GetDateTimeOffset("R");

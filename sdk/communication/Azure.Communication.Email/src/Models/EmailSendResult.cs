@@ -11,5 +11,7 @@ namespace Azure.Communication.Email
     {
         /// <summary> The unique id of the operation. Use a UUID. </summary>
         internal string Id { get; }
+        /// <summary> Error details when status is a non-success terminal state. </summary>
+        internal ErrorDetail Error { get; }
     }
 }

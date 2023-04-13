@@ -19,502 +19,37 @@ namespace Azure.ResourceManager.Reservations
     /// <summary> A class to add extension methods to Azure.ResourceManager.Reservations. </summary>
     public static partial class ReservationsExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary> Gets a collection of ReservationOrderResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ReservationOrderResources and their operations over a ReservationOrderResource. </returns>
-        public static ReservationOrderCollection GetReservationOrders(this TenantResource tenantResource)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(tenantResource).GetReservationOrders();
-        }
-
-        /// <summary>
-        /// Get the details of the `ReservationOrder`.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrder_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="expand"> May be used to expand the planInformation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static async Task<Response<ReservationOrderResource>> GetReservationOrderAsync(this TenantResource tenantResource, Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetReservationOrders().GetAsync(reservationOrderId, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the details of the `ReservationOrder`.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrder_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="expand"> May be used to expand the planInformation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static Response<ReservationOrderResource> GetReservationOrder(this TenantResource tenantResource, Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetReservationOrders().Get(reservationOrderId, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Reservation_ListAll</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(this TenantResource tenantResource, TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
-        {
-            options ??= new TenantResourceGetReservationDetailsOptions();
-
-            return GetExtensionClient(tenantResource).GetReservationDetailsAsync(options, cancellationToken);
-        }
-
-        /// <summary>
-        /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Reservation_ListAll</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationDetailResource> GetReservationDetails(this TenantResource tenantResource, TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
-        {
-            options ??= new TenantResourceGetReservationDetailsOptions();
-
-            return GetExtensionClient(tenantResource).GetReservationDetails(options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Calculate price for placing a `ReservationOrder`.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/calculatePrice</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrder_Calculate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CalculatePriceResult>> CalculateReservationOrderAsync(this TenantResource tenantResource, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(tenantResource).CalculateReservationOrderAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Calculate price for placing a `ReservationOrder`.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/calculatePrice</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrder_Calculate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CalculatePriceResult> CalculateReservationOrder(this TenantResource tenantResource, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(tenantResource).CalculateReservationOrder(content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Calculates price for exchanging `Reservations` if there are no policy errors.
-        /// 
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/calculateExchange</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CalculateExchange_Post</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<CalculateExchangeResult>> CalculateReservationExchangeAsync(this TenantResource tenantResource, WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(tenantResource).CalculateReservationExchangeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Calculates price for exchanging `Reservations` if there are no policy errors.
-        /// 
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/calculateExchange</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CalculateExchange_Post</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static ArmOperation<CalculateExchangeResult> CalculateReservationExchange(this TenantResource tenantResource, WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(tenantResource).CalculateReservationExchange(waitUntil, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
-        /// 
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/exchange</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exchange_Post</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<ExchangeResult>> ExchangeAsync(this TenantResource tenantResource, WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetExtensionClient(tenantResource).ExchangeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
-        /// 
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/exchange</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exchange_Post</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static ArmOperation<ExchangeResult> Exchange(this TenantResource tenantResource, WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetExtensionClient(tenantResource).Exchange(waitUntil, content, cancellationToken);
-        }
-
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
-        {
-            return subscriptionResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of ReservationQuotaResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="providerId"> Azure resource provider ID. </param>
-        /// <param name="location"> Azure region. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
-        /// <returns> An object representing collection of ReservationQuotaResources and their operations over a ReservationQuotaResource. </returns>
-        public static ReservationQuotaCollection GetAllReservationQuota(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
         {
-            Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
-
-            return GetExtensionClient(subscriptionResource).GetAllReservationQuota(providerId, location);
+            return resource.GetCachedClient(client =>
+            {
+                return new TenantResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Get the current quota (service limit) and usage of a resource. You can use the response from the GET operation to submit quota update request.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="providerId"> Azure resource provider ID. </param>
-        /// <param name="location"> Azure region. </param>
-        /// <param name="resourceName"> The resource name for a resource provider, such as SKU name for Microsoft.Compute, Sku or TotalLowPriorityCores for Microsoft.MachineLearningServices. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ReservationQuotaResource>> GetReservationQuotaAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string resourceName, CancellationToken cancellationToken = default)
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await subscriptionResource.GetAllReservationQuota(providerId, location).GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new TenantResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary>
-        /// Get the current quota (service limit) and usage of a resource. You can use the response from the GET operation to submit quota update request.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="providerId"> Azure resource provider ID. </param>
-        /// <param name="location"> Azure region. </param>
-        /// <param name="resourceName"> The resource name for a resource provider, such as SKU name for Microsoft.Compute, Sku or TotalLowPriorityCores for Microsoft.MachineLearningServices. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ReservationQuotaResource> GetReservationQuota(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string resourceName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetAllReservationQuota(providerId, location).Get(resourceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of QuotaRequestDetailResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="providerId"> Azure resource provider ID. </param>
-        /// <param name="location"> Azure region. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
-        /// <returns> An object representing collection of QuotaRequestDetailResources and their operations over a QuotaRequestDetailResource. </returns>
-        public static QuotaRequestDetailCollection GetQuotaRequestDetails(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location)
-        {
-            Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
-
-            return GetExtensionClient(subscriptionResource).GetQuotaRequestDetails(providerId, location);
-        }
-
-        /// <summary>
-        /// For the specified Azure region (location), get the details and status of the quota request by the quota request ID for the resources of the resource provider. The PUT request for the quota (service limit) returns a response with the requestId parameter.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaRequestStatus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="providerId"> Azure resource provider ID. </param>
-        /// <param name="location"> Azure region. </param>
-        /// <param name="id"> Quota Request ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetQuotaRequestDetails(providerId, location).GetAsync(id, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// For the specified Azure region (location), get the details and status of the quota request by the quota request ID for the resources of the resource provider. The PUT request for the quota (service limit) returns a response with the requestId parameter.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaRequestStatus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="providerId"> Azure resource provider ID. </param>
-        /// <param name="location"> Azure region. </param>
-        /// <param name="id"> Quota Request ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<QuotaRequestDetailResource> GetQuotaRequestDetail(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetQuotaRequestDetails(providerId, location).Get(id, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetCatalog</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
-        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
-        /// <param name="publisherId"> Publisher id used to get the third party products. </param>
-        /// <param name="offerId"> Offer id used to get the third party products. </param>
-        /// <param name="planId"> Plan id used to get the third party products. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetCatalogAsync(reservedResourceType, location, publisherId, offerId, planId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetCatalog</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
-        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
-        /// <param name="publisherId"> Publisher id used to get the third party products. </param>
-        /// <param name="offerId"> Offer id used to get the third party products. </param>
-        /// <param name="planId"> Plan id used to get the third party products. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetCatalog(reservedResourceType, location, publisherId, offerId, planId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetAppliedReservationList</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<AppliedReservationData>> GetAppliedReservationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return await GetExtensionClient(subscriptionResource).GetAppliedReservationsAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetAppliedReservationList</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<AppliedReservationData> GetAppliedReservations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetAppliedReservations(cancellationToken);
-        }
-
         #region ReservationDetailResource
         /// <summary>
         /// Gets an object representing a <see cref="ReservationDetailResource" /> along with the instance operations that can be performed on it but with no data.
@@ -590,5 +125,479 @@ namespace Azure.ResourceManager.Reservations
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of ReservationQuotaResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="providerId"> Azure resource provider ID. </param>
+        /// <param name="location"> Azure region. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
+        /// <returns> An object representing collection of ReservationQuotaResources and their operations over a ReservationQuotaResource. </returns>
+        public static ReservationQuotaCollection GetAllReservationQuota(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location)
+        {
+            Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllReservationQuota(providerId, location);
+        }
+
+        /// <summary>
+        /// Get the current quota (service limit) and usage of a resource. You can use the response from the GET operation to submit quota update request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quota_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="providerId"> Azure resource provider ID. </param>
+        /// <param name="location"> Azure region. </param>
+        /// <param name="resourceName"> The resource name for a resource provider, such as SKU name for Microsoft.Compute, Sku or TotalLowPriorityCores for Microsoft.MachineLearningServices. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ReservationQuotaResource>> GetReservationQuotaAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetAllReservationQuota(providerId, location).GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the current quota (service limit) and usage of a resource. You can use the response from the GET operation to submit quota update request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Quota_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="providerId"> Azure resource provider ID. </param>
+        /// <param name="location"> Azure region. </param>
+        /// <param name="resourceName"> The resource name for a resource provider, such as SKU name for Microsoft.Compute, Sku or TotalLowPriorityCores for Microsoft.MachineLearningServices. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ReservationQuotaResource> GetReservationQuota(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string resourceName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetAllReservationQuota(providerId, location).Get(resourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of QuotaRequestDetailResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="providerId"> Azure resource provider ID. </param>
+        /// <param name="location"> Azure region. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
+        /// <returns> An object representing collection of QuotaRequestDetailResources and their operations over a QuotaRequestDetailResource. </returns>
+        public static QuotaRequestDetailCollection GetQuotaRequestDetails(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location)
+        {
+            Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetQuotaRequestDetails(providerId, location);
+        }
+
+        /// <summary>
+        /// For the specified Azure region (location), get the details and status of the quota request by the quota request ID for the resources of the resource provider. The PUT request for the quota (service limit) returns a response with the requestId parameter.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="providerId"> Azure resource provider ID. </param>
+        /// <param name="location"> Azure region. </param>
+        /// <param name="id"> Quota Request ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetQuotaRequestDetails(providerId, location).GetAsync(id, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// For the specified Azure region (location), get the details and status of the quota request by the quota request ID for the resources of the resource provider. The PUT request for the quota (service limit) returns a response with the requestId parameter.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="providerId"> Azure resource provider ID. </param>
+        /// <param name="location"> Azure region. </param>
+        /// <param name="id"> Quota Request ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<QuotaRequestDetailResource> GetQuotaRequestDetail(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetQuotaRequestDetails(providerId, location).Get(id, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetCatalog</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new SubscriptionResourceGetCatalogOptions();
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCatalogAsync(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetCatalog</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new SubscriptionResourceGetCatalogOptions();
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCatalog(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetAppliedReservationList</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<Response<AppliedReservationData>> GetAppliedReservationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppliedReservationsAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get applicable `Reservation`s that are applied to this subscription or a resource group under this subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/appliedReservations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetAppliedReservationList</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Response<AppliedReservationData> GetAppliedReservations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppliedReservations(cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ReservationOrderResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ReservationOrderResources and their operations over a ReservationOrderResource. </returns>
+        public static ReservationOrderCollection GetReservationOrders(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetReservationOrders();
+        }
+
+        /// <summary>
+        /// Get the details of the `ReservationOrder`.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="expand"> May be used to expand the planInformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static async Task<Response<ReservationOrderResource>> GetReservationOrderAsync(this TenantResource tenantResource, Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetReservationOrders().GetAsync(reservationOrderId, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the details of the `ReservationOrder`.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="expand"> May be used to expand the planInformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public static Response<ReservationOrderResource> GetReservationOrder(this TenantResource tenantResource, Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetReservationOrders().Get(reservationOrderId, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_ListAll</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(this TenantResource tenantResource, TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new TenantResourceGetReservationDetailsOptions();
+
+            return GetTenantResourceExtensionClient(tenantResource).GetReservationDetailsAsync(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_ListAll</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReservationDetailResource> GetReservationDetails(this TenantResource tenantResource, TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new TenantResourceGetReservationDetailsOptions();
+
+            return GetTenantResourceExtensionClient(tenantResource).GetReservationDetails(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Calculate price for placing a `ReservationOrder`.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/calculatePrice</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Calculate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CalculatePriceResult>> CalculateReservationOrderAsync(this TenantResource tenantResource, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CalculateReservationOrderAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Calculate price for placing a `ReservationOrder`.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/calculatePrice</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Calculate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<CalculatePriceResult> CalculateReservationOrder(this TenantResource tenantResource, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetTenantResourceExtensionClient(tenantResource).CalculateReservationOrder(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Calculates price for exchanging `Reservations` if there are no policy errors.
+        /// 
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/calculateExchange</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CalculateExchange_Post</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation<CalculateExchangeResult>> CalculateReservationExchangeAsync(this TenantResource tenantResource, WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetTenantResourceExtensionClient(tenantResource).CalculateReservationExchangeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Calculates price for exchanging `Reservations` if there are no policy errors.
+        /// 
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/calculateExchange</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CalculateExchange_Post</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static ArmOperation<CalculateExchangeResult> CalculateReservationExchange(this TenantResource tenantResource, WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetTenantResourceExtensionClient(tenantResource).CalculateReservationExchange(waitUntil, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
+        /// 
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/exchange</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Exchange_Post</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation<ExchangeResult>> ExchangeAsync(this TenantResource tenantResource, WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetTenantResourceExtensionClient(tenantResource).ExchangeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
+        /// 
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/exchange</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Exchange_Post</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static ArmOperation<ExchangeResult> Exchange(this TenantResource tenantResource, WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetTenantResourceExtensionClient(tenantResource).Exchange(waitUntil, content, cancellationToken);
+        }
     }
 }

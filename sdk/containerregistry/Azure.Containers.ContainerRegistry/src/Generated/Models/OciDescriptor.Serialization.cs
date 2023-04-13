@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Containers.ContainerRegistry.Specialized
+namespace Azure.Containers.ContainerRegistry
 {
     public partial class OciDescriptor : IUtf8JsonSerializable
     {
@@ -84,7 +84,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     size = property.Value.GetInt64();
@@ -99,7 +98,6 @@ namespace Azure.Containers.ContainerRegistry.Specialized
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Uri> array = new List<Uri>();
