@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Azure.Core
 {
     /// <summary>
-    /// Implementation of a <see cref="DelayStrategy"/>. Polling interval is based on the specified sequence.
+    /// Polling interval is based on the specified sequence.
     /// Defaults to {1s, 1s, 1s, 2s, 4s, 8s, 16s, 32s}.
     /// </summary>
     /// <remarks>Polling interval always follows the given sequence.</remarks>
