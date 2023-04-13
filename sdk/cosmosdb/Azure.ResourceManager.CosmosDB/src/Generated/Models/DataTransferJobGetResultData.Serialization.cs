@@ -79,7 +79,6 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -103,7 +102,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             source = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property0.Value);
@@ -113,7 +111,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             destination = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property0.Value);
@@ -128,7 +125,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             processedCount = property0.Value.GetInt64();
@@ -138,7 +134,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalCount = property0.Value.GetInt64();
@@ -148,7 +143,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastUpdatedUtcTime = property0.Value.GetDateTimeOffset("O");
@@ -158,7 +152,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             workerCount = property0.Value.GetInt32();
@@ -168,7 +161,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             error = ErrorResponse.DeserializeErrorResponse(property0.Value);

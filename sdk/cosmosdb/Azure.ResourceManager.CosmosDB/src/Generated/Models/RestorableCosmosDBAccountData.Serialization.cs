@@ -95,7 +95,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             oldestRestorableTime = property0.Value.GetDateTimeOffset("O");

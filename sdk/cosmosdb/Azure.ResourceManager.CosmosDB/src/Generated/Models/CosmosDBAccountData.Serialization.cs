@@ -693,7 +693,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             diagnosticLogSettings = DiagnosticLogSettings.DeserializeDiagnosticLogSettings(property0.Value);
@@ -721,7 +720,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableMaterializedViews = property0.Value.GetBoolean();
@@ -749,7 +747,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableBurstCapacity = property0.Value.GetBoolean();
