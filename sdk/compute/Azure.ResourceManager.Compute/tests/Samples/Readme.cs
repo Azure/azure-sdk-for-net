@@ -1,9 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#region Snippet:Readme_AuthClient_Namespaces
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+#endregion
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -17,7 +19,9 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         [Ignore("Only verifying that the sample builds")]
         public void ClientAuth()
         {
+            #region Snippet:Readme_AuthClient
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+            #endregion
         }
 
         [Test]

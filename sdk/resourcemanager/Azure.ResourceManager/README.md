@@ -50,7 +50,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
 ```
-```C# Snippet:Readme_AuthClient_
+```C# Snippet:Readme_AuthClient
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ```
 
