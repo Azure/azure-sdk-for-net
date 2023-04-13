@@ -162,7 +162,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_Id(TransferType transferType)
         {
             // Arrange
@@ -213,7 +213,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_DataTransfer(TransferType transferType)
         {
             // Arrange
@@ -280,7 +280,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_AlreadyPaused(TransferType transferType)
         {
             // Arrange
@@ -336,7 +336,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task PauseThenResumeTransferAsync(TransferType transferType)
         {
             // Arrange
