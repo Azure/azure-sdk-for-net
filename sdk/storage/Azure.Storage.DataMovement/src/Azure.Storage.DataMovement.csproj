@@ -80,7 +80,6 @@
     <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)UserDelegationKeyProperties.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared\Storage" />
-    <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)\StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared\Storage" />
   </ItemGroup>

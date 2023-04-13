@@ -56,15 +56,14 @@ namespace Azure.Core.Json
                 throw new ArgumentOutOfRangeException(nameof(format));
             }
 
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             if (!Changes.HasChanges)
             {
                 Write(stream, _original.Span);
-                stream.Flush();
                 return;
             }
 
-            WriteRootElementTo(writer);
+            using Utf8JsonWriter writer = new(stream);
+            RootElement.WriteTo(writer);
         }
 
         internal void WriteTo(Utf8JsonWriter writer)
@@ -75,7 +74,7 @@ namespace Azure.Core.Json
                 return;
             }
 
-            WriteRootElementTo(writer);
+            RootElement.WriteTo(writer);
         }
 
         private static void Write(Stream stream, ReadOnlySpan<byte> buffer)

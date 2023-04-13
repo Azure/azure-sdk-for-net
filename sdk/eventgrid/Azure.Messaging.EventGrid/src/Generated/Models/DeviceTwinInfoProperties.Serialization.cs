@@ -26,7 +26,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     desired = DeviceTwinProperties.DeserializeDeviceTwinProperties(property.Value);
@@ -36,7 +35,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reported = DeviceTwinProperties.DeserializeDeviceTwinProperties(property.Value);

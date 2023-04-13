@@ -96,7 +96,6 @@ namespace Azure.ResourceManager.Synapse
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -106,7 +105,6 @@ namespace Azure.ResourceManager.Synapse
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -141,7 +139,6 @@ namespace Azure.ResourceManager.Synapse
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -160,7 +157,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new KustoPoolState(property0.Value.GetString());
@@ -170,7 +166,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ResourceProvisioningState(property0.Value.GetString());
@@ -180,7 +175,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                uri = null;
                                 continue;
                             }
                             uri = new Uri(property0.Value.GetString());
@@ -190,7 +184,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                dataIngestionUri = null;
                                 continue;
                             }
                             dataIngestionUri = new Uri(property0.Value.GetString());
@@ -205,7 +198,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             optimizedAutoscale = SynapseOptimizedAutoscale.DeserializeSynapseOptimizedAutoscale(property0.Value);
@@ -215,7 +207,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableStreamingIngest = property0.Value.GetBoolean();
@@ -225,7 +216,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enablePurge = property0.Value.GetBoolean();
@@ -235,7 +225,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             languageExtensions = SynapseLanguageExtensionsList.DeserializeSynapseLanguageExtensionsList(property0.Value);
@@ -245,7 +234,6 @@ namespace Azure.ResourceManager.Synapse
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             workspaceUID = property0.Value.GetGuid();

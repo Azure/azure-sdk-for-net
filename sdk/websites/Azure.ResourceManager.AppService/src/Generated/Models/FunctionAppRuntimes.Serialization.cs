@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linuxRuntimeSettings = FunctionAppRuntimeSettings.DeserializeFunctionAppRuntimeSettings(property.Value);
@@ -36,7 +35,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowsRuntimeSettings = FunctionAppRuntimeSettings.DeserializeFunctionAppRuntimeSettings(property.Value);

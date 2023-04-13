@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryptionKeyReference = IntegrationServiceEnvironmenEncryptionKeyReference.DeserializeIntegrationServiceEnvironmenEncryptionKeyReference(property.Value);

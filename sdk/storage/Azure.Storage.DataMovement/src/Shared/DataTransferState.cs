@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement
 {
@@ -186,8 +187,7 @@ namespace Azure.Storage.DataMovement
             if (TriggerCancellation())
             {
                 // Wait until full pause has completed.
-                cancellationToken.Register(() => CompletionSource.TrySetCanceled(cancellationToken), useSynchronizationContext: false);
-                await CompletionSource.Task.ConfigureAwait(false);
+                await CompletionSource.Task.AwaitWithCancellation(cancellationToken);
                 return true;
             }
             return false;
