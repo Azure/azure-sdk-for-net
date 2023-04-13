@@ -134,9 +134,9 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 await transfer.TryPauseAsync(cancellationTokenSource.Token);
             }
-            catch (TaskCanceledException exception)
+            catch (OperationCanceledException exception)
             {
-                Assert.AreEqual(exception.Message, "A task was canceled.");
+                Assert.AreEqual(exception.Message, "The operation was canceled.");
             }
             Assert.AreEqual(StorageTransferStatus.PauseInProgress, transfer.TransferStatus);
             Assert.IsFalse(transfer.HasCompleted);
