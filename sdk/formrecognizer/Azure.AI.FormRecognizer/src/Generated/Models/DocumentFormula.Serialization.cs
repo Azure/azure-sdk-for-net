@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class DocumentFormula
+    public partial class DocumentFormula
     {
         internal static DocumentFormula DeserializeDocumentFormula(JsonElement element)
         {

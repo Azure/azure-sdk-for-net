@@ -31,27 +31,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
     internal partial class CustomDocumentModelsDetails { }
 
-    [CodeGenModel("DocumentAnalysisFeature")]
-    internal partial struct DocumentAnalysisFeature { }
-
     [CodeGenModel("DocumentAnalysisRestClient")]
     internal partial class DocumentAnalysisRestClient { }
-
-    internal partial class DocumentAnnotation { }
-
-    internal partial struct DocumentAnnotationKind { }
-
-    internal partial class DocumentBarcode { }
-
-    internal partial struct DocumentBarcodeKind { }
-
-    internal partial class DocumentFormula { }
-
-    internal partial struct DocumentFormulaKind { }
-
-    internal partial class DocumentImage { }
-
-    internal partial struct DocumentPageKind { }
 
     internal partial class Error { }
 

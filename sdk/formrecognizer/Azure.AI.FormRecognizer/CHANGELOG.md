@@ -3,13 +3,16 @@
 ## 4.1.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added property `Features` in `AnalyzeDocumentOptions` to support add-on capabilities.
+- Added properties `SimilarFontFamily`, `FontStyle`, `FontWeight`, `Color`, and `BackgroundColor` to `DocumentStyle`. These properties can only be populated when `DocumentAnalysisFeature.OcrFont` is enabled.
+- Added properties `Annotations`, `Barcodes`, `Formulas`, `Images`, and `Kind` to `DocumentPage`. `Formulas` can only be populated when `DocumentAnalysisFeature.OcrFormula` is enabled.
+- Added member `FormulaBlock` to `ParagraphRole`.
 - Added methods in `DocumentAnalysisClient` to support custom document classification: `ClassifyDocument` and `ClassifyDocumentFromUri`.
 - Added methods in `DocumentModelAdministrationClient` to support custom document classification: `BuildDocumentClassifier`, `GetDocumentClassifier`, `GetDocumentClassifiers`, and `DeleteDocumentClassifier`.
 - Added a new `DocumentClassifierBuildOperationDetails` class. Instances of this class can now be returned in calls to `DocumentModelAdministrationClient.GetOperation`.
 - Added member `DocumentClassifierBuild` to `DocumentOperationKind`.
 - Added member `Boolean` to `DocumentFieldType`.
 - Added method `AsBoolean` to `DocumentFieldValue` to support extracting values of boolean fields.
-- Added properties `SimilarFontFamily`, `FontStyle`, `FontWeight`, `Color`, and `BackgroundColor` to `DocumentStyle`.
 - Added properties `Unit`, `CityDistrict`, `StateDistrict`, `Suburb`, `House`, and `Level` to the `AddressValue` class.
 
 ### Breaking Changes

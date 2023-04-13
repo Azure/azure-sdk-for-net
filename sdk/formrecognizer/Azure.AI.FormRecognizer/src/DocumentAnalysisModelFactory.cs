@@ -121,6 +121,28 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence);
         }
 
+        /// <summary> Initializes a new instance of DocumentAnnotation. </summary>
+        /// <param name="kind"> Annotation kind. </param>
+        /// <param name="boundingPolygon"> Bounding polygon of the annotation. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the annotation. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentAnnotation"/> instance for mocking. </returns>
+        public static DocumentAnnotation DocumentAnnotation(DocumentAnnotationKind kind = default, IReadOnlyList<PointF> boundingPolygon = default, float confidence = default)
+        {
+            return new DocumentAnnotation(kind, boundingPolygon, confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentBarcode. </summary>
+        /// <param name="kind"> Barcode kind. </param>
+        /// <param name="value"> Barcode value. </param>
+        /// <param name="boundingPolygon"> Bounding polygon of the barcode. </param>
+        /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the barcode. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentBarcode"/> instance for mocking. </returns>
+        public static DocumentBarcode DocumentBarcode(DocumentBarcodeKind kind = default, string value = null, IReadOnlyList<PointF> boundingPolygon = default, DocumentSpan span = default, float confidence = default)
+        {
+            return new DocumentBarcode(kind, value, boundingPolygon, span, confidence);
+        }
+
         /// <summary> Initializes a new instance of DocumentClassifierBuildOperationDetails. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
@@ -303,6 +325,29 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new DocumentFieldValue(expectedFieldType);
         }
 
+        /// <summary> Initializes a new instance of DocumentFormula. </summary>
+        /// <param name="kind"> Formula kind. </param>
+        /// <param name="value"> LaTex expression describing the formula. </param>
+        /// <param name="boundingPolygon"> Bounding polygon of the formula. </param>
+        /// <param name="span"> Location of the formula in the reading order concatenated content. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the formula. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentFormula"/> instance for mocking. </returns>
+        public static DocumentFormula DocumentFormula(DocumentFormulaKind kind = default, string value = null, IReadOnlyList<PointF> boundingPolygon = default, DocumentSpan span = default, float confidence = default)
+        {
+            return new DocumentFormula(kind, value, boundingPolygon, span, confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentImage. </summary>
+        /// <param name="boundingPolygon"> Bounding polygon of the image. </param>
+        /// <param name="span"> Location of the image in the reading order concatenated content. </param>
+        /// <param name="pageNumber"> 1-based page number of the page that contains the image. </param>
+        /// <param name="confidence"> Confidence of correctly identifying the image. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentImage"/> instance for mocking. </returns>
+        public static DocumentImage DocumentImage(IReadOnlyList<PointF> boundingPolygon = default, DocumentSpan span = default, int pageNumber = default, float confidence = default)
+        {
+            return new DocumentImage(boundingPolygon, span, pageNumber, confidence);
+        }
+
         /// <summary> Initializes a new instance of DocumentKeyValueElement. </summary>
         /// <param name="content"> Concatenated content of the key-value element in reading order. </param>
         /// <param name="boundingRegions"> Bounding regions covering the key-value element. </param>
@@ -445,7 +490,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="selectionMarks"> Extracted selection marks from the page. </param>
         /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentPage"/> instance for mocking. </returns>
-        public static DocumentPage DocumentPage(int pageNumber = default, float? angle = null, float? width = null, float? height = null, DocumentPageLengthUnit? unit = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null, IEnumerable<DocumentSelectionMark> selectionMarks = null, IEnumerable<DocumentLine> lines = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DocumentPage DocumentPage(int pageNumber, float? angle, float? width, float? height, DocumentPageLengthUnit? unit, IEnumerable<DocumentSpan> spans, IEnumerable<DocumentWord> words, IEnumerable<DocumentSelectionMark> selectionMarks, IEnumerable<DocumentLine> lines)
         {
             spans ??= new List<DocumentSpan>();
             words ??= new List<DocumentWord>();
@@ -458,6 +504,36 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var images = new List<DocumentImage>();
 
             return new DocumentPage(kind: default, pageNumber, angle, width, height, unit, spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList(), annotations, barcodes, formulas, images);
+        }
+
+        /// <summary> Initializes a new instance of DocumentPage. </summary>
+        /// <param name="pageNumber"> 1-based page number in the input document. </param>
+        /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
+        /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
+        /// <param name="height"> The height of the image/PDF in pixels/inches, respectively. </param>
+        /// <param name="unit"> The unit used by the width, height, and boundingPolygon properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </param>
+        /// <param name="spans"> Location of the page in the reading order concatenated content. </param>
+        /// <param name="words"> Extracted words from the page. </param>
+        /// <param name="selectionMarks"> Extracted selection marks from the page. </param>
+        /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
+        /// <param name="kind"> Kind of document page. </param>
+        /// <param name="annotations"> Extracted annotations from the page. </param>
+        /// <param name="barcodes"> Extracted barcodes from the page. </param>
+        /// <param name="formulas"> Extracted formulas from the page. </param>
+        /// <param name="images"> Extracted images from the page. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentPage"/> instance for mocking. </returns>
+        public static DocumentPage DocumentPage(int pageNumber = default, float? angle = null, float? width = null, float? height = null, DocumentPageLengthUnit? unit = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null, IEnumerable<DocumentSelectionMark> selectionMarks = null, IEnumerable<DocumentLine> lines = null, DocumentPageKind kind = default, IEnumerable<DocumentAnnotation> annotations = null, IEnumerable<DocumentBarcode> barcodes = null, IEnumerable<DocumentFormula> formulas = null, IEnumerable<DocumentImage> images = null)
+        {
+            spans ??= new List<DocumentSpan>();
+            words ??= new List<DocumentWord>();
+            selectionMarks ??= new List<DocumentSelectionMark>();
+            lines ??= new List<DocumentLine>();
+            annotations ??= new List<DocumentAnnotation>();
+            barcodes ??= new List<DocumentBarcode>();
+            formulas ??= new List<DocumentFormula>();
+            images ??= new List<DocumentImage>();
+
+            return new DocumentPage(kind, pageNumber, angle, width, height, unit, spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList(), annotations?.ToList(), barcodes?.ToList(), formulas?.ToList(), images?.ToList());
         }
 
         /// <summary> Initializes a new instance of DocumentParagraph. </summary>
