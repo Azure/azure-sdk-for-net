@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -17,17 +20,64 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
-            writer.WritePropertyName("botId"u8);
-            writer.WriteStringValue(BotId);
+            writer.WritePropertyName("botAppId"u8);
+            writer.WriteStringValue(BotAppId);
             writer.WritePropertyName("dialogContext"u8);
             writer.WriteStartObject();
             foreach (var item in DialogContext)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
+        }
+
+        internal static DialogOptionsInternal DeserializeDialogOptionsInternal(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            CommunicationIdentifierModel targetParticipant = default;
+            Guid botAppId = default;
+            IDictionary<string, object> dialogContext = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("targetParticipant"u8))
+                {
+                    targetParticipant = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("botAppId"u8))
+                {
+                    botAppId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("dialogContext"u8))
+                {
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
+                    }
+                    dialogContext = dictionary;
+                    continue;
+                }
+            }
+            return new DialogOptionsInternal(targetParticipant, botAppId, dialogContext);
         }
     }
 }

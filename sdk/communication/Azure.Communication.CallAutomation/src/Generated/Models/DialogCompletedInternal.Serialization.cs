@@ -22,9 +22,9 @@ namespace Azure.Communication.CallAutomation.Models.Events
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
-            Optional<DialogInputType> dialogInputType = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
+            Optional<DialogInputType> dialogInputType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -42,16 +42,6 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dialogInputType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    dialogInputType = new DialogInputType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
@@ -67,8 +57,18 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
+                if (property.NameEquals("dialogInputType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dialogInputType = new DialogInputType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new DialogCompletedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, Optional.ToNullable(dialogInputType), operationContext.Value, resultInformation.Value);
+            return new DialogCompletedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType));
         }
     }
 }

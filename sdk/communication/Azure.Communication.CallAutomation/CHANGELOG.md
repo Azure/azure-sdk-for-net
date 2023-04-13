@@ -1,5 +1,13 @@
 # Release History
 
+## 1.0.1-alpha.5 (Unreleased)
+- All events now serialize DialogInputType
+- StopDialogRequest has been removed as a parameter and object for StopDialog calls
+- Dialog calls have been separated into their own client
+- StartDialog call is now a PUT call
+- botId within StartDialog options has been renamed to botAppId
+- DialogOptions is a public object now to allow it to be returned as part of the response from StartDialog
+
 ## 1.0.1-alpha.4 (Unreleased)
 - Fixed StopDialog bug
 

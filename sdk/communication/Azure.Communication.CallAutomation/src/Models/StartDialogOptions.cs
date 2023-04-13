@@ -16,13 +16,13 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="dialogInputType"></param>
         /// <param name="targetParticipant"></param>
-        /// <param name="botId"></param>
+        /// <param name="botAppId"></param>
         /// <param name="dialogContext"></param>
-        public StartDialogOptions(DialogInputType dialogInputType, CommunicationIdentifier targetParticipant, Guid botId, IDictionary<string, string> dialogContext)
+        public StartDialogOptions(DialogInputType dialogInputType, CommunicationIdentifier targetParticipant, Guid botAppId, IDictionary<string, object> dialogContext)
         {
             DialogInputType = dialogInputType;
             TargetParticipant = targetParticipant;
-            BotId = botId;
+            BotAppId = botAppId;
             DialogContext = dialogContext;
         }
 
@@ -33,8 +33,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Target participant of dialog. </summary>
         public CommunicationIdentifier TargetParticipant { get; }
         /// <summary> Bot identifier. </summary>
-        public Guid BotId { get; }
+        public Guid BotAppId { get; }
         /// <summary> Dialog context. </summary>
-        public IDictionary<string, string> DialogContext { get; }
+        public IDictionary<string, object> DialogContext { get; }
     }
 }

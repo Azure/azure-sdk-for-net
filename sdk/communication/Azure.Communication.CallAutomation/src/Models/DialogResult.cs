@@ -6,18 +6,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.CallAutomation.Models;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>AddParticipantsResult Result.</summary>
+    /// <summary>Dialog Result.</summary>
     public class DialogResult
     {
         private CallAutomationEventProcessor _evHandler;
         private string _callConnectionId;
         private string _operationContext;
-        internal DialogResult()
+
+        internal DialogResult(DialogOptions dialogOptions, string operationContext)
         {
+            DialogOptions = dialogOptions;
+            OperationContext = operationContext;
         }
+        internal DialogResult(DialogStateResponseInternal internalObj)
+        {
+            DialogOptions = new DialogOptions(internalObj.DialogOptions);
+            DialogInputType = internalObj.DialogInputType;
+            OperationContext = internalObj.OperationContext;
+        }
+
+        /// <summary> Defines options for dialog. </summary>
+        public DialogOptions DialogOptions { get; }
+        /// <summary> Determines the type of the dialog. </summary>
+        public DialogInputType? DialogInputType { get; }
+        /// <summary> The value to identify context of the operation. </summary>
+        public string OperationContext { get; }
 
         internal void SetEventProcessor(CallAutomationEventProcessor evHandler, string callConnectionId, string operationContext)
         {
