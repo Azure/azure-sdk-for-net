@@ -313,7 +313,7 @@ namespace Azure.Storage
             return (
                 ChecksumCalculatingStream.GetReadStream(stream, hasher.AppendHash),
                 hasher.GetFinalHash,
-                hasher.HashSize,
+                hasher.HashSizeInBytes,
                 hasher
             );
         }
@@ -346,6 +346,18 @@ namespace Azure.Storage
             byte[] hash = await hasher.ComputeHashInternal(content, async, cancellationToken).ConfigureAwait(false);
             content.Position = startPosition;
             return hash;
+        }
+
+        public static IHasher GetHasherFromAlgorithmId(StorageChecksumAlgorithm algorithm)
+        {
+            return algorithm.ResolveAuto() switch
+            {
+                StorageChecksumAlgorithm.None => null,
+                StorageChecksumAlgorithm.MD5 => new HashAlgorithmHasher(MD5.Create()),
+                StorageChecksumAlgorithm.StorageCrc64
+                    => new NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm.Create()),
+                _ => throw Errors.InvalidArgument(nameof(algorithm))
+            };
         }
     }
 }

@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = LoadTestingCmkIdentity.DeserializeLoadTestingCmkIdentity(property.Value);
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyUrl = null;
                         continue;
                     }
                     keyUrl = new Uri(property.Value.GetString());

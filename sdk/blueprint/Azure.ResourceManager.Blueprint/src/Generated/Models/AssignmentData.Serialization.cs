@@ -121,7 +121,6 @@ namespace Azure.ResourceManager.Blueprint
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -180,7 +179,6 @@ namespace Azure.ResourceManager.Blueprint
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = AssignmentStatus.DeserializeAssignmentStatus(property0.Value);
@@ -190,7 +188,6 @@ namespace Azure.ResourceManager.Blueprint
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             locks = AssignmentLockSettings.DeserializeAssignmentLockSettings(property0.Value);
@@ -200,7 +197,6 @@ namespace Azure.ResourceManager.Blueprint
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new AssignmentProvisioningState(property0.Value.GetString());

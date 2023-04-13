@@ -27,7 +27,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     index = property.Value.GetInt32();
@@ -37,7 +36,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusCode = property.Value.GetInt32();

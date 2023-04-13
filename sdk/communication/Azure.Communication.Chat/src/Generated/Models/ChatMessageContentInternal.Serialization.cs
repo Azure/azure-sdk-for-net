@@ -40,7 +40,6 @@ namespace Azure.Communication.Chat
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ChatParticipantInternal> array = new List<ChatParticipantInternal>();
@@ -55,7 +54,6 @@ namespace Azure.Communication.Chat
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     initiatorCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);

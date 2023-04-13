@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     domain = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
@@ -39,7 +38,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     spf = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
@@ -49,7 +47,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dkim = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
@@ -59,7 +56,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dkiM2 = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
@@ -69,7 +65,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dmarc = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
