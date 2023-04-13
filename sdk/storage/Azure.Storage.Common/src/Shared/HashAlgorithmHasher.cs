@@ -23,7 +23,29 @@ namespace Azure.Storage
             _hashAlgorithm = hashAlgorithm;
         }
 
-        public byte[] ComputeHash(Stream stream) => _hashAlgorithm.ComputeHash(stream);
+        public async Task<byte[]> ComputeHashInternal(
+            Stream stream,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
+
+#if NET5_0_OR_GREATER
+            return async
+                ? await _hashAlgorithm.ComputeHashAsync(stream, cancellationToken)
+                    .ConfigureAwait(false)
+                : _hashAlgorithm.ComputeHash(stream);
+#else
+            await ChecksumCalculatingStream.GetReadStream(stream, AppendHash)
+                .CopyToInternal(Stream.Null, async, cancellationToken)
+                .ConfigureAwait(false);
+
+            var checksum = new byte[HashSizeInBytes];
+            GetFinalHash(checksum);
+            return checksum;
+#endif
+        }
 
         public void AppendHash(ReadOnlySpan<byte> content)
         {

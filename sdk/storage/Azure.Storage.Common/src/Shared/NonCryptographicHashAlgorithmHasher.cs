@@ -5,6 +5,8 @@ using System;
 using System.Buffers;
 using System.IO;
 using System.IO.Hashing;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Azure.Storage
 {
@@ -24,26 +26,23 @@ namespace Azure.Storage
             _nonCryptographicHashAlgorithm = nonCryptographicHashAlgorithm;
         }
 
-        public byte[] ComputeHash(Stream stream)
+        public async Task<byte[]> ComputeHashInternal(
+            Stream stream,
+            bool async,
+            CancellationToken cancellationToken)
         {
             if (stream is null)
                 throw new ArgumentNullException(nameof(stream));
 
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(_streamBufferSize);
-
-            while (true)
+            if (async)
             {
-                int read = stream.Read(buffer, 0, buffer.Length);
-
-                if (read == 0)
-                {
-                    break;
-                }
-
-                _nonCryptographicHashAlgorithm.Append(new ReadOnlySpan<byte>(buffer, 0, read));
+                await _nonCryptographicHashAlgorithm.AppendAsync(stream, cancellationToken)
+                    .ConfigureAwait(false);
             }
-
-            ArrayPool<byte>.Shared.Return(buffer);
+            else
+            {
+                _nonCryptographicHashAlgorithm.Append(stream);
+            }
 
             return _nonCryptographicHashAlgorithm.GetCurrentHash();
         }
