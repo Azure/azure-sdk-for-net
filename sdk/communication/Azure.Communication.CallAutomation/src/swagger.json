@@ -1950,10 +1950,8 @@
           "description": "Target participant of dialog."
         },
         "botAppId": {
-          "format": "uuid",
           "description": "Bot identifier.",
-          "type": "string",
-          "example": "00000000-0000-0000-0000-000000000000"
+          "type": "string"
         },
         "dialogContext": {
           "description": "Dialog context.",
@@ -1967,6 +1965,12 @@
     "DialogStateResponse": {
       "type": "object",
       "properties": {
+        "dialogId": {
+          "format": "uuid",
+          "description": "The dialog ID.",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
         "dialogOptions": {
           "$ref": "#/definitions/DialogOptions",
           "description": "Defines options for dialog."

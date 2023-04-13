@@ -27,6 +27,7 @@ namespace Azure.Communication.CallAutomation
             DialogOptions = new DialogOptions(internalObj.DialogOptions);
             DialogInputType = internalObj.DialogInputType;
             OperationContext = internalObj.OperationContext;
+            DialogId = internalObj.DialogId;
         }
 
         /// <summary> Defines options for dialog. </summary>
@@ -35,6 +36,8 @@ namespace Azure.Communication.CallAutomation
         public DialogInputType? DialogInputType { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; }
+        /// <summary> The dialog ID. </summary>
+        public Guid? DialogId { get; }
 
         internal void SetEventProcessor(CallAutomationEventProcessor evHandler, string callConnectionId, string operationContext)
         {

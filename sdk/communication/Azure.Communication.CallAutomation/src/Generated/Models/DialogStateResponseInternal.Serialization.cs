@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Communication.CallAutomation;
 using Azure.Core;
@@ -19,11 +20,22 @@ namespace Azure.Communication.CallAutomation.Models
             {
                 return null;
             }
+            Optional<Guid> dialogId = default;
             Optional<DialogOptionsInternal> dialogOptions = default;
             Optional<DialogInputType> dialogInputType = default;
             Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("dialogId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dialogId = property.Value.GetGuid();
+                    continue;
+                }
                 if (property.NameEquals("dialogOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -50,7 +62,7 @@ namespace Azure.Communication.CallAutomation.Models
                     continue;
                 }
             }
-            return new DialogStateResponseInternal(dialogOptions.Value, Optional.ToNullable(dialogInputType), operationContext.Value);
+            return new DialogStateResponseInternal(Optional.ToNullable(dialogId), dialogOptions.Value, Optional.ToNullable(dialogInputType), operationContext.Value);
         }
     }
 }

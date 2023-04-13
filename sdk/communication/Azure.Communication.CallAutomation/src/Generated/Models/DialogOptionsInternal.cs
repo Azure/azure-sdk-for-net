@@ -19,10 +19,11 @@ namespace Azure.Communication.CallAutomation
         /// <param name="targetParticipant"> Target participant of dialog. </param>
         /// <param name="botAppId"> Bot identifier. </param>
         /// <param name="dialogContext"> Dialog context. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> or <paramref name="dialogContext"/> is null. </exception>
-        public DialogOptionsInternal(CommunicationIdentifierModel targetParticipant, Guid botAppId, IDictionary<string, object> dialogContext)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/>, <paramref name="botAppId"/> or <paramref name="dialogContext"/> is null. </exception>
+        public DialogOptionsInternal(CommunicationIdentifierModel targetParticipant, string botAppId, IDictionary<string, object> dialogContext)
         {
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
+            Argument.AssertNotNull(botAppId, nameof(botAppId));
             Argument.AssertNotNull(dialogContext, nameof(dialogContext));
 
             TargetParticipant = targetParticipant;
@@ -33,7 +34,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Target participant of dialog. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; set; }
         /// <summary> Bot identifier. </summary>
-        public Guid BotAppId { get; set; }
+        public string BotAppId { get; set; }
         /// <summary> Dialog context. </summary>
         public IDictionary<string, object> DialogContext { get; }
     }

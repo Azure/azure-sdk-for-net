@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication;
@@ -45,7 +44,7 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
             CommunicationIdentifierModel targetParticipant = default;
-            Guid botAppId = default;
+            string botAppId = default;
             IDictionary<string, object> dialogContext = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -56,7 +55,7 @@ namespace Azure.Communication.CallAutomation
                 }
                 if (property.NameEquals("botAppId"u8))
                 {
-                    botAppId = property.Value.GetGuid();
+                    botAppId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dialogContext"u8))

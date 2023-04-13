@@ -9,7 +9,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The options of a dialog call. </summary>
     public class DialogOptions
     {
-        internal DialogOptions(CommunicationIdentifier targetParticipant, Guid botAppId, IDictionary<string, object> dialogContext)
+        internal DialogOptions(CommunicationIdentifier targetParticipant, string botAppId, IDictionary<string, object> dialogContext)
         {
             TargetParticipant = targetParticipant;
             BotAppId = botAppId;
@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Target participant of dialog. </summary>
         public CommunicationIdentifier TargetParticipant { get; }
         /// <summary> Bot identifier. </summary>
-        public Guid BotAppId { get; set; }
+        public string BotAppId { get; set; }
         /// <summary> Dialog context. </summary>
         public IDictionary<string, object> DialogContext { get; }
     }

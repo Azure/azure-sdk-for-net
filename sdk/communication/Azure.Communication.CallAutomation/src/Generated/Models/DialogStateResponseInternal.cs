@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Communication.CallAutomation;
 
 namespace Azure.Communication.CallAutomation.Models
@@ -18,16 +19,20 @@ namespace Azure.Communication.CallAutomation.Models
         }
 
         /// <summary> Initializes a new instance of DialogStateResponseInternal. </summary>
+        /// <param name="dialogId"> The dialog ID. </param>
         /// <param name="dialogOptions"> Defines options for dialog. </param>
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
-        internal DialogStateResponseInternal(DialogOptionsInternal dialogOptions, DialogInputType? dialogInputType, string operationContext)
+        internal DialogStateResponseInternal(Guid? dialogId, DialogOptionsInternal dialogOptions, DialogInputType? dialogInputType, string operationContext)
         {
+            DialogId = dialogId;
             DialogOptions = dialogOptions;
             DialogInputType = dialogInputType;
             OperationContext = operationContext;
         }
 
+        /// <summary> The dialog ID. </summary>
+        public Guid? DialogId { get; }
         /// <summary> Defines options for dialog. </summary>
         public DialogOptionsInternal DialogOptions { get; }
         /// <summary> Determines the type of the dialog. </summary>
