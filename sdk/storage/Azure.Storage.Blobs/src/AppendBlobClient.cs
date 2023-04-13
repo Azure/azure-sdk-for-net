@@ -39,7 +39,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Gets the maximum number of bytes that can be sent in a call
         /// to AppendBlock.
         /// </summary>
-        public virtual int AppendBlobMaxAppendBlockBytes => Constants.Blob.Append.MaxAppendBlockBytes;
+        public virtual int AppendBlobMaxAppendBlockBytes => ClientConfiguration.Version < BlobClientOptions.ServiceVersion.V2022_11_02
+            ? Constants.Blob.Append.Pre_2022_11_02_MaxAppendBlockBytes
+            : Constants.Blob.Append.MaxAppendBlockBytes;
 
         /// <summary>
         /// Gets the maximum number of blocks allowed in an append blob.

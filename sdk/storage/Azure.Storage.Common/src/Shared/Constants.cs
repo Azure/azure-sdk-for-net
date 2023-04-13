@@ -214,7 +214,8 @@ namespace Azure.Storage
 
             internal static class Append
             {
-                public const int MaxAppendBlockBytes = 4 * Constants.MB; // 4MB
+                public const int Pre_2022_11_02_MaxAppendBlockBytes = 4 * Constants.MB; // 4MB
+                public const int MaxAppendBlockBytes = 100 * Constants.MB; // 100MB
                 public const int MaxBlocks = 50000;
             }
 
