@@ -84,7 +84,7 @@ Note that the `Credential` property is optional. If it is not set, Azure Monitor
 
 ### Advanced configuration
 
-The Azure Monitor Distro includes .NET OpenTelemetry instrumentation for ASP.NET Core, HttpClient, and SQLClient. However, you can customize the instrumentation included or use additional instrumentation on your own using the OpenTelemetry SDK API. Here are some examples of how to customize the instrumentation:
+The Azure Monitor Distro includes .NET OpenTelemetry instrumentation for [ASP.NET Core](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/), [HttpClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/), and [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient). However, you can customize the instrumentation included or use additional instrumentation on your own using the OpenTelemetry API. Here are some examples of how to customize the instrumentation:
 
 #### Customizing ASP.NET Core Instrumentation Options
 
@@ -126,6 +126,22 @@ builder.Services.Configure<SqlClientInstrumentationOptions>(options =>
 });
 ```
 
+#### Customizing Sampling Percentage
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor()
+                                   .WithTracing(b =>
+                                   {
+                                       b.SetSampler(new ApplicationInsightsSampler(0.9F));
+                                   });
+```
+
+(or)
+
+```
+builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.SetSampler(new ApplicationInsightsSampler(0.9F)));
+```
+
 #### Adding Custom ActivitySources to Traces
 
 ```C#
@@ -148,7 +164,7 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor()
 
 #### Adding Additional Instrumentation
 
-If you need to instrument a library or framework that isn't included in the Azure Monitor Distro, you can add additional instrumentation using the OpenTelemetry Instrumentation packages. For example, to add instrumentation for gRPC clients, you can add the OpenTelemetry.Instrumentation.GrpcNetClient package and use the following code:
+If you need to instrument a library or framework that isn't included in the Azure Monitor Distro, you can add additional instrumentation using the OpenTelemetry Instrumentation packages. For example, to add instrumentation for gRPC clients, you can add the [OpenTelemetry.Instrumentation.GrpcNetClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.GrpcNetClient/) package and use the following code:
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor()
@@ -157,23 +173,6 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor()
                                        b.AddGrpcClientInstrumentation();
                                    });
 ```
-
-#### Modifying Sampling Percentage
-
-```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor()
-                                   .WithTracing(b =>
-                                   {
-                                       b.SetSampler(new ApplicationInsightsSampler(0.9F));
-                                   });
-```
-
-(or)
-
-```
-builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.SetSampler(new ApplicationInsightsSampler(0.9F)));
-```
-
 
 ## Key concepts
 
