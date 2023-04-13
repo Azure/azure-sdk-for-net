@@ -1,4 +1,4 @@
 directory: specification/cognitiveservices/AnomalyDetector
-commit: 4b044353531d574be26f64297f47736cb141f14a
+commit: 5042eea1a5a0471073e37d874687aad62f6cffbb
 repo: Azure/azure-rest-api-specs
 cleanup: false
