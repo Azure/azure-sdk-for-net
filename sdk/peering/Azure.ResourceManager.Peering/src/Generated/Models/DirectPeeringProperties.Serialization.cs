@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PeeringDirectConnection> array = new List<PeeringDirectConnection>();
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useForPeeringService = property.Value.GetBoolean();
@@ -81,7 +79,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peerAsn = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -91,7 +88,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     directPeeringType = new DirectPeeringType(property.Value.GetString());

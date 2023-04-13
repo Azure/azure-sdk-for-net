@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logType = new LogType(property.Value.GetString());
@@ -82,7 +81,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logOption = new LogOption(property.Value.GetString());
@@ -92,7 +90,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     applicationInsights = ApplicationInsights.DeserializeApplicationInsights(property.Value);
@@ -102,7 +99,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     commonDestination = LogDestination.DeserializeLogDestination(property.Value);
@@ -112,7 +108,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trafficLogDestination = LogDestination.DeserializeLogDestination(property.Value);
@@ -122,7 +117,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     threatLogDestination = LogDestination.DeserializeLogDestination(property.Value);
@@ -132,7 +126,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     decryptLogDestination = LogDestination.DeserializeLogDestination(property.Value);

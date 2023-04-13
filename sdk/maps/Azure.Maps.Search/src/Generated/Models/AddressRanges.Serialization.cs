@@ -38,7 +38,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @from = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);
@@ -48,7 +47,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     to = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);

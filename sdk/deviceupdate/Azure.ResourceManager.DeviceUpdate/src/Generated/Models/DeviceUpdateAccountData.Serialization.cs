@@ -88,7 +88,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -99,7 +98,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -134,7 +132,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -153,7 +150,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -168,7 +164,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
@@ -178,7 +173,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DeviceUpdatePrivateEndpointConnectionData> array = new List<DeviceUpdatePrivateEndpointConnectionData>();
@@ -193,7 +187,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sku = new DeviceUpdateSku(property0.Value.GetString());
@@ -203,7 +196,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DeviceUpdateAccountLocationDetail> array = new List<DeviceUpdateAccountLocationDetail>();

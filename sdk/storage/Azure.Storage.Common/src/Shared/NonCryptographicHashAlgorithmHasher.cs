@@ -17,7 +17,7 @@ namespace Azure.Storage
 
         private readonly NonCryptographicHashAlgorithm _nonCryptographicHashAlgorithm;
 
-        public int HashSize => _nonCryptographicHashAlgorithm.HashLengthInBytes;
+        public int HashSizeInBytes => _nonCryptographicHashAlgorithm.HashLengthInBytes;
 
         public NonCryptographicHashAlgorithmHasher(NonCryptographicHashAlgorithm nonCryptographicHashAlgorithm)
         {

@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HDInsightDayOfWeek> array = new List<HDInsightDayOfWeek>();
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeAndCapacity = HDInsightAutoScaleTimeAndCapacity.DeserializeHDInsightAutoScaleTimeAndCapacity(property.Value);

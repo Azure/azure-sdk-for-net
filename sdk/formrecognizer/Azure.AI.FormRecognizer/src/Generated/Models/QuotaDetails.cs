@@ -10,24 +10,22 @@ using System;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Quota used, limit, and next reset date/time. </summary>
-    internal partial class QuotaDetails
+    public partial class QuotaDetails
     {
         /// <summary> Initializes a new instance of QuotaDetails. </summary>
         /// <param name="used"> Amount of the resource quota used. </param>
         /// <param name="quota"> Resource quota limit. </param>
-        /// <param name="quotaResetDateTime"> Date/time when the resource quota usage will be reset. </param>
-        internal QuotaDetails(int used, int quota, DateTimeOffset quotaResetDateTime)
+        /// <param name="quotaResetsOn"> Date/time when the resource quota usage will be reset. </param>
+        internal QuotaDetails(int used, int quota, DateTimeOffset quotaResetsOn)
         {
             Used = used;
             Quota = quota;
-            QuotaResetDateTime = quotaResetDateTime;
+            QuotaResetsOn = quotaResetsOn;
         }
 
         /// <summary> Amount of the resource quota used. </summary>
         public int Used { get; }
         /// <summary> Resource quota limit. </summary>
         public int Quota { get; }
-        /// <summary> Date/time when the resource quota usage will be reset. </summary>
-        public DateTimeOffset QuotaResetDateTime { get; }
     }
 }
