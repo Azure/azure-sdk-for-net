@@ -9,38 +9,34 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automation.Tests.TestCase
 {
-    public class RunbookTests : AutomationManagementTestBase
+    public class AccountTests : AutomationManagementTestBase
     {
-        public RunbookTests(bool isAsync)
+        public AccountTests(bool isAsync)
             : base(isAsync, RecordedTestMode.Record)
         {
         }
 
-        private async Task<AutomationRunbookCollection> GetRunbookCollectionAsync()
+        private async Task<AutomationAccountCollection> GetAccountCollection()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            var accountCollection = resourceGroup.GetAutomationAccounts();
-            var accountName = Recording.GenerateAssetName("account");
-            var input = ResourceDataHelpers.GetAccountData();
-            var accountResource = await accountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, input);
-            return accountResource.Value.GetAutomationRunbooks();
+            return resourceGroup.GetAutomationAccounts();
         }
 
         [TestCase]
-        public async Task RunbookApiTests()
+        public async Task AccountApiTests()
         {
-            //1.CreateOrUpdate
-            var collection = await GetRunbookCollectionAsync();
-            var name = Recording.GenerateAssetName("runbook");
-            var name2 = Recording.GenerateAssetName("runbook");
-            var name3 = Recording.GenerateAssetName("runbook");
-            var input = ResourceDataHelpers.GetRunbookData();
+            //1.CreateorUpdate
+            var collection = await GetAccountCollection();
+            var name = Recording.GenerateAssetName("account");
+            var name2 = Recording.GenerateAssetName("account");
+            var name3 = Recording.GenerateAssetName("account");
+            var input = ResourceDataHelpers.GetAccountData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            AutomationRunbookResource runbook = lro.Value;
-            Assert.AreEqual(name, runbook.Data.Name);
+            AutomationAccountResource account = lro.Value;
+            Assert.AreEqual(name, account.Data.Name);
             //2.Get
-            AutomationRunbookResource runbook2 = await runbook.GetAsync();
-            ResourceDataHelpers.AssertRunbook(runbook.Data, runbook2.Data);
+            AutomationAccountResource account2 = await account.GetAsync();
+            ResourceDataHelpers.AssertAccount(account.Data, account2.Data);
             //3.GetAll
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);
@@ -58,10 +54,10 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
             //Resource
             //5.Get
-            AutomationRunbookResource runbook3 = await runbook.GetAsync();
-            ResourceDataHelpers.AssertRunbook(runbook.Data, runbook3.Data);
+            AutomationAccountResource account3 = await account.GetAsync();
+            ResourceDataHelpers.AssertAccount(account.Data, account3.Data);
             //6.Delete
-            await runbook.DeleteAsync(WaitUntil.Completed);
+            await account.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

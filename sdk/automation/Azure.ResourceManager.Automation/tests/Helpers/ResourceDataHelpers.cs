@@ -55,25 +55,30 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         #endregion
 
         #region DscConfigurationData
-        public static void AssertDscConfiguration(DscConfigurationCreateOrUpdateContent data1, DscConfigurationCreateOrUpdateContent data2)
+        public static void AssertDscConfiguration(DscConfigurationData data1, DscConfigurationData data2)
         {
-            //AssertResource(data1, data2);
+            AssertResource(data1, data2);
             Assert.AreEqual(data1.Location, data2.Location);
             Assert.AreEqual(data1.Description, data2.Description);
-            //Assert.AreEqual(data1.State, data2.State);
-            //Assert.AreEqual(data1.JobCount, data2.JobCount);
+            Assert.AreEqual(data1.State, data2.State);
+            Assert.AreEqual(data1.JobCount, data2.JobCount);
         }
 
-        public static DscConfigurationCreateOrUpdateContent GetDscConfigurationData()
+        public static DscConfigurationCreateOrUpdateContent GetDscConfigurationData(string name)
         {
             var data = new DscConfigurationCreateOrUpdateContent(new AutomationContentSource()
             {
-                Hash = new AutomationContentHash("sha256", "A9E5DB56BA21513F61E0B3868816FDC6D4DF5131F5617D7FF0D769674BD5072F"),
+                Hash = new AutomationContentHash("algorithm", "sha256"),
+                Value = "A9E5DB56BA21513F61E0B3868816FDC6D4DF5131F5617D7FF0D769674BD5072F",
                 SourceType = AutomationContentSourceType.EmbeddedContent,
                 Version = "1.0.0"
             })
             {
-                Description= "new sample configuration test"
+                Description= "new sample configuration test",
+                Location = AzureLocation.EastUS,
+                Name = name,
+                IsLogProgressEnabled = true,
+                IsLogVerboseEnabled = true
             };
             return data;
         }
@@ -89,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
             Assert.AreEqual(data1.NodeCount, data2.NodeCount);
         }
 
-        public static DscNodeConfigurationCreateOrUpdateContent GetDscNodeConfigurationData()
+        public static DscNodeConfigurationCreateOrUpdateContent GetDscNodeConfigurationData(string dscconfigurationName)
         {
             var data = new DscNodeConfigurationCreateOrUpdateContent()
             {
@@ -101,7 +106,7 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
                 },
                 Configuration = new DscConfigurationAssociationProperty()
                 {
-                    ConfigurationName = "SampleConfiguration"
+                    ConfigurationName = dscconfigurationName
                 }
             };
             return data;
@@ -114,6 +119,7 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         {
             var data = new AutomationRunbookCreateOrUpdateContent(AutomationRunbookType.Script)
             {
+                Location = AzureLocation.EastUS
             };
             return data;
         }
@@ -141,7 +147,8 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
                 SourceType = SourceControlSourceType.VsoGit,
                 SecurityToken = new SourceControlSecurityTokenProperties()
                 {
-                    AccessToken = "p26mwl3frnfa4l5i6a7zjfog7k75qeac7otyfa76q3ceajmrnjoq"
+                    AccessToken = "p26mwl3frnfa4l5i6a7zjfog7k75qeac7otyfa76q3ceajmrnjoq",
+                    TokenType = SourceControlTokenType.PersonalAccessToken
                 },
                 Description = "test creating a Source Control",
             };
@@ -183,7 +190,7 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         #region Schedule
         public static AutomationScheduleCreateOrUpdateContent GetScheduleData(string name)
         {
-            var data = new AutomationScheduleCreateOrUpdateContent(name, DateTime.Today, AutomationScheduleFrequency.Hour)
+            var data = new AutomationScheduleCreateOrUpdateContent(name, DateTime.Now.AddMinutes(10), AutomationScheduleFrequency.Hour)
             {
                 Interval = BinaryData.FromString("1"),
             };
@@ -194,7 +201,25 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         {
             AssertResource(data1, data2);
             Assert.AreEqual(data1.Frequency, data2.Frequency);
-            Assert.AreEqual(data1.Interval, data2.Interval);
+            Assert.AreEqual(data1.Description, data2.Description);
+        }
+        #endregion
+
+        #region Account
+        public static AutomationAccountCreateOrUpdateContent GetAccountData()
+        {
+            var data = new AutomationAccountCreateOrUpdateContent()
+            {
+                Sku = new AutomationSku("Basic"),
+                Location = AzureLocation.EastUS
+            };
+            return data;
+        }
+
+        public static void AssertAccount(AutomationAccountData data1, AutomationAccountData data2)
+        {
+            AssertResource(data1, data2);
+            Assert.AreEqual(data1.Location, data2.Location);
             Assert.AreEqual(data1.Description, data2.Description);
         }
         #endregion
