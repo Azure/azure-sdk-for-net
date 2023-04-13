@@ -474,6 +474,31 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new SupportInfo(productSku, productSerial, accountRegistered, accountId, userDomainSupported, userRegistered, freeTrial, freeTrialDaysLeft, freeTrialCreditLeft, helpURL, supportURL, registerURL);
         }
 
+        /// <summary> Initializes a new instance of FirewallStatusResourceData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
+        /// <param name="healthStatus"> Current status of the Firewall. </param>
+        /// <param name="healthReason"> Detail description of current health of the Firewall. </param>
+        /// <param name="panoramaStatus"> Panorama Status. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Ngfw.FirewallStatusResourceData"/> instance for mocking. </returns>
+        public static FirewallStatusResourceData FirewallStatusResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BooleanEnum? isPanoramaManaged = null, HealthStatus? healthStatus = null, string healthReason = null, PanoramaStatus panoramaStatus = null, ReadOnlyProvisioningState? provisioningState = null)
+        {
+            return new FirewallStatusResourceData(id, name, resourceType, systemData, isPanoramaManaged, healthStatus, healthReason, panoramaStatus, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of PanoramaStatus. </summary>
+        /// <param name="panoramaServerStatus"> Primary Panorama connection status. </param>
+        /// <param name="panoramaServer2Status"> Secondary Panorama connection status. </param>
+        /// <returns> A new <see cref="Models.PanoramaStatus"/> instance for mocking. </returns>
+        public static PanoramaStatus PanoramaStatus(ServerStatus? panoramaServerStatus = null, ServerStatus? panoramaServer2Status = null)
+        {
+            return new PanoramaStatus(panoramaServerStatus, panoramaServer2Status);
+        }
+
         /// <summary> Initializes a new instance of CertificateObjectLocalRulestackResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
