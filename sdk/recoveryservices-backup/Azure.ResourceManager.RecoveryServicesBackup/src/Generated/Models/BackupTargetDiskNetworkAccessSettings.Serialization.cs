@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetDiskNetworkAccessOption = property.Value.GetString().ToBackupTargetDiskNetworkAccessOption();
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetDiskAccessId = new ResourceIdentifier(property.Value.GetString());

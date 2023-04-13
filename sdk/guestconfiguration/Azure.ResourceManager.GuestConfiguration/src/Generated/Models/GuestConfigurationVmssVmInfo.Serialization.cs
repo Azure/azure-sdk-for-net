@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vmId = property.Value.GetGuid();
@@ -46,7 +45,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vmResourceId = new ResourceIdentifier(property.Value.GetString());
@@ -56,7 +54,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());

@@ -105,7 +105,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new CassandraProvisioningState(property.Value.GetString());
@@ -115,7 +114,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataCenterLocation = new AzureLocation(property.Value.GetString());
@@ -125,7 +123,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delegatedSubnetId = new ResourceIdentifier(property.Value.GetString());
@@ -135,7 +132,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nodeCount = property.Value.GetInt32();
@@ -145,7 +141,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CassandraDataCenterSeedNode> array = new List<CassandraDataCenterSeedNode>();
@@ -165,7 +160,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        managedDiskCustomerKeyUri = null;
                         continue;
                     }
                     managedDiskCustomerKeyUri = new Uri(property.Value.GetString());
@@ -175,7 +169,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        backupStorageCustomerKeyUri = null;
                         continue;
                     }
                     backupStorageCustomerKeyUri = new Uri(property.Value.GetString());
@@ -195,7 +188,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskCapacity = property.Value.GetInt32();
@@ -205,7 +197,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     availabilityZone = property.Value.GetBoolean();

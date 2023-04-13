@@ -42,7 +42,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManifestListAttributes> array = new List<ManifestListAttributes>();
@@ -57,7 +56,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     config = OciDescriptor.DeserializeOciDescriptor(property.Value);
@@ -67,7 +65,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OciDescriptor> array = new List<OciDescriptor>();
@@ -107,7 +104,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FsLayer> array = new List<FsLayer>();
@@ -122,7 +118,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<History> array = new List<History>();
@@ -137,7 +132,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ImageSignature> array = new List<ImageSignature>();
@@ -152,7 +146,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     schemaVersion = property.Value.GetInt32();

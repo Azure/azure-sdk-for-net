@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.DataLakeStore
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.DataLakeStore
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -73,7 +71,6 @@ namespace Azure.ResourceManager.DataLakeStore
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -103,7 +100,6 @@ namespace Azure.ResourceManager.DataLakeStore
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -122,7 +118,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accountId = property0.Value.GetGuid();
@@ -132,7 +127,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = property0.Value.GetString().ToDataLakeStoreAccountStatus();
@@ -142,7 +136,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = property0.Value.GetString().ToDataLakeStoreAccountState();
@@ -152,7 +145,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationTime = property0.Value.GetDateTimeOffset("O");
@@ -162,7 +154,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
@@ -182,7 +173,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryptionConfig = DataLakeStoreAccountEncryptionConfig.DeserializeDataLakeStoreAccountEncryptionConfig(property0.Value);
@@ -192,7 +182,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryptionState = property0.Value.GetString().ToDataLakeStoreEncryptionState();
@@ -202,7 +191,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryptionProvisioningState = property0.Value.GetString().ToDataLakeStoreEncryptionProvisioningState();
@@ -212,7 +200,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataLakeStoreFirewallRuleData> array = new List<DataLakeStoreFirewallRuleData>();
@@ -227,7 +214,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataLakeStoreVirtualNetworkRuleData> array = new List<DataLakeStoreVirtualNetworkRuleData>();
@@ -242,7 +228,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             firewallState = property0.Value.GetString().ToDataLakeStoreFirewallState();
@@ -252,7 +237,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             firewallAllowAzureIPs = property0.Value.GetString().ToDataLakeStoreFirewallAllowAzureIPsState();
@@ -262,7 +246,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataLakeStoreTrustedIdProviderData> array = new List<DataLakeStoreTrustedIdProviderData>();
@@ -277,7 +260,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             trustedIdProviderState = property0.Value.GetString().ToDataLakeStoreTrustedIdProviderState();
@@ -287,7 +269,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             newTier = property0.Value.GetString().ToDataLakeStoreCommitmentTierType();
@@ -297,7 +278,6 @@ namespace Azure.ResourceManager.DataLakeStore
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             currentTier = property0.Value.GetString().ToDataLakeStoreCommitmentTierType();

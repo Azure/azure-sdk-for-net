@@ -254,10 +254,6 @@ namespace Azure.Storage.DataMovement
                     _currentBytesSemaphore.Release();
                 }
             }
-            catch (OperationCanceledException)
-            {
-                // If operation cancelled, no need to log the exception. As it's logged by whoever called the cancellation (e.g. disposal)
-            }
             catch (Exception ex)
             {
                 await _invokeFailedEventHandler(ex).ConfigureAwait(false);

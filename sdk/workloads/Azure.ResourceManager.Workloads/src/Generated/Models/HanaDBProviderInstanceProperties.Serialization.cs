@@ -130,7 +130,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dbPasswordUri = null;
                         continue;
                     }
                     dbPasswordUri = new Uri(property.Value.GetString());
@@ -140,7 +139,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sslCertificateUri = null;
                         continue;
                     }
                     sslCertificateUri = new Uri(property.Value.GetString());
@@ -155,7 +153,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sslPreference = new SslPreference(property.Value.GetString());

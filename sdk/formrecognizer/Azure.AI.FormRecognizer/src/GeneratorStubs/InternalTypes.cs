@@ -55,10 +55,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
     internal partial class Error { }
 
-    internal partial struct FontStyle { }
-
-    internal partial struct FontWeight { }
-
     internal partial class InnerError { }
 
     internal partial class QuotaDetails { }

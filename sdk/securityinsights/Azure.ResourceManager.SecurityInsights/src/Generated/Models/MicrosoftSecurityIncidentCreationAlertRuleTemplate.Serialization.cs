@@ -139,7 +139,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -158,7 +157,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             alertRulesCreatedByTemplateCount = property0.Value.GetInt32();
@@ -168,7 +166,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdDateUTC = property0.Value.GetDateTimeOffset("O");
@@ -178,7 +175,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastUpdatedDateUTC = property0.Value.GetDateTimeOffset("O");
@@ -198,7 +194,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<AlertRuleTemplateDataSource> array = new List<AlertRuleTemplateDataSource>();
@@ -213,7 +208,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new SecurityInsightsAlertRuleTemplateStatus(property0.Value.GetString());
@@ -223,7 +217,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -238,7 +231,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -253,7 +245,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             productFilter = new MicrosoftSecurityProductName(property0.Value.GetString());
@@ -263,7 +254,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SecurityInsightsAlertSeverity> array = new List<SecurityInsightsAlertSeverity>();

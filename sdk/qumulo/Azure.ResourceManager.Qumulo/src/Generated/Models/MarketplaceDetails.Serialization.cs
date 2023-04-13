@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.Qumulo.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     marketplaceSubscriptionStatus = property.Value.GetString().ToMarketplaceSubscriptionStatus();

@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     alertsForCriticalOperations = new RecoveryServicesAlertsState(property.Value.GetString());

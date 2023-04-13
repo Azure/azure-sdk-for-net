@@ -116,6 +116,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private object InternalValue => ExpectedFieldType switch
         {
             DocumentFieldType.Address => ValueAddress,
+            DocumentFieldType.Boolean => ValueBoolean,
             DocumentFieldType.CountryRegion => ValueCountryRegion,
             DocumentFieldType.Currency => ValueCurrency,
             DocumentFieldType.Date => ValueDate,
@@ -242,6 +243,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns>The value of the field converted to an <see cref="AddressValue"/>.</returns>
         /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.Address"/>.</exception>
         public AddressValue AsAddress() => AssertFieldTypeAndGetValue(DocumentFieldType.Address, ValueAddress);
+
+        /// <summary>
+        /// Gets the value of the field as a <see cref="bool"/>.
+        /// </summary>
+        /// <returns>The value of the field converted to a <see cref="bool"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="FieldType"/> is not <see cref="DocumentFieldType.Boolean"/>.</exception>
+        public bool AsBoolean() => AssertFieldTypeAndGetValue(DocumentFieldType.Boolean, ValueBoolean);
         #endregion Conversion Methods
 
         /// <summary>
@@ -253,6 +261,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             string conversionMethod = ExpectedFieldType switch
             {
                 DocumentFieldType.Address => nameof(AsAddress),
+                DocumentFieldType.Boolean => nameof(AsBoolean),
                 DocumentFieldType.CountryRegion => nameof(AsCountryRegion),
                 DocumentFieldType.Currency => nameof(AsCurrency),
                 DocumentFieldType.Date => nameof(AsDate),

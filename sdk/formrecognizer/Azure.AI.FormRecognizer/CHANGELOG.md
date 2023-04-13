@@ -6,7 +6,11 @@
 - Added methods in `DocumentAnalysisClient` to support custom document classification: `ClassifyDocument` and `ClassifyDocumentFromUri`.
 - Added methods in `DocumentModelAdministrationClient` to support custom document classification: `BuildDocumentClassifier`, `GetDocumentClassifier`, `GetDocumentClassifiers`, and `DeleteDocumentClassifier`.
 - Added a new `DocumentClassifierBuildOperationDetails` class. Instances of this class can now be returned in calls to `DocumentModelAdministrationClient.GetOperation`.
-- Added the `DocumentClassifierBuild` member to `DocumentOperationKind`.
+- Added member `DocumentClassifierBuild` to `DocumentOperationKind`.
+- Added member `Boolean` to `DocumentFieldType`.
+- Added method `AsBoolean` to `DocumentFieldValue` to support extracting values of boolean fields.
+- Added properties `SimilarFontFamily`, `FontStyle`, `FontWeight`, `Color`, and `BackgroundColor` to `DocumentStyle`.
+- Added properties `Unit`, `CityDistrict`, `StateDistrict`, `Suburb`, `House`, and `Level` to the `AddressValue` class.
 
 ### Breaking Changes
 

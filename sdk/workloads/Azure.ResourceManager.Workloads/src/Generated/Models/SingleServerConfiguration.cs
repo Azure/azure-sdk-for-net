@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Gets or sets the single server configuration. </summary>
+    /// <summary> Gets or sets the single server configuration. For prerequisites for creating the infrastructure, please see [here](https://go.microsoft.com/fwlink/?linkid=2212611&amp;clcid=0x409). </summary>
     public partial class SingleServerConfiguration : InfrastructureConfiguration
     {
         /// <summary> Initializes a new instance of SingleServerConfiguration. </summary>
