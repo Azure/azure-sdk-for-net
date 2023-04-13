@@ -102,9 +102,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="amount"> Currency amount. </param>
         /// <param name="symbol"> Currency symbol label, if any. </param>
         /// <returns> A new <see cref="DocumentAnalysis.CurrencyValue"/> instance for mocking. </returns>
-        public static CurrencyValue CurrencyValue(double amount = default, string symbol = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CurrencyValue CurrencyValue(double amount, string symbol)
         {
-            return new CurrencyValue(amount, symbol, currencyCode: null);
+            return new CurrencyValue(amount, symbol, code: null);
+        }
+
+        /// <summary> Initializes a new instance of CurrencyValue. </summary>
+        /// <param name="amount"> Currency amount. </param>
+        /// <param name="symbol"> Currency symbol label, if any. </param>
+        /// <param name="code"> Resolved currency code (ISO 4217), if any. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.CurrencyValue"/> instance for mocking. </returns>
+        public static CurrencyValue CurrencyValue(double amount = default, string symbol = null, string code = null)
+        {
+            return new CurrencyValue(amount, symbol, code);
         }
 
         /// <summary> Initializes a new instance of DocumentTypeDetails. </summary>
@@ -366,9 +377,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="value"> Field value of the key-value pair. </param>
         /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentKeyValuePair"/> instance for mocking. </returns>
-        public static DocumentKeyValuePair DocumentKeyValuePair(DocumentKeyValueElement key = null, DocumentKeyValueElement value = null, float confidence = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DocumentKeyValuePair DocumentKeyValuePair(DocumentKeyValueElement key, DocumentKeyValueElement value, float confidence)
         {
             return new DocumentKeyValuePair(key, value, commonName: null, confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentKeyValuePair. </summary>
+        /// <param name="key"> Field label of the key-value pair. </param>
+        /// <param name="value"> Field value of the key-value pair. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>
+        /// <param name="commonName"> Common name of the key-value pair. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentKeyValuePair"/> instance for mocking. </returns>
+        public static DocumentKeyValuePair DocumentKeyValuePair(DocumentKeyValueElement key = null, DocumentKeyValueElement value = null, float confidence = default, string commonName = null)
+        {
+            return new DocumentKeyValuePair(key, value, commonName, confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentLanguage. </summary>
@@ -458,12 +481,29 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
         /// <param name="documentTypes"> Supported document types. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentModelDetails"/> instance for mocking. </returns>
-        public static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdOn = default, IReadOnlyDictionary<string, string> tags = null, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DocumentModelDetails DocumentModelDetails(string modelId, string description, DateTimeOffset createdOn, IReadOnlyDictionary<string, string> tags, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes)
         {
             tags ??= new Dictionary<string, string>();
             documentTypes ??= new Dictionary<string, DocumentTypeDetails>();
 
-            return new DocumentModelDetails(modelId, description, createdOn, expirationDateTime: null, apiVersion: null, tags, documentTypes);
+            return new DocumentModelDetails(modelId, description, createdOn, expiresOn: null, apiVersion: null, tags, documentTypes);
+        }
+
+        /// <summary> Initializes a new instance of DocumentModelDetails. </summary>
+        /// <param name="modelId"> Unique model name. </param>
+        /// <param name="description"> Model description. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
+        /// <param name="documentTypes"> Supported document types. </param>
+        /// <param name="expiresOn"> Date and time (UTC) when the model expires. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelDetails"/> instance for mocking. </returns>
+        public static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdOn = default, IReadOnlyDictionary<string, string> tags = null, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes = null, DateTimeOffset? expiresOn = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            documentTypes ??= new Dictionary<string, DocumentTypeDetails>();
+
+            return new DocumentModelDetails(modelId, description, createdOn, expiresOn, apiVersion: null, tags, documentTypes);
         }
 
         /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
@@ -472,11 +512,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentModelSummary"/> instance for mocking. </returns>
-        public static DocumentModelSummary DocumentModelSummary(string modelId = null, string description = null, DateTimeOffset createdOn = default, IReadOnlyDictionary<string, string> tags = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DocumentModelSummary DocumentModelSummary(string modelId, string description, DateTimeOffset createdOn, IReadOnlyDictionary<string, string> tags)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelSummary(modelId, description, createdOn, expirationDateTime: null, apiVersion: null, tags);
+            return new DocumentModelSummary(modelId, description, createdOn, expiresOn: null, apiVersion: null, tags);
+        }
+
+        /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
+        /// <param name="modelId"> Unique model name. </param>
+        /// <param name="description"> Model description. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
+        /// <param name="expiresOn"> Date and time (UTC) when the model expires. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelSummary"/> instance for mocking. </returns>
+        public static DocumentModelSummary DocumentModelSummary(string modelId = null, string description = null, DateTimeOffset createdOn = default, IReadOnlyDictionary<string, string> tags = null, DateTimeOffset? expiresOn = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentModelSummary(modelId, description, createdOn, expiresOn, apiVersion: null, tags);
         }
 
         /// <summary> Initializes a new instance of DocumentPage. </summary>
@@ -680,13 +735,36 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new OperationSummary(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion: null, tags);
         }
 
+        /// <summary>
+        /// Initializes a new instance of QuotaDetails.
+        /// </summary>
+        /// <param name="used"> Amount of the resource quota used. </param>
+        /// <param name="quota"> Resource quota limit. </param>
+        /// <param name="quotaResetsOn"> Date/time when the resource quota usage will be reset. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.QuotaDetails"/> instance for mocking. </returns>
+        public static QuotaDetails QuotaDetails(int used = default, int quota = default, DateTimeOffset quotaResetsOn = default)
+        {
+            return new QuotaDetails(used, quota, quotaResetsOn);
+        }
+
         /// <summary> Initializes a new instance of ResourceDetails. </summary>
         /// <param name="customDocumentModelCount"> Number of custom models in the current resource. </param>
         /// <param name="customDocumentModelLimit"> Maximum number of custom models supported in the current resource. </param>
         /// <returns> A new <see cref="DocumentAnalysis.ResourceDetails"/> instance for mocking. </returns>
-        public static ResourceDetails ResourceDetails(int customDocumentModelCount = default, int customDocumentModelLimit = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ResourceDetails ResourceDetails(int customDocumentModelCount, int customDocumentModelLimit)
         {
-            return new ResourceDetails(customDocumentModelCount, customDocumentModelLimit);
+            return new ResourceDetails(customDocumentModelCount, customDocumentModelLimit, customNeuralDocumentModelBuilds: null);
+        }
+
+        /// <summary> Initializes a new instance of ResourceDetails. </summary>
+        /// <param name="customDocumentModelCount"> Number of custom models in the current resource. </param>
+        /// <param name="customDocumentModelLimit"> Maximum number of custom models supported in the current resource. </param>
+        /// <param name="customNeuralDocumentModelBuilds"> Quota used, limit, and next reset date/time. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.ResourceDetails"/> instance for mocking. </returns>
+        public static ResourceDetails ResourceDetails(int customDocumentModelCount = default, int customDocumentModelLimit = default, QuotaDetails customNeuralDocumentModelBuilds = null)
+        {
+            return new ResourceDetails(customDocumentModelCount, customDocumentModelLimit, customNeuralDocumentModelBuilds);
         }
     }
 }
