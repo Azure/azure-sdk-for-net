@@ -91,6 +91,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallStatusResource GetFirewallStatusResource() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo> GetGlobalRulestack(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo>> GetGlobalRulestackAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.LogSettings> GetLogProfile(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -135,6 +136,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanoramaConfig PanoramaConfig { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PlanData PlanData { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+    }
+    public partial class FirewallStatusResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FirewallStatusResource() { }
+        public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallStatusResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string firewallName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallStatusResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallStatusResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class FirewallStatusResourceData : Azure.ResourceManager.Models.ResourceData
+    {
+        public FirewallStatusResourceData() { }
+        public string HealthReason { get { throw null; } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.HealthStatus? HealthStatus { get { throw null; } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.BooleanEnum? IsPanoramaManaged { get { throw null; } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanoramaStatus PanoramaStatus { get { throw null; } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ReadOnlyProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class FqdnListGlobalRulestackResource : Azure.ResourceManager.ArmResource
     {
@@ -439,6 +459,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallResourceCollection GetFirewallResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallResource> GetFirewallResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallResource> GetFirewallResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallStatusResource GetFirewallStatusResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.FqdnListGlobalRulestackResource GetFqdnListGlobalRulestackResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.FqdnListLocalRulestackResource GetFqdnListLocalRulestackResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource GetGlobalRulestackResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -739,6 +760,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.Changelog Changelog(System.Collections.Generic.IEnumerable<string> changes = null, System.DateTimeOffset? lastCommitted = default(System.DateTimeOffset?), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.Country Country(string code = null, string description = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallResourceData FirewallResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AzureResourceManagerManagedIdentityProperties identity = null, string panETag = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NetworkProfile networkProfile = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.BooleanEnum? isPanoramaManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.BooleanEnum?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanoramaConfig panoramaConfig = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails associatedRulestack = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DnsSettings dnsSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FrontendSetting> frontEndSettings = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProvisioningState?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PlanData planData = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceDetails marketplaceDetails = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.FirewallStatusResourceData FirewallStatusResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.BooleanEnum? isPanoramaManaged = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.BooleanEnum?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.HealthStatus? healthStatus = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.HealthStatus?), string healthReason = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanoramaStatus panoramaStatus = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ReadOnlyProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ReadOnlyProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.FqdnListGlobalRulestackResourceData FqdnListGlobalRulestackResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<string> fqdnList = null, Azure.ETag? etag = default(Azure.ETag?), string auditComment = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.FqdnListLocalRulestackResourceData FqdnListLocalRulestackResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, System.Collections.Generic.IEnumerable<string> fqdnList = null, Azure.ETag? etag = default(Azure.ETag?), string auditComment = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.GlobalRulestackInfo GlobalRulestackInfo(string azureId = null) { throw null; }
@@ -748,6 +770,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceDetails MarketplaceDetails(string marketplaceSubscriptionId = null, string offerId = null, string publisherId = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.MarketplaceSubscriptionStatus?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject NameDescriptionObject(string name = null, string description = null) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanoramaConfig PanoramaConfig(string configString = null, string vmAuthKey = null, string panoramaServer = null, string panoramaServer2 = null, string dgName = null, string tplName = null, string cgName = null, string hostName = null) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanoramaStatus PanoramaStatus(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus? panoramaServerStatus = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus? panoramaServer2Status = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PlanData PlanData(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.UsageType? usageType = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.UsageType?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.BillingCycle billingCycle = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.BillingCycle), string planId = null, System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulesResourceData PostRulesResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string ruleName = null, int? priority = default(int?), string description = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StateEnum? ruleState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StateEnum?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SourceAddr source = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.BooleanEnum? negateSource = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.BooleanEnum?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DestinationAddr destination = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.BooleanEnum? negateDestination = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.BooleanEnum?), System.Collections.Generic.IEnumerable<string> applications = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.Category category = null, string protocol = null, System.Collections.Generic.IEnumerable<string> protocolPortList = null, string inboundInspectionCertificate = null, string auditComment = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ActionEnum? actionType = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ActionEnum?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StateEnum? enableLogging = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.StateEnum?), Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleTypeEnum? decryptionRuleType = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.DecryptionRuleTypeEnum?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.TagInfo> tags = null, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PredefinedUrlCategory PredefinedUrlCategory(string action = null, string name = null) { throw null; }
@@ -998,6 +1021,26 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ScopeType? Scope { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.SecurityServices SecurityServices { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HealthStatus : System.IEquatable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.HealthStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HealthStatus(string value) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.HealthStatus Green { get { throw null; } }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.HealthStatus Initializing { get { throw null; } }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.HealthStatus RED { get { throw null; } }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.HealthStatus Yellow { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.HealthStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.HealthStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.HealthStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.HealthStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.HealthStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.HealthStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class IPAddress
     {
         public IPAddress() { }
@@ -1192,6 +1235,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public string TplName { get { throw null; } }
         public string VmAuthKey { get { throw null; } }
     }
+    public partial class PanoramaStatus
+    {
+        internal PanoramaStatus() { }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus? PanoramaServer2Status { get { throw null; } }
+        public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus? PanoramaServerStatus { get { throw null; } }
+    }
     public partial class PlanData
     {
         public PlanData(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.BillingCycle billingCycle, string planId) { }
@@ -1247,6 +1296,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProvisioningState left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProvisioningState left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ReadOnlyProvisioningState : System.IEquatable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ReadOnlyProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ReadOnlyProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ReadOnlyProvisioningState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ReadOnlyProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ReadOnlyProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ReadOnlyProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ReadOnlyProvisioningState left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ReadOnlyProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ReadOnlyProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ReadOnlyProvisioningState left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ReadOnlyProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class RuleCounter
@@ -1342,6 +1410,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         internal SecurityServicesTypeList() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.NameDescriptionObject> Entry { get { throw null; } }
         public string SecurityServicesTypeListType { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ServerStatus : System.IEquatable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ServerStatus(string value) { throw null; }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus Down { get { throw null; } }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus UP { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus left, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.ServerStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class SourceAddr
     {
