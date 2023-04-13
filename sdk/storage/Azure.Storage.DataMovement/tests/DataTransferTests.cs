@@ -32,6 +32,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(StorageTransferStatus.InProgress)]
         [TestCase(StorageTransferStatus.PauseInProgress)]
         [TestCase(StorageTransferStatus.CancellationInProgress)]
+        [TestCase(StorageTransferStatus.Paused)]
         public void HasCompleted_False(StorageTransferStatus status)
         {
             DataTransfer transfer = new DataTransfer(status);
@@ -39,7 +40,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [TestCase(StorageTransferStatus.Paused)]
         [TestCase(StorageTransferStatus.Completed)]
         [TestCase(StorageTransferStatus.CompletedWithSkippedTransfers)]
         [TestCase(StorageTransferStatus.CompletedWithFailedTransfers)]
@@ -107,7 +107,7 @@ namespace Azure.Storage.DataMovement.Tests
             bool pauseResult = await pauseTask;
 
             Assert.IsTrue(pauseResult);
-            Assert.IsTrue(transfer.HasCompleted);
+            Assert.IsFalse(transfer.HasCompleted);
         }
 
         [Test]
@@ -122,7 +122,6 @@ namespace Azure.Storage.DataMovement.Tests
             bool pauseResult = await transfer.TryPauseAsync();
 
             Assert.IsFalse(pauseResult);
-            Assert.IsTrue(transfer.HasCompleted);
         }
 
         [Test]
