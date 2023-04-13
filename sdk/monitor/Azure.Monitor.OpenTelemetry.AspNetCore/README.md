@@ -82,6 +82,98 @@ With this configuration, the Azure Monitor Distro will use the credentials of th
 
 Note that the `Credential` property is optional. If it is not set, Azure Monitor Distro will use the Instrumentation Key from the Connection String to send data to Azure Monitor.
 
+### Advanced configuration
+
+The Azure Monitor Distro includes .NET OpenTelemetry instrumentation for ASP.NET Core, HttpClient, and SQLClient. However, you can customize the instrumentation included or use additional instrumentation on your own using the OpenTelemetry SDK API. Here are some examples of how to customize the instrumentation:
+
+#### Customizing ASP.NET Core Instrumentation Options
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+builder.Services.Configure<AspNetCoreInstrumentationOptions>(options =>
+{
+    options.RecordException = true;
+    options.Filter = (httpContext) =>
+    {
+        // only collect telemetry about HTTP GET requests
+        return httpContext.Request.Method.Equals("GET");
+    };
+});
+```
+
+#### Customizing HttpClient Instrumentation Options
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+builder.Services.Configure<HttpClientInstrumentationOptions>(options =>
+{
+    options.RecordException = true;
+    options.FilterHttpRequestMessage = (httpRequestMessage) =>
+    {
+        // only collect telemetry about HTTP GET requests
+        return httpRequestMessage.Method.Equals("GET");
+    };
+});
+```
+
+#### Customizing SQLClient Instrumentation Options
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+builder.Services.Configure<SqlClientInstrumentationOptions>(options =>
+{
+    options.SetDbStatementForStoredProcedure = false;
+});
+```
+
+#### Adding Custom ActivitySources to Traces
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor()
+									.WithTracing(b =>
+									{
+										b.AddSource("MyCompany.MyProduct.MyLibrary");
+									});
+```
+
+#### Adding Custom Meter to Metrics
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor()
+									.WithMetrics(b =>
+									{
+										b.AddMeter("MyCompany.MyProduct.MyLibrary");
+									});
+```
+
+#### Adding Additional Instrumentation
+
+If you need to instrument a library or framework that isn't included in the Azure Monitor Distro, you can add additional instrumentation using the OpenTelemetry Instrumentation packages. For example, to add instrumentation for gRPC clients, you can add the OpenTelemetry.Instrumentation.GrpcNetClient package and use the following code:
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor()
+									.WithTracing(b =>
+									{
+										b.AddGrpcClientInstrumentation();
+									});
+```
+
+#### Modifying Sampling Percentage
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor()
+									.WithTracing(b =>
+                                     {
+                                         b.SetSampler(new ApplicationInsightsSampler(0.9F));
+                                     });
+```
+
+(or)
+
+```
+builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.SetSampler(new ApplicationInsightsSampler(0.9F)));
+```
+
 ## Key concepts
 
 The Azure Monitor Distro is a distribution package which enables users to send telemetry data to Azure Monitor. It includes the .NET OpenTelemetry SDK and instrumentation libraries for [ASP.NET Core](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/), [HttpClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/), and [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient).
