@@ -50,7 +50,8 @@ namespace Azure.Storage.DataMovement
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
-                destinationResource: destinationResource).ConfigureAwait(false);
+                destinationResource: destinationResource,
+                partPlanFileExists: true).ConfigureAwait(false);
 
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
@@ -72,7 +73,8 @@ namespace Azure.Storage.DataMovement
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
-                destinationResource: destinationResource).ConfigureAwait(false);
+                destinationResource: destinationResource,
+                partPlanFileExists: true).ConfigureAwait(false);
 
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
@@ -121,7 +123,8 @@ namespace Azure.Storage.DataMovement
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource.GetChildStorageResource(childSourcePath.Substring(sourceResource.Path.Length)),
-                destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Path.Length))).ConfigureAwait(false);
+                destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Path.Length)),
+                partPlanFileExists: true).ConfigureAwait(false);
 
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
@@ -145,7 +148,8 @@ namespace Azure.Storage.DataMovement
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource.GetChildStorageResource(childSourcePath.Substring(sourceResource.Path.Length)),
-                destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Path.Length))).ConfigureAwait(false);
+                destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Path.Length)),
+                partPlanFileExists: true).ConfigureAwait(false);
 
             // TODO: When enabling resume chunked upload Add each transfer to the CommitChunkHandler
             return jobPart;
