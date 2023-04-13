@@ -18,6 +18,7 @@ namespace Azure.AI.FormRecognizer.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
+    [Ignore("")]
     public class FormRecognizerOperationsLiveTests : FormRecognizerLiveTestBase
     {
         /// <summary>

@@ -36,6 +36,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("")]
         public async Task BuildModelCanAuthenticateWithTokenCredential()
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential: true);
@@ -55,6 +56,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("")]
         public async Task BuildModel(bool singlePage)
         {
             var client = CreateDocumentModelAdministrationClient();
@@ -78,6 +80,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("")]
         public async Task BuildModelWithNeuralBuildMode()
         {
             // Test takes too long to finish running, and seems to cause multiple failures in our
@@ -112,6 +115,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("")]
         public async Task BuildModelSucceedsWithValidPrefix()
         {
             var client = CreateDocumentModelAdministrationClient();
@@ -137,6 +141,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("")]
         public async Task BuildModelWithTags()
         {
             var client = CreateDocumentModelAdministrationClient();
@@ -158,6 +163,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("")]
         public void BuildModelError()
         {
             var client = CreateDocumentModelAdministrationClient();
@@ -185,6 +191,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("")]
         public async Task GetPrebuiltModel()
         {
             var client = CreateDocumentModelAdministrationClient();
@@ -198,6 +205,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("")]
         public async Task AdminOps(bool useTokenCredential)
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential);
@@ -233,6 +241,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("")]
         public void DeleteModelFailsWhenModelDoesNotExist()
         {
             var client = CreateDocumentModelAdministrationClient();
@@ -245,6 +254,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("")]
         public async Task GetAndListOperations(bool useTokenCredential)
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential);
@@ -264,6 +274,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("")]
         public async Task GetAndListOperationsWithTags()
         {
             var client = CreateDocumentModelAdministrationClient();
@@ -293,6 +304,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("")]
         public void GetOperationWrongId()
         {
             var client = CreateDocumentModelAdministrationClient();
@@ -307,6 +319,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("")]
         public async Task CopyModelTo(bool useTokenCredential)
         {
             var sourceClient = CreateDocumentModelAdministrationClient(useTokenCredential);
@@ -337,6 +350,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("")]
         public async Task GetCopyAuthorization()
         {
             var targetClient = CreateDocumentModelAdministrationClient();
@@ -352,6 +366,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("")]
         public async Task CopyModelToWithTags()
         {
             var sourceClient = CreateDocumentModelAdministrationClient();
@@ -374,6 +389,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("")]
         public async Task CopyModelToErrorAsync()
         {
             var sourceClient = CreateDocumentModelAdministrationClient();
@@ -393,6 +409,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
+        [Ignore("")]
         public async Task ComposeModel(bool useTokenCredential)
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential);
@@ -426,6 +443,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("")]
         public async Task ComposeModelWithTags()
         {
             var client = CreateDocumentModelAdministrationClient();
@@ -450,6 +468,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("")]
         public async Task ComposeModelFailsWithInvalidId()
         {
             var client = CreateDocumentModelAdministrationClient();

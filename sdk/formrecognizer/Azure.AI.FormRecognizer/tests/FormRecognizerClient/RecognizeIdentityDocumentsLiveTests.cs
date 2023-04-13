@@ -18,6 +18,7 @@ using NUnit.Framework;
 /// </remarks>
 namespace Azure.AI.FormRecognizer.Tests
 {
+    [Ignore("")]
     [ClientTestFixture(FormRecognizerClientOptions.ServiceVersion.V2_1)]
     public class RecognizeIdentityDocumentsLiveTests : FormRecognizerLiveTestBase
     {

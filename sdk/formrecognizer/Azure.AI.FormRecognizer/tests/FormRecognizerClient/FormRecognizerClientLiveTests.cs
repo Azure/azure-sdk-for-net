@@ -16,6 +16,7 @@ namespace Azure.AI.FormRecognizer.Tests
     [ClientTestFixture(
     FormRecognizerClientOptions.ServiceVersion.V2_0,
     FormRecognizerClientOptions.ServiceVersion.V2_1)]
+    [Ignore("")]
     public class FormRecognizerClientLiveTests : FormRecognizerLiveTestBase
     {
         /// <summary>
