@@ -2,15 +2,23 @@
 
 ## 1.1.0-beta.1 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed issue #34745. Introduced new property `RelayArmId` in `HybridConnectionData` class to replace the property `RelayArmUri` with a wrong type `Uri`.
+- Fixed issue #35146. BadRequest when calling CreateOrUpdateFunctionSecretAsync
 
-### Other Changes
+### Other Changes in API
+
+Added property 'ResourceIdentifier RelayArmId' in type Azure.ResourceManager.AppService.HybridConnectionData
+Added property 'KeyInfoProperties Properties' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
+Added type 'Azure.ResourceManager.AppService.Models.KeyInfoProperties'
+Obsoleted property 'Uri RelayArmUri' in type Azure.ResourceManager.AppService.HybridConnectionData
+Obsoleted property 'String Name' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
+Obsoleted property 'String Value' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
+
+### Azure SDK Dependency Changes
+
+Upgraded Azure.Core from 1.28.0 to 1.31.0
 
 ## 1.0.1 (2023-02-20)
 

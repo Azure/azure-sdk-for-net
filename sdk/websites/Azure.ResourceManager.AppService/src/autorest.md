@@ -695,6 +695,27 @@ directive:
             "name": "DomainNotRenewableReasons",
             "modelAsString": true
           }
+# workaround incorrect definition in swagger before it's fixed. github issue 35146
+  - from: WebApps.json
+    where: $.definitions.KeyInfo
+    transform: >
+      $["properties"] = {
+        "properties":{
+          "description": "Properties of function key info.",
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "Key name",
+              "type": "string"
+            },
+            "value": {
+              "description": "Key value",
+              "type": "string"
+            }
+          }
+        }
+      }
+    reason: workaround incorrect definition in swagger before it's fixed. github issue 35146
 # get array
   - remove-operation: AppServicePlans_GetRouteForVnet
   - from: swagger-document

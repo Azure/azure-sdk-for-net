@@ -6172,6 +6172,12 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Collections.Generic.IList<string> AllowedClientApplications { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedGroups { get { throw null; } }
     }
+    public partial class KeyInfoProperties
+    {
+        public KeyInfoProperties() { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
     public enum KeyVaultSecretStatus
     {
         Unknown = 0,
@@ -7459,7 +7465,12 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class WebAppKeyInfo
     {
         public WebAppKeyInfo() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("Please use WebAppKeyInfo.Properties.Name instead")]
         public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.KeyInfoProperties Properties { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("Please use WebAppKeyInfo.Properties.Value instead")]
         public string Value { get { throw null; } set { } }
     }
     public partial class WebAppLoginInfo
