@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -14,9 +15,12 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task SingleLabelClassifyConvenienceAsync()
         {
+            Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
+            TextAnalyticsClientLiveTestBase.IgnoreIfNotPublicCloud(authorityHost);
+
             Uri endpoint = new(TestEnvironment.StaticEndpoint);
             AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);
-            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions(true));
 
             #region Snippet:Sample9_SingleLabelClassifyConvenienceAsync
             string document =

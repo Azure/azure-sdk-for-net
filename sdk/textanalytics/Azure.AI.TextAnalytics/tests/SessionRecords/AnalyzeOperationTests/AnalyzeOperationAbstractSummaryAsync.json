@@ -194,7 +194,7 @@
   ],
   "Variables": {
     "RandomSeed": "1192663132",
-    "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/"
+    "TEXTANALYTICS_API_KEY": "Sanitized",
+    "TEXTANALYTICS_ENDPOINT": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/"
   }
 }

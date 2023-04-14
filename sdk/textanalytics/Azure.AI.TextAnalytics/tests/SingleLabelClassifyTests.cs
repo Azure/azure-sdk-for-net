@@ -43,6 +43,13 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         };
 
+        [SetUp]
+        public void TestSetup()
+        {
+            Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
+            IgnoreIfNotPublicCloud(authorityHost);
+        }
+
         [RecordedTest]
         [RetryOnInternalServerError]
         public async Task SingleLabelClassifyWithDisableServiceLogs()

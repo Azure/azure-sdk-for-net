@@ -26,13 +26,13 @@ namespace Azure.AI.TextAnalytics.Perf
         /// <summary>
         /// The endpoint of the Text Analytics account to test against.
         /// </summary>
-        /// <value>The endpoint, read from the "TEXT_ANALYTICS_ENDPOINT" environment variable.</value>
-        public string Endpoint => GetVariable("TEXT_ANALYTICS_ENDPOINT");
+        /// <value>The endpoint, read from the "TEXTANALYTICS_ENDPOINT" environment variable.</value>
+        public string Endpoint => GetVariable("TEXTANALYTICS_ENDPOINT");
 
         /// <summary>
         /// The API key of the Text Analytics account to test against.
         /// </summary>
-        /// <value>The API key, read from the "TEXT_ANALYTICS_API_KEY" environment variable.</value>
-        public string ApiKey => GetVariable("TEXT_ANALYTICS_API_KEY");
+        /// <value>The API key, read from the "TEXTANALYTICS_API_KEY" environment variable.</value>
+        public string ApiKey => GetVariable("TEXTANALYTICS_API_KEY");
     }
 }

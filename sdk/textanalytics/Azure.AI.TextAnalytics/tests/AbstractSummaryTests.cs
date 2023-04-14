@@ -76,6 +76,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private const int AbstractiveSummarizationSentenceCount = 3;
 
+        [SetUp]
+        public void TestSetup()
+        {
+            Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
+            IgnoreIfNotPublicCloud(authorityHost);
+        }
+
         [RecordedTest]
         [RetryOnInternalServerError]
         public async Task AbstractSummaryWithAADTest()

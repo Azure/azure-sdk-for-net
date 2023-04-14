@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -13,9 +14,12 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task RecognizeCustomEntitiesConvenienceAsync()
         {
+            Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
+            TextAnalyticsClientLiveTestBase.IgnoreIfNotPublicCloud(authorityHost);
+
             Uri endpoint = new(TestEnvironment.StaticEndpoint);
             AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);
-            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions(true));
 
             string documentA =
                 "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"

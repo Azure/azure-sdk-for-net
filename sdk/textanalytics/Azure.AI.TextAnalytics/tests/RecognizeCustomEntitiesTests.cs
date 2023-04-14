@@ -71,6 +71,13 @@ namespace Azure.AI.TextAnalytics.Tests
             { "1", s_englishExpectedOutput2 },
         };
 
+        [SetUp]
+        public void TestSetup()
+        {
+            Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
+            IgnoreIfNotPublicCloud(authorityHost);
+        }
+
         [RecordedTest]
         [RetryOnInternalServerError]
         public async Task RecognizeCustomEntitiesWithAADTest()
