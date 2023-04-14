@@ -162,14 +162,15 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="parentType"> The type of the parent resource. This can be either \&apos;topics\&apos;, \&apos;domains\&apos;, or \&apos;partnerNamespaces\&apos;. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EventGridPartnerNamespacePrivateEndpointConnectionResource>> GetEventGridPartnerNamespacePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventGridPartnerNamespacePrivateEndpointConnectionResource>> GetEventGridPartnerNamespacePrivateEndpointConnectionAsync(ParentType parentType, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetEventGridPartnerNamespacePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetEventGridPartnerNamespacePrivateEndpointConnections().GetAsync(parentType, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -185,14 +186,15 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="parentType"> The type of the parent resource. This can be either \&apos;topics\&apos;, \&apos;domains\&apos;, or \&apos;partnerNamespaces\&apos;. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EventGridPartnerNamespacePrivateEndpointConnectionResource> GetEventGridPartnerNamespacePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<EventGridPartnerNamespacePrivateEndpointConnectionResource> GetEventGridPartnerNamespacePrivateEndpointConnection(ParentType parentType, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetEventGridPartnerNamespacePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetEventGridPartnerNamespacePrivateEndpointConnections().Get(parentType, privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PartnerNamespacePrivateLinkResources in the PartnerNamespace. </summary>
@@ -215,14 +217,15 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="parentType"> The type of the parent resource. This can be either \&apos;topics\&apos;, \&apos;domains\&apos;, or \&apos;partnerNamespaces\&apos;. </param>
         /// <param name="privateLinkResourceName"> The name of private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PartnerNamespacePrivateLinkResource>> GetPartnerNamespacePrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PartnerNamespacePrivateLinkResource>> GetPartnerNamespacePrivateLinkResourceAsync(ParentType parentType, string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            return await GetPartnerNamespacePrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetPartnerNamespacePrivateLinkResources().GetAsync(parentType, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -238,14 +241,15 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="parentType"> The type of the parent resource. This can be either \&apos;topics\&apos;, \&apos;domains\&apos;, or \&apos;partnerNamespaces\&apos;. </param>
         /// <param name="privateLinkResourceName"> The name of private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PartnerNamespacePrivateLinkResource> GetPartnerNamespacePrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<PartnerNamespacePrivateLinkResource> GetPartnerNamespacePrivateLinkResource(ParentType parentType, string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            return GetPartnerNamespacePrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
+            return GetPartnerNamespacePrivateLinkResources().Get(parentType, privateLinkResourceName, cancellationToken);
         }
 
         /// <summary>

@@ -100,14 +100,15 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="parentType"> The type of the parent resource. This can be either \&apos;topics\&apos;, \&apos;domains\&apos;, or \&apos;partnerNamespaces\&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EventGridTopicPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventGridTopicPrivateLinkResource>> GetAsync(ParentType parentType, CancellationToken cancellationToken = default)
         {
             using var scope = _eventGridTopicPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridTopicPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _eventGridTopicPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _eventGridTopicPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, parentType, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EventGridTopicPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -132,14 +133,15 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="parentType"> The type of the parent resource. This can be either \&apos;topics\&apos;, \&apos;domains\&apos;, or \&apos;partnerNamespaces\&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EventGridTopicPrivateLinkResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<EventGridTopicPrivateLinkResource> Get(ParentType parentType, CancellationToken cancellationToken = default)
         {
             using var scope = _eventGridTopicPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridTopicPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _eventGridTopicPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _eventGridTopicPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, parentType, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EventGridTopicPrivateLinkResource(Client, response.Value), response.GetRawResponse());

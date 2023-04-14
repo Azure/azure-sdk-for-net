@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> The ParentType. </summary>
-    internal readonly partial struct ParentType : IEquatable<ParentType>
+    public readonly partial struct ParentType : IEquatable<ParentType>
     {
         private readonly string _value;
 

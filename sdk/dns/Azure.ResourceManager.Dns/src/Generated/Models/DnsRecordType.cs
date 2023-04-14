@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> The DnsRecordType. </summary>
-    internal enum DnsRecordType
+    public enum DnsRecordType
     {
         /// <summary> A. </summary>
         A,
