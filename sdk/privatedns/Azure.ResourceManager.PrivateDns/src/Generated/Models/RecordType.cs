@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     /// <summary> The RecordType. </summary>
-    internal enum RecordType
+    public enum RecordType
     {
         /// <summary> A. </summary>
         A,
