@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Temporarily disable until AutoRest changes are merged")]
         public void CreateVnet()
         {
             HybridContainerServiceVirtualNetworkCollection vnetCollection = new HybridContainerServiceVirtualNetworkCollection(Client, ResourceGroup.Id);
