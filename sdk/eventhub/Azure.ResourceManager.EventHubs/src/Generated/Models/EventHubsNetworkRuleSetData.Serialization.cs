@@ -81,7 +81,6 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -106,7 +105,6 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -125,7 +123,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             trustedServiceAccessEnabled = property0.Value.GetBoolean();
@@ -135,7 +132,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             defaultAction = new EventHubsNetworkRuleSetDefaultAction(property0.Value.GetString());
@@ -145,7 +141,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<EventHubsNetworkRuleSetVirtualNetworkRules> array = new List<EventHubsNetworkRuleSetVirtualNetworkRules>();
@@ -160,7 +155,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<EventHubsNetworkRuleSetIPRules> array = new List<EventHubsNetworkRuleSetIPRules>();
@@ -175,7 +169,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new EventHubsPublicNetworkAccessFlag(property0.Value.GetString());

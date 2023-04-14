@@ -155,7 +155,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -165,7 +164,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = MySqlFlexibleServerSku.DeserializeMySqlFlexibleServerSku(property.Value);
@@ -175,7 +173,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -210,7 +207,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -239,7 +235,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             version = new MySqlFlexibleServerVersion(property0.Value.GetString());
@@ -254,7 +249,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createMode = new MySqlFlexibleServerCreateMode(property0.Value.GetString());
@@ -264,7 +258,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourceServerResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -274,7 +267,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             restorePointInTime = property0.Value.GetDateTimeOffset("O");
@@ -284,7 +276,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             replicationRole = new MySqlFlexibleServerReplicationRole(property0.Value.GetString());
@@ -294,7 +285,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             replicaCapacity = property0.Value.GetInt32();
@@ -304,7 +294,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataEncryption = MySqlFlexibleServerDataEncryption.DeserializeMySqlFlexibleServerDataEncryption(property0.Value);
@@ -314,7 +303,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new MySqlFlexibleServerState(property0.Value.GetString());
@@ -329,7 +317,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storage = MySqlFlexibleServerStorage.DeserializeMySqlFlexibleServerStorage(property0.Value);
@@ -339,7 +326,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             backup = MySqlFlexibleServerBackupProperties.DeserializeMySqlFlexibleServerBackupProperties(property0.Value);
@@ -349,7 +335,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             highAvailability = MySqlFlexibleServerHighAvailability.DeserializeMySqlFlexibleServerHighAvailability(property0.Value);
@@ -359,7 +344,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             network = MySqlFlexibleServerNetwork.DeserializeMySqlFlexibleServerNetwork(property0.Value);
@@ -369,7 +353,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maintenanceWindow = MySqlFlexibleServerMaintenanceWindow.DeserializeMySqlFlexibleServerMaintenanceWindow(property0.Value);

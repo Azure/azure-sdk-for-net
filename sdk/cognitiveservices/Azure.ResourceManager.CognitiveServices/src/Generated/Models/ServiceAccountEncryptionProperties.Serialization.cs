@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyVaultProperties = CognitiveServicesKeyVaultProperties.DeserializeCognitiveServicesKeyVaultProperties(property.Value);
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keySource = new ServiceAccountEncryptionKeySource(property.Value.GetString());

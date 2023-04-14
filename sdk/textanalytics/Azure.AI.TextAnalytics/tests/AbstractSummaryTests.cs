@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -76,6 +77,7 @@ namespace Azure.AI.TextAnalytics.Tests
         private const int AbstractiveSummarizationSentenceCount = 3;
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AbstractSummaryWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -93,6 +95,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AbstractSummaryBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -118,6 +121,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AbstractSummaryBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -135,6 +139,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AbstractSummaryBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -158,6 +163,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AbstractSummaryBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -175,6 +181,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AbstractSummaryBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -198,6 +205,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32614")]
         public async Task AbstractSummaryBatchConvenienceWithAutoDetectedLanguageTest()
         {
@@ -216,6 +224,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32614")]
         public async Task AnalyzeOperationAbstractSummaryWithAutoDetectedLanguageTest()
         {

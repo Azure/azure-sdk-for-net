@@ -40,8 +40,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointDiskConfiguration"> Disk configuration. </param>
         /// <param name="zones"> Identifies the zone of the VM at the time of backup. Applicable only for zone-pinned Vms. </param>
         /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
+        /// <param name="securityType"> Security Type of the Disk. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
-        internal IaasVmRecoveryPoint(string objectType, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVmStorageType, bool? isSourceVmEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType)
+        /// <param name="isPrivateAccessEnabledOnAnyDisk"> This flag denotes if any of the disks in the VM are using Private access network setting. </param>
+        internal IaasVmRecoveryPoint(string objectType, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVmStorageType, bool? isSourceVmEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, string securityType, RecoveryPointProperties recoveryPointProperties, bool? isPrivateAccessEnabledOnAnyDisk) : base(objectType)
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointOn = recoveryPointOn;
@@ -58,7 +60,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RecoveryPointDiskConfiguration = recoveryPointDiskConfiguration;
             Zones = zones;
             RecoveryPointMoveReadinessInfo = recoveryPointMoveReadinessInfo;
+            SecurityType = securityType;
             RecoveryPointProperties = recoveryPointProperties;
+            IsPrivateAccessEnabledOnAnyDisk = isPrivateAccessEnabledOnAnyDisk;
             ObjectType = objectType ?? "IaasVMRecoveryPoint";
         }
 
@@ -92,7 +96,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<string> Zones { get; }
         /// <summary> Eligibility of RP to be moved to another tier. </summary>
         public IDictionary<string, RecoveryPointMoveReadinessInfo> RecoveryPointMoveReadinessInfo { get; }
+        /// <summary> Security Type of the Disk. </summary>
+        public string SecurityType { get; set; }
         /// <summary> Properties of Recovery Point. </summary>
         public RecoveryPointProperties RecoveryPointProperties { get; set; }
+        /// <summary> This flag denotes if any of the disks in the VM are using Private access network setting. </summary>
+        public bool? IsPrivateAccessEnabledOnAnyDisk { get; set; }
     }
 }

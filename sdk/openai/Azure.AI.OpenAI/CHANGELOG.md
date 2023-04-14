@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (2023-03-22)
+
+This is a significant release that brings GPT-4 model support (chat) and the ability to use non-Azure OpenAI (not just Azure OpenAI resources) to the .NET library. It also makes a number of clarifying adjustments to request properties for completions.
+
+### Features Added
+- GPT-4 models are now supported via new `GetChatCompletions` and `GetChatCompletionsStreaming` methods on `OpenAIClient`. These use the `/chat/completions` REST endpoint and represent the [OpenAI Chat messages format](https://platform.openai.com/docs/guides/chat).
+    - The `gpt-3.5-model` can also be used with Chat completions; prior models like text-davinci-003 cannot be used with Chat completions and should still use the `GetCompletions` methods.
+- Support for using OpenAI's endpoint via valid API keys obtained from https://platform.openai.com has been added. `OpenAIClient` has new constructors that accept an OpenAI API key instead of an Azure endpoint URI and credential; once configured, Completions, Chat Completions, and Embeddings can be used with identical calling patterns.
+
+### Breaking Changes
+
+A number of Completions request properties have been renamed and further documented for clarity.
+- `CompletionsOptions` (REST request payload):
+    - `CacheLevel` and `CompletionConfig` are removed.
+    - `LogitBias` (REST: `logit_bias`), previously a `<string, int>` Dictionary, is now an `<int, int>` Dictionary named `TokenSelectionBiases`.
+    - `LogProbability` (REST: `logprobs`) is renamed to `LogProbabilityCount`.
+    - `Model` is removed (in favor of the method-level parameter for deployment or model name)
+    - `Prompt` is renamed to `Prompts`
+    - `SnippetCount` (REST: `n`) is renamed to `ChoicesPerPrompt`.
+    - `Stop` is renamed to `StopSequences`.
+- Method and property documentation are broadly updated, with renames from REST schema (like `n` becoming `ChoicesPerPrompt`) specifically noted in `<remarks>`.
 
 ## 1.0.0-beta.4 (2023-02-23)
 

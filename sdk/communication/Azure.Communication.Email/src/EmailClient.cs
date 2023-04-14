@@ -18,9 +18,9 @@ namespace Azure.Communication.Email
     /// <summary> The Email service client. </summary>
     public partial class EmailClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
+        internal readonly ClientDiagnostics _clientDiagnostics;
 
-        private readonly EmailRestClient _restClient;
+        internal readonly EmailRestClient _restClient;
 
         /// <summary> Initializes a new instance of EmailClient for mocking. </summary>
         protected EmailClient()
@@ -120,16 +120,16 @@ namespace Azure.Communication.Email
         /// if the method should wait to return until the long-running operation has completed on the service;
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="from"> From address of the email. </param>
-        /// <param name="to"> Email address of the TO recipient. </param>
+        /// <param name="senderAddress"> From address of the email. </param>
+        /// <param name="recipientAddress"> Email address of the TO recipient. </param>
         /// <param name="subject"> Subject for the email. </param>
         /// <param name="htmlContent"> Email body in HTML format. </param>
         /// <param name="plainTextContent"> Email body in plain text format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<EmailSendOperation> SendAsync(
             WaitUntil wait,
-            string from,
-            string to,
+            string senderAddress,
+            string recipientAddress,
             string subject,
             string htmlContent,
             string plainTextContent = default,
@@ -140,10 +140,10 @@ namespace Azure.Communication.Email
             try
             {
                 EmailMessage message = new EmailMessage(
-                    from,
+                    senderAddress,
                     new EmailRecipients(new List<EmailAddress>()
                     {
-                        new EmailAddress(to)
+                        new EmailAddress(recipientAddress)
                     }),
                     new EmailContent(subject)
                     {
@@ -189,16 +189,16 @@ namespace Azure.Communication.Email
         /// if the method should wait to return until the long-running operation has completed on the service;
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="from"> From address of the email. </param>
-        /// <param name="to"> Email address of the TO recipient. </param>
+        /// <param name="senderAddress"> From address of the email. </param>
+        /// <param name="recipientAddress"> Email address of the TO recipient. </param>
         /// <param name="subject"> Subject for the email. </param>
         /// <param name="htmlContent"> Email body in HTML format. </param>
         /// <param name="plainTextContent"> Email body in plain text format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual EmailSendOperation Send(
             WaitUntil wait,
-            string from,
-            string to,
+            string senderAddress,
+            string recipientAddress,
             string subject,
             string htmlContent,
             string plainTextContent = default,
@@ -209,10 +209,10 @@ namespace Azure.Communication.Email
             try
             {
                 EmailMessage message = new EmailMessage(
-                    from,
+                    senderAddress,
                     new EmailRecipients(new List<EmailAddress>()
                     {
-                        new EmailAddress(to)
+                        new EmailAddress(recipientAddress)
                     }),
                                         new EmailContent(subject)
                     {
@@ -235,7 +235,7 @@ namespace Azure.Communication.Email
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate
         /// notification that the operation should be cancelled.</param>
         /// <returns></returns>
-        public virtual async Task<Response<EmailSendResult>> GetSendResultAsync(
+        internal virtual async Task<Response<EmailSendResult>> GetSendResultAsync(
             string id,
             CancellationToken cancellationToken = default)
         {
@@ -260,7 +260,7 @@ namespace Azure.Communication.Email
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate
         /// notification that the operation should be cancelled.</param>
         /// <returns></returns>
-        public virtual Response<EmailSendResult> GetSendResult(
+        internal virtual Response<EmailSendResult> GetSendResult(
             string id,
             CancellationToken cancellationToken = default)
         {
@@ -292,7 +292,7 @@ namespace Azure.Communication.Email
             using JsonDocument document = await JsonDocument.ParseAsync(rawResponse.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var emailSendResult = EmailSendResult.DeserializeEmailSendResult(document.RootElement);
 
-            var operation = new EmailSendOperation(this, emailSendResult.Id, originalResponse.GetRawResponse(), cancellationToken);
+            var operation = new EmailSendOperation(this, emailSendResult.Id, originalResponse.GetRawResponse());
             if (wait == WaitUntil.Completed)
             {
                 await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -315,7 +315,7 @@ namespace Azure.Communication.Email
             using JsonDocument document = JsonDocument.Parse(rawResponse.ContentStream, default);
             var emailSendResult = EmailSendResult.DeserializeEmailSendResult(document.RootElement);
 
-            var operation = new EmailSendOperation(this, emailSendResult.Id, originalResponse.GetRawResponse(), cancellationToken);
+            var operation = new EmailSendOperation(this, emailSendResult.Id, originalResponse.GetRawResponse());
             if (wait == WaitUntil.Completed)
             {
                 operation.WaitForCompletion(cancellationToken);

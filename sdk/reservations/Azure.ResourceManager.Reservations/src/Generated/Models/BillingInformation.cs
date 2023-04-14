@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of BillingInformation. </summary>
-        /// <param name="billingCurrencyTotalPaidAmount"></param>
-        /// <param name="billingCurrencyProratedAmount"></param>
-        /// <param name="billingCurrencyRemainingCommitmentAmount"></param>
+        /// <param name="billingCurrencyTotalPaidAmount"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="billingCurrencyProratedAmount"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="billingCurrencyRemainingCommitmentAmount"> Pricing information containing the amount and the currency code. </param>
         internal BillingInformation(PurchasePrice billingCurrencyTotalPaidAmount, PurchasePrice billingCurrencyProratedAmount, PurchasePrice billingCurrencyRemainingCommitmentAmount)
         {
             BillingCurrencyTotalPaidAmount = billingCurrencyTotalPaidAmount;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Reservations.Models
             BillingCurrencyRemainingCommitmentAmount = billingCurrencyRemainingCommitmentAmount;
         }
 
-        /// <summary> Gets the billing currency total paid amount. </summary>
+        /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice BillingCurrencyTotalPaidAmount { get; }
-        /// <summary> Gets the billing currency prorated amount. </summary>
+        /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice BillingCurrencyProratedAmount { get; }
-        /// <summary> Gets the billing currency remaining commitment amount. </summary>
+        /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice BillingCurrencyRemainingCommitmentAmount { get; }
     }
 }

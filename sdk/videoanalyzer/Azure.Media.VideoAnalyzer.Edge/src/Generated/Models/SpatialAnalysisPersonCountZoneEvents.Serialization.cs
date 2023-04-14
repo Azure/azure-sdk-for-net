@@ -50,7 +50,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SpatialAnalysisPersonCountEvent> array = new List<SpatialAnalysisPersonCountEvent>();

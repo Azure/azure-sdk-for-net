@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The AppliedReservationList. </summary>
+    /// <summary> Paginated list of applied reservations. </summary>
     public partial class AppliedReservationList
     {
         /// <summary> Initializes a new instance of AppliedReservationList. </summary>
