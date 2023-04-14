@@ -18,7 +18,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private LogsTestData _logsTestData;
 
-        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -676,7 +676,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.True(response.Value.Single());
         }
 
-        //[LiveOnly]
+        [LiveOnly]
         [Test]
         public async Task CanQueryResource()
         {
@@ -760,15 +760,17 @@ namespace Azure.Monitor.Query.Tests
             Assert.IsTrue(verifyColumn1 && verifyColumn2);
         }
 
-        //[LiveOnly]
+        [LiveOnly]
         [Test]
         public async Task CanQueryResourceCheckMultipleBackslash()
         {
             var client = CreateClient();
-
-            var results = await client.QueryResourceAsync(ResourceIdentifier.Parse("///" + TestEnvironment.StorageAccountId),
+            LogsQueryOptions options = new LogsQueryOptions();
+            options.IncludeStatistics = true;
+            var results = await client.QueryResourceAsync(new ResourceIdentifier("///" + TestEnvironment.StorageAccountId),
                 "search *",
-                _logsTestData.DataTimeRange);
+                _logsTestData.DataTimeRange,
+                options);
 
             Assert.AreEqual(LogsQueryResultStatus.Success, results.Value.Status);
             var resultTable = results.Value.Table;
@@ -800,6 +802,9 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.IsTrue(verifyRow);
             Assert.IsTrue(verifyColumn1 && verifyColumn2);
+            Assert.IsNotNull(results.Value.GetStatistics());
+            Assert.IsNull(results.Value.Error);
+            Assert.IsNull(results.Value.GetVisualization());
         }
 
         public static IEnumerable<FormattableStringWrapper> Queries
