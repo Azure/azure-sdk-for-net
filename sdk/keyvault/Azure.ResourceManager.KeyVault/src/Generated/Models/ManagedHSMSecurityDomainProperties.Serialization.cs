@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     activationStatus = new ManagedHSMSecurityDomainActivationStatus(property.Value.GetString());

@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     attributes = SecretAttributes.DeserializeSecretAttributes(property.Value);
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        secretUri = null;
                         continue;
                     }
                     secretUri = new Uri(property.Value.GetString());
