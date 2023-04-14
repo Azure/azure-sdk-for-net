@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Consumption.Tests
         private ResourceGroupResource _resourceGroup;
         private ConsumptionBudgetCollection _consumptionBudgetCollection;
 
-        public ConsumptionBudgetTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public ConsumptionBudgetTests(bool isAsync) : base(isAsync)
         {
         }
 

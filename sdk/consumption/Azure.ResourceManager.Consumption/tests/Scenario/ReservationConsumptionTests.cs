@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Consumption.Tests
     {
         protected ResourceIdentifier _reservationOrderId;
         protected ResourceIdentifier _reservationId;
+        protected ResourceIdentifier _scope;
         private const string _filter = "properties/usageDate ge 2023-04-01 AND properties/usageDate le 2023-12-01";
 
         public ReservationConsumptionTests(bool isAsync) : base(isAsync)
@@ -28,13 +29,14 @@ namespace Azure.ResourceManager.Consumption.Tests
         {
             _reservationId = new ResourceIdentifier("<reservation-id>");
             _reservationOrderId = new ResourceIdentifier("<reservation-id>");
+            _scope = new ResourceIdentifier($"/providers/Microsoft.Capacity/reservationorders/{_reservationOrderId}/reservations/{_reservationId}");
         }
 
         [RecordedTest]
         [Ignore("Current tenants have not reservation resource")]
         public async Task GetReservationDetails()
         {
-            ReservationConsumptionResource reservation = Client.GetReservationConsumptionResource(_reservationId);
+            ReservationConsumptionResource reservation = Client.GetReservationConsumptionResource(_scope);
             var list = await reservation.GetReservationDetailsAsync(_filter).ToEnumerableAsync();
             ValidateConsumptionReservationDetail(list.FirstOrDefault());
         }
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.Consumption.Tests
         [Ignore("Current tenants have not reservation resource")]
         public async Task GetReservationSummaries()
         {
-            ReservationConsumptionResource reservation = Client.GetReservationConsumptionResource(_reservationId);
+            ReservationConsumptionResource reservation = Client.GetReservationConsumptionResource(_scope);
             var monthlyList = await reservation.GetReservationSummariesAsync(ReservationSummaryDataGrain.MonthlyGrain, _filter).ToEnumerableAsync();
             ValidateConsumptionReservationSummary(monthlyList.FirstOrDefault());
 
