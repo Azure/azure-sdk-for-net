@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// finished</param>
         /// <param name="provisioningState">The state of the script execution
         /// resource. Possible values include: 'Pending', 'Running',
-        /// 'Succeeded', 'Failed', 'Cancelling', 'Cancelled',
-        /// 'Deleting'</param>
+        /// 'Succeeded', 'Failed', 'Cancelling', 'Cancelled', 'Deleting',
+        /// 'Canceled'</param>
         /// <param name="output">Standard output stream from the powershell
         /// execution</param>
         /// <param name="namedOutputs">User-defined dictionary.</param>
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <summary>
         /// Gets the state of the script execution resource. Possible values
         /// include: 'Pending', 'Running', 'Succeeded', 'Failed', 'Cancelling',
-        /// 'Cancelled', 'Deleting'
+        /// 'Cancelled', 'Deleting', 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

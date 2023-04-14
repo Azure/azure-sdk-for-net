@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="segments">NSX Segments consuming DHCP.</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Succeeded', 'Failed', 'Building', 'Deleting',
-        /// 'Updating'</param>
+        /// 'Updating', 'Canceled'</param>
         /// <param name="revision">NSX revision number.</param>
         /// <param name="serverAddresses">DHCP Relay Addresses. Max 3.</param>
         public WorkloadNetworkDhcpRelay(string displayName = default(string), IList<string> segments = default(IList<string>), string provisioningState = default(string), long? revision = default(long?), IList<string> serverAddresses = default(IList<string>))

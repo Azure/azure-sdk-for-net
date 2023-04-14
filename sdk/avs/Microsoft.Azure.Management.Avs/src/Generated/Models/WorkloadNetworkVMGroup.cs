@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// 'SUCCESS', 'FAILURE'</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Succeeded', 'Failed', 'Building', 'Deleting',
-        /// 'Updating'</param>
+        /// 'Updating', 'Canceled'</param>
         /// <param name="revision">NSX revision number.</param>
         public WorkloadNetworkVMGroup(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IList<string> members = default(IList<string>), string status = default(string), string provisioningState = default(string), long? revision = default(long?))
             : base(id, name, type)
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Avs.Models
 
         /// <summary>
         /// Gets the provisioning state. Possible values include: 'Succeeded',
-        /// 'Failed', 'Building', 'Deleting', 'Updating'
+        /// 'Failed', 'Building', 'Deleting', 'Updating', 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

@@ -11,30 +11,30 @@
 namespace Microsoft.Azure.Management.Avs.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The properties of an addon
+    /// List of all zones and associated hosts for a cluster
     /// </summary>
-    public partial class AddonProperties
+    public partial class ClusterZoneList
     {
         /// <summary>
-        /// Initializes a new instance of the AddonProperties class.
+        /// Initializes a new instance of the ClusterZoneList class.
         /// </summary>
-        public AddonProperties()
+        public ClusterZoneList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AddonProperties class.
+        /// Initializes a new instance of the ClusterZoneList class.
         /// </summary>
-        /// <param name="provisioningState">The state of the addon
-        /// provisioning. Possible values include: 'Succeeded', 'Failed',
-        /// 'Cancelled', 'Building', 'Deleting', 'Updating', 'Canceled'</param>
-        public AddonProperties(string provisioningState = default(string))
+        /// <param name="zones">Zone and associated hosts info</param>
+        public ClusterZoneList(IList<ClusterZone> zones = default(IList<ClusterZone>))
         {
-            ProvisioningState = provisioningState;
+            Zones = zones;
             CustomInit();
         }
 
@@ -44,12 +44,10 @@ namespace Microsoft.Azure.Management.Avs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the state of the addon provisioning. Possible values include:
-        /// 'Succeeded', 'Failed', 'Cancelled', 'Building', 'Deleting',
-        /// 'Updating', 'Canceled'
+        /// Gets or sets zone and associated hosts info
         /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; private set; }
+        [JsonProperty(PropertyName = "zones")]
+        public IList<ClusterZone> Zones { get; set; }
 
     }
 }

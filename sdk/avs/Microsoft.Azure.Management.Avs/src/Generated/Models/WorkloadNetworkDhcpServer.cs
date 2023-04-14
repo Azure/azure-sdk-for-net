@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="segments">NSX Segments consuming DHCP.</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Succeeded', 'Failed', 'Building', 'Deleting',
-        /// 'Updating'</param>
+        /// 'Updating', 'Canceled'</param>
         /// <param name="revision">NSX revision number.</param>
         /// <param name="serverAddress">DHCP Server Address.</param>
         /// <param name="leaseTime">DHCP Server Lease Time.</param>

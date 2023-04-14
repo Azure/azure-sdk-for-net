@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// zone.</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Succeeded', 'Failed', 'Building', 'Deleting',
-        /// 'Updating'</param>
+        /// 'Updating', 'Canceled'</param>
         /// <param name="revision">NSX revision number.</param>
         public WorkloadNetworkDnsZone(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IList<string> domain = default(IList<string>), IList<string> dnsServerIps = default(IList<string>), string sourceIp = default(string), long? dnsServices = default(long?), string provisioningState = default(string), long? revision = default(long?))
             : base(id, name, type)
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Avs.Models
 
         /// <summary>
         /// Gets the provisioning state. Possible values include: 'Succeeded',
-        /// 'Failed', 'Building', 'Deleting', 'Updating'
+        /// 'Failed', 'Building', 'Deleting', 'Updating', 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

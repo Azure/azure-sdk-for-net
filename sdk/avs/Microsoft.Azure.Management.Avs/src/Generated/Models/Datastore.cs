@@ -37,7 +37,8 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="type">Resource type.</param>
         /// <param name="provisioningState">The state of the datastore
         /// provisioning. Possible values include: 'Succeeded', 'Failed',
-        /// 'Cancelled', 'Pending', 'Creating', 'Updating', 'Deleting'</param>
+        /// 'Cancelled', 'Pending', 'Creating', 'Updating', 'Deleting',
+        /// 'Canceled'</param>
         /// <param name="netAppVolume">An Azure NetApp Files volume</param>
         /// <param name="diskPoolVolume">An iSCSI volume</param>
         /// <param name="status">The operational status of the datastore.
@@ -61,7 +62,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <summary>
         /// Gets the state of the datastore provisioning. Possible values
         /// include: 'Succeeded', 'Failed', 'Cancelled', 'Pending', 'Creating',
-        /// 'Updating', 'Deleting'
+        /// 'Updating', 'Deleting', 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

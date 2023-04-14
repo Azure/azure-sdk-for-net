@@ -22,6 +22,86 @@ namespace Microsoft.Azure.Management.Avs
     public static partial class WorkloadNetworksOperationsExtensions
     {
             /// <summary>
+            /// Get a private cloud workload network.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            public static WorkloadNetwork Get(this IWorkloadNetworksOperations operations, string resourceGroupName, string privateCloudName)
+            {
+                return operations.GetAsync(resourceGroupName, privateCloudName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a private cloud workload network.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WorkloadNetwork> GetAsync(this IWorkloadNetworksOperations operations, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, privateCloudName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List of workload networks in a private cloud.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            public static IPage<WorkloadNetwork> List(this IWorkloadNetworksOperations operations, string resourceGroupName, string privateCloudName)
+            {
+                return operations.ListAsync(resourceGroupName, privateCloudName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List of workload networks in a private cloud.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<WorkloadNetwork>> ListAsync(this IWorkloadNetworksOperations operations, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, privateCloudName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List of segments in a private cloud workload network.
             /// </summary>
             /// <param name='operations'>
@@ -2789,6 +2869,40 @@ namespace Microsoft.Azure.Management.Avs
             public static async Task BeginDeletePublicIPAsync(this IWorkloadNetworksOperations operations, string resourceGroupName, string publicIPId, string privateCloudName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeletePublicIPWithHttpMessagesAsync(resourceGroupName, publicIPId, privateCloudName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// List of workload networks in a private cloud.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<WorkloadNetwork> ListNext(this IWorkloadNetworksOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List of workload networks in a private cloud.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<WorkloadNetwork>> ListNextAsync(this IWorkloadNetworksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

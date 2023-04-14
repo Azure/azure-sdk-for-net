@@ -29,6 +29,9 @@ namespace Microsoft.Azure.Management.Avs
         /// <param name='location'>
         /// Azure region
         /// </param>
+        /// <param name='sku'>
+        /// The sku to check for trial availability
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -44,7 +47,7 @@ namespace Microsoft.Azure.Management.Avs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Trial>> CheckTrialAvailabilityWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Trial>> CheckTrialAvailabilityWithHttpMessagesAsync(string location, Sku sku = default(Sku), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Return quota for subscription by region
         /// </summary>

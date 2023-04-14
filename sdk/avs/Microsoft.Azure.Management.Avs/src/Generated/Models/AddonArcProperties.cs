@@ -14,31 +14,30 @@ namespace Microsoft.Azure.Management.Avs.Models
     using System.Linq;
 
     /// <summary>
-    /// The properties of a vSphere Replication (VR) addon
+    /// The properties of an Arc addon
     /// </summary>
-    [Newtonsoft.Json.JsonObject("VR")]
-    public partial class AddonVrProperties : AddonProperties
+    [Newtonsoft.Json.JsonObject("Arc")]
+    public partial class AddonArcProperties : AddonProperties
     {
         /// <summary>
-        /// Initializes a new instance of the AddonVrProperties class.
+        /// Initializes a new instance of the AddonArcProperties class.
         /// </summary>
-        public AddonVrProperties()
+        public AddonArcProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AddonVrProperties class.
+        /// Initializes a new instance of the AddonArcProperties class.
         /// </summary>
-        /// <param name="vrsCount">The vSphere Replication Server (VRS)
-        /// count</param>
         /// <param name="provisioningState">The state of the addon
         /// provisioning. Possible values include: 'Succeeded', 'Failed',
         /// 'Cancelled', 'Building', 'Deleting', 'Updating', 'Canceled'</param>
-        public AddonVrProperties(int vrsCount, string provisioningState = default(string))
+        /// <param name="vCenter">The VMware vCenter resource ID</param>
+        public AddonArcProperties(string provisioningState = default(string), string vCenter = default(string))
             : base(provisioningState)
         {
-            VrsCount = vrsCount;
+            VCenter = vCenter;
             CustomInit();
         }
 
@@ -48,20 +47,10 @@ namespace Microsoft.Azure.Management.Avs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the vSphere Replication Server (VRS) count
+        /// Gets or sets the VMware vCenter resource ID
         /// </summary>
-        [JsonProperty(PropertyName = "vrsCount")]
-        public int VrsCount { get; set; }
+        [JsonProperty(PropertyName = "vCenter")]
+        public string VCenter { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            //Nothing to validate
-        }
     }
 }

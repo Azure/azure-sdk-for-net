@@ -19,5 +19,6 @@ namespace Microsoft.Azure.Management.Avs.Models
         public const string Succeeded = "Succeeded";
         public const string Failed = "Failed";
         public const string Updating = "Updating";
+        public const string Canceled = "Canceled";
     }
 }

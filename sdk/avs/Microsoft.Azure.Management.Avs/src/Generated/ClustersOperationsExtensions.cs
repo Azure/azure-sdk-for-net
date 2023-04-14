@@ -255,6 +255,52 @@ namespace Microsoft.Azure.Management.Avs
             }
 
             /// <summary>
+            /// List hosts by zone in a cluster
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            /// <param name='clusterName'>
+            /// Name of the cluster in the private cloud
+            /// </param>
+            public static ClusterZoneList ListZones(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName)
+            {
+                return operations.ListZonesAsync(resourceGroupName, privateCloudName, clusterName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List hosts by zone in a cluster
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='privateCloudName'>
+            /// Name of the private cloud
+            /// </param>
+            /// <param name='clusterName'>
+            /// Name of the cluster in the private cloud
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ClusterZoneList> ListZonesAsync(this IClustersOperations operations, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListZonesWithHttpMessagesAsync(resourceGroupName, privateCloudName, clusterName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update a cluster in a private cloud
             /// </summary>
             /// <param name='operations'>

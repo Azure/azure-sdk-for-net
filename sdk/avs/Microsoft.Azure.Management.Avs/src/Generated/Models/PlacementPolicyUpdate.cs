@@ -38,11 +38,19 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// disabled. Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="vmMembers">Virtual machine members list</param>
         /// <param name="hostMembers">Host members list</param>
-        public PlacementPolicyUpdate(string state = default(string), IList<string> vmMembers = default(IList<string>), IList<string> hostMembers = default(IList<string>))
+        /// <param name="affinityStrength">vm-host placement policy affinity
+        /// strength (should/must). Possible values include: 'Should',
+        /// 'Must'</param>
+        /// <param name="azureHybridBenefitType">placement policy azure hybrid
+        /// benefit opt-in type. Possible values include: 'SqlHost',
+        /// 'None'</param>
+        public PlacementPolicyUpdate(string state = default(string), IList<string> vmMembers = default(IList<string>), IList<string> hostMembers = default(IList<string>), string affinityStrength = default(string), string azureHybridBenefitType = default(string))
         {
             State = state;
             VmMembers = vmMembers;
             HostMembers = hostMembers;
+            AffinityStrength = affinityStrength;
+            AzureHybridBenefitType = azureHybridBenefitType;
             CustomInit();
         }
 
@@ -69,6 +77,20 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostMembers")]
         public IList<string> HostMembers { get; set; }
+
+        /// <summary>
+        /// Gets or sets vm-host placement policy affinity strength
+        /// (should/must). Possible values include: 'Should', 'Must'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.affinityStrength")]
+        public string AffinityStrength { get; set; }
+
+        /// <summary>
+        /// Gets or sets placement policy azure hybrid benefit opt-in type.
+        /// Possible values include: 'SqlHost', 'None'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.azureHybridBenefitType")]
+        public string AzureHybridBenefitType { get; set; }
 
     }
 }

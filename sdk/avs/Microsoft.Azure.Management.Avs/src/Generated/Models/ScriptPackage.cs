@@ -38,11 +38,16 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="description">User friendly description of the
         /// package</param>
         /// <param name="version">Module version</param>
-        public ScriptPackage(string id = default(string), string name = default(string), string type = default(string), string description = default(string), string version = default(string))
+        /// <param name="company">Company that created and supports the
+        /// package</param>
+        /// <param name="uri">Link to support by the package vendor</param>
+        public ScriptPackage(string id = default(string), string name = default(string), string type = default(string), string description = default(string), string version = default(string), string company = default(string), string uri = default(string))
             : base(id, name, type)
         {
             Description = description;
             Version = version;
+            Company = company;
+            Uri = uri;
             CustomInit();
         }
 
@@ -62,6 +67,18 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.version")]
         public string Version { get; private set; }
+
+        /// <summary>
+        /// Gets company that created and supports the package
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.company")]
+        public string Company { get; private set; }
+
+        /// <summary>
+        /// Gets link to support by the package vendor
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.uri")]
+        public string Uri { get; private set; }
 
     }
 }

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// Provider (Enterprise)</param>
         /// <param name="provisioningState">The state of the addon
         /// provisioning. Possible values include: 'Succeeded', 'Failed',
-        /// 'Cancelled', 'Building', 'Deleting', 'Updating'</param>
+        /// 'Cancelled', 'Building', 'Deleting', 'Updating', 'Canceled'</param>
         public AddonHcxProperties(string offer, string provisioningState = default(string))
             : base(provisioningState)
         {

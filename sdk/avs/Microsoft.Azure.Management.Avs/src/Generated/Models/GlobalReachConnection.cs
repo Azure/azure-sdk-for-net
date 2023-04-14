@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="type">Resource type.</param>
         /// <param name="provisioningState">The state of the  ExpressRoute
         /// Circuit Authorization provisioning. Possible values include:
-        /// 'Succeeded', 'Failed', 'Updating'</param>
+        /// 'Succeeded', 'Failed', 'Updating', 'Canceled'</param>
         /// <param name="addressPrefix">The network used for global reach
         /// carved out from the original network block provided for the private
         /// cloud</param>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <summary>
         /// Gets the state of the  ExpressRoute Circuit Authorization
         /// provisioning. Possible values include: 'Succeeded', 'Failed',
-        /// 'Updating'
+        /// 'Updating', 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

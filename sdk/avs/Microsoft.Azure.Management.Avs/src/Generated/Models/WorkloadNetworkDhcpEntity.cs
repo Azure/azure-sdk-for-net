@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="segments">NSX Segments consuming DHCP.</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Succeeded', 'Failed', 'Building', 'Deleting',
-        /// 'Updating'</param>
+        /// 'Updating', 'Canceled'</param>
         /// <param name="revision">NSX revision number.</param>
         public WorkloadNetworkDhcpEntity(string displayName = default(string), IList<string> segments = default(IList<string>), string provisioningState = default(string), long? revision = default(long?))
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Avs.Models
 
         /// <summary>
         /// Gets the provisioning state. Possible values include: 'Succeeded',
-        /// 'Failed', 'Building', 'Deleting', 'Updating'
+        /// 'Failed', 'Building', 'Deleting', 'Updating', 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }

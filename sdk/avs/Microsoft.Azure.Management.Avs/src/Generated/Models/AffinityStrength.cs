@@ -12,15 +12,11 @@ namespace Microsoft.Azure.Management.Avs.Models
 {
 
     /// <summary>
-    /// Defines values for WorkloadNetworkPublicIPProvisioningState.
+    /// Defines values for AffinityStrength.
     /// </summary>
-    public static class WorkloadNetworkPublicIPProvisioningState
+    public static class AffinityStrength
     {
-        public const string Succeeded = "Succeeded";
-        public const string Failed = "Failed";
-        public const string Building = "Building";
-        public const string Deleting = "Deleting";
-        public const string Updating = "Updating";
-        public const string Canceled = "Canceled";
+        public const string Should = "Should";
+        public const string Must = "Must";
     }
 }

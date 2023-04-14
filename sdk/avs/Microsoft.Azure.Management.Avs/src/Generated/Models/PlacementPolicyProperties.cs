@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// policy</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Succeeded', 'Failed', 'Building', 'Deleting',
-        /// 'Updating'</param>
+        /// 'Updating', 'Canceled'</param>
         public PlacementPolicyProperties(string state = default(string), string displayName = default(string), string provisioningState = default(string))
         {
             State = state;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Avs.Models
 
         /// <summary>
         /// Gets the provisioning state. Possible values include: 'Succeeded',
-        /// 'Failed', 'Building', 'Deleting', 'Updating'
+        /// 'Failed', 'Building', 'Deleting', 'Updating', 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }

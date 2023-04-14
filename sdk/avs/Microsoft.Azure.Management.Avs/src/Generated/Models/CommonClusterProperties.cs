@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// <param name="clusterSize">The cluster size</param>
         /// <param name="provisioningState">The state of the cluster
         /// provisioning. Possible values include: 'Succeeded', 'Failed',
-        /// 'Cancelled', 'Deleting', 'Updating'</param>
+        /// 'Cancelled', 'Deleting', 'Updating', 'Canceled'</param>
         /// <param name="clusterId">The identity</param>
         /// <param name="hosts">The hosts</param>
         public CommonClusterProperties(int? clusterSize = default(int?), string provisioningState = default(string), int? clusterId = default(int?), IList<string> hosts = default(IList<string>))
@@ -59,7 +59,8 @@ namespace Microsoft.Azure.Management.Avs.Models
 
         /// <summary>
         /// Gets or sets the state of the cluster provisioning. Possible values
-        /// include: 'Succeeded', 'Failed', 'Cancelled', 'Deleting', 'Updating'
+        /// include: 'Succeeded', 'Failed', 'Cancelled', 'Deleting',
+        /// 'Updating', 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }

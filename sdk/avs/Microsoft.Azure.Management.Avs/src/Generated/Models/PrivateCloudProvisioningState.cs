@@ -23,5 +23,6 @@ namespace Microsoft.Azure.Management.Avs.Models
         public const string Building = "Building";
         public const string Deleting = "Deleting";
         public const string Updating = "Updating";
+        public const string Canceled = "Canceled";
     }
 }

@@ -45,13 +45,21 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// policy</param>
         /// <param name="provisioningState">The provisioning state. Possible
         /// values include: 'Succeeded', 'Failed', 'Building', 'Deleting',
-        /// 'Updating'</param>
-        public VmHostPlacementPolicyProperties(IList<string> vmMembers, IList<string> hostMembers, string affinityType, string state = default(string), string displayName = default(string), string provisioningState = default(string))
+        /// 'Updating', 'Canceled'</param>
+        /// <param name="affinityStrength">vm-host placement policy affinity
+        /// strength (should/must). Possible values include: 'Should',
+        /// 'Must'</param>
+        /// <param name="azureHybridBenefitType">placement policy azure hybrid
+        /// benefit opt-in type. Possible values include: 'SqlHost',
+        /// 'None'</param>
+        public VmHostPlacementPolicyProperties(IList<string> vmMembers, IList<string> hostMembers, string affinityType, string state = default(string), string displayName = default(string), string provisioningState = default(string), string affinityStrength = default(string), string azureHybridBenefitType = default(string))
             : base(state, displayName, provisioningState)
         {
             VmMembers = vmMembers;
             HostMembers = hostMembers;
             AffinityType = affinityType;
+            AffinityStrength = affinityStrength;
+            AzureHybridBenefitType = azureHybridBenefitType;
             CustomInit();
         }
 
@@ -78,6 +86,20 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "affinityType")]
         public string AffinityType { get; set; }
+
+        /// <summary>
+        /// Gets or sets vm-host placement policy affinity strength
+        /// (should/must). Possible values include: 'Should', 'Must'
+        /// </summary>
+        [JsonProperty(PropertyName = "affinityStrength")]
+        public string AffinityStrength { get; set; }
+
+        /// <summary>
+        /// Gets or sets placement policy azure hybrid benefit opt-in type.
+        /// Possible values include: 'SqlHost', 'None'
+        /// </summary>
+        [JsonProperty(PropertyName = "azureHybridBenefitType")]
+        public string AzureHybridBenefitType { get; set; }
 
         /// <summary>
         /// Validate the object.

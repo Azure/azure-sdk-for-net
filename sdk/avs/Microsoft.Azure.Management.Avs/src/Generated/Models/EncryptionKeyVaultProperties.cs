@@ -33,16 +33,19 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         /// <param name="keyName">The name of the key.</param>
         /// <param name="keyVersion">The version of the key.</param>
+        /// <param name="autoDetectedKeyVersion">The auto-detected version of
+        /// the key if versionType is auto-detected.</param>
         /// <param name="keyVaultUrl">The URL of the vault.</param>
         /// <param name="keyState">The state of key provided. Possible values
         /// include: 'Connected', 'AccessDenied'</param>
         /// <param name="versionType">Property of the key if user provided or
         /// auto detected. Possible values include: 'Fixed',
         /// 'AutoDetected'</param>
-        public EncryptionKeyVaultProperties(string keyName = default(string), string keyVersion = default(string), string keyVaultUrl = default(string), string keyState = default(string), string versionType = default(string))
+        public EncryptionKeyVaultProperties(string keyName = default(string), string keyVersion = default(string), string autoDetectedKeyVersion = default(string), string keyVaultUrl = default(string), string keyState = default(string), string versionType = default(string))
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
+            AutoDetectedKeyVersion = autoDetectedKeyVersion;
             KeyVaultUrl = keyVaultUrl;
             KeyState = keyState;
             VersionType = versionType;
@@ -65,6 +68,13 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         [JsonProperty(PropertyName = "keyVersion")]
         public string KeyVersion { get; set; }
+
+        /// <summary>
+        /// Gets the auto-detected version of the key if versionType is
+        /// auto-detected.
+        /// </summary>
+        [JsonProperty(PropertyName = "autoDetectedKeyVersion")]
+        public string AutoDetectedKeyVersion { get; private set; }
 
         /// <summary>
         /// Gets or sets the URL of the vault.

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Avs.Models
         /// </summary>
         /// <param name="provisioningState">The state of the addon
         /// provisioning. Possible values include: 'Succeeded', 'Failed',
-        /// 'Cancelled', 'Building', 'Deleting', 'Updating'</param>
+        /// 'Cancelled', 'Building', 'Deleting', 'Updating', 'Canceled'</param>
         /// <param name="licenseKey">The Site Recovery Manager (SRM)
         /// license</param>
         public AddonSrmProperties(string provisioningState = default(string), string licenseKey = default(string))
