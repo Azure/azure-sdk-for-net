@@ -548,6 +548,8 @@ namespace Azure.ResourceManager.Monitor
         public static Azure.ResourceManager.Monitor.AutoscaleSettingCollection GetAutoscaleSettings(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Monitor.AutoscaleSettingResource> GetAutoscaleSettings(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.AutoscaleSettingResource> GetAutoscaleSettingsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.SingleMetricBaseline> GetBaselines(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Monitor.Models.ArmResourceGetBaselinesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.SingleMetricBaseline> GetBaselinesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Monitor.Models.ArmResourceGetBaselinesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Monitor.DataCollectionEndpointResource> GetDataCollectionEndpoint(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.DataCollectionEndpointResource>> GetDataCollectionEndpointAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Monitor.DataCollectionEndpointResource GetDataCollectionEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -584,6 +586,12 @@ namespace Azure.ResourceManager.Monitor
         public static Azure.ResourceManager.Monitor.MetricAlertCollection GetMetricAlerts(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Monitor.MetricAlertResource> GetMetricAlerts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.MetricAlertResource> GetMetricAlertsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.MetricDefinition> GetMetricDefinitions(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string metricnamespace = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.MetricDefinition> GetMetricDefinitionsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string metricnamespace = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.MetricNamespace> GetMetricNamespaces(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string startTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.MetricNamespace> GetMetricNamespacesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string startTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.MonitorMetric> GetMetrics(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Monitor.Models.ArmResourceGetMetricsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.MonitorMetric> GetMetricsAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Monitor.Models.ArmResourceGetMetricsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.SubscriptionMonitorMetric> GetMonitorMetrics(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Monitor.Models.SubscriptionResourceGetMonitorMetricsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.SubscriptionMonitorMetric> GetMonitorMetricsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Monitor.Models.SubscriptionResourceGetMonitorMetricsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.SubscriptionMonitorMetric> GetMonitorMetricsWithPost(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Monitor.Models.SubscriptionResourceGetMonitorMetricsWithPostOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -878,6 +886,15 @@ namespace Azure.ResourceManager.Monitor.Models
         public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
+    public enum AggregationType
+    {
+        None = 0,
+        Average = 1,
+        Count = 2,
+        Minimum = 3,
+        Maximum = 4,
+        Total = 5,
+    }
     public abstract partial class AlertRuleAction
     {
         protected AlertRuleAction() { }
@@ -926,6 +943,33 @@ namespace Azure.ResourceManager.Monitor.Models
         public static implicit operator Azure.ResourceManager.Monitor.Models.AlertSeverity (long value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.AlertSeverity left, Azure.ResourceManager.Monitor.Models.AlertSeverity right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ArmResourceGetBaselinesOptions
+    {
+        public ArmResourceGetBaselinesOptions() { }
+        public string Aggregation { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public System.TimeSpan? Interval { get { throw null; } set { } }
+        public string Metricnames { get { throw null; } set { } }
+        public string Metricnamespace { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.ResultType? ResultType { get { throw null; } set { } }
+        public string Sensitivities { get { throw null; } set { } }
+        public string Timespan { get { throw null; } set { } }
+    }
+    public partial class ArmResourceGetMetricsOptions
+    {
+        public ArmResourceGetMetricsOptions() { }
+        public string Aggregation { get { throw null; } set { } }
+        public bool? AutoAdjustTimegrain { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public System.TimeSpan? Interval { get { throw null; } set { } }
+        public string Metricnames { get { throw null; } set { } }
+        public string Metricnamespace { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.ResultType? ResultType { get { throw null; } set { } }
+        public string Timespan { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+        public bool? ValidateDimensions { get { throw null; } set { } }
     }
     public partial class AutoscaleNotification
     {
@@ -976,6 +1020,31 @@ namespace Azure.ResourceManager.Monitor.Models
         public string MetricName { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
         public string Timespan { get { throw null; } }
+    }
+    public partial class BaselineMetadata
+    {
+        internal BaselineMetadata() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BaselineSensitivity : System.IEquatable<Azure.ResourceManager.Monitor.Models.BaselineSensitivity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BaselineSensitivity(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.BaselineSensitivity High { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.BaselineSensitivity Low { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.BaselineSensitivity Medium { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.BaselineSensitivity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.BaselineSensitivity left, Azure.ResourceManager.Monitor.Models.BaselineSensitivity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.BaselineSensitivity (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.BaselineSensitivity left, Azure.ResourceManager.Monitor.Models.BaselineSensitivity right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ConditionFailingPeriods
     {
@@ -1476,6 +1545,33 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Status { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
+    public partial class MetricAvailability
+    {
+        internal MetricAvailability() { }
+        public System.TimeSpan? Retention { get { throw null; } }
+        public System.TimeSpan? TimeGrain { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MetricClass : System.IEquatable<Azure.ResourceManager.Monitor.Models.MetricClass>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MetricClass(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MetricClass Availability { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MetricClass Errors { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MetricClass Latency { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MetricClass Saturation { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MetricClass Transactions { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.MetricClass other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.MetricClass left, Azure.ResourceManager.Monitor.Models.MetricClass right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MetricClass (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.MetricClass left, Azure.ResourceManager.Monitor.Models.MetricClass right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MetricCriteria : Azure.ResourceManager.Monitor.Models.MultiMetricCriteria
     {
         public MetricCriteria(string name, string metricName, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation, Azure.ResourceManager.Monitor.Models.MetricCriteriaOperator @operator, double threshold) : base (default(string), default(string), default(Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType)) { }
@@ -1524,12 +1620,35 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType left, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MetricDefinition
+    {
+        internal MetricDefinition() { }
+        public string Category { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MonitorLocalizableString> Dimensions { get { throw null; } }
+        public string DisplayDescription { get { throw null; } }
+        public string Id { get { throw null; } }
+        public bool? IsDimensionRequired { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MetricAvailability> MetricAvailabilities { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MetricClass? MetricClass { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorLocalizableString Name { get { throw null; } }
+        public string Namespace { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.AggregationType? PrimaryAggregationType { get { throw null; } }
+        public string ResourceId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.AggregationType> SupportedAggregationTypes { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorMetricUnit? Unit { get { throw null; } }
+    }
     public partial class MetricDimension
     {
         public MetricDimension(string name, string @operator, System.Collections.Generic.IEnumerable<string> values) { }
         public string Name { get { throw null; } set { } }
         public string Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+    }
+    public partial class MetricNamespace : Azure.ResourceManager.Models.ResourceData
+    {
+        internal MetricNamespace() { }
+        public Azure.ResourceManager.Monitor.Models.NamespaceClassification? Classification { get { throw null; } }
+        public string MetricNamespaceNameValue { get { throw null; } }
     }
     public partial class MetricSettings
     {
@@ -1538,6 +1657,12 @@ namespace Azure.ResourceManager.Monitor.Models
         public bool IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.RetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public System.TimeSpan? TimeGrain { get { throw null; } set { } }
+    }
+    public partial class MetricSingleDimension
+    {
+        internal MetricSingleDimension() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
     }
     public enum MetricStatisticType
     {
@@ -1751,6 +1876,18 @@ namespace Azure.ResourceManager.Monitor.Models
         internal MonitorMetadataValue() { }
         public Azure.ResourceManager.Monitor.Models.MonitorLocalizableString Name { get { throw null; } }
         public string Value { get { throw null; } }
+    }
+    public partial class MonitorMetric
+    {
+        internal MonitorMetric() { }
+        public string DisplayDescription { get { throw null; } }
+        public string ErrorCode { get { throw null; } }
+        public string ErrorMessage { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string MetricType { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorLocalizableString Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MonitorTimeSeriesElement> Timeseries { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.Unit Unit { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MonitorMetricResultType : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorMetricResultType>
@@ -2027,6 +2164,25 @@ namespace Azure.ResourceManager.Monitor.Models
         public bool? SkipMetricValidation { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType TimeAggregation { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NamespaceClassification : System.IEquatable<Azure.ResourceManager.Monitor.Models.NamespaceClassification>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NamespaceClassification(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.NamespaceClassification Custom { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.NamespaceClassification Platform { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.NamespaceClassification Qos { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.NamespaceClassification other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.NamespaceClassification left, Azure.ResourceManager.Monitor.Models.NamespaceClassification right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.NamespaceClassification (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.NamespaceClassification left, Azure.ResourceManager.Monitor.Models.NamespaceClassification right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class NotificationActionDetail
     {
         internal NotificationActionDetail() { }
@@ -2154,6 +2310,11 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         public ResourceForUpdate() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public enum ResultType
+    {
+        Data = 0,
+        Metadata = 1,
     }
     public partial class RetentionPolicy
     {
@@ -2304,6 +2465,21 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Action { get { throw null; } }
         public string Role { get { throw null; } }
         public string Scope { get { throw null; } }
+    }
+    public partial class SingleBaseline
+    {
+        internal SingleBaseline() { }
+        public System.Collections.Generic.IReadOnlyList<double> HighThresholds { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<double> LowThresholds { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.BaselineSensitivity Sensitivity { get { throw null; } }
+    }
+    public partial class SingleMetricBaseline : Azure.ResourceManager.Models.ResourceData
+    {
+        internal SingleMetricBaseline() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.TimeSeriesBaseline> Baselines { get { throw null; } }
+        public System.TimeSpan Interval { get { throw null; } }
+        public string Namespace { get { throw null; } }
+        public string Timespan { get { throw null; } }
     }
     public partial class SubscriptionMonitorMetric
     {
@@ -2468,6 +2644,31 @@ namespace Azure.ResourceManager.Monitor.Models
         Maximum = 2,
         Total = 3,
         Last = 4,
+    }
+    public partial class TimeSeriesBaseline
+    {
+        internal TimeSeriesBaseline() { }
+        public string Aggregation { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.SingleBaseline> Data { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MetricSingleDimension> Dimensions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.BaselineMetadata> MetadataValues { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.DateTimeOffset> Timestamps { get { throw null; } }
+    }
+    public enum Unit
+    {
+        Unspecified = 0,
+        Count = 1,
+        Bytes = 2,
+        Seconds = 3,
+        CountPerSecond = 4,
+        BytesPerSecond = 5,
+        Percent = 6,
+        MilliSeconds = 7,
+        ByteSeconds = 8,
+        Cores = 9,
+        MilliCores = 10,
+        NanoCores = 11,
+        BitsPerSecond = 12,
     }
     public partial class WebhookNotification
     {

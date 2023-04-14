@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.ManagedServices
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationResource>> GetManagedServicesRegistrationAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string registrationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationResource GetManagedServicesRegistrationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationCollection GetManagedServicesRegistrations(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ManagedServices.Models.Operation> GetOperationsWithScopes(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ManagedServices.Models.Operation> GetOperationsWithScopesAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ManagedServicesMarketplaceRegistrationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationResource>, System.Collections.IEnumerable
     {
@@ -247,5 +249,19 @@ namespace Azure.ResourceManager.ManagedServices.Models
         public static implicit operator Azure.ResourceManager.ManagedServices.Models.MultiFactorAuthProvider (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ManagedServices.Models.MultiFactorAuthProvider left, Azure.ResourceManager.ManagedServices.Models.MultiFactorAuthProvider right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class Operation
+    {
+        internal Operation() { }
+        public Azure.ResourceManager.ManagedServices.Models.OperationDisplay Display { get { throw null; } }
+        public string Name { get { throw null; } }
+    }
+    public partial class OperationDisplay
+    {
+        internal OperationDisplay() { }
+        public string Description { get { throw null; } }
+        public string Operation { get { throw null; } }
+        public string Provider { get { throw null; } }
+        public string Resource { get { throw null; } }
     }
 }
