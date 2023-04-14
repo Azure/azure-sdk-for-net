@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Messaging.EventGridMessaging.Models
+namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Failed LockToken information. </summary>
     public partial class FailedLockToken

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.Messaging.EventGridMessaging.Models
+namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Details of the LockTokens information. This is used for both Acknowledge and Release operation response. </summary>
     public partial class LockTokensResponse

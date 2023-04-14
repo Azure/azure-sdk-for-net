@@ -9,7 +9,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.Messaging.EventGridMessaging.Models
+namespace Azure.Messaging.EventGrid.Models
 {
     public partial class BrokerProperties
     {

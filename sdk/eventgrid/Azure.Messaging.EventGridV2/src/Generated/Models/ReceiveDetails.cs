@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Messaging.EventGridMessaging.Models
+namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Receive operation details per Cloud Event. </summary>
     public partial class ReceiveDetails
@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventGridMessaging.Models
         /// <param name="brokerProperties"> The Event Broker details. </param>
         /// <param name="event"> Cloud Event details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="brokerProperties"/> or <paramref name="event"/> is null. </exception>
-        internal ReceiveDetails(BrokerProperties brokerProperties, CloudEvent @event)
+        internal ReceiveDetails(BrokerProperties brokerProperties, CloudEventEvent @event)
         {
             Argument.AssertNotNull(brokerProperties, nameof(brokerProperties));
             Argument.AssertNotNull(@event, nameof(@event));
@@ -29,6 +29,6 @@ namespace Azure.Messaging.EventGridMessaging.Models
         /// <summary> The Event Broker details. </summary>
         public BrokerProperties BrokerProperties { get; }
         /// <summary> Cloud Event details. </summary>
-        public CloudEvent Event { get; }
+        public CloudEventEvent Event { get; }
     }
 }

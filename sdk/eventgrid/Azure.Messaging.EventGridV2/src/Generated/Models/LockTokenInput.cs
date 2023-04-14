@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.Messaging.EventGridMessaging.Models
+namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Lock token input formatting. </summary>
     public partial class LockTokenInput
