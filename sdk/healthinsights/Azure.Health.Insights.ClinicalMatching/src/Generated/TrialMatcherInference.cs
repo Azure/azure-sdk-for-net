@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -43,7 +42,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             Value = value;
             Description = description;
             ConfidenceScore = confidenceScore;
-            Evidence = evidence.ToList();
+            Evidence = evidence;
             Id = id;
             Source = source;
             Metadata = metadata;
