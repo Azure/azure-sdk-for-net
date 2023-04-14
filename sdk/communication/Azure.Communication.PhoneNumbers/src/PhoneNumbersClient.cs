@@ -721,6 +721,24 @@ namespace Azure.Communication.PhoneNumbers
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
+        /// <summary> Search for operator information associated with phone numbers. </summary>
+        /// <param name="searchRequest"> The search request specifying which phone numbers to retrieve operator information about. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Task<Response<OperatorInformationSearchResult>> SearchOperatorInformationAsync(OperatorInformationSearchRequest searchRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(searchRequest, nameof(searchRequest));
+            return Task.FromResult(SearchOperatorInformation(searchRequest, cancellationToken));
+        }
+
+        /// <summary> Search for operator information associated with phone numbers. </summary>
+        /// <param name="searchRequest"> The search request specifying which phone numbers to retrieve operator information about. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<OperatorInformationSearchResult> SearchOperatorInformation(OperatorInformationSearchRequest searchRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(searchRequest, nameof(searchRequest));
+            return null;
+        }
+
         /// <summary> Lists the available area codes within a given country and locality. </summary>
         /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="phoneNumberType"> The type of phone numbers to search for. </param>
