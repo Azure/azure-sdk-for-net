@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The result data of a query. </summary>
-    internal partial class MonitorMetric
+    public partial class MonitorMetric
     {
         /// <summary> Initializes a new instance of MonitorMetric. </summary>
         /// <param name="id"> the metric Id. </param>
