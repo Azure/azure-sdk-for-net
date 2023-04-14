@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of SupportedConfigurationsDiskDetails. </summary>
-        /// <param name="sku"> The disk sku. </param>
+        /// <param name="sku"> The type of disk sku. For example, Standard_LRS, Standard_ZRS, Premium_LRS, Premium_ZRS. </param>
         /// <param name="sizeGB"> The disk size in GB. </param>
         /// <param name="minimumSupportedDiskCount"> The minimum supported disk count. </param>
         /// <param name="maximumSupportedDiskCount"> The maximum supported disk count. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Workloads.Models
             DiskTier = diskTier;
         }
 
-        /// <summary> The disk sku. </summary>
+        /// <summary> The type of disk sku. For example, Standard_LRS, Standard_ZRS, Premium_LRS, Premium_ZRS. </summary>
         internal DiskSku Sku { get; }
         /// <summary> Defines the disk sku name. </summary>
         public DiskDetailsDiskSkuName? SkuName

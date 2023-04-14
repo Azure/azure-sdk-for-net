@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
     /// <summary>
     /// A Web PubSub service endpoint used to process incoming and outgoing requests.
     /// </summary>
-    public class ServiceEndpoint
+    public class WebPubSubServiceEndpoint
     {
         private const string EndpointPropertyName = "Endpoint";
         private const string AccessKeyPropertyName = "AccessKey";
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// </summary>
         /// <param name="connectionString">The service endpoint connection string.</param>
         /// <param name="clientOptions">The <see cref="WebPubSubServiceClientOptions"/> to use when invoke service.</param>
-        public ServiceEndpoint(string connectionString, WebPubSubServiceClientOptions clientOptions = null)
+        public WebPubSubServiceEndpoint(string connectionString, WebPubSubServiceClientOptions clientOptions = null)
         {
             CredentialKind = CredentialKind.ConnectionString;
             ConnectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <param name="endpoint">The uri of target service endpoint.</param>
         /// <param name="credential">The <see cref="TokenCredential"/>.</param>
         /// <param name="clientOptions">The <see cref="WebPubSubServiceClientOptions"/> to use when invoke service.</param>
-        public ServiceEndpoint(Uri endpoint, TokenCredential credential, WebPubSubServiceClientOptions clientOptions = null)
+        public WebPubSubServiceEndpoint(Uri endpoint, TokenCredential credential, WebPubSubServiceClientOptions clientOptions = null)
         {
             CredentialKind = CredentialKind.TokenCredential;
             Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         /// <param name="endpoint">The uri of target service endpoint.</param>
         /// <param name="credential">The <see cref="AzureKeyCredential"/>.</param>
         /// <param name="clientOptions">The <see cref="WebPubSubServiceClientOptions"/> to use when invoke service.</param>
-        public ServiceEndpoint(Uri endpoint, AzureKeyCredential credential, WebPubSubServiceClientOptions clientOptions = null)
+        public WebPubSubServiceEndpoint(Uri endpoint, AzureKeyCredential credential, WebPubSubServiceClientOptions clientOptions = null)
         {
             CredentialKind = CredentialKind.AzureKeyCredential;
             Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));

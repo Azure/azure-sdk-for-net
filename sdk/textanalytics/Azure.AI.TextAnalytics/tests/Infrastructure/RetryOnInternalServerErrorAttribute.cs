@@ -40,14 +40,21 @@ namespace Azure.AI.TextAnalytics.Tests.Infrastructure
                     && message.Contains("Status: 200 (OK)")
                     && message.Contains("ErrorCode: InternalServerError");
 
-            // A known transient issue where the server appears to be unable to process a valid task.
+            // A known transient issue where the server appears to be unable to process a valid text analysis task.
             bool invalidTaskTypeTransientError =
                 message.Contains("Azure.RequestFailedException")
                     && message.Contains("Invalid Task Type")
                     && message.Contains("Status: 500 (Internal Server Error)")
                     && message.Contains("ErrorCode: InternalServerError");
 
-            return failedToProcessTaskTransientError || invalidTaskTypeTransientError;
+            // A known transient issue where the server fails to process a request and does not provide more context.
+            bool internalServerTransientError =
+                message.Contains("Azure.RequestFailedException")
+                    && message.Contains("Internal Server Error.")
+                    && message.Contains("Status: 200 (OK)")
+                    && message.Contains("ErrorCode: InternalServerError");
+
+            return failedToProcessTaskTransientError || invalidTaskTypeTransientError || internalServerTransientError;
         }
     }
 }

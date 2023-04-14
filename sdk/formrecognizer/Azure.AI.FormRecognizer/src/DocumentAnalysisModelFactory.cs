@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 
@@ -23,9 +24,31 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="countryRegion"> Country/region. </param>
         /// <param name="streetAddress"> Street-level address, excluding city, state, countryRegion, and postalCode. </param>
         /// <returns> A new <see cref="DocumentAnalysis.AddressValue"/> instance for mocking. </returns>
-        public static AddressValue AddressValue(string houseNumber = null, string poBox = null, string road = null, string city = null, string state = null, string postalCode = null, string countryRegion = null, string streetAddress = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AddressValue AddressValue(string houseNumber, string poBox, string road, string city, string state, string postalCode, string countryRegion, string streetAddress)
         {
             return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress, unit: null, cityDistrict: null, stateDistrict: null, suburb: null, house: null, level: null);
+        }
+
+        /// <summary> Initializes a new instance of AddressValue. </summary>
+        /// <param name="houseNumber"> House or building number. </param>
+        /// <param name="poBox"> Post office box number. </param>
+        /// <param name="road"> Street name. </param>
+        /// <param name="city"> Name of city, town, village, etc. </param>
+        /// <param name="state"> First-level administrative division. </param>
+        /// <param name="postalCode"> Postal code used for mail sorting. </param>
+        /// <param name="countryRegion"> Country/region. </param>
+        /// <param name="streetAddress"> Street-level address, excluding city, state, countryRegion, and postalCode. </param>
+        /// <param name="unit"> Apartment or office number. </param>
+        /// <param name="cityDistrict"> Districts or boroughs within a city, such as Brooklyn in New York City or City of Westminster in London. </param>
+        /// <param name="stateDistrict"> Second-level administrative division used in certain locales. </param>
+        /// <param name="suburb"> Unofficial neighborhood name, like Chinatown. </param>
+        /// <param name="house"> Build name, such as World Trade Center. </param>
+        /// <param name="level"> Floor number, such as 3F. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.AddressValue"/> instance for mocking. </returns>
+        public static AddressValue AddressValue(string houseNumber = null, string poBox = null, string road = null, string city = null, string state = null, string postalCode = null, string countryRegion = null, string streetAddress = null, string unit = null, string cityDistrict = null, string stateDistrict = null, string suburb = null, string house = null, string level = null)
+        {
+            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress, unit, cityDistrict, stateDistrict, suburb, house, level);
         }
 
         /// <summary> Initializes a new instance of AnalyzedDocument. </summary>
@@ -166,6 +189,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static DocumentFieldValue DocumentFieldValueWithAddressFieldType(AddressValue value)
         {
             return new DocumentFieldValue(DocumentFieldType.Address, valueAddress: value);
+        }
+
+        /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
+        /// <param name="value"> The value of the field. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
+        public static DocumentFieldValue DocumentFieldValueWithBooleanFieldType(bool value)
+        {
+            return new DocumentFieldValue(DocumentFieldType.Boolean, valueBoolean: value);
         }
 
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
@@ -468,11 +499,29 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentStyle"/> instance for mocking. </returns>
-        public static DocumentStyle DocumentStyle(bool? isHandwritten = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DocumentStyle DocumentStyle(bool? isHandwritten, IEnumerable<DocumentSpan> spans, float confidence)
         {
             spans ??= new List<DocumentSpan>();
 
             return new DocumentStyle(isHandwritten, similarFontFamily: null, fontStyle: null, fontWeight: null, color: null, backgroundColor: null, spans?.ToList(), confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentStyle. </summary>
+        /// <param name="isHandwritten"> Is content handwritten?. </param>
+        /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
+        /// <param name="confidence"> Confidence of correctly identifying the style. </param>
+        /// <param name="similarFontFamily"> Visually most similar font from among the set of supported font families, with fallback fonts following CSS convention (ex. &apos;Arial, sans-serif&apos;). </param>
+        /// <param name="fontStyle"> Font style. </param>
+        /// <param name="fontWeight"> Font weight. </param>
+        /// <param name="color"> Foreground color in #rrggbb hexadecimal format. </param>
+        /// <param name="backgroundColor"> Background color in #rrggbb hexadecimal format. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentStyle"/> instance for mocking. </returns>
+        public static DocumentStyle DocumentStyle(bool? isHandwritten = null, IEnumerable<DocumentSpan> spans = null, float confidence = default, string similarFontFamily = null, FontStyle? fontStyle = null, FontWeight? fontWeight = null, string color = null, string backgroundColor = null)
+        {
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentStyle(isHandwritten, similarFontFamily, fontStyle, fontWeight, color, backgroundColor, spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentTable. </summary>

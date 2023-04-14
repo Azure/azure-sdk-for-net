@@ -109,7 +109,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = AzureResourceManagerManagedIdentityProperties.DeserializeAzureResourceManagerManagedIdentityProperties(property.Value);
@@ -119,7 +118,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -154,7 +152,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -183,7 +180,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isPanoramaManaged = new BooleanEnum(property0.Value.GetString());
@@ -193,7 +189,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             panoramaConfig = PanoramaConfig.DeserializePanoramaConfig(property0.Value);
@@ -203,7 +198,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             associatedRulestack = RulestackDetails.DeserializeRulestackDetails(property0.Value);
@@ -218,7 +212,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<FrontendSetting> array = new List<FrontendSetting>();
@@ -233,7 +226,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
