@@ -5,14 +5,27 @@
 
 #nullable disable
 
+using System.Threading;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class to add extension methods to ArmResource. </summary>
     internal partial class ArmResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _metricDefinitionsClientDiagnostics;
+        private MetricDefinitionsRestOperations _metricDefinitionsRestClient;
+        private ClientDiagnostics _metricsClientDiagnostics;
+        private MetricsRestOperations _metricsRestClient;
+        private ClientDiagnostics _baselinesClientDiagnostics;
+        private BaselinesRestOperations _baselinesRestClient;
+        private ClientDiagnostics _metricNamespacesClientDiagnostics;
+        private MetricNamespacesRestOperations _metricNamespacesRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="ArmResourceExtensionClient"/> class for mocking. </summary>
         protected ArmResourceExtensionClient()
         {
@@ -24,6 +37,15 @@ namespace Azure.ResourceManager.Monitor
         internal ArmResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics MetricDefinitionsClientDiagnostics => _metricDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private MetricDefinitionsRestOperations MetricDefinitionsRestClient => _metricDefinitionsRestClient ??= new MetricDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics MetricsClientDiagnostics => _metricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private MetricsRestOperations MetricsRestClient => _metricsRestClient ??= new MetricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics BaselinesClientDiagnostics => _baselinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private BaselinesRestOperations BaselinesRestClient => _baselinesRestClient ??= new BaselinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics MetricNamespacesClientDiagnostics => _metricNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private MetricNamespacesRestOperations MetricNamespacesRestClient => _metricNamespacesRestClient ??= new MetricNamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -57,6 +79,182 @@ namespace Azure.ResourceManager.Monitor
         public virtual DataCollectionRuleAssociationCollection GetDataCollectionRuleAssociations()
         {
             return GetCachedClient(Client => new DataCollectionRuleAssociationCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Lists the metric definitions for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/metricDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MetricDefinitions_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsAsync(string metricnamespace = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricDefinitionsRestClient.CreateListRequest(Id, metricnamespace);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MetricDefinition.DeserializeMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMetricDefinitions", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the metric definitions for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/metricDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MetricDefinitions_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MetricDefinition> GetMetricDefinitions(string metricnamespace = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricDefinitionsRestClient.CreateListRequest(Id, metricnamespace);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MetricDefinition.DeserializeMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMetricDefinitions", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric values for a resource**.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorMetric> GetMetricsAsync(ArmResourceGetMetricsOptions options, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListRequest(Id, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetric.DeserializeMonitorMetric, MetricsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMetrics", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric values for a resource**.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorMetric> GetMetrics(ArmResourceGetMetricsOptions options, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListRequest(Id, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetric.DeserializeMonitorMetric, MetricsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMetrics", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric baseline values for a resource**.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/metricBaselines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Baselines_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SingleMetricBaseline" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SingleMetricBaseline> GetBaselinesAsync(ArmResourceGetBaselinesOptions options, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BaselinesRestClient.CreateListRequest(Id, options.Metricnames, options.Metricnamespace, options.Timespan, options.Interval, options.Aggregation, options.Sensitivities, options.Filter, options.ResultType);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SingleMetricBaseline.DeserializeSingleMetricBaseline, BaselinesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBaselines", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric baseline values for a resource**.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/metricBaselines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Baselines_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SingleMetricBaseline" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SingleMetricBaseline> GetBaselines(ArmResourceGetBaselinesOptions options, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BaselinesRestClient.CreateListRequest(Id, options.Metricnames, options.Metricnamespace, options.Timespan, options.Interval, options.Aggregation, options.Sensitivities, options.Filter, options.ResultType);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SingleMetricBaseline.DeserializeSingleMetricBaseline, BaselinesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetBaselines", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the metric namespaces for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/microsoft.insights/metricNamespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MetricNamespaces_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MetricNamespace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MetricNamespace> GetMetricNamespacesAsync(string startTime = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricNamespacesRestClient.CreateListRequest(Id, startTime);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MetricNamespace.DeserializeMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMetricNamespaces", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the metric namespaces for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/microsoft.insights/metricNamespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MetricNamespaces_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="startTime"> The ISO 8601 conform Date start time from which to query for metric namespaces. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MetricNamespace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MetricNamespace> GetMetricNamespaces(string startTime = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricNamespacesRestClient.CreateListRequest(Id, startTime);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MetricNamespace.DeserializeMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMetricNamespaces", "value", null, cancellationToken);
         }
     }
 }
