@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-6c2ed7368fc7eb4a2b7b60505f517689-36e94dd40242dcd8-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "ac12341784322a56964b7dc7e3a3b98b",
+        "traceparent": "00-24ca065bbe255aa8c88c712ca9ceb4d9-072b15a7d2f6be50-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "b84cdb35ead0ca32e890af715bda6cec",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "460",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:11:21 GMT",
+        "Date": "Fri, 14 Apr 2023 13:18:32 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "daccf0b5-12d7-4502-b8f9-3698972ca83b",
-        "x-ms-ratelimit-remaining-subscription-reads": "11942",
-        "x-ms-request-id": "daccf0b5-12d7-4502-b8f9-3698972ca83b",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181122Z:daccf0b5-12d7-4502-b8f9-3698972ca83b"
+        "x-ms-correlation-request-id": "6c043188-1045-42a4-ab2c-5da3720d9575",
+        "x-ms-ratelimit-remaining-subscription-reads": "11886",
+        "x-ms-request-id": "6c043188-1045-42a4-ab2c-5da3720d9575",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131832Z:6c043188-1045-42a4-ab2c-5da3720d9575"
       },
       "ResponseBody": {
         "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e",
@@ -47,16 +47,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourcegroups/testeventhubRG-6140?api-version=**",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourcegroups/testeventhubRG-304?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "44",
         "Content-Type": "application/json",
-        "traceparent": "00-3611447948976ec9a9e66a29aab0ab21-fec861e8170b1739-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "5d24e64d34753879a71e4ba4b7f5f490",
+        "traceparent": "00-0955a985492f98a6dfd9dec1fa7cd394-e9083811599ba698-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "3547d01884978941742d5b8415100768",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -68,21 +68,21 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "258",
+        "Content-Length": "256",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:11:22 GMT",
+        "Date": "Fri, 14 Apr 2023 13:18:32 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "421162b2-daa8-41d4-a4bd-e164833d0566",
-        "x-ms-ratelimit-remaining-subscription-writes": "1177",
-        "x-ms-request-id": "421162b2-daa8-41d4-a4bd-e164833d0566",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181122Z:421162b2-daa8-41d4-a4bd-e164833d0566"
+        "x-ms-correlation-request-id": "08a61637-0222-4293-87fa-d59848dacc30",
+        "x-ms-ratelimit-remaining-subscription-writes": "1174",
+        "x-ms-request-id": "08a61637-0222-4293-87fa-d59848dacc30",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131833Z:08a61637-0222-4293-87fa-d59848dacc30"
       },
       "ResponseBody": {
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140",
-        "name": "testeventhubRG-6140",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304",
+        "name": "testeventhubRG-304",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus2",
         "tags": {
@@ -101,20 +101,20 @@
         "Authorization": "Sanitized",
         "Content-Length": "32",
         "Content-Type": "application/json",
-        "traceparent": "00-c570be145c8888f1f3089fafb42245b3-075d0324120d51ca-00",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "7b586f5d8b92cb84c79e52f6bdf3567b",
+        "traceparent": "00-b0122bf6c1421e0f80921c83ecbe9387-c229970bdded7d55-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "5802601108113418a10a206975af09ec",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "testnamespacemgmt5103"
+        "name": "testnamespacemgmt1662"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "53",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:11:22 GMT",
+        "Date": "Fri, 14 Apr 2023 13:18:33 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -124,11 +124,11 @@
         "Server-SB": "Service-Bus-Resource-Provider/SN1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "7b586f5d8b92cb84c79e52f6bdf3567b",
-        "x-ms-correlation-request-id": "cfbd2263-d56a-4456-a863-68b0ca4b8f8e",
-        "x-ms-ratelimit-remaining-subscription-writes": "1195",
-        "x-ms-request-id": "efbaa361-a901-4db8-9f3b-1074f9cabb07_M5SN1_M5SN1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181123Z:cfbd2263-d56a-4456-a863-68b0ca4b8f8e"
+        "x-ms-client-request-id": "5802601108113418a10a206975af09ec",
+        "x-ms-correlation-request-id": "72c3316a-403e-49c4-a325-f153780decfc",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "e4225a05-4a92-4ba1-a99e-aa8b000c3eb4_M10SN1_M10SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131833Z:72c3316a-403e-49c4-a325-f153780decfc"
       },
       "ResponseBody": {
         "nameAvailable": true,
@@ -137,16 +137,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662?api-version=2022-10-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "48",
         "Content-Type": "application/json",
-        "traceparent": "00-f44269de8ac0611ebfa539686a221c9f-2e96624199b2aa77-00",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "04a68e65a1289800738a650a85de5688",
+        "traceparent": "00-8fd66ef5cae961e32a9dd2b3ad24286e-f0f895ad41ba3810-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "d85e1a0c9e5a0a562e5bbdd645d280a7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -157,9 +157,9 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "794",
+        "Content-Length": "795",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:11:24 GMT",
+        "Date": "Fri, 14 Apr 2023 13:18:35 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -169,11 +169,11 @@
         "Server-SB": "Service-Bus-Resource-Provider/SN1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "04a68e65a1289800738a650a85de5688",
-        "x-ms-correlation-request-id": "8ed25e0f-7996-4824-ae6b-b34e655249f9",
-        "x-ms-ratelimit-remaining-subscription-resource-requests": "45",
-        "x-ms-request-id": "5b7ab24a-17b4-4b0c-905e-bfd1585cee5f_M5SN1_M5SN1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181125Z:8ed25e0f-7996-4824-ae6b-b34e655249f9"
+        "x-ms-client-request-id": "d85e1a0c9e5a0a562e5bbdd645d280a7",
+        "x-ms-correlation-request-id": "2ce4021c-cbd1-474e-8146-1e34d4f2ce42",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "43",
+        "x-ms-request-id": "8e79b5b3-d6f7-4c3c-861b-667f286db649_M10SN1_M10SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131835Z:2ce4021c-cbd1-474e-8146-1e34d4f2ce42"
       },
       "ResponseBody": {
         "sku": {
@@ -181,8 +181,8 @@
           "tier": "Standard",
           "capacity": 1
         },
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103",
-        "name": "testnamespacemgmt5103",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662",
+        "name": "testnamespacemgmt1662",
         "type": "Microsoft.EventHub/Namespaces",
         "location": "East US 2",
         "tags": {},
@@ -195,31 +195,31 @@
           "maximumThroughputUnits": 0,
           "kafkaEnabled": true,
           "provisioningState": "Created",
-          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt5103",
-          "createdAt": "2023-04-04T18:11:24.79Z",
-          "updatedAt": "2023-04-04T18:11:24.79Z",
-          "serviceBusEndpoint": "https://testnamespacemgmt5103.servicebus.windows.net:443/",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1662",
+          "createdAt": "2023-04-14T13:18:34.963Z",
+          "updatedAt": "2023-04-14T13:18:34.963Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1662.servicebus.windows.net:443/",
           "status": "Activating"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f44269de8ac0611ebfa539686a221c9f-9b39bdc04971c41b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "675229f58b4ebbf26fc00708257a45e8",
+        "traceparent": "00-8fd66ef5cae961e32a9dd2b3ad24286e-1f229a044d353a0f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "f60897518fa8722809f829b54b41efce",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "794",
+        "Content-Length": "795",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:11:24 GMT",
+        "Date": "Fri, 14 Apr 2023 13:18:35 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -229,11 +229,11 @@
         "Server-SB": "Service-Bus-Resource-Provider/SN1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "675229f58b4ebbf26fc00708257a45e8",
-        "x-ms-correlation-request-id": "bcacbd81-806d-436e-a58f-e5299a0d5250",
-        "x-ms-ratelimit-remaining-subscription-reads": "11941",
-        "x-ms-request-id": "91e781ee-9b3b-40c3-9961-a64ebe217352_M5SN1_M5SN1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181125Z:bcacbd81-806d-436e-a58f-e5299a0d5250"
+        "x-ms-client-request-id": "f60897518fa8722809f829b54b41efce",
+        "x-ms-correlation-request-id": "3b70d5e8-3a6b-41ab-af56-b7d27d06848f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11885",
+        "x-ms-request-id": "f85812a3-badc-41a0-8d4b-958614ce1a0f_M10SN1_M10SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131836Z:3b70d5e8-3a6b-41ab-af56-b7d27d06848f"
       },
       "ResponseBody": {
         "sku": {
@@ -241,8 +241,8 @@
           "tier": "Standard",
           "capacity": 1
         },
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103",
-        "name": "testnamespacemgmt5103",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662",
+        "name": "testnamespacemgmt1662",
         "type": "Microsoft.EventHub/Namespaces",
         "location": "East US 2",
         "tags": {},
@@ -255,31 +255,31 @@
           "maximumThroughputUnits": 0,
           "kafkaEnabled": true,
           "provisioningState": "Created",
-          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt5103",
-          "createdAt": "2023-04-04T18:11:24.79Z",
-          "updatedAt": "2023-04-04T18:11:24.79Z",
-          "serviceBusEndpoint": "https://testnamespacemgmt5103.servicebus.windows.net:443/",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1662",
+          "createdAt": "2023-04-14T13:18:34.963Z",
+          "updatedAt": "2023-04-14T13:18:34.963Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1662.servicebus.windows.net:443/",
           "status": "Activating"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f44269de8ac0611ebfa539686a221c9f-b5245f6cb4d9665c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "f4bfc9480cad4c49d34b6497f36a7131",
+        "traceparent": "00-8fd66ef5cae961e32a9dd2b3ad24286e-9df8e75531008b4f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "9c61798afde607031297a95aa8dbe90f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "794",
+        "Content-Length": "795",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:11:26 GMT",
+        "Date": "Fri, 14 Apr 2023 13:18:36 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -289,11 +289,11 @@
         "Server-SB": "Service-Bus-Resource-Provider/SN1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "f4bfc9480cad4c49d34b6497f36a7131",
-        "x-ms-correlation-request-id": "701de6b1-e880-4d86-8b28-df9643f0abf3",
-        "x-ms-ratelimit-remaining-subscription-reads": "11940",
-        "x-ms-request-id": "f4b96cd3-ca77-4859-83de-cdd2d6f8f2a0_M5SN1_M5SN1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181126Z:701de6b1-e880-4d86-8b28-df9643f0abf3"
+        "x-ms-client-request-id": "9c61798afde607031297a95aa8dbe90f",
+        "x-ms-correlation-request-id": "76ea441d-8223-49f3-97e2-099cd35f2edb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11884",
+        "x-ms-request-id": "330dd03b-4e4d-4db2-a775-12c40e832554_M10SN1_M10SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131837Z:76ea441d-8223-49f3-97e2-099cd35f2edb"
       },
       "ResponseBody": {
         "sku": {
@@ -301,8 +301,8 @@
           "tier": "Standard",
           "capacity": 1
         },
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103",
-        "name": "testnamespacemgmt5103",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662",
+        "name": "testnamespacemgmt1662",
         "type": "Microsoft.EventHub/Namespaces",
         "location": "East US 2",
         "tags": {},
@@ -315,31 +315,31 @@
           "maximumThroughputUnits": 0,
           "kafkaEnabled": true,
           "provisioningState": "Created",
-          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt5103",
-          "createdAt": "2023-04-04T18:11:24.79Z",
-          "updatedAt": "2023-04-04T18:11:24.79Z",
-          "serviceBusEndpoint": "https://testnamespacemgmt5103.servicebus.windows.net:443/",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1662",
+          "createdAt": "2023-04-14T13:18:34.963Z",
+          "updatedAt": "2023-04-14T13:18:34.963Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1662.servicebus.windows.net:443/",
           "status": "Activating"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f44269de8ac0611ebfa539686a221c9f-158d4a3d8e432169-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "5c143a9fee8bab3ad58ada7110b23525",
+        "traceparent": "00-8fd66ef5cae961e32a9dd2b3ad24286e-f0e53912b69443f1-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "ad853f5b89c979feaf5602f1db517bed",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "794",
+        "Content-Length": "795",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:11:27 GMT",
+        "Date": "Fri, 14 Apr 2023 13:18:38 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -349,11 +349,11 @@
         "Server-SB": "Service-Bus-Resource-Provider/SN1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5c143a9fee8bab3ad58ada7110b23525",
-        "x-ms-correlation-request-id": "f79e825f-98ce-492e-be6a-e82a0d2e1fd4",
-        "x-ms-ratelimit-remaining-subscription-reads": "11939",
-        "x-ms-request-id": "6af6f4f6-f3dd-4dea-89ea-aa7b502a4717_M5SN1_M5SN1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181127Z:f79e825f-98ce-492e-be6a-e82a0d2e1fd4"
+        "x-ms-client-request-id": "ad853f5b89c979feaf5602f1db517bed",
+        "x-ms-correlation-request-id": "c8901658-db99-4811-878d-70a6800c713b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11883",
+        "x-ms-request-id": "4825a5ab-1d32-4f11-8074-37ced3d1b248_M10SN1_M10SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131838Z:c8901658-db99-4811-878d-70a6800c713b"
       },
       "ResponseBody": {
         "sku": {
@@ -361,8 +361,8 @@
           "tier": "Standard",
           "capacity": 1
         },
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103",
-        "name": "testnamespacemgmt5103",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662",
+        "name": "testnamespacemgmt1662",
         "type": "Microsoft.EventHub/Namespaces",
         "location": "East US 2",
         "tags": {},
@@ -375,31 +375,31 @@
           "maximumThroughputUnits": 0,
           "kafkaEnabled": true,
           "provisioningState": "Created",
-          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt5103",
-          "createdAt": "2023-04-04T18:11:24.79Z",
-          "updatedAt": "2023-04-04T18:11:24.79Z",
-          "serviceBusEndpoint": "https://testnamespacemgmt5103.servicebus.windows.net:443/",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1662",
+          "createdAt": "2023-04-14T13:18:34.963Z",
+          "updatedAt": "2023-04-14T13:18:34.963Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1662.servicebus.windows.net:443/",
           "status": "Activating"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f44269de8ac0611ebfa539686a221c9f-64020d9fa54fbce8-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "5d4cc54bf582e97ddf069402275bc704",
+        "traceparent": "00-8fd66ef5cae961e32a9dd2b3ad24286e-4cf1d7ea6ad92b5b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "a8f0271163be54969401e311e5ceca2e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "794",
+        "Content-Length": "795",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:11:28 GMT",
+        "Date": "Fri, 14 Apr 2023 13:18:39 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -409,11 +409,11 @@
         "Server-SB": "Service-Bus-Resource-Provider/SN1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5d4cc54bf582e97ddf069402275bc704",
-        "x-ms-correlation-request-id": "7728a4b6-c4bc-4556-9fe7-e3d6dd82dfa9",
-        "x-ms-ratelimit-remaining-subscription-reads": "11938",
-        "x-ms-request-id": "68e4707f-53b3-411c-8d38-af4fb52ca3e1_M5SN1_M5SN1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181129Z:7728a4b6-c4bc-4556-9fe7-e3d6dd82dfa9"
+        "x-ms-client-request-id": "a8f0271163be54969401e311e5ceca2e",
+        "x-ms-correlation-request-id": "9fcf6671-bb67-443b-a609-2903a4f332c2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11882",
+        "x-ms-request-id": "b066707f-a68d-41b1-b234-bed8613673d9_M10SN1_M10SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131839Z:9fcf6671-bb67-443b-a609-2903a4f332c2"
       },
       "ResponseBody": {
         "sku": {
@@ -421,8 +421,8 @@
           "tier": "Standard",
           "capacity": 1
         },
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103",
-        "name": "testnamespacemgmt5103",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662",
+        "name": "testnamespacemgmt1662",
         "type": "Microsoft.EventHub/Namespaces",
         "location": "East US 2",
         "tags": {},
@@ -435,31 +435,31 @@
           "maximumThroughputUnits": 0,
           "kafkaEnabled": true,
           "provisioningState": "Created",
-          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt5103",
-          "createdAt": "2023-04-04T18:11:24.79Z",
-          "updatedAt": "2023-04-04T18:11:24.79Z",
-          "serviceBusEndpoint": "https://testnamespacemgmt5103.servicebus.windows.net:443/",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1662",
+          "createdAt": "2023-04-14T13:18:34.963Z",
+          "updatedAt": "2023-04-14T13:18:34.963Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1662.servicebus.windows.net:443/",
           "status": "Activating"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f44269de8ac0611ebfa539686a221c9f-284f515c3c17165e-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "ea68d54ee9665a5c8e141f2231d73b20",
+        "traceparent": "00-8fd66ef5cae961e32a9dd2b3ad24286e-6a19189e8eb2fe52-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "0b5a1a0e41bc00047ae7ec90fb122bc0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "794",
+        "Content-Length": "795",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:11:30 GMT",
+        "Date": "Fri, 14 Apr 2023 13:18:41 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -469,11 +469,11 @@
         "Server-SB": "Service-Bus-Resource-Provider/SN1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "ea68d54ee9665a5c8e141f2231d73b20",
-        "x-ms-correlation-request-id": "1003d27d-6b5a-49ea-9a82-fd9749ac28c6",
-        "x-ms-ratelimit-remaining-subscription-reads": "11937",
-        "x-ms-request-id": "e86a09c8-4f11-4c86-8124-82b08675cd2d_M5SN1_M5SN1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181131Z:1003d27d-6b5a-49ea-9a82-fd9749ac28c6"
+        "x-ms-client-request-id": "0b5a1a0e41bc00047ae7ec90fb122bc0",
+        "x-ms-correlation-request-id": "a6b59b0c-8fba-4f06-8cf8-6ac96f88af83",
+        "x-ms-ratelimit-remaining-subscription-reads": "11881",
+        "x-ms-request-id": "469a60d9-75a5-4808-9ddd-3da2a2c50d81_M10SN1_M10SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131842Z:a6b59b0c-8fba-4f06-8cf8-6ac96f88af83"
       },
       "ResponseBody": {
         "sku": {
@@ -481,8 +481,8 @@
           "tier": "Standard",
           "capacity": 1
         },
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103",
-        "name": "testnamespacemgmt5103",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662",
+        "name": "testnamespacemgmt1662",
         "type": "Microsoft.EventHub/Namespaces",
         "location": "East US 2",
         "tags": {},
@@ -495,31 +495,31 @@
           "maximumThroughputUnits": 0,
           "kafkaEnabled": true,
           "provisioningState": "Created",
-          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt5103",
-          "createdAt": "2023-04-04T18:11:24.79Z",
-          "updatedAt": "2023-04-04T18:11:24.79Z",
-          "serviceBusEndpoint": "https://testnamespacemgmt5103.servicebus.windows.net:443/",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1662",
+          "createdAt": "2023-04-14T13:18:34.963Z",
+          "updatedAt": "2023-04-14T13:18:34.963Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1662.servicebus.windows.net:443/",
           "status": "Activating"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f44269de8ac0611ebfa539686a221c9f-0ced6a62a992778e-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "2d4b3e15141eaaafbd2b7d855a388379",
+        "traceparent": "00-8fd66ef5cae961e32a9dd2b3ad24286e-f1ebbf627640c9a9-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "8148bc1b41ebf850a93019c7a6ed93e1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "794",
+        "Content-Length": "795",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:11:34 GMT",
+        "Date": "Fri, 14 Apr 2023 13:18:46 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -529,11 +529,11 @@
         "Server-SB": "Service-Bus-Resource-Provider/SN1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "2d4b3e15141eaaafbd2b7d855a388379",
-        "x-ms-correlation-request-id": "bc1783c3-c108-429c-bbef-4f2e3e91b1ff",
-        "x-ms-ratelimit-remaining-subscription-reads": "11936",
-        "x-ms-request-id": "ddc3e1bf-b6f8-4c37-85d5-309c69a30e95_M5SN1_M5SN1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181135Z:bc1783c3-c108-429c-bbef-4f2e3e91b1ff"
+        "x-ms-client-request-id": "8148bc1b41ebf850a93019c7a6ed93e1",
+        "x-ms-correlation-request-id": "f747f34f-1efd-47ed-8e96-39508201eb92",
+        "x-ms-ratelimit-remaining-subscription-reads": "11880",
+        "x-ms-request-id": "8c634505-7e48-466c-b072-0145e08ed395_M10SN1_M10SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131846Z:f747f34f-1efd-47ed-8e96-39508201eb92"
       },
       "ResponseBody": {
         "sku": {
@@ -541,8 +541,8 @@
           "tier": "Standard",
           "capacity": 1
         },
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103",
-        "name": "testnamespacemgmt5103",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662",
+        "name": "testnamespacemgmt1662",
         "type": "Microsoft.EventHub/Namespaces",
         "location": "East US 2",
         "tags": {},
@@ -555,31 +555,31 @@
           "maximumThroughputUnits": 0,
           "kafkaEnabled": true,
           "provisioningState": "Created",
-          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt5103",
-          "createdAt": "2023-04-04T18:11:24.79Z",
-          "updatedAt": "2023-04-04T18:11:24.79Z",
-          "serviceBusEndpoint": "https://testnamespacemgmt5103.servicebus.windows.net:443/",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1662",
+          "createdAt": "2023-04-14T13:18:34.963Z",
+          "updatedAt": "2023-04-14T13:18:34.963Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1662.servicebus.windows.net:443/",
           "status": "Activating"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f44269de8ac0611ebfa539686a221c9f-ab83213f9a1a57df-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "3a22d6c24a4962bf69f2ce6dd65ab708",
+        "traceparent": "00-8fd66ef5cae961e32a9dd2b3ad24286e-bf3dcafed0b8121d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "c1e2d48b6ff7d03122ef2dd676055982",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "794",
+        "Content-Length": "795",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:11:43 GMT",
+        "Date": "Fri, 14 Apr 2023 13:18:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -589,11 +589,11 @@
         "Server-SB": "Service-Bus-Resource-Provider/SN1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "3a22d6c24a4962bf69f2ce6dd65ab708",
-        "x-ms-correlation-request-id": "96e053ab-cc75-48b6-a192-43aacc7a642a",
-        "x-ms-ratelimit-remaining-subscription-reads": "11935",
-        "x-ms-request-id": "f5a84576-846e-4762-8fed-f5b92ccda78a_M5SN1_M5SN1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181143Z:96e053ab-cc75-48b6-a192-43aacc7a642a"
+        "x-ms-client-request-id": "c1e2d48b6ff7d03122ef2dd676055982",
+        "x-ms-correlation-request-id": "5baebf60-60be-4deb-8231-83f9189256a4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11879",
+        "x-ms-request-id": "98279227-3f24-4344-b82f-531ebdc65ff0_M10SN1_M10SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131854Z:5baebf60-60be-4deb-8231-83f9189256a4"
       },
       "ResponseBody": {
         "sku": {
@@ -601,8 +601,8 @@
           "tier": "Standard",
           "capacity": 1
         },
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103",
-        "name": "testnamespacemgmt5103",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662",
+        "name": "testnamespacemgmt1662",
         "type": "Microsoft.EventHub/Namespaces",
         "location": "East US 2",
         "tags": {},
@@ -615,31 +615,31 @@
           "maximumThroughputUnits": 0,
           "kafkaEnabled": true,
           "provisioningState": "Created",
-          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt5103",
-          "createdAt": "2023-04-04T18:11:24.79Z",
-          "updatedAt": "2023-04-04T18:11:24.79Z",
-          "serviceBusEndpoint": "https://testnamespacemgmt5103.servicebus.windows.net:443/",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1662",
+          "createdAt": "2023-04-14T13:18:34.963Z",
+          "updatedAt": "2023-04-14T13:18:34.963Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1662.servicebus.windows.net:443/",
           "status": "Activating"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f44269de8ac0611ebfa539686a221c9f-df587663d265ccd7-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "e8ec73ca9a0f3ae526be2d3a6cd6ff56",
+        "traceparent": "00-8fd66ef5cae961e32a9dd2b3ad24286e-a5e85ad4d150925c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "29f622d64985cd42c961628b283c598d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "794",
+        "Content-Length": "795",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:00 GMT",
+        "Date": "Fri, 14 Apr 2023 13:19:10 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -649,11 +649,11 @@
         "Server-SB": "Service-Bus-Resource-Provider/SN1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "e8ec73ca9a0f3ae526be2d3a6cd6ff56",
-        "x-ms-correlation-request-id": "ecd4536f-b08e-4e8a-b7cc-163b852a75d1",
-        "x-ms-ratelimit-remaining-subscription-reads": "11934",
-        "x-ms-request-id": "4b3126f4-d8b0-4fda-afe0-569eddadefd2_M5SN1_M5SN1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181200Z:ecd4536f-b08e-4e8a-b7cc-163b852a75d1"
+        "x-ms-client-request-id": "29f622d64985cd42c961628b283c598d",
+        "x-ms-correlation-request-id": "2f57f595-196e-450b-9df0-13b9b54268cf",
+        "x-ms-ratelimit-remaining-subscription-reads": "11878",
+        "x-ms-request-id": "19eca991-9f5d-4ab8-aaa9-5a33d68abdaf_M10SN1_M10SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131911Z:2f57f595-196e-450b-9df0-13b9b54268cf"
       },
       "ResponseBody": {
         "sku": {
@@ -661,8 +661,8 @@
           "tier": "Standard",
           "capacity": 1
         },
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103",
-        "name": "testnamespacemgmt5103",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662",
+        "name": "testnamespacemgmt1662",
         "type": "Microsoft.EventHub/Namespaces",
         "location": "East US 2",
         "tags": {},
@@ -675,31 +675,31 @@
           "maximumThroughputUnits": 0,
           "kafkaEnabled": true,
           "provisioningState": "Created",
-          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt5103",
-          "createdAt": "2023-04-04T18:11:24.79Z",
-          "updatedAt": "2023-04-04T18:11:24.79Z",
-          "serviceBusEndpoint": "https://testnamespacemgmt5103.servicebus.windows.net:443/",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1662",
+          "createdAt": "2023-04-14T13:18:34.963Z",
+          "updatedAt": "2023-04-14T13:18:34.963Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1662.servicebus.windows.net:443/",
           "status": "Activating"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f44269de8ac0611ebfa539686a221c9f-fd1c3b616ec01036-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "5b5fa59001b4cbd67fe9c42b4541d362",
+        "traceparent": "00-8fd66ef5cae961e32a9dd2b3ad24286e-6d6fc24167f74f0a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "26050b546a2fabc98a785efb137a82a4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "792",
+        "Content-Length": "793",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:31 GMT",
+        "Date": "Fri, 14 Apr 2023 13:19:42 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": [
@@ -709,11 +709,11 @@
         "Server-SB": "Service-Bus-Resource-Provider/SN1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5b5fa59001b4cbd67fe9c42b4541d362",
-        "x-ms-correlation-request-id": "2578fbe4-1e37-4651-a36e-06366a0e61a0",
-        "x-ms-ratelimit-remaining-subscription-reads": "11933",
-        "x-ms-request-id": "1ab8a38e-5b79-4370-be99-8c3f23d49e7d_M5SN1_M5SN1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181232Z:2578fbe4-1e37-4651-a36e-06366a0e61a0"
+        "x-ms-client-request-id": "26050b546a2fabc98a785efb137a82a4",
+        "x-ms-correlation-request-id": "1ae0d652-b6eb-4058-8073-179c764f9527",
+        "x-ms-ratelimit-remaining-subscription-reads": "11877",
+        "x-ms-request-id": "e39d194a-0d0c-4c5d-a404-4792cebda62a_M3SN1_M3SN1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131943Z:1ae0d652-b6eb-4058-8073-179c764f9527"
       },
       "ResponseBody": {
         "sku": {
@@ -721,8 +721,8 @@
           "tier": "Standard",
           "capacity": 1
         },
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103",
-        "name": "testnamespacemgmt5103",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662",
+        "name": "testnamespacemgmt1662",
         "type": "Microsoft.EventHub/Namespaces",
         "location": "East US 2",
         "tags": {},
@@ -735,25 +735,25 @@
           "maximumThroughputUnits": 0,
           "kafkaEnabled": true,
           "provisioningState": "Succeeded",
-          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt5103",
-          "createdAt": "2023-04-04T18:11:24.79Z",
-          "updatedAt": "2023-04-04T18:12:10.84Z",
-          "serviceBusEndpoint": "https://testnamespacemgmt5103.servicebus.windows.net:443/",
+          "metricId": "326100e2-f69d-4268-8503-075374f62b6e:testnamespacemgmt1662",
+          "createdAt": "2023-04-14T13:18:34.963Z",
+          "updatedAt": "2023-04-14T13:19:25.793Z",
+          "serviceBusEndpoint": "https://testnamespacemgmt1662.servicebus.windows.net:443/",
           "status": "Active"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313?api-version=2022-10-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "17",
         "Content-Type": "application/json",
-        "traceparent": "00-52b4089213f9f64f082c8ca49f258e76-c00ed371134c8bda-00",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "4be7bb756a9bf028e8148b1d84f692f3",
+        "traceparent": "00-addc0b7701c1ad0dd3238c78de4f04b6-a3b653225fbb0482-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "f784f1965b6a914215f7950da5a8e596",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -762,22 +762,22 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "539",
+        "Content-Length": "537",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:34 GMT",
+        "Date": "Fri, 14 Apr 2023 13:19:44 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "01f30796-2819-4bb2-9b68-884741339d5a",
-        "x-ms-ratelimit-remaining-subscription-writes": "1176",
-        "x-ms-request-id": "01f30796-2819-4bb2-9b68-884741339d5a",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181234Z:01f30796-2819-4bb2-9b68-884741339d5a"
+        "x-ms-correlation-request-id": "7eef9a6c-151a-4986-bfde-fc2c89fd937f",
+        "x-ms-ratelimit-remaining-subscription-writes": "1173",
+        "x-ms-request-id": "7eef9a6c-151a-4986-bfde-fc2c89fd937f",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131945Z:7eef9a6c-151a-4986-bfde-fc2c89fd937f"
       },
       "ResponseBody": {
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350",
-        "name": "eventhub2350",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313",
+        "name": "eventhub9313",
         "type": "Microsoft.EventHub/namespaces/eventhubs",
         "location": "eastus2",
         "properties": {
@@ -788,8 +788,8 @@
           "messageRetentionInDays": 7,
           "partitionCount": 4,
           "status": "Active",
-          "createdAt": "2023-04-04T18:12:33.857Z",
-          "updatedAt": "2023-04-04T18:12:34.077Z",
+          "createdAt": "2023-04-14T13:19:44.593Z",
+          "updatedAt": "2023-04-14T13:19:44.73Z",
           "partitionIds": [
             "0",
             "1",
@@ -800,16 +800,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup04731?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup07108?api-version=2022-10-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "17",
         "Content-Type": "application/json",
-        "traceparent": "00-fd0830914b4ead7d657c7e74e5375183-d8be13ef9d33e5bb-00",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "5bfb30ddc953219c6826d5baf4e5eacb",
+        "traceparent": "00-3a69785c351d299b217a4d351453f05c-c8533a0945e89f35-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "32006b826c524a599e0dea46b94fdfbd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -818,170 +818,41 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "436",
+        "Content-Length": "435",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:35 GMT",
+        "Date": "Fri, 14 Apr 2023 13:19:45 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "4f91e931-fa50-4bb2-8d03-08b81d1e6e0b",
-        "x-ms-ratelimit-remaining-subscription-writes": "1175",
-        "x-ms-request-id": "4f91e931-fa50-4bb2-8d03-08b81d1e6e0b",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181235Z:4f91e931-fa50-4bb2-8d03-08b81d1e6e0b"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup04731",
-        "name": "testconsumergroup04731",
-        "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
-        "location": "eastus2",
-        "properties": {
-          "createdAt": "2023-04-04T18:12:35.7139121Z",
-          "updatedAt": "2023-04-04T18:12:35.7139121Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup16742?api-version=2022-10-01-preview",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "17",
-        "Content-Type": "application/json",
-        "traceparent": "00-978a983d5c3dc9be08ecd8dcff95749b-3a9d7c6e56aa3414-00",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "0b171bf73bf56a37ccec4badfbf33138",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "properties": {}
-      },
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "436",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:36 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "17c3b584-3e60-487f-95ad-736d374c030e",
-        "x-ms-ratelimit-remaining-subscription-writes": "1174",
-        "x-ms-request-id": "17c3b584-3e60-487f-95ad-736d374c030e",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181237Z:17c3b584-3e60-487f-95ad-736d374c030e"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup16742",
-        "name": "testconsumergroup16742",
-        "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
-        "location": "eastus2",
-        "properties": {
-          "createdAt": "2023-04-04T18:12:37.0889448Z",
-          "updatedAt": "2023-04-04T18:12:37.0889448Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup23274?api-version=2022-10-01-preview",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "17",
-        "Content-Type": "application/json",
-        "traceparent": "00-f9545589954b1dcc1d9e7c381a8b83e8-602481b7d6c45497-00",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "1867a363f221294a32435336f32ea052",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "properties": {}
-      },
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "434",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:37 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2765d260-dec3-4a7a-8cc6-c9585fe03c06",
-        "x-ms-ratelimit-remaining-subscription-writes": "1173",
-        "x-ms-request-id": "2765d260-dec3-4a7a-8cc6-c9585fe03c06",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181238Z:2765d260-dec3-4a7a-8cc6-c9585fe03c06"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup23274",
-        "name": "testconsumergroup23274",
-        "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
-        "location": "eastus2",
-        "properties": {
-          "createdAt": "2023-04-04T18:12:38.229599Z",
-          "updatedAt": "2023-04-04T18:12:38.229599Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup36161?api-version=2022-10-01-preview",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "17",
-        "Content-Type": "application/json",
-        "traceparent": "00-d17935008f4d5afbe5a942669a8bfe6a-dcdb8ce51e0761cf-00",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "6cdb77fff4e8f0c487dc51736d33a482",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "properties": {}
-      },
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "436",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:39 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "309655c2-ccee-4909-82ce-8681501e8464",
+        "x-ms-correlation-request-id": "f70dd891-f790-4e1b-8411-f507ca716aa5",
         "x-ms-ratelimit-remaining-subscription-writes": "1172",
-        "x-ms-request-id": "309655c2-ccee-4909-82ce-8681501e8464",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181239Z:309655c2-ccee-4909-82ce-8681501e8464"
+        "x-ms-request-id": "f70dd891-f790-4e1b-8411-f507ca716aa5",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131946Z:f70dd891-f790-4e1b-8411-f507ca716aa5"
       },
       "ResponseBody": {
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup36161",
-        "name": "testconsumergroup36161",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup07108",
+        "name": "testconsumergroup07108",
         "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
         "location": "eastus2",
         "properties": {
-          "createdAt": "2023-04-04T18:12:39.5890155Z",
-          "updatedAt": "2023-04-04T18:12:39.5890155Z"
+          "createdAt": "2023-04-14T13:19:46.2532964Z",
+          "updatedAt": "2023-04-14T13:19:46.2532964Z"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup46489?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup18835?api-version=2022-10-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "17",
         "Content-Type": "application/json",
-        "traceparent": "00-472d181a218942680c3f7c91b508093e-ff4d55d5667e2be6-00",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "ae63478129d5e1ccc2f7e334d9beaa5b",
+        "traceparent": "00-cde3749eb12f7e7cbdf5c805c61f48bc-39a200d4a3dd6063-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "96d54b91afe995c31a72339de4cf7965",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -990,41 +861,41 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "436",
+        "Content-Length": "435",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:40 GMT",
+        "Date": "Fri, 14 Apr 2023 13:19:46 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0a786835-c16b-41ac-a2bc-078e95ff2a2a",
+        "x-ms-correlation-request-id": "5491de41-fe61-4833-a0b6-0260ba0664f9",
         "x-ms-ratelimit-remaining-subscription-writes": "1171",
-        "x-ms-request-id": "0a786835-c16b-41ac-a2bc-078e95ff2a2a",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181240Z:0a786835-c16b-41ac-a2bc-078e95ff2a2a"
+        "x-ms-request-id": "5491de41-fe61-4833-a0b6-0260ba0664f9",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131947Z:5491de41-fe61-4833-a0b6-0260ba0664f9"
       },
       "ResponseBody": {
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup46489",
-        "name": "testconsumergroup46489",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup18835",
+        "name": "testconsumergroup18835",
         "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
         "location": "eastus2",
         "properties": {
-          "createdAt": "2023-04-04T18:12:40.8234158Z",
-          "updatedAt": "2023-04-04T18:12:40.8234158Z"
+          "createdAt": "2023-04-14T13:19:47.5189456Z",
+          "updatedAt": "2023-04-14T13:19:47.5189456Z"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup58431?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup2307?api-version=2022-10-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "17",
         "Content-Type": "application/json",
-        "traceparent": "00-97b0bd66b8ab807a08a752b60d538b81-553302a3bfd08a2c-00",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "625cbaf3ae7b27a39a15f9b6c510afb3",
+        "traceparent": "00-2c60521c04329c89cb73ceddb689f2c5-7d749be6ccb73e2f-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "a4a417f78544ac2acb4e574a5ba8b650",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1033,41 +904,41 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "436",
+        "Content-Length": "433",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:41 GMT",
+        "Date": "Fri, 14 Apr 2023 13:19:48 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9995d28d-c327-4a79-8c5e-066d0463984e",
+        "x-ms-correlation-request-id": "6f148780-6b24-4e89-ab7d-c8f134449381",
         "x-ms-ratelimit-remaining-subscription-writes": "1170",
-        "x-ms-request-id": "9995d28d-c327-4a79-8c5e-066d0463984e",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181242Z:9995d28d-c327-4a79-8c5e-066d0463984e"
+        "x-ms-request-id": "6f148780-6b24-4e89-ab7d-c8f134449381",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131948Z:6f148780-6b24-4e89-ab7d-c8f134449381"
       },
       "ResponseBody": {
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup58431",
-        "name": "testconsumergroup58431",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup2307",
+        "name": "testconsumergroup2307",
         "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
         "location": "eastus2",
         "properties": {
-          "createdAt": "2023-04-04T18:12:41.9484439Z",
-          "updatedAt": "2023-04-04T18:12:41.9484439Z"
+          "createdAt": "2023-04-14T13:19:48.7064645Z",
+          "updatedAt": "2023-04-14T13:19:48.7064645Z"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup65710?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup37716?api-version=2022-10-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "17",
         "Content-Type": "application/json",
-        "traceparent": "00-276a8f56d86cb47bb8cd7819323ac2e1-8456bd5103de393c-00",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "0fee59ac4e298a0e25fde0bbad1ea617",
+        "traceparent": "00-d1a7207bc3cb8ac8a08e54f956e5dec4-6a3c8484aedbe35c-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "0ac09a17bb989d3d38f926adb93d71e1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1076,41 +947,41 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "436",
+        "Content-Length": "435",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:42 GMT",
+        "Date": "Fri, 14 Apr 2023 13:19:49 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "cfba84c2-f34a-4986-aefa-dcd5b271e81c",
+        "x-ms-correlation-request-id": "fb90298e-73de-439c-b853-b7fe1eda9288",
         "x-ms-ratelimit-remaining-subscription-writes": "1169",
-        "x-ms-request-id": "cfba84c2-f34a-4986-aefa-dcd5b271e81c",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181243Z:cfba84c2-f34a-4986-aefa-dcd5b271e81c"
+        "x-ms-request-id": "fb90298e-73de-439c-b853-b7fe1eda9288",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131950Z:fb90298e-73de-439c-b853-b7fe1eda9288"
       },
       "ResponseBody": {
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup65710",
-        "name": "testconsumergroup65710",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup37716",
+        "name": "testconsumergroup37716",
         "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
         "location": "eastus2",
         "properties": {
-          "createdAt": "2023-04-04T18:12:43.2141044Z",
-          "updatedAt": "2023-04-04T18:12:43.2141044Z"
+          "createdAt": "2023-04-14T13:19:50.0502394Z",
+          "updatedAt": "2023-04-14T13:19:50.0502394Z"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup73794?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup44063?api-version=2022-10-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "17",
         "Content-Type": "application/json",
-        "traceparent": "00-a7a9966f14e107760c9f004c6256323d-3ad4342ed39bfbd9-00",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "c425e93f980686c03b13d32bfce73481",
+        "traceparent": "00-1865473800447b0994d8d1c028fcd6ef-7f435628428590a7-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "1019c857c54de9aa1e616b4abec97c4d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1119,41 +990,41 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "436",
+        "Content-Length": "435",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:43 GMT",
+        "Date": "Fri, 14 Apr 2023 13:19:50 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "72ae40bc-7024-46c6-a10a-c8f93bdf89f6",
+        "x-ms-correlation-request-id": "186605d0-ae41-4a22-ae37-027d89212b2a",
         "x-ms-ratelimit-remaining-subscription-writes": "1168",
-        "x-ms-request-id": "72ae40bc-7024-46c6-a10a-c8f93bdf89f6",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181244Z:72ae40bc-7024-46c6-a10a-c8f93bdf89f6"
+        "x-ms-request-id": "186605d0-ae41-4a22-ae37-027d89212b2a",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131951Z:186605d0-ae41-4a22-ae37-027d89212b2a"
       },
       "ResponseBody": {
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup73794",
-        "name": "testconsumergroup73794",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup44063",
+        "name": "testconsumergroup44063",
         "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
         "location": "eastus2",
         "properties": {
-          "createdAt": "2023-04-04T18:12:44.4016326Z",
-          "updatedAt": "2023-04-04T18:12:44.4016326Z"
+          "createdAt": "2023-04-14T13:19:51.2690123Z",
+          "updatedAt": "2023-04-14T13:19:51.2690123Z"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup85827?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup51992?api-version=2022-10-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "17",
         "Content-Type": "application/json",
-        "traceparent": "00-9bf83c2fd4b1a28c14299c4c2fa508b3-ac8528c1ab2a6526-00",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "2e6d51116bc9d74d55b1c36cecf7539e",
+        "traceparent": "00-1b8c23141b4b1c8b9649569a3ed0e38b-3e781f88b1aedc0a-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "68a4dfb85b5e07670c8b04ff1110e669",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1162,41 +1033,41 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "436",
+        "Content-Length": "435",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:44 GMT",
+        "Date": "Fri, 14 Apr 2023 13:19:51 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "647d45ac-2e35-4c84-af53-a2053bb0582a",
+        "x-ms-correlation-request-id": "903b139e-eb0d-446f-8848-262343c68b3a",
         "x-ms-ratelimit-remaining-subscription-writes": "1167",
-        "x-ms-request-id": "647d45ac-2e35-4c84-af53-a2053bb0582a",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181245Z:647d45ac-2e35-4c84-af53-a2053bb0582a"
+        "x-ms-request-id": "903b139e-eb0d-446f-8848-262343c68b3a",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131952Z:903b139e-eb0d-446f-8848-262343c68b3a"
       },
       "ResponseBody": {
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup85827",
-        "name": "testconsumergroup85827",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup51992",
+        "name": "testconsumergroup51992",
         "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
         "location": "eastus2",
         "properties": {
-          "createdAt": "2023-04-04T18:12:45.5431195Z",
-          "updatedAt": "2023-04-04T18:12:45.5431195Z"
+          "createdAt": "2023-04-14T13:19:52.5346599Z",
+          "updatedAt": "2023-04-14T13:19:52.5346599Z"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup91592?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup63980?api-version=2022-10-01-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "17",
         "Content-Type": "application/json",
-        "traceparent": "00-3fb33155ac3f76c530d63d218476673d-6d5f68ed443d448d-00",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "088dc5d0c1a6892dee3a3b5f2916ab3a",
+        "traceparent": "00-777183de4a52d65502cf2f0d7b37c169-e3457ba1b3928d27-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "e036ee50d4c920167a5ad1527930a960",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1205,295 +1076,424 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "436",
+        "Content-Length": "433",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:46 GMT",
+        "Date": "Fri, 14 Apr 2023 13:19:53 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9dd401e8-a36a-4e87-b6da-db9b075038e1",
+        "x-ms-correlation-request-id": "5b570b2d-8a21-4237-99b7-2cae2bdb72c3",
         "x-ms-ratelimit-remaining-subscription-writes": "1166",
-        "x-ms-request-id": "9dd401e8-a36a-4e87-b6da-db9b075038e1",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181246Z:9dd401e8-a36a-4e87-b6da-db9b075038e1"
+        "x-ms-request-id": "5b570b2d-8a21-4237-99b7-2cae2bdb72c3",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131953Z:5b570b2d-8a21-4237-99b7-2cae2bdb72c3"
       },
       "ResponseBody": {
-        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup91592",
-        "name": "testconsumergroup91592",
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup63980",
+        "name": "testconsumergroup63980",
         "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
         "location": "eastus2",
         "properties": {
-          "createdAt": "2023-04-04T18:12:46.8087758Z",
-          "updatedAt": "2023-04-04T18:12:46.8087758Z"
+          "createdAt": "2023-04-14T13:19:53.706568Z",
+          "updatedAt": "2023-04-14T13:19:53.706568Z"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups?api-version=2022-10-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup76446?api-version=2022-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "17",
+        "Content-Type": "application/json",
+        "traceparent": "00-274bf9461716e6545e0240656ea4eb9a-0e274cf97b82dbd3-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "de3c91856cf909b2403aa6ea0c5085e1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "435",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 14 Apr 2023 13:19:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7048aaae-1358-4d90-a10e-281dc647b90c",
+        "x-ms-ratelimit-remaining-subscription-writes": "1165",
+        "x-ms-request-id": "7048aaae-1358-4d90-a10e-281dc647b90c",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131954Z:7048aaae-1358-4d90-a10e-281dc647b90c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup76446",
+        "name": "testconsumergroup76446",
+        "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
+        "location": "eastus2",
+        "properties": {
+          "createdAt": "2023-04-14T13:19:54.8628311Z",
+          "updatedAt": "2023-04-14T13:19:54.8628311Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup83683?api-version=2022-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "17",
+        "Content-Type": "application/json",
+        "traceparent": "00-a7de2f936a97616fc2c0702ab6b7dc94-85f0607d2955e542-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "13168e790bee478ee30195b4925b5a9f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "433",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 14 Apr 2023 13:19:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5f660a21-6817-42cc-90a8-b529532302a1",
+        "x-ms-ratelimit-remaining-subscription-writes": "1164",
+        "x-ms-request-id": "5f660a21-6817-42cc-90a8-b529532302a1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131956Z:5f660a21-6817-42cc-90a8-b529532302a1"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup83683",
+        "name": "testconsumergroup83683",
+        "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
+        "location": "eastus2",
+        "properties": {
+          "createdAt": "2023-04-14T13:19:56.081604Z",
+          "updatedAt": "2023-04-14T13:19:56.081604Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup9359?api-version=2022-10-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "17",
+        "Content-Type": "application/json",
+        "traceparent": "00-927701b2f9309a9cbcf2933d91f7576c-c6fd091171832f45-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "372d548b8157d68488996f366e094c71",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "433",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 14 Apr 2023 13:19:56 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0581d415-2993-4454-ad4a-cedaaddad3e6",
+        "x-ms-ratelimit-remaining-subscription-writes": "1163",
+        "x-ms-request-id": "0581d415-2993-4454-ad4a-cedaaddad3e6",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131957Z:0581d415-2993-4454-ad4a-cedaaddad3e6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup9359",
+        "name": "testconsumergroup9359",
+        "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
+        "location": "eastus2",
+        "properties": {
+          "createdAt": "2023-04-14T13:19:57.2066213Z",
+          "updatedAt": "2023-04-14T13:19:57.2066213Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "aa550ca17501d77eecb0e6fd194e1b7f",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "491bb6cf96b1ad8696156b1d54aede4b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "4698",
+        "Content-Length": "4683",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:46 GMT",
+        "Date": "Fri, 14 Apr 2023 13:19:56 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1aa26a8e-e971-4b35-8ef8-7a9ed8174550",
+        "x-ms-correlation-request-id": "12d60ca0-466f-4007-83b7-41ded629f7f1",
         "x-ms-inline-count": "",
-        "x-ms-ratelimit-remaining-subscription-reads": "11932",
-        "x-ms-request-id": "1aa26a8e-e971-4b35-8ef8-7a9ed8174550",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181246Z:1aa26a8e-e971-4b35-8ef8-7a9ed8174550"
+        "x-ms-ratelimit-remaining-subscription-reads": "11876",
+        "x-ms-request-id": "12d60ca0-466f-4007-83b7-41ded629f7f1",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131957Z:12d60ca0-466f-4007-83b7-41ded629f7f1"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/$Default",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/$Default",
             "name": "$Default",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:33.938Z",
-              "updatedAt": "2023-04-04T18:12:33.938Z"
+              "createdAt": "2023-04-14T13:19:44.613Z",
+              "updatedAt": "2023-04-14T13:19:44.613Z"
             }
           },
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup04731",
-            "name": "testconsumergroup04731",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup07108",
+            "name": "testconsumergroup07108",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:35.72Z",
-              "updatedAt": "2023-04-04T18:12:35.72Z"
+              "createdAt": "2023-04-14T13:19:46.254Z",
+              "updatedAt": "2023-04-14T13:19:46.254Z"
             }
           },
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup16742",
-            "name": "testconsumergroup16742",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup18835",
+            "name": "testconsumergroup18835",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:37.096Z",
-              "updatedAt": "2023-04-04T18:12:37.096Z"
+              "createdAt": "2023-04-14T13:19:47.52Z",
+              "updatedAt": "2023-04-14T13:19:47.52Z"
             }
           },
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup23274",
-            "name": "testconsumergroup23274",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup2307",
+            "name": "testconsumergroup2307",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:38.236Z",
-              "updatedAt": "2023-04-04T18:12:38.236Z"
+              "createdAt": "2023-04-14T13:19:48.708Z",
+              "updatedAt": "2023-04-14T13:19:48.708Z"
             }
           },
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup36161",
-            "name": "testconsumergroup36161",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup37716",
+            "name": "testconsumergroup37716",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:39.596Z",
-              "updatedAt": "2023-04-04T18:12:39.596Z"
+              "createdAt": "2023-04-14T13:19:50.051Z",
+              "updatedAt": "2023-04-14T13:19:50.051Z"
             }
           },
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup46489",
-            "name": "testconsumergroup46489",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup44063",
+            "name": "testconsumergroup44063",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:40.83Z",
-              "updatedAt": "2023-04-04T18:12:40.83Z"
+              "createdAt": "2023-04-14T13:19:51.27Z",
+              "updatedAt": "2023-04-14T13:19:51.27Z"
             }
           },
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup58431",
-            "name": "testconsumergroup58431",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup51992",
+            "name": "testconsumergroup51992",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:41.955Z",
-              "updatedAt": "2023-04-04T18:12:41.955Z"
+              "createdAt": "2023-04-14T13:19:52.536Z",
+              "updatedAt": "2023-04-14T13:19:52.536Z"
             }
           },
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup65710",
-            "name": "testconsumergroup65710",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup63980",
+            "name": "testconsumergroup63980",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:43.221Z",
-              "updatedAt": "2023-04-04T18:12:43.221Z"
+              "createdAt": "2023-04-14T13:19:53.708Z",
+              "updatedAt": "2023-04-14T13:19:53.708Z"
             }
           },
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup73794",
-            "name": "testconsumergroup73794",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup76446",
+            "name": "testconsumergroup76446",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:44.408Z",
-              "updatedAt": "2023-04-04T18:12:44.408Z"
+              "createdAt": "2023-04-14T13:19:54.864Z",
+              "updatedAt": "2023-04-14T13:19:54.864Z"
             }
           },
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup85827",
-            "name": "testconsumergroup85827",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup83683",
+            "name": "testconsumergroup83683",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:45.564Z",
-              "updatedAt": "2023-04-04T18:12:45.564Z"
+              "createdAt": "2023-04-14T13:19:56.083Z",
+              "updatedAt": "2023-04-14T13:19:56.083Z"
             }
           },
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup91592",
-            "name": "testconsumergroup91592",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup9359",
+            "name": "testconsumergroup9359",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:46.815Z",
-              "updatedAt": "2023-04-04T18:12:46.815Z"
+              "createdAt": "2023-04-14T13:19:57.208Z",
+              "updatedAt": "2023-04-14T13:19:57.208Z"
             }
           }
         ]
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups?api-version=2022-10-01-preview\u0026$skip=5\u0026$top=5",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups?api-version=2022-10-01-preview\u0026$skip=5\u0026$top=5",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "6f16668c04f38f6b3fa4db3012772c9b",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "30c5c04b72b40c22923d66711e1175f7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "2431",
+        "Content-Length": "2423",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:46 GMT",
+        "Date": "Fri, 14 Apr 2023 13:19:56 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "176fc66d-1ba2-454e-910b-fb148bcdea0f",
+        "x-ms-correlation-request-id": "b40dd482-338f-4c9e-9c25-52e6d385bf54",
         "x-ms-inline-count": "",
-        "x-ms-ratelimit-remaining-subscription-reads": "11931",
-        "x-ms-request-id": "176fc66d-1ba2-454e-910b-fb148bcdea0f",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181247Z:176fc66d-1ba2-454e-910b-fb148bcdea0f"
+        "x-ms-ratelimit-remaining-subscription-reads": "11875",
+        "x-ms-request-id": "b40dd482-338f-4c9e-9c25-52e6d385bf54",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131957Z:b40dd482-338f-4c9e-9c25-52e6d385bf54"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup46489",
-            "name": "testconsumergroup46489",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup44063",
+            "name": "testconsumergroup44063",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:40.826Z",
-              "updatedAt": "2023-04-04T18:12:40.826Z"
+              "createdAt": "2023-04-14T13:19:51.28Z",
+              "updatedAt": "2023-04-14T13:19:51.28Z"
             }
           },
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup58431",
-            "name": "testconsumergroup58431",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup51992",
+            "name": "testconsumergroup51992",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:41.951Z",
-              "updatedAt": "2023-04-04T18:12:41.951Z"
+              "createdAt": "2023-04-14T13:19:52.546Z",
+              "updatedAt": "2023-04-14T13:19:52.546Z"
             }
           },
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup65710",
-            "name": "testconsumergroup65710",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup63980",
+            "name": "testconsumergroup63980",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:43.217Z",
-              "updatedAt": "2023-04-04T18:12:43.217Z"
+              "createdAt": "2023-04-14T13:19:53.718Z",
+              "updatedAt": "2023-04-14T13:19:53.718Z"
             }
           },
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup73794",
-            "name": "testconsumergroup73794",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup76446",
+            "name": "testconsumergroup76446",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:44.405Z",
-              "updatedAt": "2023-04-04T18:12:44.405Z"
+              "createdAt": "2023-04-14T13:19:54.858Z",
+              "updatedAt": "2023-04-14T13:19:54.858Z"
             }
           },
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup85827",
-            "name": "testconsumergroup85827",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup83683",
+            "name": "testconsumergroup83683",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:45.545Z",
-              "updatedAt": "2023-04-04T18:12:45.545Z"
+              "createdAt": "2023-04-14T13:19:56.093Z",
+              "updatedAt": "2023-04-14T13:19:56.093Z"
             }
           }
         ],
-        "nextLink": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups?api-version=2022-10-01-preview\u0026$skip=10\u0026$top=5"
+        "nextLink": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups?api-version=2022-10-01-preview\u0026$skip=10\u0026$top=5"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups?api-version=2022-10-01-preview\u0026$skip=10\u0026$top=5",
+      "RequestUri": "https://management.azure.com/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups?api-version=2022-10-01-preview\u0026$skip=10\u0026$top=5",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230404.1 (.NET 6.0.15; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "eb4a3117f3fd5b9546b61bf5da306f9f",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.1.0-alpha.20230414.1 (.NET 6.0.16; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "a4c34349553ff59ace7fa042166782da",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "440",
+        "Content-Length": "437",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 04 Apr 2023 18:12:46 GMT",
+        "Date": "Fri, 14 Apr 2023 13:19:56 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "cd3766f7-01b0-4772-943b-6c051a410692",
+        "x-ms-correlation-request-id": "9b0bd313-1dc5-42e6-bed6-25bf62353996",
         "x-ms-inline-count": "",
-        "x-ms-ratelimit-remaining-subscription-reads": "11930",
-        "x-ms-request-id": "cd3766f7-01b0-4772-943b-6c051a410692",
-        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230404T181247Z:cd3766f7-01b0-4772-943b-6c051a410692"
+        "x-ms-ratelimit-remaining-subscription-reads": "11874",
+        "x-ms-request-id": "9b0bd313-1dc5-42e6-bed6-25bf62353996",
+        "x-ms-routing-request-id": "SOUTHCENTRALUS:20230414T131957Z:9b0bd313-1dc5-42e6-bed6-25bf62353996"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-6140/providers/Microsoft.EventHub/namespaces/testnamespacemgmt5103/eventhubs/eventhub2350/consumergroups/testconsumergroup91592",
-            "name": "testconsumergroup91592",
+            "id": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/testeventhubRG-304/providers/Microsoft.EventHub/namespaces/testnamespacemgmt1662/eventhubs/eventhub9313/consumergroups/testconsumergroup9359",
+            "name": "testconsumergroup9359",
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "location": "eastus2",
             "properties": {
-              "createdAt": "2023-04-04T18:12:46.815Z",
-              "updatedAt": "2023-04-04T18:12:46.815Z"
+              "createdAt": "2023-04-14T13:19:57.214Z",
+              "updatedAt": "2023-04-14T13:19:57.214Z"
             }
           }
         ]
@@ -1502,7 +1502,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1286813011",
+    "RandomSeed": "1009244392",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "326100e2-f69d-4268-8503-075374f62b6e"
   }

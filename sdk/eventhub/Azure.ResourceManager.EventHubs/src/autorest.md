@@ -8,7 +8,7 @@ generate-model-factory: false
 csharp: true
 namespace: Azure.ResourceManager.EventHubs
 output-folder: $(this-folder)/Generated
-require: https://github.com/Azure/azure-rest-api-specs/blob/f69c52dd603c79a8b29ba51483e3aa7fe1b56212/specification/eventhub/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/24166cedd1055380f1b9d40df270bf51b287d7d9/specification/eventhub/resource-manager/readme.md
 tag: package-2022-10-preview
 clear-output-folder: true
 skip-csproj: true

@@ -30,13 +30,15 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="networkSecurityPerimeter"> NetworkSecurityPerimeter related information. </param>
         /// <param name="resourceAssociation"> Information about resource association. </param>
         /// <param name="profile"> Information about current network profile. </param>
-        internal EventHubsNetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IList<EventHubsProvisioningIssue> provisioningIssues, EventHubsNetworkSecurityPerimeter networkSecurityPerimeter, EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile profile) : base(id, name, resourceType, systemData)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal EventHubsNetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IList<EventHubsProvisioningIssue> provisioningIssues, EventHubsNetworkSecurityPerimeter networkSecurityPerimeter, EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile profile, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
             NetworkSecurityPerimeter = networkSecurityPerimeter;
             ResourceAssociation = resourceAssociation;
             Profile = profile;
+            Location = location;
         }
 
         /// <summary> Provisioning state of NetworkSecurityPerimeter configuration propagation. </summary>
@@ -49,5 +51,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get; }
         /// <summary> Information about current network profile. </summary>
         public EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; }
     }
 }
