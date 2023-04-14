@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             return accountResource.Value.GetAutomationVariables();
         }
 
-        [TestCase]
+        [Test]
         public async Task VariableApiTests()
         {
             //1.CreateOrUpdate
@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
             var name3 = Recording.GenerateAssetName("variable");
             var input = ResourceDataHelpers.GetVariableData(name);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            Thread.Sleep(55000);
             AutomationVariableResource variable1 = lro.Value;
             Assert.AreEqual(name, variable1.Data.Name);
             //2.Get

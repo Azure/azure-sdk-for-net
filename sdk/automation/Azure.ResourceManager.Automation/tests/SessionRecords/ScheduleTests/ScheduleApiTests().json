@@ -7,9 +7,9 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Connection": "keep-alive",
-        "traceparent": "00-25ba69570706964c9a454b68728bd2e4-127f84b7c7dd454d-00",
+        "traceparent": "00-25ebb5d7606184489b88b885f47a1bc3-76179a72e877b441-00",
         "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "5749fdd01cd10c6d6c008b6fea124d3a",
+        "x-ms-client-request-id": "e55cf7989e3f32f82f8e2f1bdef32ae3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,15 +18,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "748",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 Apr 2023 08:24:49 GMT",
+        "Date": "Fri, 14 Apr 2023 06:25:57 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "bb661ad6-b608-4127-b100-47e1e54e0b47",
+        "x-ms-correlation-request-id": "a457909a-4954-4d2c-8b6e-9d8214336c3d",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "bb661ad6-b608-4127-b100-47e1e54e0b47",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230413T082450Z:bb661ad6-b608-4127-b100-47e1e54e0b47"
+        "x-ms-request-id": "a457909a-4954-4d2c-8b6e-9d8214336c3d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230414T062557Z:a457909a-4954-4d2c-8b6e-9d8214336c3d"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -57,16 +57,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-7742?api-version=**",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-7171?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "43",
         "Content-Type": "application/json",
-        "traceparent": "00-54ec5c0824a77b41853079bd418bf9d9-dcedc09c9eb73542-00",
+        "traceparent": "00-749a0439bc4aee4a89b7c9cf010091f4-6300c1bc48d8524c-00",
         "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "8c2ff5216d05759fbebbd2b38180c5a8",
+        "x-ms-client-request-id": "5f672b98a095c865c2dc38f864d3853d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -80,19 +80,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "241",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 Apr 2023 08:24:53 GMT",
+        "Date": "Fri, 14 Apr 2023 06:26:01 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d5c5ecbb-1ee0-4f9c-bdd6-dd5fefd246f4",
+        "x-ms-correlation-request-id": "3f8b3a36-85df-42d9-9d9f-de1a5a8f1a35",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "d5c5ecbb-1ee0-4f9c-bdd6-dd5fefd246f4",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230413T082453Z:d5c5ecbb-1ee0-4f9c-bdd6-dd5fefd246f4"
+        "x-ms-request-id": "3f8b3a36-85df-42d9-9d9f-de1a5a8f1a35",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230414T062601Z:3f8b3a36-85df-42d9-9d9f-de1a5a8f1a35"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742",
-        "name": "testRG-7742",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171",
+        "name": "testRG-7171",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus",
         "tags": {
@@ -104,16 +104,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118?api-version=2021-06-22",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968?api-version=2021-06-22",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "59",
         "Content-Type": "application/json",
-        "traceparent": "00-7ba933d506db4841b2d49086cf2b2d51-3794011179e94348-00",
+        "traceparent": "00-1f323fb6de97d642906ab6ff4727044a-01dc43f91ddcbe4c-00",
         "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "73874d0f9a118655af6c87e897a34421",
+        "x-ms-client-request-id": "6692daef54f03d727b2e213ac7330d13",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -129,25 +129,25 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 Apr 2023 08:24:59 GMT",
+        "Date": "Fri, 14 Apr 2023 06:26:07 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118?api-version=2021-06-22",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968?api-version=2021-06-22",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2394778b-b90c-4f9e-8f04-cd2715003f8e",
+        "x-ms-correlation-request-id": "285b2517-1e57-46bb-824d-c96ab8695a2b",
         "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "d621e87e-41be-4495-b4d7-5f9ef0ba61ec",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230413T082500Z:2394778b-b90c-4f9e-8f04-cd2715003f8e"
+        "x-ms-request-id": "086ac164-6706-4096-99e7-401c99c677ab",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230414T062608Z:285b2517-1e57-46bb-824d-c96ab8695a2b"
       },
       "ResponseBody": {
-        "name": "account3118",
+        "name": "account5968",
         "systemData": {
-          "createdAt": "2023-04-13T08:24:57.81\u002B00:00",
-          "lastModifiedAt": "2023-04-13T08:24:57.81\u002B00:00"
+          "createdAt": "2023-04-14T06:26:06.48\u002B00:00",
+          "lastModifiedAt": "2023-04-14T06:26:06.48\u002B00:00"
         },
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968",
         "type": "Microsoft.Automation/AutomationAccounts",
         "location": "eastus",
         "tags": {},
@@ -160,14 +160,14 @@
             "capacity": null
           },
           "state": "Ok",
-          "RegistrationUrl": "https://bded9b56-150b-420f-9a58-16893dcf1109.agentsvc.eus.azure-automation.net/accounts/bded9b56-150b-420f-9a58-16893dcf1109",
+          "RegistrationUrl": "https://5b31acaf-ff96-4722-8c6a-f13774e24b12.agentsvc.eus.azure-automation.net/accounts/5b31acaf-ff96-4722-8c6a-f13774e24b12",
           "encryption": {
             "keySource": "Microsoft.Automation",
             "identity": {
               "userAssignedIdentity": null
             }
           },
-          "automationHybridServiceUrl": "https://bded9b56-150b-420f-9a58-16893dcf1109.jrds.eus.azure-automation.net/automationAccounts/bded9b56-150b-420f-9a58-16893dcf1109",
+          "automationHybridServiceUrl": "https://5b31acaf-ff96-4722-8c6a-f13774e24b12.jrds.eus.azure-automation.net/automationAccounts/5b31acaf-ff96-4722-8c6a-f13774e24b12",
           "RuntimeConfiguration": {
             "powershell": {
               "builtinModules": {
@@ -180,258 +180,29 @@
               }
             }
           },
-          "creationTime": "2023-04-13T08:24:57.81\u002B00:00",
+          "creationTime": "2023-04-14T06:26:06.48\u002B00:00",
           "lastModifiedBy": null,
-          "lastModifiedTime": "2023-04-13T08:24:57.81\u002B00:00"
+          "lastModifiedTime": "2023-04-14T06:26:06.48\u002B00:00"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule7274?api-version=2020-01-13-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule3732?api-version=2020-01-13-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "113",
         "Content-Type": "application/json",
-        "traceparent": "00-fa2c288cba7dc841ade0f325845c160d-dcaeee66f26b7948-00",
+        "traceparent": "00-bdabc403aada0f49b06cf1d0a53699e2-631a191131737d46-00",
         "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "8fcb4345e1aa61129a58ea7fc6c7f402",
+        "x-ms-client-request-id": "57038bcf1cf7c17dbf39cabaa9dee103",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "name": "schedule7274",
+        "name": "schedule3732",
         "properties": {
-          "startTime": "2023-04-13T08:35:01.1771043Z",
-          "interval": 1,
-          "frequency": "Hour"
-        }
-      },
-      "StatusCode": 201,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "692",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 Apr 2023 08:25:00 GMT",
-        "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule7274?api-version=2020-01-13-preview",
-        "Pragma": "no-cache",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1418c14e-12c2-4916-a074-1dbdde1c51d0",
-        "x-ms-ratelimit-remaining-subscription-writes": "1197",
-        "x-ms-request-id": "1b62e3d2-9152-412e-9f9d-3aaeb8c8fefb",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230413T082501Z:1418c14e-12c2-4916-a074-1dbdde1c51d0"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule7274",
-        "name": "schedule7274",
-        "type": "Microsoft.Automation/AutomationAccounts/Schedules",
-        "properties": {
-          "description": null,
-          "startTime": "2023-04-13T08:35:00\u002B00:00",
-          "startTimeOffsetMinutes": 0.0,
-          "expiryTime": "9999-12-31T23:59:00\u002B00:00",
-          "expiryTimeOffsetMinutes": 0.0,
-          "isEnabled": true,
-          "nextRun": "2023-04-13T08:35:00\u002B00:00",
-          "nextRunOffsetMinutes": 0.0,
-          "interval": 1,
-          "frequency": "Hour",
-          "creationTime": "2023-04-13T08:25:01.0266667\u002B00:00",
-          "lastModifiedTime": "2023-04-13T08:25:01.0266667\u002B00:00",
-          "timeZone": "Etc/UTC",
-          "advancedSchedule": null
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule7274?api-version=2020-01-13-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-405031cdd23a9748874f29e880f340f6-20699132e0358a42-00",
-        "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "0fa9b300da5b550601178d27178e91b9",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "692",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 Apr 2023 08:25:01 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "5fda152e-a0ff-4d71-b9e4-eb412a1ae608",
-        "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "e7a53232-5ff6-4da7-bcb2-d15d69690e49",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230413T082501Z:5fda152e-a0ff-4d71-b9e4-eb412a1ae608"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule7274",
-        "name": "schedule7274",
-        "type": "Microsoft.Automation/AutomationAccounts/Schedules",
-        "properties": {
-          "description": null,
-          "startTime": "2023-04-13T08:35:00\u002B00:00",
-          "startTimeOffsetMinutes": 0.0,
-          "expiryTime": "9999-12-31T23:59:00\u002B00:00",
-          "expiryTimeOffsetMinutes": 0.0,
-          "isEnabled": true,
-          "nextRun": "2023-04-13T08:35:00\u002B00:00",
-          "nextRunOffsetMinutes": 0.0,
-          "interval": 1,
-          "frequency": "Hour",
-          "creationTime": "2023-04-13T08:25:01.0266667\u002B00:00",
-          "lastModifiedTime": "2023-04-13T08:25:01.0266667\u002B00:00",
-          "timeZone": "Etc/UTC",
-          "advancedSchedule": null
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule7274?api-version=2020-01-13-preview",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "113",
-        "Content-Type": "application/json",
-        "traceparent": "00-0719196953d3df4bb7a1904fff378bec-177b84ea1f9fff4e-00",
-        "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "b2630d7fbe4492dcff38ba2dc5ecc021",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "name": "schedule7274",
-        "properties": {
-          "startTime": "2023-04-13T08:35:01.1771043Z",
-          "interval": 1,
-          "frequency": "Hour"
-        }
-      },
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "692",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 Apr 2023 08:25:01 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "33692b06-4570-482e-b1f1-f17a04bf99d6",
-        "x-ms-ratelimit-remaining-subscription-writes": "1196",
-        "x-ms-request-id": "171e123b-1e63-4b5e-83b2-0a3a75936fec",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230413T082502Z:33692b06-4570-482e-b1f1-f17a04bf99d6"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule7274",
-        "name": "schedule7274",
-        "type": "Microsoft.Automation/AutomationAccounts/Schedules",
-        "properties": {
-          "description": null,
-          "startTime": "2023-04-13T08:35:00\u002B00:00",
-          "startTimeOffsetMinutes": 0.0,
-          "expiryTime": "9999-12-31T23:59:00\u002B00:00",
-          "expiryTimeOffsetMinutes": 0.0,
-          "isEnabled": true,
-          "nextRun": "2023-04-13T08:35:00\u002B00:00",
-          "nextRunOffsetMinutes": 0.0,
-          "interval": 1,
-          "frequency": "Hour",
-          "creationTime": "2023-04-13T08:25:01.0266667\u002B00:00",
-          "lastModifiedTime": "2023-04-13T08:25:01.0266667\u002B00:00",
-          "timeZone": "Etc/UTC",
-          "advancedSchedule": null
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule6478?api-version=2020-01-13-preview",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "113",
-        "Content-Type": "application/json",
-        "traceparent": "00-0470c22737fa7548aa7e687476dcbcc4-1e08eb1419464342-00",
-        "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "6e44a1a3f11d6b5c3d758d9254eb4a0c",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "name": "schedule7274",
-        "properties": {
-          "startTime": "2023-04-13T08:35:01.1771043Z",
-          "interval": 1,
-          "frequency": "Hour"
-        }
-      },
-      "StatusCode": 201,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "692",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 Apr 2023 08:25:02 GMT",
-        "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule6478?api-version=2020-01-13-preview",
-        "Pragma": "no-cache",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "84fda468-c076-4b0e-9f91-cfad679583fb",
-        "x-ms-ratelimit-remaining-subscription-writes": "1195",
-        "x-ms-request-id": "8bf43215-d666-473d-95ab-fd992f1cad1a",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230413T082503Z:84fda468-c076-4b0e-9f91-cfad679583fb"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule6478",
-        "name": "schedule6478",
-        "type": "Microsoft.Automation/AutomationAccounts/Schedules",
-        "properties": {
-          "description": null,
-          "startTime": "2023-04-13T08:35:00\u002B00:00",
-          "startTimeOffsetMinutes": 0.0,
-          "expiryTime": "9999-12-31T23:59:00\u002B00:00",
-          "expiryTimeOffsetMinutes": 0.0,
-          "isEnabled": true,
-          "nextRun": "2023-04-13T08:35:00\u002B00:00",
-          "nextRunOffsetMinutes": 0.0,
-          "interval": 1,
-          "frequency": "Hour",
-          "creationTime": "2023-04-13T08:25:03.1366667\u002B00:00",
-          "lastModifiedTime": "2023-04-13T08:25:03.1366667\u002B00:00",
-          "timeZone": "Etc/UTC",
-          "advancedSchedule": null
-        }
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule6416?api-version=2020-01-13-preview",
-      "RequestMethod": "PUT",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "113",
-        "Content-Type": "application/json",
-        "traceparent": "00-03c08bce5ec6984c89ecca3b3c76acea-4bd7d218c3057344-00",
-        "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "b9ff30c6416341bed61710221fd89015",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "name": "schedule7274",
-        "properties": {
-          "startTime": "2023-04-13T08:35:01.1771043Z",
+          "startTime": "2023-04-14T16:00:00.0000000Z",
           "interval": 1,
           "frequency": "Hour"
         }
@@ -441,129 +212,358 @@
         "Cache-Control": "no-cache",
         "Content-Length": "682",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 Apr 2023 08:25:03 GMT",
+        "Date": "Fri, 14 Apr 2023 06:26:08 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule6416?api-version=2020-01-13-preview",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule3732?api-version=2020-01-13-preview",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ce512c2e-592b-439b-91fd-91c8ad4090b8",
-        "x-ms-ratelimit-remaining-subscription-writes": "1194",
-        "x-ms-request-id": "8a64d87a-e6ac-4256-8934-dd96a6e26da4",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230413T082503Z:ce512c2e-592b-439b-91fd-91c8ad4090b8"
+        "x-ms-correlation-request-id": "c26dd023-5d58-4d73-ae20-4d51f20f95c0",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "82b00d12-ec2c-482e-bd96-acfca0ba77fa",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230414T062609Z:c26dd023-5d58-4d73-ae20-4d51f20f95c0"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule6416",
-        "name": "schedule6416",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule3732",
+        "name": "schedule3732",
         "type": "Microsoft.Automation/AutomationAccounts/Schedules",
         "properties": {
           "description": null,
-          "startTime": "2023-04-13T08:35:00\u002B00:00",
+          "startTime": "2023-04-14T16:00:00\u002B00:00",
           "startTimeOffsetMinutes": 0.0,
           "expiryTime": "9999-12-31T23:59:00\u002B00:00",
           "expiryTimeOffsetMinutes": 0.0,
           "isEnabled": true,
-          "nextRun": "2023-04-13T08:35:00\u002B00:00",
+          "nextRun": "2023-04-14T16:00:00\u002B00:00",
           "nextRunOffsetMinutes": 0.0,
           "interval": 1,
           "frequency": "Hour",
-          "creationTime": "2023-04-13T08:25:03.86\u002B00:00",
-          "lastModifiedTime": "2023-04-13T08:25:03.86\u002B00:00",
+          "creationTime": "2023-04-14T06:26:09.03\u002B00:00",
+          "lastModifiedTime": "2023-04-14T06:26:09.03\u002B00:00",
           "timeZone": "Etc/UTC",
           "advancedSchedule": null
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules?api-version=2020-01-13-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule3732?api-version=2020-01-13-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-bd0d234c39193d40b404efaab2a790df-78a25aff2041754d-00",
+        "traceparent": "00-6ec4d9683d3fd141a261a76d7ba26942-5ad5351ff22bad43-00",
         "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "75846b56224a8e9cb1f875ce304a3d13",
+        "x-ms-client-request-id": "a816504ff4d71a2272438efaa92be409",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "2080",
+        "Content-Length": "682",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 Apr 2023 08:25:04 GMT",
+        "Date": "Fri, 14 Apr 2023 06:26:09 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ad9f354c-2eac-4bfe-98d3-bf47f9d314b1",
+        "x-ms-correlation-request-id": "c9f9a132-650a-437f-8fdf-6906af655447",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "9af8712c-a9c8-4cd5-b6fc-2e34066f9a14",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230414T062609Z:c9f9a132-650a-437f-8fdf-6906af655447"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule3732",
+        "name": "schedule3732",
+        "type": "Microsoft.Automation/AutomationAccounts/Schedules",
+        "properties": {
+          "description": null,
+          "startTime": "2023-04-14T16:00:00\u002B00:00",
+          "startTimeOffsetMinutes": 0.0,
+          "expiryTime": "9999-12-31T23:59:00\u002B00:00",
+          "expiryTimeOffsetMinutes": 0.0,
+          "isEnabled": true,
+          "nextRun": "2023-04-14T16:00:00\u002B00:00",
+          "nextRunOffsetMinutes": 0.0,
+          "interval": 1,
+          "frequency": "Hour",
+          "creationTime": "2023-04-14T06:26:09.03\u002B00:00",
+          "lastModifiedTime": "2023-04-14T06:26:09.03\u002B00:00",
+          "timeZone": "Etc/UTC",
+          "advancedSchedule": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule3732?api-version=2020-01-13-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "113",
+        "Content-Type": "application/json",
+        "traceparent": "00-a2b794e4237d3748b171dc7c4585bbc7-079b52c3478d7a44-00",
+        "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "706e6af783ec499b7392b303b073775c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "schedule3732",
+        "properties": {
+          "startTime": "2023-04-14T16:00:00.0000000Z",
+          "interval": 1,
+          "frequency": "Hour"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "682",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 14 Apr 2023 06:26:10 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "07d06c98-f96f-44ed-b7e9-87554be4cf86",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "c0d7a3a2-3982-4958-a940-b1426440f590",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230414T062610Z:07d06c98-f96f-44ed-b7e9-87554be4cf86"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule3732",
+        "name": "schedule3732",
+        "type": "Microsoft.Automation/AutomationAccounts/Schedules",
+        "properties": {
+          "description": null,
+          "startTime": "2023-04-14T16:00:00\u002B00:00",
+          "startTimeOffsetMinutes": 0.0,
+          "expiryTime": "9999-12-31T23:59:00\u002B00:00",
+          "expiryTimeOffsetMinutes": 0.0,
+          "isEnabled": true,
+          "nextRun": "2023-04-14T16:00:00\u002B00:00",
+          "nextRunOffsetMinutes": 0.0,
+          "interval": 1,
+          "frequency": "Hour",
+          "creationTime": "2023-04-14T06:26:09.03\u002B00:00",
+          "lastModifiedTime": "2023-04-14T06:26:09.03\u002B00:00",
+          "timeZone": "Etc/UTC",
+          "advancedSchedule": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule6195?api-version=2020-01-13-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "113",
+        "Content-Type": "application/json",
+        "traceparent": "00-58b8307b2a77fa4dbdd05aa1bdd96297-0a15b37efe7bd449-00",
+        "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "c3bd30e53444da4369e8e5b38e821893",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "schedule3732",
+        "properties": {
+          "startTime": "2023-04-14T16:00:00.0000000Z",
+          "interval": 1,
+          "frequency": "Hour"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "682",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 14 Apr 2023 06:26:10 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule6195?api-version=2020-01-13-preview",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a9ec8ad2-c096-4836-bb99-d4362ebf9c0e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "afcc7a6a-c461-4e3c-80e9-420539362d1b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230414T062611Z:a9ec8ad2-c096-4836-bb99-d4362ebf9c0e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule6195",
+        "name": "schedule6195",
+        "type": "Microsoft.Automation/AutomationAccounts/Schedules",
+        "properties": {
+          "description": null,
+          "startTime": "2023-04-14T16:00:00\u002B00:00",
+          "startTimeOffsetMinutes": 0.0,
+          "expiryTime": "9999-12-31T23:59:00\u002B00:00",
+          "expiryTimeOffsetMinutes": 0.0,
+          "isEnabled": true,
+          "nextRun": "2023-04-14T16:00:00\u002B00:00",
+          "nextRunOffsetMinutes": 0.0,
+          "interval": 1,
+          "frequency": "Hour",
+          "creationTime": "2023-04-14T06:26:11.14\u002B00:00",
+          "lastModifiedTime": "2023-04-14T06:26:11.14\u002B00:00",
+          "timeZone": "Etc/UTC",
+          "advancedSchedule": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule9873?api-version=2020-01-13-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "113",
+        "Content-Type": "application/json",
+        "traceparent": "00-6e85aa049b797a49bb4bd8df36ce5a05-2004ae7efca46441-00",
+        "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "3fc3c155716fcc16b4cd3444401e6afe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "schedule3732",
+        "properties": {
+          "startTime": "2023-04-14T16:00:00.0000000Z",
+          "interval": 1,
+          "frequency": "Hour"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "682",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 14 Apr 2023 06:26:11 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule9873?api-version=2020-01-13-preview",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "840b5500-0be2-409c-a0a0-cfeeaa74a674",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "935a0896-f11f-48de-a7c1-3f402095678e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230414T062611Z:840b5500-0be2-409c-a0a0-cfeeaa74a674"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule9873",
+        "name": "schedule9873",
+        "type": "Microsoft.Automation/AutomationAccounts/Schedules",
+        "properties": {
+          "description": null,
+          "startTime": "2023-04-14T16:00:00\u002B00:00",
+          "startTimeOffsetMinutes": 0.0,
+          "expiryTime": "9999-12-31T23:59:00\u002B00:00",
+          "expiryTimeOffsetMinutes": 0.0,
+          "isEnabled": true,
+          "nextRun": "2023-04-14T16:00:00\u002B00:00",
+          "nextRunOffsetMinutes": 0.0,
+          "interval": 1,
+          "frequency": "Hour",
+          "creationTime": "2023-04-14T06:26:11.82\u002B00:00",
+          "lastModifiedTime": "2023-04-14T06:26:11.82\u002B00:00",
+          "timeZone": "Etc/UTC",
+          "advancedSchedule": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules?api-version=2020-01-13-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-640dc9a4cbad314eb9a5c151461f30ab-ffd4a5e30d257149-00",
+        "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "791431cb206ec2c4269307049de8baf0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2065",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 14 Apr 2023 06:26:12 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1c16bf43-4fe9-4c97-bcb9-8bf6d0989124",
         "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "1ee0f4d5-4b4f-4f39-af9b-8e631e36f7ef",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230413T082504Z:ad9f354c-2eac-4bfe-98d3-bf47f9d314b1"
+        "x-ms-request-id": "8b92eddc-3957-4458-abeb-3422346d65b0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230414T062612Z:1c16bf43-4fe9-4c97-bcb9-8bf6d0989124"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule6416",
-            "name": "schedule6416",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule3732",
+            "name": "schedule3732",
             "type": "Microsoft.Automation/AutomationAccounts/Schedules",
             "properties": {
               "description": null,
-              "startTime": "2023-04-13T08:35:00\u002B00:00",
+              "startTime": "2023-04-14T16:00:00\u002B00:00",
               "startTimeOffsetMinutes": 0.0,
               "expiryTime": "9999-12-31T23:59:00\u002B00:00",
               "expiryTimeOffsetMinutes": 0.0,
               "isEnabled": true,
-              "nextRun": "2023-04-13T08:35:00\u002B00:00",
+              "nextRun": "2023-04-14T16:00:00\u002B00:00",
               "nextRunOffsetMinutes": 0.0,
               "interval": 1,
               "frequency": "Hour",
-              "creationTime": "2023-04-13T08:25:03.86\u002B00:00",
-              "lastModifiedTime": "2023-04-13T08:25:03.86\u002B00:00",
+              "creationTime": "2023-04-14T06:26:09.03\u002B00:00",
+              "lastModifiedTime": "2023-04-14T06:26:10.4433333\u002B00:00",
               "timeZone": "Etc/UTC",
               "advancedSchedule": null
             }
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule6478",
-            "name": "schedule6478",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule6195",
+            "name": "schedule6195",
             "type": "Microsoft.Automation/AutomationAccounts/Schedules",
             "properties": {
               "description": null,
-              "startTime": "2023-04-13T08:35:00\u002B00:00",
+              "startTime": "2023-04-14T16:00:00\u002B00:00",
               "startTimeOffsetMinutes": 0.0,
               "expiryTime": "9999-12-31T23:59:00\u002B00:00",
               "expiryTimeOffsetMinutes": 0.0,
               "isEnabled": true,
-              "nextRun": "2023-04-13T08:35:00\u002B00:00",
+              "nextRun": "2023-04-14T16:00:00\u002B00:00",
               "nextRunOffsetMinutes": 0.0,
               "interval": 1,
               "frequency": "Hour",
-              "creationTime": "2023-04-13T08:25:03.1366667\u002B00:00",
-              "lastModifiedTime": "2023-04-13T08:25:03.1366667\u002B00:00",
+              "creationTime": "2023-04-14T06:26:11.14\u002B00:00",
+              "lastModifiedTime": "2023-04-14T06:26:11.14\u002B00:00",
               "timeZone": "Etc/UTC",
               "advancedSchedule": null
             }
           },
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule7274",
-            "name": "schedule7274",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule9873",
+            "name": "schedule9873",
             "type": "Microsoft.Automation/AutomationAccounts/Schedules",
             "properties": {
               "description": null,
-              "startTime": "2023-04-13T08:35:00\u002B00:00",
+              "startTime": "2023-04-14T16:00:00\u002B00:00",
               "startTimeOffsetMinutes": 0.0,
               "expiryTime": "9999-12-31T23:59:00\u002B00:00",
               "expiryTimeOffsetMinutes": 0.0,
               "isEnabled": true,
-              "nextRun": "2023-04-13T08:35:00\u002B00:00",
+              "nextRun": "2023-04-14T16:00:00\u002B00:00",
               "nextRunOffsetMinutes": 0.0,
               "interval": 1,
               "frequency": "Hour",
-              "creationTime": "2023-04-13T08:25:01.0266667\u002B00:00",
-              "lastModifiedTime": "2023-04-13T08:25:02.4233333\u002B00:00",
+              "creationTime": "2023-04-14T06:26:11.82\u002B00:00",
+              "lastModifiedTime": "2023-04-14T06:26:11.82\u002B00:00",
               "timeZone": "Etc/UTC",
               "advancedSchedule": null
             }
@@ -572,64 +572,64 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule7274?api-version=2020-01-13-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule3732?api-version=2020-01-13-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a894d5bb55ad7e4b89a2a6204f983233-feb5263f922b9c49-00",
+        "traceparent": "00-28a59fd96a6b0a43af4c820d2e88b6d2-b54a0b4e7873bb4a-00",
         "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "9466aeee07ec61bde3029806e1394b64",
+        "x-ms-client-request-id": "eead207a38af74ec19f00e77ffff994a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "692",
+        "Content-Length": "687",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 Apr 2023 08:25:04 GMT",
+        "Date": "Fri, 14 Apr 2023 06:26:12 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c4d58e35-e491-40e1-ae50-21e53ffb802a",
+        "x-ms-correlation-request-id": "b9d5738b-6f55-4ef3-a18f-e43f957ac83a",
         "x-ms-ratelimit-remaining-subscription-reads": "11996",
-        "x-ms-request-id": "4ea2fe7e-ffe4-4159-95f7-76b02eaffae5",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230413T082505Z:c4d58e35-e491-40e1-ae50-21e53ffb802a"
+        "x-ms-request-id": "4a00e5e4-3c52-4c37-b451-6ba60e48d186",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230414T062613Z:b9d5738b-6f55-4ef3-a18f-e43f957ac83a"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule7274",
-        "name": "schedule7274",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule3732",
+        "name": "schedule3732",
         "type": "Microsoft.Automation/AutomationAccounts/Schedules",
         "properties": {
           "description": null,
-          "startTime": "2023-04-13T08:35:00\u002B00:00",
+          "startTime": "2023-04-14T16:00:00\u002B00:00",
           "startTimeOffsetMinutes": 0.0,
           "expiryTime": "9999-12-31T23:59:00\u002B00:00",
           "expiryTimeOffsetMinutes": 0.0,
           "isEnabled": true,
-          "nextRun": "2023-04-13T08:35:00\u002B00:00",
+          "nextRun": "2023-04-14T16:00:00\u002B00:00",
           "nextRunOffsetMinutes": 0.0,
           "interval": 1,
           "frequency": "Hour",
-          "creationTime": "2023-04-13T08:25:01.0266667\u002B00:00",
-          "lastModifiedTime": "2023-04-13T08:25:02.4233333\u002B00:00",
+          "creationTime": "2023-04-14T06:26:09.03\u002B00:00",
+          "lastModifiedTime": "2023-04-14T06:26:10.4433333\u002B00:00",
           "timeZone": "Etc/UTC",
           "advancedSchedule": null
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule72741?api-version=2020-01-13-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule37321?api-version=2020-01-13-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-cbd3f17fe761454b9f012462faa0b5e2-50c2b62f9157994a-00",
+        "traceparent": "00-176e561c923bfc4f8bde2e608fb8a7cb-594cdd92a8a6614a-00",
         "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "e93b77e5d467a4c29471076bcbef118b",
+        "x-ms-client-request-id": "5de8e67e9e6e3424fd0019dc6a112fcc",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -638,16 +638,16 @@
         "Cache-Control": "no-cache",
         "Content-Length": "32",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 Apr 2023 08:25:05 GMT",
+        "Date": "Fri, 14 Apr 2023 06:26:13 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "26b971bf-3f79-417d-8ac0-cb9a29bfdc50",
+        "x-ms-correlation-request-id": "311d1901-285e-49a5-89bf-d01916787a65",
         "x-ms-ratelimit-remaining-subscription-reads": "11995",
-        "x-ms-request-id": "0763ea58-f2f9-4946-b9fb-111d7fc3af70",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230413T082505Z:26b971bf-3f79-417d-8ac0-cb9a29bfdc50"
+        "x-ms-request-id": "580e8603-217d-4e44-835d-2db587848a3d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230414T062613Z:311d1901-285e-49a5-89bf-d01916787a65"
       },
       "ResponseBody": {
         "code": "NotFound",
@@ -655,64 +655,64 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule7274?api-version=2020-01-13-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule3732?api-version=2020-01-13-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-266188feb5e2284692c907f4b1012518-f124f08f94330144-00",
+        "traceparent": "00-8eb2222c8f75a44fa5fe08faa4c92aef-a2af0f84b8600947-00",
         "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "7134fcd9fb714f29ad2292478a95ad77",
+        "x-ms-client-request-id": "20c944127b71924f44a05f7e124cc326",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "692",
+        "Content-Length": "687",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 Apr 2023 08:25:05 GMT",
+        "Date": "Fri, 14 Apr 2023 06:26:13 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "5ea742e6-ecd7-412a-8bda-b20310b3c5fb",
+        "x-ms-correlation-request-id": "3e3c2130-b97f-4f56-9484-49d005f772c7",
         "x-ms-ratelimit-remaining-subscription-reads": "11994",
-        "x-ms-request-id": "8d522251-a7c4-4f1c-b799-1c45313bf5f2",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230413T082506Z:5ea742e6-ecd7-412a-8bda-b20310b3c5fb"
+        "x-ms-request-id": "2e2c65ca-fcbc-43fd-8815-5189b85aa4e9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230414T062614Z:3e3c2130-b97f-4f56-9484-49d005f772c7"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule7274",
-        "name": "schedule7274",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule3732",
+        "name": "schedule3732",
         "type": "Microsoft.Automation/AutomationAccounts/Schedules",
         "properties": {
           "description": null,
-          "startTime": "2023-04-13T08:35:00\u002B00:00",
+          "startTime": "2023-04-14T16:00:00\u002B00:00",
           "startTimeOffsetMinutes": 0.0,
           "expiryTime": "9999-12-31T23:59:00\u002B00:00",
           "expiryTimeOffsetMinutes": 0.0,
           "isEnabled": true,
-          "nextRun": "2023-04-13T08:35:00\u002B00:00",
+          "nextRun": "2023-04-14T16:00:00\u002B00:00",
           "nextRunOffsetMinutes": 0.0,
           "interval": 1,
           "frequency": "Hour",
-          "creationTime": "2023-04-13T08:25:01.0266667\u002B00:00",
-          "lastModifiedTime": "2023-04-13T08:25:02.4233333\u002B00:00",
+          "creationTime": "2023-04-14T06:26:09.03\u002B00:00",
+          "lastModifiedTime": "2023-04-14T06:26:10.4433333\u002B00:00",
           "timeZone": "Etc/UTC",
           "advancedSchedule": null
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7742/providers/Microsoft.Automation/automationAccounts/account3118/schedules/schedule7274?api-version=2020-01-13-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-7171/providers/Microsoft.Automation/automationAccounts/account5968/schedules/schedule3732?api-version=2020-01-13-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-118252d9e248fb42919ea6f837fe9292-137e2bfcf6371645-00",
+        "traceparent": "00-e64c20b99a86f64193e566d75615aab7-bf2411e4fde35e41-00",
         "User-Agent": "azsdk-net-ResourceManager.Automation/1.1.0-alpha.20230413.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "b9e911ac540e19acecc2007bff5296f3",
+        "x-ms-client-request-id": "b686bcf95cffdb82fb79f1ae1f100a08",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -720,23 +720,23 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Thu, 13 Apr 2023 08:25:06 GMT",
+        "Date": "Fri, 14 Apr 2023 06:26:14 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ef9423ad-ebc9-43c3-9197-f0d726bc1734",
+        "x-ms-correlation-request-id": "ecfa708f-1dfe-493e-978a-22fa0c235f31",
         "x-ms-ratelimit-remaining-subscription-deletes": "14999",
-        "x-ms-request-id": "94ecd57f-6ce3-404d-b3ef-d89cf2321858",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20230413T082507Z:ef9423ad-ebc9-43c3-9197-f0d726bc1734"
+        "x-ms-request-id": "88e98be5-f2d0-4a34-97fc-61cc19ffee8a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230414T062615Z:ecfa708f-1dfe-493e-978a-22fa0c235f31"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1476395803",
+    "RandomSeed": "1947961669",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
