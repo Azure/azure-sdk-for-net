@@ -386,5 +386,10 @@ namespace Azure.Storage.DataMovement
         {
             _jobParts.Add(jobPart);
         }
+
+        internal List<string> GetJobPartSourceResourcePaths()
+        {
+            return _jobParts.Select( x => x._sourceResource.Path ).ToList();
+        }
     }
 }

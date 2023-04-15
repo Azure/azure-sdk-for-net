@@ -419,7 +419,7 @@ namespace Azure.Storage.DataMovement
                         destinationResource: destinationResource,
                         transferOptions: transferOptions,
                         queueChunkTask: QueueJobChunkAsync,
-                        CheckPointFolderPath: _checkpointer,
+                        checkpointer: _checkpointer,
                         errorHandling: _errorHandling,
                         arrayPool: _arrayPool);
 
@@ -478,19 +478,25 @@ namespace Azure.Storage.DataMovement
             if (!string.IsNullOrEmpty(transferOptions.ResumeFromCheckpointId))
             {
                 resumeJob = true;
-                string resumeId = transferOptions.ResumeFromCheckpointId;
+                string transferId = transferOptions.ResumeFromCheckpointId;
                 // Attempt to add existing job to the checkpointer.
                 await _checkpointer.AddExistingJobAsync(
-                    transferId: resumeId,
+                    transferId: transferId,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Check if it's a single part transfer.
                 int partCount = await _checkpointer.CurrentJobPartCountAsync(
-                    transferId: resumeId,
+                    transferId: transferId,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
                 if (partCount < 2)
                 {
-                    throw Errors.MismatchIdContainer(resumeId);
+                    throw Errors.MismatchIdContainer(transferId);
+                }
+                if (_dataTransfers.ContainsKey(transferId))
+                {
+                    // Remove the stale DataTransfer so we can pass a new DataTransfer object
+                    // to the user and also track the transfer from the DataTransfer object
+                    _dataTransfers.Remove(transferId);
                 }
 
                 dataTransfer = new DataTransfer(transferOptions.ResumeFromCheckpointId, 0);
@@ -498,10 +504,12 @@ namespace Azure.Storage.DataMovement
             else
             {
                 // Add Transfer to Checkpointer
-                string transferId = GetNewTransferId();
+                string transferId = Guid.NewGuid().ToString();
                 dataTransfer = new DataTransfer(transferId, 0);
                 await _checkpointer.AddNewJobAsync(transferId, _cancellationToken).ConfigureAwait(false);
             }
+            // Add DataTransfer object to keep track of.
+            _dataTransfers.Add(dataTransfer.Id, dataTransfer);
 
             // If the resource cannot produce a Uri, it means it can only produce a local path
             // From here we only support an upload job
@@ -635,7 +643,6 @@ namespace Azure.Storage.DataMovement
 
             // Queue Job
             await QueueJobAsync(transferJobInternal).ConfigureAwait(false);
-            _dataTransfers.Add(dataTransfer.Id, dataTransfer);
 
             return dataTransfer;
         }
@@ -669,22 +676,6 @@ namespace Azure.Storage.DataMovement
             }
             GC.SuppressFinalize(this);
             return default;
-        }
-
-        /// <summary>
-        /// Creates a new Transfer Id and avoids collisions with the existing
-        /// transfer id strings.
-        /// </summary>
-        /// <returns>A unique transfer id in the form of a GUID.</returns>
-        private string GetNewTransferId()
-        {
-            string id = Guid.NewGuid().ToString();
-            while (_dataTransfers.TryGetValue(id, out DataTransfer value))
-            {
-                CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
-                id = Guid.NewGuid().ToString();
-            }
-            return id;
         }
     }
 }

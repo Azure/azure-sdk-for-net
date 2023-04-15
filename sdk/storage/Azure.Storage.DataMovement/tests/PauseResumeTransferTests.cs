@@ -163,7 +163,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_Id(TransferType transferType)
         {
             // Arrange
@@ -214,7 +214,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_DataTransfer(TransferType transferType)
         {
             // Arrange
@@ -272,7 +272,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager transferManager = new TransferManager(options);
 
             // Act / Assert
-            Assert.CatchAsync( async () => await transferManager.TryPauseTransferAsync("bad transfer Id"));
+            Assert.CatchAsync(async () => await transferManager.TryPauseTransferAsync("bad transfer Id"));
         }
 
         [LiveOnly]
@@ -281,7 +281,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_AlreadyPaused(TransferType transferType)
         {
             // Arrange
@@ -337,7 +337,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task PauseThenResumeTransferAsync(TransferType transferType)
         {
             // Arrange
@@ -431,14 +431,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             for (int i = 0; i < fileCount; i++)
             {
-                string localSourceFile = await CreateRandomFileAsync(directoryPath);
-                // create a new file and copy contents of stream into it, and then close the FileStream
-                // so the StagedUploadAsync call is not prevented from reading using its FileStream.
-                using Stream originalStream = await CreateLimitedMemoryStream(size);
-                using (FileStream fileStream = File.Create(localSourceFile))
-                {
-                    await originalStream.CopyToAsync(fileStream);
-                }
+                await CreateRandomFileAsync(directoryPath, size: size);
             }
             return new LocalDirectoryStorageResourceContainer(directoryPath);
         }
@@ -509,7 +502,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobContainerClient destinationContainer = default,
             StorageResourceContainer sourceResource = default,
             StorageResourceContainer destinationResource = default,
-            ContainerTransferOptions singleTransferOptions = default,
+            ContainerTransferOptions containerTransferOptions = default,
             int transferCount = 100,
             long size = Constants.MB)
         {
@@ -535,7 +528,263 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             // Act
-            return await manager.StartTransferAsync(sourceResource, destinationResource, singleTransferOptions);
+            return await manager.StartTransferAsync(sourceResource, destinationResource, containerTransferOptions);
+        }
+
+        [LiveOnly]
+        [Test]
+        [TestCase(TransferType.Upload)]
+        [TestCase(TransferType.Download)]
+        [TestCase(TransferType.AsyncCopy)]
+        [TestCase(TransferType.SyncCopy)]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        public async Task TryPauseTransferAsync_Id_Directory(TransferType transferType)
+        {
+            // Arrange
+            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
+            DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
+            DisposingLocalDirectory destinationDirectory = GetTestLocalDirectory();
+            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            TransferManagerOptions options = new TransferManagerOptions()
+            {
+                CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+            };
+            TransferManager transferManager = new TransferManager(options);
+            ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(containerTransferOptions);
+
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            int partCount = 10;
+            DataTransfer transfer = await CreateDirectoryLongTransferAsync(
+                manager: transferManager,
+                transferType: transferType,
+                sourceDirectory: sourceDirectory.DirectoryPath,
+                destinationDirectory: destinationDirectory.DirectoryPath,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container,
+                size: Constants.MB * 10,
+                transferCount: partCount,
+                containerTransferOptions: containerTransferOptions);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+
+            // Assert
+            failureTransferHolder.AssertFailureCheck();
+            Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+            Assert.IsTrue(pauseSuccess);
+
+            // Check if Job Plan File exists in checkpointer path.
+            // Part Numbers are not random, so we can just count based on how many parts/files/blobs there are.
+            for (int partNumber = 0; partNumber < partCount; partNumber++)
+            {
+                JobPartPlanFileName fileName = new JobPartPlanFileName(
+                    checkpointerPath: checkpointerDirectory.DirectoryPath,
+                    id: transfer.Id,
+                    jobPartNumber: partNumber);
+                Assert.IsTrue(File.Exists(fileName.FullPath));
+            }
+        }
+
+        [LiveOnly]
+        [Test]
+        [TestCase(TransferType.Upload)]
+        [TestCase(TransferType.Download)]
+        [TestCase(TransferType.AsyncCopy)]
+        [TestCase(TransferType.SyncCopy)]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        public async Task TryPauseTransferAsync_DataTransfer_Directory(TransferType transferType)
+        {
+            // Arrange
+            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
+            DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
+            DisposingLocalDirectory destinationDirectory = GetTestLocalDirectory();
+            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            TransferManagerOptions options = new TransferManagerOptions()
+            {
+                CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+            };
+            TransferManager transferManager = new TransferManager(options);
+            ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(containerTransferOptions);
+
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            int partCount = 10;
+            DataTransfer transfer = await CreateDirectoryLongTransferAsync(
+                manager: transferManager,
+                transferType: transferType,
+                sourceDirectory: sourceDirectory.DirectoryPath,
+                destinationDirectory: destinationDirectory.DirectoryPath,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container,
+                size: Constants.MB * 10,
+                transferCount: partCount,
+                containerTransferOptions: containerTransferOptions);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer, cancellationTokenSource.Token);
+
+            // Assert
+            failureTransferHolder.AssertFailureCheck();
+            Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+            Assert.IsTrue(pauseSuccess);
+
+            // Check if Job Plan File exists in checkpointer path.
+            // Part Numbers are not random, so we can just count based on how many parts/files/blobs there are.
+            for (int partNumber = 0; partNumber < partCount; partNumber++)
+            {
+                JobPartPlanFileName fileName = new JobPartPlanFileName(
+                    checkpointerPath: checkpointerDirectory.DirectoryPath,
+                    id: transfer.Id,
+                    jobPartNumber: partNumber);
+                Assert.IsTrue(File.Exists(fileName.FullPath));
+            }
+        }
+
+        [LiveOnly]
+        [Test]
+        [TestCase(TransferType.Upload)]
+        [TestCase(TransferType.Download)]
+        [TestCase(TransferType.AsyncCopy)]
+        [TestCase(TransferType.SyncCopy)]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        public async Task TryPauseTransferAsync_AlreadyPaused_Directory(TransferType transferType)
+        {
+            // Arrange
+            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
+            DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
+            DisposingLocalDirectory destinationDirectory = GetTestLocalDirectory();
+            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            TransferManagerOptions options = new TransferManagerOptions()
+            {
+                CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+            };
+            TransferManager transferManager = new TransferManager(options);
+            ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(containerTransferOptions);
+
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            int partCount = 10;
+            DataTransfer transfer = await CreateDirectoryLongTransferAsync(
+                manager: transferManager,
+                transferType: transferType,
+                sourceDirectory: sourceDirectory.DirectoryPath,
+                destinationDirectory: destinationDirectory.DirectoryPath,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container,
+                size: Constants.MB * 10,
+                transferCount: partCount,
+                containerTransferOptions: containerTransferOptions);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer, cancellationTokenSource.Token);
+
+            // Assert
+            failureTransferHolder.AssertFailureCheck();
+            Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+            Assert.IsTrue(pauseSuccess);
+
+            CancellationTokenSource cancellationTokenSource2 = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            bool pauseFailure = await transferManager.TryPauseTransferAsync(transfer, cancellationTokenSource2.Token);
+
+            Assert.IsFalse(pauseFailure);
+
+            // Check if Job Plan File exists in checkpointer path.
+            // Part Numbers are not random, so we can just count based on how many parts/files/blobs there are.
+            for (int partNumber = 0; partNumber < partCount; partNumber++)
+            {
+                JobPartPlanFileName fileName = new JobPartPlanFileName(
+                    checkpointerPath: checkpointerDirectory.DirectoryPath,
+                    id: transfer.Id,
+                    jobPartNumber: partNumber);
+                Assert.IsTrue(File.Exists(fileName.FullPath));
+            }
+        }
+
+        [LiveOnly]
+        [Test]
+        [TestCase(TransferType.Upload)]
+        [TestCase(TransferType.Download)]
+        [TestCase(TransferType.AsyncCopy)]
+        [TestCase(TransferType.SyncCopy)]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        public async Task PauseThenResumeTransferAsync_Directory(TransferType transferType)
+        {
+            // Arrange
+            DisposingLocalDirectory checkpointerDirectory = GetTestLocalDirectory();
+            DisposingLocalDirectory sourceDirectory = GetTestLocalDirectory();
+            DisposingLocalDirectory destinationDirectory = GetTestLocalDirectory();
+            DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
+            DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            TransferManagerOptions options = new TransferManagerOptions()
+            {
+                CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+            };
+            TransferManager transferManager = new TransferManager(options);
+            ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(containerTransferOptions);
+            long size = Constants.MB * 10;
+            int partCount = 100;
+
+            (StorageResourceContainer sResource, StorageResourceContainer dResource) = await CreateStorageResourceContainersAsync(
+                transferType: transferType,
+                size: size,
+                transferCount: partCount,
+                sourceDirectoryPath: sourceDirectory.DirectoryPath,
+                destinationDirectoryPath: destinationDirectory.DirectoryPath,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container);
+            StorageResourceContainer sourceResource = sResource;
+            StorageResourceContainer destinationResource = dResource;
+
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            DataTransfer transfer = await CreateDirectoryLongTransferAsync(
+                manager: transferManager,
+                sourceResource: sourceResource,
+                destinationResource: destinationResource,
+                containerTransferOptions: containerTransferOptions);
+
+            // Act - Pause Job
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            bool pauseSuccess = await transferManager.TryPauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+
+            // Assert - Confirm we've paused
+            Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+            failureTransferHolder.AssertFailureCheck();
+            Assert.IsTrue(pauseSuccess);
+
+            // Act - Resume Job
+            ContainerTransferOptions resumeOptions = new ContainerTransferOptions()
+            {
+                ResumeFromCheckpointId = transfer.Id
+            };
+            FailureTransferHolder resumeFailureHolder = new FailureTransferHolder(resumeOptions);
+            DataTransfer resumeTransfer = await CreateDirectoryLongTransferAsync(
+                manager: transferManager,
+                sourceResource: sourceResource,
+                destinationResource: destinationResource,
+                containerTransferOptions: resumeOptions);
+
+            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
+            await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
+
+            resumeFailureHolder.AssertFailureCheck();
+            Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
+            Assert.IsTrue(resumeTransfer.HasCompleted);
         }
     }
 }
