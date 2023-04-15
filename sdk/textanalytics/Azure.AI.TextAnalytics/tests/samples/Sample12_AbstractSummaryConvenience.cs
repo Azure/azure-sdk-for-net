@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
         public void AbstractSummaryConvenience()
         {
             Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
-            TextAnalyticsClientLiveTestBase.IgnoreIfNotPublicCloud(authorityHost);
+            TextAnalyticsTestEnvironment.IgnoreIfNotPublicCloud(authorityHost);
 
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);

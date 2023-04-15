@@ -314,7 +314,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task AnalyzeOperationWithMultipleActionsOfSameType()
         {
             Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
-            IgnoreIfNotPublicCloud(authorityHost);
+            TextAnalyticsTestEnvironment.IgnoreIfNotPublicCloud(authorityHost);
 
             TextAnalyticsClient client = GetClient(useStaticResource: true);
 

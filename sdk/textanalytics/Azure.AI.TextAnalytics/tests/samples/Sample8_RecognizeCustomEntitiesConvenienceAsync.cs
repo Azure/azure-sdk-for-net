@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Samples
         public async Task RecognizeCustomEntitiesConvenienceAsync()
         {
             Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
-            TextAnalyticsClientLiveTestBase.IgnoreIfNotPublicCloud(authorityHost);
+            TextAnalyticsTestEnvironment.IgnoreIfNotPublicCloud(authorityHost);
 
             Uri endpoint = new(TestEnvironment.StaticEndpoint);
             AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);

@@ -81,7 +81,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             // Abstractive summarization is currently only supported in the public cloud.
             Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
-            IgnoreIfNotPublicCloud(authorityHost);
+            TextAnalyticsTestEnvironment.IgnoreIfNotPublicCloud(authorityHost);
         }
 
         [RecordedTest]

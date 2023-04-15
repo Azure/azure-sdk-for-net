@@ -4,6 +4,8 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
@@ -26,13 +28,25 @@ namespace Azure.AI.TextAnalytics.Tests
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {
             // Check that the dynamic resource is ready.
+            Uri authorityHost = new(AuthorityHostUrl);
             Uri endpoint = new(Endpoint);
-            AzureKeyCredential credential = new(ApiKey);
-            TextAnalyticsClient client = new(endpoint, credential);
+            AzureKeyCredential azureKeyCredential = new(ApiKey);
+            TextAnalyticsClientOptions options = new() { Audience = GetAudience(authorityHost) };
 
             try
             {
-                await client.DetectLanguageAsync("The dynamic resource is ready.");
+                TextAnalyticsClient clientWithAzureKeyCredential = new(endpoint, azureKeyCredential, options);
+                await clientWithAzureKeyCredential.DetectLanguageAsync("Ready!");
+            }
+            catch (RequestFailedException e) when (e.Status == 401)
+            {
+                return false;
+            }
+
+            try
+            {
+                TextAnalyticsClient clientWithTokenCredential = new(endpoint, Credential, options);
+                await clientWithTokenCredential.DetectLanguageAsync("Ready!");
             }
             catch (RequestFailedException e) when (e.Status == 401)
             {
@@ -40,6 +54,36 @@ namespace Azure.AI.TextAnalytics.Tests
             }
 
             return true;
+        }
+
+        internal static TextAnalyticsAudience GetAudience(Uri authorityHost)
+        {
+            if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
+            {
+                return TextAnalyticsAudience.AzurePublicCloud;
+            }
+
+            if (authorityHost == AzureAuthorityHosts.AzureChina)
+            {
+                return TextAnalyticsAudience.AzureChina;
+            }
+
+            if (authorityHost == AzureAuthorityHosts.AzureGovernment)
+            {
+                return TextAnalyticsAudience.AzureGovernment;
+            }
+
+            throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
+        }
+
+        internal static void IgnoreIfNotPublicCloud(Uri authorityHost)
+        {
+            TextAnalyticsAudience audience = GetAudience(authorityHost);
+
+            if (audience != TextAnalyticsAudience.AzurePublicCloud)
+            {
+                Assert.Ignore("Currently, these tests can only be run in the public cloud.");
+            }
         }
     }
 }

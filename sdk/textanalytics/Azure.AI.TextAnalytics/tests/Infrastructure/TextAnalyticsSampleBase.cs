@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             TextAnalyticsClientOptions options = new()
             {
-                Audience = TextAnalyticsClientLiveTestBase.GetAudience(authorityHost)
+                Audience = TextAnalyticsTestEnvironment.GetAudience(authorityHost)
             };
 
             // While we use a persistent resource for live tests, we need to increase our retries.

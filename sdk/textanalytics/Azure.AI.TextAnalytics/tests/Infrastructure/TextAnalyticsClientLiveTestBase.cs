@@ -6,8 +6,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
-using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
@@ -55,7 +53,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             options ??= new TextAnalyticsClientOptions(ServiceVersion)
             {
-                Audience = GetAudience(authorityHost)
+                Audience = TextAnalyticsTestEnvironment.GetAudience(authorityHost)
             };
 
             // While we use a persistent resource for live tests, we need to increase our retries.
@@ -96,36 +94,6 @@ namespace Azure.AI.TextAnalytics.Tests
             catch (TaskCanceledException)
             {
                 Debug.WriteLine("Test cancelled. Test timed out.");
-            }
-        }
-
-        internal static TextAnalyticsAudience GetAudience(Uri authorityHost)
-        {
-            if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
-            {
-                return TextAnalyticsAudience.AzurePublicCloud;
-            }
-
-            if (authorityHost == AzureAuthorityHosts.AzureChina)
-            {
-                return TextAnalyticsAudience.AzureChina;
-            }
-
-            if (authorityHost == AzureAuthorityHosts.AzureGovernment)
-            {
-                return TextAnalyticsAudience.AzureGovernment;
-            }
-
-            throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
-        }
-
-        internal static void IgnoreIfNotPublicCloud(Uri authorityHost)
-        {
-            TextAnalyticsAudience audience = GetAudience(authorityHost);
-
-            if (audience != TextAnalyticsAudience.AzurePublicCloud)
-            {
-                Assert.Ignore("Currently, these tests can only be run in the public cloud.");
             }
         }
     }
