@@ -251,7 +251,7 @@ namespace Azure.Storage.DataMovement
         /// and any chunks is still processing to be cancelled is will be set to <see cref="StorageTransferStatus.CancellationInProgress"/>
         /// until the chunks finish then it will be set to <see cref="StorageTransferStatus.CompletedWithFailedTransfers"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The task to wait until the cancellation has been triggered.</returns>
         internal async Task TriggerCancellationAsync()
         {
             if (!_cancellationToken.IsCancellationRequested)

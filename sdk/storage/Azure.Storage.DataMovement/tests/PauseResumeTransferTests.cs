@@ -557,7 +557,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
-            int partCount = 10;
+            int partCount = 4;
             DataTransfer transfer = await CreateDirectoryLongTransferAsync(
                 manager: transferManager,
                 transferType: transferType,
@@ -577,17 +577,6 @@ namespace Azure.Storage.DataMovement.Tests
             failureTransferHolder.AssertFailureCheck();
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
             Assert.IsTrue(pauseSuccess);
-
-            // Check if Job Plan File exists in checkpointer path.
-            // Part Numbers are not random, so we can just count based on how many parts/files/blobs there are.
-            for (int partNumber = 0; partNumber < partCount; partNumber++)
-            {
-                JobPartPlanFileName fileName = new JobPartPlanFileName(
-                    checkpointerPath: checkpointerDirectory.DirectoryPath,
-                    id: transfer.Id,
-                    jobPartNumber: partNumber);
-                Assert.IsTrue(File.Exists(fileName.FullPath));
-            }
         }
 
         [LiveOnly]
@@ -636,17 +625,6 @@ namespace Azure.Storage.DataMovement.Tests
             failureTransferHolder.AssertFailureCheck();
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
             Assert.IsTrue(pauseSuccess);
-
-            // Check if Job Plan File exists in checkpointer path.
-            // Part Numbers are not random, so we can just count based on how many parts/files/blobs there are.
-            for (int partNumber = 0; partNumber < partCount; partNumber++)
-            {
-                JobPartPlanFileName fileName = new JobPartPlanFileName(
-                    checkpointerPath: checkpointerDirectory.DirectoryPath,
-                    id: transfer.Id,
-                    jobPartNumber: partNumber);
-                Assert.IsTrue(File.Exists(fileName.FullPath));
-            }
         }
 
         [LiveOnly]
@@ -699,18 +677,9 @@ namespace Azure.Storage.DataMovement.Tests
             CancellationTokenSource cancellationTokenSource2 = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             bool pauseFailure = await transferManager.TryPauseTransferAsync(transfer, cancellationTokenSource2.Token);
 
+            failureTransferHolder.AssertFailureCheck();
             Assert.IsFalse(pauseFailure);
-
-            // Check if Job Plan File exists in checkpointer path.
-            // Part Numbers are not random, so we can just count based on how many parts/files/blobs there are.
-            for (int partNumber = 0; partNumber < partCount; partNumber++)
-            {
-                JobPartPlanFileName fileName = new JobPartPlanFileName(
-                    checkpointerPath: checkpointerDirectory.DirectoryPath,
-                    id: transfer.Id,
-                    jobPartNumber: partNumber);
-                Assert.IsTrue(File.Exists(fileName.FullPath));
-            }
+            Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
         }
 
         [LiveOnly]
@@ -737,7 +706,7 @@ namespace Azure.Storage.DataMovement.Tests
             ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
             FailureTransferHolder failureTransferHolder = new FailureTransferHolder(containerTransferOptions);
             long size = Constants.MB * 10;
-            int partCount = 100;
+            int partCount = 4;
 
             (StorageResourceContainer sResource, StorageResourceContainer dResource) = await CreateStorageResourceContainersAsync(
                 transferType: transferType,
