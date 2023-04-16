@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Tests;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -15,8 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task SingleLabelClassifyAsync()
         {
-            Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
-            TextAnalyticsTestEnvironment.IgnoreIfNotPublicCloud(authorityHost);
+            IgnoreIfNotPublicCloud();
 
             Uri endpoint = new(TestEnvironment.StaticEndpoint);
             AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
@@ -16,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Tests
     TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
     public class TextAnalyticsClientLiveTestBase : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
-        internal const int MaxRetriesCount = 12;
+        private const int MaxRetriesCount = 12;
 
         /// <summary>
         /// The version of the REST API to test against.  This will be passed
@@ -45,15 +46,13 @@ namespace Azure.AI.TextAnalytics.Tests
             bool useTokenCredential = default,
             bool useStaticResource = default)
         {
-            Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
-
             Uri endpoint = new(useStaticResource
                 ? TestEnvironment.StaticEndpoint
                 : TestEnvironment.Endpoint);
 
             options ??= new TextAnalyticsClientOptions(ServiceVersion)
             {
-                Audience = TextAnalyticsTestEnvironment.GetAudience(authorityHost)
+                Audience = TestEnvironment.GetAudience()
             };
 
             // While we use a persistent resource for live tests, we need to increase our retries.
@@ -76,6 +75,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
                 nonInstrumentedClient = new TextAnalyticsClient(endpoint, credential, InstrumentClientOptions(options));
             }
+
             return InstrumentClient(nonInstrumentedClient);
         }
 
@@ -85,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Tests
         internal static async Task PollUntilTimeout<T>(Operation<T> operation, int timeoutInMinutes = 20)
         {
             TimeSpan pollingInterval = TimeSpan.FromSeconds(10);
-            var timeout = TimeSpan.FromMinutes(timeoutInMinutes);
+            TimeSpan timeout = TimeSpan.FromMinutes(timeoutInMinutes);
             using CancellationTokenSource cts = new(timeout);
             try
             {
@@ -94,6 +94,14 @@ namespace Azure.AI.TextAnalytics.Tests
             catch (TaskCanceledException)
             {
                 Debug.WriteLine("Test cancelled. Test timed out.");
+            }
+        }
+
+        internal void IgnoreIfNotPublicCloud()
+        {
+            if (TestEnvironment.GetAudience() != TextAnalyticsAudience.AzurePublicCloud)
+            {
+                Assert.Ignore("Currently, these tests can only be run in the public cloud.");
             }
         }
     }

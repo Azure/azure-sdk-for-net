@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Tests;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -14,8 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task AbstractSummaryAsync()
         {
-            Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
-            TextAnalyticsTestEnvironment.IgnoreIfNotPublicCloud(authorityHost);
+            IgnoreIfNotPublicCloud();
 
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);

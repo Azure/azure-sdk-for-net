@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.TextAnalytics.Tests;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -13,8 +12,7 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void RecognizeCustomEntitiesConvenience()
         {
-            Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
-            TextAnalyticsTestEnvironment.IgnoreIfNotPublicCloud(authorityHost);
+            IgnoreIfNotPublicCloud();
 
             Uri endpoint = new(TestEnvironment.StaticEndpoint);
             AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);

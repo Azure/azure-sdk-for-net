@@ -74,9 +74,9 @@ namespace Azure.AI.TextAnalytics.Tests
         [SetUp]
         public void TestSetup()
         {
-            // These tests require a pre-trained, static resource, which is currently only available in the public cloud.
-            Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
-            TextAnalyticsTestEnvironment.IgnoreIfNotPublicCloud(authorityHost);
+            // These tests require a pre-trained, static resource,
+            // which is currently only available in the public cloud.
+            IgnoreIfNotPublicCloud();
         }
 
         [RecordedTest]

@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
@@ -25,39 +24,10 @@ namespace Azure.AI.TextAnalytics.Tests
         public string RecognizeCustomEntitiesProjectName => GetRecordedVariable("TEXTANALYTICS_CUSTOM_ENTITIES_PROJECT_NAME");
         public string RecognizeCustomEntitiesDeploymentName => GetRecordedVariable("TEXTANALYTICS_CUSTOM_ENTITIES_DEPLOYMENT_NAME");
 
-        protected override async ValueTask<bool> IsEnvironmentReadyAsync()
+        public TextAnalyticsAudience GetAudience()
         {
-            // Check that the dynamic resource is ready.
             Uri authorityHost = new(AuthorityHostUrl);
-            Uri endpoint = new(Endpoint);
-            AzureKeyCredential azureKeyCredential = new(ApiKey);
-            TextAnalyticsClientOptions options = new() { Audience = GetAudience(authorityHost) };
 
-            try
-            {
-                TextAnalyticsClient clientWithAzureKeyCredential = new(endpoint, azureKeyCredential, options);
-                await clientWithAzureKeyCredential.DetectLanguageAsync("Ready!");
-            }
-            catch (RequestFailedException e) when (e.Status == 401)
-            {
-                return false;
-            }
-
-            try
-            {
-                TextAnalyticsClient clientWithTokenCredential = new(endpoint, Credential, options);
-                await clientWithTokenCredential.DetectLanguageAsync("Ready!");
-            }
-            catch (RequestFailedException e) when (e.Status == 401)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        internal static TextAnalyticsAudience GetAudience(Uri authorityHost)
-        {
             if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
             {
                 return TextAnalyticsAudience.AzurePublicCloud;
@@ -76,14 +46,27 @@ namespace Azure.AI.TextAnalytics.Tests
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
         }
 
-        internal static void IgnoreIfNotPublicCloud(Uri authorityHost)
+        protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {
-            TextAnalyticsAudience audience = GetAudience(authorityHost);
+            // Check that the dynamic resource is ready.
+            Uri endpoint = new(Endpoint);
+            AzureKeyCredential azureKeyCredential = new(ApiKey);
+            TextAnalyticsClientOptions options = new() { Audience = GetAudience() };
 
-            if (audience != TextAnalyticsAudience.AzurePublicCloud)
+            try
             {
-                Assert.Ignore("Currently, these tests can only be run in the public cloud.");
+                TextAnalyticsClient clientWithAzureKeyCredential = new(endpoint, azureKeyCredential, options);
+                await clientWithAzureKeyCredential.DetectLanguageAsync("Ready!");
+
+                TextAnalyticsClient clientWithTokenCredential = new(endpoint, Credential, options);
+                await clientWithTokenCredential.DetectLanguageAsync("Ready!");
             }
+            catch (RequestFailedException e) when (e.Status == 401)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

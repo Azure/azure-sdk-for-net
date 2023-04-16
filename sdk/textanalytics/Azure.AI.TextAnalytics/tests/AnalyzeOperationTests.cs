@@ -313,8 +313,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Ignore("issue: results in an internal server error | bug link: https://dev.azure.com/msazure/Cognitive%20Services/_workitems/edit/12413250")]
         public async Task AnalyzeOperationWithMultipleActionsOfSameType()
         {
-            Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
-            TextAnalyticsTestEnvironment.IgnoreIfNotPublicCloud(authorityHost);
+            IgnoreIfNotPublicCloud();
 
             TextAnalyticsClient client = GetClient(useStaticResource: true);
 

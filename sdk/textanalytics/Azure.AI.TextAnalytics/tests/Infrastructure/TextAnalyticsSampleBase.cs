@@ -1,21 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
     public class TextAnalyticsSampleBase : SamplesBase<TextAnalyticsTestEnvironment>
     {
+        private const int MaxRetriesCount = 12;
+
         public TextAnalyticsClientOptions CreateSampleOptions(bool useStaticResource = default)
         {
-            Uri authorityHost = new(TestEnvironment.AuthorityHostUrl);
-
             TextAnalyticsClientOptions options = new()
             {
-                Audience = TextAnalyticsTestEnvironment.GetAudience(authorityHost)
+                Audience = TestEnvironment.GetAudience()
             };
 
             // While we use a persistent resource for live tests, we need to increase our retries.
@@ -23,10 +23,18 @@ namespace Azure.AI.TextAnalytics.Samples
             // Issue: https://github.com/Azure/azure-sdk-for-net/issues/25041
             if (useStaticResource)
             {
-                options.Retry.MaxRetries = TextAnalyticsClientLiveTestBase.MaxRetriesCount;
+                options.Retry.MaxRetries = MaxRetriesCount;
             }
 
             return options;
+        }
+
+        internal void IgnoreIfNotPublicCloud()
+        {
+            if (TestEnvironment.GetAudience() != TextAnalyticsAudience.AzurePublicCloud)
+            {
+                Assert.Ignore("Currently, these tests can only be run in the public cloud.");
+            }
         }
     }
 }
