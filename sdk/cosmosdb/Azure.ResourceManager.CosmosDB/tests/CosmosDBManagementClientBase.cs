@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     IPRules = { new CosmosDBIPAddressOrRange("23.43.230.120") },
                     IsVirtualNetworkFilterEnabled = true,
                     EnableAutomaticFailover = false,
+                    EnableBurstCapacity = true,
                     ConnectorOffer = ConnectorOffer.Small,
                     DisableKeyBasedMetadataWriteAccess = false,
                     BackupPolicy = new ContinuousModeBackupPolicy()
@@ -83,6 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     IPRules = { new CosmosDBIPAddressOrRange("23.43.230.120") },
                     IsVirtualNetworkFilterEnabled = true,
                     EnableAutomaticFailover = false,
+                    EnableBurstCapacity = true,
                     ConnectorOffer = ConnectorOffer.Small,
                     DisableKeyBasedMetadataWriteAccess = false
                 };
