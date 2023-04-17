@@ -396,7 +396,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns an Http response 200 for success, or an http failure error code.</returns>
-        public virtual Response StartContinuousDtmfRecognition(CommunicationIdentifier targetParticipant, string operationContext,
+        public virtual Response StartContinuousDtmfRecognition(CommunicationIdentifier targetParticipant, string operationContext = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartContinuousDtmfRecognition)}");
@@ -424,7 +424,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>Returns an Http response 200 for success, or an http failure error code.</returns>
-        public virtual Response StopContinuousDtmfRecognition(CommunicationIdentifier targetParticipant, string operationContext,
+        public virtual Response StopContinuousDtmfRecognition(CommunicationIdentifier targetParticipant, string operationContext = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopContinuousDtmfRecognition)}");
@@ -454,7 +454,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<Response<SendDtmfResult>> SendDtmfAsync(CommunicationIdentifier targetParticipant, IEnumerable<DtmfTone> tones,
-            string operationContext, CancellationToken cancellationToken = default)
+            string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
             scope.Start();
@@ -487,7 +487,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual Response<SendDtmfResult> SendDtmf(CommunicationIdentifier targetParticipant, IEnumerable<DtmfTone> tones,
-            string operationContext, CancellationToken cancellationToken = default)
+            string operationContext = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
             scope.Start();
