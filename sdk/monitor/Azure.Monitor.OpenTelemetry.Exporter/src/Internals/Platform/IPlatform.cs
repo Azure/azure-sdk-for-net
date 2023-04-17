@@ -20,5 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         public bool IsOSPlatform(OSPlatform osPlatform);
 
         public string GetOSPlatformName();
+
+        public bool CreateDirectory(string path);
     }
 }

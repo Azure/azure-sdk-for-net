@@ -108,7 +108,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = AzureResourceManagerManagedIdentityProperties.DeserializeAzureResourceManagerManagedIdentityProperties(property.Value);
@@ -133,7 +132,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -162,7 +160,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scope = new ScopeType(property0.Value.GetString());
@@ -172,7 +169,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -192,7 +188,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             defaultMode = new DefaultMode(property0.Value.GetString());
@@ -207,7 +202,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
@@ -217,7 +211,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             securityServices = SecurityServices.DeserializeSecurityServices(property0.Value);

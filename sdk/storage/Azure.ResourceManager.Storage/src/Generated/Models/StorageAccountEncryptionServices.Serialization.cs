@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     blob = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     file = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
@@ -74,7 +72,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     table = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);
@@ -84,7 +81,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queue = StorageEncryptionService.DeserializeStorageEncryptionService(property.Value);

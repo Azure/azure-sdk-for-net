@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -93,7 +92,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventType = new EventTypeValue(property0.Value.GetString());
@@ -103,7 +101,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventSource = new EventSourceValue(property0.Value.GetString());
@@ -113,7 +110,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new EventStatusValue(property0.Value.GetString());
@@ -138,7 +134,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             level = new LevelValue(property0.Value.GetString());
@@ -148,7 +143,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             eventLevel = new EventLevelValue(property0.Value.GetString());
@@ -163,7 +157,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             article = EventPropertiesArticle.DeserializeEventPropertiesArticle(property0.Value);
@@ -173,7 +166,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Link> array = new List<Link>();
@@ -188,7 +180,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             impactStartTime = property0.Value.GetDateTimeOffset("O");
@@ -198,7 +189,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             impactMitigationTime = property0.Value.GetDateTimeOffset("O");
@@ -208,7 +198,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Impact> array = new List<Impact>();
@@ -223,7 +212,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             recommendedActions = EventPropertiesRecommendedActions.DeserializeEventPropertiesRecommendedActions(property0.Value);
@@ -233,7 +221,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Faq> array = new List<Faq>();
@@ -248,7 +235,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isHIR = property0.Value.GetBoolean();
@@ -258,7 +244,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableMicrosoftSupport = property0.Value.GetBoolean();
@@ -273,7 +258,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             platformInitiated = property0.Value.GetBoolean();
@@ -283,7 +267,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableChatWithUs = property0.Value.GetBoolean();
@@ -293,7 +276,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             priority = property0.Value.GetInt32();
@@ -303,7 +285,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastUpdateTime = property0.Value.GetDateTimeOffset("O");
@@ -318,7 +299,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             additionalInformation = EventPropertiesAdditionalInformation.DeserializeEventPropertiesAdditionalInformation(property0.Value);
@@ -328,7 +308,6 @@ namespace Azure.ResourceManager.ResourceHealth
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             duration = property0.Value.GetInt32();

@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     apiKeyOnly = BinaryData.FromString(property.Value.GetRawText());
@@ -57,7 +56,6 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aadOrApiKey = DataPlaneAadOrApiKeyAuthOption.DeserializeDataPlaneAadOrApiKeyAuthOption(property.Value);

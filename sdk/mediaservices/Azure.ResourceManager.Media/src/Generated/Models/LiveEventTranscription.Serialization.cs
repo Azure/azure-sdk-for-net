@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LiveEventInputTrackSelection> array = new List<LiveEventInputTrackSelection>();
@@ -74,7 +73,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     outputTranscriptionTrack = LiveEventOutputTranscriptionTrack.DeserializeLiveEventOutputTranscriptionTrack(property.Value);
