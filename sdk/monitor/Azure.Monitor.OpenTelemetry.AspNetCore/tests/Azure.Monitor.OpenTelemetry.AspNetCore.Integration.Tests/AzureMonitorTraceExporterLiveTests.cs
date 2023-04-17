@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 #if !NETCOREAPP3_1
-namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
+
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -12,7 +13,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
 
     using Azure.Core.TestFramework;
     using Azure.Monitor.OpenTelemetry.Exporter;
-    using Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests.TestFramework;
     using Azure.Monitor.Query;
     using Azure.Monitor.Query.Models;
     using global::OpenTelemetry;
@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests
     /// </summary>
     public class AzureMonitorTraceExporterLiveTests : RecordedTestBase<MonitorExporterTestEnvironment>
     {
-        public AzureMonitorTraceExporterLiveTests(bool isAsync) : base(isAsync) { }
+        public AzureMonitorTraceExporterLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live) { }
 
         [RecordedTest]
         public async Task VerifyTraceExporter()
