@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.Chat.Models;
 using Azure.Core;
 
 namespace Azure.Communication.Chat

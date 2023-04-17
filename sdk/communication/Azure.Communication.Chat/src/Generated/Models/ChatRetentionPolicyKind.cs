@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.Chat.Models
+namespace Azure.Communication.Chat
 {
     /// <summary> Retention Policy Type. </summary>
     public readonly partial struct ChatRetentionPolicyKind : IEquatable<ChatRetentionPolicyKind>

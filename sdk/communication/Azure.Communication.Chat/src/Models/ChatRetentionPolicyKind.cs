@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.Chat.Models
+namespace Azure.Communication.Chat
 {
     /// <summary>
     /// Retention policy kind

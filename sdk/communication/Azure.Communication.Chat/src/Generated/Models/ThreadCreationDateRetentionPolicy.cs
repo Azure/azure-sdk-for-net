@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication.Chat.Models;
-
 namespace Azure.Communication.Chat
 {
     /// <summary> Thread retention policy based on thread creation date. </summary>
@@ -14,10 +12,9 @@ namespace Azure.Communication.Chat
     {
         /// <summary> Initializes a new instance of ThreadCreationDateRetentionPolicy. </summary>
         /// <param name="deleteThreadAfterDays"> Indicates how many days after the thread creation the thread will be deleted. Only 90 is accepted for now. </param>
-        public ThreadCreationDateRetentionPolicy(int deleteThreadAfterDays)
+        public ThreadCreationDateRetentionPolicy(int deleteThreadAfterDays):base(ChatRetentionPolicyKind.ThreadCreationDate)
         {
             DeleteThreadAfterDays = deleteThreadAfterDays;
-            Kind = ChatRetentionPolicyKind.ThreadCreationDate;
         }
 
         /// <summary> Initializes a new instance of ThreadCreationDateRetentionPolicy. </summary>
@@ -26,10 +23,6 @@ namespace Azure.Communication.Chat
         internal ThreadCreationDateRetentionPolicy(ChatRetentionPolicyKind kind, int deleteThreadAfterDays) : base(kind)
         {
             DeleteThreadAfterDays = deleteThreadAfterDays;
-            Kind = kind;
         }
-
-        /// <summary> Indicates how many days after the thread creation the thread will be deleted. Only 90 is accepted for now. </summary>
-        public int DeleteThreadAfterDays { get; set; }
     }
 }

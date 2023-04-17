@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication.Chat.Models;
-
 namespace Azure.Communication.Chat
 {
     /// <summary> The UnknownChatRetentionPolicy. </summary>
@@ -16,7 +14,7 @@ namespace Azure.Communication.Chat
         /// <param name="kind"> Retention Policy Type. </param>
         internal UnknownChatRetentionPolicy(ChatRetentionPolicyKind kind) : base(kind)
         {
-            Kind = kind;
+            //Kind = kind;
         }
     }
 }

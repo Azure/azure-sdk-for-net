@@ -13,7 +13,7 @@ namespace Azure.Communication
     /// <summary> The identifier kind, for example &apos;communicationUser&apos; or &apos;phoneNumber&apos;. </summary>
     internal readonly partial struct CommunicationIdentifierModelKind : IEquatable<CommunicationIdentifierModelKind>
     {
-       
+        ///// <summary> Determines if two <see cref="CommunicationIdentifierModelKind"/> values are the same. </summary>
         //public static bool operator ==(CommunicationIdentifierModelKind left, CommunicationIdentifierModelKind right) => left.Equals(right);
         ///// <summary> Determines if two <see cref="CommunicationIdentifierModelKind"/> values are not the same. </summary>
         //public static bool operator !=(CommunicationIdentifierModelKind left, CommunicationIdentifierModelKind right) => !left.Equals(right);
