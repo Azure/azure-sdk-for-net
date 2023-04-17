@@ -107,7 +107,7 @@ Note that the `Credential` property is optional. If it is not set, Azure Monitor
 
 The Azure Monitor Distro includes .NET OpenTelemetry instrumentation for [ASP.NET Core](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/), [HttpClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/), and [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient). However, you can customize the instrumentation included or use additional instrumentation on your own using the OpenTelemetry API. Here are some examples of how to customize the instrumentation:
 
-#### Customizing ASP.NET Core Instrumentation Options
+#### Customizing AspNetCoreInstrumentationOptions
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
@@ -117,12 +117,12 @@ builder.Services.Configure<AspNetCoreInstrumentationOptions>(options =>
     options.Filter = (httpContext) =>
     {
         // only collect telemetry about HTTP GET requests
-        return httpContext.Request.Method.Equals("GET");
+        return HttpMethods.IsGet(httpContext.Request.Method);
     };
 });
 ```
 
-#### Customizing HttpClient Instrumentation Options
+#### Customizing HttpClientInstrumentationOptions
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
@@ -132,12 +132,12 @@ builder.Services.Configure<HttpClientInstrumentationOptions>(options =>
     options.FilterHttpRequestMessage = (httpRequestMessage) =>
     {
         // only collect telemetry about HTTP GET requests
-        return httpRequestMessage.Method.Equals("GET");
+        return HttpMethods.IsGet(httpRequestMessage.Method.Method);
     };
 });
 ```
 
-#### Customizing SQLClient Instrumentation Options
+#### Customizing SqlClientInstrumentationOptions
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
