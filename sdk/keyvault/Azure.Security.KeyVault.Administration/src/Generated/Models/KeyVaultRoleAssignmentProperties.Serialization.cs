@@ -27,7 +27,6 @@ namespace Azure.Security.KeyVault.Administration
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scope = new KeyVaultRoleScope(property.Value.GetString());

@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<PurchasePrice> refundsTotal = default;
             Optional<PurchasePrice> purchasesTotal = default;
             Optional<IReadOnlyList<ReservationToPurchaseExchange>> reservationsToPurchase = default;
+            Optional<IReadOnlyList<SavingsPlanToPurchaseExchange>> savingsPlansToPurchase = default;
             Optional<IReadOnlyList<ReservationToReturnForExchange>> reservationsToExchange = default;
             Optional<ExchangePolicyErrors> policyResult = default;
             foreach (var property in element.EnumerateObject())
@@ -33,7 +34,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sessionId = property.Value.GetGuid();
@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     netPayable = PurchasePrice.DeserializePurchasePrice(property.Value);
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     refundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
@@ -63,7 +61,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     purchasesTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
@@ -73,7 +70,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReservationToPurchaseExchange> array = new List<ReservationToPurchaseExchange>();
@@ -84,11 +80,24 @@ namespace Azure.ResourceManager.Reservations.Models
                     reservationsToPurchase = array;
                     continue;
                 }
+                if (property.NameEquals("savingsPlansToPurchase"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SavingsPlanToPurchaseExchange> array = new List<SavingsPlanToPurchaseExchange>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SavingsPlanToPurchaseExchange.DeserializeSavingsPlanToPurchaseExchange(item));
+                    }
+                    savingsPlansToPurchase = array;
+                    continue;
+                }
                 if (property.NameEquals("reservationsToExchange"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReservationToReturnForExchange> array = new List<ReservationToReturnForExchange>();
@@ -103,14 +112,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policyResult = ExchangePolicyErrors.DeserializeExchangePolicyErrors(property.Value);
                     continue;
                 }
             }
-            return new ExchangeResultProperties(Optional.ToNullable(sessionId), netPayable.Value, refundsTotal.Value, purchasesTotal.Value, Optional.ToList(reservationsToPurchase), Optional.ToList(reservationsToExchange), policyResult.Value);
+            return new ExchangeResultProperties(Optional.ToNullable(sessionId), netPayable.Value, refundsTotal.Value, purchasesTotal.Value, Optional.ToList(reservationsToPurchase), Optional.ToList(savingsPlansToPurchase), Optional.ToList(reservationsToExchange), policyResult.Value);
         }
     }
 }

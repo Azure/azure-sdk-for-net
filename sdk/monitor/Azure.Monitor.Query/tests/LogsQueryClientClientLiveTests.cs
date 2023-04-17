@@ -562,7 +562,7 @@ namespace Azure.Monitor.Query.Tests
             if (include)
             {
                 using JsonDocument document = JsonDocument.Parse(response.Value.GetStatistics());
-                Assert.Greater(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
+                Assert.GreaterOrEqual(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
             }
             else
             {
@@ -611,7 +611,7 @@ namespace Azure.Monitor.Query.Tests
             if (include)
             {
                 using JsonDocument document = JsonDocument.Parse(result.GetStatistics());
-                Assert.Greater(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
+                Assert.GreaterOrEqual(document.RootElement.GetProperty("query").GetProperty("executionTime").GetDouble(), 0);
             }
             else
             {

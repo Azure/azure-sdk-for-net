@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ReservationMergeProperties. </summary>
+    /// <summary> Properties of reservation merge. </summary>
     public partial class ReservationMergeProperties
     {
         /// <summary> Initializes a new instance of ReservationMergeProperties. </summary>
@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of ReservationMergeProperties. </summary>
-        /// <param name="mergeDestination"> Reservation Resource Id Created due to the merge. Format of the resource Id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
-        /// <param name="mergeSources"> Resource Ids of the Source Reservation&apos;s merged to form this Reservation. Format of the resource Id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        /// <param name="mergeDestination"> Reservation resource id Created due to the merge. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        /// <param name="mergeSources"> Resource ids of the source reservation&apos;s merged to form this reservation. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
         internal ReservationMergeProperties(string mergeDestination, IReadOnlyList<string> mergeSources)
         {
             MergeDestination = mergeDestination;
             MergeSources = mergeSources;
         }
 
-        /// <summary> Reservation Resource Id Created due to the merge. Format of the resource Id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
+        /// <summary> Reservation resource id Created due to the merge. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
         public string MergeDestination { get; }
-        /// <summary> Resource Ids of the Source Reservation&apos;s merged to form this Reservation. Format of the resource Id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
+        /// <summary> Resource ids of the source reservation&apos;s merged to form this reservation. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>
         public IReadOnlyList<string> MergeSources { get; }
     }
 }

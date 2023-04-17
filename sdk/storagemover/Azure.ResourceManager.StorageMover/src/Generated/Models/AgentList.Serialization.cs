@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.StorageMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StorageMoverAgentData> array = new List<StorageMoverAgentData>();

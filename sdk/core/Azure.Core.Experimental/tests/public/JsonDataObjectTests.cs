@@ -125,13 +125,13 @@ namespace Azure.Core.Tests.Public
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "first": 1, "second": 2 }""");
 
-            var expectedKeys = new[] { "first", "second" };
+            var expectedNames = new[] { "first", "second" };
             var expectedValues = new[] { 1, 2 };
 
             int i = 0;
             foreach (var pair in data)
             {
-                Assert.AreEqual(expectedKeys[i], pair.Key);
+                Assert.AreEqual(expectedNames[i], pair.Name);
                 Assert.AreEqual(expectedValues[i], (int)pair.Value);
                 i++;
             }

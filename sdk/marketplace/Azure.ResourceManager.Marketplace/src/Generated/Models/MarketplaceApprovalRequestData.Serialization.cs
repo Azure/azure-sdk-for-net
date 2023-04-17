@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -120,7 +119,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PrivateStorePlanDetails> array = new List<PrivateStorePlanDetails>();
@@ -135,7 +133,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isClosed = property0.Value.GetBoolean();
@@ -145,7 +142,6 @@ namespace Azure.ResourceManager.Marketplace
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             messageCode = property0.Value.GetInt64();

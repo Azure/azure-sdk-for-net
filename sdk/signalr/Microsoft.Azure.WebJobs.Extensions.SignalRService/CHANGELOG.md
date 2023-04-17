@@ -1,6 +1,6 @@
 # Release History
 
-## 1.10.0-beta.1 (Unreleased)
+## 1.11.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.10.0 (2023-04-11)
+
+### Features Added
+* Support MessagePack hub protocol for both persistent mode and transient mode.
+
+### Other Changes
+* Upgraded `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` from 1.19.2 to 1.21.2
 
 ## 1.9.0 (2023-01-12)
 

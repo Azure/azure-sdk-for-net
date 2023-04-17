@@ -1,39 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-fe226b42dd7454327bd31b6935b968e5-d4f901484fa66295-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "0a026bbce45d3a8ee07fa5995f346d41",
+        "traceparent": "00-5294bcf5d6a312c79e2a7687d85a8277-4a44abf9305f386e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "2a857331b29fd19e9d8a8ed982d94535",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "400",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:13:23 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:26 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "fbf0b07a-4f68-46e9-95ec-d49340b1408a",
-        "x-ms-ratelimit-remaining-subscription-reads": "11987",
-        "x-ms-request-id": "fbf0b07a-4f68-46e9-95ec-d49340b1408a",
-        "x-ms-routing-request-id": "WESTUS:20220516T231323Z:fbf0b07a-4f68-46e9-95ec-d49340b1408a"
+        "x-ms-correlation-request-id": "8fb11b8a-f754-498e-aa98-19e0e90fa68d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11903",
+        "x-ms-request-id": "8fb11b8a-f754-498e-aa98-19e0e90fa68d",
+        "x-ms-routing-request-id": "WESTUS:20230310T063226Z:8fb11b8a-f754-498e-aa98-19e0e90fa68d"
       },
       "ResponseBody": {
-        "id": "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-        "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
-        "displayName": "Azure subscription 1",
+        "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -43,40 +43,584 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01\u0026reservedResourceType=NetAppStorage\u0026location=westus",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=NetAppStorage\u0026location=westus",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-27169f31068448924992e26afe868182-5752545fb85f79b7-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220516.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "f59b2221d0736f393e9211fc2a5a433b",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "ee2bccefea0de857b2b231e6eda1351c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "6083",
+        "Content-Length": "6108",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:13:23 GMT",
+        "Date": "Fri, 10 Mar 2023 06:32:26 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9ebb04f0-39c3-40a4-ab13-8a0f41b49a9d",
-        "x-ms-ratelimit-remaining-subscription-reads": "11986",
-        "x-ms-request-id": "f59b2221d0736f393e9211fc2a5a433b",
-        "x-ms-routing-request-id": "WESTUS:20220516T231323Z:9ebb04f0-39c3-40a4-ab13-8a0f41b49a9d",
-        "x-ms-version": "1.0.1957.1107"
+        "x-ms-correlation-request-id": "aac66f40-7da7-4586-aee8-88dc02e5fcda",
+        "x-ms-ratelimit-remaining-subscription-reads": "11902",
+        "x-ms-request-id": "ee2bccefea0de857b2b231e6eda1351c",
+        "x-ms-routing-request-id": "WESTUS:20230310T063226Z:aac66f40-7da7-4586-aee8-88dc02e5fcda",
+        "x-ms-version": "1.0.2251.115"
       },
-      "ResponseBody": "[{\u0022resourceType\u0022:\u0022NetAppStorage\u0022,\u0022name\u0022:\u0022netapp_ultra_1 pib\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:3928538.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u00221048576\u0022},{\u0022name\u0022:\u0022PerformanceTier\u0022,\u0022value\u0022:\u0022Ultra Capacity\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u00221 PiB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure NetApp Files Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure NetApp Files Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Ultra - 1 PiB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022678c70e1-072d-4847-9f2a-c7d1e2347cc6\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Capacity (GiB/Hour)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Ultra - 1 PiB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022NetAppStorage\u0022,\u0022name\u0022:\u0022netapp_premium_100 tib\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:302285.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u0022102400\u0022},{\u0022name\u0022:\u0022PerformanceTier\u0022,\u0022value\u0022:\u0022Premium Capacity\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u0022100 TiB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure NetApp Files Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure NetApp Files Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Premium - 100 TiB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00220b18c330-9866-492f-9e6a-d19ba3444f8e\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Capacity (GiB/Hour)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Premium - 100 TiB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022NetAppStorage\u0022,\u0022name\u0022:\u0022netapp_premium_1 pib\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:2944403.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u00221048576\u0022},{\u0022name\u0022:\u0022PerformanceTier\u0022,\u0022value\u0022:\u0022Premium Capacity\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u00221 PiB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure NetApp Files Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure NetApp Files Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Premium - 1 PiB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00220b18c330-9866-492f-9e6a-d19ba3444f8e\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Capacity (GiB/Hour)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Premium - 1 PiB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022NetAppStorage\u0022,\u0022name\u0022:\u0022netapp_ultra_100 tib\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:403321.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u0022102400\u0022},{\u0022name\u0022:\u0022PerformanceTier\u0022,\u0022value\u0022:\u0022Ultra Capacity\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u0022100 TiB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure NetApp Files Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure NetApp Files Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Ultra - 100 TiB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022678c70e1-072d-4847-9f2a-c7d1e2347cc6\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Capacity (GiB/Hour)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Ultra - 100 TiB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022NetAppStorage\u0022,\u0022name\u0022:\u0022netapp_standard_100 tib\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:151143.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u0022102400\u0022},{\u0022name\u0022:\u0022PerformanceTier\u0022,\u0022value\u0022:\u0022Standard Capacity\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u0022100 TiB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure NetApp Files Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure NetApp Files Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Standard - 100 TiB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022881c9624-2da3-430a-9500-89db938b9e0a\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Capacity (GiB/Hour)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Standard - 100 TiB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022NetAppStorage\u0022,\u0022name\u0022:\u0022netapp_standard_1 pib\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1472202.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u00221048576\u0022},{\u0022name\u0022:\u0022PerformanceTier\u0022,\u0022value\u0022:\u0022Standard Capacity\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u00221 PiB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Azure NetApp Files Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Azure NetApp Files Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Standard - 1 PiB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022881c9624-2da3-430a-9500-89db938b9e0a\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Capacity (GiB/Hour)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Standard - 1 PiB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P3Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022},{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]}]"
+      "ResponseBody": {
+        "value": [
+          {
+            "resourceType": "NetAppStorage",
+            "name": "netapp_ultra_1 pib",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 5107099.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1048576"
+              },
+              {
+                "name": "PerformanceTier",
+                "value": "Ultra Capacity"
+              },
+              {
+                "name": "Size",
+                "value": "1 PiB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure NetApp Files Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure NetApp Files Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Ultra - 1 PiB"
+              },
+              {
+                "name": "MeterId",
+                "value": "678c70e1-072d-4847-9f2a-c7d1e2347cc6"
+              },
+              {
+                "name": "MeterType",
+                "value": "Capacity (GiB/Hour)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ultra - 1 PiB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "NetAppStorage",
+            "name": "netapp_premium_100 tib",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 392971.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "PerformanceTier",
+                "value": "Premium Capacity"
+              },
+              {
+                "name": "Size",
+                "value": "100 TiB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure NetApp Files Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure NetApp Files Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Premium - 100 TiB"
+              },
+              {
+                "name": "MeterId",
+                "value": "0b18c330-9866-492f-9e6a-d19ba3444f8e"
+              },
+              {
+                "name": "MeterType",
+                "value": "Capacity (GiB/Hour)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Premium - 100 TiB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "NetAppStorage",
+            "name": "netapp_premium_1 pib",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 3827724.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1048576"
+              },
+              {
+                "name": "PerformanceTier",
+                "value": "Premium Capacity"
+              },
+              {
+                "name": "Size",
+                "value": "1 PiB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure NetApp Files Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure NetApp Files Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Premium - 1 PiB"
+              },
+              {
+                "name": "MeterId",
+                "value": "0b18c330-9866-492f-9e6a-d19ba3444f8e"
+              },
+              {
+                "name": "MeterType",
+                "value": "Capacity (GiB/Hour)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Premium - 1 PiB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "NetAppStorage",
+            "name": "netapp_ultra_100 tib",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 524317.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "PerformanceTier",
+                "value": "Ultra Capacity"
+              },
+              {
+                "name": "Size",
+                "value": "100 TiB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure NetApp Files Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure NetApp Files Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Ultra - 100 TiB"
+              },
+              {
+                "name": "MeterId",
+                "value": "678c70e1-072d-4847-9f2a-c7d1e2347cc6"
+              },
+              {
+                "name": "MeterType",
+                "value": "Capacity (GiB/Hour)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Ultra - 100 TiB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "NetAppStorage",
+            "name": "netapp_standard_100 tib",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 196486.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "PerformanceTier",
+                "value": "Standard Capacity"
+              },
+              {
+                "name": "Size",
+                "value": "100 TiB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure NetApp Files Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure NetApp Files Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Standard - 100 TiB"
+              },
+              {
+                "name": "MeterId",
+                "value": "881c9624-2da3-430a-9500-89db938b9e0a"
+              },
+              {
+                "name": "MeterType",
+                "value": "Capacity (GiB/Hour)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Standard - 100 TiB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "NetAppStorage",
+            "name": "netapp_standard_1 pib",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1913863.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1048576"
+              },
+              {
+                "name": "PerformanceTier",
+                "value": "Standard Capacity"
+              },
+              {
+                "name": "Size",
+                "value": "1 PiB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Azure NetApp Files Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Azure NetApp Files Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Standard - 1 PiB"
+              },
+              {
+                "name": "MeterId",
+                "value": "881c9624-2da3-430a-9500-89db938b9e0a"
+              },
+              {
+                "name": "MeterType",
+                "value": "Capacity (GiB/Hour)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Standard - 1 PiB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P3Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              },
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          }
+        ],
+        "totalItems": 6
+      }
     }
   ],
   "Variables": {
-    "RandomSeed": "1870647949",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
-    "SUBSCRIPTION_ID": "6d5e2387-bdf5-4ca1-83db-795fd2398b93"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "900530421",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }
 }

@@ -33,11 +33,6 @@ namespace Azure.Storage.Tests
             int writeCount = 9;
 
             Mock<PooledMemoryStream> mockBuffer = new Mock<PooledMemoryStream>(MockBehavior.Strict);
-            StorageWriteStreamImplementation stream = new StorageWriteStreamImplementation(
-                position: 0,
-                bufferSize: bufferSize,
-                progressHandler: null,
-                buffer: mockBuffer.Object);
 
             mockBuffer.SetupSequence(r => r.WriteAsync(
                 It.IsAny<byte[]>(),
@@ -58,6 +53,7 @@ namespace Azure.Storage.Tests
 
             mockBuffer.SetupSequence(r => r.Position)
                 .Returns(0)
+                .Returns(0)
                 .Returns(256)
                 .Returns(512)
                 .Returns(768)
@@ -68,6 +64,14 @@ namespace Azure.Storage.Tests
                 .Returns(512)
                 .Returns(1024)
                 .Returns(1024);
+
+            mockBuffer.Setup(r => r.Length).Returns(1024); // just need a value > 0
+
+            StorageWriteStreamImplementation stream = new StorageWriteStreamImplementation(
+                position: 0,
+                bufferSize: bufferSize,
+                progressHandler: null,
+                buffer: mockBuffer.Object);
 
             List<byte[]> data = new List<byte[]>();
             for (int i = 0; i < writeCount; i++)
@@ -89,7 +93,7 @@ namespace Azure.Storage.Tests
             Assert.AreEqual(s_append, stream.ApiCalls[1]);
             Assert.AreEqual(s_flush, stream.ApiCalls[2]);
 
-            mockBuffer.Verify(r => r.Position, Times.Exactly(11));
+            mockBuffer.Verify(r => r.Position, Times.Exactly(12));
             for (int i = 0; i < writeCount; i++)
             {
                 mockBuffer.Verify(r => r.WriteAsync(
@@ -114,11 +118,6 @@ namespace Azure.Storage.Tests
             int writeCount = 5;
 
             Mock<PooledMemoryStream> mockBuffer = new Mock<PooledMemoryStream>(MockBehavior.Strict);
-            StorageWriteStreamImplementation stream = new StorageWriteStreamImplementation(
-                position: 0,
-                bufferSize: bufferSize,
-                progressHandler: null,
-                buffer: mockBuffer.Object);
 
             mockBuffer.SetupSequence(r => r.WriteAsync(
                 It.IsAny<byte[]>(),
@@ -135,12 +134,21 @@ namespace Azure.Storage.Tests
 
             mockBuffer.SetupSequence(r => r.Position)
                 .Returns(0)
+                .Returns(0)
                 .Returns(500)
                 .Returns(1000)
                 .Returns(1000)
                 .Returns(476)
                 .Returns(976)
                 .Returns(976);
+
+            mockBuffer.Setup(r => r.Length).Returns(1024); // just need a value > 0
+
+            StorageWriteStreamImplementation stream = new StorageWriteStreamImplementation(
+                position: 0,
+                bufferSize: bufferSize,
+                progressHandler: null,
+                buffer: mockBuffer.Object);
 
             List<byte[]> data = new List<byte[]>();
             for (int i = 0; i < writeCount; i++)
@@ -161,7 +169,7 @@ namespace Azure.Storage.Tests
             Assert.AreEqual(s_append, stream.ApiCalls[1]);
             Assert.AreEqual(s_flush, stream.ApiCalls[2]);
 
-            mockBuffer.Verify(r => r.Position, Times.Exactly(7));
+            mockBuffer.Verify(r => r.Position, Times.Exactly(8));
 
             mockBuffer.Verify(r => r.WriteAsync(data[0], 0, writeSize, default));
             mockBuffer.Verify(r => r.WriteAsync(data[1], 0, writeSize, default));
@@ -185,11 +193,6 @@ namespace Azure.Storage.Tests
             int writeCount = 2;
 
             Mock<PooledMemoryStream> mockBuffer = new Mock<PooledMemoryStream>(MockBehavior.Strict);
-            StorageWriteStreamImplementation stream = new StorageWriteStreamImplementation(
-                position: 0,
-                bufferSize: bufferSize,
-                progressHandler: null,
-                buffer: mockBuffer.Object);
 
             mockBuffer.SetupSequence(r => r.WriteAsync(
                 It.IsAny<byte[]>(),
@@ -205,8 +208,17 @@ namespace Azure.Storage.Tests
             mockBuffer.SetupSequence(r => r.Position)
                 .Returns(0)
                 .Returns(0)
+                .Returns(0)
                 .Returns(976)
                 .Returns(976);
+
+            mockBuffer.Setup(r => r.Length).Returns(1024); // just need a value > 0
+
+            StorageWriteStreamImplementation stream = new StorageWriteStreamImplementation(
+                position: 0,
+                bufferSize: bufferSize,
+                progressHandler: null,
+                buffer: mockBuffer.Object);
 
             List<byte[]> data = new List<byte[]>();
             for (int i = 0; i < writeCount; i++)
@@ -228,7 +240,7 @@ namespace Azure.Storage.Tests
             Assert.AreEqual(s_append, stream.ApiCalls[2]);
             Assert.AreEqual(s_flush, stream.ApiCalls[3]);
 
-            mockBuffer.Verify(r => r.Position, Times.Exactly(4));
+            mockBuffer.Verify(r => r.Position, Times.Exactly(5));
 
             mockBuffer.Verify(r => r.WriteAsync(data[0], 0, bufferSize, default));
             mockBuffer.Verify(r => r.WriteAsync(data[0], bufferSize, 976, default));
@@ -251,19 +263,28 @@ namespace Azure.Storage.Tests
                       position,
                       bufferSize,
                       progressHandler,
-                      transferValidation: default,
+                      transferValidation: new UploadTransferValidationOptions
+                      {
+                          ChecksumAlgorithm = StorageChecksumAlgorithm.Auto
+                      },
                       buffer)
             {
                 ApiCalls = new List<string>();
             }
 
-            protected override Task AppendInternal(bool async, CancellationToken cancellationToken)
+            protected override Task AppendInternal(
+                UploadTransferValidationOptions validationOptions,
+                bool async,
+                CancellationToken cancellationToken)
             {
                 ApiCalls.Add(s_append);
                 return Task.CompletedTask;
             }
 
-            protected override Task FlushInternal(bool async, CancellationToken cancellationToken)
+            protected override Task FlushInternal(
+                UploadTransferValidationOptions validationOptions,
+                bool async,
+                CancellationToken cancellationToken)
             {
                 ApiCalls.Add(s_flush);
                 return Task.CompletedTask;

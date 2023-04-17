@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filter = Filter.DeserializeFilter(property.Value);

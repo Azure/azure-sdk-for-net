@@ -22,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
             else
             {
-                assemblyName = methodInfo.Module.Assembly.FullName;
+                assemblyName = methodInfo.Module.Assembly.FullName ?? "unknown";
                 if (methodInfo.DeclaringType != null)
                 {
                     fullName = methodInfo.DeclaringType.FullName + "." + methodInfo.Name;

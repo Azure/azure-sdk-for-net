@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enforcement = property.Value.GetString().ToSearchEncryptionWithCmkEnforcement();
@@ -47,7 +46,6 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryptionComplianceStatus = property.Value.GetString().ToSearchEncryptionComplianceStatus();
