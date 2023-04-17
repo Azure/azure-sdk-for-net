@@ -224,7 +224,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #region Snippet:CreateTransferManagerWithOptions
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     MaximumTransferChunkSize = 4 * Constants.MB,
                     CreateMode = StorageResourceCreateMode.Overwrite,
@@ -310,8 +310,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #region Snippet:SimpleLoggingSample
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
-                ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
-                containerTransferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
+                TransferOptions transferOptions = new TransferOptions();
+                transferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
                 {
                     using (StreamWriter logStream = File.AppendText(logFile))
                     {
@@ -396,8 +396,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             {
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
-                ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
-                containerTransferOptions.TransferStatus += (TransferStatusEventArgs args) =>
+                TransferOptions transferOptions = new TransferOptions();
+                transferOptions.TransferStatus += (TransferStatusEventArgs args) =>
                 {
                     if (args.StorageTransferStatus == StorageTransferStatus.Completed)
                     {
@@ -409,7 +409,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     return Task.CompletedTask;
                 };
                 #region Snippet:FailedEventDelegation
-                containerTransferOptions.TransferFailed += (TransferFailedEventArgs args) =>
+                transferOptions.TransferFailed += (TransferFailedEventArgs args) =>
                 {
                     using (StreamWriter logStream = File.AppendText(logFile))
                     {
@@ -494,7 +494,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
-                ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
+                TransferOptions downloadOptions = new TransferOptions();
                 downloadOptions.TransferFailed += async (TransferFailedEventArgs args) =>
                 {
                     // TODO: change the Exception if it's a RequestFailedException and then look at the exception.StatusCode
@@ -646,7 +646,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create Blob Transfer Manager
                 TransferManager transferManager = new TransferManager(default);
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-                ContainerTransferOptions options = new ContainerTransferOptions();
+                TransferOptions options = new TransferOptions();
                 options.TransferFailed += async (TransferFailedEventArgs args) =>
                 {
                     //await LogFailedFileAsync(args.SourceFileUri, args.DestinationFileClient.Uri, args.Exception.Message);
@@ -703,7 +703,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 #region Snippet:TransferManagerResume_Async
                 // Resume from checkpoint id
-                SingleTransferOptions optionsWithResumeTransferId = new SingleTransferOptions()
+                TransferOptions optionsWithResumeTransferId = new TransferOptions()
                 {
                     ResumeFromCheckpointId = dataTransfer.Id
                 };
@@ -764,7 +764,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #endregion Snippet:TransferManagerTryPauseId_Async
 
                 // Resume from checkpoint id
-                SingleTransferOptions optionsWithResumeTransferId = new SingleTransferOptions()
+                TransferOptions optionsWithResumeTransferId = new TransferOptions()
                 {
                     ResumeFromCheckpointId = dataTransfer.Id
                 };
@@ -823,7 +823,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #endregion Snippet:DataTransferTryPause_Async
 
                 // Resume from checkpoint id
-                SingleTransferOptions optionsWithResumeTransferId = new SingleTransferOptions()
+                TransferOptions optionsWithResumeTransferId = new TransferOptions()
                 {
                     ResumeFromCheckpointId = dataTransfer.Id
                 };

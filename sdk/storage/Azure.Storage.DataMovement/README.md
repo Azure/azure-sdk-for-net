@@ -48,7 +48,7 @@ TransferManager transferManager = new TransferManager(new TransferManagerOptions
 ```C# Snippet:CreateTransferManagerWithOptions
 // Create BlobTransferManager with event handler in Options bag
 TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
-ContainerTransferOptions options = new ContainerTransferOptions()
+TransferOptions options = new TransferOptions()
 {
     MaximumTransferChunkSize = 4 * Constants.MB,
     CreateMode = StorageResourceCreateMode.Overwrite,

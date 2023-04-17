@@ -116,8 +116,8 @@ namespace Azure.Storage.DataMovement
     {
         protected TransferManager() { }
         public TransferManager(Azure.Storage.DataMovement.TransferManagerOptions options = null) { }
-        public virtual System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.StorageResource destinationResource, Azure.Storage.DataMovement.Models.SingleTransferOptions transferOptions = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResourceContainer sourceResource, Azure.Storage.DataMovement.StorageResourceContainer destinationResource, Azure.Storage.DataMovement.Models.ContainerTransferOptions transferOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.StorageResource destinationResource, Azure.Storage.DataMovement.Models.TransferOptions transferOptions = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartTransferAsync(Azure.Storage.DataMovement.StorageResourceContainer sourceResource, Azure.Storage.DataMovement.StorageResourceContainer destinationResource, Azure.Storage.DataMovement.Models.TransferOptions transferOptions = null) { throw null; }
         System.Threading.Tasks.ValueTask System.IAsyncDisposable.DisposeAsync() { throw null; }
         public virtual System.Threading.Tasks.Task<bool> TryPauseTransferAsync(Azure.Storage.DataMovement.DataTransfer transfer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<bool> TryPauseTransferAsync(string transferId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -137,28 +137,6 @@ namespace Azure.Storage.DataMovement
 }
 namespace Azure.Storage.DataMovement.Models
 {
-    public partial class ContainerTransferOptions : System.IEquatable<Azure.Storage.DataMovement.Models.ContainerTransferOptions>
-    {
-        public ContainerTransferOptions() { }
-        public Azure.Storage.DataMovement.StorageResourceCreateMode CreateMode { get { throw null; } set { } }
-        public long? InitialTransferSize { get { throw null; } set { } }
-        public long? MaximumTransferChunkSize { get { throw null; } set { } }
-        public string ResumeFromCheckpointId { get { throw null; } set { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.SingleTransferCompletedEventArgs> SingleTransferCompleted { add { } remove { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferFailedEventArgs> TransferFailed { add { } remove { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferSkippedEventArgs> TransferSkipped { add { } remove { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferStatusEventArgs> TransferStatus { add { } remove { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public bool Equals(Azure.Storage.DataMovement.Models.ContainerTransferOptions obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static bool operator ==(Azure.Storage.DataMovement.Models.ContainerTransferOptions left, Azure.Storage.DataMovement.Models.ContainerTransferOptions right) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static bool operator !=(Azure.Storage.DataMovement.Models.ContainerTransferOptions left, Azure.Storage.DataMovement.Models.ContainerTransferOptions right) { throw null; }
-    }
     public partial class ReadStreamStorageResourceResult
     {
         public ReadStreamStorageResourceResult(System.IO.Stream content) { }
@@ -176,27 +154,6 @@ namespace Azure.Storage.DataMovement.Models
         public SingleTransferCompletedEventArgs(string transferId, Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.StorageResource destinationResource, bool isRunningSynchronously, System.Threading.CancellationToken cancellationToken) : base (default(string), default(bool), default(System.Threading.CancellationToken)) { }
         public Azure.Storage.DataMovement.StorageResource DestinationResource { get { throw null; } }
         public Azure.Storage.DataMovement.StorageResource SourceResource { get { throw null; } }
-    }
-    public partial class SingleTransferOptions : System.IEquatable<Azure.Storage.DataMovement.Models.SingleTransferOptions>
-    {
-        public SingleTransferOptions() { }
-        public Azure.Storage.DataMovement.StorageResourceCreateMode CreateMode { get { throw null; } set { } }
-        public long? InitialTransferSize { get { throw null; } set { } }
-        public long? MaximumTransferChunkSize { get { throw null; } set { } }
-        public string ResumeFromCheckpointId { get { throw null; } set { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferFailedEventArgs> TransferFailed { add { } remove { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferSkippedEventArgs> TransferSkipped { add { } remove { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferStatusEventArgs> TransferStatus { add { } remove { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public bool Equals(Azure.Storage.DataMovement.Models.SingleTransferOptions obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static bool operator ==(Azure.Storage.DataMovement.Models.SingleTransferOptions left, Azure.Storage.DataMovement.Models.SingleTransferOptions right) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static bool operator !=(Azure.Storage.DataMovement.Models.SingleTransferOptions left, Azure.Storage.DataMovement.Models.SingleTransferOptions right) { throw null; }
     }
     public partial class StorageResourceCopyFromUriOptions
     {
@@ -232,6 +189,28 @@ namespace Azure.Storage.DataMovement.Models
         public Azure.Storage.DataMovement.StorageResource DestinationResource { get { throw null; } }
         public System.Exception Exception { get { throw null; } }
         public Azure.Storage.DataMovement.StorageResource SourceResource { get { throw null; } }
+    }
+    public partial class TransferOptions : System.IEquatable<Azure.Storage.DataMovement.Models.TransferOptions>
+    {
+        public TransferOptions() { }
+        public Azure.Storage.DataMovement.StorageResourceCreateMode CreateMode { get { throw null; } set { } }
+        public long? InitialTransferSize { get { throw null; } set { } }
+        public long? MaximumTransferChunkSize { get { throw null; } set { } }
+        public string ResumeFromCheckpointId { get { throw null; } set { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.SingleTransferCompletedEventArgs> SingleTransferCompleted { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferFailedEventArgs> TransferFailed { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferSkippedEventArgs> TransferSkipped { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.Models.TransferStatusEventArgs> TransferStatus { add { } remove { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public bool Equals(Azure.Storage.DataMovement.Models.TransferOptions obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static bool operator ==(Azure.Storage.DataMovement.Models.TransferOptions left, Azure.Storage.DataMovement.Models.TransferOptions right) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static bool operator !=(Azure.Storage.DataMovement.Models.TransferOptions left, Azure.Storage.DataMovement.Models.TransferOptions right) { throw null; }
     }
     public partial class TransferSkippedEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
     {
