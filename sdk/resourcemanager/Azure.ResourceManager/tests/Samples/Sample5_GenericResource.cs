@@ -111,10 +111,12 @@ namespace Azure.ResourceManager.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public static async Task UpdateGenericResourceTags(GenericResource resource)
+        public static async Task UpdateGenericResourceTags()
         {
             #region Snippet:Update_GenericResourc_Tags
             ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+            GenericResource resource = client.GetGenericResources().Get(id).Value;
 
             GenericResourceData updateTag = new GenericResourceData(AzureLocation.EastUS);
             updateTag.Tags.Add("tag1", "sample-for-genericresource");
@@ -158,10 +160,12 @@ namespace Azure.ResourceManager.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public static async Task DeleteGenericResource(GenericResource resource)
+        public static async Task DeleteGenericResource()
         {
             #region Snippet:Delete_GenericResource
             ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+            GenericResource resource = client.GetGenericResources().Get(id).Value;
 
             var deleteResult = await resource.DeleteAsync(WaitUntil.Completed);
             Console.WriteLine($"Resource deletion response status code: {deleteResult.WaitForCompletionResponse().Status}");

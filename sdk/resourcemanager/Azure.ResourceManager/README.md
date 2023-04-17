@@ -391,6 +391,8 @@ Console.WriteLine($"Resource {createResult.Value.Id.Name} in resource group {cre
 ### Update GenericResourc Tags
 ```C# Snippet:Update_GenericResourc_Tags
 ArmClient client = new ArmClient(new DefaultAzureCredential());
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+GenericResource resource = client.GetGenericResources().Get(id).Value;
 
 GenericResourceData updateTag = new GenericResourceData(AzureLocation.EastUS);
 updateTag.Tags.Add("tag1", "sample-for-genericresource");
@@ -421,6 +423,8 @@ Console.WriteLine($"Resource exists: {existResult}");
 ### Delete GenericResource
 ```C# Snippet:Delete_GenericResource
 ArmClient client = new ArmClient(new DefaultAzureCredential());
+ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");
+GenericResource resource = client.GetGenericResources().Get(id).Value;
 
 var deleteResult = await resource.DeleteAsync(WaitUntil.Completed);
 Console.WriteLine($"Resource deletion response status code: {deleteResult.WaitForCompletionResponse().Status}");
