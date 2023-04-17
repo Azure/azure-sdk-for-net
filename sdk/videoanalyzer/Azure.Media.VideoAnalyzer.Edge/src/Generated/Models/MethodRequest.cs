@@ -17,7 +17,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of MethodRequest. </summary>
         protected MethodRequest()
         {
-            ApiVersion = "1.1";
         }
 
         /// <summary> Initializes a new instance of MethodRequest. </summary>
