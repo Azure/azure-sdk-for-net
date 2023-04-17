@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
     /// </summary>
     public class AzureMonitorTraceExporterLiveTests : RecordedTestBase<MonitorExporterTestEnvironment>
     {
-        public AzureMonitorTraceExporterLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live) { }
+        public AzureMonitorTraceExporterLiveTests(bool isAsync) : base(isAsync) { } // Add RecordedTestMode to the base ctor to choose between Live, Record, or Playback modes.
 
         [RecordedTest]
         public async Task VerifyTraceExporter()
