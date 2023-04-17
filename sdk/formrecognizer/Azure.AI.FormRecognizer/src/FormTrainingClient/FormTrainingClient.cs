@@ -18,8 +18,8 @@ namespace Azure.AI.FormRecognizer.Training
     /// properties.
     /// </summary>
     /// <remarks>
-    /// This client only works with <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and older.
-    /// If you want to use a newer version, please use the <see cref="DocumentAnalysis.DocumentModelAdministrationClient"/>.
+    /// This client only supports <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and older.
+    /// To use a newer service version, see <see cref="DocumentAnalysis.DocumentModelAdministrationClient"/>.
     /// </remarks>
     public class FormTrainingClient
     {

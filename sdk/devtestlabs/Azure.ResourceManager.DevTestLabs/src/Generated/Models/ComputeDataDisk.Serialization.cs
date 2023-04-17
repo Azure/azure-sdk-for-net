@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        diskUri = null;
                         continue;
                     }
                     diskUri = new Uri(property.Value.GetString());
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskSizeGiB = property.Value.GetInt32();

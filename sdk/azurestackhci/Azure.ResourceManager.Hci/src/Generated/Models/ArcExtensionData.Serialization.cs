@@ -118,7 +118,6 @@ namespace Azure.ResourceManager.Hci
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -137,7 +136,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new HciProvisioningState(property0.Value.GetString());
@@ -147,7 +145,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aggregateState = new ArcExtensionAggregateState(property0.Value.GetString());
@@ -157,7 +154,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PerNodeExtensionState> array = new List<PerNodeExtensionState>();
@@ -201,7 +197,6 @@ namespace Azure.ResourceManager.Hci
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     autoUpgradeMinorVersion = property1.Value.GetBoolean();
@@ -211,7 +206,6 @@ namespace Azure.ResourceManager.Hci
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     settings = BinaryData.FromString(property1.Value.GetRawText());
@@ -221,7 +215,6 @@ namespace Azure.ResourceManager.Hci
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     protectedSettings = BinaryData.FromString(property1.Value.GetRawText());
@@ -231,7 +224,6 @@ namespace Azure.ResourceManager.Hci
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     enableAutomaticUpgrade = property1.Value.GetBoolean();

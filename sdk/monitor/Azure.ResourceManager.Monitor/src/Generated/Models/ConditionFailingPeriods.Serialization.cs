@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     numberOfEvaluationPeriods = property.Value.GetInt64();
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minFailingPeriodsToAlert = property.Value.GetInt64();

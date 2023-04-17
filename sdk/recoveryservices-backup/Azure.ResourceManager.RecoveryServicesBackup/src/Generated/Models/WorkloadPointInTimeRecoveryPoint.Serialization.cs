@@ -94,7 +94,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PointInTimeRange> array = new List<PointInTimeRange>();
@@ -109,7 +108,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPointTimeInUTC = property.Value.GetDateTimeOffset("O");
@@ -119,7 +117,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new RestorePointType(property.Value.GetString());
@@ -129,7 +126,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RecoveryPointTierInformationV2> array = new List<RecoveryPointTierInformationV2>();
@@ -144,7 +140,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, RecoveryPointMoveReadinessInfo> dictionary = new Dictionary<string, RecoveryPointMoveReadinessInfo>();
@@ -159,7 +154,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value);

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = SqlMetricName.DeserializeSqlMetricName(property.Value);
@@ -41,7 +40,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryAggregationType = new SqlMetricPrimaryAggregationType(property.Value.GetString());
@@ -51,7 +49,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resourceUri = null;
                         continue;
                     }
                     resourceUri = new Uri(property.Value.GetString());
@@ -61,7 +58,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unit = new SqlMetricDefinitionUnitType(property.Value.GetString());
@@ -71,7 +67,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SqlMetricAvailability> array = new List<SqlMetricAvailability>();

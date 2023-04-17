@@ -109,7 +109,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
@@ -119,7 +118,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
@@ -144,7 +142,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ActivityDependency> array = new List<ActivityDependency>();
@@ -159,7 +156,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ActivityUserProperty> array = new List<ActivityUserProperty>();

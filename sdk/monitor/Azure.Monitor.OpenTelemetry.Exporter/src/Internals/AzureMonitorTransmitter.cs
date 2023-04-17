@@ -56,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
         }
 
-        private static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
+        internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
         {
             if (options.ConnectionString == null)
             {

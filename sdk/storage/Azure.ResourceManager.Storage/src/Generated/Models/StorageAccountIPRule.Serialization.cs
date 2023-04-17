@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     action = new StorageAccountNetworkRuleAction(property.Value.GetString());

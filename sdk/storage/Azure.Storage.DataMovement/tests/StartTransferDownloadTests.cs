@@ -176,7 +176,6 @@ namespace Azure.Storage.DataMovement.Tests
                     downloadedBlobInfo[i].DataTransfer = transfer;
                 }
 
-                failureTransferHolder.AssertFailureCheck();
                 for (int i = 0; i < downloadedBlobInfo.Count; i++)
                 {
                     // Assert
@@ -189,6 +188,7 @@ namespace Azure.Storage.DataMovement.Tests
                     // Verify Download
                     CheckDownloadFile(downloadedBlobInfo[i].SourceLocalPath, downloadedBlobInfo[i].DestinationLocalPath);
                 }
+                failureTransferHolder.AssertFailureCheck();
             }
             catch (Exception ex)
             {

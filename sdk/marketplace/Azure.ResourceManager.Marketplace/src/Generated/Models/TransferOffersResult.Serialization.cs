@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PrivateStoreCollectionDetails> array = new List<PrivateStoreCollectionDetails>();
@@ -42,7 +41,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PrivateStoreCollectionDetails> array = new List<PrivateStoreCollectionDetails>();

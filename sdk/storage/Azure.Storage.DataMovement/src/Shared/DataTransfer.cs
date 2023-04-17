@@ -79,8 +79,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         public async Task AwaitCompletion(CancellationToken cancellationToken = default)
         {
-            cancellationToken.Register(() => _state.CompletionSource.TrySetCanceled(cancellationToken), useSynchronizationContext: false);
-            await _state.CompletionSource.Task.ConfigureAwait(false);
+            await _state.CompletionSource.Task.AwaitWithCancellation(cancellationToken);
         }
 
         /// <summary>

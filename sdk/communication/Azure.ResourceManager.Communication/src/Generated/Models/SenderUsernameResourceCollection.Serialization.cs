@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SenderUsernameResourceData> array = new List<SenderUsernameResourceData>();

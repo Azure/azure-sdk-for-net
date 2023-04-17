@@ -58,7 +58,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     marketplaceSubscriptionStatus = new MarketplaceSubscriptionStatus(property.Value.GetString());

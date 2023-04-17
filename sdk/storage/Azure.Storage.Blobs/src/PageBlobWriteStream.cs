@@ -64,7 +64,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Flush the buffer.
-                await AppendInternal(async, cancellationToken).ConfigureAwait(false);
+                await AppendInternal(FinalizeAndReplaceBufferChecksum(), async, cancellationToken).ConfigureAwait(false);
 
                 while (remaining > 0)
                 {
@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs
                     // Remaining bytes won't fit in buffer.
                     if (remaining > _bufferSize)
                     {
-                        await AppendInternal(async, cancellationToken).ConfigureAwait(false);
+                        await AppendInternal(FinalizeAndReplaceBufferChecksum(), async, cancellationToken).ConfigureAwait(false);
                         remaining -= (int)_bufferSize;
                         offset += (int)_bufferSize;
                     }
@@ -92,7 +92,10 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        protected override async Task AppendInternal(bool async, CancellationToken cancellationToken)
+        protected override async Task AppendInternal(
+            UploadTransferValidationOptions validationOptions,
+            bool async,
+            CancellationToken cancellationToken)
         {
             if (_buffer.Length > 0)
             {
@@ -101,7 +104,7 @@ namespace Azure.Storage.Blobs
                 Response<PageInfo> response = await _pageBlobClient.UploadPagesInternal(
                     content: _buffer,
                     offset: _writeIndex,
-                    _validationOptions,
+                    validationOptions,
                     _conditions,
                     _progressHandler,
                     async: async,
@@ -115,8 +118,11 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        protected override async Task FlushInternal(bool async, CancellationToken cancellationToken)
-            => await AppendInternal(async, cancellationToken).ConfigureAwait(false);
+        protected override async Task FlushInternal(
+            UploadTransferValidationOptions validationOptions,
+            bool async,
+            CancellationToken cancellationToken)
+            => await AppendInternal(validationOptions, async, cancellationToken).ConfigureAwait(false);
 
         protected override void ValidateBufferSize(long bufferSize)
         {

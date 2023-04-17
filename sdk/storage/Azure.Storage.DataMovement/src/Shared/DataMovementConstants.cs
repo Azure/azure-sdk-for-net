@@ -184,5 +184,11 @@ namespace Azure.Storage.DataMovement
             /// </summary>
             internal const int JobPartHeaderSizeInBytes = AtomicPartStatusIndex + OneByte;
         }
+
+        internal static class ErrorCode
+        {
+            internal static readonly string[] CannotOverwrite = { "BlobAlreadyExists", "Cannot overwite file." };
+            internal static readonly string[] AccessDenied = { "AuthenticationFailed", "AuthorizationFailure", "access denied" };
+        }
     }
 }

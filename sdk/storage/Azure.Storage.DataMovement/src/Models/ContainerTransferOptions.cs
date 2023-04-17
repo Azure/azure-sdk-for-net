@@ -2,20 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Storage.DataMovement.Models
 {
     /// <summary>
-    /// <see cref="SingleTransferOptions"/> is used to provide options for parallel transfers.
+    /// <see cref="ContainerTransferOptions"/> is used to provide options for parallel transfers
+    /// of multiple resources in a container.
     /// </summary>
     public class ContainerTransferOptions : IEquatable<ContainerTransferOptions>
     {
         /// <summary>
-        /// The maximum length of an transfer in bytes.
+        /// The maximum length of a network transfer in bytes.
         ///
         /// On uploads, if the value is not set, it will be set at 4 MB if the total size is less than 100MB
         /// or will default to 8 MB if the total size is greater than or equal to 100MB.

@@ -34,7 +34,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = property.Value.GetInt32();
@@ -44,7 +43,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     body = LogsBatchQueryResult.DeserializeLogsBatchQueryResult(property.Value);
@@ -54,7 +52,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

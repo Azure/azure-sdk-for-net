@@ -112,7 +112,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     external = property.Value.GetBoolean();
@@ -122,7 +121,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetPort = property.Value.GetInt32();
@@ -132,7 +130,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     exposedPort = property.Value.GetInt32();
@@ -142,7 +139,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transport = new ContainerAppIngressTransportMethod(property.Value.GetString());
@@ -152,7 +148,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerAppRevisionTrafficWeight> array = new List<ContainerAppRevisionTrafficWeight>();
@@ -167,7 +162,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerAppCustomDomain> array = new List<ContainerAppCustomDomain>();
@@ -182,7 +176,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowInsecure = property.Value.GetBoolean();
@@ -192,7 +185,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerAppIPSecurityRestrictionRule> array = new List<ContainerAppIPSecurityRestrictionRule>();
@@ -207,7 +199,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientCertificateMode = new ContainerAppIngressClientCertificateMode(property.Value.GetString());
@@ -217,7 +208,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     corsPolicy = ContainerAppCorsPolicy.DeserializeContainerAppCorsPolicy(property.Value);

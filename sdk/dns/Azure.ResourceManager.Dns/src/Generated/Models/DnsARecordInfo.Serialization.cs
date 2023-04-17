@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.Dns.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ipv4Address = IPAddress.Parse(property.Value.GetString());
