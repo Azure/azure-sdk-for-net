@@ -458,7 +458,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var response = callConnection.GetCallMedia().SendDtmf(
                        new CommunicationUserIdentifier("targetUserId"),
                        new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
-                       "context"
+                       OperationContext
                 );
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
@@ -488,7 +488,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var response = callConnection.GetCallMedia().SendDtmf(
                        new CommunicationUserIdentifier("targetUserId"),
                        new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
-                       "context"
+                       OperationContext
                 );
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
