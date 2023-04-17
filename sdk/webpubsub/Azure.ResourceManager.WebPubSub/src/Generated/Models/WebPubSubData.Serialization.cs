@@ -118,7 +118,6 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = BillingInfoSku.DeserializeBillingInfoSku(property.Value);
@@ -128,7 +127,6 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -138,7 +136,6 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -173,7 +170,6 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -192,7 +188,6 @@ namespace Azure.ResourceManager.WebPubSub
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new WebPubSubProvisioningState(property0.Value.GetString());
@@ -212,7 +207,6 @@ namespace Azure.ResourceManager.WebPubSub
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicPort = property0.Value.GetInt32();
@@ -222,7 +216,6 @@ namespace Azure.ResourceManager.WebPubSub
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serverPort = property0.Value.GetInt32();
@@ -237,7 +230,6 @@ namespace Azure.ResourceManager.WebPubSub
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WebPubSubPrivateEndpointConnectionData> array = new List<WebPubSubPrivateEndpointConnectionData>();
@@ -252,7 +244,6 @@ namespace Azure.ResourceManager.WebPubSub
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WebPubSubSharedPrivateLinkData> array = new List<WebPubSubSharedPrivateLinkData>();
@@ -267,7 +258,6 @@ namespace Azure.ResourceManager.WebPubSub
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tls = WebPubSubTlsSettings.DeserializeWebPubSubTlsSettings(property0.Value);
@@ -282,7 +272,6 @@ namespace Azure.ResourceManager.WebPubSub
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             liveTraceConfiguration = LiveTraceConfiguration.DeserializeLiveTraceConfiguration(property0.Value);
@@ -292,7 +281,6 @@ namespace Azure.ResourceManager.WebPubSub
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceLogConfiguration = ResourceLogConfiguration.DeserializeResourceLogConfiguration(property0.Value);
@@ -302,7 +290,6 @@ namespace Azure.ResourceManager.WebPubSub
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkAcls = WebPubSubNetworkAcls.DeserializeWebPubSubNetworkAcls(property0.Value);
@@ -317,7 +304,6 @@ namespace Azure.ResourceManager.WebPubSub
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disableLocalAuth = property0.Value.GetBoolean();
@@ -327,7 +313,6 @@ namespace Azure.ResourceManager.WebPubSub
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disableAadAuth = property0.Value.GetBoolean();

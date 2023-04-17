@@ -17,6 +17,11 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             writer.WritePropertyName("capacityCostPerJob"u8);
             writer.WriteNumberValue(CapacityCostPerJob);
+            if (Optional.IsDefined(MaxNumberOfJobs))
+            {
+                writer.WritePropertyName("maxNumberOfJobs"u8);
+                writer.WriteNumberValue(MaxNumberOfJobs.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -27,6 +32,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             int capacityCostPerJob = default;
+            Optional<int> maxNumberOfJobs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacityCostPerJob"u8))
@@ -34,8 +40,17 @@ namespace Azure.Communication.JobRouter
                     capacityCostPerJob = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("maxNumberOfJobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxNumberOfJobs = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new ChannelConfiguration(capacityCostPerJob);
+            return new ChannelConfiguration(capacityCostPerJob, Optional.ToNullable(maxNumberOfJobs));
         }
     }
 }

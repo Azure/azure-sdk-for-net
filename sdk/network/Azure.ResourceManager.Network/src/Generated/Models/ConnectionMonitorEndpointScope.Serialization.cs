@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectionMonitorEndpointScopeItem> array = new List<ConnectionMonitorEndpointScopeItem>();
@@ -68,7 +67,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectionMonitorEndpointScopeItem> array = new List<ConnectionMonitorEndpointScopeItem>();

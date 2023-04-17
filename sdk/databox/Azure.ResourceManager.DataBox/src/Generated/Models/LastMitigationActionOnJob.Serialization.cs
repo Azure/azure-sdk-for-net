@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actionDateTimeInUtc = property.Value.GetDateTimeOffset("O");
@@ -38,7 +37,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPerformedByCustomer = property.Value.GetBoolean();
@@ -48,7 +46,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customerResolution = property.Value.GetString().ToCustomerResolutionCode();

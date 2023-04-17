@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     daily = DailySchedule.DeserializeDailySchedule(property.Value);
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     weekly = ContainerServiceMaintenanceWeeklySchedule.DeserializeContainerServiceMaintenanceWeeklySchedule(property.Value);
@@ -74,7 +72,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     absoluteMonthly = ContainerServiceMaintenanceAbsoluteMonthlySchedule.DeserializeContainerServiceMaintenanceAbsoluteMonthlySchedule(property.Value);
@@ -84,7 +81,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     relativeMonthly = ContainerServiceMaintenanceRelativeMonthlySchedule.DeserializeContainerServiceMaintenanceRelativeMonthlySchedule(property.Value);

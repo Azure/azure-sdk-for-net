@@ -31,7 +31,7 @@
     <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)VoidValue.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)DelayStrategyInternal.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AsyncLockWithValue.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared" />

@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backendHttpSettings = ApplicationGatewayBackendHttpSettings.DeserializeApplicationGatewayBackendHttpSettings(property.Value);
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplicationGatewayBackendHealthServer> array = new List<ApplicationGatewayBackendHealthServer>();

@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{3E77BE70-A052-44F1-9E79-CB6D266DB1B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests", "tests\Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests\Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests.csproj", "{BDEBE918-929D-4F32-B947-D5D1BAA3FC26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,12 +50,17 @@ Global
 		{3E77BE70-A052-44F1-9E79-CB6D266DB1B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E77BE70-A052-44F1-9E79-CB6D266DB1B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E77BE70-A052-44F1-9E79-CB6D266DB1B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDEBE918-929D-4F32-B947-D5D1BAA3FC26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDEBE918-929D-4F32-B947-D5D1BAA3FC26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDEBE918-929D-4F32-B947-D5D1BAA3FC26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDEBE918-929D-4F32-B947-D5D1BAA3FC26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4158B8A7-971D-4A57-B4C8-5077BFD10AE6} = {E8C00D1E-9637-423D-AD28-D40CC01F19BE}
+		{3E77BE70-A052-44F1-9E79-CB6D266DB1B3} = {E8C00D1E-9637-423D-AD28-D40CC01F19BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {901A3302-C365-45ED-959D-662F975A7511}

@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = KustoSku.DeserializeKustoSku(property.Value);
@@ -42,7 +41,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = KustoCapacity.DeserializeKustoCapacity(property.Value);

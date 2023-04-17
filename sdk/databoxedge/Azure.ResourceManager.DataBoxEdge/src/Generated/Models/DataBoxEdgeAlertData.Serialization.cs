@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -92,7 +91,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             appearedAtDateTime = property0.Value.GetDateTimeOffset("O");
@@ -107,7 +105,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             severity = new DataBoxEdgeAlertSeverity(property0.Value.GetString());
@@ -117,7 +114,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             errorDetails = DataBoxEdgeAlertErrorDetails.DeserializeDataBoxEdgeAlertErrorDetails(property0.Value);
@@ -127,7 +123,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();

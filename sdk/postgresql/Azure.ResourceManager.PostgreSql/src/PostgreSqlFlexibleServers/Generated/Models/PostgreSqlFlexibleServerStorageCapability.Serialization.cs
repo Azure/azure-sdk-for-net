@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportedIops = property.Value.GetInt64();
@@ -45,7 +44,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageSizeMB = property.Value.GetInt64();
@@ -55,7 +53,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PostgreSqlFlexibleServerStorageTierCapability> array = new List<PostgreSqlFlexibleServerStorageTierCapability>();

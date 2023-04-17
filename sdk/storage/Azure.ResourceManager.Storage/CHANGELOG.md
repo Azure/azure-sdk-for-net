@@ -222,11 +222,13 @@ storageManagementClient.StorageAccounts.Create(resourceGroupName, accountName, p
 ```
 
 After upgrade:
-```C# Snippet:Create_Storage_Account
+```C# Snippet:Create_Storage_Account_Namespaces
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Models;
+```
+```C# Snippet:Create_Storage_Account
 string accountName = "myaccount";
 string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());

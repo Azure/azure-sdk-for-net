@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     result = new IotHubTestResultStatus(property.Value.GetString());
@@ -36,7 +35,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     details = IotHubTestRouteResultDetails.DeserializeIotHubTestRouteResultDetails(property.Value);
