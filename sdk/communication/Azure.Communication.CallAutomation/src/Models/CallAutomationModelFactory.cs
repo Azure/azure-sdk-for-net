@@ -141,10 +141,10 @@ namespace Azure.Communication.CallAutomation
                 callConnectionId,
                 serverCallId,
                 correlationId,
+                sequenceNumber,
                 participants == null
                     ? new List<CallParticipantInternal>()
-                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList(),
-                sequenceNumber
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList()
                 );
 
             return new ParticipantsUpdated(internalObject);
