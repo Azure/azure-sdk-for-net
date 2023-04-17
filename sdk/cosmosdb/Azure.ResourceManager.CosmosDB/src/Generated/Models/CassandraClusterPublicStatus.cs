@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal CassandraClusterPublicStatus()
         {
             ConnectionErrors = new ChangeTrackingList<CassandraConnectionError>();
+            Errors = new ChangeTrackingList<CassandraError>();
             DataCenters = new ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem>();
         }
 
@@ -25,12 +26,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="etag"></param>
         /// <param name="reaperStatus"></param>
         /// <param name="connectionErrors"> List relevant information about any connection errors to the Datacenters. </param>
+        /// <param name="errors"> List relevant information about any errors about cluster, data center and connection error. </param>
         /// <param name="dataCenters"> List of the status of each datacenter in this cluster. </param>
-        internal CassandraClusterPublicStatus(ETag? etag, CassandraReaperStatus reaperStatus, IReadOnlyList<CassandraConnectionError> connectionErrors, IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters)
+        internal CassandraClusterPublicStatus(ETag? etag, CassandraReaperStatus reaperStatus, IReadOnlyList<CassandraConnectionError> connectionErrors, IReadOnlyList<CassandraError> errors, IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters)
         {
             ETag = etag;
             ReaperStatus = reaperStatus;
             ConnectionErrors = connectionErrors;
+            Errors = errors;
             DataCenters = dataCenters;
         }
 
@@ -40,6 +43,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public CassandraReaperStatus ReaperStatus { get; }
         /// <summary> List relevant information about any connection errors to the Datacenters. </summary>
         public IReadOnlyList<CassandraConnectionError> ConnectionErrors { get; }
+        /// <summary> List relevant information about any errors about cluster, data center and connection error. </summary>
+        public IReadOnlyList<CassandraError> Errors { get; }
         /// <summary> List of the status of each datacenter in this cluster. </summary>
         public IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> DataCenters { get; }
     }

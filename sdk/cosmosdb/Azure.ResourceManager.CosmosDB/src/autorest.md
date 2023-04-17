@@ -10,8 +10,8 @@ generate-model-factory: false
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/50e7b9b2c1527ee2342032595541b2ffd12ae10d/specification/cosmos-db/resource-manager/readme.md
-tag: package-2022-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/a1d401150f5c1f4718d3fe8307a4a71135911e84/specification/cosmos-db/resource-manager/readme.md
+tag: package-2023-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -370,6 +370,7 @@ directive:
     $.MetricDefinition.properties.resourceUri['x-ms-client-name'] = 'ResourceId';
     $.MetricDefinition.properties.resourceUri['x-ms-format'] = 'arm-id';
     $.VirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
+    $.DatabaseAccountConnectionString.properties.type['x-ms-client-name'] = 'KeyType';
 # add a missing response code for long running operation. an issue was filed on swagger: https://github.com/Azure/azure-rest-api-specs/issues/16508
 - from: swagger-document
   where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/notebookWorkspaces/{notebookWorkspaceName}'].put

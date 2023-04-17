@@ -38,10 +38,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="gossipCertificates"> List of TLS certificates that unmanaged nodes must trust for gossip with managed nodes. All managed nodes will present TLS client certificates that are verifiable using one of the certificates provided in this property. </param>
         /// <param name="externalSeedNodes"> List of IP addresses of seed nodes in unmanaged data centers. These will be added to the seed node lists of all managed nodes. </param>
         /// <param name="seedNodes"> List of IP addresses of seed nodes in the managed data centers. These should be added to the seed node lists of all unmanaged nodes. </param>
-        /// <param name="hoursBetweenBackups"> Number of hours to wait between taking a backup of the cluster. To disable backups, set this property to 0. </param>
+        /// <param name="hoursBetweenBackups"> (Deprecated) Number of hours to wait between taking a backup of the cluster. </param>
         /// <param name="isDeallocated"> Whether the cluster and associated data centers has been deallocated. </param>
         /// <param name="isCassandraAuditLoggingEnabled"> Whether Cassandra audit logging is enabled. </param>
-        internal CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, CassandraDataCenterSeedNode prometheusEndpoint, bool? isRepairEnabled, IList<CassandraCertificate> clientCertificates, IList<CassandraCertificate> externalGossipCertificates, IReadOnlyList<CassandraCertificate> gossipCertificates, IList<CassandraDataCenterSeedNode> externalSeedNodes, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled)
+        /// <param name="provisionError"> Error related to resource provisioning. </param>
+        internal CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, CassandraDataCenterSeedNode prometheusEndpoint, bool? isRepairEnabled, IList<CassandraCertificate> clientCertificates, IList<CassandraCertificate> externalGossipCertificates, IReadOnlyList<CassandraCertificate> gossipCertificates, IList<CassandraDataCenterSeedNode> externalSeedNodes, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled, CassandraError provisionError)
         {
             ProvisioningState = provisioningState;
             RestoreFromBackupId = restoreFromBackupId;
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             HoursBetweenBackups = hoursBetweenBackups;
             IsDeallocated = isDeallocated;
             IsCassandraAuditLoggingEnabled = isCassandraAuditLoggingEnabled;
+            ProvisionError = provisionError;
         }
 
         /// <summary> The status of the resource at the time the operation was called. </summary>
@@ -102,11 +104,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public IList<CassandraDataCenterSeedNode> ExternalSeedNodes { get; }
         /// <summary> List of IP addresses of seed nodes in the managed data centers. These should be added to the seed node lists of all unmanaged nodes. </summary>
         public IReadOnlyList<CassandraDataCenterSeedNode> SeedNodes { get; }
-        /// <summary> Number of hours to wait between taking a backup of the cluster. To disable backups, set this property to 0. </summary>
+        /// <summary> (Deprecated) Number of hours to wait between taking a backup of the cluster. </summary>
         public int? HoursBetweenBackups { get; set; }
         /// <summary> Whether the cluster and associated data centers has been deallocated. </summary>
         public bool? IsDeallocated { get; set; }
         /// <summary> Whether Cassandra audit logging is enabled. </summary>
         public bool? IsCassandraAuditLoggingEnabled { get; set; }
+        /// <summary> Error related to resource provisioning. </summary>
+        public CassandraError ProvisionError { get; set; }
     }
 }
