@@ -179,7 +179,7 @@ namespace Azure.Storage.DataMovement
 
             JobPartPlanDestinationLocal dstLocalData = new JobPartPlanDestinationLocal(
                 preserveLastModifiedTime: false, // TODO: update when supported
-                md5VerificationOption: 0); // TODO: update when supported
+                checksumVerificationOption: 0); // TODO: update when supported
 
             return new JobPartPlanHeader(
                 version: DataMovementConstants.PlanFile.SchemaVersion,

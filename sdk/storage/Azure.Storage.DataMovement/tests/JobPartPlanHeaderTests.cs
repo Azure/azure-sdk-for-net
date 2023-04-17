@@ -83,7 +83,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(header.DstBlobData.CpkScopeInfoLength, _testCpkScopeInfo.Length);
             Assert.AreEqual(header.DstBlobData.BlockSize, _testBlockSize);
             Assert.IsFalse(header.DstLocalData.PreserveLastModifiedTime);
-            Assert.AreEqual(header.DstLocalData.MD5VerificationOption, _testMd5VerificationOption);
+            Assert.AreEqual(header.DstLocalData.ChecksumVerificationOption, _testChecksumVerificationOption);
             Assert.IsFalse(header.PreserveSMBPermissions);
             Assert.IsFalse(header.PreserveSMBInfo);
             Assert.IsFalse(header.S2SGetPropertiesInBackend);
@@ -331,9 +331,9 @@ namespace Azure.Storage.DataMovement.Tests
                 stream.ReadAsync(preserveLastModifiedTimeBuffer, 0, oneByte);
                 Assert.AreEqual(0, preserveLastModifiedTimeBuffer[0]);
 
-                byte[] md5VerificationOptionBuffer = new byte[oneByte];
-                stream.ReadAsync(md5VerificationOptionBuffer, 0, oneByte);
-                Assert.AreEqual(_testMd5VerificationOption, md5VerificationOptionBuffer[0]);
+                byte[] checksumVerificationOptionBuffer = new byte[oneByte];
+                stream.ReadAsync(checksumVerificationOptionBuffer, 0, oneByte);
+                Assert.AreEqual(_testChecksumVerificationOption, checksumVerificationOptionBuffer[0]);
 
                 byte[] preserveSMBPermissionsBuffer = new byte[oneByte];
                 stream.ReadAsync(preserveSMBPermissionsBuffer, 0, oneByte);
@@ -492,7 +492,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(deserializedHeader.DstBlobData.CpkScopeInfoLength, _testCpkScopeInfo.Length);
             Assert.AreEqual(deserializedHeader.DstBlobData.BlockSize, _testBlockSize);
             Assert.IsFalse(deserializedHeader.DstLocalData.PreserveLastModifiedTime);
-            Assert.AreEqual(deserializedHeader.DstLocalData.MD5VerificationOption, _testMd5VerificationOption);
+            Assert.AreEqual(deserializedHeader.DstLocalData.ChecksumVerificationOption, _testChecksumVerificationOption);
             Assert.IsFalse(deserializedHeader.PreserveSMBPermissions);
             Assert.IsFalse(deserializedHeader.PreserveSMBInfo);
             Assert.IsFalse(deserializedHeader.S2SGetPropertiesInBackend);

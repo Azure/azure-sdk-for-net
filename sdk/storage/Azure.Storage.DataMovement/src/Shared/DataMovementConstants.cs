@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.InteropServices.ComTypes;
-
 namespace Azure.Storage.DataMovement
 {
     internal class DataMovementConstants
@@ -133,54 +131,83 @@ namespace Azure.Storage.DataMovement
             internal const int NumberChunksIndex = FolderPropertyModeIndex + OneByte;
 
             // JobPartPlanDestinationBlob Indexes
-            /// <summary>Index: 10,299</summary>
+            /// <summary>Index: 20,500</summary>
             internal const int DstBlobTypeIndex = NumberChunksIndex + LongSizeInBytes;
-            /// <summary>Index: 10,300</summary>
+            /// <summary>Index: 20,501</summary>
             internal const int DstBlobNoGuessMimeTypeIndex = DstBlobTypeIndex + OneByte;
-            /// <summary>Index: 10,301</summary>
+            /// <summary>Index: 20,502</summary>
             internal const int DstBlobContentTypeLengthIndex = DstBlobNoGuessMimeTypeIndex + OneByte;
-            /// <summary>Index: 10,309</summary>
+            /// <summary>Index: 20,504</summary>
             internal const int DstBlobContentTypeIndex = DstBlobContentTypeLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 11,309</summary>
+            /// <summary>Index: 22,504</summary>
             internal const int DstBlobContentEncodingLengthIndex = DstBlobContentTypeIndex + HeaderValueNumBytes;
-            /// <summary>Index: 11,317</summary>
+            /// <summary>Index: 22,506</summary>
             internal const int DstBlobContentEncodingIndex = DstBlobContentEncodingLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 12,317</summary>
+            /// <summary>Index: 24,506</summary>
             internal const int DstBlobContentLanguageLengthIndex = DstBlobContentEncodingIndex + HeaderValueNumBytes;
-            /// <summary>Index: 12,325</summary>
+            /// <summary>Index: 24,508</summary>
             internal const int DstBlobContentLanguageIndex = DstBlobContentLanguageLengthIndex + UShortSizeInBytes;
+            /// <summary>Index: 26,508</summary>
             internal const int DstBlobContentDispositionLengthIndex = DstBlobContentLanguageIndex + HeaderValueNumBytes;
+            /// <summary>Index: 26,510</summary>
             internal const int DstBlobContentDispositionIndex = DstBlobContentDispositionLengthIndex + UShortSizeInBytes;
+            /// <summary>Index: 28,510</summary>
             internal const int DstBlobCacheControlLengthIndex = DstBlobContentDispositionIndex + HeaderValueNumBytes;
+            /// <summary>Index: 28,512</summary>
             internal const int DstBlobCacheControlIndex = DstBlobCacheControlLengthIndex + UShortSizeInBytes;
+            /// <summary>Index: 30,512</summary>
             internal const int DstBlobBlockBlobTierIndex = DstBlobCacheControlIndex + HeaderValueNumBytes;
+            /// <summary>Index: 30,513</summary>
             internal const int DstBlobPageBlobTierIndex = DstBlobBlockBlobTierIndex + OneByte;
+            /// <summary>Index: 30,514</summary>
             internal const int DstBlobPutMd5Index = DstBlobPageBlobTierIndex + OneByte;
+            /// <summary>Index: 30,515</summary>
             internal const int DstBlobMetadataLengthIndex = DstBlobPutMd5Index + OneByte;
+            /// <summary>Index: 30,517</summary>
             internal const int DstBlobMetadataIndex = DstBlobMetadataLengthIndex + UShortSizeInBytes;
+            /// <summary>Index: 38,709</summary>
             internal const int DstBlobTagsLengthIndex = DstBlobMetadataIndex + MetadataStrNumBytes;
+            /// <summary>Index: 38,717</summary>
             internal const int DstBlobTagsIndex = DstBlobTagsLengthIndex + LongSizeInBytes;
+            /// <summary>Index: 46,909</summary>
             internal const int DstBlobIsSourceEncrypted = DstBlobTagsIndex + BlobTagsStrNumBytes;
+            /// <summary>Index: 46,910</summary>
             internal const int DstBlobCpkScopeInfoLengthIndex = DstBlobIsSourceEncrypted + OneByte;
+            /// <summary>Index: 46,912</summary>
             internal const int DstBlobCpkScopeInfoIndex = DstBlobCpkScopeInfoLengthIndex + UShortSizeInBytes;
+            /// <summary>Index: 48,912</summary>
             internal const int DstBlobBlockSizeIndex = DstBlobCpkScopeInfoIndex + HeaderValueNumBytes;
 
             // JobPartPlanDestinationLocal Indexes
+            /// <summary>Index: 48,920</summary>
             internal const int DstLocalPreserveLastModifiedTimeIndex = DstBlobBlockSizeIndex + LongSizeInBytes;
+            /// <summary>Index: 48,921</summary>
             internal const int DstLocalMD5VerificationOptionIndex = DstLocalPreserveLastModifiedTimeIndex + OneByte;
+
+            /// <summary>Index: 48,922</summary>
             internal const int PreserveSMBPermissionsIndex = DstLocalMD5VerificationOptionIndex + OneByte;
+            /// <summary>Index: 48,923</summary>
             internal const int PreserveSMBInfoIndex = PreserveSMBPermissionsIndex + OneByte;
+            /// <summary>Index: 48,924</summary>
             internal const int S2SGetPropertiesInBackendIndex = PreserveSMBInfoIndex + OneByte;
+            /// <summary>Index: 48,925</summary>
             internal const int S2SSourceChangeValidationIndex = S2SGetPropertiesInBackendIndex + OneByte;
+            /// <summary>Index: 48,926</summary>
             internal const int DestLengthValidationIndex = S2SSourceChangeValidationIndex + OneByte;
+            /// <summary>Index: 48,927</summary>
             internal const int S2SInvalidMetadataHandleOptionIndex = DestLengthValidationIndex + OneByte;
+            /// <summary>Index: 48,928</summary>
             internal const int DeleteSnapshotsOptionIndex = S2SInvalidMetadataHandleOptionIndex + OneByte;
+            /// <summary>Index: 48,929</summary>
             internal const int PermanentDeleteOptionIndex = DeleteSnapshotsOptionIndex + OneByte;
+            /// <summary>Index: 48,930</summary>
             internal const int RehydratePriorityTypeIndex = PermanentDeleteOptionIndex + OneByte;
+            /// <summary>Index: 48,931</summary>
             internal const int AtomicJobStatusIndex = RehydratePriorityTypeIndex + OneByte;
+            /// <summary>Index: 48,932</summary>
             internal const int AtomicPartStatusIndex = AtomicJobStatusIndex + OneByte;
             /// <summary>
-            /// Size of the JobPart Header
+            /// Size of the JobPart Header: 48,933
             /// </summary>
             internal const int JobPartHeaderSizeInBytes = AtomicPartStatusIndex + OneByte;
         }

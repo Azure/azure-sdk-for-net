@@ -494,7 +494,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             writer.Write(Convert.ToByte(DstLocalData.PreserveLastModifiedTime));
 
             // DstLocalData.MD5VerificationOption
-            writer.Write(DstLocalData.MD5VerificationOption);
+            writer.Write(DstLocalData.ChecksumVerificationOption);
 
             // PreserveSMBPermissions
             writer.Write(Convert.ToByte(PreserveSMBPermissions));
@@ -718,7 +718,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             bool preserveLastModifiedTime = Convert.ToBoolean(reader.ReadByte());
 
             // DstBlobData.MD5VerificationOption
-            byte md5VerificationOption = reader.ReadByte();
+            byte checksumVerificationOption = reader.ReadByte();
 
             // preserveSMBPermissions
             bool preserveSMBPermissions = Convert.ToBoolean(reader.ReadByte());
@@ -777,7 +777,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
 
             JobPartPlanDestinationLocal dstLocalData = new JobPartPlanDestinationLocal(
                 preserveLastModifiedTime: preserveLastModifiedTime,
-                md5VerificationOption: md5VerificationOption);
+                checksumVerificationOption: checksumVerificationOption);
 
             return new JobPartPlanHeader(
                 version: version,
