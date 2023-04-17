@@ -8,12 +8,12 @@ using Azure.Core;
 namespace Azure.Storage.DataMovement.Models
 {
     /// <summary>
-    /// <see cref="SingleTransferOptions"/> is used to provide options for parallel transfers.
+    /// <see cref="SingleTransferOptions"/> is used to provide options for a transfer of a single resource.
     /// </summary>
     public class SingleTransferOptions : IEquatable<SingleTransferOptions>
     {
         /// <summary>
-        /// The maximum length of an transfer in bytes.
+        /// The maximum length of a network transfer in bytes.
         ///
         /// On uploads, if the value is not set, it will be set at 4 MB if the total size is less than 100MB
         /// or will default to 8 MB if the total size is greater than or equal to 100MB.
@@ -32,11 +32,9 @@ namespace Azure.Storage.DataMovement.Models
 
         /// <summary>
         /// Optional. Defines the checkpoint id that the transfer should continue from and will
-        /// grab transfer information from TransferManagerOptions.Checkpointer.
-        ///
-        /// TODO: https://github.com/Azure/azure-sdk-for-net/issues/32955
+        /// grab transfer information from <see cref="TransferManagerOptions.CheckpointerOptions"/>.
         /// </summary>
-        internal string ResumeFromCheckpointId { get; set; }
+        public string ResumeFromCheckpointId { get; set; }
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.

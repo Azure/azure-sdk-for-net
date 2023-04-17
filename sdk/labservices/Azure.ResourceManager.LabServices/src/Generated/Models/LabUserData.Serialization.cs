@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.LabServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -89,7 +88,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             additionalUsageQuota = property0.Value.GetTimeSpan("P");
@@ -99,7 +97,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = property0.Value.GetString().ToLabServicesProvisioningState();
@@ -119,7 +116,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             registrationState = property0.Value.GetString().ToLabUserRegistrationState();
@@ -129,7 +125,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             invitationState = property0.Value.GetString().ToLabUserInvitationState();
@@ -139,7 +134,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             invitationSent = property0.Value.GetDateTimeOffset("O");
@@ -149,7 +143,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalUsage = property0.Value.GetTimeSpan("P");

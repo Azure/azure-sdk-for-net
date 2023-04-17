@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @default = property.Value.GetInt64();
@@ -38,7 +37,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minimum = property.Value.GetInt64();
@@ -48,7 +46,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximum = property.Value.GetInt64();
@@ -58,7 +55,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scaleType = new LabServicesSkuCapacityScaleType(property.Value.GetString());

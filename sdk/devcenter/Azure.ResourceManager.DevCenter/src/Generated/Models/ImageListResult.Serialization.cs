@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ImageData> array = new List<ImageData>();

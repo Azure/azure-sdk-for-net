@@ -27,7 +27,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetadataValue> array = new List<MetadataValue>();
@@ -42,7 +41,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetricValue> array = new List<MetricValue>();

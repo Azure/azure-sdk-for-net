@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataBoxEdgeRoleData> array = new List<DataBoxEdgeRoleData>();

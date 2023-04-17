@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     relocationRequested = property.Value.GetBoolean();
@@ -47,7 +46,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     readyToBeFinalized = property.Value.GetBoolean();

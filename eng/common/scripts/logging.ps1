@@ -1,8 +1,11 @@
-$isDevOpsRun = ($null -ne $env:SYSTEM_TEAMPROJECTID)
+function Test-SupportsDevOpsLogging()
+{
+    return ($null -ne $env:SYSTEM_TEAMPROJECTID)
+}
 
 function LogWarning
 {
-    if ($isDevOpsRun) 
+    if (Test-SupportsDevOpsLogging)
     {
         Write-Host "##vso[task.LogIssue type=warning;]$args"
     }
@@ -14,11 +17,11 @@ function LogWarning
 
 function LogError
 {
-    if ($isDevOpsRun) 
+    if (Test-SupportsDevOpsLogging)
     {
         Write-Host "##vso[task.LogIssue type=error;]$args"
     }
-    else 
+    else
     {
         Write-Error "$args"
     }
@@ -26,11 +29,11 @@ function LogError
 
 function LogDebug
 {
-    if ($isDevOpsRun) 
+    if (Test-SupportsDevOpsLogging)
     {
         Write-Host "[debug]$args"
     }
-    else 
+    else
     {
         Write-Debug "$args"
     }

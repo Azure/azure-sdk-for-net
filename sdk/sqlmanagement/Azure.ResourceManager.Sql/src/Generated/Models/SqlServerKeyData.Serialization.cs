@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -88,7 +87,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -112,7 +110,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serverKeyType = new SqlServerKeyType(property0.Value.GetString());
@@ -122,7 +119,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                uri = null;
                                 continue;
                             }
                             uri = new Uri(property0.Value.GetString());
@@ -137,7 +133,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationDate = property0.Value.GetDateTimeOffset("O");
@@ -147,7 +142,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoRotationEnabled = property0.Value.GetBoolean();

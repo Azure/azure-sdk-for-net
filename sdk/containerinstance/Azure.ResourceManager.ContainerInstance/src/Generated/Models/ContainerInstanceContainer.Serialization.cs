@@ -119,7 +119,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -134,7 +133,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerPort> array = new List<ContainerPort>();
@@ -149,7 +147,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerEnvironmentVariable> array = new List<ContainerEnvironmentVariable>();
@@ -164,7 +161,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             instanceView = ContainerInstanceView.DeserializeContainerInstanceView(property0.Value);
@@ -179,7 +175,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerVolumeMount> array = new List<ContainerVolumeMount>();
@@ -194,7 +189,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             livenessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value);
@@ -204,7 +198,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             readinessProbe = ContainerProbe.DeserializeContainerProbe(property0.Value);

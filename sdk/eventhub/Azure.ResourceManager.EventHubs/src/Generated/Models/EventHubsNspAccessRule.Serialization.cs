@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = EventHubsNspAccessRuleProperties.DeserializeEventHubsNspAccessRuleProperties(property.Value);
@@ -55,7 +54,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

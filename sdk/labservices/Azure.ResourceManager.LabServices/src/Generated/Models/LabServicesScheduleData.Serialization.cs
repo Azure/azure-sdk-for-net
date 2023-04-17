@@ -90,7 +90,6 @@ namespace Azure.ResourceManager.LabServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -109,7 +108,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startAt = property0.Value.GetDateTimeOffset("O");
@@ -119,7 +117,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             stopAt = property0.Value.GetDateTimeOffset("O");
@@ -129,7 +126,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             recurrencePattern = LabServicesRecurrencePattern.DeserializeLabServicesRecurrencePattern(property0.Value);
@@ -144,7 +140,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             notes = BinaryData.FromString(property0.Value.GetRawText());
@@ -154,7 +149,6 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = property0.Value.GetString().ToLabServicesProvisioningState();

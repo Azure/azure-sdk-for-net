@@ -659,6 +659,34 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.DeleteBlobAsync(digest);
         }
 
+        [RecordedTest]
+        public async Task CanCatchDownloadFailure()
+        {
+            // Arrange
+            string repositoryId = Recording.Random.NewGuid().ToString();
+            ContainerRegistryContentClient client = CreateBlobClient(repositoryId);
+
+            // Act
+
+            // We don't upload a blob, so we expect 404.
+            bool caught = false;
+
+            try
+            {
+                using var downloadStream = new MemoryStream();
+                await client.DownloadBlobToAsync("BadDigest", downloadStream);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+                Console.WriteLine($"Service error: {ex.Message}");
+                caught = true;
+                Assert.IsTrue(ex.Message.Contains("Content:"), "Download failed exception did not contain \"Content:\".");
+                Assert.IsTrue(ex.Message.Contains("404 page not found"), "Download failed exception did not contain error content \"404 page not found\".");
+            }
+
+            Assert.IsTrue(caught, "Did not catch download failed exception.");
+        }
+
         #endregion
 
         [RecordedTest]
@@ -688,9 +716,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [IgnoreServiceError(404, "BLOB_UPLOAD_INVALID", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/35322")]
         public async Task CanUploadAndDownloadLargeBlob()
         {
-            long sizeInGiB = 1;
+            long sizeInMiB = 512;
             var uneven = 20;
-            long size = (1024 * 1024 * 1024 * sizeInGiB) + uneven;
+            long size = (1024 * 1024 * sizeInMiB) + uneven;
 
             string repositoryId = Recording.Random.NewGuid().ToString();
             ContainerRegistryContentClient client = CreateBlobClient(repositoryId);

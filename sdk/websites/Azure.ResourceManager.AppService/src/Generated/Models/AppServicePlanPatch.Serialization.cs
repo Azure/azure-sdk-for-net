@@ -162,7 +162,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -186,7 +185,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = property0.Value.GetString().ToAppServicePlanStatus();
@@ -201,7 +199,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value);
@@ -211,7 +208,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maximumNumberOfWorkers = property0.Value.GetInt32();
@@ -226,7 +222,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             perSiteScaling = property0.Value.GetBoolean();
@@ -236,7 +231,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             elasticScaleEnabled = property0.Value.GetBoolean();
@@ -246,7 +240,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maximumElasticWorkerCount = property0.Value.GetInt32();
@@ -256,7 +249,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             numberOfSites = property0.Value.GetInt32();
@@ -266,7 +258,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isSpot = property0.Value.GetBoolean();
@@ -276,7 +267,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             spotExpirationTime = property0.Value.GetDateTimeOffset("O");
@@ -286,7 +276,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             freeOfferExpirationTime = property0.Value.GetDateTimeOffset("O");
@@ -301,7 +290,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reserved = property0.Value.GetBoolean();
@@ -311,7 +299,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isXenon = property0.Value.GetBoolean();
@@ -321,7 +308,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hyperV = property0.Value.GetBoolean();
@@ -331,7 +317,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetWorkerCount = property0.Value.GetInt32();
@@ -341,7 +326,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetWorkerSizeId = property0.Value.GetInt32();
@@ -351,7 +335,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = property0.Value.GetString().ToProvisioningState();
@@ -361,7 +344,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             kubeEnvironmentProfile = KubeEnvironmentProfile.DeserializeKubeEnvironmentProfile(property0.Value);
@@ -371,7 +353,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             zoneRedundant = property0.Value.GetBoolean();

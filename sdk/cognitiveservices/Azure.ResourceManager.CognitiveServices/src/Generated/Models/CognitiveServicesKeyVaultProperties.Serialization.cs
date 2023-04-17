@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyVaultUri = null;
                         continue;
                     }
                     keyVaultUri = new Uri(property.Value.GetString());
@@ -75,7 +74,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identityClientId = property.Value.GetGuid();

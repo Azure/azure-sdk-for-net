@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed the URL returned by `TableClient.Uri` when connecting to Azurite
 
 ### Other Changes
 

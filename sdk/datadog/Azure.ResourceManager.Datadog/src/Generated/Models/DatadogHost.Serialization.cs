@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -64,7 +62,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     meta = DatadogHostMetadata.DeserializeDatadogHostMetadata(property.Value);

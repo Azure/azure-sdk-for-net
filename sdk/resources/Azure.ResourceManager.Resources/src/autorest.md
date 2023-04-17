@@ -90,6 +90,9 @@ rename-rules:
   URI: Uri
   Urls: Uris
 
+models-to-treat-empty-string-as-null:
+  - ArmApplicationPackageSupportUris
+
 directive:
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations

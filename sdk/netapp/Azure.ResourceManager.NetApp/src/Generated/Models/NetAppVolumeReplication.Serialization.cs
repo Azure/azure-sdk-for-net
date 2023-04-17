@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endpointType = new NetAppEndpointType(property.Value.GetString());
@@ -38,7 +37,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicationSchedule = new NetAppReplicationSchedule(property.Value.GetString());
