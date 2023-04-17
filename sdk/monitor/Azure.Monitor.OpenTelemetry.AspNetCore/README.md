@@ -65,6 +65,9 @@ var app = builder.Build();
 
 Note that in the examples above, `UseAzureMonitor` is added to the `IServiceCollection` in the `Program.cs` file. You can also add it in the `ConfigureServices` method of your `Startup.cs` file.
 
+> **Note**
+  > Multiple calls to `AddOpenTelemetry.UseAzureMonitor()` will **NOT** result in multiple providers. Only a single `TracerProvider` and/or `MeterProvider` will be created in the target `IServiceCollection`. To establish multiple providers use the `Sdk.CreateTracerProviderBuilder()` and/or `Sdk.CreateMeterProviderBuilder()` methods with the [Azure Monitor Exporter](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter) instead of using Azure Monitor Distro.
+
 ### Authenticate the client
 
 Azure Active Directory (AAD) authentication is an optional feature that can be used with Azure Monitor Distro. To enable AAD authentication, set the `Credential` property in `AzureMonitorOptions`. This is made easy with the [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md), which provides support for authenticating Azure SDK clients with their corresponding Azure services.
@@ -81,6 +84,24 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
 With this configuration, the Azure Monitor Distro will use the credentials of the currently logged-in user or of the service principal to authenticate and send telemetry data to Azure Monitor.
 
 Note that the `Credential` property is optional. If it is not set, Azure Monitor Distro will use the Instrumentation Key from the Connection String to send data to Azure Monitor.
+
+### What is Included in the Distro
+
+The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK and related instrumentation libraries. It includes the following components:
+
+* Traces
+  * [ASP.NET Core Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/) provides automatic tracing for incoming HTTP requests to ASP.NET Core applications.
+  * [Http Client Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/) provides automatic tracing for outgoing HTTP requests made using [System.Net.Http.HttpClient](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient) and [System.Net.HttpWebRequest](https://docs.microsoft.com/dotnet/api/system.net.httpwebrequest).
+  * [SQL Client Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) provides automatic tracing for SQL queries executed using the [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient) and [System.Data.SqlClient](https://www.nuget.org/packages/System.Data.SqlClient) packages.
+  * [Application Insights Sampler](https://www.nuget.org/packages/OpenTelemetry.Extensions.AzureMonitor/) provides a sampling that is compatible with Application Insights sampling.
+
+* Metrics
+  * [ASP.NET Core Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/) provides automatic collection of common ASP.NET Core metrics.
+  * [Http Client Instrumentation Library](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/) provides automatic collection of HTTP client metrics.
+
+* [Logs](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/docs/logs/getting-started/README.md)
+
+* [Azure Monitor Exporter](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/) allows sending traces, metrics, and logs data to Azure Monitor.
 
 ### Advanced configuration
 
@@ -128,38 +149,23 @@ builder.Services.Configure<SqlClientInstrumentationOptions>(options =>
 
 #### Customizing Sampling Percentage
 
-```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor()
-                                   .WithTracing(b =>
-                                   {
-                                       b.SetSampler(new ApplicationInsightsSampler(0.9F));
-                                   });
-```
-
-(or)
-
-```
+``` C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
 builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.SetSampler(new ApplicationInsightsSampler(0.9F)));
 ```
 
-#### Adding Custom ActivitySources to Traces
+#### Adding Custom ActivitySource to Traces
 
 ```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor()
-                                   .WithTracing(b =>
-                                   {
-                                       b.AddSource("MyCompany.MyProduct.MyLibrary");
-                                   });
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.AddSource("MyCompany.MyProduct.MyLibrary"));
 ```
 
 #### Adding Custom Meter to Metrics
 
 ```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor()
-                                   .WithMetrics(b =>
-                                   {
-                                       b.AddMeter("MyCompany.MyProduct.MyLibrary");
-                                   });
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+builder.Services.ConfigureOpenTelemetryMeterProvider((sp, builder) => builder.AddMeter("MyCompany.MyProduct.MyLibrary"));
 ```
 
 #### Adding Additional Instrumentation
@@ -167,12 +173,36 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor()
 If you need to instrument a library or framework that isn't included in the Azure Monitor Distro, you can add additional instrumentation using the OpenTelemetry Instrumentation packages. For example, to add instrumentation for gRPC clients, you can add the [OpenTelemetry.Instrumentation.GrpcNetClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.GrpcNetClient/) package and use the following code:
 
 ```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor()
-                                   .WithTracing(b =>
-                                   {
-                                       b.AddGrpcClientInstrumentation();
-                                   });
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.AddGrpcClientInstrumentation());
 ```
+
+#### Adding Another Exporter
+
+Azure Monitor Distro uses the Azure Monitor exporter to send data to Application Insights. However, if you need to send data to other services, including Application Insights, you can add another exporter. For example, to add the Prometheus exporter, you can install the [OpenTelemetry.Exporter.Prometheus.AspNetCore](https://www.nuget.org/packages/OpenTelemetry.Exporter.Prometheus.AspNetCore) package and use the following code:
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+builder.Services.ConfigureOpenTelemetryMeterProvider((sp, builder) => builder.AddPrometheusExporter());
+```
+
+#### Adding Custom Resource
+
+To customize the resource, use the following code.
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.ConfigureResource(resourceBuilder => resourceBuilder.AddService("service-name")));
+```
+
+It is also possible to configure the `Resource` by using following
+environmental variables:
+
+| Environment variable       | Description                                        |
+| -------------------------- | -------------------------------------------------- |
+| `OTEL_RESOURCE_ATTRIBUTES` | Key-value pairs to be used as resource attributes. See the [Resource SDK specification](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.5.0/specification/resource/sdk.md#specifying-resource-information-via-an-environment-variable) for more details. |
+| `OTEL_SERVICE_NAME`        | Sets the value of the `service.name` resource attribute. If `service.name` is also provided in `OTEL_RESOURCE_ATTRIBUTES`, then `OTEL_SERVICE_NAME` takes precedence. |
+
 
 ## Key concepts
 
