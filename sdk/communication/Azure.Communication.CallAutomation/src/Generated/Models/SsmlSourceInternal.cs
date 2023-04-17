@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The SsmlSource. </summary>
-    public partial class SsmlSource
+    internal partial class SsmlSourceInternal
     {
-        /// <summary> Initializes a new instance of SsmlSource. </summary>
+        /// <summary> Initializes a new instance of SsmlSourceInternal. </summary>
         /// <param name="ssmlText"> Ssml string for the cognitive service to be played. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ssmlText"/> is null. </exception>
-        public SsmlSource(string ssmlText)
+        public SsmlSourceInternal(string ssmlText)
         {
             Argument.AssertNotNull(ssmlText, nameof(ssmlText));
 
