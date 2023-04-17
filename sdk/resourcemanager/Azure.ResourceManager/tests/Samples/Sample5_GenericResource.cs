@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Tests.Samples
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        private static async Task GetGenericResourceList()
+        public static async Task GetGenericResourceList()
         {
             #region Snippet:Get_GenericResource_List
             ArmClient client = new ArmClient(new DefaultAzureCredential());
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        private static async Task CreateGenericResource()
+        public static async Task CreateGenericResource()
         {
             #region Snippet:Create_GenericResource
             ArmClient client = new ArmClient(new DefaultAzureCredential());
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        private static async Task UpdateGenericResource()
+        public static async Task UpdateGenericResource()
         {
             #region Snippet:Update_GenericResource
             ArmClient client = new ArmClient(new DefaultAzureCredential());
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        private static async Task UpdateGenericResourceTags(GenericResource resource)
+        public static async Task UpdateGenericResourceTags(GenericResource resource)
         {
             #region Snippet:Update_GenericResourc_Tags
             ArmClient client = new ArmClient(new DefaultAzureCredential());
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        private static async Task GetGenericResource()
+        public static async Task GetGenericResource()
         {
             #region Snippet:Get_GenericResource
             ArmClient client = new ArmClient(new DefaultAzureCredential());
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        private static async Task IsGenericResourceExist()
+        public static async Task IsGenericResourceExist()
         {
             #region Snippet:Is_GenericResource_Exist
             ArmClient client = new ArmClient(new DefaultAzureCredential());
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        private static async Task DeleteGenericResource(GenericResource resource)
+        public static async Task DeleteGenericResource(GenericResource resource)
         {
             #region Snippet:Delete_GenericResource
             ArmClient client = new ArmClient(new DefaultAzureCredential());
