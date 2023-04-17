@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 IsVirtualNetworkFilterEnabled = false,
                 EnableAutomaticFailover = true,
                 DisableKeyBasedMetadataWriteAccess = true,
-                EnableBurstCapacity = false,
+                EnableBurstCapacity = true,
             };
             updateOptions.Tags.Add("key3", "value3");
             updateOptions.Tags.Add("key4", "value4");
