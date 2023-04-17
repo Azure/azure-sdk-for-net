@@ -1,4 +1,4 @@
-﻿#region Snippet:Readme_AuthClient
+﻿#region Snippet:Readme_AuthClient_Namespaces
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -6,7 +6,7 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
-#if !SNIPPET
+#endregion Snippet:Readme_AuthClient_Namespaces
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests.Samples
@@ -17,12 +17,9 @@ namespace Azure.ResourceManager.Tests.Samples
         [Ignore("Only verifying that the sample builds")]
         public void ClientAuth()
         {
-#endif
-
-// Code omitted for brevity
-
-ArmClient client = new ArmClient(new DefaultAzureCredential());
-#endregion Snippet:Readme_AuthClient
+            #region Snippet:Readme_AuthClient
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            #endregion Snippet:Readme_AuthClient
         }
 
         [Test]

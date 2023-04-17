@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EmergingIssuesGetResultData> array = new List<EmergingIssuesGetResultData>();

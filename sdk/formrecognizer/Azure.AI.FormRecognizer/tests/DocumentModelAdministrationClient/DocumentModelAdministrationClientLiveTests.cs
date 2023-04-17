@@ -529,6 +529,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.IsNotNull(model.ModelId);
             Assert.AreNotEqual(default(DateTimeOffset), model.CreatedOn);
 
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            {
+                if (model.ExpiresOn.HasValue)
+                {
+                    Assert.Greater(model.ExpiresOn, model.CreatedOn);
+                }
+            }
+            else
+            {
+                Assert.Null(model.ExpiresOn);
+            }
+
             // TODO add validation for Doctypes https://github.com/Azure/azure-sdk-for-net-pr/issues/1432
         }
 
@@ -546,6 +558,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsNotNull(model.ModelId);
             Assert.AreNotEqual(default(DateTimeOffset), model.CreatedOn);
+
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            {
+                if (model.ExpiresOn.HasValue)
+                {
+                    Assert.Greater(model.ExpiresOn, model.CreatedOn);
+                }
+            }
+            else
+            {
+                Assert.Null(model.ExpiresOn);
+            }
         }
     }
 }
