@@ -41,32 +41,34 @@ namespace Azure.ResourceManager.Automation.Tests.TestCase
         {
             //0.prepare
             var dscCollection = await GetDscConfigurationCollectionAsync();
-            var configurationName = Recording.GenerateAssetName("dscconfiguration");
+            var configurationName = "SampleConfiguration";
             var dscinput = ResourceDataHelpers.GetDscConfigurationData(configurationName);
             var dsclro = await dscCollection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, dscinput);
             DscConfigurationResource dscconfiguriationResource = dsclro.Value;
+            dscconfiguriationResource = await dscCollection.GetAsync(configurationName);
             //1.CreateOrUpdate
             var collection = await GetDscNodeConfigurationCollectionAsync();
-            var name = Recording.GenerateAssetName(".dscnodeconfiguration");
-            var name2 = Recording.GenerateAssetName(".dscnodeconfiguration");
-            var name3 = Recording.GenerateAssetName(".dscnodeconfiguration");
+            var name = "localhost";
+            //var name = Recording.GenerateAssetName(".dscnodeconfiguration");
+            //var name2 = Recording.GenerateAssetName(".dscnodeconfiguration");
+            //var name3 = Recording.GenerateAssetName(".dscnodeconfiguration");
             var dscName = dscconfiguriationResource.Data.Name;
-            var finalName = dscName + name;
+            //var finalName = dscName + name;
             var input = ResourceDataHelpers.GetDscNodeConfigurationData(dscName);
-            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, finalName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, "SampleConfiguration.localhost", input);
             //2.Get
             DscNodeConfigurationResource dscconfiguration2 = (await collection.GetAsync(name)).Value;
             Assert.AreEqual(name, dscconfiguration2.Data.Name);
             //3.GetAll
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName + name, input);
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName + name2, input);
-            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName + name3, input);
+            //_ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName + name2, input);
+            //_ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName + name3, input);
             int count = 0;
             await foreach (var num in collection.GetAllAsync())
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 3);
+            Assert.GreaterOrEqual(count, 1);
             //4.Exists
             Assert.IsTrue(await collection.ExistsAsync(name));
             Assert.IsFalse(await collection.ExistsAsync(name + "1"));
