@@ -16,10 +16,10 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>
-        /// <param name="callConnectionId"> CallconnectionID. </param>
-        /// <param name="serverCallId"> ServercallID. </param>
-        /// <param name="correlationId"> CorrelationIDforeventtocallcorrelation.AlsocalledChainIdforskypechainID. </param>
-        /// <param name="resultInformation"> ContainstheresultingSIPcode/sub-codeandmessagefromNGCservices. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
         internal ContinuousDtmfRecognitionToneFailed(string callConnectionId, string serverCallId, string correlationId, ResultInformation resultInformation)
         {
             CallConnectionId = callConnectionId;

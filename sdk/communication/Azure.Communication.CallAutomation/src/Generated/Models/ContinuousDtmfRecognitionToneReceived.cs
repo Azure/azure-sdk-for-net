@@ -16,11 +16,11 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
-        /// <param name="toneInfo"> InformationaboutTone. </param>
-        /// <param name="callConnectionId"> CallconnectionID. </param>
-        /// <param name="serverCallId"> ServercallID. </param>
-        /// <param name="correlationId"> CorrelationIDforeventtocallcorrelation.AlsocalledChainIdorskypechainID. </param>
-        /// <param name="resultInformation"> ContainstheresultingSIPcode/sub-codeandmessagefromNGCservices. </param>
+        /// <param name="toneInfo"> The information about Tone. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId or skype chain ID. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
         internal ContinuousDtmfRecognitionToneReceived(ToneInfo toneInfo, string callConnectionId, string serverCallId, string correlationId, ResultInformation resultInformation)
         {
             ToneInfo = toneInfo;
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
             ResultInformation = resultInformation;
         }
 
-        /// <summary> InformationaboutTone. </summary>
+        /// <summary> The information about Tone. </summary>
         public ToneInfo ToneInfo { get; }
     }
 }

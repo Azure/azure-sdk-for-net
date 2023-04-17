@@ -812,6 +812,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
+                operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
@@ -821,6 +822,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("callConnectionId", continuousDtmfRecognitionStopped.CallConnectionId);
                 Assert.AreEqual("correlationId", continuousDtmfRecognitionStopped.CorrelationId);
                 Assert.AreEqual("serverCallId", continuousDtmfRecognitionStopped.ServerCallId);
+                Assert.AreEqual("operationContext", continuousDtmfRecognitionStopped.OperationContext);
                 Assert.AreEqual(200, continuousDtmfRecognitionStopped.ResultInformation?.Code);
             }
             else

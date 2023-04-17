@@ -415,7 +415,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Send dtmf tones. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="sendDtmfRequest"> The send dtmf request. </param>
+        /// <param name="sendDtmfRequest"> The send dtmf request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfRequest"/> is null. </exception>
         public async Task<Response> SendDtmfAsync(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, CancellationToken cancellationToken = default)
@@ -442,7 +442,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Send dtmf tones. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="sendDtmfRequest"> The send dtmf request. </param>
+        /// <param name="sendDtmfRequest"> The send dtmf request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfRequest"/> is null. </exception>
         public Response SendDtmf(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, CancellationToken cancellationToken = default)

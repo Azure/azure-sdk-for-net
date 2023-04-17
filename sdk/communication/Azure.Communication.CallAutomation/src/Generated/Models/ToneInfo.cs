@@ -7,11 +7,11 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Theinformationaboutthetone. </summary>
+    /// <summary> The information about Tone. </summary>
     public partial class ToneInfo
     {
         /// <summary> Initializes a new instance of ToneInfo. </summary>
-        /// <param name="sequenceId"> Thesequenceidwhichcanbeusedtodetermineifthesametonewasplayedmultipletimesorifanytonesweremissed. </param>
+        /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
         /// <param name="tone"></param>
         internal ToneInfo(int sequenceId, DtmfTone tone)
         {
@@ -20,9 +20,9 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of ToneInfo. </summary>
-        /// <param name="sequenceId"> Thesequenceidwhichcanbeusedtodetermineifthesametonewasplayedmultipletimesorifanytonesweremissed. </param>
+        /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
         /// <param name="tone"></param>
-        /// <param name="participantId"> Theidofparticipant. </param>
+        /// <param name="participantId"> The id of participant. </param>
         internal ToneInfo(int sequenceId, DtmfTone tone, string participantId)
         {
             SequenceId = sequenceId;
@@ -30,11 +30,11 @@ namespace Azure.Communication.CallAutomation
             ParticipantId = participantId;
         }
 
-        /// <summary> Thesequenceidwhichcanbeusedtodetermineifthesametonewasplayedmultipletimesorifanytonesweremissed. </summary>
+        /// <summary> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </summary>
         public int SequenceId { get; }
         /// <summary> Gets the tone. </summary>
         public DtmfTone Tone { get; }
-        /// <summary> Theidofparticipant. </summary>
+        /// <summary> The id of participant. </summary>
         public string ParticipantId { get; }
     }
 }
