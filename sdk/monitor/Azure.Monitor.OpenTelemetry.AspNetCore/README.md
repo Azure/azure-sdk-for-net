@@ -149,6 +149,8 @@ builder.Services.Configure<SqlClientInstrumentationOptions>(options =>
 
 #### Customizing Sampling Percentage
 
+When using the Azure Monitor Distro, the sampling percentage for telemetry data is set to 100% (1.0F) by default. For example, let's say you want to set the sampling percentage to 90%. You can achieve this by modifying the code as follows:
+
 ``` C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
 builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.SetSampler(new ApplicationInsightsSampler(0.9F)));
@@ -179,16 +181,16 @@ builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.A
 
 #### Adding Another Exporter
 
-Azure Monitor Distro uses the Azure Monitor exporter to send data to Application Insights. However, if you need to send data to other services, including Application Insights, you can add another exporter. For example, to add the Prometheus exporter, you can install the [OpenTelemetry.Exporter.Prometheus.AspNetCore](https://www.nuget.org/packages/OpenTelemetry.Exporter.Prometheus.AspNetCore) package and use the following code:
+Azure Monitor Distro uses the Azure Monitor exporter to send data to Application Insights. However, if you need to send data to other services, including Application Insights, you can add another exporter. For example, to add the Console exporter, you can install the [OpenTelemetry.Exporter.Console](https://www.nuget.org/packages/OpenTelemetry.Exporter.Console) package and use the following code:
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.ConfigureOpenTelemetryMeterProvider((sp, builder) => builder.AddPrometheusExporter());
+builder.Services.ConfigureOpenTelemetryMeterProvider((sp, builder) => builder.AddConsoleExporter());
 ```
 
 #### Adding Custom Resource
 
-To customize the resource, use the following code.
+To modify the resource, use the following code.
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
