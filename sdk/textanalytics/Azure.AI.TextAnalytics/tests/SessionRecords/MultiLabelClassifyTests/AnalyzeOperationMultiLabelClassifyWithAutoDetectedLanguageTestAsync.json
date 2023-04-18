@@ -175,7 +175,7 @@
     "RandomSeed": "1011112420",
     "TEXTANALYTICS_MULTI_CATEGORY_CLASSIFY_DEPLOYMENT_NAME": "7cdace98-537b-494a-b69a-c19754718025",
     "TEXTANALYTICS_MULTI_CATEGORY_CLASSIFY_PROJECT_NAME": "7cdace98-537b-494a-b69a-c19754718025",
-    "TEXTANALYTICS_STATIC_API_KEY": "Sanitized",
-    "TEXTANALYTICS_STATIC_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_STATIC_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_STATIC_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

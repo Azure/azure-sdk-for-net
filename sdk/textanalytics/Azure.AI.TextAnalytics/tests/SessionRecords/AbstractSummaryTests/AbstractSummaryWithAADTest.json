@@ -248,6 +248,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
     "RandomSeed": "7936234",
-    "TEXTANALYTICS_ENDPOINT": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/"
   }
 }

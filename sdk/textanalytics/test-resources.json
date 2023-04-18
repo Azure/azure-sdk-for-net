@@ -102,11 +102,11 @@
             "type": "string",
             "value": "[parameters('testApplicationSecret')]"
         },
-        "TEXTANALYTICS_API_KEY": {
+        "TEXT_ANALYTICS_API_KEY": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('uniqueSubDomainName')), variables('cognitiveServicesApiVersion')).key1]"
         },
-        "TEXTANALYTICS_ENDPOINT": {
+        "TEXT_ANALYTICS_ENDPOINT": {
             "type": "string",
             "value": "[variables('endpointValue')]"
         }
