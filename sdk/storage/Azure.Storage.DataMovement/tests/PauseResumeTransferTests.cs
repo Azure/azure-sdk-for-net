@@ -221,13 +221,12 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, singleTransferOptions);
         }
 
-        [LiveOnly]
-        [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_Id(TransferType transferType)
         {
             // Arrange
@@ -252,7 +251,7 @@ namespace Azure.Storage.DataMovement.Tests
                 localDirectory: localDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB * 100,
+                size: Constants.MB,
                 singleTransferOptions: singleTransferOptions);
 
             // Act
@@ -272,13 +271,12 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [LiveOnly]
-        [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_DataTransfer(TransferType transferType)
         {
             // Arrange
@@ -303,7 +301,7 @@ namespace Azure.Storage.DataMovement.Tests
                 localDirectory: localDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB * 100,
+                size: Constants.MB,
                 singleTransferOptions: singleTransferOptions);
 
             // Act
@@ -339,13 +337,12 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.CatchAsync(async () => await transferManager.TryPauseTransferAsync("bad transfer Id"));
         }
 
-        [LiveOnly]
-        [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_AlreadyPaused(TransferType transferType)
         {
             // Arrange
@@ -370,7 +367,7 @@ namespace Azure.Storage.DataMovement.Tests
                 localDirectory: localDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB * 100,
+                size: Constants.MB,
                 singleTransferOptions: singleTransferOptions);
 
             // Act
@@ -395,13 +392,12 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [LiveOnly]
-        [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task PauseThenResumeTransferAsync(TransferType transferType)
         {
             // Arrange
@@ -418,7 +414,7 @@ namespace Azure.Storage.DataMovement.Tests
             SingleTransferOptions singleTransferOptions = new SingleTransferOptions();
             FailureTransferHolder failureTransferHolder = new FailureTransferHolder(singleTransferOptions);
             TransferManager transferManager = new TransferManager(options);
-            long size = Constants.MB * 100;
+            long size = Constants.MB;
 
             (StorageResource sResource, StorageResource dResource) = await CreateStorageResourcesAsync(
                 transferType: transferType,
@@ -604,13 +600,12 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, containerTransferOptions);
         }
 
-        [LiveOnly]
-        [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_Id_Directory(TransferType transferType)
         {
             // Arrange
@@ -638,7 +633,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationDirectory: destinationDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB * 10,
+                size: Constants.MB,
                 transferCount: partCount,
                 containerTransferOptions: containerTransferOptions);
 
@@ -652,13 +647,12 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(pauseSuccess);
         }
 
-        [LiveOnly]
-        [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_DataTransfer_Directory(TransferType transferType)
         {
             // Arrange
@@ -686,7 +680,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationDirectory: destinationDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB * 10,
+                size: Constants.MB,
                 transferCount: partCount,
                 containerTransferOptions: containerTransferOptions);
 
@@ -700,13 +694,12 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(pauseSuccess);
         }
 
-        [LiveOnly]
-        [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task TryPauseTransferAsync_AlreadyPaused_Directory(TransferType transferType)
         {
             // Arrange
@@ -726,7 +719,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
-            int partCount = 10;
+            int partCount = 4;
             DataTransfer transfer = await CreateDirectoryLongTransferAsync(
                 manager: transferManager,
                 transferType: transferType,
@@ -734,7 +727,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationDirectory: destinationDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB * 10,
+                size: Constants.MB,
                 transferCount: partCount,
                 containerTransferOptions: containerTransferOptions);
 
@@ -755,13 +748,12 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
         }
 
-        [LiveOnly]
-        [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [RecordedTest]
         [TestCase(TransferType.Upload)]
         [TestCase(TransferType.Download)]
         [TestCase(TransferType.AsyncCopy)]
         [TestCase(TransferType.SyncCopy)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         public async Task PauseThenResumeTransferAsync_Directory(TransferType transferType)
         {
             // Arrange
@@ -778,7 +770,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager transferManager = new TransferManager(options);
             ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
             FailureTransferHolder failureTransferHolder = new FailureTransferHolder(containerTransferOptions);
-            long size = Constants.MB * 10;
+            long size = Constants.MB;
             int partCount = 4;
 
             (StorageResourceContainer sResource, StorageResourceContainer dResource) = await CreateStorageResourceContainersAsync(
