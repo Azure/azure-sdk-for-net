@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             return rgOp.Value;
         }
 
-        protected async Task CreateVirtualNetworkAsync()
+        protected async Task<(ResourceIdentifier DefaultVnetID, ResourceIdentifier DefaultSubnetID)> CreateVirtualNetworkAsync()
         {
             var vnet = new VirtualNetworkData()
             {
@@ -91,6 +91,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             }
             DefaultVnetID = vnetID;
             DefaultSubnetID = subnetID;
+            return (DefaultVnetID, DefaultSubnetID);
         }
     }
 }

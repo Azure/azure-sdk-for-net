@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var vnetName = Recording.GenerateAssetName("vnet-");
             await CreateDnsResolverCollectionAsync();
             await CreateVirtualNetworkAsync();
-            var vnetId = DefaultVnetID.ToString();
+            var vnetId = DefaultVnetID;
             var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
             {
                 Id = new ResourceIdentifier(vnetId)

@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task CreateDnsResolverCollection()
         {
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
-            var vnetName = Recording.GenerateAssetName("vnet-");
             var resourceGroup = await CreateResourceGroupAsync();
             var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
 
