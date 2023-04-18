@@ -1003,16 +1003,6 @@ namespace Azure.Storage
                     cancellationToken).ConfigureAwait(false);
 
             return (slicedStream, validationOptions.PrecalculatedChecksum);
-
-            //return await PooledMemoryStream.BufferStreamPartitionInternal(
-            //    stream,
-            //    minCount,
-            //    maxCount,
-            //    absolutePosition,
-            //    _arrayPool,
-            //    maxArrayPoolRentalSize: default,
-            //    async,
-            //    cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

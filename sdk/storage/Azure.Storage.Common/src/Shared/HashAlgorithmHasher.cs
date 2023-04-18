@@ -6,6 +6,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Storage
 {
@@ -28,8 +29,7 @@ namespace Azure.Storage
             bool async,
             CancellationToken cancellationToken)
         {
-            if (stream is null)
-                throw new ArgumentNullException(nameof(stream));
+            Argument.AssertNotNull(stream, nameof(stream));
 
 #if NET5_0_OR_GREATER
             return async
