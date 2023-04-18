@@ -66,12 +66,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     break;
             }
 
-            if (activity.Kind == ActivityKind.Internal && activity.Parent != null)
+            Type = activityTagsProcessor.UnMappedTags.GetAzNameSpace() ?? Type;
+
+            if (activity.Kind == ActivityKind.Internal)
             {
                 Type = "InProc";
             }
-
-            Type = activityTagsProcessor.UnMappedTags.GetAzNameSpace() ?? Type;
 
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
