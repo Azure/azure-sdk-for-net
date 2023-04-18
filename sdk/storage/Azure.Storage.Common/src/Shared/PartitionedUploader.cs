@@ -405,7 +405,7 @@ namespace Azure.Storage
                 if (!content.CanSeek)
                 {
                     (content, oneshotValidationOptions) = await BufferAndOptionalChecksumStreamInternal(
-                        content, length.Value, oneshotValidationOptions, async, cancellationToken)
+                        content, length.Value, length.Value, oneshotValidationOptions, async, cancellationToken)
                         .ConfigureAwait(false);
                     disposable = content;
                 }
@@ -487,8 +487,11 @@ namespace Azure.Storage
         /// <param name="source">
         /// Stream to buffer.
         /// </param>
-        /// <param name="sourceLength">
-        /// Length of the source stream.
+        /// <param name="minCount">
+        /// Minimum count to buffer from the stream.
+        /// </param>
+        /// <param name="maxCount">
+        /// Maximum count to buffer from the stream.
         /// </param>
         /// <param name="validationOptions">
         /// Validation options for the upload to determine if buffering is needed.
@@ -513,7 +516,8 @@ namespace Azure.Storage
         private async Task<(Stream Stream, UploadTransferValidationOptions ValidationOptions)>
             BufferAndOptionalChecksumStreamInternal(
                 Stream source,
-                long sourceLength,
+                long minCount,
+                long maxCount,
                 UploadTransferValidationOptions validationOptions,
                 bool async,
                 CancellationToken cancellationToken)
@@ -535,8 +539,8 @@ namespace Azure.Storage
 
             PooledMemoryStream bufferedContent = await PooledMemoryStream.BufferStreamPartitionInternal(
                 source,
-                sourceLength,
-                sourceLength,
+                minCount,
+                maxCount,
                 _arrayPool,
                 maxArrayPoolRentalSize: default,
                 async,
@@ -867,9 +871,13 @@ namespace Azure.Storage
                 }
 
                 var partition = BinaryData.FromBytes(next);
-                var checksum = ContentHasher.GetHash(partition, _validationAlgorithm);
+                var checksum = ContentHasher.GetHashOrDefault(partition, ValidationOptions);
 
-                yield return new ContentPartition<BinaryData>(position, next.Length, partition, checksum.Checksum);
+                yield return new ContentPartition<BinaryData>(
+                    position,
+                    next.Length,
+                    partition,
+                    checksum?.Checksum ?? ReadOnlyMemory<byte>.Empty);
                 position += next.Length;
             }
         }
@@ -988,7 +996,8 @@ namespace Azure.Storage
             (Stream slicedStream, UploadTransferValidationOptions validationOptions)
                 = await BufferAndOptionalChecksumStreamInternal(
                     stream,
-                    sourceLength: 0,
+                    minCount,
+                    maxCount,
                     new UploadTransferValidationOptions { ChecksumAlgorithm = _validationAlgorithm },
                     async,
                     cancellationToken).ConfigureAwait(false);
@@ -1045,13 +1054,13 @@ namespace Azure.Storage
             }
             var partitionStream = WindowStream.GetWindow(stream, maxCount);
             // this resets stream position for us
-            var checksum = await ContentHasher.GetHashInternal(
+            var checksum = await ContentHasher.GetHashOrDefaultInternal(
                 partitionStream,
-                _validationAlgorithm,
+                ValidationOptions,
                 async,
                 cancellationToken)
                 .ConfigureAwait(false);
-            return (partitionStream, checksum.Checksum);
+            return (partitionStream, checksum?.Checksum ?? ReadOnlyMemory<byte>.Empty);
         }
         #endregion
     }
