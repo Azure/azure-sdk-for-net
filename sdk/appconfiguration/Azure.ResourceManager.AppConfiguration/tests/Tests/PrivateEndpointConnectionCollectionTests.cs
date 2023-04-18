@@ -52,22 +52,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 vnetData.AddressPrefixes.Add("10.0.0.0/16");
                 vnetData.DhcpOptionsDnsServers.Add("10.1.1.1");
                 vnetData.DhcpOptionsDnsServers.Add("10.1.2.4");
-                //VirtualNetworkResource vnet = (await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, VnetName, vnetData)).Value;
-                ResourceIdentifier subnetID;
-                if (Mode == RecordedTestMode.Playback)
-                {
-                    subnetID = SubnetResource.CreateResourceIdentifier(ResGroup.Id.SubscriptionId, ResGroup.Id.Name, VnetName, SubnetName);
-                }
-                else
-                {
-                    using (Recording.DisableRecording())
-                    {
-                        var vnetResource = await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, VnetName, vnetData);
-                        var subnetCollection = vnetResource.Value.GetSubnets();
-                        //SubnetResource subnetResource = (await subnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName2, subnetData)).Value;
-                        subnetID = vnetResource.Value.Data.Subnets[0].Id;
-                    }
-                }
+                ResourceIdentifier subnetID = await GetSubnetID(ResGroup, VnetName, SubnetName, vnetData);
                 PrivateEndpointData privateEndpointData = new PrivateEndpointData()
                 {
                     Location = "eastus",
