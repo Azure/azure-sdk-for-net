@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task AbstractSummaryConvenienceAsync()
         {
-            IgnoreIfNotPublicCloud();
+            TestEnvironment.IgnoreIfNotPublicCloud();
 
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);

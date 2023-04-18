@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task RecognizeCustomEntitiesConvenienceAsync()
         {
-            IgnoreIfNotPublicCloud();
+            TestEnvironment.IgnoreIfNotPublicCloud();
 
             Uri endpoint = new(TestEnvironment.StaticEndpoint);
             AzureKeyCredential credential = new(TestEnvironment.StaticApiKey);

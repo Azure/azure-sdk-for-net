@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
@@ -94,14 +93,6 @@ namespace Azure.AI.TextAnalytics.Tests
             catch (TaskCanceledException)
             {
                 Debug.WriteLine("Test cancelled. Test timed out.");
-            }
-        }
-
-        internal void IgnoreIfNotPublicCloud()
-        {
-            if (TestEnvironment.GetAudience() != TextAnalyticsAudience.AzurePublicCloud)
-            {
-                Assert.Ignore("Currently, these tests can only be run in the public cloud.");
             }
         }
     }

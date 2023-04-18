@@ -3,7 +3,6 @@
 
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -27,14 +26,6 @@ namespace Azure.AI.TextAnalytics.Samples
             }
 
             return options;
-        }
-
-        internal void IgnoreIfNotPublicCloud()
-        {
-            if (TestEnvironment.GetAudience() != TextAnalyticsAudience.AzurePublicCloud)
-            {
-                Assert.Ignore("Currently, these tests can only be run in the public cloud.");
-            }
         }
     }
 }

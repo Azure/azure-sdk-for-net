@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void AbstractSummary()
         {
-            IgnoreIfNotPublicCloud();
+            TestEnvironment.IgnoreIfNotPublicCloud();
 
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);

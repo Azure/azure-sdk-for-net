@@ -80,7 +80,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public void TestSetup()
         {
             // Currently only supported in the public cloud.
-            IgnoreIfNotPublicCloud();
+            TestEnvironment.IgnoreIfNotPublicCloud();
         }
 
         [RecordedTest]

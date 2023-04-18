@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
@@ -44,6 +45,14 @@ namespace Azure.AI.TextAnalytics.Tests
             }
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
+        }
+
+        public void IgnoreIfNotPublicCloud()
+        {
+            if (GetAudience() != TextAnalyticsAudience.AzurePublicCloud)
+            {
+                Assert.Ignore("Currently, these tests can only be run in the public cloud.");
+            }
         }
 
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
