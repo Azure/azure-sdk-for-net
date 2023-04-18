@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Security.Authentication;
@@ -231,6 +232,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             try
             {
                 var tryTimeout = retryPolicy.CalculateTryTimeout(0);
+                var stopWatch = ValueStopwatch.StartNew();
 
                 while (!cancellationToken.IsCancellationRequested)
                 {
@@ -245,7 +247,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (!ManagementLink.TryGetOpenedObject(out link))
                         {
-                            link = await ManagementLink.GetOrCreateAsync(tryTimeout, cancellationToken).ConfigureAwait(false);
+                            link = await ManagementLink.GetOrCreateAsync(tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
                         }
 
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -328,6 +330,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             try
             {
                 var tryTimeout = retryPolicy.CalculateTryTimeout(0);
+                var stopWatch = ValueStopwatch.StartNew();
 
                 while (!cancellationToken.IsCancellationRequested)
                 {
@@ -342,7 +345,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (!ManagementLink.TryGetOpenedObject(out link))
                         {
-                            link = await ManagementLink.GetOrCreateAsync(tryTimeout, cancellationToken).ConfigureAwait(false);
+                            link = await ManagementLink.GetOrCreateAsync(tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
                         }
 
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
