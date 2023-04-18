@@ -66,9 +66,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     break;
             }
 
-            if (activity.Kind == ActivityKind.Internal && activity.Parent != null)
+            if (activity.Kind == ActivityKind.Internal)
             {
                 Type = "InProc";
+            }
+            else
+            {
+                // The Azure SDK sets az.namespace with its resource provider information.
+                // When ActivityKind is not internal and az.namespace is present, set the value of Type to az.namespace.
+                Type = activityTagsProcessor.UnMappedTags.GetAzNameSpace() ?? Type;
             }
 
             Properties = new ChangeTrackingDictionary<string, string>();
