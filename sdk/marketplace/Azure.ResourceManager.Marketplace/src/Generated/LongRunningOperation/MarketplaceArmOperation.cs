@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Marketplace
         internal MarketplaceArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "MarketplaceArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "MarketplaceArmOperation", fallbackStrategy: new Core.SequentialDelayStrategy());
         }
 
         /// <inheritdoc />
