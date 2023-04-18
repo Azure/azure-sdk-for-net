@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
 
-namespace Azure.Messaging.ServiceBus.Tests.Samples
+namespace Plugins
 {
     public static class ServiceBusClientExtensions
     {
@@ -77,7 +78,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
         #endregion
 
-        public static async Task<PluginSessionReceiver> AccextNextSessionPluginAsync(
+        public static async Task<PluginSessionReceiver> AcceptNextSessionPluginAsync(
             this ServiceBusClient client,
             string queueName,
             IEnumerable<Func<ServiceBusReceivedMessage, Task>> plugins,
