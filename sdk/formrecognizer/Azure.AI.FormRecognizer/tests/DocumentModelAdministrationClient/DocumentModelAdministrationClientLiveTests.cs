@@ -251,7 +251,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             // Guarantee there is going to be at least one operation
             var modelId = Recording.GenerateId();
-            await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
 
             var modelOperationFromList = client.GetOperationsAsync().ToEnumerableAsync().Result;
             Assert.GreaterOrEqual(modelOperationFromList.Count, 1);
@@ -313,7 +313,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var targetClient = CreateDocumentModelAdministrationClient(useTokenCredential);
             var modelId = Recording.GenerateId();
 
-            await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
 
             var targetModelId = Recording.GenerateId();
             DocumentModelCopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId);
@@ -358,7 +358,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var targetClient = CreateDocumentModelAdministrationClient();
             var modelId = Recording.GenerateId();
 
-            await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
 
             var tags = TestingTags.ToDictionary(t => t.Key, t => t.Value);
 
@@ -400,8 +400,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelAId = Recording.GenerateId();
             var modelBId = Recording.GenerateId();
 
-            await using var trainedModelA = await CreateDisposableBuildModelAsync(modelAId);
-            await using var trainedModelB = await CreateDisposableBuildModelAsync(modelBId);
+            await using var trainedModelA = await BuildDisposableDocumentModelAsync(modelAId);
+            await using var trainedModelB = await BuildDisposableDocumentModelAsync(modelBId);
 
             var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
 
@@ -433,8 +433,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelAId = Recording.GenerateId();
             var modelBId = Recording.GenerateId();
 
-            await using var trainedModelA = await CreateDisposableBuildModelAsync(modelAId);
-            await using var trainedModelB = await CreateDisposableBuildModelAsync(modelBId);
+            await using var trainedModelA = await BuildDisposableDocumentModelAsync(modelAId);
+            await using var trainedModelB = await BuildDisposableDocumentModelAsync(modelBId);
 
             var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
             var tags = TestingTags.ToDictionary(t => t.Key, t => t.Value);
@@ -456,7 +456,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var modelId = Recording.GenerateId();
 
-            await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
+            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
 
             var modelIds = new List<string> { trainedModel.ModelId, "00000000-0000-0000-0000-000000000000" };
 
