@@ -23,10 +23,6 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         {
             var subscription = await Client.GetSubscriptions().GetAsync(TestEnvironment.SubscriptionId);
             var resourceGroup = await CreateResourceGroupAsync();
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                await CreateVirtualNetworkAsync();
-            }
 
             _dnsResolverCollection = resourceGroup.GetDnsResolvers();
         }
@@ -39,6 +35,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
             var vnetName = Recording.GenerateAssetName("vnet-");
             await CreateDnsResolverCollectionAsync();
+            await CreateVirtualNetworkAsync();
             var vnetId = DefaultVnetID.ToString();
             var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
             {
@@ -60,6 +57,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
             var vnetName = Recording.GenerateAssetName("vnet-");
             await CreateDnsResolverCollectionAsync();
+            await CreateVirtualNetworkAsync();
             var vnetId = DefaultVnetID.ToString();
             ;
             var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
@@ -86,6 +84,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
             await CreateDnsResolverCollectionAsync();
+            await CreateVirtualNetworkAsync();
             var vnetId = DefaultVnetID.ToString();
             var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
             {
@@ -108,6 +107,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
             await CreateDnsResolverCollectionAsync();
+            await CreateVirtualNetworkAsync();
             var vnetId = DefaultVnetID.ToString();
             var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
             {

@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.DnsResolver.Tests
     public class DnsResolverTestBase : ManagementRecordedTestBase<DnsResolverManagementTestEnvironment>
     {
         protected string SubnetName => "snet-endpoint";
-        public string DefaultVnetID;
-        public string DefaultSubnetID;
+        public ResourceIdentifier DefaultVnetID;
+        public ResourceIdentifier DefaultSubnetID;
         protected AzureLocation DefaultLocation => AzureLocation.AustraliaEast;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         {
             var vnet = new VirtualNetworkData()
             {
-                Location = AzureLocation.AustraliaEast,
+                Location = DefaultLocation,
                 Subnets = {
                     new SubnetData()
                     {
@@ -85,8 +85,6 @@ namespace Azure.ResourceManager.DnsResolver.Tests
                 using (Recording.DisableRecording())
                 {
                     var vnetResource = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
-                    var subnetCollection = vnetResource.Value.GetSubnets();
-                    //SubnetResource subnetResource = (await subnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName2, subnetData)).Value;
                     vnetID = vnetResource.Value.Data.Id;
                     subnetID = vnetResource.Value.Data.Subnets[0].Id;
                 }
