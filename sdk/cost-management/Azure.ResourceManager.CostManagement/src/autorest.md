@@ -4,17 +4,17 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: CostManagement
 namespace: Azure.ResourceManager.CostManagement
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/costmanagement/resource-manager/readme.md
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/351c8598465737e5a64dd4b65b57738dc8cf9bf7/specification/cost-management/resource-manager/readme.md
+tag: package-2022-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-
- 
 
 format-by-name-rules:
   'tenantId': 'uuid'
