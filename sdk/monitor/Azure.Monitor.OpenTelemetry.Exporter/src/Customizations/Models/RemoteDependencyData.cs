@@ -71,6 +71,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Type = "InProc";
             }
 
+            Type = activityTagsProcessor.UnMappedTags.GetAzNameSpace() ?? Type;
+
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
 
