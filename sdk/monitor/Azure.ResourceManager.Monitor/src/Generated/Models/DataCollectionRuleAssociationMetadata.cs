@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// Metadata about the resource
     /// Serialized Name: DataCollectionRuleAssociationMetadata
     /// </summary>
-    public partial class DataCollectionRuleAssociationMetadata : Metadata
+    public partial class DataCollectionRuleAssociationMetadata : DataCollectionRuleRelatedResourceMetadata
     {
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationMetadata. </summary>
         internal DataCollectionRuleAssociationMetadata()

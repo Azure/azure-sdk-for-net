@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class StorageTableDestination : IUtf8JsonSerializable
+    public partial class DataCollectionRuleStorageBlobDestination : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TableName))
+            if (Optional.IsDefined(ContainerName))
             {
-                writer.WritePropertyName("tableName"u8);
-                writer.WriteStringValue(TableName);
+                writer.WritePropertyName("containerName"u8);
+                writer.WriteStringValue(ContainerName);
             }
             if (Optional.IsDefined(StorageAccountResourceId))
             {
@@ -33,20 +33,20 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static StorageTableDestination DeserializeStorageTableDestination(JsonElement element)
+        internal static DataCollectionRuleStorageBlobDestination DeserializeDataCollectionRuleStorageBlobDestination(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> tableName = default;
+            Optional<string> containerName = default;
             Optional<ResourceIdentifier> storageAccountResourceId = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tableName"u8))
+                if (property.NameEquals("containerName"u8))
                 {
-                    tableName = property.Value.GetString();
+                    containerName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("storageAccountResourceId"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new StorageTableDestination(tableName.Value, storageAccountResourceId.Value, name.Value);
+            return new DataCollectionRuleStorageBlobDestination(containerName.Value, storageAccountResourceId.Value, name.Value);
         }
     }
 }

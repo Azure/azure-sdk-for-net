@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class LocationSpec
+    public partial class DataCollectionRuleBcdrLocationSpec
     {
-        internal static LocationSpec DeserializeLocationSpec(JsonElement element)
+        internal static DataCollectionRuleBcdrLocationSpec DeserializeDataCollectionRuleBcdrLocationSpec(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AzureLocation> location = default;
-            Optional<KnownLocationSpecProvisioningStatus> provisioningStatus = default;
+            Optional<DataCollectionRuleBcdrLocationSpecProvisioningStatus> provisioningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningStatus = new KnownLocationSpecProvisioningStatus(property.Value.GetString());
+                    provisioningStatus = new DataCollectionRuleBcdrLocationSpecProvisioningStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new LocationSpec(Optional.ToNullable(location), Optional.ToNullable(provisioningStatus));
+            return new DataCollectionRuleBcdrLocationSpec(Optional.ToNullable(location), Optional.ToNullable(provisioningStatus));
         }
     }
 }

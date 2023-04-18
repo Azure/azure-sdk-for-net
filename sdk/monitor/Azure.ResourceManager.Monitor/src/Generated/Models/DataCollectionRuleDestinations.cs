@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// List of storage accounts destinations.
         /// Serialized Name: DestinationsSpec.storageAccounts
         /// </param>
-        internal DataCollectionRuleDestinations(IList<LogAnalyticsDestination> logAnalytics, IList<MonitoringAccountDestination> monitoringAccounts, DestinationsSpecAzureMonitorMetrics azureMonitorMetrics, IList<EventHubDestination> eventHubs, IList<EventHubDirectDestination> eventHubsDirect, IList<StorageBlobDestination> storageBlobsDirect, IList<StorageTableDestination> storageTablesDirect, IList<StorageBlobDestination> storageAccounts) : base(logAnalytics, monitoringAccounts, azureMonitorMetrics, eventHubs, eventHubsDirect, storageBlobsDirect, storageTablesDirect, storageAccounts)
+        internal DataCollectionRuleDestinations(IList<LogAnalyticsDestination> logAnalytics, IList<MonitoringAccountDestination> monitoringAccounts, DestinationsSpecAzureMonitorMetrics azureMonitorMetrics, IList<DataCollectionRuleEventHubDestination> eventHubs, IList<DataCollectionRuleEventHubDirectDestination> eventHubsDirect, IList<DataCollectionRuleStorageBlobDestination> storageBlobsDirect, IList<DataCollectionRuleStorageTableDestination> storageTablesDirect, IList<DataCollectionRuleStorageBlobDestination> storageAccounts) : base(logAnalytics, monitoringAccounts, azureMonitorMetrics, eventHubs, eventHubsDirect, storageBlobsDirect, storageTablesDirect, storageAccounts)
         {
         }
     }

@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
-    /// The FailoverConfigurationSpec.
+    /// The DataCollectionRuleBcdrFailoverConfigurationSpec.
     /// Serialized Name: FailoverConfigurationSpec
     /// </summary>
-    public partial class FailoverConfigurationSpec
+    public partial class DataCollectionRuleBcdrFailoverConfigurationSpec
     {
-        /// <summary> Initializes a new instance of FailoverConfigurationSpec. </summary>
-        internal FailoverConfigurationSpec()
+        /// <summary> Initializes a new instance of DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>
+        internal DataCollectionRuleBcdrFailoverConfigurationSpec()
         {
-            Locations = new ChangeTrackingList<LocationSpec>();
+            Locations = new ChangeTrackingList<DataCollectionRuleBcdrLocationSpec>();
         }
 
-        /// <summary> Initializes a new instance of FailoverConfigurationSpec. </summary>
+        /// <summary> Initializes a new instance of DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>
         /// <param name="activeLocation">
         /// Active location where data flow will occur.
         /// Serialized Name: FailoverConfigurationSpec.activeLocation
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Locations that are configured for failover.
         /// Serialized Name: FailoverConfigurationSpec.locations
         /// </param>
-        internal FailoverConfigurationSpec(string activeLocation, IReadOnlyList<LocationSpec> locations)
+        internal DataCollectionRuleBcdrFailoverConfigurationSpec(string activeLocation, IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations)
         {
             ActiveLocation = activeLocation;
             Locations = locations;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Locations that are configured for failover.
         /// Serialized Name: FailoverConfigurationSpec.locations
         /// </summary>
-        public IReadOnlyList<LocationSpec> Locations { get; }
+        public IReadOnlyList<DataCollectionRuleBcdrLocationSpec> Locations { get; }
     }
 }

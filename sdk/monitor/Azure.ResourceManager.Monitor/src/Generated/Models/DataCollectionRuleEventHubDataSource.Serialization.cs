@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class EventHubDataSource : IUtf8JsonSerializable
+    public partial class DataCollectionRuleEventHubDataSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static EventHubDataSource DeserializeEventHubDataSource(JsonElement element)
+        internal static DataCollectionRuleEventHubDataSource DeserializeDataCollectionRuleEventHubDataSource(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new EventHubDataSource(name.Value, consumerGroup.Value, stream.Value);
+            return new DataCollectionRuleEventHubDataSource(name.Value, consumerGroup.Value, stream.Value);
         }
     }
 }

@@ -5,30 +5,32 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
-    /// The EventHubDirectDestination.
-    /// Serialized Name: EventHubDirectDestination
+    /// The DataCollectionRuleEventHubDestination.
+    /// Serialized Name: EventHubDestination
     /// </summary>
-    public partial class EventHubDirectDestination
+    public partial class DataCollectionRuleEventHubDestination
     {
-        /// <summary> Initializes a new instance of EventHubDirectDestination. </summary>
-        public EventHubDirectDestination()
+        /// <summary> Initializes a new instance of DataCollectionRuleEventHubDestination. </summary>
+        public DataCollectionRuleEventHubDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubDirectDestination. </summary>
+        /// <summary> Initializes a new instance of DataCollectionRuleEventHubDestination. </summary>
         /// <param name="eventHubResourceId">
         /// The resource ID of the event hub.
-        /// Serialized Name: EventHubDirectDestination.eventHubResourceId
+        /// Serialized Name: EventHubDestination.eventHubResourceId
         /// </param>
         /// <param name="name">
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// Serialized Name: EventHubDirectDestination.name
+        /// Serialized Name: EventHubDestination.name
         /// </param>
-        internal EventHubDirectDestination(string eventHubResourceId, string name)
+        internal DataCollectionRuleEventHubDestination(ResourceIdentifier eventHubResourceId, string name)
         {
             EventHubResourceId = eventHubResourceId;
             Name = name;
@@ -36,13 +38,13 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary>
         /// The resource ID of the event hub.
-        /// Serialized Name: EventHubDirectDestination.eventHubResourceId
+        /// Serialized Name: EventHubDestination.eventHubResourceId
         /// </summary>
-        public string EventHubResourceId { get; set; }
+        public ResourceIdentifier EventHubResourceId { get; set; }
         /// <summary>
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// Serialized Name: EventHubDirectDestination.name
+        /// Serialized Name: EventHubDestination.name
         /// </summary>
         public string Name { get; set; }
     }

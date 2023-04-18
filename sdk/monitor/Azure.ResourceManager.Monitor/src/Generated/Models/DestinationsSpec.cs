@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             LogAnalytics = new ChangeTrackingList<LogAnalyticsDestination>();
             MonitoringAccounts = new ChangeTrackingList<MonitoringAccountDestination>();
-            EventHubs = new ChangeTrackingList<EventHubDestination>();
-            EventHubsDirect = new ChangeTrackingList<EventHubDirectDestination>();
-            StorageBlobsDirect = new ChangeTrackingList<StorageBlobDestination>();
-            StorageTablesDirect = new ChangeTrackingList<StorageTableDestination>();
-            StorageAccounts = new ChangeTrackingList<StorageBlobDestination>();
+            EventHubs = new ChangeTrackingList<DataCollectionRuleEventHubDestination>();
+            EventHubsDirect = new ChangeTrackingList<DataCollectionRuleEventHubDirectDestination>();
+            StorageBlobsDirect = new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>();
+            StorageTablesDirect = new ChangeTrackingList<DataCollectionRuleStorageTableDestination>();
+            StorageAccounts = new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>();
         }
 
         /// <summary> Initializes a new instance of DestinationsSpec. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// List of storage accounts destinations.
         /// Serialized Name: DestinationsSpec.storageAccounts
         /// </param>
-        internal DestinationsSpec(IList<LogAnalyticsDestination> logAnalytics, IList<MonitoringAccountDestination> monitoringAccounts, DestinationsSpecAzureMonitorMetrics azureMonitorMetrics, IList<EventHubDestination> eventHubs, IList<EventHubDirectDestination> eventHubsDirect, IList<StorageBlobDestination> storageBlobsDirect, IList<StorageTableDestination> storageTablesDirect, IList<StorageBlobDestination> storageAccounts)
+        internal DestinationsSpec(IList<LogAnalyticsDestination> logAnalytics, IList<MonitoringAccountDestination> monitoringAccounts, DestinationsSpecAzureMonitorMetrics azureMonitorMetrics, IList<DataCollectionRuleEventHubDestination> eventHubs, IList<DataCollectionRuleEventHubDirectDestination> eventHubsDirect, IList<DataCollectionRuleStorageBlobDestination> storageBlobsDirect, IList<DataCollectionRuleStorageTableDestination> storageTablesDirect, IList<DataCollectionRuleStorageBlobDestination> storageAccounts)
         {
             LogAnalytics = logAnalytics;
             MonitoringAccounts = monitoringAccounts;
@@ -108,26 +108,26 @@ namespace Azure.ResourceManager.Monitor.Models
         /// List of Event Hubs destinations.
         /// Serialized Name: DestinationsSpec.eventHubs
         /// </summary>
-        public IList<EventHubDestination> EventHubs { get; }
+        public IList<DataCollectionRuleEventHubDestination> EventHubs { get; }
         /// <summary>
         /// List of Event Hubs Direct destinations.
         /// Serialized Name: DestinationsSpec.eventHubsDirect
         /// </summary>
-        public IList<EventHubDirectDestination> EventHubsDirect { get; }
+        public IList<DataCollectionRuleEventHubDirectDestination> EventHubsDirect { get; }
         /// <summary>
         /// List of Storage Blob Direct destinations. To be used only for sending data directly to store from the agent.
         /// Serialized Name: DestinationsSpec.storageBlobsDirect
         /// </summary>
-        public IList<StorageBlobDestination> StorageBlobsDirect { get; }
+        public IList<DataCollectionRuleStorageBlobDestination> StorageBlobsDirect { get; }
         /// <summary>
         /// List of Storage Table Direct destinations.
         /// Serialized Name: DestinationsSpec.storageTablesDirect
         /// </summary>
-        public IList<StorageTableDestination> StorageTablesDirect { get; }
+        public IList<DataCollectionRuleStorageTableDestination> StorageTablesDirect { get; }
         /// <summary>
         /// List of storage accounts destinations.
         /// Serialized Name: DestinationsSpec.storageAccounts
         /// </summary>
-        public IList<StorageBlobDestination> StorageAccounts { get; }
+        public IList<DataCollectionRuleStorageBlobDestination> StorageAccounts { get; }
     }
 }

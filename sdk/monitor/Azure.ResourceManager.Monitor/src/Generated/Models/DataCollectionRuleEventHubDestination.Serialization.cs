@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class EventHubDestination : IUtf8JsonSerializable
+    public partial class DataCollectionRuleEventHubDestination : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,19 +28,24 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static EventHubDestination DeserializeEventHubDestination(JsonElement element)
+        internal static DataCollectionRuleEventHubDestination DeserializeDataCollectionRuleEventHubDestination(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> eventHubResourceId = default;
+            Optional<ResourceIdentifier> eventHubResourceId = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventHubResourceId"u8))
                 {
-                    eventHubResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    eventHubResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -49,7 +54,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new EventHubDestination(eventHubResourceId.Value, name.Value);
+            return new DataCollectionRuleEventHubDestination(eventHubResourceId.Value, name.Value);
         }
     }
 }

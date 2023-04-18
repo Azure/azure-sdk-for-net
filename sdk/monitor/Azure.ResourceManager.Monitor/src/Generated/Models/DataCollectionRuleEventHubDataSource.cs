@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
-    /// The EventHubDataSource.
+    /// The DataCollectionRuleEventHubDataSource.
     /// Serialized Name: EventHubDataSource
     /// </summary>
-    public partial class EventHubDataSource
+    public partial class DataCollectionRuleEventHubDataSource
     {
-        /// <summary> Initializes a new instance of EventHubDataSource. </summary>
-        public EventHubDataSource()
+        /// <summary> Initializes a new instance of DataCollectionRuleEventHubDataSource. </summary>
+        public DataCollectionRuleEventHubDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubDataSource. </summary>
+        /// <summary> Initializes a new instance of DataCollectionRuleEventHubDataSource. </summary>
         /// <param name="name">
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// The stream to collect from EventHub
         /// Serialized Name: EventHubDataSource.stream
         /// </param>
-        internal EventHubDataSource(string name, string consumerGroup, string stream)
+        internal DataCollectionRuleEventHubDataSource(string name, string consumerGroup, string stream)
         {
             Name = name;
             ConsumerGroup = consumerGroup;

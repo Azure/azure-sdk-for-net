@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// Definition of Event Hub configuration.
     /// Serialized Name: DataImportSourcesEventHub
     /// </summary>
-    public partial class DataImportSourcesEventHub : EventHubDataSource
+    public partial class DataImportSourcesEventHub : DataCollectionRuleEventHubDataSource
     {
         /// <summary> Initializes a new instance of DataImportSourcesEventHub. </summary>
         public DataImportSourcesEventHub()

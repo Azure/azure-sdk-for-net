@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class Metadata
+    public partial class DataCollectionRuleRelatedResourceMetadata
     {
-        internal static Metadata DeserializeMetadata(JsonElement element)
+        internal static DataCollectionRuleRelatedResourceMetadata DeserializeDataCollectionRuleRelatedResourceMetadata(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new Metadata(provisionedBy.Value, provisionedByResourceId.Value);
+            return new DataCollectionRuleRelatedResourceMetadata(provisionedBy.Value, provisionedByResourceId.Value);
         }
     }
 }

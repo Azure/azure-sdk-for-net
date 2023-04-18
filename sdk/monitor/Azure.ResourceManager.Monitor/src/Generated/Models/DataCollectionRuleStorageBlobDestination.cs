@@ -10,17 +10,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
-    /// The StorageBlobDestination.
+    /// The DataCollectionRuleStorageBlobDestination.
     /// Serialized Name: StorageBlobDestination
     /// </summary>
-    public partial class StorageBlobDestination
+    public partial class DataCollectionRuleStorageBlobDestination
     {
-        /// <summary> Initializes a new instance of StorageBlobDestination. </summary>
-        public StorageBlobDestination()
+        /// <summary> Initializes a new instance of DataCollectionRuleStorageBlobDestination. </summary>
+        public DataCollectionRuleStorageBlobDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageBlobDestination. </summary>
+        /// <summary> Initializes a new instance of DataCollectionRuleStorageBlobDestination. </summary>
         /// <param name="containerName">
         /// The container name of the Storage Blob.
         /// Serialized Name: StorageBlobDestination.containerName
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// Serialized Name: StorageBlobDestination.name
         /// </param>
-        internal StorageBlobDestination(string containerName, ResourceIdentifier storageAccountResourceId, string name)
+        internal DataCollectionRuleStorageBlobDestination(string containerName, ResourceIdentifier storageAccountResourceId, string name)
         {
             ContainerName = containerName;
             StorageAccountResourceId = storageAccountResourceId;

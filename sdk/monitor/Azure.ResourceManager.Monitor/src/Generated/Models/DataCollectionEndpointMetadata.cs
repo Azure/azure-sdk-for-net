@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// Metadata for the resource. This property is READ-ONLY.
     /// Serialized Name: DataCollectionEndpointMetadata
     /// </summary>
-    public partial class DataCollectionEndpointMetadata : Metadata
+    public partial class DataCollectionEndpointMetadata : DataCollectionRuleRelatedResourceMetadata
     {
         /// <summary> Initializes a new instance of DataCollectionEndpointMetadata. </summary>
         internal DataCollectionEndpointMetadata()

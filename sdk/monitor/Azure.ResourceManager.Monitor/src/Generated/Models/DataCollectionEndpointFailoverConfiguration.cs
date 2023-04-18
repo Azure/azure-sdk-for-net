@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// Failover configuration on this endpoint. This property is READ-ONLY.
     /// Serialized Name: DataCollectionEndpointFailoverConfiguration
     /// </summary>
-    public partial class DataCollectionEndpointFailoverConfiguration : FailoverConfigurationSpec
+    public partial class DataCollectionEndpointFailoverConfiguration : DataCollectionRuleBcdrFailoverConfigurationSpec
     {
         /// <summary> Initializes a new instance of DataCollectionEndpointFailoverConfiguration. </summary>
         internal DataCollectionEndpointFailoverConfiguration()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// Locations that are configured for failover.
         /// Serialized Name: FailoverConfigurationSpec.locations
         /// </param>
-        internal DataCollectionEndpointFailoverConfiguration(string activeLocation, IReadOnlyList<LocationSpec> locations) : base(activeLocation, locations)
+        internal DataCollectionEndpointFailoverConfiguration(string activeLocation, IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations) : base(activeLocation, locations)
         {
         }
     }

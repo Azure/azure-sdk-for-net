@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// Serialized Name: MonitoringAccountDestination.name
         /// </param>
-        internal MonitoringAccountDestination(string accountResourceId, string accountId, string name)
+        internal MonitoringAccountDestination(ResourceIdentifier accountResourceId, string accountId, string name)
         {
             AccountResourceId = accountResourceId;
             AccountId = accountId;
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// The resource ID of the monitoring account.
         /// Serialized Name: MonitoringAccountDestination.accountResourceId
         /// </summary>
-        public string AccountResourceId { get; set; }
+        public ResourceIdentifier AccountResourceId { get; set; }
         /// <summary>
         /// The immutable ID  of the account.
         /// Serialized Name: MonitoringAccountDestination.accountId

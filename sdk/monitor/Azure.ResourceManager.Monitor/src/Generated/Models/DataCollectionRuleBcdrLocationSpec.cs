@@ -10,17 +10,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
-    /// The LocationSpec.
+    /// The DataCollectionRuleBcdrLocationSpec.
     /// Serialized Name: LocationSpec
     /// </summary>
-    public partial class LocationSpec
+    public partial class DataCollectionRuleBcdrLocationSpec
     {
-        /// <summary> Initializes a new instance of LocationSpec. </summary>
-        internal LocationSpec()
+        /// <summary> Initializes a new instance of DataCollectionRuleBcdrLocationSpec. </summary>
+        internal DataCollectionRuleBcdrLocationSpec()
         {
         }
 
-        /// <summary> Initializes a new instance of LocationSpec. </summary>
+        /// <summary> Initializes a new instance of DataCollectionRuleBcdrLocationSpec. </summary>
         /// <param name="location">
         /// Name of location.
         /// Serialized Name: LocationSpec.location
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// The resource provisioning state in this location.
         /// Serialized Name: LocationSpec.provisioningStatus
         /// </param>
-        internal LocationSpec(AzureLocation? location, KnownLocationSpecProvisioningStatus? provisioningStatus)
+        internal DataCollectionRuleBcdrLocationSpec(AzureLocation? location, DataCollectionRuleBcdrLocationSpecProvisioningStatus? provisioningStatus)
         {
             Location = location;
             ProvisioningStatus = provisioningStatus;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// The resource provisioning state in this location.
         /// Serialized Name: LocationSpec.provisioningStatus
         /// </summary>
-        public KnownLocationSpecProvisioningStatus? ProvisioningStatus { get; }
+        public DataCollectionRuleBcdrLocationSpecProvisioningStatus? ProvisioningStatus { get; }
     }
 }

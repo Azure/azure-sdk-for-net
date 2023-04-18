@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             Optional<string> activeLocation = default;
-            Optional<IReadOnlyList<LocationSpec>> locations = default;
+            Optional<IReadOnlyList<DataCollectionRuleBcdrLocationSpec>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeLocation"u8))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LocationSpec> array = new List<LocationSpec>();
+                    List<DataCollectionRuleBcdrLocationSpec> array = new List<DataCollectionRuleBcdrLocationSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LocationSpec.DeserializeLocationSpec(item));
+                        array.Add(DataCollectionRuleBcdrLocationSpec.DeserializeDataCollectionRuleBcdrLocationSpec(item));
                     }
                     locations = array;
                     continue;
