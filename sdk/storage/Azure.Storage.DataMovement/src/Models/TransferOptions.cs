@@ -8,10 +8,9 @@ using Azure.Core;
 namespace Azure.Storage.DataMovement.Models
 {
     /// <summary>
-    /// <see cref="ContainerTransferOptions"/> is used to provide options for parallel transfers
-    /// of multiple resources in a container.
+    /// <see cref="TransferOptions"/> is used to provide options for a transfer of a single resource.
     /// </summary>
-    public class ContainerTransferOptions : IEquatable<ContainerTransferOptions>
+    public class TransferOptions : IEquatable<TransferOptions>
     {
         /// <summary>
         /// The maximum length of a network transfer in bytes.
@@ -27,13 +26,13 @@ namespace Azure.Storage.DataMovement.Models
         /// Transfers larger than this limit will continue being downloaded or uploaded
         /// in chunks of size <see cref="MaximumTransferChunkSize"/>.
         ///
-        /// On Uploads, if the value is not set, it will set at 256 MB.
+        /// On Uploads, if the value is not set, it will set at 256 MB. (TODO: We should lower to 32 MB)
         /// </summary>
         public long? InitialTransferSize { get; set; }
 
         /// <summary>
         /// Optional. Defines the checkpoint id that the transfer should continue from and will
-        /// grab transfer information from TransferManagerOptions.Checkpointer
+        /// grab transfer information from <see cref="TransferManagerOptions.CheckpointerOptions"/>.
         /// </summary>
         public string ResumeFromCheckpointId { get; set; }
 
@@ -45,8 +44,7 @@ namespace Azure.Storage.DataMovement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
             => obj is StorageTransferOptions other
-            && Equals(other)
-            ;
+            && Equals(other);
 
         /// <summary>
         /// Get a hash code for the ParallelTransferOptions.
@@ -55,8 +53,7 @@ namespace Azure.Storage.DataMovement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
             => MaximumTransferChunkSize.GetHashCode()
-            ^ InitialTransferSize.GetHashCode()
-            ;
+            ^ InitialTransferSize.GetHashCode();
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -65,7 +62,7 @@ namespace Azure.Storage.DataMovement.Models
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static bool operator ==(ContainerTransferOptions left, ContainerTransferOptions right) => left.Equals(right);
+        public static bool operator ==(TransferOptions left, TransferOptions right) => left.Equals(right);
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -74,7 +71,7 @@ namespace Azure.Storage.DataMovement.Models
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static bool operator !=(ContainerTransferOptions left, ContainerTransferOptions right) => !(left == right);
+        public static bool operator !=(TransferOptions left, TransferOptions right) => !(left == right);
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -82,10 +79,9 @@ namespace Azure.Storage.DataMovement.Models
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool Equals(ContainerTransferOptions obj)
+        public bool Equals(TransferOptions obj)
             => MaximumTransferChunkSize == obj?.MaximumTransferChunkSize
-            && InitialTransferSize == obj?.InitialTransferSize
-            ;
+            && InitialTransferSize == obj?.InitialTransferSize;
 
         /// <summary>
         /// Optional <see cref="StorageResourceCreateMode"/> to configure overwrite
@@ -100,15 +96,17 @@ namespace Azure.Storage.DataMovement.Models
         internal SyncAsyncEventHandler<TransferStatusEventArgs> GetTransferStatus() => TransferStatus;
 
         /// <summary>
-        /// If any single transfer has any failed events that occur the event will get added to this handler.
+        /// If the transfer has any failed events that occur the event will get added to this handler.
         /// </summary>
         public event SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailed;
 
         internal SyncAsyncEventHandler<TransferFailedEventArgs> GetFailed() => TransferFailed;
 
         /// <summary>
-        /// If a single transfer within the resource contianer gets transferred successfully the event
-        /// will get added to this handler
+        /// If a single transfer within the resource container gets transferred successfully the event
+        /// will get added to this handler.
+        ///
+        /// Only applies to container transfers, not single resource transfers.
         /// </summary>
         public event SyncAsyncEventHandler<SingleTransferCompletedEventArgs> SingleTransferCompleted;
         internal SyncAsyncEventHandler<SingleTransferCompletedEventArgs> GetCompleted() => SingleTransferCompleted;

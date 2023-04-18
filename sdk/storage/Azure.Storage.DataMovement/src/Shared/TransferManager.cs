@@ -293,7 +293,7 @@ namespace Azure.Storage.DataMovement
         public virtual async Task<DataTransfer> StartTransferAsync(
             StorageResource sourceResource,
             StorageResource destinationResource,
-            SingleTransferOptions transferOptions = default)
+            TransferOptions transferOptions = default)
         {
             if (sourceResource == default)
             {
@@ -304,7 +304,7 @@ namespace Azure.Storage.DataMovement
                 throw Errors.ArgumentNull(nameof(destinationResource));
             }
 
-            transferOptions ??= new SingleTransferOptions();
+            transferOptions ??= new TransferOptions();
 
             bool resumeJob = false;
             DataTransfer dataTransfer;
@@ -469,7 +469,7 @@ namespace Azure.Storage.DataMovement
         public virtual async Task<DataTransfer> StartTransferAsync(
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource,
-            ContainerTransferOptions transferOptions = default)
+            TransferOptions transferOptions = default)
         {
             if (sourceResource == default)
             {
@@ -480,7 +480,7 @@ namespace Azure.Storage.DataMovement
                 throw Errors.ArgumentNull(nameof(destinationResource));
             }
 
-            transferOptions ??= new ContainerTransferOptions();
+            transferOptions ??= new TransferOptions();
 
             bool resumeJob = false;
             DataTransfer dataTransfer;

@@ -195,7 +195,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobContainerClient destinationContainer = default,
             StorageResource sourceResource = default,
             StorageResource destinationResource = default,
-            SingleTransferOptions singleTransferOptions = default,
+            TransferOptions transferOptions = default,
             long size = Constants.MB)
         {
             Argument.AssertNotNull(manager, nameof(manager));
@@ -218,7 +218,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             // Act
-            return await manager.StartTransferAsync(sourceResource, destinationResource, singleTransferOptions);
+            return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
         [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
@@ -240,8 +240,8 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
             };
             TransferManager transferManager = new TransferManager(options);
-            SingleTransferOptions singleTransferOptions = new SingleTransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(singleTransferOptions);
+            TransferOptions transferOptions = new TransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -252,7 +252,7 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
                 size: Constants.MB,
-                singleTransferOptions: singleTransferOptions);
+                transferOptions: transferOptions);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
@@ -289,8 +289,8 @@ namespace Azure.Storage.DataMovement.Tests
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
-            SingleTransferOptions singleTransferOptions = new SingleTransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(singleTransferOptions);
+            TransferOptions transferOptions = new TransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
             TransferManager transferManager = new TransferManager(options);
 
             // Add long-running job to pause, if the job is not big enough
@@ -302,7 +302,7 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
                 size: Constants.MB,
-                singleTransferOptions: singleTransferOptions);
+                transferOptions: transferOptions);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
@@ -355,8 +355,8 @@ namespace Azure.Storage.DataMovement.Tests
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
-            SingleTransferOptions singleTransferOptions = new SingleTransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(singleTransferOptions);
+            TransferOptions transferOptions = new TransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
             TransferManager transferManager = new TransferManager(options);
 
             // Add long-running job to pause, if the job is not big enough
@@ -368,7 +368,7 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
                 size: Constants.MB,
-                singleTransferOptions: singleTransferOptions);
+                transferOptions: transferOptions);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
@@ -411,8 +411,8 @@ namespace Azure.Storage.DataMovement.Tests
                 CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
-            SingleTransferOptions singleTransferOptions = new SingleTransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(singleTransferOptions);
+            TransferOptions transferOptions = new TransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
             TransferManager transferManager = new TransferManager(options);
             long size = Constants.MB;
 
@@ -431,7 +431,7 @@ namespace Azure.Storage.DataMovement.Tests
                 manager: transferManager,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                singleTransferOptions: singleTransferOptions);
+                transferOptions: transferOptions);
 
             // Act - Pause Job
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
@@ -443,7 +443,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(pauseSuccess);
 
             // Act - Resume Job
-            SingleTransferOptions resumeOptions = new SingleTransferOptions()
+            TransferOptions resumeOptions = new TransferOptions()
             {
                 ResumeFromCheckpointId = transfer.Id
             };
@@ -452,7 +452,7 @@ namespace Azure.Storage.DataMovement.Tests
                 manager: transferManager,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                singleTransferOptions: resumeOptions);
+                transferOptions: resumeOptions);
 
             CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
             await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
@@ -571,7 +571,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobContainerClient destinationContainer = default,
             StorageResourceContainer sourceResource = default,
             StorageResourceContainer destinationResource = default,
-            ContainerTransferOptions containerTransferOptions = default,
+            TransferOptions transferOptions = default,
             int transferCount = 100,
             long size = Constants.MB)
         {
@@ -597,7 +597,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             // Act
-            return await manager.StartTransferAsync(sourceResource, destinationResource, containerTransferOptions);
+            return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
         [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
@@ -620,8 +620,8 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
             };
             TransferManager transferManager = new TransferManager(options);
-            ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(containerTransferOptions);
+            TransferOptions transferOptions = new TransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -635,7 +635,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container,
                 size: Constants.MB,
                 transferCount: partCount,
-                containerTransferOptions: containerTransferOptions);
+                transferOptions: transferOptions);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
@@ -667,8 +667,8 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
             };
             TransferManager transferManager = new TransferManager(options);
-            ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(containerTransferOptions);
+            TransferOptions transferOptions = new TransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -682,7 +682,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container,
                 size: Constants.MB,
                 transferCount: partCount,
-                containerTransferOptions: containerTransferOptions);
+                transferOptions: transferOptions);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
@@ -714,8 +714,8 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
             };
             TransferManager transferManager = new TransferManager(options);
-            ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(containerTransferOptions);
+            TransferOptions transferOptions = new TransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
 
             // Add long-running job to pause, if the job is not big enough
             // then the job might finish before we can pause it.
@@ -729,7 +729,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container,
                 size: Constants.MB,
                 transferCount: partCount,
-                containerTransferOptions: containerTransferOptions);
+                transferOptions: transferOptions);
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
@@ -768,8 +768,8 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
             };
             TransferManager transferManager = new TransferManager(options);
-            ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
-            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(containerTransferOptions);
+            TransferOptions transferOptions = new TransferOptions();
+            FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
             long size = Constants.MB;
             int partCount = 4;
 
@@ -790,7 +790,7 @@ namespace Azure.Storage.DataMovement.Tests
                 manager: transferManager,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                containerTransferOptions: containerTransferOptions);
+                transferOptions: transferOptions);
 
             // Act - Pause Job
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(100));
@@ -802,7 +802,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(pauseSuccess);
 
             // Act - Resume Job
-            ContainerTransferOptions resumeOptions = new ContainerTransferOptions()
+            TransferOptions resumeOptions = new TransferOptions()
             {
                 ResumeFromCheckpointId = transfer.Id
             };
@@ -811,7 +811,7 @@ namespace Azure.Storage.DataMovement.Tests
                 manager: transferManager,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                containerTransferOptions: resumeOptions);
+                transferOptions: resumeOptions);
 
             CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
             await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);

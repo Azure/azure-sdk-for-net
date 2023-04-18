@@ -50,10 +50,10 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationLocalPath,
             int waitTimeInSec = 10,
             TransferManagerOptions transferManagerOptions = default,
-            ContainerTransferOptions options = default)
+            TransferOptions options = default)
         {
             // Set transfer options
-            options ??= new ContainerTransferOptions();
+            options ??= new TransferOptions();
             FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             transferManagerOptions ??= new TransferManagerOptions()
@@ -418,7 +418,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobContainerClient containerClient,
             string destinationFolder,
             int concurrency,
-            ContainerTransferOptions options = default,
+            TransferOptions options = default,
             int size = Constants.KB)
         {
             // Arrange
@@ -455,7 +455,7 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Create transfer to do a AwaitCompletion
-                ContainerTransferOptions options = new ContainerTransferOptions();
+                TransferOptions options = new TransferOptions();
                 FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
                 DataTransfer transfer = await CreateStartTransfer(
                     test.Container,
@@ -490,7 +490,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             try
             {
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Fail
                 };
@@ -535,7 +535,7 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Create transfer options with Skipping available
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Skip
                 };
@@ -578,7 +578,7 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Create transfer to do a EnsureCompleted
-                ContainerTransferOptions options = new ContainerTransferOptions();
+                TransferOptions options = new TransferOptions();
                 FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
                 DataTransfer transfer = await CreateStartTransfer(
@@ -614,7 +614,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             try
             {
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Fail
                 };
@@ -659,7 +659,7 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Create transfer options with Skipping available
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Skip
                 };
