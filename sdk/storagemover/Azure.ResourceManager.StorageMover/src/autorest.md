@@ -8,7 +8,7 @@ generate-model-factory: false
 csharp: true
 library-name: StorageMover
 namespace: Azure.ResourceManager.StorageMover
-require: https://github.com/Azure/azure-rest-api-specs/blob/0b1805b3ce076549ba4e9285a4f0f8727caf53a5/specification/storagemover/resource-manager/readme.md
+require: D:\Works\Codespace\Azure\tem\azure-rest-api-specs-pr\specification\storagemover\resource-manager\readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -31,6 +31,7 @@ rename-mapping:
   JobRun.properties.sourceResourceId: -|arm-id
   JobRun.properties.targetResourceId: -|arm-id
   JobRunResourceId.jobRunResourceId: -|arm-id
+  AzureStorageBlobContainerEndpointProperties.storageAccountResourceId: -|string
 
 format-by-name-rules:
   'tenantId': 'uuid'

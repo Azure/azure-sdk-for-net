@@ -299,11 +299,42 @@ namespace Azure.ResourceManager.StorageMover.Models
         public string BlobContainerName { get { throw null; } set { } }
         public string StorageAccountResourceId { get { throw null; } set { } }
     }
+    public partial class AzureStorageBlobContainerEndpointUpdateProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseUpdateProperties
+    {
+        public AzureStorageBlobContainerEndpointUpdateProperties() { }
+    }
+    public partial class AzureStorageSmbFileShareEndpointProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseProperties
+    {
+        public AzureStorageSmbFileShareEndpointProperties(Azure.Core.ResourceIdentifier storageAccountResourceId, string fileShareName) { }
+        public string FileShareName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountResourceId { get { throw null; } set { } }
+    }
+    public partial class AzureStorageSmbFileShareEndpointUpdateProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseUpdateProperties
+    {
+        public AzureStorageSmbFileShareEndpointUpdateProperties() { }
+    }
+    public partial class Credentials
+    {
+        public Credentials(System.Uri usernameUri, System.Uri passwordUri) { }
+        public System.Uri PasswordUri { get { throw null; } set { } }
+        public System.Uri UsernameUri { get { throw null; } set { } }
+    }
+    public partial class CredentialsUpdate
+    {
+        public CredentialsUpdate() { }
+        public System.Uri PasswordUri { get { throw null; } set { } }
+        public System.Uri UsernameUri { get { throw null; } set { } }
+    }
     public abstract partial class EndpointBaseProperties
     {
         protected EndpointBaseProperties() { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? ProvisioningState { get { throw null; } }
+    }
+    public abstract partial class EndpointBaseUpdateProperties
+    {
+        protected EndpointBaseUpdateProperties() { }
+        public string Description { get { throw null; } set { } }
     }
     public partial class JobDefinitionPatch
     {
@@ -374,6 +405,10 @@ namespace Azure.ResourceManager.StorageMover.Models
         public string Host { get { throw null; } set { } }
         public Azure.ResourceManager.StorageMover.Models.NfsVersion? NfsVersion { get { throw null; } set { } }
     }
+    public partial class NfsMountEndpointUpdateProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseUpdateProperties
+    {
+        public NfsMountEndpointUpdateProperties() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NfsVersion : System.IEquatable<Azure.ResourceManager.StorageMover.Models.NfsVersion>
     {
@@ -392,6 +427,18 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static implicit operator Azure.ResourceManager.StorageMover.Models.NfsVersion (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.StorageMover.Models.NfsVersion left, Azure.ResourceManager.StorageMover.Models.NfsVersion right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SmbMountEndpointProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseProperties
+    {
+        public SmbMountEndpointProperties(string host, string shareName) { }
+        public Azure.ResourceManager.StorageMover.Models.Credentials Credentials { get { throw null; } set { } }
+        public string Host { get { throw null; } set { } }
+        public string ShareName { get { throw null; } set { } }
+    }
+    public partial class SmbMountEndpointUpdateProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseUpdateProperties
+    {
+        public SmbMountEndpointUpdateProperties() { }
+        public Azure.ResourceManager.StorageMover.Models.CredentialsUpdate Credentials { get { throw null; } set { } }
     }
     public partial class StorageMoverAgentPatch
     {
@@ -447,7 +494,10 @@ namespace Azure.ResourceManager.StorageMover.Models
     public partial class StorageMoverEndpointPatch
     {
         public StorageMoverEndpointPatch() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public string EndpointBaseUpdateDescription { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageMover.Models.EndpointBaseUpdateProperties Properties { get { throw null; } set { } }
     }
     public partial class StorageMoverPatch
     {
