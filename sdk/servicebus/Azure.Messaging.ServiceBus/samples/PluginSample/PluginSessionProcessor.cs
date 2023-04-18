@@ -4,8 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
 
-namespace Azure.Messaging.ServiceBus.Tests.Samples
+namespace Plugins
 {
     #region Snippet:PluginSessionProcessor
     public class PluginSessionProcessor : ServiceBusSessionProcessor
@@ -24,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             _plugins = plugins;
         }
 
-        protected internal override async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
+        protected override async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
         {
             foreach (var plugin in _plugins)
             {
@@ -34,7 +35,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             await base.OnProcessSessionMessageAsync(args);
         }
 
-        protected internal override Task OnProcessErrorAsync(ProcessErrorEventArgs args)
+        protected override Task OnProcessErrorAsync(ProcessErrorEventArgs args)
         {
             return Task.CompletedTask;
         }
