@@ -134,6 +134,8 @@ directive:
         $.ConnectionState.properties.status['x-ms-enum'].name = 'EventHubsPrivateLinkConnectionStatus';
         $.Encryption['x-ms-client-name'] = 'EventHubsEncryption';
         $.KeyVaultProperties['x-ms-client-name'] = 'EventHubsKeyVaultProperties';
+        $.KeyVaultProperties['x-ms-client-name'] = 'EventHubsKeyVaultProperties';
+        $.NetworkSecurityPerimeterConfiguration.allOf[0]['$ref'] = '../../../common/v1/definitions.json#/definitions/TrackedResource';
     - from: CheckNameAvailability.json
       where: $.definitions
       transform: >
