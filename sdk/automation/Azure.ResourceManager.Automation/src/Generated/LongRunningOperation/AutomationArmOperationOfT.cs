@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Automation
         internal AutomationArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "AutomationArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "AutomationArmOperation", fallbackStrategy: new Core.SequentialDelayStrategy());
         }
 
         /// <inheritdoc />
