@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.StoragePool.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DiskPoolZoneInfo> array = new List<DiskPoolZoneInfo>();

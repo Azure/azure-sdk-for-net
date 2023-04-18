@@ -46,7 +46,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacityReservationLevel = property.Value.GetInt32().ToOperationalInsightsWorkspaceCapacityReservationLevel();
@@ -56,7 +55,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastSkuUpdate = property.Value.GetDateTimeOffset("O");

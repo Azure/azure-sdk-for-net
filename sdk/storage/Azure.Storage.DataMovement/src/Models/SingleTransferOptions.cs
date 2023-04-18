@@ -32,11 +32,9 @@ namespace Azure.Storage.DataMovement.Models
 
         /// <summary>
         /// Optional. Defines the checkpoint id that the transfer should continue from and will
-        /// grab transfer information from TransferManagerOptions.Checkpointer.
-        ///
-        /// TODO: https://github.com/Azure/azure-sdk-for-net/issues/32955
+        /// grab transfer information from <see cref="TransferManagerOptions.CheckpointerOptions"/>.
         /// </summary>
-        internal string ResumeFromCheckpointId { get; set; }
+        public string ResumeFromCheckpointId { get; set; }
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.

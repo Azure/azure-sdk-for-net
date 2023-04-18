@@ -135,7 +135,7 @@ namespace Azure.Identity.Tests
 
                 VisualStudioCredential cred = (VisualStudioCredential)factory.CreateVisualStudioCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(30), cred.VisualStudioProcessTimeout);
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(30), cred.ProcessTimeout);
                 Assert.AreEqual(expVisualStudioTenantId ?? expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
             }
@@ -218,13 +218,13 @@ namespace Azure.Identity.Tests
 
                 AzureCliCredential cred = (AzureCliCredential)factory.CreateAzureCliCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), cred.CliProcessTimeout);
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), cred.ProcessTimeout);
                 Assert.AreEqual(expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
 
                 AzureDeveloperCliCredential credAzd = (AzureDeveloperCliCredential)factory.CreateAzureDeveloperCliCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), credAzd.AzdCliProcessTimeout);
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), credAzd.ProcessTimeout);
                 Assert.AreEqual(expTenantId, credAzd.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, credAzd.AdditionallyAllowedTenantIds);
             }
@@ -260,7 +260,7 @@ namespace Azure.Identity.Tests
 
                 AzurePowerShellCredential cred = (AzurePowerShellCredential)factory.CreateAzurePowerShellCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(10), cred.PowerShellProcessTimeout);
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(10), cred.ProcessTimeout);
                 Assert.AreEqual(expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
             }

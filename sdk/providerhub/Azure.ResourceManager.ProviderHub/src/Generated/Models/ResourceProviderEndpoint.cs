@@ -18,43 +18,41 @@ namespace Azure.ResourceManager.ProviderHub.Models
         internal ResourceProviderEndpoint()
         {
             ApiVersions = new ChangeTrackingList<string>();
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
             RequiredFeatures = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ResourceProviderEndpoint. </summary>
-        /// <param name="enabled"></param>
+        /// <param name="isEnabled"></param>
         /// <param name="apiVersions"></param>
         /// <param name="endpointUri"></param>
         /// <param name="locations"></param>
         /// <param name="requiredFeatures"></param>
         /// <param name="featuresRule"></param>
         /// <param name="timeout"></param>
-        /// <param name="endpointType"></param>
-        internal ResourceProviderEndpoint(bool? enabled, IReadOnlyList<string> apiVersions, Uri endpointUri, IReadOnlyList<string> locations, IReadOnlyList<string> requiredFeatures, ResourceProviderEndpointFeaturesRule featuresRule, TimeSpan? timeout, EndpointType? endpointType)
+        internal ResourceProviderEndpoint(bool? isEnabled, IReadOnlyList<string> apiVersions, Uri endpointUri, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> requiredFeatures, FeaturesRule featuresRule, TimeSpan? timeout)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             ApiVersions = apiVersions;
             EndpointUri = endpointUri;
             Locations = locations;
             RequiredFeatures = requiredFeatures;
             FeaturesRule = featuresRule;
             Timeout = timeout;
-            EndpointType = endpointType;
         }
 
-        /// <summary> Gets the enabled. </summary>
-        public bool? Enabled { get; }
+        /// <summary> Gets the is enabled. </summary>
+        public bool? IsEnabled { get; }
         /// <summary> Gets the api versions. </summary>
         public IReadOnlyList<string> ApiVersions { get; }
         /// <summary> Gets the endpoint uri. </summary>
         public Uri EndpointUri { get; }
         /// <summary> Gets the locations. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> Gets the required features. </summary>
         public IReadOnlyList<string> RequiredFeatures { get; }
         /// <summary> Gets the features rule. </summary>
-        internal ResourceProviderEndpointFeaturesRule FeaturesRule { get; }
+        internal FeaturesRule FeaturesRule { get; }
         /// <summary> Gets the required features policy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
@@ -63,7 +61,5 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Gets the timeout. </summary>
         public TimeSpan? Timeout { get; }
-        /// <summary> Gets the endpoint type. </summary>
-        public EndpointType? EndpointType { get; }
     }
 }

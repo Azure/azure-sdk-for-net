@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        instanceUri = null;
                         continue;
                     }
                     instanceUri = new Uri(property.Value.GetString());
@@ -92,7 +91,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new Status(property.Value.GetString());
