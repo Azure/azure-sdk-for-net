@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     public partial class EventHubsNetworkSecurityPerimeterConfiguration : TrackedResourceData
     {
         /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfiguration. </summary>
+        /// <param name="location"> The location. </param>
         public EventHubsNetworkSecurityPerimeterConfiguration(AzureLocation location) : base(location)
         {
             ProvisioningIssues = new ChangeTrackingList<EventHubsProvisioningIssue>();
@@ -37,7 +38,6 @@ namespace Azure.ResourceManager.EventHubs.Models
             NetworkSecurityPerimeter = networkSecurityPerimeter;
             ResourceAssociation = resourceAssociation;
             Profile = profile;
-            Location = location;
         }
 
         /// <summary> Provisioning state of NetworkSecurityPerimeter configuration propagation. </summary>
