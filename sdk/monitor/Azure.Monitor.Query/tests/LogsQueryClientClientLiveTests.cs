@@ -18,7 +18,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private LogsTestData _logsTestData;
 
-        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
+        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -760,14 +760,17 @@ namespace Azure.Monitor.Query.Tests
             Assert.IsTrue(verifyColumn1 && verifyColumn2);
         }
 
-        [LiveOnly]
+        //[LiveOnly]
         [Test]
         public async Task CanQueryResourceCheckMultipleBackslash()
         {
             var client = CreateClient();
             LogsQueryOptions options = new LogsQueryOptions();
             options.IncludeStatistics = true;
-            var results = await client.QueryResourceAsync(new ResourceIdentifier("///" + TestEnvironment.StorageAccountId),
+            var resourceId = new ResourceIdentifier("///" + TestEnvironment.StorageAccountId);
+            var x = resourceId.Name;
+            var results = await client.QueryResourceAsync(
+                resourceId,
                 "search *",
                 _logsTestData.DataTimeRange,
                 options);
