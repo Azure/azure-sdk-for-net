@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
         }
 
-        public async Task TestSetUp()
+        public async Task Prepare()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task CreateOrUpdateTest()
         {
             // Only support update
-            await TestSetUp();
+            await Prepare();
             List<AppConfigurationPrivateEndpointConnectionResource> connections = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             string privateEndpointConnectionName = connections.FirstOrDefault().Data.Name;
             AppConfigurationPrivateEndpointConnectionData privateEndpointConnectionData = connections.FirstOrDefault().Data;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetTest()
         {
-            await TestSetUp();
+            await Prepare();
             List<AppConfigurationPrivateEndpointConnectionResource> connections = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             string privateEndpointConnectionName = connections.First().Data.Name;
             AppConfigurationPrivateEndpointConnectionResource privateEndpointConnection = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAsync(privateEndpointConnectionName);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             string configurationStoreName1 = Recording.GenerateAssetName("testapp-");
             string configurationStoreName2 = Recording.GenerateAssetName("testapp-");
-            await TestSetUp();
+            await Prepare();
             AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
             {
                 PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
