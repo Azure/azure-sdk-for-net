@@ -1528,7 +1528,9 @@ namespace Azure.ResourceManager.Resources.Models
     {
         public ResourcesMoveContent() { }
         public System.Collections.Generic.IList<string> Resources { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string TargetResourceGroup { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetResourceGroupId { get { throw null; } set { } }
     }
     public partial class ResourcesSku
     {
