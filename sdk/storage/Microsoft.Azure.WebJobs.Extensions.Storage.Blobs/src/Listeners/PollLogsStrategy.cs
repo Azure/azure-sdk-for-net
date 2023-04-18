@@ -78,7 +78,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             if (!_logListeners.ContainsKey(blobServiceClient))
             {
-                BlobLogListener logListener = await BlobLogListener.CreateAsync(blobServiceClient, _exceptionHandler, _logger, cancellationToken).ConfigureAwait(false);
+                BlobLogListener logListener = await BlobLogListener.CreateAsync(blobServiceClient, _logger, cancellationToken).ConfigureAwait(false);
                 _logListeners.Add(blobServiceClient, logListener);
             }
         }

@@ -28,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         // BlobType enum have different values in track 2 vs track 1, e.g. Block vs BlockBlob.
         // This internal property makes sure we serialize new type same way track 1 extension did.
         // This also makes sure we can read both formats since we already shipped few betas and don't want to disturb them.
-        [JsonProperty("BlobType")]
+        [JsonProperty(nameof(BlobType))]
         private string BlobTypeInternal {
             get
             {
