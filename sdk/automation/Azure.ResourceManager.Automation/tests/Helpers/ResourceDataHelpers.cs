@@ -69,12 +69,7 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
             var data = new DscConfigurationCreateOrUpdateContent(new AutomationContentSource()
             {
                 Hash = new AutomationContentHash("sha256", "A9E5DB56BA21513F61E0B3868816FDC6D4DF5131F5617D7FF0D769674BD5072F"),
-                Value = "Configuration "+name+@" {
-    Node SampleConfiguration.localhost {
-        WindowsFeature IIS {
-            Name = ""Web - Server"";
-        Ensure = ""Present""; 
-}}}",
+                Value = "Configuration "+name+@" { Node SampleConfiguration.localhost { WindowsFeature IIS { Name = ""Web - Server""; Ensure = ""Present""; }}}",
                 SourceType = AutomationContentSourceType.EmbeddedContent,
                 Version = "1.0.0"
             })
