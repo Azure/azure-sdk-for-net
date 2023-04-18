@@ -259,7 +259,7 @@
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="3.13.2" />
-    <PackageReference Update="NUnit3TestAdapter" Version="4.3.1" />
+    <PackageReference Update="NUnit3TestAdapter" Version="4.4.2" />
     <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.4.0" />
     <PackageReference Update="OpenTelemetry.Extensions.AzureMonitor" Version="1.0.0-beta.3" />
     <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.4.0" />

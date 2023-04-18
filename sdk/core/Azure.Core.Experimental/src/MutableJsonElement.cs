@@ -121,36 +121,18 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value switch
+                switch (change.Value)
                 {
-                    double d => d,
-                    JsonElement element => element.GetDouble(),
-                    _ => throw new InvalidCastException(GetInvalidCastExceptionText(typeof(double), _path, change)),
-                };
+                    case double d:
+                        return d;
+                    case JsonElement element:
+                        return element.GetDouble();
+                    default:
+                        throw new InvalidOperationException($"Element at {_path} is not a double.");
+                }
             }
 
-            try
-            {
-                return _element.GetDouble();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(double), _path, _element), e);
-            }
-        }
-
-        private static string GetInvalidCastExceptionText(Type target, string path, MutableJsonChange change)
-        {
-            string reason = change.Value == null ?
-                $"Element at {path} is null." :
-                $"Element at {path} has type \"{change.Value.GetType()}\".";
-
-            return $"Unable to get element as {target}. {reason}";
-        }
-
-        private static string GetInvalidCastExceptionText(Type target, string path, JsonElement element)
-        {
-            return $"Unable to get element as \"{target}\".  Element at {path} has kind \"{element.ValueKind}\".";
+            return _element.GetDouble();
         }
 
         /// <summary>
@@ -163,22 +145,18 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value switch
+                switch (change.Value)
                 {
-                    int i => i,
-                    JsonElement element => element.GetInt32(),
-                    _ => throw new InvalidCastException(GetInvalidCastExceptionText(typeof(int), _path, change)),
-                };
+                    case int i:
+                        return i;
+                    case JsonElement element:
+                        return element.GetInt32();
+                    default:
+                        throw new InvalidOperationException($"Element at {_path} is not an Int32.");
+                }
             }
 
-            try
-            {
-                return _element.GetInt32();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(int), _path, _element), e);
-            }
+            return _element.GetInt32();
         }
 
         /// <summary>
@@ -191,22 +169,18 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value switch
+                switch (change.Value)
                 {
-                    long l => l,
-                    JsonElement element => element.GetInt64(),
-                    _ => throw new InvalidCastException(GetInvalidCastExceptionText(typeof(long), _path, change)),
-                };
+                    case long l:
+                        return l;
+                    case JsonElement element:
+                        return element.GetInt64();
+                    default:
+                        throw new InvalidOperationException($"Element at {_path} is not an Int32.");
+                }
             }
 
-            try
-            {
-                return _element.GetInt64();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(long), _path, _element), e);
-            }
+            return _element.GetInt64();
         }
 
         /// <summary>
@@ -219,22 +193,18 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value switch
+                switch (change.Value)
                 {
-                    float f => f,
-                    JsonElement element => element.GetSingle(),
-                    _ => throw new InvalidCastException(GetInvalidCastExceptionText(typeof(float), _path, change)),
-                };
+                    case float f:
+                        return f;
+                    case JsonElement element:
+                        return element.GetSingle();
+                    default:
+                        throw new InvalidOperationException($"Element at {_path} is not an Int32.");
+                }
             }
 
-            try
-            {
-                return _element.GetSingle();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(float), _path, _element), e);
-            }
+            return _element.GetSingle();
         }
 
         /// <summary>
@@ -259,18 +229,11 @@ namespace Azure.Core.Json
                         {
                             return null;
                         }
-                        throw new InvalidCastException(GetInvalidCastExceptionText(typeof(string), _path, change));
+                        throw new InvalidOperationException($"Element at {_path} is not a string.");
                 }
             }
 
-            try
-            {
-                return _element.GetString();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(string), _path, _element), e);
-            }
+            return _element.GetString();
         }
 
         /// <summary>
@@ -284,22 +247,18 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return change.Value switch
+                switch (change.Value)
                 {
-                    bool b => b,
-                    JsonElement element => element.GetBoolean(),
-                    _ => throw new InvalidCastException(GetInvalidCastExceptionText(typeof(bool), _path, change)),
-                };
+                    case bool b:
+                        return b;
+                    case JsonElement element:
+                        return element.GetBoolean();
+                    default:
+                        throw new InvalidOperationException($"Element at {_path} is not a bool.");
+                }
             }
 
-            try
-            {
-                return _element.GetBoolean();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new InvalidCastException(GetInvalidCastExceptionText(typeof(bool), _path, _element), e);
-            }
+            return _element.GetBoolean();
         }
 
         /// <summary>
