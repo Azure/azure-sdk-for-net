@@ -10,13 +10,16 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class SsmlSource : IUtf8JsonSerializable
+    internal partial class SpeechOptionsInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ssmlText"u8);
-            writer.WriteStringValue(SsmlText);
+            if (Optional.IsDefined(EndSilenceTimeoutInMs))
+            {
+                writer.WritePropertyName("endSilenceTimeoutInMs"u8);
+                writer.WriteNumberValue(EndSilenceTimeoutInMs.Value);
+            }
             writer.WriteEndObject();
         }
     }
