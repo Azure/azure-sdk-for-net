@@ -110,7 +110,6 @@ namespace Azure.Core
         {
             _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
         }
-        // End TEMP backcompat with AutoRest
 
         private OperationInternal(OperationState finalState)
             :base(finalState.RawResponse)
