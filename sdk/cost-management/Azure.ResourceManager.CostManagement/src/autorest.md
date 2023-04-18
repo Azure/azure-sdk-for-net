@@ -16,6 +16,17 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+mgmt-debug:
+  suppress-list-exception: true
+
+override-operation-name: 
+  Alerts_ListExternal: Foo
+
+list-exception:
+- /providers/Microsoft.CostManagement/views/{viewName}
+
+
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -46,4 +57,10 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  - remove-operation: Views_List
+  - remove-operation: GenerateCostDetailsReport_GetOperationResults
+  - remove-operation: GenerateDetailedCostReportOperationResults_Get
+  - remove-operation: GenerateDetailedCostReportOperationStatus_Get
+  
 ```
