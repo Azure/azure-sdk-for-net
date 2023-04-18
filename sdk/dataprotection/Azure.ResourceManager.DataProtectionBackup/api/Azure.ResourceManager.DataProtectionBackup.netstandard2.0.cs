@@ -1105,7 +1105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public Azure.Core.AzureLocation? ResourceLocation { get { throw null; } set { } }
         public string ResourceName { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
-        public System.Uri ResourceUri { get { throw null; } set { } }
+        public string ResourceUri { get { throw null; } set { } }
     }
     public partial class DataSourceSetInfo
     {
@@ -1116,7 +1116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public Azure.Core.AzureLocation? ResourceLocation { get { throw null; } set { } }
         public string ResourceName { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
-        public System.Uri ResourceUri { get { throw null; } set { } }
+        public string ResourceUri { get { throw null; } set { } }
     }
     public partial class DataStoreInfoBase
     {

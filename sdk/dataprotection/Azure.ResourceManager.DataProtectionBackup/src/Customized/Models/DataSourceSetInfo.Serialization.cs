@@ -1,0 +1,75 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System.Text.Json;
+using Azure.Core;
+
+namespace Azure.ResourceManager.DataProtectionBackup.Models
+{
+    public partial class DataSourceSetInfo
+    {
+        internal static DataSourceSetInfo DeserializeDataSourceSetInfo(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> datasourceType = default;
+            Optional<string> objectType = default;
+            ResourceIdentifier resourceId = default;
+            Optional<AzureLocation> resourceLocation = default;
+            Optional<string> resourceName = default;
+            Optional<ResourceType> resourceType = default;
+            Optional<string> resourceUri = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("datasourceType"u8))
+                {
+                    datasourceType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resourceID"u8))
+                {
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceLocation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceLocation = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceName"u8))
+                {
+                    resourceName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resourceType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceUri"u8))
+                {
+                    resourceUri = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new DataSourceSetInfo(datasourceType.Value, objectType.Value, resourceId, Optional.ToNullable(resourceLocation), resourceName.Value, Optional.ToNullable(resourceType), resourceUri.Value);
+        }
+    }
+}

@@ -6,6 +6,9 @@
 
 ### Breaking Changes
 
+- `DataSourceInfo.ResourceUri` changed from `Uri` to `string`
+- `DataSourceSetInfo.ResourceUri` changed from `Uri` to `string`
+
 ### Bugs Fixed
 
 ### Other Changes
