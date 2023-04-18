@@ -141,12 +141,16 @@ namespace Azure.Core.Json
 
         private static string GetInvalidCastExceptionText(Type target, string path, MutableJsonChange change)
         {
-            return $"Unable to get element as {target}.  Element at {path} has type {change.Value?.GetType()}.";
+            string reason = change.Value == null ?
+                $"Element at {path} is null." :
+                $"Element at {path} has type \"{change.Value.GetType()}\".";
+
+            return $"Unable to get element as {target}. {reason}";
         }
 
         private static string GetInvalidCastExceptionText(Type target, string path, JsonElement element)
         {
-            return $"Unable to get element as {target}.  Element at {path} has kind {element.ValueKind}.";
+            return $"Unable to get element as \"{target}\".  Element at {path} has kind \"{element.ValueKind}\".";
         }
 
         /// <summary>
