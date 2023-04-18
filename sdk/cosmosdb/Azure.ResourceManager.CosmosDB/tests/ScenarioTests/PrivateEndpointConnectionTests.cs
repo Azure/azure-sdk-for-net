@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task PrivateEndpointConnectionCreateAndUpdate()
         {
             // ID and name of source private endpoint connection is different from the private connection returned by service
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual("Approved", privateEndpointConnection.Data.ConnectionState.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task PrivateEndpointConnectionList()
         {
             var privateEndpoint = await CreatePrivateEndpoint();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnections[0]);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task PrivateEndpointConnectionDelete()
         {
             await CreatePrivateEndpoint();
@@ -128,23 +128,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             vnet.AddressPrefixes.Add("10.0.0.0/16");
             vnet.DhcpOptionsDnsServers.Add("10.1.1.1");
             vnet.DhcpOptionsDnsServers.Add("10.1.2.4");
-            //VirtualNetworkResource virtualNetwork = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
-            ResourceIdentifier subnetID;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                subnetID = SubnetResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, vnetName, "default");
-            }
-            else
-            {
-                using (Recording.DisableRecording())
-                {
-                    VirtualNetworkResource vnetResource = (await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet)).Value;
-                    var subnetCollection = vnetResource.GetSubnets();
-                    //SubnetResource subnetResource = (await subnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName2, subnetData)).Value;
-                    subnetID = vnetResource.Data.Subnets[0].Id;
-                }
-            };
-            //var name = Recording.GenerateAssetName("pe-");
+            ResourceIdentifier subnetID = await GetSubnetId(vnetName, vnet);
+
             var privateEndpointData = new PrivateEndpointData
             {
                 Location = AzureLocation.WestUS,
