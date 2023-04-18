@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DigitalTwins
         internal DigitalTwinsArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "DigitalTwinsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "DigitalTwinsArmOperation", fallbackStrategy: new Core.SequentialDelayStrategy());
         }
 
         /// <inheritdoc />

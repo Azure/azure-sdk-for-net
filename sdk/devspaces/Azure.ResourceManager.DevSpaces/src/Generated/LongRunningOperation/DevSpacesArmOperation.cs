@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevSpaces
         internal DevSpacesArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "DevSpacesArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "DevSpacesArmOperation", fallbackStrategy: new Core.SequentialDelayStrategy());
         }
 
         /// <inheritdoc />

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         internal DataLakeAnalyticsArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "DataLakeAnalyticsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
+            _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "DataLakeAnalyticsArmOperation", fallbackStrategy: new Core.SequentialDelayStrategy());
         }
 
         /// <inheritdoc />
