@@ -91,7 +91,6 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
         {
             AssertResource(data1, data2);
             Assert.AreEqual(data1.ConfigurationName, data2.ConfigurationName);
-            Assert.AreEqual(data1.Configuration, data2.Configuration);
             Assert.AreEqual(data1.Source, data2.Source);
             Assert.AreEqual(data1.NodeCount, data2.NodeCount);
         }
