@@ -113,7 +113,7 @@ bool pauseResult = await dataTransfer.TryPauseAsync();
 Resume a transfer
 ```C# Snippet:TransferManagerResume_Async
 // Resume from checkpoint id
-SingleTransferOptions optionsWithResumeTransferId = new SingleTransferOptions()
+TransferOptions optionsWithResumeTransferId = new TransferOptions()
 {
     ResumeFromCheckpointId = dataTransfer.Id
 };
