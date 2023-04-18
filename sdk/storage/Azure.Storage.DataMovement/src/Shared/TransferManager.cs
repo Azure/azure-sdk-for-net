@@ -2,19 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Threading.Channels;
 using System.Buffers;
-using Azure.Storage.DataMovement.Models;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Threading.Channels;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Base class for data cotnroller
+    /// The main class for starting and controlling all types of transfers.
     /// </summary>
     public class TransferManager : IAsyncDisposable
     {
@@ -44,13 +44,13 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Channel of Job chunks / requests to send to the service.
         ///
-        /// Limit 4-300/Max amount of tasks allowed to process chunks
+        /// Limit 4-300/Max amount of tasks allowed to process chunks.
         /// </summary>
         private Channel<Func<Task>> _chunksToProcessChannel { get; set; }
 
         /// <summary>
         /// This value can fluctuate depending on if we've reached max capacity
-        /// Future capability for it to flucate based on throttling and bandwidth
+        /// Future capability for it to fluctuate based on throttling and bandwidth.
         /// </summary>
         internal int _maxJobChunkTasks;
 
@@ -60,7 +60,7 @@ namespace Azure.Storage.DataMovement
         internal IDictionary<string, DataTransfer> _dataTransfers;
 
         /// <summary>
-        /// Desginated checkpointer for the respective transfer manager.
+        /// Designated checkpointer for the respective transfer manager.
         ///
         /// If unspecified will default to LocalTransferCheckpointer at {currentpath}/.azstoragedml
         /// </summary>
@@ -87,15 +87,15 @@ namespace Azure.Storage.DataMovement
         private ArrayPool<byte> _arrayPool;
 
         /// <summary>
-        /// Constructor
+        /// Protected constructor for mocking.
         /// </summary>
         protected TransferManager()
         { }
 
         /// <summary>
-        /// Constructor to create a DataController
+        /// Constructor to create a TransferManager.
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">Options that will apply to all transfers started by this TransferManager.</param>
         public TransferManager(TransferManagerOptions options = default)
         {
             _channelCancellationTokenSource = new CancellationTokenSource();
@@ -221,22 +221,32 @@ namespace Azure.Storage.DataMovement
 
         #region Transfer Job Management
         /// <summary>
-        /// Attempts to pause the transfer of the respective id.
+        /// Attempts to pause the transfer of the respective <see cref="DataTransfer"></see>.
         /// </summary>
-        /// <param name="transfer"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <param name="transfer">The <see cref="DataTransfer"></see> for the transfer to pause.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Return true once the transfer has been successfully paused or false if the transfer
+        /// was already completed.
+        /// </returns>
         public virtual Task<bool> TryPauseTransferAsync(DataTransfer transfer, CancellationToken cancellationToken = default)
             => TryPauseTransferAsync(transfer.Id, cancellationToken);
 
         /// <summary>
         /// Attempts to pause the transfer of the respective id.
         /// </summary>
-        /// <param name="transferId"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <param name="transferId">The id of the transfer to pause.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Return true once the transfer has been successfully paused or false if the transfer
+        /// was already completed.
+        /// </returns>
         public virtual Task<bool> TryPauseTransferAsync(string transferId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
@@ -251,7 +261,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Attempts to all the ongoing transfers.
+        /// Attempts to pause all the ongoing transfers.
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
@@ -274,12 +284,12 @@ namespace Azure.Storage.DataMovement
 
         #region Start Transfer
         /// <summary>
-        /// Initiate transfer
+        /// Starts a transfer from the given single source resource to the given single destination resource.
         /// </summary>
-        /// <param name="sourceResource"></param>
-        /// <param name="destinationResource"></param>
-        /// <param name="transferOptions"></param>
-        /// <returns></returns>
+        /// <param name="sourceResource">A <see cref="StorageResource"/> representing the source.</param>
+        /// <param name="destinationResource">A <see cref="StorageResource"/> representing the destination.</param>
+        /// <param name="transferOptions">Options specific to this transfer.</param>
+        /// <returns>Returns a <see cref="DataTransfer"/> for tracking this transfer.</returns>
         public virtual async Task<DataTransfer> StartTransferAsync(
             StorageResource sourceResource,
             StorageResource destinationResource,
@@ -450,12 +460,12 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Initiate transfer
+        /// Starts a transfer from the given source resource container to the given destination resource container.
         /// </summary>
-        /// <param name="sourceResource"></param>
-        /// <param name="destinationResource"></param>
-        /// <param name="transferOptions"></param>
-        /// <returns></returns>
+        /// <param name="sourceResource">A <see cref="StorageResource"/> representing the source container.</param>
+        /// <param name="destinationResource">A <see cref="StorageResource"/> representing the destination container.</param>
+        /// <param name="transferOptions">Options specific to this transfer.</param>
+        /// <returns>Returns a <see cref="DataTransfer"/> for tracking this transfer.</returns>
         public virtual async Task<DataTransfer> StartTransferAsync(
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource,
@@ -656,7 +666,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Disposes
+        /// Disposes.
         /// </summary>
         /// <returns>A <see cref="ValueTask"/> of disposing the <see cref="TransferManager"/>.</returns>
         ValueTask IAsyncDisposable.DisposeAsync()

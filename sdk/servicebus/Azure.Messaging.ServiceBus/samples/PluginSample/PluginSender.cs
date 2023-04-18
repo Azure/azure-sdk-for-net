@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
 
-namespace Azure.Messaging.ServiceBus.Tests.Samples
+namespace Plugins
 {
     #region Snippet:PluginSender
     public class PluginSender : ServiceBusSender

@@ -3,12 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal struct TagEnumerationState
+    internal struct ActivityTagsProcessor
     {
-        private static readonly IReadOnlyDictionary<string, OperationType> s_part_B_Mapping = new Dictionary<string, OperationType>()
+        private static readonly IReadOnlyDictionary<string, OperationType> s_semanticTypeMapping = new Dictionary<string, OperationType>()
         {
             [SemanticConventions.AttributeDbStatement] = OperationType.Db,
             [SemanticConventions.AttributeDbSystem] = OperationType.Db,
@@ -65,24 +66,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private OperationType _tempActivityType;
         public OperationType activityType;
 
-        public void ForEach(IEnumerable<KeyValuePair<string, object?>> activityTags)
+        public ActivityTagsProcessor()
         {
-            foreach (KeyValuePair<string, object?> activityTag in activityTags)
+            MappedTags = AzMonList.Initialize();
+            UnMappedTags = AzMonList.Initialize();
+        }
+
+        public void CategorizeTags(Activity activity)
+        {
+            foreach (ref readonly var tag in activity.EnumerateTagObjects())
             {
-                if (activityTag.Value == null)
+                if (tag.Value == null)
                 {
                     continue;
                 }
 
-                if (activityTag.Value is Array array)
+                if (tag.Value is Array array)
                 {
-                    AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(activityTag.Key, array.ToCommaDelimitedString()));
+                    AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(tag.Key, array.ToCommaDelimitedString()));
                     continue;
                 }
 
-                if (!s_part_B_Mapping.TryGetValue(activityTag.Key, out _tempActivityType))
+                if (!s_semanticTypeMapping.TryGetValue(tag.Key, out _tempActivityType))
                 {
-                    AzMonList.Add(ref UnMappedTags, activityTag);
+                    AzMonList.Add(ref UnMappedTags, tag);
                     continue;
                 }
 
@@ -93,11 +100,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 if (_tempActivityType == activityType || _tempActivityType == OperationType.Common)
                 {
-                    AzMonList.Add(ref MappedTags, activityTag);
+                    AzMonList.Add(ref MappedTags, tag);
                 }
                 else
                 {
-                    AzMonList.Add(ref UnMappedTags, activityTag);
+                    AzMonList.Add(ref UnMappedTags, tag);
                 }
             }
         }

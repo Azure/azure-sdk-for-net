@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- Introduced new property `TargetResourceGroupId` on `Azure.ResourceManager.Resources.Models.ResourcesMoveContent` to supersede `TargetResourceGroup` to emphasize this is accepting a `ResourceIdentifier` of the target resource group.
+
 ## 1.4.0 (2023-02-10)
 
 ### Features Added

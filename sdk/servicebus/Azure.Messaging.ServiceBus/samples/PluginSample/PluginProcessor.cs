@@ -4,8 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
 
-namespace Azure.Messaging.ServiceBus.Tests.Samples
+namespace Plugins
 {
     #region Snippet:PluginProcessor
     public class PluginProcessor : ServiceBusProcessor
@@ -24,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             _plugins = plugins;
         }
 
-        protected internal override async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
+        protected override async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
         {
             foreach (var plugin in _plugins)
             {

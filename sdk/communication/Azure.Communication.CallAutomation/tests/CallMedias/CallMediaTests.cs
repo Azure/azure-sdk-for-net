@@ -18,6 +18,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         };
         private static readonly FileSource _fileSource = new FileSource(new System.Uri("file://path/to/file"));
         private static readonly TextSource _textSource = new TextSource("PlayTTS test text.", "en-US-ElizabethNeural");
+        private static readonly SsmlSource _ssmlSource = new SsmlSource("<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xml:lang=\"en-US\"><voice name=\"en-US-JennyNeural\">Recognize Choice Completed, played through SSML source.</voice></speak>");
+
         private static readonly PlayOptions _options = new PlayOptions()
         {
             Loop = false,
@@ -66,6 +68,33 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             SpeechLanguage = "en-US",
         };
 
+        private static CallMediaRecognizeSpeechOptions _speechRecognizeOptions = new CallMediaRecognizeSpeechOptions(RecognizeInputType.Speech, new CommunicationUserIdentifier("targetUserId"), 500)
+        {
+            InterruptCallMediaOperation = true,
+            InitialSilenceTimeout = TimeSpan.FromSeconds(5),
+            InterruptPrompt = true,
+            OperationContext = "operationContext",
+            Prompt = new TextSource("PlayTTS test text.")
+            {
+                SourceLocale = "en-US",
+                VoiceGender = GenderType.Female,
+                VoiceName = "LULU"
+            },
+        };
+
+        private static CallMediaRecognizeSpeechOptions _speechOrDtmfRecognizeOptions = new CallMediaRecognizeSpeechOptions(RecognizeInputType.SpeechOrDtmf, new CommunicationUserIdentifier("targetUserId"), 500)
+        {
+            InterruptCallMediaOperation = true,
+            InitialSilenceTimeout = TimeSpan.FromSeconds(5),
+            InterruptPrompt = true,
+            OperationContext = "operationContext",
+            Prompt = new TextSource("PlayTTS test text.")
+            {
+                SourceLocale = "en-US",
+                VoiceGender = GenderType.Female,
+                VoiceName = "LULU"
+            },
+        };
         private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);
 
         private static readonly SendDtmfOptions _sendDmtfOptions = new(new CommunicationUserIdentifier("targetUserId"),
@@ -306,6 +335,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 {
                    callMedia => callMedia.PlayToAllAsync(_textSource, _options)
                 },
+                new Func<CallMedia, Task<Response<PlayResult>>>?[]
+                {
+                   callMedia => callMedia.PlayAsync(_ssmlSource, _target, _options)
+                },
+                new Func<CallMedia, Task<Response<PlayResult>>>?[]
+                {
+                   callMedia => callMedia.PlayToAllAsync(_ssmlSource, _options)
+                },
             };
         }
 
@@ -334,6 +371,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response<StartRecognizingResult>>>?[]
                 {
+                   callMedia => callMedia.StartRecognizingAsync(_speechRecognizeOptions)
+                },
+                new Func<CallMedia, Task<Response<StartRecognizingResult>>>?[]
+                {
+                   callMedia => callMedia.StartRecognizingAsync(_speechOrDtmfRecognizeOptions)
+                },
+                new Func<CallMedia, Task<Response<StartRecognizingResult>>>?[]
+                {
                    callMedia => callMedia.StartRecognizingAsync(_emptyRecognizeOptions)
                 }
             };
@@ -358,6 +403,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Response<PlayResult>>?[]
                 {
                    callMedia => callMedia.PlayToAll(_textSource, _options)
+                },
+                new Func<CallMedia, Response<PlayResult>>?[]
+                {
+                   callMedia => callMedia.Play(_ssmlSource, _target, _options)
+                },
+                new Func<CallMedia, Response<PlayResult>>?[]
+                {
+                   callMedia => callMedia.PlayToAll(_ssmlSource, _options)
                 },
             };
         }
@@ -384,6 +437,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Response<StartRecognizingResult>>?[]
                 {
                    callMedia => callMedia.StartRecognizing(_choiceRecognizeOptions)
+                },
+                new Func<CallMedia, Response<StartRecognizingResult>>?[]
+                {
+                   callMedia => callMedia.StartRecognizing(_speechRecognizeOptions)
+                },
+                new Func<CallMedia, Response<StartRecognizingResult>>?[]
+                {
+                   callMedia => callMedia.StartRecognizing(_speechOrDtmfRecognizeOptions)
                 },
                 new Func<CallMedia, Response<StartRecognizingResult>>?[]
                 {

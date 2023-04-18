@@ -28,8 +28,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
-                    var monitorTags = EnumerateActivityTags(activity);
-                    telemetryItem = new TelemetryItem(activity, ref monitorTags, resource, instrumentationKey);
+                    var activityTagsProcessor = EnumerateActivityTags(activity);
+                    telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, resource, instrumentationKey);
 
                     // Check for Exceptions events
                     if (activity.Events.Any())
@@ -43,19 +43,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             telemetryItem.Data = new MonitorBase
                             {
                                 BaseType = "RequestData",
-                                BaseData = new RequestData(Version, activity, ref monitorTags),
+                                BaseData = new RequestData(Version, activity, ref activityTagsProcessor),
                             };
                             break;
                         case TelemetryType.Dependency:
                             telemetryItem.Data = new MonitorBase
                             {
                                 BaseType = "RemoteDependencyData",
-                                BaseData = new RemoteDependencyData(Version, activity, ref monitorTags),
+                                BaseData = new RemoteDependencyData(Version, activity, ref activityTagsProcessor),
                             };
                             break;
                     }
 
-                    monitorTags.Return();
+                    activityTagsProcessor.Return();
                     telemetryItems.Add(telemetryItem);
                 }
                 catch (Exception ex)
@@ -137,16 +137,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        internal static TagEnumerationState EnumerateActivityTags(Activity activity)
+        internal static ActivityTagsProcessor EnumerateActivityTags(Activity activity)
         {
-            var monitorTags = new TagEnumerationState
-            {
-                MappedTags = AzMonList.Initialize(),
-                UnMappedTags = AzMonList.Initialize()
-            };
-
-            monitorTags.ForEach(activity.TagObjects);
-            return monitorTags;
+            var activityTagsProcessor = new ActivityTagsProcessor();
+            activityTagsProcessor.CategorizeTags(activity);
+            return activityTagsProcessor;
         }
 
         internal static string? GetLocationIp(ref AzMonList MappedTags)
