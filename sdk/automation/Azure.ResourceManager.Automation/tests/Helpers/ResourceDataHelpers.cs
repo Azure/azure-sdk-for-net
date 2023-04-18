@@ -98,27 +98,7 @@ namespace Azure.ResourceManager.Automation.Tests.Helpers
                 Source = new AutomationContentSource()
                 {
                     Hash = new AutomationContentHash("sha256", "6DE256A57F01BFA29B88696D5E77A383D6E61484C7686E8DB955FA10ACE9FFE5"),
-                    Value = @"instance of MSFT_RoleResource as $MSFT_RoleResource1ref
-                            {
-                                ResourceID = ""[WindowsFeature]IIS"";
-                                Ensure = ""Present"";
-                                SourceInfo = ""::3::32::WindowsFeature"";
-                                Name = ""Web-Server""; 
-                                ModuleName = ""PsDesiredStateConfiguration"";
-                                ModuleVersion = ""1.0"";
-                                ConfigurationName = ""SampleConfiguration"";
-                            };
-
-                            instance of OMI_ConfigurationDocument
-                            {
-                                Version=""2.0.0"";
-                                MinimumCompatibleVersion = ""1.0.0"";
-                                CompatibleVersionAdditionalProperties= {""Omi_BaseResource:ConfigurationName""};
-                                Author=""vameru"";
-                                GenerationDate=""03/30/2017 13:40:25"";
-                                GenerationHost=""VAMERU-BACKEND"";
-                                Name=""SampleConfiguration"";
-                            };",
+                    Value = @"instance of MSFT_RoleResource as $MSFT_RoleResource1ref { ResourceID = ""[WindowsFeature]IIS""; Ensure = ""Present""; SourceInfo = ""::3::32::WindowsFeature""; Name = ""Web-Server""; ModuleName = ""PsDesiredStateConfiguration""; ModuleVersion = ""1.0""; ConfigurationName = ""SampleConfiguration""; }; instance of OMI_ConfigurationDocument { Version=""2.0.0""; MinimumCompatibleVersion = ""1.0.0""; CompatibleVersionAdditionalProperties= {""Omi_BaseResource:ConfigurationName""}; Author=""vameru""; GenerationDate=""03/30/2017 13:40:25""; GenerationHost=""VAMERU-BACKEND""; Name=""SampleConfiguration""; };",
                     SourceType = AutomationContentSourceType.EmbeddedContent,
                     Version = "1.0"
                 },
