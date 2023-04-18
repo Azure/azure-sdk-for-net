@@ -7,10 +7,6 @@ using System;
 
 namespace Azure.Core
 {
-    /// <summary>
-    /// Implementation of a delay strategy. Polling interval is hard-coded to {1s, 1s, 1s, 2s, 4s, 8s, 16s, 32s}.
-    /// </summary>
-    /// <remarks>Polling interval always follows the above sequence.</remarks>
     internal class SequentialDelayStrategy : DelayStrategy
     {
         private static readonly TimeSpan[] _pollingSequence = new TimeSpan[]
