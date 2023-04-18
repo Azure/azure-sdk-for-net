@@ -91,14 +91,14 @@ namespace Azure.Core
         /// parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
-        /// <param name="fallbackStrategy">The fallback delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used. Default is <see cref="ConstantDelayStrategy"/>.</param>
-        public OperationInternal(
-            ClientDiagnostics clientDiagnostics,
+        /// <param name="fallbackStrategy">The delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used.
+        ///     Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
+        public OperationInternal(ClientDiagnostics clientDiagnostics,
             IOperation<T> operation,
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategyInternal? fallbackStrategy = null)
+            DelayStrategy? fallbackStrategy = null)
             : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
             _operation = operation;
@@ -160,8 +160,7 @@ namespace Azure.Core
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes.
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategyInternal"/>
-        /// is then used as the wait interval.
+        /// for status change until the specified time has passed.
         /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms",
         /// <example>Usage example:
         /// <code>
@@ -200,8 +199,7 @@ namespace Azure.Core
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatus(CancellationToken)"/> until the long-running operation completes.
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategyInternal"/>
-        /// is then use as the wait interval.
+        /// for status change until the specified time has passed.
         /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms",
         /// <example>Usage example:
         /// <code>
@@ -218,11 +216,8 @@ namespace Azure.Core
 
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatus(CancellationToken)"/> until the long-running operation completes. The interval
-        /// between calls is defined by the property <see cref="ConstantDelayStrategy.DefaultPollingInterval"/>, but it can change based on information returned
-        /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="ConstantDelayStrategy.DefaultPollingInterval"/>
-        /// property and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
-        /// and "x-ms-retry-after-ms".
+        /// between calls is defined by the <see cref="FixedDelayWithNoJitterStrategy"/>, which takes into account any retry-after header that is returned
+        /// from the server.
         /// <example>Usage example:
         /// <code>
         ///   public async ValueTask&lt;Response&lt;T&gt;&gt; WaitForCompletionAsync(CancellationToken cancellationToken) =>
