@@ -8,7 +8,7 @@ azure-arm: true
 generate-model-factory: false
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
-require: https://github.com/Azure/azure-rest-api-specs/blob/3f3b51edf8fd0eb65004df390d6ee98e0e23c53d/specification/monitor/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/351c8598465737e5a64dd4b65b57738dc8cf9bf7/specification/monitor/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
