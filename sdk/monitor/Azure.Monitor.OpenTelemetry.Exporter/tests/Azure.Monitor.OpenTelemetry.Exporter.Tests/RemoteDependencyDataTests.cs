@@ -57,25 +57,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void DependencyTypeisSetToInProcForInternalSpanWithParent()
+        public void DependencyTypeisSetToInProcForInternalSpan()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
-            using var parentActivity = activitySource.StartActivity("ParentActivity", ActivityKind.Internal);
-            using var childActivity = activitySource.StartActivity("ChildActivity", ActivityKind.Internal);
+            using var activity = activitySource.StartActivity("Activity", ActivityKind.Internal);
 
-            Assert.NotNull(parentActivity);
-            var activityTagsProcessorParent = TraceHelper.EnumerateActivityTags(parentActivity);
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var remoteDependencyDataTypeForParent = new RemoteDependencyData(2, parentActivity, ref activityTagsProcessorParent).Type;
+            var remoteDependencyDataType = new RemoteDependencyData(2, activity, ref activityTagsProcessor).Type;
 
-            Assert.Null(remoteDependencyDataTypeForParent);
+            Assert.Equal("InProc", remoteDependencyDataType);
+        }
 
-            Assert.NotNull(childActivity);
-            var activityTagsProcessorChild = TraceHelper.EnumerateActivityTags(childActivity);
+        [Fact]
+        public void DependencyTypeisSetToAzNamespaceValueForNonInternalSpan()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity("Activity", ActivityKind.Client);
+            activity?.AddTag("az.namespace", "DemoAzureResource");
 
-            var remoteDependencyDataTypeForChild = new RemoteDependencyData(2, childActivity, ref activityTagsProcessorChild).Type;
+            Assert.NotNull(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            Assert.Equal("InProc", remoteDependencyDataTypeForChild);
+            var remoteDependencyDataType = new RemoteDependencyData(2, activity, ref activityTagsProcessor).Type;
+
+            Assert.Equal("DemoAzureResource", remoteDependencyDataType);
         }
 
         [Fact]
