@@ -80,9 +80,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var remoteDependencyDataType = new RemoteDependencyData(2, activity, ref activityTagsProcessor).Type;
+            var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
 
-            Assert.Equal("DemoAzureResource", remoteDependencyDataType);
+            Assert.Equal("DemoAzureResource", remoteDependencyData.Type);
+            Assert.Equal("DemoAzureResource", remoteDependencyData.Properties["az.namespace"]);
         }
 
         [Fact]
