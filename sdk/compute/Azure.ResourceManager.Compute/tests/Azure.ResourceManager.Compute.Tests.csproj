@@ -2,6 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Compute.csproj" />
     <PackageReference Include="Azure.ResourceManager.Network" />
+    <ProjectReference Include="../../../resourcemanager/Azure.ResourceManager/src/Azure.ResourceManager.csproj" />
   </ItemGroup>
 
   <ItemGroup>

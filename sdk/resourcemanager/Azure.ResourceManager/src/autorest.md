@@ -230,6 +230,9 @@ override-operation-name:
 
 no-property-type-replacement: ResourceProviderData;ResourceProvider;
 
+operations-to-skip-lro-api-version-override:
+- Tags_CreateOrUpdateAtScope
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
