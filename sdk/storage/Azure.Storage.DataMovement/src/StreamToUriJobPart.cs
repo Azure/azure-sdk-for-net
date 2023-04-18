@@ -159,10 +159,12 @@ namespace Azure.Storage.DataMovement
                 if (_initialTransferSize >= length)
                 {
                     // If we can create the destination in one call
-                    await QueueChunkToChannelAsync(CreateDestinationResource(
+                    await QueueChunkToChannelAsync(
+                        async () =>
+                        await CreateDestinationResource(
                             blockSize: length,
                             length: length,
-                            singleCall: true)).ConfigureAwait(false);
+                            singleCall: true).ConfigureAwait(false)).ConfigureAwait(false);
                     return;
                 }
                 long blockSize = CalculateBlockSize(length);
@@ -186,10 +188,11 @@ namespace Azure.Storage.DataMovement
                     {
                         // Queue paritioned block task
                         await QueueChunkToChannelAsync(
-                            StageBlockInternal(
+                            async () =>
+                            await StageBlockInternal(
                                 rangeList[0].Offset,
                                 rangeList[0].Length,
-                                length)).ConfigureAwait(false);
+                                length).ConfigureAwait(false)).ConfigureAwait(false);
                     }
                 }
             }
@@ -385,10 +388,12 @@ namespace Azure.Storage.DataMovement
             foreach ((long Offset, long Length) block in rangeList)
             {
                 // Queue paritioned block task
-                await QueueChunkToChannelAsync(StageBlockInternal(
+                await QueueChunkToChannelAsync(
+                    async () =>
+                    await StageBlockInternal(
                     block.Offset,
                     block.Length,
-                    completeLength)).ConfigureAwait(false);
+                    completeLength).ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
 

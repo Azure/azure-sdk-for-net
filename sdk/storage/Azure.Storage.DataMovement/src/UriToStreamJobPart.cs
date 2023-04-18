@@ -202,7 +202,9 @@ namespace Azure.Storage.DataMovement
                     if (succesfulCreation)
                     {
                         // Queue the work to end the download
-                        await QueueChunkToChannelAsync(CompleteFileDownload()).ConfigureAwait(false);
+                        await QueueChunkToChannelAsync(
+                            async () =>
+                            await CompleteFileDownload().ConfigureAwait(false)).ConfigureAwait(false);
                     }
                     else
                     {
@@ -224,7 +226,10 @@ namespace Azure.Storage.DataMovement
                     if (totalLength == initialLength)
                     {
                         // Complete download since it was done in one go
-                        await QueueChunkToChannelAsync(CompleteFileDownload()).ConfigureAwait(false);
+                        await QueueChunkToChannelAsync(
+                            async () =>
+                            await CompleteFileDownload().ConfigureAwait(false))
+                            .ConfigureAwait(false);
                     }
                     else
                     {
@@ -246,7 +251,10 @@ namespace Azure.Storage.DataMovement
                         {
                             // Add the next Task (which will start the download but
                             // return before it's completed downloading)
-                            await QueueChunkToChannelAsync(DownloadStreamingInternal(range: httpRange)).ConfigureAwait(false);
+                            await QueueChunkToChannelAsync(
+                                async () =>
+                                await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false))
+                                .ConfigureAwait(false);
                         }
                     }
                 }
@@ -286,7 +294,9 @@ namespace Azure.Storage.DataMovement
                     if (successfulCopy)
                     {
                         // Queue the work to end the download
-                        await QueueChunkToChannelAsync(CompleteFileDownload())
+                        await QueueChunkToChannelAsync(
+                            async () =>
+                            await CompleteFileDownload().ConfigureAwait(false))
                             .ConfigureAwait(false);
                     }
                     return;
@@ -312,7 +322,10 @@ namespace Azure.Storage.DataMovement
                 {
                     // Add the next Task (which will start the download but
                     // return before it's completed downloading)
-                    await QueueChunkToChannelAsync(DownloadStreamingInternal(range: httpRange)).ConfigureAwait(false);
+                    await QueueChunkToChannelAsync(
+                        async () =>
+                        await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false))
+                        .ConfigureAwait(false);
                 }
             }
         }
@@ -454,7 +467,9 @@ namespace Azure.Storage.DataMovement
                 CopyToChunkFile = (chunkFilePath, source) => job.WriteChunkToTempFile(chunkFilePath, source),
                 ReportProgressInBytes= (progress) => job.ReportBytesWritten(progress),
                 InvokeFailedHandler = async (ex) => await job.InvokeFailedArg(ex).ConfigureAwait(false),
-                QueueCompleteFileDownload = () => job.QueueChunkToChannelAsync(job.CompleteFileDownload())
+                QueueCompleteFileDownload = () => job.QueueChunkToChannelAsync(
+                    async ()
+                    => await job.CompleteFileDownload().ConfigureAwait(false))
             };
         }
 

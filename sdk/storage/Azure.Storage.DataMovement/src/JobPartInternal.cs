@@ -216,7 +216,7 @@ namespace Azure.Storage.DataMovement
         /// when we're looking to stop/pause the job part.
         /// </summary>
         /// <returns></returns>
-        public async Task QueueChunkToChannelAsync(Task chunkTask)
+        public async Task QueueChunkToChannelAsync(Func<Task> chunkTask)
         {
             // Attach TaskCompletionSource
             TaskCompletionSource<bool> chunkCompleted = new TaskCompletionSource<bool>(
@@ -228,7 +228,7 @@ namespace Azure.Storage.DataMovement
             await QueueChunk(
                 async () =>
                 {
-                    await chunkTask.ConfigureAwait(false);
+                    await Task.Run(chunkTask).ConfigureAwait(false);
                     chunkCompleted.SetResult(true);
                     await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
                 }).ConfigureAwait(false);

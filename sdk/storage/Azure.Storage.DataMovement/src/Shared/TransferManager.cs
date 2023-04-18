@@ -484,21 +484,12 @@ namespace Azure.Storage.DataMovement
                     transferId: transferId,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
-                // Check if it's a single part transfer.
-                int partCount = await _checkpointer.CurrentJobPartCountAsync(
-                    transferId: transferId,
-                    cancellationToken: _cancellationToken).ConfigureAwait(false);
-                if (partCount < 2)
-                {
-                    throw Errors.MismatchIdContainer(transferId);
-                }
                 if (_dataTransfers.ContainsKey(transferId))
                 {
                     // Remove the stale DataTransfer so we can pass a new DataTransfer object
                     // to the user and also track the transfer from the DataTransfer object
                     _dataTransfers.Remove(transferId);
                 }
-
                 dataTransfer = new DataTransfer(transferOptions.ResumeFromCheckpointId, 0);
             }
             else
