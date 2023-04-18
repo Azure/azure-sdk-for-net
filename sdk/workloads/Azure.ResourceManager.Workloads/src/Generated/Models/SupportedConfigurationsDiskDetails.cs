@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="iopsReadWrite"> The disk Iops. </param>
         /// <param name="mbpsReadWrite"> The disk provisioned throughput in MBps. </param>
         /// <param name="diskTier"> The disk tier, e.g. P10, E10. </param>
-        internal SupportedConfigurationsDiskDetails(DiskSku sku, long? sizeGB, long? minimumSupportedDiskCount, long? maximumSupportedDiskCount, long? iopsReadWrite, long? mbpsReadWrite, string diskTier)
+        internal SupportedConfigurationsDiskDetails(SapDiskSku sku, long? sizeGB, long? minimumSupportedDiskCount, long? maximumSupportedDiskCount, long? iopsReadWrite, long? mbpsReadWrite, string diskTier)
         {
             Sku = sku;
             SizeGB = sizeGB;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> The type of disk sku. For example, Standard_LRS, Standard_ZRS, Premium_LRS, Premium_ZRS. </summary>
-        internal DiskSku Sku { get; }
+        internal SapDiskSku Sku { get; }
         /// <summary> Defines the disk sku name. </summary>
         public DiskDetailsDiskSkuName? SkuName
         {

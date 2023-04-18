@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="count"> The total number of disks required for the concerned volume. </param>
         /// <param name="sizeGB"> The disk size in GB. </param>
         /// <param name="sku"> The disk SKU details. </param>
-        internal DiskVolumeConfiguration(long? count, long? sizeGB, DiskSku sku)
+        internal DiskVolumeConfiguration(long? count, long? sizeGB, SapDiskSku sku)
         {
             Count = count;
             SizeGB = sizeGB;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> The disk size in GB. </summary>
         public long? SizeGB { get; set; }
         /// <summary> The disk SKU details. </summary>
-        internal DiskSku Sku { get; set; }
+        internal SapDiskSku Sku { get; set; }
         /// <summary> Defines the disk sku name. </summary>
         public DiskDetailsDiskSkuName? SkuName
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Workloads.Models
             set
             {
                 if (Sku is null)
-                    Sku = new DiskSku();
+                    Sku = new SapDiskSku();
                 Sku.Name = value;
             }
         }

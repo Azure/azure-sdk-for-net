@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SshKeyPair : IUtf8JsonSerializable
+    public partial class SapSshKeyPair : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteEndObject();
         }
 
-        internal static SshKeyPair DeserializeSshKeyPair(JsonElement element)
+        internal static SapSshKeyPair DeserializeSapSshKeyPair(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SshKeyPair(publicKey.Value, privateKey.Value);
+            return new SapSshKeyPair(publicKey.Value, privateKey.Value);
         }
     }
 }

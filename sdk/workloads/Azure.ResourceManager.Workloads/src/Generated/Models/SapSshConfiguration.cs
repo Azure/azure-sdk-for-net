@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> SSH configuration for Linux based VMs running on Azure. </summary>
-    internal partial class SshConfiguration
+    internal partial class SapSshConfiguration
     {
-        /// <summary> Initializes a new instance of SshConfiguration. </summary>
-        public SshConfiguration()
+        /// <summary> Initializes a new instance of SapSshConfiguration. </summary>
+        public SapSshConfiguration()
         {
-            PublicKeys = new ChangeTrackingList<SshPublicKey>();
+            PublicKeys = new ChangeTrackingList<SapSshPublicKey>();
         }
 
-        /// <summary> Initializes a new instance of SshConfiguration. </summary>
+        /// <summary> Initializes a new instance of SapSshConfiguration. </summary>
         /// <param name="publicKeys"> The list of SSH public keys used to authenticate with linux based VMs. </param>
-        internal SshConfiguration(IList<SshPublicKey> publicKeys)
+        internal SapSshConfiguration(IList<SapSshPublicKey> publicKeys)
         {
             PublicKeys = publicKeys;
         }
 
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
-        public IList<SshPublicKey> PublicKeys { get; }
+        public IList<SapSshPublicKey> PublicKeys { get; }
     }
 }

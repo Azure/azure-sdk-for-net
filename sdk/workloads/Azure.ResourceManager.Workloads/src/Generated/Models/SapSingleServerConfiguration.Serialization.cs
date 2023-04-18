@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SingleServerConfiguration : IUtf8JsonSerializable
+    public partial class SapSingleServerConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteEndObject();
         }
 
-        internal static SingleServerConfiguration DeserializeSingleServerConfiguration(JsonElement element)
+        internal static SapSingleServerConfiguration DeserializeSapSingleServerConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<NetworkConfiguration> networkConfiguration = default;
             Optional<SapDatabaseType> databaseType = default;
             ResourceIdentifier subnetId = default;
-            VirtualMachineConfiguration virtualMachineConfiguration = default;
+            SapVirtualMachineConfiguration virtualMachineConfiguration = default;
             Optional<DiskConfiguration> dbDiskConfiguration = default;
             Optional<SingleServerCustomResourceNames> customResourceNames = default;
             SapDeploymentType deploymentType = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
-                    virtualMachineConfiguration = VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(property.Value);
+                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dbDiskConfiguration"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SingleServerConfiguration(deploymentType, appResourceGroup, networkConfiguration.Value, Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration, dbDiskConfiguration.Value, customResourceNames.Value);
+            return new SapSingleServerConfiguration(deploymentType, appResourceGroup, networkConfiguration.Value, Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration, dbDiskConfiguration.Value, customResourceNames.Value);
         }
     }
 }

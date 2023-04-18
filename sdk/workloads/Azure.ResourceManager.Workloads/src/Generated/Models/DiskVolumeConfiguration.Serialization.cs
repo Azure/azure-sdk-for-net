@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             Optional<long> count = default;
             Optional<long> sizeGB = default;
-            Optional<DiskSku> sku = default;
+            Optional<SapDiskSku> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    sku = DiskSku.DeserializeDiskSku(property.Value);
+                    sku = SapDiskSku.DeserializeSapDiskSku(property.Value);
                     continue;
                 }
             }

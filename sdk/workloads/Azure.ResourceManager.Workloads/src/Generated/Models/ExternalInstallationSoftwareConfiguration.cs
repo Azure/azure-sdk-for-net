@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The SAP Software configuration Input when the software is installed externally outside the service. </summary>
-    public partial class ExternalInstallationSoftwareConfiguration : SoftwareConfiguration
+    public partial class ExternalInstallationSoftwareConfiguration : SapSoftwareConfiguration
     {
         /// <summary> Initializes a new instance of ExternalInstallationSoftwareConfiguration. </summary>
         public ExternalInstallationSoftwareConfiguration()

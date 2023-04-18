@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class DiskSku : IUtf8JsonSerializable
+    internal partial class SapStorageConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Optional.IsDefined(TransportFileShareConfiguration))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name.Value.ToString());
+                writer.WritePropertyName("transportFileShareConfiguration"u8);
+                writer.WriteObjectValue(TransportFileShareConfiguration);
             }
             writer.WriteEndObject();
         }
 
-        internal static DiskSku DeserializeDiskSku(JsonElement element)
+        internal static SapStorageConfiguration DeserializeSapStorageConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DiskDetailsDiskSkuName> name = default;
+            Optional<FileShareConfiguration> transportFileShareConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (property.NameEquals("transportFileShareConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    name = new DiskDetailsDiskSkuName(property.Value.GetString());
+                    transportFileShareConfiguration = FileShareConfiguration.DeserializeFileShareConfiguration(property.Value);
                     continue;
                 }
             }
-            return new DiskSku(Optional.ToNullable(name));
+            return new SapStorageConfiguration(transportFileShareConfiguration.Value);
         }
     }
 }

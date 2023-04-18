@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SingleServer": return SingleServerConfiguration.DeserializeSingleServerConfiguration(element);
+                    case "SingleServer": return SapSingleServerConfiguration.DeserializeSapSingleServerConfiguration(element);
                     case "ThreeTier": return ThreeTierConfiguration.DeserializeThreeTierConfiguration(element);
                 }
             }

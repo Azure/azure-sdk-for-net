@@ -10,20 +10,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Specifies the Linux operating system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </summary>
-    public partial class LinuxConfiguration : OSConfiguration
+    public partial class SapLinuxConfiguration : SapOSConfiguration
     {
-        /// <summary> Initializes a new instance of LinuxConfiguration. </summary>
-        public LinuxConfiguration()
+        /// <summary> Initializes a new instance of SapLinuxConfiguration. </summary>
+        public SapLinuxConfiguration()
         {
-            OSType = OSType.Linux;
+            OSType = SapOSType.Linux;
         }
 
-        /// <summary> Initializes a new instance of LinuxConfiguration. </summary>
+        /// <summary> Initializes a new instance of SapLinuxConfiguration. </summary>
         /// <param name="osType"> The OS Type. </param>
         /// <param name="disablePasswordAuthentication"> Specifies whether password authentication should be disabled. </param>
         /// <param name="ssh"> Specifies the ssh key configuration for a Linux OS. (This property is deprecated, please use &apos;sshKeyPair&apos; instead). </param>
         /// <param name="sshKeyPair"> The SSH Key-pair used to authenticate with the VM&apos;s. </param>
-        internal LinuxConfiguration(OSType osType, bool? disablePasswordAuthentication, SshConfiguration ssh, SshKeyPair sshKeyPair) : base(osType)
+        internal SapLinuxConfiguration(SapOSType osType, bool? disablePasswordAuthentication, SapSshConfiguration ssh, SapSshKeyPair sshKeyPair) : base(osType)
         {
             DisablePasswordAuthentication = disablePasswordAuthentication;
             Ssh = ssh;
@@ -34,19 +34,19 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Specifies whether password authentication should be disabled. </summary>
         public bool? DisablePasswordAuthentication { get; set; }
         /// <summary> Specifies the ssh key configuration for a Linux OS. (This property is deprecated, please use &apos;sshKeyPair&apos; instead). </summary>
-        internal SshConfiguration Ssh { get; set; }
+        internal SapSshConfiguration Ssh { get; set; }
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
-        public IList<SshPublicKey> SshPublicKeys
+        public IList<SapSshPublicKey> SshPublicKeys
         {
             get
             {
                 if (Ssh is null)
-                    Ssh = new SshConfiguration();
+                    Ssh = new SapSshConfiguration();
                 return Ssh.PublicKeys;
             }
         }
 
         /// <summary> The SSH Key-pair used to authenticate with the VM&apos;s. </summary>
-        public SshKeyPair SshKeyPair { get; set; }
+        public SapSshKeyPair SshKeyPair { get; set; }
     }
 }

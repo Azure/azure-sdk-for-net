@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Workloads
             Optional<WorkloadMonitorProvisioningState> provisioningState = default;
             Optional<ResponseError> errors = default;
             Optional<AzureLocation> appLocation = default;
-            Optional<RoutingPreference> routingPreference = default;
+            Optional<SapRoutingPreference> routingPreference = default;
             Optional<string> zoneRedundancyPreference = default;
             Optional<ManagedRGConfiguration> managedResourceGroupConfiguration = default;
             Optional<ResourceIdentifier> logAnalyticsWorkspaceArmId = default;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            routingPreference = new RoutingPreference(property0.Value.GetString());
+                            routingPreference = new SapRoutingPreference(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundancyPreference"u8))
