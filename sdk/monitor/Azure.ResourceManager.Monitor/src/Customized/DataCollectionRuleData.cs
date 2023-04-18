@@ -10,9 +10,7 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class DataCollectionRuleData : TrackedResourceData
     {
-        /// <summary>
-        /// This property has been removed
-        /// </summary>
+        /// <summary> Azure offering managing this resource on-behalf-of customer. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string MetadataProvisionedBy
         {

@@ -8,16 +8,13 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary>
-    /// A class representing the DataCollectionRuleAssociation data model.
-    /// Definition of generic ARM proxy resource.
-    /// </summary>
     public partial class DataCollectionRuleAssociationData : ResourceData
     {
-        /// <summary>
-        /// This property has been removed
-        /// </summary>
+        /// <summary> Azure offering managing this resource on-behalf-of customer. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string MetadataProvisionedBy { get { throw null; } }
+        public string MetadataProvisionedBy
+        {
+            get => Metadata?.ProvisionedBy;
+        }
     }
 }

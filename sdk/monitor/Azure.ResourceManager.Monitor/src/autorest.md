@@ -262,6 +262,22 @@ rename-mapping:
   StorageTableDestination.storageAccountResourceId: -|arm-id
   PrivateLinkScopedResource.resourceId: -|arm-id
   PrivateLinkScopedResource: DataCollectionRulePrivateLinkScopedResourceInfo
+  EventHubDataSource: DataCollectionRuleEventHubDataSource
+  EventHubDestination: DataCollectionRuleEventHubDestination
+  EventHubDestination.eventHubResourceId: -|arm-id
+  EventHubDirectDestination: DataCollectionRuleEventHubDirectDestination
+  EventHubDirectDestination.eventHubResourceId: -|arm-id
+  FailoverConfigurationSpec: DataCollectionRuleBcdrFailoverConfigurationSpec
+  FailoverConfigurationSpec.ActiveLocation: -|azure-location
+  KnownLocationSpecProvisioningStatus: DataCollectionRuleBcdrLocationSpecProvisioningStatus
+  KnownPrometheusForwarderDataSourceStream: DataCollectionRuleKnownPrometheusForwarderDataSourceStream
+  LocationSpec: DataCollectionRuleBcdrLocationSpec
+  Metadata: DataCollectionRuleRelatedResourceMetadata
+  Metadata.ProvisionedByResourceId: -|arm-id
+  MonitoringAccountDestination.accountResourceId: -|arm-id
+  StorageBlobDestination: DataCollectionRuleStorageBlobDestination
+  StorageTableDestination: DataCollectionRuleStorageTableDestination
+
 
 
 directive:
