@@ -208,7 +208,7 @@
               "value": "A9E5DB56BA21513F61E0B3868816FDC6D4DF5131F5617D7FF0D769674BD5072F"
             },
             "type": "embeddedContent",
-            "value": "Configuration Dscconfiguration8875 {\r\n    Node SampleConfiguration.localhost {\r\n        WindowsFeature IIS {\r\n            Name = \u0022Web - Server\u0022;\r\n        Ensure = \u0022Present\u0022; \r\n}}}",
+            "value": "Configuration Dscconfiguration8875 {\n    Node SampleConfiguration.localhost {\r\n        WindowsFeature IIS {\r\n            Name = \u0022Web - Server\u0022;\r\n        Ensure = \u0022Present\u0022; \r\n}}}",
             "version": "1.0.0"
           },
           "description": "new sample configuration test"
