@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2023-04-17)
 Initial version of Text Translation client library for .NET
 
 ### Features Added
@@ -11,8 +11,3 @@ Initial version of Text Translation client library for .NET
 - Added support for Looking up the Dictionary Entries - [LookupDictionaryEntries API](https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-dictionary-lookup)
 - Added support for Looking up the Dictionary Examples - [LookupDictionaryExamples API](https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-dictionary-examples)
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
