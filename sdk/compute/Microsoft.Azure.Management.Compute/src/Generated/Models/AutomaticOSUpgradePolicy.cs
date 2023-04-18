@@ -11,7 +11,7 @@
 namespace Microsoft.Azure.Management.Compute.Models
 {
     using Newtonsoft.Json;
-    using System.Linq;
+    using System.Linq;//
 
     /// <summary>
     /// The configuration parameters used for performing automatic OS upgrade.
