@@ -11,13 +11,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 {
     internal static class StorageHelper
     {
-        internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string instrumentationKey, string processName, string applicationDirectory)
+        internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string instrumentationKey, string userName, string processName, string applicationDirectory)
         {
             // get root directory
             var rootDirectory = configuredStorageDirectory ?? GetDefaultStorageDirectory(platform);
 
             // get unique sub directory
-            string subDirectory = HashHelper.GetSHA256Hash($"{instrumentationKey};{processName};{applicationDirectory}");
+            string subDirectory = HashHelper.GetSHA256Hash($"{instrumentationKey};{userName};{processName};{applicationDirectory}");
 
             return Path.Combine(rootDirectory, subDirectory);
         }

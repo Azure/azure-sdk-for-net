@@ -111,6 +111,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         platform: platform,
                         configuredStorageDirectory: options.StorageDirectory,
                         instrumentationKey: instrumentationKey,
+                        userName: Environment.UserName,
                         processName: Process.GetCurrentProcess().ProcessName,
                         applicationDirectory: AppContext.BaseDirectory);
 

@@ -21,10 +21,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 platform: new MockPlatform(),
                 configuredStorageDirectory: $"C:{ds}Temp",
                 instrumentationKey: "testIkey",
+                userName: "ApplicationPoolIdentity",
                 processName: "w3wp",
                 applicationDirectory: "C:\\inetpub\\wwwroot");
 
-            Assert.Equal($"C:{ds}Temp{ds}da7bc2b3fc208d871eda206b7dec121a7944a3bce25e17143ba0f8b1a6c41bdd", directoryPath);
+            Assert.Equal($"C:{ds}Temp{ds}f01a11b594e1f6d06cd96564b1f258b515bf98d956e8a1842c74479a1ecef4eb", directoryPath);
         }
 
         [Theory]
@@ -40,10 +41,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 platform: platform,
                 configuredStorageDirectory: null,
                 instrumentationKey: "testIkey",
+                userName: "ApplicationPoolIdentity",
                 processName: "w3wp",
                 applicationDirectory: "C:\\inetpub\\wwwroot");
 
-            Assert.Equal($"C:{ds}Temp{ds}Microsoft{ds}AzureMonitor{ds}da7bc2b3fc208d871eda206b7dec121a7944a3bce25e17143ba0f8b1a6c41bdd", directoryPath);
+            Assert.Equal($"C:{ds}Temp{ds}Microsoft{ds}AzureMonitor{ds}f01a11b594e1f6d06cd96564b1f258b515bf98d956e8a1842c74479a1ecef4eb", directoryPath);
         }
 
         [Theory]
