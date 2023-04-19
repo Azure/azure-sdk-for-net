@@ -59,8 +59,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="instanceView">The dedicated host instance
         /// view.</param>
         /// <param name="timeCreated">Specifies the time at which the Dedicated
-        /// Host resource was created. Minimum api-version: 2021-11-01.</param>
-        public DedicatedHostUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), int? platformFaultDomain = default(int?), bool? autoReplaceOnFailure = default(bool?), string hostId = default(string), IList<SubResourceReadOnly> virtualMachines = default(IList<SubResourceReadOnly>), DedicatedHostLicenseTypes? licenseType = default(DedicatedHostLicenseTypes?), System.DateTime? provisioningTime = default(System.DateTime?), string provisioningState = default(string), DedicatedHostInstanceView instanceView = default(DedicatedHostInstanceView), System.DateTime? timeCreated = default(System.DateTime?))
+        /// Host resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version:
+        /// 2021-11-01.</param>
+        /// <param name="sku">[List all available dedicated host sizes for
+        /// resizing]
+        /// (https://docs.microsoft.com/rest/api/compute/dedicated-hosts/listavailablesizes).
+        /// Resizing can be only used to scale up DedicatedHost. Only name is
+        /// required to be set. </param>
+        public DedicatedHostUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), int? platformFaultDomain = default(int?), bool? autoReplaceOnFailure = default(bool?), string hostId = default(string), IList<SubResourceReadOnly> virtualMachines = default(IList<SubResourceReadOnly>), DedicatedHostLicenseTypes? licenseType = default(DedicatedHostLicenseTypes?), System.DateTime? provisioningTime = default(System.DateTime?), string provisioningState = default(string), DedicatedHostInstanceView instanceView = default(DedicatedHostInstanceView), System.DateTime? timeCreated = default(System.DateTime?), Sku sku = default(Sku))
             : base(tags)
         {
             PlatformFaultDomain = platformFaultDomain;
@@ -72,6 +78,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
             TimeCreated = timeCreated;
+            Sku = sku;
             CustomInit();
         }
 
@@ -144,6 +151,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
         public System.DateTime? TimeCreated { get; private set; }
+
+        /// <summary>
+        /// Gets or sets [List all available dedicated host sizes for resizing]
+        /// (https://docs.microsoft.com/rest/api/compute/dedicated-hosts/listavailablesizes).
+        /// Resizing can be only used to scale up DedicatedHost. Only name is
+        /// required to be set.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
 
         /// <summary>
         /// Validate the object.
