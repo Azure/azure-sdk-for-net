@@ -79,7 +79,6 @@ rename-mapping:
   OSProfile: SapOSProfile
   OSType: SapOSType
   RoutingPreference: SapRoutingPreference
-  SingleServerConfiguration: SapSingleServerConfiguration
   SoftwareConfiguration: SapSoftwareConfiguration
   SshConfiguration: SapSshConfiguration
   SshKeyPair: SapSshKeyPair
@@ -111,4 +110,9 @@ directive:
             '$ref': '#/definitions/RestrictionInfo',
             'description': 'The restriction information.'
           };
+  - from: monitors.json
+    where: $.definitions
+    transform: >
+      delete $.OperationsDefinition.properties.display['allOf'];
+      $.OperationsDefinition.properties.display['$ref'] = '#/definitions/OperationsDisplayDefinition';
 ```
