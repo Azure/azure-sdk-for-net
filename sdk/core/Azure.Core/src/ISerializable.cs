@@ -18,7 +18,7 @@ namespace Azure
         /// <param name="bytesWritten"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool TrySerialize(Stream stream, out int bytesWritten, SerializableOptions options = default);
+        bool TrySerialize(Stream stream, out long bytesWritten, SerializableOptions options = default);
 
         /// <summary>
         /// TODO
@@ -27,6 +27,6 @@ namespace Azure
         /// <param name="bytesConsumed"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        bool TryDeserialize(Stream stream, out int bytesConsumed, SerializableOptions options = default);
+        bool TryDeserialize(Stream stream, out long bytesConsumed, SerializableOptions options = default);
     }
 }

@@ -4,11 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Azure.Core.Tests.ModelSerializationTests
 {
@@ -119,7 +115,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
         #endregion
 
         #region InterfaceImplementation
-        public bool TryDeserialize(Stream stream, out int bytesConsumed, SerializableOptions options = default)
+        public new bool TryDeserialize(Stream stream, out long bytesConsumed, SerializableOptions options = default)
         {
             bytesConsumed = 0;
             try
@@ -131,7 +127,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
                 this.CatIsHungry = model.IsHungry;
                 this.HasWhiskers = model.HasWhiskers;
                 this.CatIsHungry = model.CatIsHungry;
-                bytesConsumed = (int)stream.Length; // TODO: check: casting long to int here
+                bytesConsumed = stream.Length;
                 return true;
             }
             catch
@@ -140,24 +136,20 @@ namespace Azure.Core.Tests.ModelSerializationTests
             }
         }
 
-        public bool TrySerialize(Stream stream, out int bytesWritten, SerializableOptions options = default)
+        public new bool TrySerialize(Stream stream, out long bytesWritten, SerializableOptions options = default)
         {
             bytesWritten = 0;
             try
             {
-                //using (stream)
-                //{
-                    JsonWriterOptions jsonWriterOptions = new JsonWriterOptions();
-                    if (options.PrettyPrint)
-                    {
-                        jsonWriterOptions.Indented = true;
-                    }
-                    Utf8JsonWriter writer = new Utf8JsonWriter(stream, jsonWriterOptions);
-                    ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
-                    writer.Flush();
-                    bytesWritten = (int)stream.Length;
-                    //stream.GetBuffer().AsSpan().CopyTo(buffer.Span);
-                //}
+                JsonWriterOptions jsonWriterOptions = new JsonWriterOptions();
+                if (options.PrettyPrint)
+                {
+                    jsonWriterOptions.Indented = true;
+                }
+                Utf8JsonWriter writer = new Utf8JsonWriter(stream, jsonWriterOptions);
+                ((IUtf8JsonSerializable)this).Write(writer, options ?? new SerializableOptions());
+                writer.Flush();
+                bytesWritten = (int)stream.Length;
                 return true;
             }
             catch

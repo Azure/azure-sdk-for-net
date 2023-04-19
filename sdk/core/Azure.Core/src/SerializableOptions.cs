@@ -4,7 +4,7 @@
 namespace Azure
 {
     /// <summary>
-    /// TODO
+    /// TODO - non-nullable options
     /// </summary>
     public class SerializableOptions
     {
