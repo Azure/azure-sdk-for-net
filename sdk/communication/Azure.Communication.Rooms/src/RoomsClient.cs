@@ -467,7 +467,7 @@ namespace Azure.Communication.Rooms
         /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response> AddOrUpdateParticipantsAsync(string roomId, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AddOrUpdateParticipantsAsync(string roomId, IEnumerable<RoomParticipant> participants, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(AddOrUpdateParticipants)}");
             scope.Start();
@@ -490,7 +490,7 @@ namespace Azure.Communication.Rooms
         /// <param name="roomId"></param>
         /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
-        public virtual Response AddOrUpdateParticipants(string roomId, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
+        public virtual Response AddOrUpdateParticipants(string roomId, IEnumerable<RoomParticipant> participants, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(AddOrUpdateParticipants)}");
             scope.Start();
