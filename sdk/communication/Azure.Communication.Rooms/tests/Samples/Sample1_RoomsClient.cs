@@ -29,11 +29,11 @@ namespace Azure.Communication.Rooms.Tests.samples
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
             // Create communication users using the CommunicationIdentityClient
-            var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value;
-            var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
+            CommunicationUserIdentifier communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value;
+            CommunicationUserIdentifier communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
 
-            var validFrom = DateTimeOffset.UtcNow;
-            var validUntil = validFrom.AddDays(1);
+            DateTimeOffset validFrom = DateTimeOffset.UtcNow;
+            DateTimeOffset validUntil = validFrom.AddDays(1);
             RoomParticipant participant1 = new RoomParticipant(communicationUser1); // If role is not provided, then it is set as Attendee by default
             RoomParticipant participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Presenter};
             List<RoomParticipant> invitedParticipants = new List<RoomParticipant>
@@ -49,7 +49,7 @@ namespace Azure.Communication.Rooms.Tests.samples
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
 
-            var createdRoomId = createCommunicationRoom.Id;
+            string createdRoomId = createCommunicationRoom.Id;
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_UpdateRoomAsync
             validUntil = validFrom.AddDays(30);
@@ -80,11 +80,11 @@ namespace Azure.Communication.Rooms.Tests.samples
         {
             RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
-            var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value;
-            var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
+            CommunicationUserIdentifier communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value;
+            CommunicationUserIdentifier communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
 
-            var validFrom = DateTimeOffset.UtcNow;
-            var validUntil = validFrom.AddDays(1);
+            DateTimeOffset validFrom = DateTimeOffset.UtcNow;
+            DateTimeOffset validUntil = validFrom.AddDays(1);
             List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>();
             RoomParticipant participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
             RoomParticipant participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Presenter };
@@ -96,7 +96,7 @@ namespace Azure.Communication.Rooms.Tests.samples
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
 
-            var createdRoomId = createCommunicationRoom.Id;
+            string createdRoomId = createCommunicationRoom.Id;
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_AddOrUpdateParticipants
             CommunicationIdentifier communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
@@ -142,8 +142,8 @@ namespace Azure.Communication.Rooms.Tests.samples
                 CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
                 CommunicationUserIdentifier communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value;
                 CommunicationUserIdentifier communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value;
-                var validFrom = DateTimeOffset.UtcNow;
-                var validUntil = validFrom.AddDays(1);
+                DateTimeOffset validFrom = DateTimeOffset.UtcNow;
+                DateTimeOffset validUntil = validFrom.AddDays(1);
                 List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>();
                 RoomParticipant participant1 = new RoomParticipant(communicationUser1) { Role = ParticipantRole.Presenter };
                 RoomParticipant participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
