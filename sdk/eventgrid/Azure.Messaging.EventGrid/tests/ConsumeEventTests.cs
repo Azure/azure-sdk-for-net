@@ -1366,6 +1366,60 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageBlobTierChangedEventData).Url);
         }
+
+        [Test]
+        public void ConsumeStorageTaskQueuedEvent()
+        {
+            string requestContent = @"[{
+            ""topic"": ""/subscriptions/c86a9c18-8373-41fa-92d4-1d7bdc16977b/resourceGroups/shulin-rg/providers/Microsoft.Storage/storageAccounts/shulinstcanest2"",
+            ""subject"": ""DataManagement/StorageTasks"",
+            ""eventType"": ""Microsoft.Storage.StorageTaskQueued"",
+            ""id"": ""7fddaf06-24e8-4d57-9b66-5b7ab920a626"",
+            ""data"": {
+                ""queuedDateTime"": ""2023-03-23T16:43:50Z"",
+                ""taskExecutionId"": ""deletetest-2023-03-23T16:42:33.8658256Z_2023-03-23T16:42:58.8983000Z""
+            },
+            ""dataVersion"": ""1.0"",
+            ""metadataVersion"": ""1"",
+            ""eventTime"": ""2023-03-23T16:43:50Z""
+        }]";
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("deletetest-2023-03-23T16:42:33.8658256Z_2023-03-23T16:42:58.8983000Z", (eventData as StorageTaskQueuedEventData).TaskExecutionId);
+            Assert.AreEqual(DateTimeOffset.Parse("2023-03-23T16:43:50Z"), (eventData as StorageTaskQueuedEventData).QueuedDateTime);
+        }
+
+        [Test]
+        public void ConsumeStorageTaskCompletedEvent()
+        {
+            string requestContent = @"[{
+            ""topic"": ""/subscriptions/c86a9c18-8373-41fa-92d4-1d7bdc16977b/resourceGroups/shulin-rg/providers/Microsoft.Storage/storageAccounts/shulinstcanest2"",
+            ""subject"": ""DataManagement/StorageTasks"",
+            ""eventType"": ""Microsoft.Storage.StorageTaskCompleted"",
+            ""id"": ""7fddaf06-24e8-4d57-9b66-5b7ab920a626"",
+            ""data"": {
+                ""status"": ""Succeeded"",
+                ""completedDateTime"": ""2023-03-23T16:52:58Z"",
+                ""taskExecutionId"": ""deletetest-2023-03-23T16:42:33.8658256Z_2023-03-23T16:42:58.8983000Z"",
+                ""taskName"": ""delete123"",
+                ""summaryReportBlobUrl"": ""https://shulinstcanest2.blob.core.windows.net/report/delete123_deletetest_2023-03-23T16:43:50/SummaryReport.json""
+            },
+            ""dataVersion"": ""1.0"",
+            ""metadataVersion"": ""1"",
+            ""eventTime"": ""2023-03-23T16:43:50Z""
+        }]";
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(StorageTaskCompletedStatus.Succeeded, (eventData as StorageTaskCompletedEventData).Status);
+            Assert.AreEqual(DateTimeOffset.Parse("2023-03-23T16:52:58Z"), (eventData as StorageTaskCompletedEventData).CompletedDateTime);
+            Assert.AreEqual("deletetest-2023-03-23T16:42:33.8658256Z_2023-03-23T16:42:58.8983000Z", (eventData as StorageTaskCompletedEventData).TaskExecutionId);
+            Assert.AreEqual("delete123", (eventData as StorageTaskCompletedEventData).TaskName);
+            Assert.AreEqual("https://shulinstcanest2.blob.core.windows.net/report/delete123_deletetest_2023-03-23T16:43:50/SummaryReport.json", (eventData as StorageTaskCompletedEventData).SummaryReportBlobUri.AbsoluteUri);
+        }
         #endregion
 
         #region App Service events

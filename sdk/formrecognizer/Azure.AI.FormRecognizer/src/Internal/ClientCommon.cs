@@ -91,7 +91,7 @@ namespace Azure.AI.FormRecognizer
             return new RecognizedFormCollection(forms);
         }
 
-        public static IReadOnlyList<PointF> CovertToListOfPointF(IReadOnlyList<float> coordinates)
+        public static IReadOnlyList<PointF> ConvertToListOfPointF(IReadOnlyList<float> coordinates)
         {
             if (coordinates == null || coordinates.Count == 0)
             {

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Annotation kind. </summary>
-    internal readonly partial struct DocumentAnnotationKind : IEquatable<DocumentAnnotationKind>
+    public readonly partial struct DocumentAnnotationKind : IEquatable<DocumentAnnotationKind>
     {
         private readonly string _value;
 

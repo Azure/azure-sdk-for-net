@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> A barcode object. </summary>
-    internal partial class DocumentBarcode
+    public partial class DocumentBarcode
     {
         /// <summary> Initializes a new instance of DocumentBarcode. </summary>
         /// <param name="kind"> Barcode kind. </param>
@@ -50,8 +50,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public DocumentBarcodeKind Kind { get; }
         /// <summary> Barcode value. </summary>
         public string Value { get; }
-        /// <summary> Bounding polygon of the barcode. </summary>
-        public IReadOnlyList<float> Polygon { get; }
         /// <summary> Location of the barcode in the reading order concatenated content. </summary>
         public DocumentSpan Span { get; }
         /// <summary> Confidence of correctly extracting the barcode. </summary>

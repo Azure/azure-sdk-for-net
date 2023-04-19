@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Barcode kind. </summary>
-    internal readonly partial struct DocumentBarcodeKind : IEquatable<DocumentBarcodeKind>
+    public readonly partial struct DocumentBarcodeKind : IEquatable<DocumentBarcodeKind>
     {
         private readonly string _value;
 

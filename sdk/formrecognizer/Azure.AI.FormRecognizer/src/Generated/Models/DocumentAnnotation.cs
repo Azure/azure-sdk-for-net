@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> An annotation object that represents a visual annotation in the document, such as checks ✓ and crosses X. </summary>
-    internal partial class DocumentAnnotation
+    public partial class DocumentAnnotation
     {
         /// <summary> Initializes a new instance of DocumentAnnotation. </summary>
         /// <param name="kind"> Annotation kind. </param>
@@ -42,8 +42,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Annotation kind. </summary>
         public DocumentAnnotationKind Kind { get; }
-        /// <summary> Bounding polygon of the annotation. </summary>
-        public IReadOnlyList<float> Polygon { get; }
         /// <summary> Confidence of correctly extracting the annotation. </summary>
         public float Confidence { get; }
     }

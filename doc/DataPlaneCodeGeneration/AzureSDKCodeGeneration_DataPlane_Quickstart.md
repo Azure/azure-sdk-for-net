@@ -32,3 +32,23 @@ dotnet build /t:GenerateCode
 ## Add package ship requirements
 
 Before a library package can be released, you will need to add tests and samples. You will also need to update the CHANGELOG.md and README.md as necessary. Please refer to [Azure SDK Package Ship Requirements](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/Azure_SDK_Package_Ship_Requirements.md) for those requirements.
+
+## Code Review
+
+Code review happens on 2 places.
+
+One is the usual GitHub pull request, for developers.
+
+Another is the [apiview](https://apiview.dev/), for architects. GitHub pull request (PR) should automatically trigger the apiview. If this does not happen, please help to file an issue in [azure-sdk-tools](https://github.com/azure/azure-sdk-tools) to report the failure. 
+And you can upload one manually:
+
+ - Build the SDK, Run `dotnet pack` to create SDK package.
+ - Login apiview with GitHub account.
+ - Click "Create + review" at bottom-right corner.
+ - "Browse" and upload .nupkg (e.g. /home/azure-sdk-for-net/artifacts/package/Debug/Azure.AI.AnomalyDetector/Azure.AI.AnomalyDetector.3.0.0-alpha.20230331.1.nupkg), and comment the result apiview link in the PR.
+  
+**Comment @Azure/dpg-devs for awareness in PR to loop in SDK developers for review.**
+
+## Package Release
+
+See [Release Checklist](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/8/Release-Checklist?anchor=prepare-release-script).
