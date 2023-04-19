@@ -41,7 +41,7 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 ```
 
 ### Authenticate the client
-Data movement authentication is controlled 
+The Azure.Storage.DataMovement.Blobs library uses clients from the Azure.Storage.Blobs package to communicate with the Azure Blob Storage service. For more information see the Azure.Storage.Blobs [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs#authenticate-the-client). 
 
 ## Key concepts
 
@@ -72,49 +72,80 @@ BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
 
 BlobContainerClient container = service.GetBlobContainerClient(containerName);
 ```
-Upload local directory to the root of the container
+
+Upload a local directory to the root of the container
 ```C# Snippet:ExtensionMethodSimpleUploadToRoot
 DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath);
 
 await transfer.AwaitCompletion();
 ```
-Upload local directory to a directory in the container by specifying a directory prefix
-```C# Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
-DataTransfer transfer2 = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix: Path.GetDirectoryName(localPath));
 
-await transfer2.AwaitCompletion();
-```
-Download the entire container to a local directory
-```C# Snippet:ExtensionMethodSimpleDownloadContainer
-DataTransfer transfer = await container.StartDownloadDirectoryAsync(localDirectoryPath);
+Upload a local directory to a virtual directory in the container by specifying a directory prefix
+```C# Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
+DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, Path.GetDirectoryName(localPath));
 
 await transfer.AwaitCompletion();
 ```
+
+Upload a local directory to a virtual directory in the container specifying more advanced options
+```C# Snippet:ExtensionMethodSimpleUploadWithOptions
+BlobContainerClientTransferOptions options = new BlobContainerClientTransferOptions
+{
+    BlobDirectoryPrefix = Path.GetDirectoryName(localPath),
+    TransferOptions = new TransferOptions()
+    {
+        CreateMode = StorageResourceCreateMode.Overwrite,
+    }
+};
+
+DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, options);
+
+await transfer.AwaitCompletion();
+```
+
+Download the entire container to a local directory
+```C# Snippet:ExtensionMethodSimpleDownloadContainer
+DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
+
+await transfer.AwaitCompletion();
+```
+
 Download a directory in the container by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectory
-DataTransfer tranfer2 = await container.StartDownloadDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
+DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
 
-await tranfer2.AwaitCompletion();
+await tranfer.AwaitCompletion();
 ```
 
-### Examples using TransferManager upload and download files and directories.
-Create Instance of TransferManager
-```C# Snippet:CreateTransferManagerSimple
-TransferManager transferManager = new TransferManager(new TransferManagerOptions());
+Download from the container specifying more advanced options
+```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectoryWithOptions
+BlobContainerClientTransferOptions options = new BlobContainerClientTransferOptions
+{
+    BlobDirectoryPrefix = blobDirectoryPrefix,
+    TransferOptions = new TransferOptions()
+    {
+        CreateMode = StorageResourceCreateMode.Overwrite,
+    }
+};
+
+DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
+
+await tranfer.AwaitCompletion();
 ```
+
+### Examples using BlobContainerClient extension methods to upload and download directories.
 
 Create Instance of TransferManager with Options
 ```C# Snippet:CreateTransferManagerWithOptions
 // Create BlobTransferManager with event handler in Options bag
 TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
-ContainerTransferOptions options = new ContainerTransferOptions()
+TransferOptions options = new TransferOptions()
 {
     MaximumTransferChunkSize = 4 * Constants.MB,
     CreateMode = StorageResourceCreateMode.Overwrite,
 };
 TransferManager transferManager = new TransferManager(transferManagerOptions);
 ```
-
 
 Start Upload from Local File to Block Blob
 ```C# Snippet:SimpleBlobUpload
@@ -180,8 +211,6 @@ transferOptions.TransferFailed += (TransferFailedEventArgs args) =>
     return Task.CompletedTask;
 };
 ```
-
-
 
 ## Troubleshooting
 

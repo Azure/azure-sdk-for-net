@@ -852,6 +852,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         {
             string localPath = CreateLocalTestDirectory();
 
+            string logFile = Path.GetTempFileName();
+
             string accountName = StorageAccountName;
             string accountKey = StorageAccountKey;
             Uri serviceUri = StorageAccountBlobUri;
@@ -866,24 +868,43 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             BlobContainerClient container = service.GetBlobContainerClient(containerName);
             #endregion
 
+            // Make a service request to verify we've successfully authenticated
+            await container.CreateIfNotExistsAsync();
+
             try
             {
-                // Make a service request to verify we've successfully authenticated
-                await container.CreateIfNotExistsAsync();
+                {
+                    // upload files to the root of the container
+                    #region Snippet:ExtensionMethodSimpleUploadToRoot
+                    DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath);
 
-                // upload files to the root of the container
-                #region Snippet:ExtensionMethodSimpleUploadToRoot
-                DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath);
+                    await transfer.AwaitCompletion();
+                    #endregion
+                }
+                {
+                    // upload files with to a specific directory prefix
+                    #region Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
+                    DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, Path.GetDirectoryName(localPath));
 
-                await transfer.AwaitCompletion();
-                #endregion
+                    await transfer.AwaitCompletion();
+                    #endregion
+                }
+                {
+                    #region Snippet:ExtensionMethodSimpleUploadWithOptions
+                    BlobContainerClientTransferOptions options = new BlobContainerClientTransferOptions
+                    {
+                        BlobDirectoryPrefix = Path.GetDirectoryName(localPath),
+                        TransferOptions = new TransferOptions()
+                        {
+                            CreateMode = StorageResourceCreateMode.Overwrite,
+                        }
+                    };
 
-                // upload files with to a specific directory prefix
-                #region Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
-                DataTransfer transfer2 = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix: Path.GetDirectoryName(localPath));
+                    DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, options);
 
-                await transfer2.AwaitCompletion();
-                #endregion
+                    await transfer.AwaitCompletion();
+                    #endregion
+                }
             }
             finally
             {
@@ -911,28 +932,47 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
             BlobContainerClient container = service.GetBlobContainerClient(containerName);
 
+            await CreateBlobTestFiles(container, count: 5);
+
+            string blobDirectoryPrefix = await CreateBlobContainerTestDirectory(container);
+
+            // Make a service request to verify we've successfully authenticated
+            await container.CreateIfNotExistsAsync();
+
             try
             {
-                await CreateBlobTestFiles(container, count: 5);
+                {
+                    // download the entire container to the local directory
+                    #region Snippet:ExtensionMethodSimpleDownloadContainer
+                    DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
 
-                string blobDirectoryPrefix = await CreateBlobContainerTestDirectory(container);
+                    await transfer.AwaitCompletion();
+                    #endregion
+                }
+                {
+                    // download a virtual directory, with a specific prefix, within the container
+                    #region Snippet:ExtensionMethodSimpleDownloadContainerDirectory
+                    DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
 
-                // Make a service request to verify we've successfully authenticated
-                await container.CreateIfNotExistsAsync();
+                    await tranfer.AwaitCompletion();
+                    #endregion
+                }
+                {
+                    #region Snippet:ExtensionMethodSimpleDownloadContainerDirectoryWithOptions
+                    BlobContainerClientTransferOptions options = new BlobContainerClientTransferOptions
+                    {
+                        BlobDirectoryPrefix = blobDirectoryPrefix,
+                        TransferOptions = new TransferOptions()
+                        {
+                            CreateMode = StorageResourceCreateMode.Overwrite,
+                        }
+                    };
 
-                // download the entire container to the local directory
-                #region Snippet:ExtensionMethodSimpleDownloadContainer
-                DataTransfer transfer = await container.StartDownloadDirectoryAsync(localDirectoryPath);
+                    DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
 
-                await transfer.AwaitCompletion();
-                #endregion
-
-                // download 'subdirectories' with a specific prefix
-                #region Snippet:ExtensionMethodSimpleDownloadContainerDirectory
-                DataTransfer tranfer2 = await container.StartDownloadDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
-
-                await tranfer2.AwaitCompletion();
-                #endregion
+                    await tranfer.AwaitCompletion();
+                    #endregion
+                }
             }
             finally
             {

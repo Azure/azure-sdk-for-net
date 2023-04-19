@@ -4,14 +4,20 @@
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.DataMovement.Models;
 
-namespace Azure.Storage.Blobs
+namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Options applying to data transfer uploads and downloads using the <see cref="BlobContainerClient"/> extension methods
-    /// <see cref="BlobContainerClientExtensions.StartDownloadDirectoryAsync"/> and <see cref="BlobContainerClientExtensions.StartUploadDirectoryAsync"/>
+    /// <see cref="BlobContainerClientExtensions.StartDownloadToDirectoryAsync(BlobContainerClient, string, BlobContainerClientTransferOptions)"/> and
+    /// <see cref="BlobContainerClientExtensions.StartUploadDirectoryAsync(BlobContainerClient, string, BlobContainerClientTransferOptions)"/>.
     /// </summary>
     public class BlobContainerClientTransferOptions
     {
+        /// <summary>
+        /// Optionally specifies the directory prefix to upload files to, or download files from.
+        /// </summary>
+        public string BlobDirectoryPrefix { get; set; }
+
         /// <summary>
         /// Options pertaining to the blob storage container used in the data transfer.
         /// </summary>
@@ -20,6 +26,6 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Options pertaining to the data tranfer.
         /// </summary>
-        public ContainerTransferOptions TransferOptions { get; set; }
+        public TransferOptions TransferOptions { get; set; }
     }
 }
