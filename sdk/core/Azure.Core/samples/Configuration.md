@@ -70,7 +70,7 @@ SecretClientOptions options = new SecretClientOptions()
 
 Another scenario where it may be helpful to use a custom retry policy is when you need to customize the delay behavior, but don't need to adjust the logic used to determine whether a request should be retried or not. In this case, it isn't necessary to create a custom `RetryPolicy` class - instead, you can pass in a `DelayStrategy` into the `RetryPolicy` constructor.  
 
-In the below example, we create a customized delay strategy that uses a fixed sequence of delays that will be iterated through using the retry number. We then pass the strategy into the `RetryPolicy` constructor and set the constructed policy in our options.
+In the below example, we create a customized delay strategy that uses a fixed sequence of delays that are iterated through as the number of retries increases. We then pass the strategy into the `RetryPolicy` constructor and set the constructed policy in our options.
 ```C# Snippet:SequentialDelayStrategy
 public class SequentialDelayStrategy : DelayStrategy
 {
