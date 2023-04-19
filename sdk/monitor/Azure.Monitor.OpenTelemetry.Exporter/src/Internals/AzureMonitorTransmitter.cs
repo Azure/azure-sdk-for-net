@@ -108,7 +108,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 try
                 {
                     var storageDirectory = StorageHelper.GetStorageDirectory(
-                        platform: platform
+                        platform: platform,
                         configuredStorageDirectory: options.StorageDirectory,
                         instrumentationKey: connectionVars.InstrumentationKey,
                         processName: Process.GetCurrentProcess().ProcessName,

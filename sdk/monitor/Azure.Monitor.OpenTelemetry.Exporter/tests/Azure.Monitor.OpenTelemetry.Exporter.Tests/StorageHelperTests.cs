@@ -19,14 +19,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var directoryPath = StorageHelper.GetStorageDirectory(
                 platform: new MockPlatform(),
-                configuredStorageDirectory: $"C:{ds}Temp");
                 configuredStorageDirectory: $"C:{ds}Temp",
                 instrumentationKey: "testIkey",
                 processName: "w3wp",
                 applicationDirectory: "C:\\inetpub\\wwwroot");
 
-            Assert.Equal($"C:{ds}Temp", directoryPath);
-            Assert.Equal(directoryPath, $"C:{ds}Temp{ds}da7bc2b3fc208d871eda206b7dec121a7944a3bce25e17143ba0f8b1a6c41bdd");
+            Assert.Equal($"C:{ds}Temp{ds}da7bc2b3fc208d871eda206b7dec121a7944a3bce25e17143ba0f8b1a6c41bdd", directoryPath);
         }
 
         [Theory]
