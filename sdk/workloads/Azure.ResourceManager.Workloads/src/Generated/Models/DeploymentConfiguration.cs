@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="infrastructureConfiguration">
         /// The infrastructure configuration.
         /// Please note <see cref="InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SapSingleServerConfiguration"/> and <see cref="ThreeTierConfiguration"/>.
+        /// The available derived classes include <see cref="SingleServerConfiguration"/> and <see cref="ThreeTierConfiguration"/>.
         /// </param>
         /// <param name="softwareConfiguration">
         /// The software configuration.
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary>
         /// The infrastructure configuration.
         /// Please note <see cref="InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SapSingleServerConfiguration"/> and <see cref="ThreeTierConfiguration"/>.
+        /// The available derived classes include <see cref="SingleServerConfiguration"/> and <see cref="ThreeTierConfiguration"/>.
         /// </summary>
         public InfrastructureConfiguration InfrastructureConfiguration { get; set; }
         /// <summary>
