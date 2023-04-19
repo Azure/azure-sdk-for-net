@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.CostManagement
         private GenerateReservationDetailsReportRestOperations _generateReservationDetailsReportRestClient;
         private ClientDiagnostics _priceSheetClientDiagnostics;
         private PriceSheetRestOperations _priceSheetRestClient;
-        private ClientDiagnostics _scheduledActionClientDiagnostics;
-        private ScheduledActionsRestOperations _scheduledActionRestClient;
+        private ClientDiagnostics _scheduledActionsClientDiagnostics;
+        private ScheduledActionsRestOperations _scheduledActionsRestClient;
         private ClientDiagnostics _benefitUtilizationSummariesClientDiagnostics;
         private BenefitUtilizationSummariesRestOperations _benefitUtilizationSummariesRestClient;
 
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.CostManagement
         private GenerateReservationDetailsReportRestOperations GenerateReservationDetailsReportRestClient => _generateReservationDetailsReportRestClient ??= new GenerateReservationDetailsReportRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private PriceSheetRestOperations PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ScheduledActionClientDiagnostics => _scheduledActionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ScheduledActionResource.ResourceType.Namespace, Diagnostics);
-        private ScheduledActionsRestOperations ScheduledActionRestClient => _scheduledActionRestClient ??= new ScheduledActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScheduledActionResource.ResourceType));
+        private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ScheduledActionsRestOperations ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics BenefitUtilizationSummariesClientDiagnostics => _benefitUtilizationSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private BenefitUtilizationSummariesRestOperations BenefitUtilizationSummariesRestClient => _benefitUtilizationSummariesRestClient ??= new BenefitUtilizationSummariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -60,6 +60,13 @@ namespace Azure.ResourceManager.CostManagement
         public virtual TenantViewCollection GetTenantViews()
         {
             return GetCachedClient(Client => new TenantViewCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of TenantScheduledActionResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of TenantScheduledActionResources and their operations over a TenantScheduledActionResource. </returns>
+        public virtual TenantScheduledActionCollection GetTenantScheduledActions()
+        {
+            return GetCachedClient(Client => new TenantScheduledActionCollection(Client, Id));
         }
 
         /// <summary>
@@ -359,196 +366,6 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Create or update a private scheduled action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="data"> Scheduled action to be created or updated. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity. Optional when updating an entity and can be specified to achieve optimistic concurrency. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ScheduledActionResource>> CreateOrUpdateScheduledActionAsync(string name, ScheduledActionData data, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("TenantResourceExtensionClient.CreateOrUpdateScheduledAction");
-            scope.Start();
-            try
-            {
-                var response = await ScheduledActionRestClient.CreateOrUpdateAsync(name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or update a private scheduled action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="data"> Scheduled action to be created or updated. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity. Optional when updating an entity and can be specified to achieve optimistic concurrency. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ScheduledActionResource> CreateOrUpdateScheduledAction(string name, ScheduledActionData data, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("TenantResourceExtensionClient.CreateOrUpdateScheduledAction");
-            scope.Start();
-            try
-            {
-                var response = ScheduledActionRestClient.CreateOrUpdate(name, data, ifMatch, cancellationToken);
-                return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a private scheduled action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteScheduledActionAsync(string name, CancellationToken cancellationToken = default)
-        {
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("TenantResourceExtensionClient.DeleteScheduledAction");
-            scope.Start();
-            try
-            {
-                var response = await ScheduledActionRestClient.DeleteAsync(name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a private scheduled action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteScheduledAction(string name, CancellationToken cancellationToken = default)
-        {
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("TenantResourceExtensionClient.DeleteScheduledAction");
-            scope.Start();
-            try
-            {
-                var response = ScheduledActionRestClient.Delete(name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Processes a private scheduled action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}/execute</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_Run</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RunScheduledActionAsync(string name, CancellationToken cancellationToken = default)
-        {
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("TenantResourceExtensionClient.RunScheduledAction");
-            scope.Start();
-            try
-            {
-                var response = await ScheduledActionRestClient.RunAsync(name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Processes a private scheduled action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}/execute</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_Run</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RunScheduledAction(string name, CancellationToken cancellationToken = default)
-        {
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("TenantResourceExtensionClient.RunScheduledAction");
-            scope.Start();
-            try
-            {
-                var response = ScheduledActionRestClient.Run(name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Checks availability and correctness of the name for a scheduled action.
         /// <list type="bullet">
         /// <item>
@@ -565,11 +382,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityScheduledActionAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameAvailabilityScheduledAction");
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameAvailabilityScheduledAction");
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.CheckNameAvailabilityAsync(checkNameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionsRestClient.CheckNameAvailabilityAsync(checkNameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -596,11 +413,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityScheduledAction(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameAvailabilityScheduledAction");
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameAvailabilityScheduledAction");
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.CheckNameAvailability(checkNameAvailabilityRequest, cancellationToken);
+                var response = ScheduledActionsRestClient.CheckNameAvailability(checkNameAvailabilityRequest, cancellationToken);
                 return response;
             }
             catch (Exception e)

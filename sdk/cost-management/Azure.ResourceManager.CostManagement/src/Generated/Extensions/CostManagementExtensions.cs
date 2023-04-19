@@ -126,6 +126,82 @@ namespace Azure.ResourceManager.CostManagement
         }
         #endregion
 
+        #region CostDetailsOperationResultResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CostDetailsOperationResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CostDetailsOperationResultResource.CreateResourceIdentifier" /> to create a <see cref="CostDetailsOperationResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CostDetailsOperationResultResource" /> object. </returns>
+        public static CostDetailsOperationResultResource GetCostDetailsOperationResultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CostDetailsOperationResultResource.ValidateResourceId(id);
+                return new CostDetailsOperationResultResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region GenerateDetailedCostReportOperationResultResource
+        /// <summary>
+        /// Gets an object representing a <see cref="GenerateDetailedCostReportOperationResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GenerateDetailedCostReportOperationResultResource.CreateResourceIdentifier" /> to create a <see cref="GenerateDetailedCostReportOperationResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GenerateDetailedCostReportOperationResultResource" /> object. </returns>
+        public static GenerateDetailedCostReportOperationResultResource GetGenerateDetailedCostReportOperationResultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                GenerateDetailedCostReportOperationResultResource.ValidateResourceId(id);
+                return new GenerateDetailedCostReportOperationResultResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region GenerateDetailedCostReportOperationStatusResource
+        /// <summary>
+        /// Gets an object representing a <see cref="GenerateDetailedCostReportOperationStatusResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GenerateDetailedCostReportOperationStatusResource.CreateResourceIdentifier" /> to create a <see cref="GenerateDetailedCostReportOperationStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GenerateDetailedCostReportOperationStatusResource" /> object. </returns>
+        public static GenerateDetailedCostReportOperationStatusResource GetGenerateDetailedCostReportOperationStatusResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                GenerateDetailedCostReportOperationStatusResource.ValidateResourceId(id);
+                return new GenerateDetailedCostReportOperationStatusResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region TenantScheduledActionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantScheduledActionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="TenantScheduledActionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantScheduledActionResource" /> object. </returns>
+        public static TenantScheduledActionResource GetTenantScheduledActionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                TenantScheduledActionResource.ValidateResourceId(id);
+                return new TenantScheduledActionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region ScheduledActionResource
         /// <summary>
         /// Gets an object representing a <see cref="ScheduledActionResource" /> along with the instance operations that can be performed on it but with no data.
@@ -322,6 +398,187 @@ namespace Azure.ResourceManager.CostManagement
             return client.GetExports(scope).Get(exportName, expand, cancellationToken);
         }
 
+        /// <summary> Gets a collection of CostDetailsOperationResultResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of CostDetailsOperationResultResources and their operations over a CostDetailsOperationResultResource. </returns>
+        public static CostDetailsOperationResultCollection GetCostDetailsOperationResults(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetCostDetailsOperationResults();
+        }
+
+        /// <summary>
+        /// Get the result of the specified operation. This link is provided in the CostDetails creation request response Location header.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/costDetailsOperationResults/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateCostDetailsReport_GetOperationResults</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<ArmOperation<CostDetailsOperationResultResource>> GetCostDetailsOperationResultAsync(this ArmClient client, ResourceIdentifier scope, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        {
+            return await client.GetCostDetailsOperationResults(scope).GetAsync(waitUntil, operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the result of the specified operation. This link is provided in the CostDetails creation request response Location header.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/costDetailsOperationResults/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateCostDetailsReport_GetOperationResults</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static ArmOperation<CostDetailsOperationResultResource> GetCostDetailsOperationResult(this ArmClient client, ResourceIdentifier scope, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        {
+            return client.GetCostDetailsOperationResults(scope).Get(waitUntil, operationId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GenerateDetailedCostReportOperationResultResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of GenerateDetailedCostReportOperationResultResources and their operations over a GenerateDetailedCostReportOperationResultResource. </returns>
+        public static GenerateDetailedCostReportOperationResultCollection GetGenerateDetailedCostReportOperationResults(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetGenerateDetailedCostReportOperationResults();
+        }
+
+        /// <summary>
+        /// Gets the result of the specified operation. The link with this operationId is provided as a response header of the initial request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/operationResults/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateDetailedCostReportOperationResults_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<ArmOperation<GenerateDetailedCostReportOperationResultResource>> GetGenerateDetailedCostReportOperationResultAsync(this ArmClient client, ResourceIdentifier scope, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        {
+            return await client.GetGenerateDetailedCostReportOperationResults(scope).GetAsync(waitUntil, operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the result of the specified operation. The link with this operationId is provided as a response header of the initial request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/operationResults/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateDetailedCostReportOperationResults_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static ArmOperation<GenerateDetailedCostReportOperationResultResource> GetGenerateDetailedCostReportOperationResult(this ArmClient client, ResourceIdentifier scope, WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        {
+            return client.GetGenerateDetailedCostReportOperationResults(scope).Get(waitUntil, operationId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GenerateDetailedCostReportOperationStatusResources in the ArmResource. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of GenerateDetailedCostReportOperationStatusResources and their operations over a GenerateDetailedCostReportOperationStatusResource. </returns>
+        public static GenerateDetailedCostReportOperationStatusCollection GetGenerateDetailedCostReportOperationStatuses(this ArmClient client, ResourceIdentifier scope)
+        {
+            return GetArmResourceExtensionClient(client, scope).GetGenerateDetailedCostReportOperationStatuses();
+        }
+
+        /// <summary>
+        /// Get the status of the specified operation. This link is provided in the GenerateDetailedCostReport creation request response header.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/operationStatus/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateDetailedCostReportOperationStatus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<GenerateDetailedCostReportOperationStatusResource>> GetGenerateDetailedCostReportOperationStatusAsync(this ArmClient client, ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
+        {
+            return await client.GetGenerateDetailedCostReportOperationStatuses(scope).GetAsync(operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the status of the specified operation. This link is provided in the GenerateDetailedCostReport creation request response header.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/operationStatus/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GenerateDetailedCostReportOperationStatus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<GenerateDetailedCostReportOperationStatusResource> GetGenerateDetailedCostReportOperationStatus(this ArmClient client, ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
+        {
+            return client.GetGenerateDetailedCostReportOperationStatuses(scope).Get(operationId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ScheduledActionResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -435,6 +692,62 @@ namespace Azure.ResourceManager.CostManagement
         public static Response<TenantViewResource> GetTenantView(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
         {
             return tenantResource.GetTenantViews().Get(viewName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TenantScheduledActionResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of TenantScheduledActionResources and their operations over a TenantScheduledActionResource. </returns>
+        public static TenantScheduledActionCollection GetTenantScheduledActions(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetTenantScheduledActions();
+        }
+
+        /// <summary>
+        /// Get the private scheduled action by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="name"> Scheduled action name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TenantScheduledActionResource>> GetTenantScheduledActionAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetTenantScheduledActions().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the private scheduled action by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="name"> Scheduled action name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<TenantScheduledActionResource> GetTenantScheduledAction(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetTenantScheduledActions().Get(name, cancellationToken);
         }
 
         /// <summary>
@@ -675,162 +988,6 @@ namespace Azure.ResourceManager.CostManagement
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
 
             return GetTenantResourceExtensionClient(tenantResource).DownloadByBillingProfilePriceSheet(waitUntil, billingAccountName, billingProfileName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Create or update a private scheduled action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="data"> Scheduled action to be created or updated. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity. Optional when updating an entity and can be specified to achieve optimistic concurrency. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public static async Task<Response<ScheduledActionResource>> CreateOrUpdateScheduledActionAsync(this TenantResource tenantResource, string name, ScheduledActionData data, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateScheduledActionAsync(name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Create or update a private scheduled action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CreateOrUpdate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="data"> Scheduled action to be created or updated. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity. Optional when updating an entity and can be specified to achieve optimistic concurrency. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public static Response<ScheduledActionResource> CreateOrUpdateScheduledAction(this TenantResource tenantResource, string name, ScheduledActionData data, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrUpdateScheduledAction(name, data, ifMatch, cancellationToken);
-        }
-
-        /// <summary>
-        /// Delete a private scheduled action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response> DeleteScheduledActionAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeleteScheduledActionAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Delete a private scheduled action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response DeleteScheduledAction(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeleteScheduledAction(name, cancellationToken);
-        }
-
-        /// <summary>
-        /// Processes a private scheduled action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}/execute</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_Run</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response> RunScheduledActionAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return await GetTenantResourceExtensionClient(tenantResource).RunScheduledActionAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Processes a private scheduled action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}/execute</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_Run</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Scheduled action name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response RunScheduledAction(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return GetTenantResourceExtensionClient(tenantResource).RunScheduledAction(name, cancellationToken);
         }
 
         /// <summary>

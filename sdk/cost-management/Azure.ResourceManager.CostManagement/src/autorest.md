@@ -22,6 +22,10 @@ override-operation-name:
 
 list-exception:
 - /providers/Microsoft.CostManagement/views/{viewName}
+- /{scope}/providers/Microsoft.CostManagement/costDetailsOperationResults/{operationId}
+- /{scope}/providers/Microsoft.CostManagement/operationResults/{operationId}
+- /{scope}/providers/Microsoft.CostManagement/operationStatus/{operationId}
+- /providers/Microsoft.CostManagement/scheduledActions/{name}
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -62,10 +66,4 @@ directive:
   - remove-operation: Forecast_ExternalCloudProviderUsage
   - remove-operation: Dimensions_ByExternalCloudProviderType
   - remove-operation: Query_UsageByExternalCloudProviderType
-  # [Error] The ResourceCollection TenantScheduledActionCollection XX does not have a GetAll method
-  - remove-operation: GenerateCostDetailsReport_GetOperationResults
-  - remove-operation: GenerateDetailedCostReportOperationResults_Get
-  - remove-operation: GenerateDetailedCostReportOperationStatus_Get
-  - remove-operation: ScheduledActions_Get
-  
 ```
