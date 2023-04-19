@@ -35,7 +35,7 @@ namespace Azure.AI.OpenAI
         ///     Typical usage begins with a chat message for the System role that provides instructions for the
         ///     behavior of the assistant followed by alternating messages between the User role and Assistant role.
         /// </remarks>
-        public IList<ChatMessage> Messages { get; }
+        public IList<ChatMessage> Messages { get; set; }
 
         /// <inheritdoc cref="CompletionsOptions.NucleusSamplingFactor"/>
         [CodeGenMember("TopP")]
