@@ -39,6 +39,8 @@ namespace Azure.ResourceManager.Tests
             var rehydratedOrgResponse = await rehydratedOrgOperation.UpdateStatusAsync();
             //var rehydratedRg = rehydratedOrgOperation.Value;
             var response = rgOp.GetRawResponse();
+            Assert.AreEqual(201, response.Status);
+            Assert.AreEqual(200, rehydratedOrgResponse.Status);
             //Assert.AreEqual(response.Status, rehydratedOrgResponse.Status);
             //Assert.AreEqual(response.ReasonPhrase, rehydratedOrgResponse.ReasonPhrase);
             //Assert.AreEqual(response.ClientRequestId, rehydratedOrgResponse.ClientRequestId);
@@ -55,6 +57,7 @@ namespace Azure.ResourceManager.Tests
             var rehydatedDeleteResponse = await rehydratedDeleteOperation.UpdateStatusAsync();
             Assert.AreEqual(200, deleteResponse.Status);
             Assert.AreEqual(404, rehydatedDeleteResponse.Status);
+            //TODO: turn 404 to 200
             Assert.IsFalse(deleteResponse.IsError);
             Assert.IsTrue(rehydatedDeleteResponse.IsError);
             //Assert.AreEqual(deleteResponse.ClientRequestId, rehydatedDeleteResponse.ClientRequestId);
