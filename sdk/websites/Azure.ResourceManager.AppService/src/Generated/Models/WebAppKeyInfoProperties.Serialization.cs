@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class KeyInfoProperties : IUtf8JsonSerializable
+    public partial class WebAppKeyInfoProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        internal static KeyInfoProperties DeserializeKeyInfoProperties(JsonElement element)
+        internal static WebAppKeyInfoProperties DeserializeWebAppKeyInfoProperties(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new KeyInfoProperties(name.Value, value.Value);
+            return new WebAppKeyInfoProperties(name.Value, value.Value);
         }
     }
 }

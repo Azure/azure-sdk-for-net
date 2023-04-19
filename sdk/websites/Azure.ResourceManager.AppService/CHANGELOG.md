@@ -10,8 +10,8 @@
 ### Other Changes in API
 
 Added property 'ResourceIdentifier RelayArmId' in type Azure.ResourceManager.AppService.HybridConnectionData
-Added property 'KeyInfoProperties WebAppKeyInfoProperties' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
-Added type 'Azure.ResourceManager.AppService.Models.KeyInfoProperties'
+Added property 'WebAppKeyInfoProperties Properties' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
+Added type 'Azure.ResourceManager.AppService.Models.WebAppKeyInfoProperties'
 Obsoleted property 'Uri RelayArmUri' in type Azure.ResourceManager.AppService.HybridConnectionData
 Obsoleted property 'String Name' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo
 Obsoleted property 'String Value' in type Azure.ResourceManager.AppService.Models.WebAppKeyInfo

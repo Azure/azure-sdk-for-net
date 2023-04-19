@@ -363,7 +363,6 @@ rename-mapping:
   BillingMeter.properties.billingLocation: -|azure-location
   AddressResponse.properties.vipMappings: VirtualIPMappings
   CloningInfo.sourceWebAppLocation: -|azure-location
-  KeyInfo.properties: WebAppKeyInfoProperties
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties
   AppServiceCertificateResource: AppServiceCertificate
@@ -480,6 +479,7 @@ rename-mapping:
   SupportedTlsVersions: AppServiceSupportedTlsVersion
   VnetValidationFailureDetails: VirtualNetworkValidationFailureDetails
   VnetValidationTestFailure: VirtualNetworkValidationTestFailure
+  KeyInfoProperties: WebAppKeyInfoProperties
   # All `Collection` models for pageable operation should be renamed to `ListResult`, https://github.com/Azure/autorest.csharp/issues/2756
   DomainCollection: AppServiceDomainListResult
   IdentifierCollection: AppServiceIdentifierListResult
