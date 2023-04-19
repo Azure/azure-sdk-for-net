@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public

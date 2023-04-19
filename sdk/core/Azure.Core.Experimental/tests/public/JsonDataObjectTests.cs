@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
 
@@ -93,9 +92,7 @@ namespace Azure.Core.Tests.Public
         public void CannotGetArrayIndexOnObject()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": "Hi" }""");
-            Assert.Throws<InvalidOperationException>(
-                () => { var x = data[0]; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { var x = data[0]; });
         }
         #endregion
 
@@ -112,9 +109,7 @@ namespace Azure.Core.Tests.Public
         public void CannotSetArrayIndexOnObject()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": "Hi" }""");
-            Assert.Throws<InvalidOperationException>(
-                () => { data[0] = "invalid"; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { data[0] = "invalid"; });
         }
 
         #endregion

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public
@@ -115,18 +114,14 @@ namespace Azure.Core.Tests.Public
         public void CannotGetMemberOnLeaf()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.Throws<InvalidOperationException>(
-                () => { var x = data.Property; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { var x = data.Property; });
         }
 
         [Test]
         public void CannotGetMemberOnLeafProperty()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-            Assert.Throws<InvalidOperationException>(
-                () => { var x = data.value.Property; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { var x = data.value.Property; });
         }
         #endregion
 
@@ -136,18 +131,14 @@ namespace Azure.Core.Tests.Public
         public void CannotSetMemberOnLeaf()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.Throws<InvalidOperationException>(
-                () => { data.Property = "invalid"; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { data.Property = "invalid"; });
         }
 
         [Test]
         public void CannotSetMemberOnLeafProperty()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-            Assert.Throws<InvalidOperationException>(
-                () => { data.value.Property = "invalid"; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { data.value.Property = "invalid"; });
         }
 
         [Test]
@@ -173,45 +164,29 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotGetIndexPropertyOnLeaf()
         {
-            // TODO: Make exception messages consistent.
-
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.Throws<InvalidOperationException>(
-                () => { var x = data["Property"]; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { var x = data["Property"]; });
         }
 
         [Test]
         public void CannotGetIndexPropertyOnLeafProperty()
         {
-            // TODO: Make exception messages consistent.
-
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-            Assert.Throws<InvalidOperationException>(
-                () => { var x = data.value["Property"]; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { var x = data.value["Property"]; });
         }
 
         [Test]
         public void CannotGetArrayIndexOnLeaf()
         {
-            // TODO: Make exception messages consistent.
-
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.Throws<InvalidOperationException>(
-                () => { var x = data[0]; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { var x = data[0]; });
         }
 
         [Test]
         public void CannotGetArrayIndexOnLeafProperty()
         {
-            // TODO: Make exception messages consistent.
-
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-            Assert.Throws<InvalidOperationException>(
-                () => { var x = data.value[0]; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { var x = data.value[0]; });
         }
 
         #endregion
@@ -221,45 +196,29 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotSetIndexPropertyOnLeaf()
         {
-            // TODO: Make exception messages consistent.
-
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.Throws<InvalidOperationException>(
-                () => { data["Property"] = "invalid"; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { data["Property"] = "invalid"; });
         }
 
         [Test]
         public void CannotSetIndexPropertyOnLeafProperty()
         {
-            // TODO: Make exception messages consistent.
-
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-            Assert.Throws<InvalidOperationException>(
-                () => { data.value["Property"] = "invalid"; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { data.value["Property"] = "invalid"; });
         }
 
         [Test]
         public void CannotSetArrayIndexOnLeaf()
         {
-            // TODO: Make exception messages consistent.
-
             dynamic data = JsonDataTestHelpers.CreateFromJson("5");
-            Assert.Throws<InvalidOperationException>(
-                () => { data[0] = "invalid"; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { data[0] = "invalid"; });
         }
 
         [Test]
         public void CannotSetArrayIndexOnLeafProperty()
         {
-            // TODO: Make exception messages consistent.
-
             dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": 5 }""");
-            Assert.Throws<InvalidOperationException>(
-                () => { data.value[0] = "invalid"; }
-            );
+            Assert.Throws<InvalidOperationException>(() => { data.value[0] = "invalid"; });
         }
         #endregion
 
