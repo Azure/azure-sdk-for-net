@@ -75,7 +75,6 @@ namespace Azure.Communication.PhoneNumbers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorCode = property.Value.GetInt32();
@@ -85,7 +84,6 @@ namespace Azure.Communication.PhoneNumbers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = new PhoneNumberSearchResultError(property.Value.GetString());

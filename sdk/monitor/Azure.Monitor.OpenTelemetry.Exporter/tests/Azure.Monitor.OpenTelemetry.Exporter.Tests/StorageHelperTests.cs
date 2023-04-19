@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -14,28 +15,54 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private static readonly char ds = Path.DirectorySeparatorChar;
 
         [Fact]
-        public void VerifyDirectory()
+        public void VerifyConfiguredDirectory()
         {
             var directoryPath = StorageHelper.GetStorageDirectory(
+                platform: new MockPlatform(),
+                configuredStorageDirectory: $"C:{ds}Temp");
                 configuredStorageDirectory: $"C:{ds}Temp",
                 instrumentationKey: "testIkey",
                 processName: "w3wp",
                 applicationDirectory: "C:\\inetpub\\wwwroot");
 
+            Assert.Equal($"C:{ds}Temp", directoryPath);
             Assert.Equal(directoryPath, $"C:{ds}Temp{ds}da7bc2b3fc208d871eda206b7dec121a7944a3bce25e17143ba0f8b1a6c41bdd");
         }
 
-        [Fact]
-        public void VerifyDefaultDirectory()
+        [Theory]
+        [InlineData("LOCALAPPDATA")]
+        [InlineData("TEMP")]
+        public void VerifyDefaultDirectory_Windows(string envVarName)
         {
-            var directoryPath = StorageHelper.GetStorageDirectory(
-                configuredStorageDirectory: null,
-                instrumentationKey: "testIkey",
-                processName: "w3wp",
-                applicationDirectory: "C:\\inetpub\\wwwroot");
+            var platform = new MockPlatform();
+            platform.IsOsPlatformFunc = (os) => os.ToString() == "WINDOWS";
+            platform.SetEnvironmentVariable(envVarName, $"C:{ds}Temp");
 
-            // Note: Cannot assert full string because default root directory will be variable depending on OS and environment variables.
-            Assert.EndsWith($"{ds}Microsoft{ds}AzureMonitor{ds}da7bc2b3fc208d871eda206b7dec121a7944a3bce25e17143ba0f8b1a6c41bdd", directoryPath);
+            var directoryPath = StorageHelper.GetDefaultStorageDirectory(platform: platform);
+
+            // when using a default directory, we will append /Microsoft/AzureMonitor
+            Assert.Equal($"C:{ds}Temp{ds}Microsoft{ds}AzureMonitor", directoryPath);
+        }
+
+        [Theory]
+        [InlineData(0, "/unitTest/tmp/", "/unitTest/tmp/")]
+        [InlineData(1, "null", "/var/tmp/")]
+        [InlineData(2, "null", "/tmp/")]
+        public void VerifyDefaultDirectory_Linux(int attempt, string envVarValue, string expectedDirectory)
+        {
+            // In NON-Windows environments, First attempt is an EnvironmentVariable.
+            // If that's not available, we'll attempt hardcoded defaults.
+            int attemptCount = 0;
+
+            var platform = new MockPlatform();
+            platform.IsOsPlatformFunc = (os) => os.ToString() == "LINUX";
+            platform.SetEnvironmentVariable("TMPDIR", envVarValue);
+            platform.CreateDirectoryFunc = (path) => attemptCount++ == attempt;
+
+            var directoryPath = StorageHelper.GetDefaultStorageDirectory(platform: platform);
+
+            // when using a default directory, we will append /Microsoft/AzureMonitor
+            Assert.Equal($"{expectedDirectory}Microsoft{ds}AzureMonitor", directoryPath);
         }
     }
 }

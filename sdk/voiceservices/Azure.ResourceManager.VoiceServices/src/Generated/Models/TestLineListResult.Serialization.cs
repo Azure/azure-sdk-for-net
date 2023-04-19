@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        nextLink = null;
                         continue;
                     }
                     nextLink = new Uri(property.Value.GetString());

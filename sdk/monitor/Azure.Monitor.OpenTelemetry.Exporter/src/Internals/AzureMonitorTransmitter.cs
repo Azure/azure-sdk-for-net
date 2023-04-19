@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -31,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
         private bool _disposed;
 
-        public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
+        public AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform)
         {
             if (options == null)
             {
@@ -40,31 +41,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             options.Retry.MaxRetries = 0;
 
-            _connectionVars = InitializeConnectionVars(options);
+            _connectionVars = InitializeConnectionVars(options, platform);
 
             _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars);
 
             _transmissionStateManager = new TransmissionStateManager();
 
-            _fileBlobProvider = InitializeOfflineStorage(options, _connectionVars);
+            _fileBlobProvider = InitializeOfflineStorage(options, platform, _connectionVars);
 
             if (_fileBlobProvider != null)
             {
                 _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager);
             }
 
-            _statsbeat = InitializeStatsbeat(options, _connectionVars);
+            _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
         }
 
-        private static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options)
+        internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
         {
             if (options.ConnectionString == null)
             {
-                var connectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+                var connectionString = platform.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
 
                 if (!string.IsNullOrWhiteSpace(connectionString))
                 {
-                    return ConnectionStringParser.GetValues(connectionString);
+                    return ConnectionStringParser.GetValues(connectionString!);
                 }
             }
             else
@@ -100,13 +101,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.IngestionEndpoint);
         }
 
-        private static PersistentBlobProvider? InitializeOfflineStorage(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
+        private static PersistentBlobProvider? InitializeOfflineStorage(AzureMonitorExporterOptions options, IPlatform platform, ConnectionVars connectionVars)
         {
             if (!options.DisableOfflineStorage)
             {
                 try
                 {
                     var storageDirectory = StorageHelper.GetStorageDirectory(
+                        platform: platform
                         configuredStorageDirectory: options.StorageDirectory,
                         instrumentationKey: connectionVars.InstrumentationKey,
                         processName: Process.GetCurrentProcess().ProcessName,
@@ -127,13 +129,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return null;
         }
 
-        private static AzureMonitorStatsbeat? InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars)
+        private static AzureMonitorStatsbeat? InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars, IPlatform platform)
         {
             if (options.EnableStatsbeat && connectionVars != null)
             {
                 try
                 {
-                    var disableStatsbeat = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_STATSBEAT_DISABLED");
+                    var disableStatsbeat = platform.GetEnvironmentVariable("APPLICATIONINSIGHTS_STATSBEAT_DISABLED");
                     if (string.Equals(disableStatsbeat, "true", StringComparison.OrdinalIgnoreCase))
                     {
                         AzureMonitorExporterEventSource.Log.WriteInformational("StatsbeatInitialization: ", "Statsbeat was disabled via environment variable");
@@ -141,7 +143,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         return null;
                     }
 
-                    return new AzureMonitorStatsbeat(connectionVars);
+                    return new AzureMonitorStatsbeat(connectionVars, platform);
                 }
                 catch (Exception ex)
                 {

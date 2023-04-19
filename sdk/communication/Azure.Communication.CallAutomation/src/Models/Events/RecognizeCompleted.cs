@@ -4,22 +4,20 @@
 using System.Text.Json;
 using Azure.Core;
 using System.Text.Json.Serialization;
+using System;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The Recognize Canceled event.
+    /// Recognize completed event.
     /// </summary>
     public partial class RecognizeCompleted : CallAutomationEventBase
     {
-        /// <summary> The recognize Dtmf result. </summary>
+        /// <summary> The abstract recognize result. </summary>
         public RecognizeResult RecognizeResult { get; }
 
-        /// <summary> Get the recognize Tone result. </summary>
-        private CollectTonesResult CollectTonesResult { get; }
-
-        /// <summary> The recognize choice result. </summary>
-        private ChoiceResult ChoiceResult { get; }
+        /// <summary> The recognize speech result. </summary>
+        private SpeechResult SpeechResult { get; }
 
         /// <summary>
         /// The recognition type.
@@ -27,6 +25,11 @@ namespace Azure.Communication.CallAutomation
         [CodeGenMember("RecognitionType")]
         [JsonConverter(typeof(EquatableEnumJsonConverter<CallMediaRecognitionType>))]
         private CallMediaRecognitionType RecognitionType { get; set; }
+
+        /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
+        internal RecognizeCompleted()
+        {
+        }
 
         /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
@@ -48,15 +51,18 @@ namespace Azure.Communication.CallAutomation
             OperationContext = operationContext;
             ResultInformation = resultInformation;
             RecognitionType = recognitionType;
-            CollectTonesResult = collectTonesResult;
-            ChoiceResult = choiceResult;
+
             if (RecognitionType == CallMediaRecognitionType.Dtmf)
             {
-                RecognizeResult = CollectTonesResult;
+                RecognizeResult = collectTonesResult;
             }
             else if (RecognitionType == CallMediaRecognitionType.Choices)
             {
-                RecognizeResult = ChoiceResult;
+                RecognizeResult = choiceResult;
+            }
+            else if (RecognitionType == CallMediaRecognitionType.Speech || RecognitionType == CallMediaRecognitionType.SpeechOrDtmf)
+            {
+                RecognizeResult = SpeechResult;
             }
         }
 
@@ -72,12 +78,15 @@ namespace Azure.Communication.CallAutomation
             if (internalEvent.RecognitionType == CallMediaRecognitionType.Dtmf)
             {
                 RecognizeResult = internalEvent.CollectTonesResult;
-                CollectTonesResult = internalEvent.CollectTonesResult;
             }
             else if (internalEvent.RecognitionType == CallMediaRecognitionType.Choices)
             {
                 RecognizeResult = internalEvent.ChoiceResult;
-                ChoiceResult = internalEvent.ChoiceResult;
+            }
+            else if (internalEvent.RecognitionType == CallMediaRecognitionType.Speech || RecognitionType == CallMediaRecognitionType.SpeechOrDtmf)
+            {
+                RecognizeResult = internalEvent.SpeechResult;
+                SpeechResult = internalEvent.SpeechResult;
             }
         }
 

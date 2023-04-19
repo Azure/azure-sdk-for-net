@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoleAssignmentScheduleInstanceData> array = new List<RoleAssignmentScheduleInstanceData>();

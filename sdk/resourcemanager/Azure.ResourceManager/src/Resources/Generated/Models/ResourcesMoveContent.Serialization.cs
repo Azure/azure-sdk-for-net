@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetResourceGroup))
+            if (Optional.IsDefined(TargetResourceGroupId))
             {
                 writer.WritePropertyName("targetResourceGroup"u8);
-                writer.WriteStringValue(TargetResourceGroup);
+                writer.WriteStringValue(TargetResourceGroupId);
             }
             writer.WriteEndObject();
         }
