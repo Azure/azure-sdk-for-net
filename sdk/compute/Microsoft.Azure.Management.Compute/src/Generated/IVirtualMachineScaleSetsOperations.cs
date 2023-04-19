@@ -172,6 +172,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the VM scale set.
         /// </param>
+        /// <param name='hibernate'>
+        /// Optional parameter to hibernate a virtual machine from the VM scale
+        /// set. (This feature is available for VMSS with Flexible
+        /// OrchestrationMode only)
+        /// </param>
         /// <param name='instanceIds'>
         /// The virtual machine scale set instance ids. Omitting the virtual
         /// machine scale set instance ids will result in the operation being
@@ -189,7 +194,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, bool? hibernate = default(bool?), IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes virtual machines in a VM scale set.
         /// </summary>
@@ -780,6 +785,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the VM scale set.
         /// </param>
+        /// <param name='hibernate'>
+        /// Optional parameter to hibernate a virtual machine from the VM scale
+        /// set. (This feature is available for VMSS with Flexible
+        /// OrchestrationMode only)
+        /// </param>
         /// <param name='instanceIds'>
         /// The virtual machine scale set instance ids. Omitting the virtual
         /// machine scale set instance ids will result in the operation being
@@ -797,7 +807,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeallocateWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, bool? hibernate = default(bool?), IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes virtual machines in a VM scale set.
         /// </summary>
