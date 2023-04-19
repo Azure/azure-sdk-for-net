@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return this.Properties.Name;
+                return this.WebAppKeyInfoProperties.Name;
             }
             set
             {
-                this.Properties.Name = value;
+                this.WebAppKeyInfoProperties.Name = value;
             }
         }
 
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return this.Properties.Value;
+                return this.WebAppKeyInfoProperties.Value;
             }
             set
             {
-                this.Properties.Value = value;
+                this.WebAppKeyInfoProperties.Value = value;
             }
         }
     }

@@ -363,6 +363,7 @@ rename-mapping:
   BillingMeter.properties.billingLocation: -|azure-location
   AddressResponse.properties.vipMappings: VirtualIPMappings
   CloningInfo.sourceWebAppLocation: -|azure-location
+  KeyInfo.properties: WebAppKeyInfoProperties
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties
   AppServiceCertificateResource: AppServiceCertificate

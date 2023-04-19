@@ -7468,10 +7468,10 @@ namespace Azure.ResourceManager.AppService.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("Please use WebAppKeyInfo.Properties.Name instead")]
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.KeyInfoProperties Properties { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("Please use WebAppKeyInfo.Properties.Value instead")]
         public string Value { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.KeyInfoProperties WebAppKeyInfoProperties { get { throw null; } set { } }
     }
     public partial class WebAppLoginInfo
     {
