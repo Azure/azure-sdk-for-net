@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 
         internal static UserAssignedIdentityPatch DeserializeUserAssignedIdentityPatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;

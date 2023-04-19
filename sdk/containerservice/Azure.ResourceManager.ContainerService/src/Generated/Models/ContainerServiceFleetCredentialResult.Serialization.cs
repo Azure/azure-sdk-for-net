@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ContainerServiceFleetCredentialResult DeserializeContainerServiceFleetCredentialResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<byte[]> value = default;
             foreach (var property in element.EnumerateObject())

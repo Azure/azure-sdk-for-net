@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static LoadBalancerNatRuleReferenceInfo DeserializeLoadBalancerNatRuleReferenceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             ResourceIdentifier sourceArmResourceId = default;
             foreach (var property in element.EnumerateObject())

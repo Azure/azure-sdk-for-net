@@ -66,6 +66,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static TabularTranslator DeserializeTabularTranslator(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> columnMappings = default;
             Optional<object> schemaMapping = default;
             Optional<object> collectionReference = default;

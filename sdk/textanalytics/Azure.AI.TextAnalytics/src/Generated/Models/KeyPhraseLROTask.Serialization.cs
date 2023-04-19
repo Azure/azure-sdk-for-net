@@ -32,6 +32,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static KeyPhraseLROTask DeserializeKeyPhraseLROTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KeyPhraseTaskParameters> parameters = default;
             AnalyzeTextLROTaskKind kind = default;
             Optional<string> taskName = default;

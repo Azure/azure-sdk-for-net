@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         internal static SavingsPlanValidateResponse DeserializeSavingsPlanValidateResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SavingsPlanValidateResult>> benefits = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

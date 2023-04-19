@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseIotHubDataConnection DeserializeSynapseIotHubDataConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             SynapseDataConnectionKind kind = default;
             ResourceIdentifier id = default;

@@ -88,6 +88,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static MabContainer DeserializeMabContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> canReRegister = default;
             Optional<long> containerId = default;
             Optional<long> protectedItemCount = default;

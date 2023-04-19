@@ -39,6 +39,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static RecurrenceScheduleOccurrence DeserializeRecurrenceScheduleOccurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DayOfWeek> day = default;
             Optional<int> occurrence = default;
             IDictionary<string, object> additionalProperties = default;

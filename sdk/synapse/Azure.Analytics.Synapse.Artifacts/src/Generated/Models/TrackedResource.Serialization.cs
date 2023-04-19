@@ -37,6 +37,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static TrackedResource DeserializeTrackedResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             string location = default;
             Optional<string> id = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         internal static WebPubSubSkuCapacity DeserializeWebPubSubSkuCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minimum = default;
             Optional<int> maximum = default;
             Optional<int> @default = default;

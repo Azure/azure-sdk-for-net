@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -12,6 +13,7 @@ namespace Azure.Core.Json
     /// <summary>
     /// A mutable representation of a JSON element.
     /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public readonly partial struct MutableJsonElement
     {
         private readonly MutableJsonDocument _root;
@@ -577,5 +579,8 @@ namespace Azure.Core.Json
                 throw new InvalidOperationException("An ancestor node of this element has unapplied changes.  Please re-request this property from the RootElement.");
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        internal string DebuggerDisplay => $"ValueKind = {ValueKind} : \"{ToString()}\"";
     }
 }

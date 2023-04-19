@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static EdgeKubernetesRoleNetwork DeserializeEdgeKubernetesRoleNetwork(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CniConfig> cniConfig = default;
             Optional<DataBoxEdgeLoadBalancerConfig> loadBalancerConfig = default;
             foreach (var property in element.EnumerateObject())

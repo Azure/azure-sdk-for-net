@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.HybridContainerService
 
         internal static HybridContainerServiceVirtualNetworkData DeserializeHybridContainerServiceVirtualNetworkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualNetworksProperties> properties = default;
             Optional<VirtualNetworksExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;

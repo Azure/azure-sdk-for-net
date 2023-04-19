@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static LinuxOSInfo DeserializeLinuxOSInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DevTestLabLinuxOSState> linuxOSState = default;
             foreach (var property in element.EnumerateObject())
             {

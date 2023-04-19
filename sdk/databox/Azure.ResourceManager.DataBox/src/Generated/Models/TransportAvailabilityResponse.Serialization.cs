@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static TransportAvailabilityResponse DeserializeTransportAvailabilityResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TransportAvailabilityDetails>> transportAvailabilityDetails = default;
             foreach (var property in element.EnumerateObject())
             {

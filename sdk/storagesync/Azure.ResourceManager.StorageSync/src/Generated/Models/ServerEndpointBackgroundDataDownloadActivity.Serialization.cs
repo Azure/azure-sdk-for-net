@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static ServerEndpointBackgroundDataDownloadActivity DeserializeServerEndpointBackgroundDataDownloadActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestamp = default;
             Optional<DateTimeOffset> startedTimestamp = default;
             Optional<int> percentProgress = default;

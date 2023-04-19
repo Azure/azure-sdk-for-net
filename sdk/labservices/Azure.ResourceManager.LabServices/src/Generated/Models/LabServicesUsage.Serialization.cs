@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static LabServicesUsage DeserializeLabServicesUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> currentValue = default;
             Optional<long> limit = default;
             Optional<LabServicesUsageUnit> unit = default;

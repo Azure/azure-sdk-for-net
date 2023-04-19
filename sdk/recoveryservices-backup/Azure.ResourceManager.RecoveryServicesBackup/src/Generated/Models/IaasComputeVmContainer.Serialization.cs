@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static IaasComputeVmContainer DeserializeIaasComputeVmContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> virtualMachineId = default;
             Optional<string> virtualMachineVersion = default;
             Optional<string> resourceGroup = default;

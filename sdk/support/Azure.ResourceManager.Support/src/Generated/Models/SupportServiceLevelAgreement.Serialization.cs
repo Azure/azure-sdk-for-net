@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static SupportServiceLevelAgreement DeserializeSupportServiceLevelAgreement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> expirationTime = default;
             Optional<int> slaMinutes = default;

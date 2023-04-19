@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventPreview DeserializeLiveEventPreview(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<LiveEventEndpoint>> endpoints = default;
             Optional<LiveEventPreviewAccessControl> accessControl = default;
             Optional<string> previewLocator = default;

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static PrivateCloudAvailabilityProperties DeserializePrivateCloudAvailabilityProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AvailabilityStrategy> strategy = default;
             Optional<int> zone = default;
             Optional<int> secondaryZone = default;

@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataCollectionRuleDataSources DeserializeDataCollectionRuleDataSources(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<PerfCounterDataSource>> performanceCounters = default;
             Optional<IList<WindowsEventLogDataSource>> windowsEventLogs = default;
             Optional<IList<SyslogDataSource>> syslog = default;

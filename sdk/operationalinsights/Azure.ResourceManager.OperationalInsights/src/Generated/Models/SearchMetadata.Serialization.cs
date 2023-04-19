@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static SearchMetadata DeserializeSearchMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> requestId = default;
             Optional<string> resultType = default;
             Optional<long> total = default;

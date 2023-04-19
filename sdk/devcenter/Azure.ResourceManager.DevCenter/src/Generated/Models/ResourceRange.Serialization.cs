@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static ResourceRange DeserializeResourceRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> min = default;
             Optional<int> max = default;
             foreach (var property in element.EnumerateObject())

@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static UnknownJobOutput DeserializeUnknownJobOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             Optional<MediaJobError> error = default;
             Optional<MediaTransformPreset> presetOverride = default;

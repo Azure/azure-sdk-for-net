@@ -94,6 +94,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadBackupJob DeserializeWorkloadBackupJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> workloadType = default;
             Optional<TimeSpan> duration = default;
             Optional<IList<JobSupportedAction>> actionsInfo = default;

@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoDatabaseTableLevelSharingProperties DeserializeKustoDatabaseTableLevelSharingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> tablesToInclude = default;
             Optional<IList<string>> tablesToExclude = default;
             Optional<IList<string>> externalTablesToInclude = default;

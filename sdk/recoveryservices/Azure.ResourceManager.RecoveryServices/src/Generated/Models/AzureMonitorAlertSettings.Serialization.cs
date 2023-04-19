@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static AzureMonitorAlertSettings DeserializeAzureMonitorAlertSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RecoveryServicesAlertsState> alertsForAllJobFailures = default;
             foreach (var property in element.EnumerateObject())
             {

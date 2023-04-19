@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static IsNotNullAdvancedFilter DeserializeIsNotNullAdvancedFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AdvancedFilterOperatorType operatorType = default;
             Optional<string> key = default;
             foreach (var property in element.EnumerateObject())

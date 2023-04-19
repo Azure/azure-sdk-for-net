@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineHardwareProfile DeserializeVirtualMachineHardwareProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualMachineSizeType> vmSize = default;
             Optional<VirtualMachineSizeProperties> vmSizeProperties = default;
             foreach (var property in element.EnumerateObject())

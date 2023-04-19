@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TextClassification DeserializeTextClassification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ClassificationPrimaryMetric> primaryMetric = default;
             Optional<NlpVerticalFeaturizationSettings> featurizationSettings = default;
             Optional<NlpVerticalLimitSettings> limitSettings = default;

@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSsisTaskProperties DeserializeMigrateSsisTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigrateSsisTaskInput> input = default;
             Optional<IReadOnlyList<MigrateSsisTaskOutput>> output = default;
             TaskType taskType = default;

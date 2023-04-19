@@ -15,6 +15,10 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
     {
         internal static SparkJobListViewResponse DeserializeSparkJobListViewResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> nJobs = default;
             Optional<IReadOnlyList<SparkJob>> sparkJobs = default;
             foreach (var property in element.EnumerateObject())

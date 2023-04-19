@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeerAsnContactDetail DeserializePeerAsnContactDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PeeringRole> role = default;
             Optional<string> email = default;
             Optional<string> phone = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SapAvailabilityZonePair DeserializeSapAvailabilityZonePair(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> zoneA = default;
             Optional<long> zoneB = default;
             foreach (var property in element.EnumerateObject())

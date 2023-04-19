@@ -119,6 +119,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static SqlProtectedItem DeserializeSqlProtectedItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> protectedItemDataId = default;
             Optional<ProtectedItemState> protectionState = default;
             Optional<SqlProtectedItemExtendedInfo> extendedInfo = default;

@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureDataLakeStoreSink DeserializeAzureDataLakeStoreSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> copyBehavior = default;
             Optional<BinaryData> enableAdlsSingleFileParallel = default;
             string type = default;

@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static PipelineRun DeserializePipelineRun(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> runId = default;
             Optional<string> runGroupId = default;
             Optional<bool> isLatest = default;

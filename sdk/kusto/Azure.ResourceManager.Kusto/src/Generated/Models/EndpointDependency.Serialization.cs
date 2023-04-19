@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static EndpointDependency DeserializeEndpointDependency(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> domainName = default;
             Optional<IList<EndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static UserList DeserializeUserList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DevTestLabUserData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

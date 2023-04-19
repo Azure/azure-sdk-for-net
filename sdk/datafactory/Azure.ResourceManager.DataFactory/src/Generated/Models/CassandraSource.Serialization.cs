@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CassandraSource DeserializeCassandraSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> query = default;
             Optional<CassandraSourceReadConsistencyLevel> consistencyLevel = default;
             Optional<BinaryData> queryTimeout = default;

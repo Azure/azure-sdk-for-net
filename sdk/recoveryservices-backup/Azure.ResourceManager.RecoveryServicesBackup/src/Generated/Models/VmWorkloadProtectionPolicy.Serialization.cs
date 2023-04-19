@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmWorkloadProtectionPolicy DeserializeVmWorkloadProtectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupWorkloadType> workLoadType = default;
             Optional<BackupCommonSettings> settings = default;
             Optional<IList<SubProtectionPolicy>> subProtectionPolicy = default;

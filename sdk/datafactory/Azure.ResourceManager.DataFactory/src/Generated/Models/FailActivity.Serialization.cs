@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FailActivity DeserializeFailActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string type = default;
             Optional<string> description = default;

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountBatchReleaseCriteria DeserializeIntegrationAccountBatchReleaseCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> messageCount = default;
             Optional<int> batchSize = default;
             Optional<LogicWorkflowTriggerRecurrence> recurrence = default;

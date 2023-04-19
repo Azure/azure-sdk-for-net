@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeKubernetesRoleStorage DeserializeEdgeKubernetesRoleStorage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EdgeKubernetesRoleStorageClassInfo>> storageClasses = default;
             Optional<IList<DataBoxEdgeMountPointMap>> endpoints = default;
             foreach (var property in element.EnumerateObject())

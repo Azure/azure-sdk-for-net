@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static CloudProviderProfile DeserializeCloudProviderProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CloudProviderProfileInfraNetworkProfile> infraNetworkProfile = default;
             Optional<CloudProviderProfileInfraStorageProfile> infraStorageProfile = default;
             foreach (var property in element.EnumerateObject())

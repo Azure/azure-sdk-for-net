@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationActivityListResult DeserializeAutomationActivityListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AutomationActivity>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

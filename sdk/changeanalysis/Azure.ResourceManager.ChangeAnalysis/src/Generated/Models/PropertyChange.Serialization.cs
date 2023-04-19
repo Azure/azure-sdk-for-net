@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     {
         internal static PropertyChange DeserializePropertyChange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ChangeType> changeType = default;
             Optional<ChangeCategory> changeCategory = default;
             Optional<string> jsonPath = default;

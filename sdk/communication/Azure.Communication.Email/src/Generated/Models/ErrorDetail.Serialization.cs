@@ -11,10 +11,14 @@ using Azure.Core;
 
 namespace Azure.Communication.Email
 {
-    public partial class ErrorDetail
+    internal partial class ErrorDetail
     {
         internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;

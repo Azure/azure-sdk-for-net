@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.Network
 
         internal static ServiceEndpointPolicyData DeserializeServiceEndpointPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<string> kind = default;
             Optional<ResourceIdentifier> id = default;

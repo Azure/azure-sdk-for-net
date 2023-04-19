@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static OnlineDeploymentTrackedResourceArmPaginatedResult DeserializeOnlineDeploymentTrackedResourceArmPaginatedResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<MachineLearningOnlineDeploymentData>> value = default;
             foreach (var property in element.EnumerateObject())

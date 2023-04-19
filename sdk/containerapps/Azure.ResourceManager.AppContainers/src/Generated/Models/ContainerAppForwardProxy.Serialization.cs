@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppForwardProxy DeserializeContainerAppForwardProxy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppForwardProxyConvention> convention = default;
             Optional<string> customHostHeaderName = default;
             Optional<string> customProtoHeaderName = default;

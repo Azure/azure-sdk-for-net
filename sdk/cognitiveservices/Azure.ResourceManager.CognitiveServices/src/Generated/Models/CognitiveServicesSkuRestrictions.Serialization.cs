@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CognitiveServicesSkuRestrictions DeserializeCognitiveServicesSkuRestrictions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CognitiveServicesSkuRestrictionsType> type = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<CognitiveServicesSkuRestrictionInfo> restrictionInfo = default;

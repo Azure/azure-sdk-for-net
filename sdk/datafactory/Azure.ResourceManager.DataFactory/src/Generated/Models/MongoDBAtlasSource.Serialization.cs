@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MongoDBAtlasSource DeserializeMongoDBAtlasSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> filter = default;
             Optional<MongoDBCursorMethodsProperties> cursorMethods = default;
             Optional<BinaryData> batchSize = default;

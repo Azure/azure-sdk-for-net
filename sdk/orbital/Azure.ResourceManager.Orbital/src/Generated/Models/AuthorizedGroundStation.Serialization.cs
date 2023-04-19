@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Orbital.Models
     {
         internal static AuthorizedGroundStation DeserializeAuthorizedGroundStation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groundStation = default;
             Optional<DateTimeOffset> expirationDate = default;
             foreach (var property in element.EnumerateObject())

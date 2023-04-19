@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureDataLakeStoreSource DeserializeAzureDataLakeStoreSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> recursive = default;
             string type = default;
             Optional<BinaryData> sourceRetryCount = default;

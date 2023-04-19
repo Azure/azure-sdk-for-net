@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningScriptsToExecute DeserializeMachineLearningScriptsToExecute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningScriptReference> startupScript = default;
             Optional<MachineLearningScriptReference> creationScript = default;
             foreach (var property in element.EnumerateObject())

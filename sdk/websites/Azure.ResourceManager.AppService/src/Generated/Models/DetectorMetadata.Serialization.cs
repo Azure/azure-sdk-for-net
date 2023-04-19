@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DetectorMetadata DeserializeDetectorMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DetectorDataSource> dataSource = default;
             foreach (var property in element.EnumerateObject())
             {

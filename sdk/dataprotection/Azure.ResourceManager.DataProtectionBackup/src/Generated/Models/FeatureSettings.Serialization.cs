@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static FeatureSettings DeserializeFeatureSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CrossSubscriptionRestoreSettings> crossSubscriptionRestoreSettings = default;
             foreach (var property in element.EnumerateObject())
             {

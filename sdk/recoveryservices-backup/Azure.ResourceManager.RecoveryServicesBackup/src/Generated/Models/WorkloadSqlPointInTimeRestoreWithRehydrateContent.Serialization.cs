@@ -90,6 +90,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadSqlPointInTimeRestoreWithRehydrateContent DeserializeWorkloadSqlPointInTimeRestoreWithRehydrateContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RecoveryPointRehydrationInfo> recoveryPointRehydrationInfo = default;
             Optional<DateTimeOffset> pointInTime = default;
             Optional<bool> shouldUseAlternateTargetLocation = default;

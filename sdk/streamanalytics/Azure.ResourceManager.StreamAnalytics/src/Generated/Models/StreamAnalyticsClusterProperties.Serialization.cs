@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamAnalyticsClusterProperties DeserializeStreamAnalyticsClusterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> createdDate = default;
             Optional<Guid> clusterId = default;
             Optional<StreamAnalyticsClusterProvisioningState> provisioningState = default;

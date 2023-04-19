@@ -15,6 +15,10 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static SearchInstancesResponse DeserializeSearchInstancesResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<InstanceHit>> hits = default;
             Optional<int> hitCount = default;
             Optional<string> continuationToken = default;

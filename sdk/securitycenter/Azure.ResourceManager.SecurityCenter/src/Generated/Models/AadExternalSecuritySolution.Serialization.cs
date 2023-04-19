@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AadExternalSecuritySolution DeserializeAadExternalSecuritySolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AadSolutionProperties> properties = default;
             ExternalSecuritySolutionKind? kind = default;
             Optional<AzureLocation> location = default;

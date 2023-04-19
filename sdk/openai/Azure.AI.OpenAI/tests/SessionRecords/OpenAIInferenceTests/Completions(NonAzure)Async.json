@@ -1,0 +1,77 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.openai.com/v1/completions",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "88",
+        "Content-Type": "application/json",
+        "traceparent": "00-7bfdc68cb56a243925fcd331f9dc5637-a7667a2fd27fe654-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "a4304411a49de4a571d1e1540e0410d9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "prompt": [
+          "Hello world",
+          "running over the same old ground"
+        ],
+        "model": "text-davinci-002"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Connection": "keep-alive",
+        "Content-Length": "393",
+        "Content-Type": "application/json",
+        "Date": "Tue, 21 Mar 2023 00:36:52 GMT",
+        "Openai-Model": "text-davinci-002",
+        "Openai-Organization": "msft-finetuning-2",
+        "Openai-Processing-Ms": "380",
+        "Openai-Version": "2020-10-01",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Ratelimit-Limit-Requests": "3000",
+        "X-Ratelimit-Limit-Tokens": "250000",
+        "X-Ratelimit-Remaining-Requests": "2999",
+        "X-Ratelimit-Remaining-Tokens": "249968",
+        "X-Ratelimit-Reset-Requests": "20ms",
+        "X-Ratelimit-Reset-Tokens": "7ms",
+        "X-Request-ID": "9ca6c89faf6ef192bd97b3b8c1e098dc"
+      },
+      "ResponseBody": {
+        "id": "cmpl-6wKHcQqiuJ6BQwfgHlrdhLnDAv6zV",
+        "object": "text_completion",
+        "created": 1679359012,
+        "model": "text-davinci-002",
+        "choices": [
+          {
+            "text": "\n\nhow are you?",
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop"
+          },
+          {
+            "text": ", ranting,\n\nmudslinging, and wearing our emotion on",
+            "index": 1,
+            "logprobs": null,
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 8,
+          "completion_tokens": 22,
+          "total_tokens": 30
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "270520"
+  }
+}

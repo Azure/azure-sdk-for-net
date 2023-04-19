@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCorsPolicy DeserializeContainerAppCorsPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> allowedOrigins = default;
             Optional<IList<string>> allowedMethods = default;
             Optional<IList<string>> allowedHeaders = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         internal static SignalRServiceUsageList DeserializeSignalRServiceUsageList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SignalRServiceUsage>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

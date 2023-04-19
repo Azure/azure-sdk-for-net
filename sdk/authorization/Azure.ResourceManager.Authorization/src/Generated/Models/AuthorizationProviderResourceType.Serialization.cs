@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static AuthorizationProviderResourceType DeserializeAuthorizationProviderResourceType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> displayName = default;
             Optional<IReadOnlyList<AuthorizationProviderOperationInfo>> operations = default;

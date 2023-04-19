@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CassandraConnectionError DeserializeCassandraConnectionError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CassandraConnectionState> connectionState = default;
             Optional<string> ipFrom = default;
             Optional<string> ipTo = default;

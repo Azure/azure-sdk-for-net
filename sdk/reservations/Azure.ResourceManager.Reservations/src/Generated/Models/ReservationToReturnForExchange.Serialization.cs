@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationToReturnForExchange DeserializeReservationToReturnForExchange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> reservationId = default;
             Optional<int> quantity = default;
             Optional<PurchasePrice> billingRefundAmount = default;

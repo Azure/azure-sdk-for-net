@@ -140,6 +140,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static GenericProtectedItem DeserializeGenericProtectedItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<string> policyState = default;
             Optional<BackupProtectionState> protectionState = default;

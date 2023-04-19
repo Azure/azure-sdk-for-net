@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static AppServiceWorkerPoolData DeserializeAppServiceWorkerPoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppServiceSkuDescription> sku = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;

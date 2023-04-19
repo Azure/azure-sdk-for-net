@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static AzureActiveDirectoryApp DeserializeAzureActiveDirectoryApp(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> applicationId = default;
             Optional<string> appKey = default;
             Optional<Guid> tenantId = default;

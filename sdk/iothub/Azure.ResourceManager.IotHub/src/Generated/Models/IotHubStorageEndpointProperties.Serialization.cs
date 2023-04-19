@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubStorageEndpointProperties DeserializeIotHubStorageEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> sasTtlAsIso8601 = default;
             string connectionString = default;
             string containerName = default;

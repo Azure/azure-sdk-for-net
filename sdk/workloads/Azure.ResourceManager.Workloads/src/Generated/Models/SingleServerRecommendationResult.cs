@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of SingleServerRecommendationResult. </summary>
-        /// <param name="deploymentType"> The deployment Type. </param>
+        /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         /// <param name="vmSku"> The recommended VM SKU for single server. </param>
         internal SingleServerRecommendationResult(SapDeploymentType deploymentType, string vmSku) : base(deploymentType)
         {

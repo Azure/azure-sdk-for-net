@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static CreditBalanceSummary DeserializeCreditBalanceSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConsumptionAmount> estimatedBalance = default;
             Optional<ConsumptionAmount> currentBalance = default;
             Optional<ConsumptionAmountWithExchangeRate> estimatedBalanceInBillingCurrency = default;

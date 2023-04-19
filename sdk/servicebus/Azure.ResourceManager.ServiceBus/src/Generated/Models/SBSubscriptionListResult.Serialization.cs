@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         internal static SBSubscriptionListResult DeserializeSBSubscriptionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ServiceBusSubscriptionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

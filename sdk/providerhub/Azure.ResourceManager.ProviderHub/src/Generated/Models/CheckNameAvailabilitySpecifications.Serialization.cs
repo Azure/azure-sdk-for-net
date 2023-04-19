@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableDefaultValidation))
+            if (Optional.IsDefined(IsDefaultValidationEnabled))
             {
                 writer.WritePropertyName("enableDefaultValidation"u8);
-                writer.WriteBooleanValue(EnableDefaultValidation.Value);
+                writer.WriteBooleanValue(IsDefaultValidationEnabled.Value);
             }
             if (Optional.IsCollectionDefined(ResourceTypesWithCustomValidation))
             {
@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CheckNameAvailabilitySpecifications DeserializeCheckNameAvailabilitySpecifications(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableDefaultValidation = default;
             Optional<IList<string>> resourceTypesWithCustomValidation = default;
             foreach (var property in element.EnumerateObject())

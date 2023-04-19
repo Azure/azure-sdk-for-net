@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.DeploymentManager
 
         internal static StepResourceData DeserializeStepResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             StepProperties properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

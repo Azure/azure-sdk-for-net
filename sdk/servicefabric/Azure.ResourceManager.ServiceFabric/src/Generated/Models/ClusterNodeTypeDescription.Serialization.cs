@@ -83,6 +83,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterNodeTypeDescription DeserializeClusterNodeTypeDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<IDictionary<string, string>> placementProperties = default;
             Optional<IDictionary<string, string>> capacities = default;

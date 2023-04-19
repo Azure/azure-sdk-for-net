@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformConfigServerData DeserializeAppPlatformConfigServerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformConfigServerProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

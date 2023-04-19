@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static ErrorResponseWrapper DeserializeErrorResponseWrapper(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {

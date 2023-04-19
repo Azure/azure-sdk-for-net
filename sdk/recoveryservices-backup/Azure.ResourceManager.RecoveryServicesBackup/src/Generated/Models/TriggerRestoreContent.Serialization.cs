@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static TriggerRestoreContent DeserializeTriggerRestoreContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RestoreContent> properties = default;
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;

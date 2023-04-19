@@ -50,6 +50,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static Error DeserializeError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ErrorCode code = default;
             string message = default;
             Optional<string> target = default;

@@ -48,6 +48,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         internal static EmailNotificationHook DeserializeEmailNotificationHook(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EmailHookParameter hookParameter = default;
             NotificationHookKind hookType = default;
             Optional<string> hookId = default;

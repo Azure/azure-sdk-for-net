@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppAccountEncryption DeserializeNetAppAccountEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetAppKeySource> keySource = default;
             Optional<NetAppKeyVaultProperties> keyVaultProperties = default;
             Optional<NetAppEncryptionIdentity> identity = default;

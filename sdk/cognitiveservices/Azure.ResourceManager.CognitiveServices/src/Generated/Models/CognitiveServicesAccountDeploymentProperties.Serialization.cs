@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesAccountDeploymentProperties DeserializeCognitiveServicesAccountDeploymentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CognitiveServicesAccountDeploymentProvisioningState> provisioningState = default;
             Optional<CognitiveServicesAccountDeploymentModel> model = default;
             Optional<CognitiveServicesAccountDeploymentScaleSettings> scaleSettings = default;

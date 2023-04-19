@@ -28,6 +28,10 @@ namespace Azure.Security.Attestation
 
         internal static PolicyCertificateModification DeserializePolicyCertificateModification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JsonWebKey> policyCertificate = default;
             foreach (var property in element.EnumerateObject())
             {

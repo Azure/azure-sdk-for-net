@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static DscMetaConfiguration DeserializeDscMetaConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> configurationModeFrequencyMins = default;
             Optional<bool> rebootNodeIfNeeded = default;
             Optional<string> configurationMode = default;

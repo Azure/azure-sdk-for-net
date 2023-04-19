@@ -35,6 +35,10 @@ namespace Azure.Communication.JobRouter
 
         internal static FunctionRuleCredential DeserializeFunctionRuleCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> functionKey = default;
             Optional<string> appKey = default;
             Optional<string> clientId = default;

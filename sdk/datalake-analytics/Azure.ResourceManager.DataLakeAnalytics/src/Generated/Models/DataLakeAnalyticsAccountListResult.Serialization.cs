@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     {
         internal static DataLakeAnalyticsAccountListResult DeserializeDataLakeAnalyticsAccountListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataLakeAnalyticsAccountBasic>> value = default;
             Optional<int> count = default;
             Optional<string> nextLink = default;

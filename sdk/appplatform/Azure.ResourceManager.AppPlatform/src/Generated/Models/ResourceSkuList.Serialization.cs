@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static ResourceSkuList DeserializeResourceSkuList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AvailableAppPlatformSku>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

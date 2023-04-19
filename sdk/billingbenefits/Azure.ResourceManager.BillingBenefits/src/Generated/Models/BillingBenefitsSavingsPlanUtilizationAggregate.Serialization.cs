@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         internal static BillingBenefitsSavingsPlanUtilizationAggregate DeserializeBillingBenefitsSavingsPlanUtilizationAggregate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> grain = default;
             Optional<string> grainUnit = default;
             Optional<float> value = default;

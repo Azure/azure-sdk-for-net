@@ -1,40 +1,34 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api.loganalytics.io/v1/workspaces/50e32c19-2b4b-4152-b97e-0e02441cae60/query",
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/314be15c-6065-462b-a0dc-8fe1213796f2/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "72",
         "Content-Type": "application/json",
-        "traceparent": "00-c9966626e038c74d9288d291cafb8602-1dc3e391dfd5c945-00",
-        "User-Agent": [
-          "azsdk-net-Monitor.Query/1.0.0-alpha.20210513.1",
-          "(.NET Core 4.6.30015.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "e0631063d913e4fb77da0396016c7203",
+        "traceparent": "00-72c645e91bc62d49a944d0d1140b40fe-c16d4705529de040-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.2.0-alpha.20230313.1 (.NET Framework 4.8.9139.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "419cb4c99a222b9aff53d7626ff188ce",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "query": "TableA1_123_CL",
-        "timespan": "2021-05-03T00:00:00.0000000Z/P7D"
+        "query": "TableA1_59_CL",
+        "timespan": "2023-02-28T00:00:00.0000000Z/P15D"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "3",
+        "Age": "44",
         "Connection": "keep-alive",
-        "Content-Length": "929",
+        "Content-Length": "1743",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 13 May 2021 21:58:14 GMT",
+        "Date": "Tue, 14 Mar 2023 21:54:26 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "Vary": [
-          "Accept-Encoding",
-          "Accept-Encoding"
-        ],
-        "Via": "1.1 draft-oms-6b5d48d5bb-vgphf",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-85c67bc895-79bq7",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -97,48 +91,138 @@
             ],
             "rows": [
               [
-                "50e32c19-2b4b-4152-b97e-0e02441cae60",
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
                 "RestAPI",
                 "",
                 "",
-                "2021-05-03T00:00:00Z",
+                "2023-03-14T20:57:43.1872735Z",
                 "",
                 "",
                 1,
                 "a",
                 false,
                 0,
-                "TableA1_123_CL",
+                "TableA1_59_CL",
                 ""
               ],
               [
-                "50e32c19-2b4b-4152-b97e-0e02441cae60",
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
                 "RestAPI",
                 "",
                 "",
-                "2021-05-05T00:00:00Z",
+                "2023-03-14T20:57:43.1872735Z",
                 "",
                 "",
-                3,
+                2,
                 "b",
                 true,
                 1.20000005,
-                "TableA1_123_CL",
+                "TableA1_59_CL",
                 ""
               ],
               [
-                "50e32c19-2b4b-4152-b97e-0e02441cae60",
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
                 "RestAPI",
                 "",
                 "",
-                "2021-05-08T00:00:00Z",
+                "2023-03-14T20:57:43.1872735Z",
                 "",
                 "",
-                1,
+                3,
                 "c",
                 false,
                 1.10000002,
-                "TableA1_123_CL",
+                "TableA1_59_CL",
+                ""
+              ],
+              [
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
+                "RestAPI",
+                "",
+                "",
+                "2023-03-14T20:49:08.116641Z",
+                "",
+                "",
+                1,
+                "a",
+                false,
+                0,
+                "TableA1_59_CL",
+                ""
+              ],
+              [
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
+                "RestAPI",
+                "",
+                "",
+                "2023-03-14T20:49:08.116641Z",
+                "",
+                "",
+                2,
+                "b",
+                true,
+                1.20000005,
+                "TableA1_59_CL",
+                ""
+              ],
+              [
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
+                "RestAPI",
+                "",
+                "",
+                "2023-03-14T20:49:08.116641Z",
+                "",
+                "",
+                3,
+                "c",
+                false,
+                1.10000002,
+                "TableA1_59_CL",
+                ""
+              ],
+              [
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
+                "RestAPI",
+                "",
+                "",
+                "2023-03-14T20:46:27.9577001Z",
+                "",
+                "",
+                1,
+                "a",
+                false,
+                0,
+                "TableA1_59_CL",
+                ""
+              ],
+              [
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
+                "RestAPI",
+                "",
+                "",
+                "2023-03-14T20:46:27.9577001Z",
+                "",
+                "",
+                2,
+                "b",
+                true,
+                1.20000005,
+                "TableA1_59_CL",
+                ""
+              ],
+              [
+                "314be15c-6065-462b-a0dc-8fe1213796f2",
+                "RestAPI",
+                "",
+                "",
+                "2023-03-14T20:46:27.9577001Z",
+                "",
+                "",
+                3,
+                "c",
+                false,
+                1.10000002,
+                "TableA1_59_CL",
                 ""
               ]
             ]
@@ -148,9 +232,10 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-05-13T14:58:14.5364526-07:00",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DateTimeOffsetNow": "2023-03-14T14:54:19.0935893-07:00",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "649791919",
-    "WORKSPACE_ID": "50e32c19-2b4b-4152-b97e-0e02441cae60"
+    "RandomSeed": "120144185",
+    "WORKSPACE_ID": "314be15c-6065-462b-a0dc-8fe1213796f2"
   }
 }

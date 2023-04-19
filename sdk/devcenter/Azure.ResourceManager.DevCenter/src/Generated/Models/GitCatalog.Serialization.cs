@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static GitCatalog DeserializeGitCatalog(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> uri = default;
             Optional<string> branch = default;
             Optional<string> secretIdentifier = default;

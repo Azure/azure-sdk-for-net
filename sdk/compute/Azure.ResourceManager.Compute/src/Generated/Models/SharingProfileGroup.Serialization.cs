@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SharingProfileGroup DeserializeSharingProfileGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SharingProfileGroupType> type = default;
             Optional<IList<string>> ids = default;
             foreach (var property in element.EnumerateObject())

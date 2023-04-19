@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.RecoveryServices
 
         internal static RecoveryServicesVaultExtendedInfoData DeserializeRecoveryServicesVaultExtendedInfoData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationRunbookDraft DeserializeAutomationRunbookDraft(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> inEdit = default;
             Optional<AutomationContentLink> draftContentLink = default;
             Optional<DateTimeOffset> creationTime = default;

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseSqlPoolColumnData DeserializeSynapseSqlPoolColumnData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

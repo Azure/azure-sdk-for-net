@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsRecordingFileStatusUpdatedEventData DeserializeAcsRecordingFileStatusUpdatedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AcsRecordingStorageInfoProperties> recordingStorageInfo = default;
             Optional<DateTimeOffset> recordingStartTime = default;
             Optional<long> recordingDurationMs = default;

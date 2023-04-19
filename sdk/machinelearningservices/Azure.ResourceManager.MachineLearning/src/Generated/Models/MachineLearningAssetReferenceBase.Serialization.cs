@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAssetReferenceBase DeserializeMachineLearningAssetReferenceBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("referenceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

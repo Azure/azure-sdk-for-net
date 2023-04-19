@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     {
         internal static AvailabilityGroupListenerListResult DeserializeAvailabilityGroupListenerListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AvailabilityGroupListenerData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

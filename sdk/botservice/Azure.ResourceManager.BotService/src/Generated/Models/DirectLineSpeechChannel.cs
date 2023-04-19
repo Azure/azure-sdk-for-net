@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> DirectLine Speech channel definition. </summary>
-    public partial class DirectLineSpeechChannel : Channel
+    public partial class DirectLineSpeechChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of DirectLineSpeechChannel. </summary>
         public DirectLineSpeechChannel()

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ConnectedEnvironmentStorageProperties DeserializeConnectedEnvironmentStorageProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppAzureFileProperties> azureFile = default;
             foreach (var property in element.EnumerateObject())
             {

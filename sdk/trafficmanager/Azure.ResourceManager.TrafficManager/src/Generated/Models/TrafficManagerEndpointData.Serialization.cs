@@ -146,6 +146,10 @@ namespace Azure.ResourceManager.TrafficManager
 
         internal static TrafficManagerEndpointData DeserializeTrafficManagerEndpointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;

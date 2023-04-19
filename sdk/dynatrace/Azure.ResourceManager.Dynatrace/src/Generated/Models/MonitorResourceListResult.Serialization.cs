@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static MonitorResourceListResult DeserializeMonitorResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DynatraceMonitorData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

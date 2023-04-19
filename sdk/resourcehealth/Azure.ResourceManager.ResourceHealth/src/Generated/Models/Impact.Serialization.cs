@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
         internal static Impact DeserializeImpact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> impactedService = default;
             Optional<IReadOnlyList<ImpactedServiceRegion>> impactedRegions = default;
             foreach (var property in element.EnumerateObject())

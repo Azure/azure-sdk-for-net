@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamAnalyticsSampleInputResult DeserializeStreamAnalyticsSampleInputResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamAnalyticsSampleInputResultStatus> status = default;
             Optional<IReadOnlyList<string>> diagnostics = default;
             Optional<Uri> eventsDownloadUrl = default;

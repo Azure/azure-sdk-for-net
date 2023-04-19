@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12ProtocolSettings DeserializeX12ProtocolSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             X12ValidationSettings validationSettings = default;
             X12FramingSettings framingSettings = default;
             X12EnvelopeSettings envelopeSettings = default;

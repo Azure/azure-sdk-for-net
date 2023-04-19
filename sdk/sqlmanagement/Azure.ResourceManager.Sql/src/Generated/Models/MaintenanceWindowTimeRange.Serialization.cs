@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static MaintenanceWindowTimeRange DeserializeMaintenanceWindowTimeRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlDayOfWeek> dayOfWeek = default;
             Optional<string> startTime = default;
             Optional<TimeSpan> duration = default;

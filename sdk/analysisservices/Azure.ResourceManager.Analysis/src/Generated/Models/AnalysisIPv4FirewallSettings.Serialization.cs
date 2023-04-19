@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Analysis.Models
 
         internal static AnalysisIPv4FirewallSettings DeserializeAnalysisIPv4FirewallSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AnalysisIPv4FirewallRule>> firewallRules = default;
             Optional<bool> enablePowerBIService = default;
             foreach (var property in element.EnumerateObject())

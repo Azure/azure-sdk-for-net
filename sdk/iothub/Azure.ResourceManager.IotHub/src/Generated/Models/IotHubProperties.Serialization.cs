@@ -160,6 +160,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubProperties DeserializeIotHubProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SharedAccessSignatureAuthorizationRule>> authorizationPolicies = default;
             Optional<bool> disableLocalAuth = default;
             Optional<bool> disableDeviceSas = default;

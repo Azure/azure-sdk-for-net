@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToSourceMySqlTaskProperties DeserializeConnectToSourceMySqlTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ConnectToSourceMySqlTaskInput> input = default;
             Optional<IReadOnlyList<ConnectToSourceNonSqlTaskOutput>> output = default;
             TaskType taskType = default;

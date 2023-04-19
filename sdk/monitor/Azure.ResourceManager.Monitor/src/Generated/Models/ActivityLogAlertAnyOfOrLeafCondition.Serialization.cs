@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ActivityLogAlertAnyOfOrLeafCondition DeserializeActivityLogAlertAnyOfOrLeafCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<AlertRuleLeafCondition>> anyOf = default;
             Optional<string> field = default;
             Optional<string> @equals = default;

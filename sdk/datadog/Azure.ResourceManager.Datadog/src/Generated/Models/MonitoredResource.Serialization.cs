@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal static MonitoredResource DeserializeMonitoredResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<bool> sendingMetrics = default;
             Optional<string> reasonForMetricsStatus = default;

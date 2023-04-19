@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.Hci
 
         internal static UpdateRunData DeserializeUpdateRunData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;

@@ -14,6 +14,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
     {
         internal static InnerError DeserializeInnerError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())

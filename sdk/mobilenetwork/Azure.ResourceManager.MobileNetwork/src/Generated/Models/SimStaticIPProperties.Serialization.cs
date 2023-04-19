@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static SimStaticIPProperties DeserializeSimStaticIPProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> attachedDataNetwork = default;
             Optional<WritableSubResource> slice = default;
             Optional<SimStaticIPPropertiesStaticIP> staticIP = default;

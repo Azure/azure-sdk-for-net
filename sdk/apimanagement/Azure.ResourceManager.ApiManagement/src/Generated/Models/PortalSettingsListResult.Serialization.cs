@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static PortalSettingsListResult DeserializePortalSettingsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PortalSettingsContractData>> value = default;
             Optional<long> count = default;
             foreach (var property in element.EnumerateObject())

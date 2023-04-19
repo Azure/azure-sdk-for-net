@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static HealthProbeSettings DeserializeHealthProbeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> probePath = default;
             Optional<HealthProbeRequestType> probeRequestType = default;
             Optional<HealthProbeProtocol> probeProtocol = default;

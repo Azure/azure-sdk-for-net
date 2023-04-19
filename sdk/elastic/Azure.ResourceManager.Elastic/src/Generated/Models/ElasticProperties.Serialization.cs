@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static ElasticProperties DeserializeElasticProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ElasticCloudUser> elasticCloudUser = default;
             Optional<ElasticCloudDeployment> elasticCloudDeployment = default;
             foreach (var property in element.EnumerateObject())

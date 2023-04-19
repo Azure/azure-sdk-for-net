@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static OrderItemPreferences DeserializeOrderItemPreferences(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<NotificationPreference>> notificationPreferences = default;
             Optional<TransportPreferences> transportPreferences = default;
             Optional<EncryptionPreferences> encryptionPreferences = default;

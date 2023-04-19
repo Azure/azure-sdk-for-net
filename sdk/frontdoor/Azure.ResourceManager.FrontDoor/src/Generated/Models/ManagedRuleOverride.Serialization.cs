@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static ManagedRuleOverride DeserializeManagedRuleOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleId = default;
             Optional<ManagedRuleEnabledState> enabledState = default;
             Optional<RuleMatchActionType> action = default;

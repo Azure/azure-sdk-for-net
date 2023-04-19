@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseDynamicExecutorAllocation DeserializeSynapseDynamicExecutorAllocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<int> minExecutors = default;
             Optional<int> maxExecutors = default;

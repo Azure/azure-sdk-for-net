@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SyncFullSchemaTableColumn DeserializeSyncFullSchemaTableColumn(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataSize = default;
             Optional<string> dataType = default;
             Optional<string> errorId = default;

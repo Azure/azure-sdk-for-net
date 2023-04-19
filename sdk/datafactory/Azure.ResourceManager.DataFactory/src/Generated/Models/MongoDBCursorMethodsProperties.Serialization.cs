@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MongoDBCursorMethodsProperties DeserializeMongoDBCursorMethodsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> project = default;
             Optional<BinaryData> sort = default;
             Optional<BinaryData> skip = default;

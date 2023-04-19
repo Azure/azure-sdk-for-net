@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CassandraReaperStatus DeserializeCassandraReaperStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> healthy = default;
             Optional<IReadOnlyDictionary<string, string>> repairRunIds = default;
             Optional<IReadOnlyDictionary<string, string>> repairSchedules = default;

@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedServiceBaseProperties DeserializeManagedServiceBaseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> placementConstraints = default;
             Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
             Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;

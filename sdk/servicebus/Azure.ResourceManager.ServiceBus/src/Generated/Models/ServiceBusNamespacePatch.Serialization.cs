@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusNamespacePatch DeserializeServiceBusNamespacePatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceBusSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

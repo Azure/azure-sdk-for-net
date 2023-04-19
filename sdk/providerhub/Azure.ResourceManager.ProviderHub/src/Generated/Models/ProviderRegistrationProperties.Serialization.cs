@@ -116,21 +116,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ProviderRegistrationProperties DeserializeProviderRegistrationProperties(JsonElement element)
         {
-            Optional<ProviderRegistrationPropertiesProviderHubMetadata> providerHubMetadata = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications> subscriptionLifecycleNotificationSpecifications = default;
-            Optional<ResourceProviderManifestPropertiesProviderAuthentication> providerAuthentication = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ProviderHubMetadata> providerHubMetadata = default;
+            Optional<ProviderHubProvisioningState> provisioningState = default;
+            Optional<SubscriptionLifecycleNotificationSpecifications> subscriptionLifecycleNotificationSpecifications = default;
+            Optional<ResourceProviderAuthentication> providerAuthentication = default;
             Optional<IList<ResourceProviderAuthorization>> providerAuthorizations = default;
             Optional<string> @namespace = default;
             Optional<string> providerVersion = default;
             Optional<ResourceProviderType> providerType = default;
             Optional<IList<string>> requiredFeatures = default;
-            Optional<ResourceProviderManifestPropertiesFeaturesRule> featuresRule = default;
-            Optional<ResourceProviderManifestPropertiesRequestHeaderOptions> requestHeaderOptions = default;
-            Optional<ResourceProviderManifestPropertiesManagement> management = default;
+            Optional<FeaturesRule> featuresRule = default;
+            Optional<RequestHeaderOptions> requestHeaderOptions = default;
+            Optional<ResourceProviderManagement> management = default;
             Optional<IList<ResourceProviderCapabilities>> capabilities = default;
             Optional<BinaryData> metadata = default;
-            Optional<ResourceProviderManifestPropertiesTemplateDeploymentOptions> templateDeploymentOptions = default;
+            Optional<TemplateDeploymentOptions> templateDeploymentOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerHubMetadata"u8))
@@ -140,7 +144,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    providerHubMetadata = ProviderRegistrationPropertiesProviderHubMetadata.DeserializeProviderRegistrationPropertiesProviderHubMetadata(property.Value);
+                    providerHubMetadata = ProviderHubMetadata.DeserializeProviderHubMetadata(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -150,7 +154,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ProviderHubProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subscriptionLifecycleNotificationSpecifications"u8))
@@ -160,7 +164,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    subscriptionLifecycleNotificationSpecifications = ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications.DeserializeProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications(property.Value);
+                    subscriptionLifecycleNotificationSpecifications = SubscriptionLifecycleNotificationSpecifications.DeserializeSubscriptionLifecycleNotificationSpecifications(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providerAuthentication"u8))
@@ -170,7 +174,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    providerAuthentication = ResourceProviderManifestPropertiesProviderAuthentication.DeserializeResourceProviderManifestPropertiesProviderAuthentication(property.Value);
+                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(property.Value);
                     continue;
                 }
                 if (property.NameEquals("providerAuthorizations"u8))
@@ -230,7 +234,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    featuresRule = ResourceProviderManifestPropertiesFeaturesRule.DeserializeResourceProviderManifestPropertiesFeaturesRule(property.Value);
+                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requestHeaderOptions"u8))
@@ -240,7 +244,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    requestHeaderOptions = ResourceProviderManifestPropertiesRequestHeaderOptions.DeserializeResourceProviderManifestPropertiesRequestHeaderOptions(property.Value);
+                    requestHeaderOptions = RequestHeaderOptions.DeserializeRequestHeaderOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("management"u8))
@@ -250,7 +254,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    management = ResourceProviderManifestPropertiesManagement.DeserializeResourceProviderManifestPropertiesManagement(property.Value);
+                    management = ResourceProviderManagement.DeserializeResourceProviderManagement(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capabilities"u8))
@@ -285,7 +289,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    templateDeploymentOptions = ResourceProviderManifestPropertiesTemplateDeploymentOptions.DeserializeResourceProviderManifestPropertiesTemplateDeploymentOptions(property.Value);
+                    templateDeploymentOptions = TemplateDeploymentOptions.DeserializeTemplateDeploymentOptions(property.Value);
                     continue;
                 }
             }

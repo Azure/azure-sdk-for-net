@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryApplicationVersionPublishingProfile DeserializeGalleryApplicationVersionPublishingProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             UserArtifactSource source = default;
             Optional<UserArtifactManagement> manageActions = default;
             Optional<UserArtifactSettings> settings = default;

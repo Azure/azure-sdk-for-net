@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static SignalRServiceClientConnectionDisconnectedEventData DeserializeSignalRServiceClientConnectionDisconnectedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> hubName = default;
             Optional<string> connectionId = default;

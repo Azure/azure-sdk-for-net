@@ -66,6 +66,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SapCloudForCustomerSink DeserializeSapCloudForCustomerSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SapCloudForCustomerSinkWriteBehavior> writeBehavior = default;
             Optional<object> httpRequestTimeout = default;
             string type = default;

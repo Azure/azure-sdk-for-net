@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static NetworkInterfaceResourceSettings DeserializeNetworkInterfaceResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<NicIPConfigurationResourceSettings>> ipConfigurations = default;
             Optional<bool?> enableAcceleratedNetworking = default;

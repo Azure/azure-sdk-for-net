@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DefaultCustomBlockResponseStatusCode != null)
                 {
                     writer.WritePropertyName("defaultCustomBlockResponseStatusCode"u8);
-                    writer.WriteStringValue(DefaultCustomBlockResponseStatusCode.Value.ToString());
+                    writer.WriteNumberValue(DefaultCustomBlockResponseStatusCode.Value.ToSerialInt32());
                 }
                 else
                 {
@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static WafPolicySettings DeserializeWafPolicySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolicyEnabledState> enabledState = default;
             Optional<PolicyMode> mode = default;
             Optional<Uri> defaultRedirectUri = default;

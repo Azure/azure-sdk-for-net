@@ -15,6 +15,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static Platform DeserializePlatform(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> architecture = default;
             Optional<string> os = default;
             Optional<string> osVersion = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static LabServicesUsageListResult DeserializeLabServicesUsageListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LabServicesUsage>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

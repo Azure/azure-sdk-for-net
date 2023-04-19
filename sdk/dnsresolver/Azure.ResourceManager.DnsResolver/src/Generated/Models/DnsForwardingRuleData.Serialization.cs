@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.DnsResolver
 
         internal static DnsForwardingRuleData DeserializeDnsForwardingRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;

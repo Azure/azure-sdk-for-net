@@ -74,6 +74,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static XmlReadSettings DeserializeXmlReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CompressionReadSettings> compressionProperties = default;
             Optional<BinaryData> validationMode = default;
             Optional<BinaryData> detectDataType = default;

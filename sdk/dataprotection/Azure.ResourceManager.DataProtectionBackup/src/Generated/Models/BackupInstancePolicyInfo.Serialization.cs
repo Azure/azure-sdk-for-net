@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BackupInstancePolicyInfo DeserializeBackupInstancePolicyInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier policyId = default;
             Optional<string> policyVersion = default;
             Optional<BackupInstancePolicySettings> policyParameters = default;

@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static RandomSamplingAlgorithm DeserializeRandomSamplingAlgorithm(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RandomSamplingAlgorithmRule> rule = default;
             Optional<int?> seed = default;
             SamplingAlgorithmType samplingAlgorithmType = default;

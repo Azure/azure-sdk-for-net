@@ -16,6 +16,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberSearchResult DeserializePhoneNumberSearchResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string searchId = default;
             IReadOnlyList<string> phoneNumbers = default;
             PhoneNumberType phoneNumberType = default;
@@ -23,6 +27,8 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumberCapabilities capabilities = default;
             PhoneNumberCost cost = default;
             DateTimeOffset searchExpiresBy = default;
+            Optional<int> errorCode = default;
+            Optional<PhoneNumberSearchResultError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("searchId"u8))
@@ -65,8 +71,28 @@ namespace Azure.Communication.PhoneNumbers
                     searchExpiresBy = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("errorCode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    errorCode = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("error"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    error = new PhoneNumberSearchResultError(property.Value.GetString());
+                    continue;
+                }
             }
-            return new PhoneNumberSearchResult(searchId, phoneNumbers, phoneNumberType, assignmentType, capabilities, cost, searchExpiresBy);
+            return new PhoneNumberSearchResult(searchId, phoneNumbers, phoneNumberType, assignmentType, capabilities, cost, searchExpiresBy, Optional.ToNullable(errorCode), Optional.ToNullable(error));
         }
     }
 }

@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.Maps
 
         internal static MapsAccountData DeserializeMapsAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MapsSku sku = default;
             Optional<MapsAccountKind> kind = default;
             Optional<MapsAccountProperties> properties = default;

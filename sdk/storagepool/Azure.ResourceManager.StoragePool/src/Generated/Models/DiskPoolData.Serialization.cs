@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.StoragePool
 
         internal static DiskPoolData DeserializeDiskPoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoragePoolSku> sku = default;
             Optional<string> managedBy = default;
             Optional<IReadOnlyList<string>> managedByExtended = default;

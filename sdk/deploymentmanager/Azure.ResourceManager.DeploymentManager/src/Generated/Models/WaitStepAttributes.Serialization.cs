@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
         internal static WaitStepAttributes DeserializeWaitStepAttributes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSpan duration = default;
             foreach (var property in element.EnumerateObject())
             {

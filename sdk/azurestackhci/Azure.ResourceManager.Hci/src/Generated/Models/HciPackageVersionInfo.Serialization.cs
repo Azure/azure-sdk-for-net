@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static HciPackageVersionInfo DeserializeHciPackageVersionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> packageType = default;
             Optional<string> version = default;
             Optional<DateTimeOffset> lastUpdated = default;

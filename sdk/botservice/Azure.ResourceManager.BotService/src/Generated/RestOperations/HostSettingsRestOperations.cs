@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.BotService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-15-preview";
+            _apiVersion = apiVersion ?? "2022-09-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.BotService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HostSettingsResponse>> GetAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<BotServiceHostSettingsResult>> GetAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.BotService
             {
                 case 200:
                     {
-                        HostSettingsResponse value = default;
+                        BotServiceHostSettingsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HostSettingsResponse.DeserializeHostSettingsResponse(document.RootElement);
+                        value = BotServiceHostSettingsResult.DeserializeBotServiceHostSettingsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.BotService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HostSettingsResponse> Get(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<BotServiceHostSettingsResult> Get(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.BotService
             {
                 case 200:
                     {
-                        HostSettingsResponse value = default;
+                        BotServiceHostSettingsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HostSettingsResponse.DeserializeHostSettingsResponse(document.RootElement);
+                        value = BotServiceHostSettingsResult.DeserializeBotServiceHostSettingsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

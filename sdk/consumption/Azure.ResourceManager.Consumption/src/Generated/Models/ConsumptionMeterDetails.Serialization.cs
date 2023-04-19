@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ConsumptionMeterDetails DeserializeConsumptionMeterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> meterName = default;
             Optional<string> meterCategory = default;
             Optional<string> meterSubCategory = default;

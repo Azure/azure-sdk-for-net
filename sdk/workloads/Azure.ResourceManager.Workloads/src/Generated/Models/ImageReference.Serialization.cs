@@ -35,22 +35,19 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(SharedGalleryImageId))
-            {
-                writer.WritePropertyName("sharedGalleryImageId"u8);
-                writer.WriteStringValue(SharedGalleryImageId);
-            }
             writer.WriteEndObject();
         }
 
         internal static ImageReference DeserializeImageReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> publisher = default;
             Optional<string> offer = default;
             Optional<string> sku = default;
             Optional<string> version = default;
-            Optional<string> exactVersion = default;
-            Optional<string> sharedGalleryImageId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisher"u8))
@@ -73,18 +70,8 @@ namespace Azure.ResourceManager.Workloads.Models
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("exactVersion"u8))
-                {
-                    exactVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sharedGalleryImageId"u8))
-                {
-                    sharedGalleryImageId = property.Value.GetString();
-                    continue;
-                }
             }
-            return new ImageReference(publisher.Value, offer.Value, sku.Value, version.Value, exactVersion.Value, sharedGalleryImageId.Value);
+            return new ImageReference(publisher.Value, offer.Value, sku.Value, version.Value);
         }
     }
 }

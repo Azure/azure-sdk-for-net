@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static Selector DeserializeSelector(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SelectorType type = default;
             string id = default;
             IList<TargetReference> targets = default;

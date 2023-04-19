@@ -33,6 +33,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static NodeInput DeserializeNodeInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string nodeName = default;
             Optional<IList<OutputSelector>> outputSelectors = default;
             foreach (var property in element.EnumerateObject())

@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static ScheduleData DeserializeScheduleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

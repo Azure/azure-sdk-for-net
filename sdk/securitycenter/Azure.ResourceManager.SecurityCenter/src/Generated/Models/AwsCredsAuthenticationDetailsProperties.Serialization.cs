@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AwsCredsAuthenticationDetailsProperties DeserializeAwsCredsAuthenticationDetailsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountId = default;
             string awsAccessKeyId = default;
             string awsSecretAccessKey = default;

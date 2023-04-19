@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         internal static PartnerTopicsListResult DeserializePartnerTopicsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PartnerTopicData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

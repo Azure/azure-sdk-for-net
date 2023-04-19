@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogAgreementResource DeserializeDatadogAgreementResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DatadogAgreementProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

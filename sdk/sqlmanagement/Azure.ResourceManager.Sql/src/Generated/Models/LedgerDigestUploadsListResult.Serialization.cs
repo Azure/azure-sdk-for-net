@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static LedgerDigestUploadsListResult DeserializeLedgerDigestUploadsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LedgerDigestUploadData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

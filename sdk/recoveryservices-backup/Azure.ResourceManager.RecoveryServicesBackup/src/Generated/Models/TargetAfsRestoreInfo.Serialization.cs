@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static TargetAfsRestoreInfo DeserializeTargetAfsRestoreInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ResourceIdentifier> targetResourceId = default;
             foreach (var property in element.EnumerateObject())

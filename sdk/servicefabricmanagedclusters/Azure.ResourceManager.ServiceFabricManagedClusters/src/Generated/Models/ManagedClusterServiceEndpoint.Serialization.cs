@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedClusterServiceEndpoint DeserializeManagedClusterServiceEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string service = default;
             Optional<IList<AzureLocation>> locations = default;
             foreach (var property in element.EnumerateObject())

@@ -71,6 +71,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static MongoDbAtlasSource DeserializeMongoDbAtlasSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> filter = default;
             Optional<MongoDbCursorMethodsProperties> cursorMethods = default;
             Optional<object> batchSize = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ApplicationGatewayAvailableSslPredefinedPolicies DeserializeApplicationGatewayAvailableSslPredefinedPolicies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ApplicationGatewaySslPredefinedPolicy>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

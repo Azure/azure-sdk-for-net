@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         internal static ManagedNetworkPeeringPolicyData DeserializeManagedNetworkPeeringPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedNetworkPeeringPolicyProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

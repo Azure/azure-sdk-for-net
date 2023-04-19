@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightClusterCreationValidateResult DeserializeHDInsightClusterCreationValidateResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<HDInsightClusterValidationErrorInfo>> validationErrors = default;
             Optional<IReadOnlyList<HDInsightClusterValidationErrorInfo>> validationWarnings = default;
             Optional<TimeSpan> estimatedCreationDuration = default;

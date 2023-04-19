@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static OpenIdConnectClientCredential DeserializeOpenIdConnectClientCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ClientCredentialMethod> method = default;
             Optional<string> clientSecretSettingName = default;
             foreach (var property in element.EnumerateObject())

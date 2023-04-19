@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicWorkflowRunActionRepetitionDefinitionList DeserializeLogicWorkflowRunActionRepetitionDefinitionList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<LogicWorkflowRunActionRepetitionDefinitionData>> value = default;
             foreach (var property in element.EnumerateObject())

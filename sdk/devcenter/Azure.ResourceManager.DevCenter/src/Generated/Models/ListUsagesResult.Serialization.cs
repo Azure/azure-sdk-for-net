@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static ListUsagesResult DeserializeListUsagesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DevCenterUsage>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

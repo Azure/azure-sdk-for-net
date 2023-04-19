@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnClientIPsecParameters DeserializeVpnClientIPsecParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int saLifeTimeSeconds = default;
             int saDataSizeKilobytes = default;
             IPsecEncryption ipsecEncryption = default;

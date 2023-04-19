@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.HybridData.Models
 
         internal static HybridDataJobDetails DeserializeHybridDataJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<HybridDataJobStage>> jobStages = default;
             Optional<HybridDataJobDefinitionData> jobDefinition = default;
             Optional<IList<HybridDataJobErrorDetails>> errorDetails = default;

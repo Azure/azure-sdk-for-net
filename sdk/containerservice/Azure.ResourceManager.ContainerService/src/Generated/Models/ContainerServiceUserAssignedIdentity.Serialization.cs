@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceUserAssignedIdentity DeserializeContainerServiceUserAssignedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<Guid> clientId = default;
             Optional<Guid> objectId = default;

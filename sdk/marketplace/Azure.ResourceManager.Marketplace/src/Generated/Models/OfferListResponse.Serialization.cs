@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static OfferListResponse DeserializeOfferListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PrivateStoreOfferData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

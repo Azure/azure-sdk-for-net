@@ -56,6 +56,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureQueueSink DeserializeAzureQueueSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<object> writeBatchSize = default;
             Optional<object> writeBatchTimeout = default;

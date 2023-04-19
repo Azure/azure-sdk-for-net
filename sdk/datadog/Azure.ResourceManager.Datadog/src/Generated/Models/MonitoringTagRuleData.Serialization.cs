@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Datadog
 
         internal static MonitoringTagRuleData DeserializeMonitoringTagRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MonitoringTagRulesProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

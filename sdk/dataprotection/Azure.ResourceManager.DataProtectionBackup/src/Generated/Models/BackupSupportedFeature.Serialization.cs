@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static BackupSupportedFeature DeserializeBackupSupportedFeature(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> featureName = default;
             Optional<FeatureSupportStatus> supportStatus = default;
             Optional<IReadOnlyList<string>> exposureControlledFeatures = default;

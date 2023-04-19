@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static CodecCopyAudio DeserializeCodecCopyAudio(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = default;
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())

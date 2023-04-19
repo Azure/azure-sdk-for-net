@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static ExtendedLocation DeserializeExtendedLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             ExtendedLocationType type = default;
             foreach (var property in element.EnumerateObject())

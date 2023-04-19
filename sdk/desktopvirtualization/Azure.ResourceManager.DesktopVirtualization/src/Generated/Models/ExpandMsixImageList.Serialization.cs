@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal static ExpandMsixImageList DeserializeExpandMsixImageList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ExpandMsixImage>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

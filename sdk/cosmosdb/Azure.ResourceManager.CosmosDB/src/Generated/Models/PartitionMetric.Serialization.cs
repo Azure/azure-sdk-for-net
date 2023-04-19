@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static PartitionMetric DeserializePartitionMetric(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> partitionId = default;
             Optional<string> partitionKeyRangeId = default;
             Optional<DateTimeOffset> startTime = default;

@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
@@ -43,6 +48,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static NumberInRangeAdvancedFilter DeserializeNumberInRangeAdvancedFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<IList<double>>> values = default;
             AdvancedFilterOperatorType operatorType = default;
             Optional<string> key = default;
@@ -58,12 +67,19 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<IList<double>> array = new List<IList<double>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<double> array0 = new List<double>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(item0.GetDouble());
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<double> array0 = new List<double>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(item0.GetDouble());
+                            }
+                            array.Add(array0);
+                        }
                     }
                     values = array;
                     continue;

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AwsCloudTrailDataConnectorDataTypes DeserializeAwsCloudTrailDataConnectorDataTypes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AwsCloudTrailDataConnectorDataTypesLogs> logs = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static InstallOciDriverTaskInput DeserializeInstallOciDriverTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> driverPackageName = default;
             foreach (var property in element.EnumerateObject())
             {

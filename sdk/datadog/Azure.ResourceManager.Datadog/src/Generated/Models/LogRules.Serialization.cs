@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static LogRules DeserializeLogRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> sendAadLogs = default;
             Optional<bool> sendSubscriptionLogs = default;
             Optional<bool> sendResourceLogs = default;

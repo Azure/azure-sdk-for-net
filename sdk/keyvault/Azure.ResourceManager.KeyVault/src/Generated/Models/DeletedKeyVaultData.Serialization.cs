@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.KeyVault
     {
         internal static DeletedKeyVaultData DeserializeDeletedKeyVaultData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeletedKeyVaultProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

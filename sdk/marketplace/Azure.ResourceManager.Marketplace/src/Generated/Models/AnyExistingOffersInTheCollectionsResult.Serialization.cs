@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static AnyExistingOffersInTheCollectionsResult DeserializeAnyExistingOffersInTheCollectionsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> value = default;
             foreach (var property in element.EnumerateObject())
             {

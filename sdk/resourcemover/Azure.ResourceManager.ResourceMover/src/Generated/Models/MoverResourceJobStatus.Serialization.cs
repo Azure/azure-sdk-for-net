@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoverResourceJobStatus DeserializeMoverResourceJobStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MoverResourceJobName> jobName = default;
             Optional<string> jobProgress = default;
             foreach (var property in element.EnumerateObject())

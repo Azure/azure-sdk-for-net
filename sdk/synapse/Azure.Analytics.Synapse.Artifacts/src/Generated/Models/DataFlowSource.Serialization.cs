@@ -50,6 +50,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DataFlowSource DeserializeDataFlowSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinkedServiceReference> schemaLinkedService = default;
             string name = default;
             Optional<string> description = default;

@@ -15,6 +15,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static MapsAddress DeserializeMapsAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> buildingNumber = default;
             Optional<string> street = default;
             Optional<string> crossStreet = default;

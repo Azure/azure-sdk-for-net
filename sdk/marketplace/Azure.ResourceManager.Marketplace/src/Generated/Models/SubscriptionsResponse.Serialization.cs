@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static SubscriptionsResponse DeserializeSubscriptionsResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MarketplaceSubscription>> value = default;
             Optional<string> skipToken = default;
             Optional<long> count = default;

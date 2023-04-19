@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadContainerAutoProtectionIntent DeserializeWorkloadContainerAutoProtectionIntent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ProtectionIntentItemType protectionIntentItemType = default;
             Optional<BackupManagementType> backupManagementType = default;
             Optional<ResourceIdentifier> sourceResourceId = default;

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ProviderPermission DeserializeProviderPermission(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> applicationId = default;
             Optional<AzureRoleDefinition> roleDefinition = default;
             Optional<AzureRoleDefinition> managedByRoleDefinition = default;

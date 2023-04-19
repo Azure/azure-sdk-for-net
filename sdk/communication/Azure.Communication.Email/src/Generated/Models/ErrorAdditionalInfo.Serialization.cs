@@ -10,10 +10,14 @@ using Azure.Core;
 
 namespace Azure.Communication.Email
 {
-    public partial class ErrorAdditionalInfo
+    internal partial class ErrorAdditionalInfo
     {
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<object> info = default;
             foreach (var property in element.EnumerateObject())

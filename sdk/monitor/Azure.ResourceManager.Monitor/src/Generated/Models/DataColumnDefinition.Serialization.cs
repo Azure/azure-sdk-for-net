@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataColumnDefinition DeserializeDataColumnDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<DataColumnDefinitionType> type = default;
             foreach (var property in element.EnumerateObject())

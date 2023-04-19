@@ -30,6 +30,10 @@ namespace Azure.Communication.JobRouter
 
         internal static WeightedAllocationWorkerSelectorAttachment DeserializeWeightedAllocationWorkerSelectorAttachment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<WorkerWeightedAllocation> allocations = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())

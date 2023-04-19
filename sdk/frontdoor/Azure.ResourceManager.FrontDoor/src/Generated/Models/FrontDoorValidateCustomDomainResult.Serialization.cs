@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     {
         internal static FrontDoorValidateCustomDomainResult DeserializeFrontDoorValidateCustomDomainResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> customDomainValidated = default;
             Optional<string> reason = default;
             Optional<string> message = default;

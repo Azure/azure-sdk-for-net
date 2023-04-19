@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningUriFolderJobInput DeserializeMachineLearningUriFolderJobInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningInputDeliveryMode> mode = default;
             Uri uri = default;
             Optional<string> description = default;

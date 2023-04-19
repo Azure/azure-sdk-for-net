@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerResourceRequirements DeserializeContainerResourceRequirements(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ContainerResourceRequestsContent requests = default;
             Optional<ContainerResourceLimits> limits = default;
             foreach (var property in element.EnumerateObject())

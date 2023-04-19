@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static TemplateSpecPatch DeserializeTemplateSpecPatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;

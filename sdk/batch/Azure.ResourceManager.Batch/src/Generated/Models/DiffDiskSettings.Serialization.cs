@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static DiffDiskSettings DeserializeDiffDiskSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BatchDiffDiskPlacement> placement = default;
             foreach (var property in element.EnumerateObject())
             {

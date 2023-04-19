@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         internal static DeviceProvisioningServicesCertificateData DeserializeDeviceProvisioningServicesCertificateData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeviceProvisioningServicesCertificateProperties> properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;

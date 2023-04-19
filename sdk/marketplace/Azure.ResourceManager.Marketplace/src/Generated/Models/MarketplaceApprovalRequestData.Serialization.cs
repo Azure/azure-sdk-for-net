@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Marketplace
 
         internal static MarketplaceApprovalRequestData DeserializeMarketplaceApprovalRequestData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

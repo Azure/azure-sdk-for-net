@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskEncryption DeserializeDiskEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> diskEncryptionSetId = default;
             Optional<ComputeEncryptionType> type = default;
             foreach (var property in element.EnumerateObject())

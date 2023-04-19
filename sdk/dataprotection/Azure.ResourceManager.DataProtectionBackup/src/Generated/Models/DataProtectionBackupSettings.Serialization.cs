@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupSettings DeserializeDataProtectionBackupSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string backupType = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())

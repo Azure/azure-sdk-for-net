@@ -14,6 +14,10 @@ namespace Azure.Communication.CallingServer
     {
         internal static RecognizeCompleted DeserializeRecognizeCompleted(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
             Optional<CallMediaRecognitionType> recognitionType = default;

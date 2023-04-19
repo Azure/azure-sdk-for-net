@@ -163,29 +163,38 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (MaxBatchInstancePercent > 100)
+            if (MaxBatchInstancePercent != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxBatchInstancePercent", 100);
+                if (MaxBatchInstancePercent > 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxBatchInstancePercent", 100);
+                }
+                if (MaxBatchInstancePercent < 5)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxBatchInstancePercent", 5);
+                }
             }
-            if (MaxBatchInstancePercent < 5)
+            if (MaxUnhealthyInstancePercent != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxBatchInstancePercent", 5);
+                if (MaxUnhealthyInstancePercent > 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxUnhealthyInstancePercent", 100);
+                }
+                if (MaxUnhealthyInstancePercent < 5)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxUnhealthyInstancePercent", 5);
+                }
             }
-            if (MaxUnhealthyInstancePercent > 100)
+            if (MaxUnhealthyUpgradedInstancePercent != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxUnhealthyInstancePercent", 100);
-            }
-            if (MaxUnhealthyInstancePercent < 5)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxUnhealthyInstancePercent", 5);
-            }
-            if (MaxUnhealthyUpgradedInstancePercent > 100)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxUnhealthyUpgradedInstancePercent", 100);
-            }
-            if (MaxUnhealthyUpgradedInstancePercent < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxUnhealthyUpgradedInstancePercent", 0);
+                if (MaxUnhealthyUpgradedInstancePercent > 100)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxUnhealthyUpgradedInstancePercent", 100);
+                }
+                if (MaxUnhealthyUpgradedInstancePercent < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxUnhealthyUpgradedInstancePercent", 0);
+                }
             }
         }
     }

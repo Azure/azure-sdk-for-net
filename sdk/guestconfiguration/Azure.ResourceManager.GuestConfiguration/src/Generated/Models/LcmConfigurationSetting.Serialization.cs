@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     {
         internal static LcmConfigurationSetting DeserializeLcmConfigurationSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LcmConfigurationMode> configurationMode = default;
             Optional<bool> allowModuleOverwrite = default;
             Optional<ActionAfterReboot> actionAfterReboot = default;

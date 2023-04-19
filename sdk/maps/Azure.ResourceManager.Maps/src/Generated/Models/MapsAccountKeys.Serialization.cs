@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Maps.Models
     {
         internal static MapsAccountKeys DeserializeMapsAccountKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> primaryKeyLastUpdated = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;

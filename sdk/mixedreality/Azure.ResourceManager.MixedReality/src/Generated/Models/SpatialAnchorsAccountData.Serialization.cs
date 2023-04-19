@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.MixedReality
 
         internal static SpatialAnchorsAccountData DeserializeSpatialAnchorsAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ManagedServiceIdentity> plan = default;
             Optional<MixedRealitySku> sku = default;

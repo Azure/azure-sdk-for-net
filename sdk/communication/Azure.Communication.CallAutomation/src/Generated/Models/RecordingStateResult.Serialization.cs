@@ -14,6 +14,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal static RecordingStateResult DeserializeRecordingStateResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recordingId = default;
             Optional<RecordingState> recordingState = default;
             foreach (var property in element.EnumerateObject())

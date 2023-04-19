@@ -41,6 +41,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static OrcWriteSettings DeserializeOrcWriteSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> maxRowsPerFile = default;
             Optional<object> fileNamePrefix = default;
             string type = default;

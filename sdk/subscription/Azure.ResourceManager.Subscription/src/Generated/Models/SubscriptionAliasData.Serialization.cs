@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Subscription
     {
         internal static SubscriptionAliasData DeserializeSubscriptionAliasData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SubscriptionAliasProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

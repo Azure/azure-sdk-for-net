@@ -142,6 +142,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ExecuteWranglingDataflowActivity DeserializeExecuteWranglingDataflowActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;

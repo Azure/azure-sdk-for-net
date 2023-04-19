@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static MongoDBUserDefinitionListResult DeserializeMongoDBUserDefinitionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MongoDBUserDefinitionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataMigration
 
         internal static DatabaseMigrationSqlMIData DeserializeDatabaseMigrationSqlMIData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DatabaseMigrationSqlMIProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

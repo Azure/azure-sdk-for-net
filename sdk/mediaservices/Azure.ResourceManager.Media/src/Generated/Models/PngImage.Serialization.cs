@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static PngImage DeserializePngImage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<PngLayer>> layers = default;
             string start = default;
             Optional<string> step = default;

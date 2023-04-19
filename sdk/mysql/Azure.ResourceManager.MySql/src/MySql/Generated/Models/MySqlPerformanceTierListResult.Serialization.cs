@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlPerformanceTierListResult DeserializeMySqlPerformanceTierListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MySqlPerformanceTier>> value = default;
             foreach (var property in element.EnumerateObject())
             {

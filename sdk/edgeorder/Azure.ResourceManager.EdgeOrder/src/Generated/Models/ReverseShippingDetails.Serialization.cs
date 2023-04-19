@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ReverseShippingDetails DeserializeReverseShippingDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sasKeyForLabel = default;
             Optional<string> carrierName = default;
             Optional<string> carrierDisplayName = default;

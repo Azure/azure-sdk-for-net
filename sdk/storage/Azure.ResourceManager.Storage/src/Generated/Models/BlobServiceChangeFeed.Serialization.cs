@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static BlobServiceChangeFeed DeserializeBlobServiceChangeFeed(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<int> retentionInDays = default;
             foreach (var property in element.EnumerateObject())

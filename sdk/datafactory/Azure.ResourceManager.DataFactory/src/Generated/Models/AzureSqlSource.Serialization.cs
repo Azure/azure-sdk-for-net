@@ -139,6 +139,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureSqlSource DeserializeAzureSqlSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> sqlReaderQuery = default;
             Optional<BinaryData> sqlReaderStoredProcedureName = default;
             Optional<IDictionary<string, StoredProcedureParameter>> storedProcedureParameters = default;

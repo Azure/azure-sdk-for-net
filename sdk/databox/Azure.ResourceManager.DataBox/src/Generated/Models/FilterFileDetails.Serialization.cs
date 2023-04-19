@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static FilterFileDetails DeserializeFilterFileDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             FilterFileType filterFileType = default;
             string filterFilePath = default;
             foreach (var property in element.EnumerateObject())

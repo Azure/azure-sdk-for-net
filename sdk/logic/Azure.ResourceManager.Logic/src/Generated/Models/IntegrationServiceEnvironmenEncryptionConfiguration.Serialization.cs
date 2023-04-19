@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmenEncryptionConfiguration DeserializeIntegrationServiceEnvironmenEncryptionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationServiceEnvironmenEncryptionKeyReference> encryptionKeyReference = default;
             foreach (var property in element.EnumerateObject())
             {

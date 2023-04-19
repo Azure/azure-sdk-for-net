@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Avs
 
         internal static AvsPrivateCloudAddonData DeserializeAvsPrivateCloudAddonData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AvsPrivateCloudAddonProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;

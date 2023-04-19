@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapsePrivateLinkHubListResult DeserializeSynapsePrivateLinkHubListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<SynapsePrivateLinkHubData>> value = default;
             foreach (var property in element.EnumerateObject())

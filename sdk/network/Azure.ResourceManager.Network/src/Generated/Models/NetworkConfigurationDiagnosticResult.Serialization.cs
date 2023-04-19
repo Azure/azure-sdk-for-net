@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkConfigurationDiagnosticResult DeserializeNetworkConfigurationDiagnosticResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetworkConfigurationDiagnosticProfile> profile = default;
             Optional<NetworkSecurityGroupResult> networkSecurityGroupResult = default;
             foreach (var property in element.EnumerateObject())

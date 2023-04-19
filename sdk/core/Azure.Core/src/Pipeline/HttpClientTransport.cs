@@ -513,7 +513,12 @@ namespace Azure.Core.Pipeline
             public override void Dispose()
             {
                 _headers.Dispose();
-                Content?.Dispose();
+                var content = Content;
+                if (content != null)
+                {
+                    Content = null;
+                    content.Dispose();
+                }
             }
 
             public override string ToString() => BuildRequestMessage(default).ToString();

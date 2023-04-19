@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeMountPointMap DeserializeDataBoxEdgeMountPointMap(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier shareId = default;
             Optional<ResourceIdentifier> roleId = default;
             Optional<string> mountPoint = default;

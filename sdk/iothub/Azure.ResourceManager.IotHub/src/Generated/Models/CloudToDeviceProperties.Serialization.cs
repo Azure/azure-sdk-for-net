@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static CloudToDeviceProperties DeserializeCloudToDeviceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxDeliveryCount = default;
             Optional<TimeSpan> defaultTtlAsIso8601 = default;
             Optional<CloudToDeviceFeedbackQueueProperties> feedback = default;

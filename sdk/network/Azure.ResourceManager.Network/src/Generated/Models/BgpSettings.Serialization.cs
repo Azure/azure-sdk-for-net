@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BgpSettings DeserializeBgpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> asn = default;
             Optional<string> bgpPeeringAddress = default;
             Optional<int> peerWeight = default;

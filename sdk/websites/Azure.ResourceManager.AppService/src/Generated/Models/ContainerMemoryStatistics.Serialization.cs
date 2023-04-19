@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ContainerMemoryStatistics DeserializeContainerMemoryStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> usage = default;
             Optional<long> maxUsage = default;
             Optional<long> limit = default;

@@ -139,6 +139,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static MabFileFolderProtectedItem DeserializeMabFileFolderProtectedItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<string> computerName = default;
             Optional<string> lastBackupStatus = default;

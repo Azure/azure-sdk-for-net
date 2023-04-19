@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SyncGroupSchemaTable DeserializeSyncGroupSchemaTable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SyncGroupSchemaTableColumn>> columns = default;
             Optional<string> quotedName = default;
             foreach (var property in element.EnumerateObject())

@@ -14,6 +14,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static LatLongPairAbbreviated DeserializeLatLongPairAbbreviated(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> lat = default;
             Optional<double> lon = default;
             foreach (var property in element.EnumerateObject())

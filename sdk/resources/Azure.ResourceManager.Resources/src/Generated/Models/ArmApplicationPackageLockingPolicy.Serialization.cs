@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationPackageLockingPolicy DeserializeArmApplicationPackageLockingPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> allowedActions = default;
             Optional<IList<string>> allowedDataActions = default;
             foreach (var property in element.EnumerateObject())

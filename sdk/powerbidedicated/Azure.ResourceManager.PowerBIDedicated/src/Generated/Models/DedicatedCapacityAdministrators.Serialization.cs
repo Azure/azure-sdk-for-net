@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         internal static DedicatedCapacityAdministrators DeserializeDedicatedCapacityAdministrators(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> members = default;
             foreach (var property in element.EnumerateObject())
             {

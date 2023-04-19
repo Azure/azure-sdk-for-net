@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static ResourceGuardProxyProperties DeserializeResourceGuardProxyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceGuardResourceId = default;
             Optional<IList<ResourceGuardOperationDetail>> resourceGuardOperationDetails = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;

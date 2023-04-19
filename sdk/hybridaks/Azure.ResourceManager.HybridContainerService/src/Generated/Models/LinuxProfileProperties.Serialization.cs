@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static LinuxProfileProperties DeserializeLinuxProfileProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> adminUsername = default;
             Optional<LinuxProfilePropertiesSsh> ssh = default;
             foreach (var property in element.EnumerateObject())

@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static EventHubsSchemaGroupData DeserializeEventHubsSchemaGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;

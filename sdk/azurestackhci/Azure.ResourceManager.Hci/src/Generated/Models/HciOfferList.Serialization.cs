@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static HciOfferList DeserializeHciOfferList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<OfferData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

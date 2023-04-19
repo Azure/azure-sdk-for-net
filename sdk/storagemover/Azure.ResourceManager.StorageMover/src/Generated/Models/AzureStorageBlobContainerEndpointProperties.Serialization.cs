@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         internal static AzureStorageBlobContainerEndpointProperties DeserializeAzureStorageBlobContainerEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string storageAccountResourceId = default;
             string blobContainerName = default;
             EndpointType endpointType = default;

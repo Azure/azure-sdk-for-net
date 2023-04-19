@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Analysis.Models
     {
         internal static NewResourceResultSkuEnumeration DeserializeNewResourceResultSkuEnumeration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AnalysisResourceSku>> value = default;
             foreach (var property in element.EnumerateObject())
             {

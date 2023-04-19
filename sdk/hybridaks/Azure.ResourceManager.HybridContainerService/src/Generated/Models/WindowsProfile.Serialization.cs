@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static WindowsProfile DeserializeWindowsProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> adminPassword = default;
             Optional<string> adminUsername = default;
             Optional<bool> enableCsiProxy = default;

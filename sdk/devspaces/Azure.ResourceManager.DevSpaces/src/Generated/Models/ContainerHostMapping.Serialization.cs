@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DevSpaces.Models
 
         internal static ContainerHostMapping DeserializeContainerHostMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> containerHostResourceId = default;
             Optional<string> mappedControllerResourceId = default;
             foreach (var property in element.EnumerateObject())

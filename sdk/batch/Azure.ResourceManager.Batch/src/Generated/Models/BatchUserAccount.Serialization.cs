@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchUserAccount DeserializeBatchUserAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string password = default;
             Optional<BatchUserAccountElevationLevel> elevationLevel = default;

@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BgpCommunity DeserializeBgpCommunity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceSupportedRegion = default;
             Optional<string> communityName = default;
             Optional<string> communityValue = default;

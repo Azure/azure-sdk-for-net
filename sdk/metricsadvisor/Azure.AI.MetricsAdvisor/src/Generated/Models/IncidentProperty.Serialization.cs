@@ -14,6 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static IncidentProperty DeserializeIncidentProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnomalySeverity maxSeverity = default;
             AnomalyIncidentStatus incidentStatus = default;
             double valueOfRootNode = default;

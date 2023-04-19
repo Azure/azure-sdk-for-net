@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static GitHubConnectorStatsProperties DeserializeGitHubConnectorStatsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<long> ownersCount = default;
             Optional<long> reposCount = default;

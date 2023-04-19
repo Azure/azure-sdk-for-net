@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static QuotaList DeserializeQuotaList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<Quota>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

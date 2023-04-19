@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         internal static AgFoodPlatformPrivateLinkResourceData DeserializeAgFoodPlatformPrivateLinkResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

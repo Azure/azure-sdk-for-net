@@ -15,6 +15,10 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static TimeSeriesOperationErrorDetails DeserializeTimeSeriesOperationErrorDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;

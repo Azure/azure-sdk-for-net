@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlVmAssessmentSettings DeserializeSqlVmAssessmentSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enable = default;
             Optional<bool> runImmediately = default;
             Optional<SqlVmAssessmentSchedule> schedule = default;

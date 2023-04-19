@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static DataLakeStoreOutputDataSource DeserializeDataLakeStoreOutputDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> refreshToken = default;
             Optional<string> tokenUserPrincipalName = default;

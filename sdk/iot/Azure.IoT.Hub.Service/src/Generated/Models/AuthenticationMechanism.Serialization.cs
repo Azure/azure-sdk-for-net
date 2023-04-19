@@ -35,6 +35,10 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static AuthenticationMechanism DeserializeAuthenticationMechanism(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SymmetricKey> symmetricKey = default;
             Optional<X509Thumbprint> x509Thumbprint = default;
             Optional<AuthenticationMechanismType> type = default;

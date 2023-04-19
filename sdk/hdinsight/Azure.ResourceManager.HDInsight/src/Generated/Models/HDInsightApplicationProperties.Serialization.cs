@@ -93,6 +93,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightApplicationProperties DeserializeHDInsightApplicationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ComputeProfile> computeProfile = default;
             Optional<IList<RuntimeScriptAction>> installScriptActions = default;
             Optional<IList<RuntimeScriptAction>> uninstallScriptActions = default;

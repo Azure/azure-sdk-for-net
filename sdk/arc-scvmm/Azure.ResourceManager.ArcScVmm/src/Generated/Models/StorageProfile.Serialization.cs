@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static StorageProfile DeserializeStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<VirtualDisk>> disks = default;
             foreach (var property in element.EnumerateObject())
             {

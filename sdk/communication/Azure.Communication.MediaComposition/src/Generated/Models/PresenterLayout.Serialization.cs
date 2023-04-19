@@ -52,6 +52,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static PresenterLayout DeserializePresenterLayout(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string presenterId = default;
             string supportId = default;
             Optional<SupportPosition> supportPosition = default;

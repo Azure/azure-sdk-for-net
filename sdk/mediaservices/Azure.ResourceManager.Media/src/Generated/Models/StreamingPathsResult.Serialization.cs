@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static StreamingPathsResult DeserializeStreamingPathsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StreamingPath>> streamingPaths = default;
             Optional<IReadOnlyList<string>> downloadPaths = default;
             foreach (var property in element.EnumerateObject())

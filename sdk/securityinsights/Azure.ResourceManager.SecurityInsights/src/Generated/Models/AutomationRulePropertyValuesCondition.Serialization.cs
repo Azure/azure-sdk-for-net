@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AutomationRulePropertyValuesCondition DeserializeAutomationRulePropertyValuesCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomationRulePropertyConditionSupportedProperty> propertyName = default;
             Optional<AutomationRulePropertyConditionSupportedOperator> @operator = default;
             Optional<IList<string>> propertyValues = default;

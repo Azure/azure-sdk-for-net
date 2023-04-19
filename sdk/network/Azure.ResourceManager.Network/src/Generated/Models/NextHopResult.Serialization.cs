@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NextHopResult DeserializeNextHopResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NextHopType> nextHopType = default;
             Optional<string> nextHopIPAddress = default;
             Optional<ResourceIdentifier> routeTableId = default;

@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyNatRuleCollectionInfo DeserializeFirewallPolicyNatRuleCollectionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FirewallPolicyNatRuleCollectionAction> action = default;
             Optional<IList<FirewallPolicyRule>> rules = default;
             FirewallPolicyRuleCollectionType ruleCollectionType = default;

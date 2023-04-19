@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static CloudTieringFilesNotTiering DeserializeCloudTieringFilesNotTiering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<long> totalFileCount = default;
             Optional<IReadOnlyList<FilesNotTieringError>> errors = default;

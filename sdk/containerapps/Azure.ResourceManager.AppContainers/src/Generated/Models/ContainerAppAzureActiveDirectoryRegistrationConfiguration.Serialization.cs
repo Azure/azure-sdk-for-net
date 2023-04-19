@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAzureActiveDirectoryRegistrationConfiguration DeserializeContainerAppAzureActiveDirectoryRegistrationConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> openIdIssuer = default;
             Optional<string> clientId = default;
             Optional<string> clientSecretSettingName = default;

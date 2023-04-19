@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerExec DeserializeContainerExec(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> command = default;
             foreach (var property in element.EnumerateObject())
             {

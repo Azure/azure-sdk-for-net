@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static TroubleshootingDetails DeserializeTroubleshootingDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> reasonType = default;
             Optional<string> summary = default;

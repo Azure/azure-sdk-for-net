@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static WafMetricsResponseSeriesItem DeserializeWafMetricsResponseSeriesItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> metric = default;
             Optional<WafMetricsResponseSeriesItemUnit> unit = default;
             Optional<IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem>> groups = default;

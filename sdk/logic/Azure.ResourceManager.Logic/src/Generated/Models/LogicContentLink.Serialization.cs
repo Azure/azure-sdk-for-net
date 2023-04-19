@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicContentLink DeserializeLogicContentLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> uri = default;
             Optional<string> contentVersion = default;
             Optional<long> contentSize = default;

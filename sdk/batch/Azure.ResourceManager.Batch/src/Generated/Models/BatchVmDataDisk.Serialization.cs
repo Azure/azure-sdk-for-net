@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchVmDataDisk DeserializeBatchVmDataDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int lun = default;
             Optional<BatchDiskCachingType> caching = default;
             int diskSizeGB = default;

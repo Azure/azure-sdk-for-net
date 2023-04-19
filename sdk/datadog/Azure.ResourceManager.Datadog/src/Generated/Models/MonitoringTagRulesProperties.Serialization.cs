@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static MonitoringTagRulesProperties DeserializeMonitoringTagRulesProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<LogRules> logRules = default;
             Optional<MetricRules> metricRules = default;

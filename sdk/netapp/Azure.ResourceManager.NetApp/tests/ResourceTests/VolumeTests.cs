@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             CapacityPoolResource remoteCapacityPool = (await remoteCapacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, remoteCapactiyPoolData)).Value;
             //Create the remote volume with dataProtection
             NetAppReplicationObject replication = new(null, NetAppEndpointType.Destination, NetAppReplicationSchedule.TenMinutely, volumeResource1.Id, RemoteLocation);
-            NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection(null, replication: replication, null);
+            NetAppVolumeDataProtection dataProtectionProperties = new NetAppVolumeDataProtection() { Replication = replication };
             NetAppVolumeCollection remoteVolumeCollection = remoteCapacityPool.GetNetAppVolumes();
             NetAppVolumeResource remoteVolume = await CreateVolume(RemoteLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeCollection: remoteVolumeCollection, dataProtection: dataProtectionProperties);
             if (Mode != RecordedTestMode.Playback)
@@ -593,6 +593,27 @@ namespace Azure.ResourceManager.NetApp.Tests
             await remoteResourceGroup.DeleteAsync(WaitUntil.Completed);
             exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await DefaultSubscription.GetResourceGroupAsync(remoteAccountName); });
             Assert.AreEqual(404, exception.Status);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task BreakFileLocksVolumeNoFiles()
+        {
+            //create volume
+            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold);
+            VerifyVolumeProperties(volumeResource1, true);
+            volumeResource1.Should().BeEquivalentTo((await volumeResource1.GetAsync()).Value);
+            //validate if created successfully
+            NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
+            VerifyVolumeProperties(volumeResource2, true);
+
+            //Call break file locks
+            NetAppVolumeBreakFileLocksContent parameters = new()
+            {
+                ConfirmRunningDisruptiveOperation = true
+            };
+
+            await volumeResource1.BreakFileLocksAsync(WaitUntil.Completed, parameters);
         }
 
         private async Task WaitForReplicationStatus(NetAppVolumeResource volumeResource, NetAppMirrorState mirrorState)

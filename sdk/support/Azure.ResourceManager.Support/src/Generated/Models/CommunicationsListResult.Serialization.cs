@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Support.Models
     {
         internal static CommunicationsListResult DeserializeCommunicationsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SupportTicketCommunicationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

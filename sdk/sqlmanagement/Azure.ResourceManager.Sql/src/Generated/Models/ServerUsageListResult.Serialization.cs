@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServerUsageListResult DeserializeServerUsageListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SqlServerUsage> value = default;
             foreach (var property in element.EnumerateObject())
             {

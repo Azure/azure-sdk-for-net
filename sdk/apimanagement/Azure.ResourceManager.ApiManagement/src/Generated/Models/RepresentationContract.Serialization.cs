@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static RepresentationContract DeserializeRepresentationContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string contentType = default;
             Optional<string> schemaId = default;
             Optional<string> typeName = default;

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ExpressRouteCircuitSku DeserializeExpressRouteCircuitSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ExpressRouteCircuitSkuTier> tier = default;
             Optional<ExpressRouteCircuitSkuFamily> family = default;

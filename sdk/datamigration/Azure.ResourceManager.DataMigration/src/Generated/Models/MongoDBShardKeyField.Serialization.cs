@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBShardKeyField DeserializeMongoDBShardKeyField(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             MongoDBShardKeyOrder order = default;
             foreach (var property in element.EnumerateObject())

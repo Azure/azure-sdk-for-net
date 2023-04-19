@@ -54,6 +54,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static ManagedIntegrationRuntime DeserializeManagedIntegrationRuntime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationRuntimeState> state = default;
             Optional<ManagedVirtualNetworkReference> managedVirtualNetwork = default;
             IntegrationRuntimeType type = default;

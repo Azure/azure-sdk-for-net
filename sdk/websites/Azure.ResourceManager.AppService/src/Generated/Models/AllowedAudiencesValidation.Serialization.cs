@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AllowedAudiencesValidation DeserializeAllowedAudiencesValidation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> allowedAudiences = default;
             foreach (var property in element.EnumerateObject())
             {

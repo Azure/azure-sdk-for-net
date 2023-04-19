@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultAccessPolicy DeserializeKeyVaultAccessPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid tenantId = default;
             string objectId = default;
             Optional<Guid> applicationId = default;

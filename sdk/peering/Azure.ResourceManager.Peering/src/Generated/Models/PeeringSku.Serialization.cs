@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringSku DeserializePeeringSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<PeeringTier> tier = default;
             Optional<PeeringFamily> family = default;

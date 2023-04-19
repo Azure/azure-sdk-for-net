@@ -11,7 +11,7 @@ using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Defines the collection of Virtual Instance for SAP. </summary>
+    /// <summary> Defines the collection of Virtual Instance for SAP solutions resources. </summary>
     internal partial class SapVirtualInstanceList
     {
         /// <summary> Initializes a new instance of SapVirtualInstanceList. </summary>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of SapVirtualInstanceList. </summary>
-        /// <param name="value"> Gets the list of Virtual Instances for SAP. </param>
+        /// <param name="value"> Gets the list of Virtual Instances for SAP solutions resources. </param>
         /// <param name="nextLink"> Gets the value of next link. </param>
         internal SapVirtualInstanceList(IReadOnlyList<SapVirtualInstanceData> value, string nextLink)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the list of Virtual Instances for SAP. </summary>
+        /// <summary> Gets the list of Virtual Instances for SAP solutions resources. </summary>
         public IReadOnlyList<SapVirtualInstanceData> Value { get; }
         /// <summary> Gets the value of next link. </summary>
         public string NextLink { get; }

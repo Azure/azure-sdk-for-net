@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static AcceptOwnershipStatus DeserializeAcceptOwnershipStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subscriptionId = default;
             Optional<AcceptOwnershipState> acceptOwnershipState = default;
             Optional<AcceptOwnershipProvisioningState> provisioningState = default;

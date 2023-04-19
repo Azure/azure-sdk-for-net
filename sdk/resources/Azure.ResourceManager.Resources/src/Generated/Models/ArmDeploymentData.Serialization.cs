@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Resources
     {
         internal static ArmDeploymentData DeserializeArmDeploymentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<ArmDeploymentPropertiesExtended> properties = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageRcmLastAgentUpgradeErrorDetails DeserializeInMageRcmLastAgentUpgradeErrorDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> errorCode = default;
             Optional<string> errorMessage = default;
             Optional<string> possibleCauses = default;

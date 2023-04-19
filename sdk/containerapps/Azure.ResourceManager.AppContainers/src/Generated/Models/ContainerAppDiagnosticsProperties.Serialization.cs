@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDiagnosticsProperties DeserializeContainerAppDiagnosticsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppDiagnosticsMetadata> metadata = default;
             Optional<IList<ContainerAppDiagnosticsDataApiResult>> dataset = default;
             Optional<ContainerAppDiagnosticsStatus> status = default;

@@ -35,6 +35,10 @@ namespace Azure.Communication.CallAutomation
 
         internal static RecognizeChoice DeserializeRecognizeChoice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string label = default;
             IList<string> phrases = default;
             Optional<DtmfTone> tone = default;

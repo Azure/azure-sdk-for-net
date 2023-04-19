@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ManagedIntegrationRuntime DeserializeManagedIntegrationRuntime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationRuntimeState> state = default;
             Optional<ManagedVirtualNetworkReference> managedVirtualNetwork = default;
             IntegrationRuntimeType type = default;

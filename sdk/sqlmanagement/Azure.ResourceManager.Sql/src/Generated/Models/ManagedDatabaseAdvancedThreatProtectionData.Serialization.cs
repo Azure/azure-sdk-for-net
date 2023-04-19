@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static ManagedDatabaseAdvancedThreatProtectionData DeserializeManagedDatabaseAdvancedThreatProtectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;

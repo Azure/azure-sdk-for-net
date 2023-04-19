@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal static FhirServiceData DeserializeFhirServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FhirServiceKind> kind = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;

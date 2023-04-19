@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AmlComputeScaleSettings DeserializeAmlComputeScaleSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int maxNodeCount = default;
             Optional<int> minNodeCount = default;
             Optional<TimeSpan?> nodeIdleTimeBeforeScaleDown = default;

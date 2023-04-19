@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static SmartGroupAggregatedProperty DeserializeSmartGroupAggregatedProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<long> count = default;
             foreach (var property in element.EnumerateObject())

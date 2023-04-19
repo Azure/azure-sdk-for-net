@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformCustomContainer DeserializeAppPlatformCustomContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> server = default;
             Optional<string> containerImage = default;
             Optional<IList<string>> command = default;

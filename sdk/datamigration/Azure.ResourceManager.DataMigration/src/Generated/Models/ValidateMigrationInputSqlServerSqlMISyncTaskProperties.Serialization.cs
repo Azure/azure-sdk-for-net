@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ValidateMigrationInputSqlServerSqlMISyncTaskProperties DeserializeValidateMigrationInputSqlServerSqlMISyncTaskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ValidateMigrationInputSqlServerSqlMISyncTaskInput> input = default;
             Optional<IReadOnlyList<ValidateMigrationInputSqlServerSqlMISyncTaskOutput>> output = default;
             TaskType taskType = default;

@@ -25,7 +25,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceTypeExtensionOptions DeserializeResourceTypeExtensionOptions(JsonElement element)
         {
-            Optional<ResourceTypeExtensionOptionsResourceCreationBegin> resourceCreationBegin = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ExtensionOptions> resourceCreationBegin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceCreationBegin"u8))
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceCreationBegin = ResourceTypeExtensionOptionsResourceCreationBegin.DeserializeResourceTypeExtensionOptionsResourceCreationBegin(property.Value);
+                    resourceCreationBegin = ExtensionOptions.DeserializeExtensionOptions(property.Value);
                     continue;
                 }
             }

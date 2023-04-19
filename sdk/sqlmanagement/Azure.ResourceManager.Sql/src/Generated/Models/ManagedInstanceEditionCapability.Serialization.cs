@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ManagedInstanceEditionCapability DeserializeManagedInstanceEditionCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<ManagedInstanceFamilyCapability>> supportedFamilies = default;
             Optional<IReadOnlyList<StorageCapability>> supportedStorageCapabilities = default;

@@ -24,6 +24,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 foreach (var item in DimensionFilter)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {

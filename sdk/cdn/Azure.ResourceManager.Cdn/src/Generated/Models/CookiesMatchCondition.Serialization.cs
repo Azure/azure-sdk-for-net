@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CookiesMatchCondition DeserializeCookiesMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CookiesMatchConditionType typeName = default;
             Optional<string> selector = default;
             CookiesOperator @operator = default;

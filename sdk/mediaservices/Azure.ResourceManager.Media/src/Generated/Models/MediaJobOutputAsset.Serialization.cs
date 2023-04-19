@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaJobOutputAsset DeserializeMediaJobOutputAsset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string assetName = default;
             string odataType = default;
             Optional<MediaJobError> error = default;

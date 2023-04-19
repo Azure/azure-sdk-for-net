@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterPodIdentity DeserializeManagedClusterPodIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string @namespace = default;
             Optional<string> bindingSelector = default;

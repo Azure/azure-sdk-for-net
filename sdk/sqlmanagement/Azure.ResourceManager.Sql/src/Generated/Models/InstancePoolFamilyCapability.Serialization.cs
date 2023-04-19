@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static InstancePoolFamilyCapability DeserializeInstancePoolFamilyCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
             Optional<IReadOnlyList<InstancePoolVcoresCapability>> supportedVcoresValues = default;

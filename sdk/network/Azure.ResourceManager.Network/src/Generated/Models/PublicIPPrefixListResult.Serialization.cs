@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static PublicIPPrefixListResult DeserializePublicIPPrefixListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PublicIPPrefixData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

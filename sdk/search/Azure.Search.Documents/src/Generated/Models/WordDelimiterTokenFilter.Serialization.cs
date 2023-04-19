@@ -80,6 +80,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static WordDelimiterTokenFilter DeserializeWordDelimiterTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> generateWordParts = default;
             Optional<bool> generateNumberParts = default;
             Optional<bool> catenateWords = default;

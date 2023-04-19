@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Support.Models
     {
         internal static SupportTicketsListResult DeserializeSupportTicketsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SupportTicketData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

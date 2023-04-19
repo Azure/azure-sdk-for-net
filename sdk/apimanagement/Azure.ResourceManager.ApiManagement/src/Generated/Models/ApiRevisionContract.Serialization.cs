@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiRevisionContract DeserializeApiRevisionContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> apiId = default;
             Optional<string> apiRevision = default;
             Optional<DateTimeOffset> createdDateTime = default;

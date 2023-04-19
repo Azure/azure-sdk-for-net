@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static JobExecutionTarget DeserializeJobExecutionTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JobTargetType> type = default;
             Optional<string> serverName = default;
             Optional<string> databaseName = default;

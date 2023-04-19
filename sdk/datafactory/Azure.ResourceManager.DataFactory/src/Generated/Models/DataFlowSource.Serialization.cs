@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFlowSource DeserializeDataFlowSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryLinkedServiceReference> schemaLinkedService = default;
             string name = default;
             Optional<string> description = default;

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static ServerEndpointSyncStatus DeserializeServerEndpointSyncStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServerEndpointHealthState> downloadHealth = default;
             Optional<ServerEndpointHealthState> uploadHealth = default;
             Optional<ServerEndpointHealthState> combinedHealth = default;

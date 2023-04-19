@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static CapabilitiesProperties DeserializeCapabilitiesProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DnsZone>> dnsZones = default;
             foreach (var property in element.EnumerateObject())
             {

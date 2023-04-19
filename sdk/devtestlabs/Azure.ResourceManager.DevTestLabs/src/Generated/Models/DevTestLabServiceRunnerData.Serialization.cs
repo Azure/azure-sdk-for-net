@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.DevTestLabs
 
         internal static DevTestLabServiceRunnerData DeserializeDevTestLabServiceRunnerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DevTestLabManagedIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

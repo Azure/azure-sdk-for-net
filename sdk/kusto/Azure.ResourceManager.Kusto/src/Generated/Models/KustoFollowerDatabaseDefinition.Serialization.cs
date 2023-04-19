@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoFollowerDatabaseDefinition DeserializeKustoFollowerDatabaseDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier clusterResourceId = default;
             string attachedDatabaseConfigurationName = default;
             Optional<string> databaseName = default;

@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static GoogleCloudStorageLocation DeserializeGoogleCloudStorageLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> bucketName = default;
             Optional<BinaryData> version = default;
             string type = default;

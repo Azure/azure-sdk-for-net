@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static RoleManagementPolicyProperties DeserializeRoleManagementPolicyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> displayName = default;
             Optional<RoleManagementScopeType> type = default;

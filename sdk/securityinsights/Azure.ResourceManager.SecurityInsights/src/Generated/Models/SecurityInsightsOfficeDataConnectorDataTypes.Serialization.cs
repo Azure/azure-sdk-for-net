@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsOfficeDataConnectorDataTypes DeserializeSecurityInsightsOfficeDataConnectorDataTypes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OfficeDataConnectorDataTypesExchange> exchange = default;
             Optional<OfficeDataConnectorDataTypesSharePoint> sharePoint = default;
             Optional<OfficeDataConnectorDataTypesTeams> teams = default;

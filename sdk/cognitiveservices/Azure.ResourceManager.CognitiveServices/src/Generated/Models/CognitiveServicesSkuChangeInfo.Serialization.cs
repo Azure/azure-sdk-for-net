@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CognitiveServicesSkuChangeInfo DeserializeCognitiveServicesSkuChangeInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> countOfDowngrades = default;
             Optional<float> countOfUpgradesAfterDowngrades = default;
             Optional<DateTimeOffset> lastChangeDate = default;

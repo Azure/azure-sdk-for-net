@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.ContainerService
 
         internal static ContainerServiceFleetData DeserializeContainerServiceFleetData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

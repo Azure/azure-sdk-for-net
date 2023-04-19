@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsEncryption DeserializeEventHubsEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<EventHubsKeyVaultProperties>> keyVaultProperties = default;
             Optional<EventHubsKeySource> keySource = default;
             Optional<bool> requireInfrastructureEncryption = default;

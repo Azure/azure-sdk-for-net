@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubCertificateProperties DeserializeIotHubCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subject = default;
             Optional<DateTimeOffset> expiry = default;
             Optional<BinaryData> thumbprint = default;

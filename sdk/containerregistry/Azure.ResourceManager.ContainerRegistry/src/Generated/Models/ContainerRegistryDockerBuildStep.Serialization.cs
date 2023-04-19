@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryDockerBuildStep DeserializeContainerRegistryDockerBuildStep(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> imageNames = default;
             Optional<bool> isPushEnabled = default;
             Optional<bool> noCache = default;

@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.KeyVault
 
         internal static ManagedHsmData DeserializeManagedHsmData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedHsmProperties> properties = default;
             Optional<ManagedHsmSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;

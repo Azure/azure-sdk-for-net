@@ -97,6 +97,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static AgentPoolProfile DeserializeAgentPoolProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> count = default;
             Optional<IList<string>> availabilityZones = default;
             Optional<int> maxCount = default;

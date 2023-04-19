@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         internal static ManagedNetworkGroupData DeserializeManagedNetworkGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedNetworkKind> kind = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;

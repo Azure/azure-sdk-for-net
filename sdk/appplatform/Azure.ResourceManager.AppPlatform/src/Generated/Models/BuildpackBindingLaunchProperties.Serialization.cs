@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static BuildpackBindingLaunchProperties DeserializeBuildpackBindingLaunchProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> secrets = default;
             foreach (var property in element.EnumerateObject())

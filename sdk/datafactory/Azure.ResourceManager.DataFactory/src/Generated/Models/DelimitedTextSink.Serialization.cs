@@ -97,6 +97,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DelimitedTextSink DeserializeDelimitedTextSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StoreWriteSettings> storeSettings = default;
             Optional<DelimitedTextWriteSettings> formatSettings = default;
             string type = default;

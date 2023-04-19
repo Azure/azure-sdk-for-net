@@ -133,6 +133,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureBlobSink DeserializeAzureBlobSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> blobWriterOverwriteFiles = default;
             Optional<BinaryData> blobWriterDateTimeFormat = default;
             Optional<BinaryData> blobWriterAddHeader = default;

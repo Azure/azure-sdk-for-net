@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static CassandraClusterData DeserializeCassandraClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CassandraClusterProperties> properties = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;

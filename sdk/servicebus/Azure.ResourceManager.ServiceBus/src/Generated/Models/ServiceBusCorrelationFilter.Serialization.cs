@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 foreach (var item in ApplicationProperties)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -77,6 +82,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusCorrelationFilter DeserializeServiceBusCorrelationFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, object>> properties = default;
             Optional<string> correlationId = default;
             Optional<string> messageId = default;
@@ -99,7 +108,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
                     }
                     properties = dictionary;
                     continue;

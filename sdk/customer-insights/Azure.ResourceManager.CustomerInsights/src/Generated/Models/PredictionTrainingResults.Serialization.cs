@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static PredictionTrainingResults DeserializePredictionTrainingResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> tenantId = default;
             Optional<string> scoreName = default;
             Optional<PredictionDistributionDefinition> predictionDistribution = default;

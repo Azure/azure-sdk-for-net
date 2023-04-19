@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 
@@ -13,13 +14,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// </summary>
     public static class DocumentAnalysisModelFactory
     {
-        /// <summary> Initializes a new instance of ResourceDetails. </summary>
-        /// <param name="customDocumentModelCount"> Number of custom models in the current resource. </param>
-        /// <param name="customDocumentModelLimit"> Maximum number of custom models supported in the current resource. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.ResourceDetails"/> instance for mocking. </returns>
-        public static ResourceDetails ResourceDetails(int customDocumentModelCount = default, int customDocumentModelLimit = default)
+        /// <summary> Initializes a new instance of AddressValue. </summary>
+        /// <param name="houseNumber"> House or building number. </param>
+        /// <param name="poBox"> Post office box number. </param>
+        /// <param name="road"> Street name. </param>
+        /// <param name="city"> Name of city, town, village, etc. </param>
+        /// <param name="state"> First-level administrative division. </param>
+        /// <param name="postalCode"> Postal code used for mail sorting. </param>
+        /// <param name="countryRegion"> Country/region. </param>
+        /// <param name="streetAddress"> Street-level address, excluding city, state, countryRegion, and postalCode. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.AddressValue"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AddressValue AddressValue(string houseNumber, string poBox, string road, string city, string state, string postalCode, string countryRegion, string streetAddress)
         {
-            return new ResourceDetails(customDocumentModelCount, customDocumentModelLimit);
+            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress, unit: null, cityDistrict: null, stateDistrict: null, suburb: null, house: null, level: null);
         }
 
         /// <summary> Initializes a new instance of AddressValue. </summary>
@@ -31,10 +39,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="postalCode"> Postal code used for mail sorting. </param>
         /// <param name="countryRegion"> Country/region. </param>
         /// <param name="streetAddress"> Street-level address, excluding city, state, countryRegion, and postalCode. </param>
+        /// <param name="unit"> Apartment or office number. </param>
+        /// <param name="cityDistrict"> Districts or boroughs within a city, such as Brooklyn in New York City or City of Westminster in London. </param>
+        /// <param name="stateDistrict"> Second-level administrative division used in certain locales. </param>
+        /// <param name="suburb"> Unofficial neighborhood name, like Chinatown. </param>
+        /// <param name="house"> Build name, such as World Trade Center. </param>
+        /// <param name="level"> Floor number, such as 3F. </param>
         /// <returns> A new <see cref="DocumentAnalysis.AddressValue"/> instance for mocking. </returns>
-        public static AddressValue AddressValue(string houseNumber = null, string poBox = null, string road = null, string city = null, string state = null, string postalCode = null, string countryRegion = null, string streetAddress = null)
+        public static AddressValue AddressValue(string houseNumber = null, string poBox = null, string road = null, string city = null, string state = null, string postalCode = null, string countryRegion = null, string streetAddress = null, string unit = null, string cityDistrict = null, string stateDistrict = null, string suburb = null, string house = null, string level = null)
         {
-            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress);
+            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress, unit, cityDistrict, stateDistrict, suburb, house, level);
         }
 
         /// <summary> Initializes a new instance of AnalyzedDocument. </summary>
@@ -90,7 +104,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns> A new <see cref="DocumentAnalysis.CurrencyValue"/> instance for mocking. </returns>
         public static CurrencyValue CurrencyValue(double amount = default, string symbol = null)
         {
-            return new CurrencyValue(amount, symbol);
+            return new CurrencyValue(amount, symbol, currencyCode: null);
         }
 
         /// <summary> Initializes a new instance of DocumentTypeDetails. </summary>
@@ -105,6 +119,39 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             fieldConfidence ??= new Dictionary<string, float>();
 
             return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentClassifierBuildOperationDetails. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentCompleted"> Operation progress (0-100). </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document classifier. </param>
+        /// <param name="error"> Encountered error. </param>
+        /// <param name="result"> Operation result upon success. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentClassifierBuildOperationDetails"/> instance for mocking. </returns>
+        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = null, IReadOnlyDictionary<string, string> tags = null, ResponseError error = null, DocumentClassifierDetails result = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DocumentClassifierBuildOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, resourceLocation, apiVersion: null, tags, error, result);
+        }
+
+        /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="description"> Document classifier description. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
+        /// <param name="expiresOn"> Date and time (UTC) when the document classifier will expire. </param>
+        /// <param name="apiVersion"> API version used to create this document classifier. </param>
+        /// <param name="documentTypes"> List of document types to classify against. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentClassifierDetails"/> instance for mocking. </returns>
+        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string apiVersion = null, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes = null)
+        {
+            documentTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
+
+            return new DocumentClassifierDetails(classifierId, description, createdOn, expiresOn, apiVersion, documentTypes);
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -142,6 +189,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static DocumentFieldValue DocumentFieldValueWithAddressFieldType(AddressValue value)
         {
             return new DocumentFieldValue(DocumentFieldType.Address, valueAddress: value);
+        }
+
+        /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
+        /// <param name="value"> The value of the field. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentFieldValue"/> instance for mocking. </returns>
+        public static DocumentFieldValue DocumentFieldValueWithBooleanFieldType(bool value)
+        {
+            return new DocumentFieldValue(DocumentFieldType.Boolean, valueBoolean: value);
         }
 
         /// <summary> Initializes a new instance of DocumentFieldValue. </summary>
@@ -268,7 +323,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns> A new <see cref="DocumentAnalysis.DocumentKeyValuePair"/> instance for mocking. </returns>
         public static DocumentKeyValuePair DocumentKeyValuePair(DocumentKeyValueElement key = null, DocumentKeyValueElement value = null, float confidence = default)
         {
-            return new DocumentKeyValuePair(key, value, confidence);
+            return new DocumentKeyValuePair(key, value, commonName: null, confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentLanguage. </summary>
@@ -363,7 +418,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             tags ??= new Dictionary<string, string>();
             documentTypes ??= new Dictionary<string, DocumentTypeDetails>();
 
-            return new DocumentModelDetails(modelId, description, createdOn, apiVersion: null, tags, documentTypes);
+            return new DocumentModelDetails(modelId, description, createdOn, expirationDateTime: null, apiVersion: null, tags, documentTypes);
         }
 
         /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
@@ -376,7 +431,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelSummary(modelId, description, createdOn, apiVersion: null, tags);
+            return new DocumentModelSummary(modelId, description, createdOn, expirationDateTime: null, apiVersion: null, tags);
         }
 
         /// <summary> Initializes a new instance of DocumentPage. </summary>
@@ -397,7 +452,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             selectionMarks ??= new List<DocumentSelectionMark>();
             lines ??= new List<DocumentLine>();
 
-            return new DocumentPage(pageNumber, angle, width, height, unit, spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList());
+            var annotations = new List<DocumentAnnotation>();
+            var barcodes = new List<DocumentBarcode>();
+            var formulas = new List<DocumentFormula>();
+            var images = new List<DocumentImage>();
+
+            return new DocumentPage(kind: default, pageNumber, angle, width, height, unit, spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList(), annotations, barcodes, formulas, images);
         }
 
         /// <summary> Initializes a new instance of DocumentParagraph. </summary>
@@ -439,11 +499,29 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentStyle"/> instance for mocking. </returns>
-        public static DocumentStyle DocumentStyle(bool? isHandwritten = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DocumentStyle DocumentStyle(bool? isHandwritten, IEnumerable<DocumentSpan> spans, float confidence)
         {
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentStyle(isHandwritten, spans?.ToList(), confidence);
+            return new DocumentStyle(isHandwritten, similarFontFamily: null, fontStyle: null, fontWeight: null, color: null, backgroundColor: null, spans?.ToList(), confidence);
+        }
+
+        /// <summary> Initializes a new instance of DocumentStyle. </summary>
+        /// <param name="isHandwritten"> Is content handwritten?. </param>
+        /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
+        /// <param name="confidence"> Confidence of correctly identifying the style. </param>
+        /// <param name="similarFontFamily"> Visually most similar font from among the set of supported font families, with fallback fonts following CSS convention (ex. &apos;Arial, sans-serif&apos;). </param>
+        /// <param name="fontStyle"> Font style. </param>
+        /// <param name="fontWeight"> Font weight. </param>
+        /// <param name="color"> Foreground color in #rrggbb hexadecimal format. </param>
+        /// <param name="backgroundColor"> Background color in #rrggbb hexadecimal format. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentStyle"/> instance for mocking. </returns>
+        public static DocumentStyle DocumentStyle(bool? isHandwritten = null, IEnumerable<DocumentSpan> spans = null, float confidence = default, string similarFontFamily = null, FontStyle? fontStyle = null, FontWeight? fontWeight = null, string color = null, string backgroundColor = null)
+        {
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentStyle(isHandwritten, similarFontFamily, fontStyle, fontWeight, color, backgroundColor, spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentTable. </summary>
@@ -524,6 +602,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             tags ??= new Dictionary<string, string>();
 
             return new OperationSummary(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion: null, tags);
+        }
+
+        /// <summary> Initializes a new instance of ResourceDetails. </summary>
+        /// <param name="customDocumentModelCount"> Number of custom models in the current resource. </param>
+        /// <param name="customDocumentModelLimit"> Maximum number of custom models supported in the current resource. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.ResourceDetails"/> instance for mocking. </returns>
+        public static ResourceDetails ResourceDetails(int customDocumentModelCount = default, int customDocumentModelLimit = default)
+        {
+            return new ResourceDetails(customDocumentModelCount, customDocumentModelLimit);
         }
     }
 }

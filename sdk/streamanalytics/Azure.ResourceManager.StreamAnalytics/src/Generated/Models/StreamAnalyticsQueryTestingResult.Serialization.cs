@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamAnalyticsQueryTestingResult DeserializeStreamAnalyticsQueryTestingResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamAnalyticsQueryTestingResultStatus> status = default;
             Optional<Uri> outputUri = default;
             Optional<string> code = default;

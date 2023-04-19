@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicApiOperationInfo DeserializeLogicApiOperationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LogicApiOperationProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;

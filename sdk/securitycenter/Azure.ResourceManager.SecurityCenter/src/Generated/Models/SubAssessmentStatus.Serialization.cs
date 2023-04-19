@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SubAssessmentStatus DeserializeSubAssessmentStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SubAssessmentStatusCode> code = default;
             Optional<string> cause = default;
             Optional<string> description = default;
