@@ -18,7 +18,7 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="AnomalyDetectorClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// Supported Azure Cognitive Services endpoints (protocol and host name, such as
         /// https://westus2.api.cognitive.microsoft.com).
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
