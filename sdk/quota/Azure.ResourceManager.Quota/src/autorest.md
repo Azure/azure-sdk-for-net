@@ -10,7 +10,7 @@ csharp: true
 library-name: Quota
 namespace: Azure.ResourceManager.Quota
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/34ba022add0034e30462b76e1548ce5a7e053e33/specification/quota/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/57e0f495d521002e883f5357db0dfdfdaaff0208/specification/quota/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

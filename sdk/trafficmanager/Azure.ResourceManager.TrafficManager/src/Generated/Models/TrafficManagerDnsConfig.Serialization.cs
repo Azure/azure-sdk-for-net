@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ttl = property.Value.GetInt64();

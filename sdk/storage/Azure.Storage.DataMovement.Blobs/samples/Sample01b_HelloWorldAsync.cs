@@ -226,7 +226,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #region Snippet:CreateTransferManagerWithOptions
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     MaximumTransferChunkSize = 4 * Constants.MB,
                     CreateMode = StorageResourceCreateMode.Overwrite,
@@ -312,8 +312,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #region Snippet:SimpleLoggingSample
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
-                ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
-                containerTransferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
+                TransferOptions transferOptions = new TransferOptions();
+                transferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
                 {
                     using (StreamWriter logStream = File.AppendText(logFile))
                     {
@@ -398,8 +398,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             {
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
-                ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
-                containerTransferOptions.TransferStatus += (TransferStatusEventArgs args) =>
+                TransferOptions transferOptions = new TransferOptions();
+                transferOptions.TransferStatus += (TransferStatusEventArgs args) =>
                 {
                     if (args.StorageTransferStatus == StorageTransferStatus.Completed)
                     {
@@ -411,7 +411,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     return Task.CompletedTask;
                 };
                 #region Snippet:FailedEventDelegation
-                containerTransferOptions.TransferFailed += (TransferFailedEventArgs args) =>
+                transferOptions.TransferFailed += (TransferFailedEventArgs args) =>
                 {
                     using (StreamWriter logStream = File.AppendText(logFile))
                     {
@@ -496,7 +496,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
-                ContainerTransferOptions downloadOptions = new ContainerTransferOptions();
+                TransferOptions downloadOptions = new TransferOptions();
                 downloadOptions.TransferFailed += async (TransferFailedEventArgs args) =>
                 {
                     // TODO: change the Exception if it's a RequestFailedException and then look at the exception.StatusCode
@@ -648,7 +648,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create Blob Transfer Manager
                 TransferManager transferManager = new TransferManager(default);
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-                ContainerTransferOptions options = new ContainerTransferOptions();
+                TransferOptions options = new TransferOptions();
                 options.TransferFailed += async (TransferFailedEventArgs args) =>
                 {
                     //await LogFailedFileAsync(args.SourceFileUri, args.DestinationFileClient.Uri, args.Exception.Message);
@@ -657,6 +657,186 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.StartTransferAsync(
                     sourceDirectory1,
                     destinationDirectory1);
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        /// <summary>
+        /// Test to show pause and resume tests
+        /// </summary>
+        [Test]
+        public async Task PauseAndResumeAsync_ManagerDataTransfer()
+        {
+            string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+
+            // Create a client that can authenticate with a connection string
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            await container.CreateIfNotExistsAsync();
+            try
+            {
+                string downloadPath = CreateTempPath();
+                // Get a temporary path on disk where we can download the file
+                //@@ string downloadPath = "hello.jpg";
+
+                // Download the public blob at https://aka.ms/bloburl
+                BlockBlobClient sourceBlob = new BlockBlobClient(new Uri("https://aka.ms/bloburl"));
+                await sourceBlob.DownloadToAsync(downloadPath);
+
+                // Create transfer manager
+                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
+
+                // Create source and destination resource
+                StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
+                StorageResource destinationResource = new LocalFileStorageResource(downloadPath);
+
+                // Create simple transfer single blob download job
+                #region Snippet:TransferManagerTryPause_Async
+                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                    sourceResource: sourceResource,
+                    destinationResource: destinationResource);
+
+                // Pause from the Transfer Manager using the DataTransfer object
+                bool pauseResult = await transferManager.TryPauseTransferAsync(dataTransfer);
+                #endregion Snippet:TransferManagerTryPause_Async
+
+                #region Snippet:TransferManagerResume_Async
+                // Resume from checkpoint id
+                TransferOptions optionsWithResumeTransferId = new TransferOptions()
+                {
+                    ResumeFromCheckpointId = dataTransfer.Id
+                };
+
+                DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
+                    sourceResource: sourceResource,
+                    destinationResource: destinationResource,
+                    transferOptions: optionsWithResumeTransferId);
+                #endregion Snippet:TransferManagerResume_Async
+
+                // Wait for download to finish
+                await resumedTransfer.AwaitCompletion();
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        /// <summary>
+        /// Test to show pause and resume tests
+        /// </summary>
+        [Test]
+        public async Task PauseAndResumeAsync_ManagerId()
+        {
+            string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+
+            // Create a client that can authenticate with a connection string
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            await container.CreateIfNotExistsAsync();
+            try
+            {
+                string downloadPath = CreateTempPath();
+                // Get a temporary path on disk where we can download the file
+                //@@ string downloadPath = "hello.jpg";
+
+                // Download the public blob at https://aka.ms/bloburl
+                BlockBlobClient sourceBlob = new BlockBlobClient(new Uri("https://aka.ms/bloburl"));
+                await sourceBlob.DownloadToAsync(downloadPath);
+
+                // Create transfer manager
+                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
+
+                // Create source and destination resource
+                StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
+                StorageResource destinationResource = new LocalFileStorageResource(downloadPath);
+
+                // Create simple transfer single blob download job
+                #region Snippet:TransferManagerTryPauseId_Async
+                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                    sourceResource: sourceResource,
+                    destinationResource: destinationResource);
+                string transferId = dataTransfer.Id;
+
+                // Pause from the Transfer Manager using the Transfer Id
+                bool pauseResult = await transferManager.TryPauseTransferAsync(transferId);
+                #endregion Snippet:TransferManagerTryPauseId_Async
+
+                // Resume from checkpoint id
+                TransferOptions optionsWithResumeTransferId = new TransferOptions()
+                {
+                    ResumeFromCheckpointId = dataTransfer.Id
+                };
+
+                DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
+                    sourceResource: sourceResource,
+                    destinationResource: destinationResource,
+                    transferOptions: optionsWithResumeTransferId);
+
+                // Wait for download to finish
+                await resumedTransfer.AwaitCompletion();
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        /// <summary>
+        /// Test to show pause and resume tests
+        /// </summary>
+        [Test]
+        public async Task PauseAndResumeAsync_DataTransferPause()
+        {
+            string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+
+            // Create a client that can authenticate with a connection string
+            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            await container.CreateIfNotExistsAsync();
+            try
+            {
+                string downloadPath = CreateTempPath();
+                // Get a temporary path on disk where we can download the file
+                //@@ string downloadPath = "hello.jpg";
+
+                // Download the public blob at https://aka.ms/bloburl
+                BlockBlobClient sourceBlob = new BlockBlobClient(new Uri("https://aka.ms/bloburl"));
+                await sourceBlob.DownloadToAsync(downloadPath);
+
+                // Create transfer manager
+                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
+
+                // Create source and destination resource
+                StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
+                StorageResource destinationResource = new LocalFileStorageResource(downloadPath);
+
+                // Create simple transfer single blob download job
+                #region Snippet:DataTransferTryPause_Async
+                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                    sourceResource: sourceResource,
+                    destinationResource: destinationResource);
+
+                // Pause from the DataTransfer object
+                bool pauseResult = await dataTransfer.TryPauseAsync();
+                #endregion Snippet:DataTransferTryPause_Async
+
+                // Resume from checkpoint id
+                TransferOptions optionsWithResumeTransferId = new TransferOptions()
+                {
+                    ResumeFromCheckpointId = dataTransfer.Id
+                };
+
+                DataTransfer resumedTransfer = await transferManager.StartTransferAsync(
+                    sourceResource: sourceResource,
+                    destinationResource: destinationResource,
+                    transferOptions: optionsWithResumeTransferId);
+
+                // Wait for download to finish
+                await resumedTransfer.AwaitCompletion();
             }
             finally
             {

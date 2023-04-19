@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = SavingsPlanSummaryCount.DeserializeSavingsPlanSummaryCount(property.Value);

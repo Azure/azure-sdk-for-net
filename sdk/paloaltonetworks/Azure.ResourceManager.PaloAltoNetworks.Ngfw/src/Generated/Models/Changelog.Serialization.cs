@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastCommitted = property.Value.GetDateTimeOffset("O");
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastModified = property.Value.GetDateTimeOffset("O");

@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IdentityAccessKeyPermission> array = new List<IdentityAccessKeyPermission>();
@@ -90,7 +89,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IdentityAccessSecretPermission> array = new List<IdentityAccessSecretPermission>();
@@ -105,7 +103,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IdentityAccessCertificatePermission> array = new List<IdentityAccessCertificatePermission>();
@@ -120,7 +117,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IdentityAccessStoragePermission> array = new List<IdentityAccessStoragePermission>();

@@ -99,7 +99,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cognitiveServices = CognitiveServicesAccount.DeserializeCognitiveServicesAccount(property.Value);
@@ -109,7 +108,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     knowledgeStore = KnowledgeStore.DeserializeKnowledgeStore(property.Value);

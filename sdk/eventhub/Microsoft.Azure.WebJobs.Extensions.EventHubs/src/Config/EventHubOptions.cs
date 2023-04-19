@@ -141,6 +141,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// receive multiple events. This value must be less than <see cref="MaxEventBatchSize"/> and is used in
         /// conjunction with <see cref="MaxWaitTime"/>. Default 1.
         /// </summary>
+        /// <remarks>
+        /// The minimum size is not a strict guarantee, as a partial batch will be dispatched if a full batch cannot be
+        /// prepared before the <see cref="MaxWaitTime"/> has elapsed.  Partial batches are also likely for the first invocation
+        /// of the function after scaling takes place.
+        /// </remarks>
         public int MinEventBatchSize
         {
             get => _minEventBatchSize;
@@ -163,6 +168,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         /// If less than <see cref="MinEventBatchSize" /> events were available before the wait time elapses, the function
         /// will be invoked with a partial batch.  Default is 60 seconds.  The longest allowed wait time is 10 minutes.
         /// </summary>
+        /// <remarks>
+        /// This interval is not a strict guarantee for the exact timing on which the function will be invoked. There is a small
+        /// margin of error due to timer precision. When scaling takes place, the first invocation with a partial
+        /// batch may take place more quickly or may take up to twice the configured <see cref="MaxWaitTime"/>.
+        /// </remarks>
         public TimeSpan MaxWaitTime
         {
             get => _maxWaitTime;

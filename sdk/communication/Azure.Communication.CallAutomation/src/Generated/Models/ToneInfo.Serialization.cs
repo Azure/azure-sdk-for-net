@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
             }
             int sequenceId = default;
             DtmfTone tone = default;
-            string participantId = default;
+            Optional<string> participantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sequenceId"u8))
@@ -39,7 +39,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new ToneInfo(sequenceId, tone, participantId);
+            return new ToneInfo(sequenceId, tone, participantId.Value);
         }
     }
 }

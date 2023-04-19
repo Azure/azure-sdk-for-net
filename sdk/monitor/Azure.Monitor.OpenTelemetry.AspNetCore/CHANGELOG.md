@@ -1,18 +1,24 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
-* Added new public APIs `Services.AddOpenTelemetry().WithAzureMonitor()` and `Services.AddOpenTelemetry().WithAzureMonitor(Action<AzureMonitorOptions> configureAzureMonitor)`.
-
 ### Breaking Changes
-
-* Removed public APIs `Services.AddAzureMonitor()`, `Services.AddAzureMonitor(AzureMonitorOptions options)` and `Services.AddAzureMonitor(Action<AzureMonitorOptions> configureAzureMonitor)`.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2023-04-11)
+
+### Features Added
+
+* Added new public APIs `Services.AddOpenTelemetry().UseAzureMonitor()` and `Services.AddOpenTelemetry().UseAzureMonitor(Action<AzureMonitorOptions> configureAzureMonitor)`.
+
+### Breaking Changes
+
+* Removed public APIs `Services.AddAzureMonitor()`, `Services.AddAzureMonitor(AzureMonitorOptions options)` and `Services.AddAzureMonitor(Action<AzureMonitorOptions> configureAzureMonitor)`.
 
 ## 1.0.0-beta.2 (2023-03-14)
 

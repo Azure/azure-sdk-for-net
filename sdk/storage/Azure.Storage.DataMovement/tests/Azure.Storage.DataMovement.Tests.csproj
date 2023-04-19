@@ -23,10 +23,10 @@
     <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />
-    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />
-    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\BlobsClientTestFixtureAttribute.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared\Storage" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs"/>
+    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs"/>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\BlobsClientTestFixtureAttribute.cs" LinkBase="Shared\Storage" />
     <Compile Remove="$(AzureStorageSharedTestSources)\ClientSideEncryptionTestExtensions.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\StorageTestBase.SasVersion.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\Sas\*.cs" />
