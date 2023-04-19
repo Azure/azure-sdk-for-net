@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// extension needs to be provisioned.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisionAfterExtensions")]
-        public IList<string> ProvisionAfterExtensions;
+        public IList<string> ProvisionAfterExtensions { get; set; }
 
         /// <summary>
         /// Validate the object.

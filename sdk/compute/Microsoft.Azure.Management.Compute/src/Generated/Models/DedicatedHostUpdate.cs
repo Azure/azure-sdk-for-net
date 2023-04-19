@@ -59,8 +59,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="instanceView">The dedicated host instance
         /// view.</param>
         /// <param name="timeCreated">Specifies the time at which the Dedicated
-        /// Host resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2021-11-01.</param>
+        /// Host resource was created. Minimum api-version: 2021-11-01.</param>
         /// <param name="sku">[List all available dedicated host sizes for
         /// resizing]
         /// (https://docs.microsoft.com/rest/api/compute/dedicated-hosts/listavailablesizes).
@@ -169,12 +168,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PlatformFaultDomain != null)
+            if (PlatformFaultDomain < 0)
             {
-                if (PlatformFaultDomain < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "PlatformFaultDomain", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "PlatformFaultDomain", 0);
             }
         }
     }
