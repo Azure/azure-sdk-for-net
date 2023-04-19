@@ -18,12 +18,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void VerifyGetStorageDirectory_Configured()
         {
             var directoryPath = StorageHelper.GetStorageDirectory(
-                platform: new MockPlatform(),
+                platform: new MockPlatform
+                {
+                    UserName = "ApplicationPoolIdentity",
+                    ProcessName ="w3wp",
+                    ApplicationBaseDirectory = "C:\\inetpub\\wwwroot",
+                },
                 configuredStorageDirectory: $"C:{ds}Temp",
-                instrumentationKey: "testIkey",
-                userName: "ApplicationPoolIdentity",
-                processName: "w3wp",
-                applicationDirectory: "C:\\inetpub\\wwwroot");
+                instrumentationKey: "testIkey");
 
             Assert.Equal($"C:{ds}Temp{ds}f01a11b594e1f6d06cd96564b1f258b515bf98d956e8a1842c74479a1ecef4eb", directoryPath);
         }
@@ -33,17 +35,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("LINUX", "TMPDIR")]
         public void VerifyGetStorageDirectory_Default(string osName, string envVarName)
         {
-            var platform = new MockPlatform();
+            var platform = new MockPlatform
+            {
+                UserName = "ApplicationPoolIdentity",
+                ProcessName = "w3wp",
+                ApplicationBaseDirectory = "C:\\inetpub\\wwwroot",
+            };
             platform.IsOsPlatformFunc = (os) => os.ToString() == osName;
             platform.SetEnvironmentVariable(envVarName, $"C:{ds}Temp");
 
             var directoryPath = StorageHelper.GetStorageDirectory(
                 platform: platform,
                 configuredStorageDirectory: null,
-                instrumentationKey: "testIkey",
-                userName: "ApplicationPoolIdentity",
-                processName: "w3wp",
-                applicationDirectory: "C:\\inetpub\\wwwroot");
+                instrumentationKey: "testIkey");
 
             Assert.Equal($"C:{ds}Temp{ds}Microsoft{ds}AzureMonitor{ds}f01a11b594e1f6d06cd96564b1f258b515bf98d956e8a1842c74479a1ecef4eb", directoryPath);
         }

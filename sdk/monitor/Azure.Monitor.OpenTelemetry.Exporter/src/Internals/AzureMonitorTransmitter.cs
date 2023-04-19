@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -110,10 +109,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     var storageDirectory = StorageHelper.GetStorageDirectory(
                         platform: platform,
                         configuredStorageDirectory: options.StorageDirectory,
-                        instrumentationKey: instrumentationKey,
-                        userName: Environment.UserName,
-                        processName: Process.GetCurrentProcess().ProcessName,
-                        applicationDirectory: AppContext.BaseDirectory);
+                        instrumentationKey: instrumentationKey);
 
                     AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", $"Data for ikey '{instrumentationKey}' will be stored at: {storageDirectory}");
 
