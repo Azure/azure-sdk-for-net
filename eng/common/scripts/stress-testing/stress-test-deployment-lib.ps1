@@ -394,7 +394,6 @@ function CheckDependencies()
 }
 
 function generateRetryTestsHelmValues ($pkg, $releaseName, $generatedHelmValues) {
-    CheckDependencies
 
     $podOutput = RunOrExitOnFailure kubectl get pods -n $pkg.namespace -o json
     $pods = $podOutput | ConvertFrom-Json
