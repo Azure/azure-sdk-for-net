@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
@@ -14,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private static readonly char ds = Path.DirectorySeparatorChar;
 
         [Fact]
-        public void VerifyConfiguredDirectory()
+        public void VerifyGetStorageDirectory_Configured()
         {
             var directoryPath = StorageHelper.GetStorageDirectory(
                 platform: new MockPlatform(),
@@ -24,6 +25,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 applicationDirectory: "C:\\inetpub\\wwwroot");
 
             Assert.Equal($"C:{ds}Temp{ds}da7bc2b3fc208d871eda206b7dec121a7944a3bce25e17143ba0f8b1a6c41bdd", directoryPath);
+        }
+
+        [Theory]
+        [InlineData("WINDOWS", "LOCALAPPDATA")]
+        [InlineData("LINUX", "TMPDIR")]
+        public void VerifyGetStorageDirectory_Default(string osName, string envVarName)
+        {
+            var platform = new MockPlatform();
+            platform.IsOsPlatformFunc = (os) => os.ToString() == osName;
+            platform.SetEnvironmentVariable(envVarName, $"C:{ds}Temp");
+
+            var directoryPath = StorageHelper.GetStorageDirectory(
+                platform: platform,
+                configuredStorageDirectory: null,
+                instrumentationKey: "testIkey",
+                processName: "w3wp",
+                applicationDirectory: "C:\\inetpub\\wwwroot");
+
+            Assert.Equal($"C:{ds}Temp{ds}Microsoft{ds}AzureMonitor{ds}da7bc2b3fc208d871eda206b7dec121a7944a3bce25e17143ba0f8b1a6c41bdd", directoryPath);
         }
 
         [Theory]
@@ -60,6 +80,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // when using a default directory, we will append /Microsoft/AzureMonitor
             Assert.Equal($"{expectedDirectory}Microsoft{ds}AzureMonitor", directoryPath);
+        }
+
+        [Theory]
+        [InlineData("WINDOWS")]
+        [InlineData("LINUX")]
+        public void VerifyDefaultDirectory_Failure(string osName)
+        {
+            var platform = new MockPlatform();
+            platform.IsOsPlatformFunc = (os) => os.ToString() == osName;
+            platform.CreateDirectoryFunc = (path) => false;
+
+            Assert.Throws<InvalidOperationException>(() => StorageHelper.GetDefaultStorageDirectory(platform: platform));
         }
     }
 }

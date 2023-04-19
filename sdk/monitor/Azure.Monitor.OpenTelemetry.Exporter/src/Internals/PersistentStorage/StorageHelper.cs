@@ -11,14 +11,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 {
     internal static class StorageHelper
     {
-        private static string? s_defaultStorageDirectory;
-
         internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string instrumentationKey, string processName, string applicationDirectory)
         {
             // get root directory
-            var rootDirectory = configuredStorageDirectory
-                ?? (s_defaultStorageDirectory ??= GetDefaultStorageDirectory(platform))
-                ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
+            var rootDirectory = configuredStorageDirectory ?? GetDefaultStorageDirectory(platform);
 
             // get unique sub directory
             string subDirectory = HashHelper.GetSHA256Hash($"{instrumentationKey};{processName};{applicationDirectory}");
@@ -36,8 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
                 if (TryCreateTelemetryDirectory(platform: platform, path: environmentVars["LOCALAPPDATA"]?.ToString(), createdDirectoryPath: out dirPath)
                     || TryCreateTelemetryDirectory(platform: platform, path: environmentVars["TEMP"]?.ToString(), createdDirectoryPath: out dirPath))
                 {
-                    s_defaultStorageDirectory = dirPath;
-                    return s_defaultStorageDirectory;
+                    return dirPath;
                 }
             }
             else
@@ -46,12 +41,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
                     || TryCreateTelemetryDirectory(platform: platform, path: "/var/tmp/", createdDirectoryPath: out dirPath)
                     || TryCreateTelemetryDirectory(platform: platform, path: "/tmp/", createdDirectoryPath: out dirPath))
                 {
-                    s_defaultStorageDirectory = dirPath;
-                    return s_defaultStorageDirectory;
+                    return dirPath;
                 }
             }
 
-            return s_defaultStorageDirectory;
+            throw new InvalidOperationException("Unable to determine default storage directory.");
         }
 
         /// <summary>
