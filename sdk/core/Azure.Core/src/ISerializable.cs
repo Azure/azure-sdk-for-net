@@ -4,8 +4,29 @@
 using System;
 using System.IO;
 
-public interface ISerializable
+namespace Azure
 {
-    bool TrySerialize(MemoryStream buffer, out int bytesWritten, SerializableOptions options = default);
-    bool TryDeserialize(ReadOnlyMemory<byte> data, out int bytesConsumed, SerializableOptions options = default);
+    /// <summary>
+    /// TODO
+    /// </summary>
+    public interface ISerializable
+    {
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="bytesWritten"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        bool TrySerialize(Stream stream, out int bytesWritten, SerializableOptions options = default);
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="bytesConsumed"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        bool TryDeserialize(Stream stream, out int bytesConsumed, SerializableOptions options = default);
+    }
 }
