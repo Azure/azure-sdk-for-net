@@ -122,7 +122,7 @@
     <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.14" />
     <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.14" />
     <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.0.0-rc9.14" />
-    <PackageReference Update="OpenTelemetry.Extensions.PersistentStorage" Version="1.0.0-beta.1" Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
+    <PackageReference Update="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.0-beta.2" Condition="'$(MSBuildProjectName)' == 'Azure.Monitor.OpenTelemetry.Exporter'" />
   </ItemGroup>
 
   <!--
