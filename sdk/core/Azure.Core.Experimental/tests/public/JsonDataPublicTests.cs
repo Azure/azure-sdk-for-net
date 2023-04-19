@@ -187,23 +187,6 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        [Ignore("Decide how to handle this case.")]
-        public void FloatOverflowThrows()
-        {
-            var json = new BinaryData("34028234663852885981170418348451692544000").ToDynamicFromJson();
-
-            JsonDocument doc = JsonDocument.Parse("34028234663852885981170418348451692544000");
-            float f = doc.RootElement.GetSingle();
-
-            dynamic jsonData = json;
-            Assert.AreEqual(34028234663852885981170418348451692544000d, (double)jsonData);
-            Assert.AreEqual(34028234663852885981170418348451692544000d, (double)json);
-            Assert.Throws<OverflowException>(() => _ = (float)34028234663852885981170418348451692544000d);
-            Assert.Throws<OverflowException>(() => _ = (float)json);
-            Assert.Throws<OverflowException>(() => _ = (float)jsonData);
-        }
-
-        [Test]
         public void CanAccessArrayValues()
         {
             dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } , \"array\": [1, 2, 3] }").ToDynamicFromJson();
@@ -222,15 +205,15 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        [Ignore("Decide how to handle this case.")]
-        public void FloatUnderflowThrows()
+        public void FloatOverflowThrows()
         {
-            var json = new BinaryData("-34028234663852885981170418348451692544000").ToDynamicFromJson();
+            var json = new BinaryData("34028234663852885981170418348451692544000").ToDynamicFromJson();
+
             dynamic jsonData = json;
-            Assert.Throws<OverflowException>(() => _ = (float)json);
-            Assert.Throws<OverflowException>(() => _ = (float)jsonData);
-            Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)jsonData);
-            Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)json);
+            Assert.AreEqual(34028234663852885981170418348451692544000d, (double)jsonData);
+            Assert.AreEqual(34028234663852885981170418348451692544000d, (double)json);
+            Assert.Throws<FormatException>(() => _ = (float)json);
+            Assert.Throws<FormatException>(() => _ = (float)jsonData);
         }
 
         [Test]
@@ -246,6 +229,17 @@ namespace Azure.Core.Tests.Public
             Assert.AreEqual(3402823466385288598D, (double)json);
             Assert.AreEqual(3402823466385288598F, (float)jsonData);
             Assert.AreEqual(3402823466385288598F, (float)json);
+        }
+
+        [Test]
+        public void FloatUnderflowThrows()
+        {
+            var json = new BinaryData("-34028234663852885981170418348451692544000").ToDynamicFromJson();
+            dynamic jsonData = json;
+            Assert.Throws<FormatException>(() => _ = (float)json);
+            Assert.Throws<FormatException>(() => _ = (float)jsonData);
+            Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)jsonData);
+            Assert.AreEqual(-34028234663852885981170418348451692544000d, (double)json);
         }
 
         [Test]
