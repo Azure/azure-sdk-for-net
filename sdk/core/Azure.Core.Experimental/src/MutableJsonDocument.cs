@@ -45,15 +45,14 @@ namespace Azure.Core.Json
         /// <summary>
         /// Writes the document to the provided stream as a JSON value.
         /// </summary>
-        /// <param name="stream"></param>
-        /// <param name="format"></param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <param name="stream">The stream to write the document to.</param>
+        /// <param name="format">The format to write the output in.</param>
+        /// <exception cref="FormatException">Thrown if an unsupported value is passed for format.</exception>
         public void WriteTo(Stream stream, StandardFormat format = default)
         {
-            // this is so we can add JSON Patch in the future
-            if (format != default)
+            if (format != default || format.Symbol != 'J')
             {
-                throw new ArgumentOutOfRangeException(nameof(format));
+                throw new FormatException($"Unsupported format {format.Symbol}. Supported formats are: 'J' - JSON.");
             }
 
             if (!Changes.HasChanges)
@@ -120,7 +119,7 @@ namespace Azure.Core.Json
             _originalDocument.Dispose();
         }
 
-        internal MutableJsonDocument(JsonDocument jsonDocument, Memory<byte> utf8Json) : this(jsonDocument.RootElement)
+        internal MutableJsonDocument(JsonDocument jsonDocument, Memory<byte> utf8Json)
         {
             _original = utf8Json;
             _originalDocument = jsonDocument;
@@ -142,9 +141,6 @@ namespace Azure.Core.Json
         /// <param name="type">The type of the value to convert. </param>
         internal MutableJsonDocument(object? value, JsonSerializerOptions options, Type? type = null)
         {
-            if (value is JsonDocument)
-                throw new InvalidOperationException("Calling wrong constructor.");
-
             Type inputType = type ?? (value == null ? typeof(object) : value.GetType());
             _original = JsonSerializer.SerializeToUtf8Bytes(value, inputType, options);
             _originalDocument = JsonDocument.Parse(_original);
