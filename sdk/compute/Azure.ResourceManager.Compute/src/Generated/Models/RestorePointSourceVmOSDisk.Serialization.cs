@@ -7,12 +7,27 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceVmOSDisk
+    public partial class RestorePointSourceVmOSDisk : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ManagedDisk))
+            {
+                writer.WritePropertyName("managedDisk"u8);
+                writer.WriteObjectValue(ManagedDisk);
+            }
+            if (Optional.IsDefined(DiskRestorePoint))
+            {
+                writer.WritePropertyName("diskRestorePoint"u8);
+                writer.WriteObjectValue(DiskRestorePoint);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static RestorePointSourceVmOSDisk DeserializeRestorePointSourceVmOSDisk(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -25,7 +40,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<CachingType> caching = default;
             Optional<int> diskSizeGB = default;
             Optional<VirtualMachineManagedDisk> managedDisk = default;
-            Optional<WritableSubResource> diskRestorePoint = default;
+            Optional<DiskRestorePointAttributes> diskRestorePoint = default;
+            Optional<bool> writeAcceleratorEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"u8))
@@ -90,11 +106,21 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskRestorePoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    diskRestorePoint = DiskRestorePointAttributes.DeserializeDiskRestorePointAttributes(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("writeAcceleratorEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    writeAcceleratorEnabled = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new RestorePointSourceVmOSDisk(Optional.ToNullable(osType), encryptionSettings.Value, name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint);
+            return new RestorePointSourceVmOSDisk(Optional.ToNullable(osType), encryptionSettings.Value, name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint.Value, Optional.ToNullable(writeAcceleratorEnabled));
         }
     }
 }
