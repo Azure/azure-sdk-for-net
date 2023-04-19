@@ -196,7 +196,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResource sourceResource = default,
             StorageResource destinationResource = default,
             TransferOptions transferOptions = default,
-            long size = Constants.MB)
+            long size = Constants.KB * 100)
         {
             Argument.AssertNotNull(manager, nameof(manager));
             if (sourceResource == default && destinationResource == default)
@@ -251,7 +251,7 @@ namespace Azure.Storage.DataMovement.Tests
                 localDirectory: localDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB,
+                size: Constants.KB * 100,
                 transferOptions: transferOptions);
 
             // Act
@@ -301,7 +301,7 @@ namespace Azure.Storage.DataMovement.Tests
                 localDirectory: localDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB,
+                size: Constants.KB * 100,
                 transferOptions: transferOptions);
 
             // Act
@@ -367,7 +367,7 @@ namespace Azure.Storage.DataMovement.Tests
                 localDirectory: localDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB,
+                size: Constants.KB * 100,
                 transferOptions: transferOptions);
 
             // Act
@@ -414,7 +414,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions transferOptions = new TransferOptions();
             FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
             TransferManager transferManager = new TransferManager(options);
-            long size = Constants.MB;
+            long size = Constants.KB * 100;
 
             (StorageResource sResource, StorageResource dResource) = await CreateStorageResourcesAsync(
                 transferType: transferType,
@@ -633,7 +633,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationDirectory: destinationDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB,
+                size: Constants.KB * 4,
                 transferCount: partCount,
                 transferOptions: transferOptions);
 
@@ -680,7 +680,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationDirectory: destinationDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB,
+                size: Constants.KB * 4,
                 transferCount: partCount,
                 transferOptions: transferOptions);
 
@@ -727,7 +727,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationDirectory: destinationDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.MB,
+                size: Constants.KB * 4,
                 transferCount: partCount,
                 transferOptions: transferOptions);
 
@@ -770,7 +770,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
             FailureTransferHolder failureTransferHolder = new FailureTransferHolder(transferOptions);
-            long size = Constants.MB;
+            long size = Constants.KB * 4;
             int partCount = 4;
 
             (StorageResourceContainer sResource, StorageResourceContainer dResource) = await CreateStorageResourceContainersAsync(
