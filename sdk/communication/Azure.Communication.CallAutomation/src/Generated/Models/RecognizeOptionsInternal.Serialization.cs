@@ -47,11 +47,6 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SpeechOptions))
-            {
-                writer.WritePropertyName("speechOptions"u8);
-                writer.WriteObjectValue(SpeechOptions);
-            }
             writer.WriteEndObject();
         }
     }

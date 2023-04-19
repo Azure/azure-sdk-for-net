@@ -38,7 +38,5 @@ namespace Azure.Communication.CallAutomation
         public DtmfOptionsInternal DtmfOptions { get; set; }
         /// <summary> Defines Ivr choices for recognize. </summary>
         public IList<RecognizeChoice> Choices { get; }
-        /// <summary> Defines continuous speech recognition option. </summary>
-        public SpeechOptionsInternal SpeechOptions { get; set; }
     }
 }

@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The ContinuousDtmfRecognitionRequest. </summary>
+    /// <summary> The request payload to start Continuous Dtmf Recognition request. </summary>
     internal partial class ContinuousDtmfRecognitionRequestInternal
     {
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionRequestInternal. </summary>
-        /// <param name="targetParticipant"> Defines options for recognition. </param>
+        /// <param name="targetParticipant"> Target participant of continuous DTMF tone recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public ContinuousDtmfRecognitionRequestInternal(CommunicationIdentifierModel targetParticipant)
         {
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
             TargetParticipant = targetParticipant;
         }
 
-        /// <summary> Defines options for recognition. </summary>
+        /// <summary> Target participant of continuous DTMF tone recognition. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
