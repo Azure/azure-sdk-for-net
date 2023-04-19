@@ -13,15 +13,15 @@ try
     string targetLanguage = "es";
     IEnumerable<InputTextWithTranslation> inputTextElements = new[]
     {
-        new InputTextWithTranslation { Text = "fly", Translation = "volar" }
+        new InputTextWithTranslation("fly", "volar")
     };
 
     Response<IReadOnlyList<DictionaryExampleItem>> response = await client.LookupDictionaryExamplesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
     IReadOnlyList<DictionaryExampleItem> dictionaryEntries = response.Value;
-    DictionaryExampleElement dictionaryEntry = dictionaryEntries.FirstOrDefault();
+    DictionaryExampleItem dictionaryEntry = dictionaryEntries.FirstOrDefault();
 
     Console.WriteLine($"For the given input {dictionaryEntry?.Examples?.Count} examples were found in the dictionary.");
-    Example firstExample = dictionaryEntry?.Examples?.FirstOrDefault();
+    DictionaryExample firstExample = dictionaryEntry?.Examples?.FirstOrDefault();
     Console.WriteLine($"Example: '{string.Concat(firstExample.TargetPrefix, firstExample.TargetTerm, firstExample.TargetSuffix)}'.");
 
 }
