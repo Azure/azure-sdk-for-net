@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.GraphServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new GraphServicesProvisioningState(property.Value.GetString());

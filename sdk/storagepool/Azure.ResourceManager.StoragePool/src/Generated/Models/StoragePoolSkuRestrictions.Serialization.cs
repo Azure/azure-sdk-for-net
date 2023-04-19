@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.StoragePool.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToStoragePoolSkuRestrictionsType();
@@ -39,7 +38,6 @@ namespace Azure.ResourceManager.StoragePool.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -54,7 +52,6 @@ namespace Azure.ResourceManager.StoragePool.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     restrictionInfo = StoragePoolSkuRestrictionInfo.DeserializeStoragePoolSkuRestrictionInfo(property.Value);
@@ -64,7 +61,6 @@ namespace Azure.ResourceManager.StoragePool.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reasonCode = property.Value.GetString().ToStoragePoolSkuRestrictionsReasonCode();

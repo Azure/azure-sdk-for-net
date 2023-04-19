@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -88,7 +86,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationTime = property0.Value.GetDateTimeOffset("O");
@@ -98,7 +95,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             oldestRestorableTime = property0.Value.GetDateTimeOffset("O");
@@ -108,7 +104,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deletionTime = property0.Value.GetDateTimeOffset("O");
@@ -118,7 +113,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             apiType = new CosmosDBApiType(property0.Value.GetString());
@@ -128,7 +122,6 @@ namespace Azure.ResourceManager.CosmosDB
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RestorableLocationResourceInfo> array = new List<RestorableLocationResourceInfo>();

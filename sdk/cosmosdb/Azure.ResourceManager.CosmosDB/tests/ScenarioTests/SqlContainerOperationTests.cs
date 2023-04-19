@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -115,13 +116,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
             var restorableDatabaseAccount = restorableAccounts.SingleOrDefault(account => account.Data.AccountName == _databaseAccount.Data.Name);
-            DateTime restoreTimestampInUtc = DateTime.UtcNow;
+            DateTimeOffset timestampInUtc = DateTimeOffset.FromUnixTimeSeconds((int)container.Data.Resource.Timestamp.Value);
+            AddDelayInSeconds(60);
 
             String restoreSource = restorableDatabaseAccount.Id;
             ResourceRestoreParameters RestoreParameters = new ResourceRestoreParameters
             {
                 RestoreSource = restoreSource,
-                RestoreTimestampInUtc = restoreTimestampInUtc
+                RestoreTimestampInUtc = timestampInUtc.AddSeconds(60)
             };
 
             await container.DeleteAsync(WaitUntil.Completed);
@@ -333,6 +335,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             _databaseAccountName = name;
             var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, _databaseAccountName, createOptions);
             return accountLro.Value;
+        }
+
+        private void AddDelayInSeconds(int delayInSeconds)
+        {
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Thread.Sleep(delayInSeconds * 1000);
+            }
         }
     }
 }

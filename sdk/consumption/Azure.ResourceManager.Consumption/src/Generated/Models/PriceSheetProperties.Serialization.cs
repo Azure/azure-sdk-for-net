@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     billingPeriodId = new ResourceIdentifier(property.Value.GetString());
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     meterId = property.Value.GetGuid();
@@ -54,7 +52,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     meterDetails = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property.Value);
@@ -69,7 +66,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     includedQuantity = property.Value.GetDecimal();
@@ -84,7 +80,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unitPrice = property.Value.GetDecimal();

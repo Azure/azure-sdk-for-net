@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endpointUrl = null;
                         continue;
                     }
                     endpointUrl = new Uri(property.Value.GetString());

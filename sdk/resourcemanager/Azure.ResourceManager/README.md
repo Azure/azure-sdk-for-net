@@ -41,7 +41,7 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 
 To authenticate to Azure and create an `ArmClient`, do the following code:
 
-```C# Snippet:Readme_AuthClient
+```C# Snippet:Readme_AuthClient_Namespaces
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -49,9 +49,8 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
-
-// Code omitted for brevity
-
+```
+```C# Snippet:Readme_AuthClient
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ```
 

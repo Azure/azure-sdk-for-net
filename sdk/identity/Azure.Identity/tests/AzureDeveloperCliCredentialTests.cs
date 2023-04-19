@@ -121,7 +121,7 @@ namespace Azure.Identity.Tests
             AzureDeveloperCliCredential credential = InstrumentClient(
                 new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null),
                     new TestProcessService(testProcess),
-                    new AzureDeveloperCliCredentialOptions() { AzdCliProcessTimeout = TimeSpan.Zero }));
+                    new AzureDeveloperCliCredentialOptions() { ProcessTimeout = TimeSpan.Zero }));
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             Assert.AreEqual(AzureDeveloperCliCredential.AzdCliTimeoutError, ex.Message);
         }
