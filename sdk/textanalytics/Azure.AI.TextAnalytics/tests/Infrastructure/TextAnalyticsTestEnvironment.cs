@@ -4,6 +4,8 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
@@ -23,16 +25,50 @@ namespace Azure.AI.TextAnalytics.Tests
         public string RecognizeCustomEntitiesProjectName => GetRecordedVariable("TEXTANALYTICS_CUSTOM_ENTITIES_PROJECT_NAME");
         public string RecognizeCustomEntitiesDeploymentName => GetRecordedVariable("TEXTANALYTICS_CUSTOM_ENTITIES_DEPLOYMENT_NAME");
 
+        public TextAnalyticsAudience GetAudience()
+        {
+            Uri authorityHost = new(AuthorityHostUrl);
+
+            if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
+            {
+                return TextAnalyticsAudience.AzurePublicCloud;
+            }
+
+            if (authorityHost == AzureAuthorityHosts.AzureChina)
+            {
+                return TextAnalyticsAudience.AzureChina;
+            }
+
+            if (authorityHost == AzureAuthorityHosts.AzureGovernment)
+            {
+                return TextAnalyticsAudience.AzureGovernment;
+            }
+
+            throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
+        }
+
+        public void IgnoreIfNotPublicCloud()
+        {
+            if (GetAudience() != TextAnalyticsAudience.AzurePublicCloud)
+            {
+                Assert.Ignore("Currently, these tests can only be run in the public cloud.");
+            }
+        }
+
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {
             // Check that the dynamic resource is ready.
             Uri endpoint = new(Endpoint);
-            AzureKeyCredential credential = new(ApiKey);
-            TextAnalyticsClient client = new(endpoint, credential);
+            AzureKeyCredential azureKeyCredential = new(ApiKey);
+            TextAnalyticsClientOptions options = new() { Audience = GetAudience() };
 
             try
             {
-                await client.DetectLanguageAsync("The dynamic resource is ready.");
+                TextAnalyticsClient clientWithAzureKeyCredential = new(endpoint, azureKeyCredential, options);
+                await clientWithAzureKeyCredential.DetectLanguageAsync("Ready!");
+
+                TextAnalyticsClient clientWithTokenCredential = new(endpoint, Credential, options);
+                await clientWithTokenCredential.DetectLanguageAsync("Ready!");
             }
             catch (RequestFailedException e) when (e.Status == 401)
             {
