@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.PolicyInsights
             Metadata = metadata;
             Description = description;
             Requirements = requirements;
+#pragma warning disable CS0618 // Type or member is obsolete
+            AdditionalContentUri = Uri.IsWellFormedUriString(AdditionalContentUriString, UriKind.Absolute) ? new Uri(AdditionalContentUriString) : null;
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         /// <summary> The policy metadata identifier. </summary>
@@ -58,7 +61,7 @@ namespace Azure.ResourceManager.PolicyInsights
         public string Owner { get; }
         /// <summary> Url for getting additional content about the resource metadata. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property has been replaced by AdditionalContentUriString", true)]
+        [Obsolete("This property has been replaced by AdditionalContentUriString", false)]
         public Uri AdditionalContentUri { get; }
         /// <summary> Url for getting additional content about the resource metadata. </summary>
 #pragma warning disable CA1056 // AdditionalContentUri is not always a real URI
