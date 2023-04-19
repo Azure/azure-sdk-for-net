@@ -76,7 +76,7 @@ namespace Azure.Communication.Rooms.Tests.samples
         }
 
         [Test]
-        public async Task UpsertAndRemoveParticipantsExample()
+        public async Task AddUpdateAndRemoveParticipantsExample()
         {
             RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_03_31_Preview);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
@@ -98,21 +98,21 @@ namespace Azure.Communication.Rooms.Tests.samples
 
             var createdRoomId = createCommunicationRoom.Id;
 
-            #region Snippet:Azure_Communication_Rooms_Tests_Samples_UpsertParticipants
+            #region Snippet:Azure_Communication_Rooms_Tests_Samples_AddOrUpdateParticipants
             CommunicationIdentifier communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
             RoomParticipant newParticipant = new RoomParticipant(communicationUser3) { Role = ParticipantRole.Consumer };
 
             // Previous snippet for create room added participant2 as Presenter
             participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
 
-            List<RoomParticipant> participantsToUpsert = new List<RoomParticipant>
+            List<RoomParticipant> participantsToAddOrUpdate = new List<RoomParticipant>
             {
                 participant2,   // participant2 updated from Presenter to Attendee
                 newParticipant, // newParticipant added to the room
             };
 
-            Response<UpsertParticipantsResult> upsertParticipantResponse = await roomsClient.UpsertParticipantsAsync(createdRoomId, participantsToUpsert);
-            #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_UpsertParticipants
+            Response addOrUpdateParticipantResponse = await roomsClient.AddOrUpdateParticipantsAsync(createdRoomId, participantsToAddOrUpdate);
+            #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_AddOrUpdateParticipants
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_RemoveParticipants
             List<CommunicationIdentifier> participantsToRemove = new List<CommunicationIdentifier>
@@ -120,7 +120,7 @@ namespace Azure.Communication.Rooms.Tests.samples
                communicationUser1,
                communicationUser2
             };
-            Response<RemoveParticipantsResult> removeParticipantResponse = await roomsClient.RemoveParticipantsAsync(createdRoomId, participantsToRemove);
+            Response removeParticipantResponse = await roomsClient.RemoveParticipantsAsync(createdRoomId, participantsToRemove);
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_RemoveParticipants
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_GetParticipants

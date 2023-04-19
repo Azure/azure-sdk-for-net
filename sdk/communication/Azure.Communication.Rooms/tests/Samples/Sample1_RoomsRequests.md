@@ -63,24 +63,24 @@ To delete an existing ACS room, call the `DeleteRoom` or `DeleteRoomAsync` funct
 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
 ```
 
-## Upsert Participants to an existing room
+## Add or update participants in an existing room
 
-To upsert participants to an existing ACS room, call the `UpsertParticipants` or `UpsertParticipantsAsync` function from the RoomsClient.
+To add or update participants in an existing ACS room, call the `AddOrUpdateParticipants` or `AddOrUpdateParticipantsAsync` function from the RoomsClient.
 
-```C# Snippet:Azure_Communication_Rooms_Tests_Samples_UpsertParticipants
+```C# Snippet:Azure_Communication_Rooms_Tests_Samples_AddOrUpdateParticipants
 CommunicationIdentifier communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
 RoomParticipant newParticipant = new RoomParticipant(communicationUser3) { Role = ParticipantRole.Consumer };
 
 // Previous snippet for create room added participant2 as Presenter
 participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
 
-List<RoomParticipant> participantsToUpsert = new List<RoomParticipant>
+List<RoomParticipant> participantsToAddOrUpdate = new List<RoomParticipant>
 {
     participant2,   // participant2 updated from Presenter to Attendee
     newParticipant, // newParticipant added to the room
 };
 
-Response<UpsertParticipantsResult> upsertParticipantResponse = await roomsClient.UpsertParticipantsAsync(createdRoomId, participantsToUpsert);
+Response addOrUpdateParticipantResponse = await roomsClient.AddOrUpdateParticipantsAsync(createdRoomId, participantsToAddOrUpdate);
 ```
 
 ## Remove Participants in an existing room
@@ -92,7 +92,7 @@ List<CommunicationIdentifier> participantsToRemove = new List<CommunicationIdent
    communicationUser1,
    communicationUser2
 };
-Response<RemoveParticipantsResult> removeParticipantResponse = await roomsClient.RemoveParticipantsAsync(createdRoomId, participantsToRemove);
+Response removeParticipantResponse = await roomsClient.RemoveParticipantsAsync(createdRoomId, participantsToRemove);
 ```
 
 ## Get participants in an existing room

@@ -14,20 +14,6 @@ namespace Azure.Communication.Rooms
     [CodeGenModel("RoomsModelFactory")]
     public static partial class RoomsModelFactory
     {
-        /// <summary> Initializes a new instance of UpsertParticipantsResult. </summary>
-        /// <returns> A new <see cref="UpsertParticipantsResult"/> instance for mocking. </returns>
-        public static UpsertParticipantsResult UpsertParticipantsResult()
-        {
-            return new UpsertParticipantsResult();
-        }
-
-        /// <summary> Initializes a new instance of RemoveParticipantsResult. </summary>
-        /// <returns> A new <see cref="RemoveParticipantsResult"/> instance for mocking. </returns>
-        public static RemoveParticipantsResult RemoveParticipantsResult()
-        {
-            return new RemoveParticipantsResult();
-        }
-
         /// <summary> Initializes a new instance of RoomParticipant. </summary>
         /// <param name="rawId"> Raw ID representation of the communication identifier. Please refer to the following document for additional information on Raw ID. &lt;br&gt; https://learn.microsoft.com/azure/communication-services/concepts/identifiers?pivots=programming-language-rest#raw-id-representation. </param>
         /// <param name="role"> The role of a room participant. The default value is Attendee. </param>

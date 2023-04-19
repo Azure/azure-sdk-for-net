@@ -50,12 +50,12 @@ namespace Azure.Communication.Rooms
         /// Initializes a new instance of the <see cref="RoomsClient"/> class.
         /// </summary>
         /// <param name="endpoint"></param>
-        /// <param name="keyCredential"></param>
+        /// <param name="credential"></param>
         /// <param name="options"></param>
-        public RoomsClient(Uri endpoint, AzureKeyCredential keyCredential, RoomsClientOptions options = default)
+        public RoomsClient(Uri endpoint, AzureKeyCredential credential, RoomsClientOptions options = default)
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
+                Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new RoomsClientOptions())
         { }
 
@@ -63,12 +63,12 @@ namespace Azure.Communication.Rooms
         /// Initializes a new instance of the <see cref="RoomsClient"/> class.
         /// </summary>
         /// <param name="endpoint"></param>
-        /// <param name="tokenCredential"></param>
+        /// <param name="credential"></param>
         /// <param name="options"></param>
-        public RoomsClient(Uri endpoint, TokenCredential tokenCredential, RoomsClientOptions options = default)
+        public RoomsClient(Uri endpoint, TokenCredential credential, RoomsClientOptions options = default)
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
+                Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new RoomsClientOptions())
         { }
 
@@ -113,17 +113,15 @@ namespace Azure.Communication.Rooms
         /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-#nullable enable
-        public virtual async Task<Response<CommunicationRoom>> CreateRoomAsync(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<RoomParticipant>? participants = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationRoom>> CreateRoomAsync(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<RoomParticipant> participants = null, CancellationToken cancellationToken = default)
         {
-#nullable disable
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(CreateRoom)}");
             scope.Start();
             try
             {
                 Guid repeatabilityRequestId = Guid.NewGuid();
                 DateTimeOffset repeatabilityFirstSent = DateTimeOffset.UtcNow;
-                var participantDictionary = ConvertRoomParticipantsToDictionaryForUpsert(participants);
+                var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(participants);
                 return await RoomsServiceClient.CreateAsync(repeatabilityRequestId, repeatabilityFirstSent, validFrom, validUntil, participantDictionary, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -140,17 +138,15 @@ namespace Azure.Communication.Rooms
         /// <param name="validUntil"></param>
         /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
-#nullable enable
-        public virtual Response<CommunicationRoom> CreateRoom(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<RoomParticipant>? participants = default, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationRoom> CreateRoom(DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, IEnumerable<RoomParticipant> participants = null, CancellationToken cancellationToken = default)
         {
-#nullable disable
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(CreateRoom)}");
             scope.Start();
             try
             {
                 Guid repeatabilityRequestId = Guid.NewGuid();
                 DateTimeOffset repeatabilityFirstSent = DateTimeOffset.UtcNow;
-                var participantDictionary = ConvertRoomParticipantsToDictionaryForUpsert(participants);
+                var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(participants);
                 return RoomsServiceClient.Create(repeatabilityRequestId, repeatabilityFirstSent, validFrom, validUntil, participantDictionary, cancellationToken);
             }
             catch (Exception ex)
@@ -465,21 +461,21 @@ namespace Azure.Communication.Rooms
         }
 
         /// <summary>
-        /// Upsert participants in a room asynchronously.
+        /// Add or update participants in a room asynchronously.
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<Response<UpsertParticipantsResult>> UpsertParticipantsAsync(string roomId, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AddOrUpdateParticipantsAsync(string roomId, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(UpsertParticipants)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(AddOrUpdateParticipants)}");
             scope.Start();
             try
             {
-                var participantDictionary = ConvertRoomParticipantsToDictionaryForUpsert(participants);
-                Response<object> upsertParticipantResponse = await ParticipantsServiceClient.UpdateAsync(roomId, participantDictionary, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new UpsertParticipantsResult(), upsertParticipantResponse.GetRawResponse());
+                var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(participants);
+                Response<object> addOrUpdateParticipantResponse = await ParticipantsServiceClient.UpdateAsync(roomId, participantDictionary, cancellationToken).ConfigureAwait(false);
+                return addOrUpdateParticipantResponse.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -489,20 +485,20 @@ namespace Azure.Communication.Rooms
         }
 
         /// <summary>
-        /// Upsert participants in a room.
+        /// Add or update participants in a room.
         /// </summary>
         /// <param name="roomId"></param>
         /// <param name="participants"></param>
         /// <param name="cancellationToken"></param>
-        public virtual Response<UpsertParticipantsResult> UpsertParticipants(string roomId, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
+        public virtual Response AddOrUpdateParticipants(string roomId, IEnumerable<RoomParticipant> participants = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(UpsertParticipants)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(AddOrUpdateParticipants)}");
             scope.Start();
             try
             {
-                var participantDictionary = ConvertRoomParticipantsToDictionaryForUpsert(participants);
-                Response<object> upsertParticipantResponse = ParticipantsServiceClient.Update(roomId, participantDictionary, cancellationToken);
-                return Response.FromValue(new UpsertParticipantsResult(), upsertParticipantResponse.GetRawResponse());
+                var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(participants);
+                Response<object> addOrUpdateParticipantResponse = ParticipantsServiceClient.Update(roomId, participantDictionary, cancellationToken);
+                return addOrUpdateParticipantResponse.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -515,17 +511,17 @@ namespace Azure.Communication.Rooms
         /// Delete room participants async.
         /// </summary>
         /// <param name="roomId"></param>
-        /// <param name="communicationIdentifiers"></param>
+        /// <param name="participantIdentifiers"></param>
         /// <param name="cancellationToken"></param>
-        public virtual async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(string roomId, IEnumerable<CommunicationIdentifier> communicationIdentifiers, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveParticipantsAsync(string roomId, IEnumerable<CommunicationIdentifier> participantIdentifiers, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(RemoveParticipants)}");
             scope.Start();
             try
             {
-                var participantDictionary = ConvertCommunicationIdentifiersToDictionaryForRemove(communicationIdentifiers);
+                var participantDictionary = ConvertCommunicationIdentifiersToDictionaryForRemove(participantIdentifiers);
                 Response<object> removeParticipantResponse = await ParticipantsServiceClient.UpdateAsync(roomId, participantDictionary, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RemoveParticipantsResult(), removeParticipantResponse.GetRawResponse());
+                return removeParticipantResponse.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -538,17 +534,17 @@ namespace Azure.Communication.Rooms
         /// Remove room participants.
         /// </summary>
         /// <param name="roomId"></param>
-        /// <param name="communicationIdentifiers"></param>
+        /// <param name="participantIdentifiers"></param>
         /// <param name="cancellationToken"></param>
-        public virtual Response<RemoveParticipantsResult> RemoveParticipants(string roomId, IEnumerable<CommunicationIdentifier> communicationIdentifiers, CancellationToken cancellationToken = default)
+        public virtual Response RemoveParticipants(string roomId, IEnumerable<CommunicationIdentifier> participantIdentifiers, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RoomsClient)}.{nameof(RemoveParticipants)}");
             scope.Start();
             try
             {
-                var participantDictionary = ConvertCommunicationIdentifiersToDictionaryForRemove(communicationIdentifiers);
+                var participantDictionary = ConvertCommunicationIdentifiersToDictionaryForRemove(participantIdentifiers);
                 Response<object> removeParticipantResponse = ParticipantsServiceClient.Update(roomId, participantDictionary, cancellationToken);
-                return Response.FromValue(new RemoveParticipantsResult(), removeParticipantResponse.GetRawResponse());
+                return removeParticipantResponse.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -558,7 +554,7 @@ namespace Azure.Communication.Rooms
         }
 
 #nullable enable
-        private static Dictionary<string, ParticipantProperties?> ConvertRoomParticipantsToDictionaryForUpsert(IEnumerable<RoomParticipant>? participants)
+        private static Dictionary<string, ParticipantProperties?> ConvertRoomParticipantsToDictionaryForAddOrUpdate(IEnumerable<RoomParticipant>? participants)
         {
             var participantDictionary = new Dictionary<string, ParticipantProperties?>() { };
 #nullable disable

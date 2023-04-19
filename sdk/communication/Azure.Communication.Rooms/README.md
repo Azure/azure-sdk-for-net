@@ -31,7 +31,7 @@ You need an [Azure subscription][azure_sub] and a [Communication Service Resourc
 To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal], the [Azure PowerShell][communication_resource_create_power_shell], or the [.NET management client library][communication_resource_create_net].
 
 ### Key concepts
-`RoomsClient` provides the functionality to create room, update room, get room, list rooms, delete room, upsert participants, remove participant, and list participants.
+`RoomsClient` provides the functionality to create room, update room, get room, list rooms, delete room, add participants, update participants, remove participant, and list participants.
 
 ### Using statements
 ```C# Snippet:Azure_Communication_Rooms_Tests_UsingStatements
@@ -95,23 +95,23 @@ To delete a room, call the `DeleteRoom` or `DeleteRoomAsync` function from Rooms
 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
 ```
 
-### Upsert participants in a room
-In order to insert new participants or update existing participants, call the `UpsertParticipants` or `UpsertParticipantsAsync` function from RoomsClient.
+### Add Or update participants in a room
+In order to add new participants or update existing participants, call the `AddOrUpdateParticipants` or `AddOrUpdateParticipantsAsync` function from RoomsClient.
 
-```C# Snippet:Azure_Communication_Rooms_Tests_Samples_UpsertParticipants
+```C# Snippet:Azure_Communication_Rooms_Tests_Samples_AddOrUpdateParticipants
 CommunicationIdentifier communicationUser3 = communicationIdentityClient.CreateUserAsync().Result.Value;
 RoomParticipant newParticipant = new RoomParticipant(communicationUser3) { Role = ParticipantRole.Consumer };
 
 // Previous snippet for create room added participant2 as Presenter
 participant2 = new RoomParticipant(communicationUser2) { Role = ParticipantRole.Attendee };
 
-List<RoomParticipant> participantsToUpsert = new List<RoomParticipant>
+List<RoomParticipant> participantsToAddOrUpdate = new List<RoomParticipant>
 {
     participant2,   // participant2 updated from Presenter to Attendee
     newParticipant, // newParticipant added to the room
 };
 
-Response<UpsertParticipantsResult> upsertParticipantResponse = await roomsClient.UpsertParticipantsAsync(createdRoomId, participantsToUpsert);
+Response addOrUpdateParticipantResponse = await roomsClient.AddOrUpdateParticipantsAsync(createdRoomId, participantsToAddOrUpdate);
 ```
 
 ### Remove participants in a room
@@ -123,7 +123,7 @@ List<CommunicationIdentifier> participantsToRemove = new List<CommunicationIdent
    communicationUser1,
    communicationUser2
 };
-Response<RemoveParticipantsResult> removeParticipantResponse = await roomsClient.RemoveParticipantsAsync(createdRoomId, participantsToRemove);
+Response removeParticipantResponse = await roomsClient.RemoveParticipantsAsync(createdRoomId, participantsToRemove);
 ```
 
 
