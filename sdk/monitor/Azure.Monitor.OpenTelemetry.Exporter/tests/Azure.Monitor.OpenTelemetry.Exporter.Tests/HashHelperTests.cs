@@ -11,9 +11,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void Verify_Sha256()
         {
-            var test = HashHelper.GetSHA256Hash("testValue");
+            var input = "testValue";
+            var expected = "8476d0ba402fb342ab72f4758a7fad4c1d344bbb374901cdb502b814b17cc1fc";
 
-            Assert.Equal("8476d0ba402fb342ab72f4758a7fad4c1d344bbb374901cdb502b814b17cc1fc", test);
+            Assert.Equal(expected, HashHelper.GetSHA256Hash(input));
         }
     }
 }
