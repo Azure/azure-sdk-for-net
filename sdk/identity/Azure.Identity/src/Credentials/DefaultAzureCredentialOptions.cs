@@ -264,7 +264,7 @@ namespace Azure.Identity
         public bool ExcludeAzurePowerShellCredential { get; set; }
 
         /// <inheriteddoc/>
-        public bool DisableInstanceDiscovery { get; set; }
+        public bool DisableAuthorityValidationAndInstanceDiscovery { get; set; }
 
         internal override T Clone<T>()
         {

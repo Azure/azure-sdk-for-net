@@ -9,6 +9,6 @@ namespace Azure.Identity
         /// Determines whether or not instance discovery is performed when attempting to authenticate.
         /// Setting this to true will completely disable instance discovery and authority validation.
         /// </summary>
-        bool DisableInstanceDiscovery { get; set; }
+        bool DisableAuthorityValidationAndInstanceDiscovery { get; set; }
     }
 }
