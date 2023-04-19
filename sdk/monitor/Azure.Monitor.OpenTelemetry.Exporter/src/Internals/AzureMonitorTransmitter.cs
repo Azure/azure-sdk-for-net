@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _transmissionStateManager = new TransmissionStateManager();
 
-            _fileBlobProvider = InitializeOfflineStorage(options, platform, _connectionVars);
+            _fileBlobProvider = InitializeOfflineStorage(options, platform, _connectionVars.InstrumentationKey);
 
             if (_fileBlobProvider != null)
             {
@@ -101,7 +101,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.IngestionEndpoint);
         }
 
-        private static PersistentBlobProvider? InitializeOfflineStorage(AzureMonitorExporterOptions options, IPlatform platform, ConnectionVars connectionVars)
+        private static PersistentBlobProvider? InitializeOfflineStorage(AzureMonitorExporterOptions options, IPlatform platform, string instrumentationKey)
         {
             if (!options.DisableOfflineStorage)
             {
@@ -110,11 +110,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     var storageDirectory = StorageHelper.GetStorageDirectory(
                         platform: platform,
                         configuredStorageDirectory: options.StorageDirectory,
-                        instrumentationKey: connectionVars.InstrumentationKey,
+                        instrumentationKey: instrumentationKey,
                         processName: Process.GetCurrentProcess().ProcessName,
                         applicationDirectory: AppContext.BaseDirectory);
 
-                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", $"Data for ikey '{connectionVars.InstrumentationKey}' will be stored at: {storageDirectory}");
+                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", $"Data for ikey '{instrumentationKey}' will be stored at: {storageDirectory}");
 
                     return new FileBlobProvider(storageDirectory);
                 }
