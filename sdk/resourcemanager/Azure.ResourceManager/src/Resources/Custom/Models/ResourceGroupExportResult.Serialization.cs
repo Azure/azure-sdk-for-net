@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ResourceGroupExportResult : ISerializable
     {
-        bool ISerializable.TryDeserialize(Stream data, out int bytesConsumed, StandardFormat format)
+        bool ISerializable.TryDeserialize(ReadOnlySpan<byte> data, out int bytesConsumed, StandardFormat format)
         {
-            using var document = JsonDocument.Parse(BinaryData.FromStream(data).ToString());
+            using var document = JsonDocument.Parse(BinaryData.FromBytes(data.ToArray()).ToString());
             Deserialize(document.RootElement);
-            bytesConsumed = (int)data.Length;
+            bytesConsumed = data.Length;
             return true;
         }
 
-        bool ISerializable.TrySerialize(Stream buffer, out int bytesWritten, StandardFormat format)
+        bool ISerializable.TrySerialize(Span<byte> buffer, out int bytesWritten, StandardFormat format)
         {
-            var writer = new Utf8JsonWriter(buffer);
+            var writer = new Utf8JsonWriter(new MemoryStream(buffer.ToArray()));
             ((IUtf8JsonSerializable)this).Write(writer);
-            bytesWritten = (int)buffer.Length;
+            bytesWritten = buffer.Length;
             return true;
         }
 
