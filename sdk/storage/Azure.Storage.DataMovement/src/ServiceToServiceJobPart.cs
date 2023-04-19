@@ -424,13 +424,6 @@ namespace Azure.Storage.DataMovement
                         true,
                         _cancellationToken)).ConfigureAwait(false);
             }
-            // If we fail to stage a block, we need to make sure the rest of the stage blocks are cancelled
-            // (Core already performs the retry policy on the one stage block request
-            // which means the rest are not worth to continue)
-            catch (OperationCanceledException)
-            {
-                // Job was cancelled
-            }
             catch (RequestFailedException ex)
             when (_createMode == StorageResourceCreateMode.Overwrite
                     && ex.ErrorCode == "BlobAlreadyExists")

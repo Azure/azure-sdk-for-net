@@ -10,12 +10,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of CurrencyValue. </summary>
         /// <param name="amount"> Currency amount. </param>
         /// <param name="symbol"> Currency symbol label, if any. </param>
-        /// <param name="currencyCode"> Resolved currency code (ISO 4217), if any. </param>
-        internal CurrencyValue(double amount, string symbol, string currencyCode)
+        /// <param name="code"> Resolved currency code (ISO 4217), if any. </param>
+        internal CurrencyValue(double amount, string symbol, string code)
         {
             Amount = amount;
             Symbol = symbol;
-            CurrencyCode = currencyCode;
+            Code = code;
         }
 
         /// <summary>
@@ -32,6 +32,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Resolved currency code (ISO 4217), if any.
         /// </summary>
-        internal string CurrencyCode { get; }
+        [CodeGenMember("CurrencyCode")]
+        public string Code { get; }
     }
 }

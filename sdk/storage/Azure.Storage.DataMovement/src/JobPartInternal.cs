@@ -9,8 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.DataMovement.Models;
-using Azure.Storage.DataMovement.JobPlanModels;
 using System.Linq;
+using Azure.Storage.DataMovement.Models.JobPlan;
+using System.Runtime.CompilerServices;
 
 namespace Azure.Storage.DataMovement
 {
@@ -62,6 +63,15 @@ namespace Azure.Storage.DataMovement
         /// Determines how files are created and overwrite behavior for files that already exists.
         /// </summary>
         internal StorageResourceCreateMode _createMode;
+
+        /// <summary>
+        /// If a failure occurred during a job, this defines the type of failure.
+        ///
+        /// This assists in doing the proper cleanup to leave the storage resource container in the state
+        /// it was in.
+        /// </summary>
+        internal JobPartFailureType _failureType;
+        private object _failureTypeLock = new object();
 
         /// <summary>
         /// The maximum length of an transfer in bytes.
@@ -157,6 +167,7 @@ namespace Azure.Storage.DataMovement
             _destinationResource = destinationResource;
             _errorHandling = errorHandling;
             _createMode = createMode;
+            _failureType = JobPartFailureType.None;
             _checkpointer = checkpointer;
             _cancellationToken = cancellationToken;
             _arrayPool = arrayPool;
@@ -276,6 +287,11 @@ namespace Azure.Storage.DataMovement
                 {
                     await InvokeSingleCompletedArg().ConfigureAwait(false);
                 }
+                if (JobPartStatus == StorageTransferStatus.Paused ||
+                    JobPartStatus == StorageTransferStatus.CompletedWithFailedTransfers)
+                {
+                    await CleanupAbortedJobPartAsync().ConfigureAwait(false);
+                }
                 // Set the status in the checkpointer
                 await SetCheckpointerStatus(transferStatus).ConfigureAwait(false);
 
@@ -334,20 +350,43 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async virtual Task InvokeFailedArg(Exception ex)
         {
-            if (TransferFailedEventHandler != null)
+            if (ex is not OperationCanceledException)
             {
-                // TODO: change to RaiseAsync
-                await TransferFailedEventHandler.Invoke(new TransferFailedEventArgs(
-                    _dataTransfer.Id,
-                    _sourceResource,
-                    _destinationResource,
-                    ex,
-                    false,
-                    _cancellationToken)).ConfigureAwait(false);
+                SetFailureType(ex.Message);
+                if (TransferFailedEventHandler != null)
+                {
+                    // TODO: change to RaiseAsync
+                    await TransferFailedEventHandler.Invoke(new TransferFailedEventArgs(
+                        _dataTransfer.Id,
+                        _sourceResource,
+                        _destinationResource,
+                        ex,
+                        false,
+                        _cancellationToken)).ConfigureAwait(false);
+                }
             }
             // Trigger job cancellation if the failed handler is enabled
             await TriggerCancellationAsync().ConfigureAwait(false);
             await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Cleans up the job part if it's in a state where the job part was aborted due to failure,
+        /// or paused.
+        /// </summary>
+        /// <returns></returns>
+        public async virtual Task CleanupAbortedJobPartAsync()
+        {
+            // If the failure occurred due to the file already existing or authentication,
+            // and overwrite wasn't enabled, don't delete the existing file. We can remove
+            // the unfinished file for other error types.
+            if (JobPartFailureType.Other == _failureType)
+            {
+                // If the job part is paused or ended with failures
+                // delete the destination resource because it could be unfinished or corrupted
+                // If we resume we would have to start from the beginning anyways.
+                await _destinationResource.DeleteIfExistsAsync().ConfigureAwait(false);
+            }
         }
 
         public async virtual Task AddJobPartToCheckpointer(int chunksTotal)
@@ -473,6 +512,34 @@ namespace Azure.Storage.DataMovement
                 else if (_dataTransfer.TransferStatus == StorageTransferStatus.CancellationInProgress)
                 {
                     await OnTransferStatusChanged(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
+                }
+            }
+        }
+
+        private void SetFailureType(string exceptionMessage)
+        {
+            lock (_failureTypeLock)
+            {
+                if (_failureType == JobPartFailureType.None)
+                {
+                    foreach (string errorMessage in DataMovementConstants.ErrorCode.CannotOverwrite)
+                    {
+                        if (exceptionMessage.Contains(errorMessage))
+                        {
+                            _failureType = JobPartFailureType.CannotOvewrite;
+                            return;
+                        }
+                    }
+
+                    foreach (string errorMessage in DataMovementConstants.ErrorCode.AccessDenied)
+                    {
+                        if (exceptionMessage.Contains(errorMessage))
+                        {
+                            _failureType = JobPartFailureType.AccessDenied;
+                            return;
+                        }
+                    }
+                    _failureType = JobPartFailureType.Other;
                 }
             }
         }
