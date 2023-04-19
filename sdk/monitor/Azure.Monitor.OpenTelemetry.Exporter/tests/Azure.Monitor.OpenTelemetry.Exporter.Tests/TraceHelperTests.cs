@@ -51,16 +51,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 startTime: DateTime.UtcNow);
 
             Assert.NotNull(activity);
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
             if (telemetryType == "RequestData")
             {
-                var requestData = new RequestData(2, activity, ref monitorTags);
+                var requestData = new RequestData(2, activity, ref activityTagsProcessor);
                 Assert.False(requestData.Properties.TryGetValue(msLinks, out _));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var remoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
+                var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
 
                 Assert.False(remoteDependencyData.Properties.TryGetValue(msLinks, out _));
             }
@@ -92,16 +92,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             string? expectedMSlinks = GetExpectedMSlinks(links);
             string? actualMSlinks = null;
 
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
             if (telemetryType == "RequestData")
             {
-                var requestData = new RequestData(2, activity, ref monitorTags);
+                var requestData = new RequestData(2, activity, ref activityTagsProcessor);
                 Assert.True(requestData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var remoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
+                var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
                 Assert.True(remoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
 
@@ -140,16 +140,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 startTime: DateTime.UtcNow);
 
             Assert.NotNull(activity);
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
             if (telemetryType == "RequestData")
             {
-                var requestData = new RequestData(2, activity, ref monitorTags);
+                var requestData = new RequestData(2, activity, ref activityTagsProcessor);
                 Assert.True(requestData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var remoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
+                var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
                 Assert.True(remoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
 
@@ -196,16 +196,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             string? expectedMslinks = GetExpectedMSlinks(links);
             string? actualMSlinks = null;
 
-            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
             if (telemetryType == "RequestData")
             {
-                var requestData = new RequestData(2, activity, ref monitorTags);
+                var requestData = new RequestData(2, activity, ref activityTagsProcessor);
                 Assert.True(requestData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
             if (telemetryType == "RemoteDependencyData")
             {
-                var remoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
+                var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
                 Assert.True(remoteDependencyData.Properties.TryGetValue(msLinks, out actualMSlinks));
             }
 
