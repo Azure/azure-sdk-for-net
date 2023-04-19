@@ -128,7 +128,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MonitoringAccountDestination> array = new List<MonitoringAccountDestination>();
@@ -152,7 +151,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataCollectionRuleEventHubDestination> array = new List<DataCollectionRuleEventHubDestination>();
@@ -167,7 +165,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataCollectionRuleEventHubDirectDestination> array = new List<DataCollectionRuleEventHubDirectDestination>();
@@ -182,7 +179,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataCollectionRuleStorageBlobDestination> array = new List<DataCollectionRuleStorageBlobDestination>();
@@ -197,7 +193,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataCollectionRuleStorageTableDestination> array = new List<DataCollectionRuleStorageTableDestination>();
@@ -212,7 +207,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataCollectionRuleStorageBlobDestination> array = new List<DataCollectionRuleStorageBlobDestination>();

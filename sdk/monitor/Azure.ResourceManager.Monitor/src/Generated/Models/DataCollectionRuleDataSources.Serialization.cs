@@ -220,7 +220,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WindowsFirewallLogsDataSource> array = new List<WindowsFirewallLogsDataSource>();
@@ -235,7 +234,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PrometheusForwarderDataSource> array = new List<PrometheusForwarderDataSource>();
@@ -250,7 +248,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PlatformTelemetryDataSource> array = new List<PlatformTelemetryDataSource>();
@@ -265,7 +262,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataImports = DataSourcesSpecDataImports.DeserializeDataSourcesSpecDataImports(property.Value);
