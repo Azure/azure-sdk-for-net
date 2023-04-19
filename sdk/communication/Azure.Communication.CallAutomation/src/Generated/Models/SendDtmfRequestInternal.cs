@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class SendDtmfRequestInternal
     {
         /// <summary> Initializes a new instance of SendDtmfRequestInternal. </summary>
-        /// <param name="sendDtmfOptions"> Defines options for continuous dtmf recognition. </param>
+        /// <param name="sendDtmfOptions"> Defines options for sending dtmf tones. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sendDtmfOptions"/> is null. </exception>
         public SendDtmfRequestInternal(SendDtmfOptionsInternal sendDtmfOptions)
         {
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
             SendDtmfOptions = sendDtmfOptions;
         }
 
-        /// <summary> Defines options for continuous dtmf recognition. </summary>
+        /// <summary> Defines options for sending dtmf tones. </summary>
         public SendDtmfOptionsInternal SendDtmfOptions { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }

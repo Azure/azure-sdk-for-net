@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthMonitorData> array = new List<HealthMonitorData>();

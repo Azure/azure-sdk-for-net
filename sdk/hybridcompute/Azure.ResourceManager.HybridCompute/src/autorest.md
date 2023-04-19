@@ -59,4 +59,7 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+models-to-treat-empty-string-as-null:
+  - AgentConfiguration
+
 ```

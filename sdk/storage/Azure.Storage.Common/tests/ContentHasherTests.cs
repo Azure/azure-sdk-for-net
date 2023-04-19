@@ -6,17 +6,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Tests
 {
+    [TestFixture(true)]
+    [TestFixture(false)]
     public class ContentHasherTests
     {
         public enum DataType
         {
             Stream,
             BinaryData
+        }
+
+        public bool IsAsync { get; }
+
+        public ContentHasherTests(bool async)
+        {
+            IsAsync = async;
         }
 
         public static IEnumerable<DataType> GetDataTypes()
@@ -32,7 +42,7 @@ namespace Azure.Storage.Tests
 
         [Test]
         [Combinatorial]
-        public void GetHashOrDefaultChecksOptions(
+        public async Task GetHashOrDefaultChecksOptions(
             [ValueSource(nameof(GetValidationAlgorithms))] StorageChecksumAlgorithm algorithm,
             [ValueSource(nameof(GetDataTypes))] DataType dataType)
         {
@@ -52,7 +62,7 @@ namespace Azure.Storage.Tests
             // Get hash
             var result = dataType switch
             {
-                DataType.Stream => ContentHasher.GetHashOrDefault(stream.Object, options),
+                DataType.Stream => await ContentHasher.GetHashOrDefaultInternal(stream.Object, options, IsAsync, default),
                 DataType.BinaryData => ContentHasher.GetHashOrDefault(binaryData.Object, options),
                 _ => throw new NotImplementedException(),
             };
@@ -65,7 +75,7 @@ namespace Azure.Storage.Tests
 
         [Test]
         [Combinatorial]
-        public void GetHashOrDefaultCalculatesChecksum(
+        public async Task GetHashOrDefaultCalculatesChecksum(
             [ValueSource(nameof(GetValidationAlgorithms))] StorageChecksumAlgorithm algorithm,
             [ValueSource(nameof(GetDataTypes))] DataType dataType)
         {
@@ -88,7 +98,7 @@ namespace Azure.Storage.Tests
             // Get hash
             var result = dataType switch
             {
-                DataType.Stream => ContentHasher.GetHashOrDefault(new MemoryStream(data), options),
+                DataType.Stream => await ContentHasher.GetHashOrDefaultInternal(new MemoryStream(data), options, IsAsync, default),
                 DataType.BinaryData => ContentHasher.GetHashOrDefault(BinaryData.FromBytes(data), options),
                 _ => throw new NotImplementedException(),
             };

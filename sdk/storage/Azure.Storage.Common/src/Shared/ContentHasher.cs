@@ -5,6 +5,8 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.Storage
@@ -40,21 +42,45 @@ namespace Azure.Storage
             public byte[] StorageCrc64AsArray => StorageCrc64.IsEmpty ? null : StorageCrc64.ToArray();
         }
 
+        internal static UploadTransferValidationOptions ToUploadTransferValidationOptions(this GetHashResult hashResult)
+        {
+            if (hashResult == null)
+            {
+                return new UploadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.None
+                };
+            }
+            return new UploadTransferValidationOptions
+            {
+                ChecksumAlgorithm = hashResult.Algorithm,
+                PrecalculatedChecksum = hashResult.Checksum,
+            };
+        }
+
         /// <summary>
         /// Asserts the content of the given stream match the response content hash.
         /// </summary>
         /// <param name="content">Content to hash.</param>
         /// <param name="algorithm">Hash algorithm identifier.</param>
         /// <param name="response">Response containing a response hash.</param>
+        /// <param name="async">Whether to perform the operation asynchronously.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
         /// <exception cref="ArgumentException">
         /// Throws if <paramref name="algorithm"/> is invalid.
         /// </exception>
         /// <exception cref="InvalidDataException">
         /// Throws if the hashes do not match.
         /// </exception>
-        public static void AssertResponseHashMatch(Stream content, StorageChecksumAlgorithm algorithm, Response response)
+        public static async Task AssertResponseHashMatchInternal(
+            Stream content,
+            StorageChecksumAlgorithm algorithm,
+            Response response,
+            bool async,
+            CancellationToken cancellationToken)
         {
-            GetHashResult computedHash = GetHash(content, algorithm);
+            GetHashResult computedHash = await GetHashInternal(content, algorithm, async, cancellationToken)
+                .ConfigureAwait(false);
             AssertResponseHashMatch(computedHash, algorithm, response);
         }
 
@@ -127,6 +153,8 @@ namespace Azure.Storage
         /// </summary>
         /// <param name="content">Content to hash.</param>
         /// <param name="options">Hash options.</param>
+        /// <param name="async">Whether to perform operation asynchronously.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>
         /// Object containing the requested hash on its algorithm's respective property. If
         /// <paramref name="options"/> are default or specified as "None", then the returned result is default.
@@ -135,13 +163,17 @@ namespace Azure.Storage
         /// Throws if <paramref name="options"/> exists and <see cref="UploadTransferValidationOptions.ChecksumAlgorithm"/>
         /// is invalid.
         /// </exception>
-        public static GetHashResult GetHashOrDefault(Stream content, UploadTransferValidationOptions options)
+        public static async Task<GetHashResult> GetHashOrDefaultInternal(
+            Stream content,
+            UploadTransferValidationOptions options,
+            bool async,
+            CancellationToken cancellationToken)
         {
             if (GetHashOrDefaultTryFromOptions(options, out GetHashResult result))
             {
                 return result;
             }
-            return GetHash(content, options.ChecksumAlgorithm);
+            return await GetHashInternal(content, options.ChecksumAlgorithm, async, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -210,18 +242,33 @@ namespace Azure.Storage
         /// </summary>
         /// <param name="content">Content to hash.</param>
         /// <param name="algorithmIdentifier">Algorithm to compute the hash with.</param>
+        /// <param name="async"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns>Object containing the requested hash, or no hash, on its algorithm's respective property.</returns>
         /// <exception cref="ArgumentException">
         /// Throws if <paramref name="algorithmIdentifier"/> is invalid.
         /// </exception>
-        public static GetHashResult GetHash(Stream content, StorageChecksumAlgorithm algorithmIdentifier)
+        public static async Task<GetHashResult> GetHashInternal(
+            Stream content,
+            StorageChecksumAlgorithm algorithmIdentifier,
+            bool async,
+            CancellationToken cancellationToken)
         {
             return algorithmIdentifier.ResolveAuto() switch
             {
-                StorageChecksumAlgorithm.StorageCrc64 => GetHashResult.FromStorageCrc64(
-                    ComputeHash(content, new NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm.Create()))),
+                StorageChecksumAlgorithm.StorageCrc64 => GetHashResult.FromStorageCrc64(await ComputeHashInternal(
+                    content,
+                    new NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm.Create()),
+                    async,
+                    cancellationToken)
+                    .ConfigureAwait(false)),
 #pragma warning disable CA5351 // Do Not Use Broken Cryptographic Algorithms; MD5 being used for content integrity check, not encryption
-                StorageChecksumAlgorithm.MD5 => GetHashResult.FromMD5(ComputeHash(content, new HashAlgorithmHasher(MD5.Create()))),
+                StorageChecksumAlgorithm.MD5 => GetHashResult.FromMD5(await ComputeHashInternal(
+                    content,
+                    new HashAlgorithmHasher(MD5.Create()),
+                    async,
+                    cancellationToken)
+                    .ConfigureAwait(false)),
 #pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
                 _ => throw Errors.InvalidArgument(nameof(algorithmIdentifier))
             };
@@ -266,7 +313,7 @@ namespace Azure.Storage
             return (
                 ChecksumCalculatingStream.GetReadStream(stream, hasher.AppendHash),
                 hasher.GetFinalHash,
-                hasher.HashSize,
+                hasher.HashSizeInBytes,
                 hasher
             );
         }
@@ -286,13 +333,31 @@ namespace Azure.Storage
         /// </summary>
         /// <param name="content">Seekable stream to compute on.</param>
         /// <param name="hasher">IHasher to compute with.</param>
+        /// <param name="async"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        private static byte[] ComputeHash(Stream content, IHasher hasher)
+        private static async Task<byte[]> ComputeHashInternal(
+            Stream content,
+            IHasher hasher,
+            bool async,
+            CancellationToken cancellationToken)
         {
             long startPosition = content.Position;
-            byte[] hash = hasher.ComputeHash(content);
+            byte[] hash = await hasher.ComputeHashInternal(content, async, cancellationToken).ConfigureAwait(false);
             content.Position = startPosition;
             return hash;
+        }
+
+        public static IHasher GetHasherFromAlgorithmId(StorageChecksumAlgorithm algorithm)
+        {
+            return algorithm.ResolveAuto() switch
+            {
+                StorageChecksumAlgorithm.None => null,
+                StorageChecksumAlgorithm.MD5 => new HashAlgorithmHasher(MD5.Create()),
+                StorageChecksumAlgorithm.StorageCrc64
+                    => new NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm.Create()),
+                _ => throw Errors.InvalidArgument(nameof(algorithm))
+            };
         }
     }
 }

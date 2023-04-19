@@ -40,7 +40,6 @@ namespace Azure.MixedReality.RemoteRendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RemoteRenderingServiceError> array = new List<RemoteRenderingServiceError>();
@@ -60,7 +59,6 @@ namespace Azure.MixedReality.RemoteRendering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     innerError = DeserializeRemoteRenderingServiceError(property.Value);

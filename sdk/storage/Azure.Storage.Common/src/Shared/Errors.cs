@@ -59,6 +59,9 @@ namespace Azure.Storage
         public static ArgumentException CannotDeferTransactionalHashVerification()
             => new ArgumentException("Cannot defer transactional hash verification. Returned hash is unavailable to caller.");
 
+        public static ArgumentException CannotInitializeWriteStreamWithData()
+            => new ArgumentException("Initialized buffer for StorageWriteStream must be empty.");
+
         internal static void VerifyStreamPosition(Stream stream, string streamName)
         {
             if (stream != null && stream.CanSeek && stream.Length > 0 && stream.Position >= stream.Length)

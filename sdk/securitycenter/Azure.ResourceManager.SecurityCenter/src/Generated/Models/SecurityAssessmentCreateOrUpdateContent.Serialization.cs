@@ -92,7 +92,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -111,7 +110,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(property0.Value);
@@ -126,7 +124,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -141,7 +138,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             links = AssessmentLinks.DeserializeAssessmentLinks(property0.Value);
@@ -151,7 +147,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             metadata = SecurityAssessmentMetadataProperties.DeserializeSecurityAssessmentMetadataProperties(property0.Value);
@@ -161,7 +156,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             partnersData = SecurityAssessmentPartner.DeserializeSecurityAssessmentPartner(property0.Value);
@@ -171,7 +165,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = SecurityAssessmentStatus.DeserializeSecurityAssessmentStatus(property0.Value);
