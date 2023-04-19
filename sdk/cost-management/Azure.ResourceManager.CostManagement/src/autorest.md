@@ -8,7 +8,7 @@ generate-model-factory: false
 csharp: true
 library-name: CostManagement
 namespace: Azure.ResourceManager.CostManagement
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/351c8598465737e5a64dd4b65b57738dc8cf9bf7/specification/cost-management/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/25bfafa4fc73bb7e876dd5ef00f19b9aa9ba628a/specification/cost-management/resource-manager/readme.md
 tag: package-2022-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -24,8 +24,6 @@ override-operation-name:
 
 list-exception:
 - /providers/Microsoft.CostManagement/views/{viewName}
-
-
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -59,8 +57,9 @@ rename-rules:
 
 directive:
   - remove-operation: Views_List
-  - remove-operation: GenerateCostDetailsReport_GetOperationResults
-  - remove-operation: GenerateDetailedCostReportOperationResults_Get
-  - remove-operation: GenerateDetailedCostReportOperationStatus_Get
+  - remove-operation: ScheduledActions_List
+  # - remove-operation: GenerateCostDetailsReport_GetOperationResults
+  # - remove-operation: GenerateDetailedCostReportOperationResults_Get
+  # - remove-operation: GenerateDetailedCostReportOperationStatus_Get
   
 ```
