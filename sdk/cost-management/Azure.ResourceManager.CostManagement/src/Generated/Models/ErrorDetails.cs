@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of ErrorDetails. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message indicating why the operation failed. </param>
-        internal ErrorDetails(int? code, string message)
+        internal ErrorDetails(string code, string message)
         {
             Code = code;
             Message = message;
         }
 
         /// <summary> Error code. </summary>
-        public int? Code { get; }
+        public string Code { get; }
         /// <summary> Error message indicating why the operation failed. </summary>
         public string Message { get; }
     }

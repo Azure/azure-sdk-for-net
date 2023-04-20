@@ -29,17 +29,13 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="status"> The status of the long running operation. </param>
-        /// <param name="startTime"> The startTime of the operation. </param>
-        /// <param name="endTime"> The endTime of the operation. </param>
         /// <param name="error"> The details of the error. </param>
         /// <param name="expiryOn"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
         /// <param name="validTill"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
         /// <param name="downloadUri"> The URL to download the generated report. </param>
-        internal GenerateDetailedCostReportOperationStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Status status, string startTime, string endTime, ErrorDetails error, DateTimeOffset? expiryOn, DateTimeOffset? validTill, Uri downloadUri) : base(id, name, resourceType, systemData)
+        internal GenerateDetailedCostReportOperationStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Status status, ErrorDetails error, DateTimeOffset? expiryOn, DateTimeOffset? validTill, Uri downloadUri) : base(id, name, resourceType, systemData)
         {
             Status = status;
-            StartTime = startTime;
-            EndTime = endTime;
             Error = error;
             ExpiryOn = expiryOn;
             ValidTill = validTill;
@@ -54,10 +50,6 @@ namespace Azure.ResourceManager.CostManagement
             get => Status?.StatusValue;
         }
 
-        /// <summary> The startTime of the operation. </summary>
-        public string StartTime { get; }
-        /// <summary> The endTime of the operation. </summary>
-        public string EndTime { get; }
         /// <summary> The details of the error. </summary>
         public ErrorDetails Error { get; }
         /// <summary> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </summary>

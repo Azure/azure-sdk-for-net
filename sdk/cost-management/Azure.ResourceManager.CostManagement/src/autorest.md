@@ -8,8 +8,7 @@ generate-model-factory: false
 csharp: true
 library-name: CostManagement
 namespace: Azure.ResourceManager.CostManagement
-# require: https://github.com/Azure/azure-rest-api-specs/blob/25bfafa4fc73bb7e876dd5ef00f19b9aa9ba628a/specification/cost-management/resource-manager/readme.md
-require: https://github.com/dvbb/azure-rest-api-specs/blob/a7a5a1102b293d6c69b41e0ff3659db9d5f0590a/specification/cost-management/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/25bfafa4fc73bb7e876dd5ef00f19b9aa9ba628a/specification/cost-management/resource-manager/readme.md
 tag: package-2022-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -17,8 +16,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-override-operation-name: 
-  Alerts_ListExternal: Foo
+# override-operation-name: 
+#   Alerts_ListExternal: ListExternalAlerts
 
 list-exception:
 - /providers/Microsoft.CostManagement/views/{viewName}
@@ -66,4 +65,11 @@ directive:
   - remove-operation: Forecast_ExternalCloudProviderUsage
   - remove-operation: Dimensions_ByExternalCloudProviderType
   - remove-operation: Query_UsageByExternalCloudProviderType
+  # Could not set ResourceTypeSegment for request path /{scope}
+  - from: scheduledActions.json
+    where: $.parameters.scopeParameter
+    transform: $['x-ms-skip-url-encoding'] = true;
+  - from: costmanagement.json
+    where: $.parameters.scopeViewParameter
+    transform: $['x-ms-skip-url-encoding'] = true;
 ```

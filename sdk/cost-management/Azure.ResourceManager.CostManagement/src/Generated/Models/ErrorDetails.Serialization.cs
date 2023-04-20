@@ -24,17 +24,13 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<int> code = default;
+            Optional<string> code = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    code = property.Value.GetInt32();
+                    code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -43,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ErrorDetails(Optional.ToNullable(code), message.Value);
+            return new ErrorDetails(code.Value, message.Value);
         }
     }
 }

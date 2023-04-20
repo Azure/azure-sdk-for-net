@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CostManagement
             return message;
         }
 
-        /// <summary> This API is the replacement for all previously release Usage Details APIs. Request to generate a cost details report for the provided date range, billing period (Only enterprise customers) or Invoice Id asynchronously at a certain scope. The initial call to request a report will return a 202 with a &apos;Location&apos; and &apos;Retry-After&apos; header. The &apos;Location&apos; header will provide the endpoint to poll to get the result of the report generation. The &apos;Retry-After&apos; provides the duration to wait before polling for the generated report. A call to poll the report operation will provide a 202 response with a &apos;Location&apos; header if the operation is still in progress. Once the report generation operation completes, the polling endpoint will provide a 200 response along with details on the report blob(s) that are available for download. The details on the file(s) available for download will be available in the polling response body. To Understand cost details (formerly known as usage details) fields found in files ,see https://learn.microsoft.com/en-us/azure/cost-management-billing/automate/understand-usage-details-fields. </summary>
+        /// <summary> This API is the replacement for all previously release Usage Details APIs. Request to generate a cost details report for the provided date range, billing period (Only enterprise customers) or Invoice Id asynchronously at a certain scope. The initial call to request a report will return a 202 with a &apos;Location&apos; and &apos;Retry-After&apos; header. The &apos;Location&apos; header will provide the endpoint to poll to get the result of the report generation. The &apos;Retry-After&apos; provides the duration to wait before polling for the generated report. A call to poll the report operation will provide a 202 response with a &apos;Location&apos; header if the operation is still in progress. Once the report generation operation completes, the polling endpoint will provide a 200 response along with details on the report blob(s) that are available for download. The details on the file(s) available for download will be available in the polling response body. </summary>
         /// <param name="scope"> The ARM Resource ID for subscription, resource group, billing account, or other billing scopes. For details, see https://aka.ms/costmgmt/scopes. </param>
         /// <param name="generateCostDetailsReportRequestDefinition"> Parameters supplied to the Create cost details operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -73,14 +73,13 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> This API is the replacement for all previously release Usage Details APIs. Request to generate a cost details report for the provided date range, billing period (Only enterprise customers) or Invoice Id asynchronously at a certain scope. The initial call to request a report will return a 202 with a &apos;Location&apos; and &apos;Retry-After&apos; header. The &apos;Location&apos; header will provide the endpoint to poll to get the result of the report generation. The &apos;Retry-After&apos; provides the duration to wait before polling for the generated report. A call to poll the report operation will provide a 202 response with a &apos;Location&apos; header if the operation is still in progress. Once the report generation operation completes, the polling endpoint will provide a 200 response along with details on the report blob(s) that are available for download. The details on the file(s) available for download will be available in the polling response body. To Understand cost details (formerly known as usage details) fields found in files ,see https://learn.microsoft.com/en-us/azure/cost-management-billing/automate/understand-usage-details-fields. </summary>
+        /// <summary> This API is the replacement for all previously release Usage Details APIs. Request to generate a cost details report for the provided date range, billing period (Only enterprise customers) or Invoice Id asynchronously at a certain scope. The initial call to request a report will return a 202 with a &apos;Location&apos; and &apos;Retry-After&apos; header. The &apos;Location&apos; header will provide the endpoint to poll to get the result of the report generation. The &apos;Retry-After&apos; provides the duration to wait before polling for the generated report. A call to poll the report operation will provide a 202 response with a &apos;Location&apos; header if the operation is still in progress. Once the report generation operation completes, the polling endpoint will provide a 200 response along with details on the report blob(s) that are available for download. The details on the file(s) available for download will be available in the polling response body. </summary>
         /// <param name="scope"> The ARM Resource ID for subscription, resource group, billing account, or other billing scopes. For details, see https://aka.ms/costmgmt/scopes. </param>
         /// <param name="generateCostDetailsReportRequestDefinition"> Parameters supplied to the Create cost details operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -96,7 +95,6 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case 200:
                 case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

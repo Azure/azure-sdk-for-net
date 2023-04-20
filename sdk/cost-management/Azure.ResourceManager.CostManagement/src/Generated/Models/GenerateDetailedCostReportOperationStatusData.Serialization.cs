@@ -22,8 +22,6 @@ namespace Azure.ResourceManager.CostManagement
                 return null;
             }
             Optional<Status> status = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
             Optional<ErrorDetails> error = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -41,16 +39,6 @@ namespace Azure.ResourceManager.CostManagement
                         continue;
                     }
                     status = Status.DeserializeStatus(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("startTime"u8))
-                {
-                    startTime = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("endTime"u8))
-                {
-                    endTime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -126,7 +114,7 @@ namespace Azure.ResourceManager.CostManagement
                     continue;
                 }
             }
-            return new GenerateDetailedCostReportOperationStatusData(id, name, type, systemData.Value, status.Value, startTime.Value, endTime.Value, error.Value, Optional.ToNullable(expiryTime), Optional.ToNullable(validTill), downloadUrl.Value);
+            return new GenerateDetailedCostReportOperationStatusData(id, name, type, systemData.Value, status.Value, error.Value, Optional.ToNullable(expiryTime), Optional.ToNullable(validTill), downloadUrl.Value);
         }
     }
 }
