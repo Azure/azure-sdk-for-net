@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// Azure subscription.
     /// </remarks>
     [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
-    public class ManagementOperationsLiveTests : DocumentAnalysisLiveTestBase
+    public class AdministrationOperationsLiveTests : DocumentAnalysisLiveTestBase
     {
         private readonly IReadOnlyDictionary<string, string> _testingTags = new Dictionary<string, string>()
         {
@@ -27,10 +27,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         };
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ManagementOperationsLiveTests"/> class.
+        /// Initializes a new instance of the <see cref="AdministrationOperationsLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public ManagementOperationsLiveTests(bool isAsync, DocumentAnalysisClientOptions.ServiceVersion serviceVersion)
+        public AdministrationOperationsLiveTests(bool isAsync, DocumentAnalysisClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion)
         {
         }

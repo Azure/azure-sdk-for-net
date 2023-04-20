@@ -1075,7 +1075,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         #endregion Document Classifiers
 
-        #region Management Operations
+        #region Administration Operations
 
         /// <summary>
         /// Gets the number of built models on this Form Recognizer resource and the resource limits.
@@ -1267,7 +1267,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        #endregion Management Operations
+        #endregion Administration Operations
 
         internal static List<ComponentDocumentModelDetails> ConvertToComponentModelDetails(IEnumerable<string> componentModelIds)
             => componentModelIds.Select((modelId) => new ComponentDocumentModelDetails(modelId)).ToList();
