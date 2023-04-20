@@ -30,36 +30,6 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
-        internal static EmbeddingsOptions DeserializeEmbeddingsOptions(JsonElement element)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> user = default;
-            Optional<string> model = default;
-            string input = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("user"u8))
-                {
-                    user = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("model"u8))
-                {
-                    model = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("input"u8))
-                {
-                    input = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new EmbeddingsOptions(user, model, input);
-        }
-
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal virtual RequestContent ToRequestContent()
         {
