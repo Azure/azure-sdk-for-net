@@ -138,7 +138,7 @@ namespace Azure.AI.OpenAI
     public partial class EmbeddingsOptions
     {
         public EmbeddingsOptions(string input) { }
-        public string Input { get { throw null; } set { } }
+        public string Input { get { throw null; } }
         public string User { get { throw null; } set { } }
     }
     public partial class EmbeddingsUsage
