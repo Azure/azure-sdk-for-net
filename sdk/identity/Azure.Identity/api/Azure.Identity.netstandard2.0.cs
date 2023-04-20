@@ -167,7 +167,7 @@ namespace Azure.Identity
     {
         public DefaultAzureCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? DeveloperCredentialTimeout { get { throw null; } set { } }
+        public System.TimeSpan? CredentialProcessTimeout { get { throw null; } set { } }
         public bool DisableAuthorityValidationAndInstanceDiscovery { get { throw null; } set { } }
         public bool ExcludeAzureCliCredential { get { throw null; } set { } }
         public bool ExcludeAzureDeveloperCliCredential { get { throw null; } set { } }
