@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        trackingUrl = null;
                         continue;
                     }
                     trackingUrl = new Uri(property.Value.GetString());

@@ -107,7 +107,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -122,7 +121,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -137,7 +135,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     thresholdType = new NotificationThresholdType(property.Value.GetString());
@@ -147,7 +144,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     locale = new RecipientNotificationLanguageCode(property.Value.GetString());

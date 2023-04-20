@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     propertyType = new AutomationTriggeringRulePropertyType(property.Value.GetString());
@@ -74,7 +73,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @operator = new AutomationTriggeringRuleOperator(property.Value.GetString());

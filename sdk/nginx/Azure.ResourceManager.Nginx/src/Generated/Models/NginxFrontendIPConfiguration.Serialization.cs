@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
@@ -69,7 +68,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NginxPrivateIPAddress> array = new List<NginxPrivateIPAddress>();

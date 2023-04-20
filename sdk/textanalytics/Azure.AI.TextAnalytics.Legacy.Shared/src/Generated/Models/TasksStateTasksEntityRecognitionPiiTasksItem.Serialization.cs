@@ -30,7 +30,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     results = PiiResult.DeserializePiiResult(property.Value);

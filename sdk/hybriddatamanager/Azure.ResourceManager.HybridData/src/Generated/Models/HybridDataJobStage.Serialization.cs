@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.HybridData.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jobStageDetails = BinaryData.FromString(property.Value.GetRawText());
@@ -82,7 +81,6 @@ namespace Azure.ResourceManager.HybridData.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HybridDataJobErrorDetails> array = new List<HybridDataJobErrorDetails>();

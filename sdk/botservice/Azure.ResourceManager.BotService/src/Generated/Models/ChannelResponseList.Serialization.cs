@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BotChannelData> array = new List<BotChannelData>();

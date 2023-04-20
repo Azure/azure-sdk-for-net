@@ -106,7 +106,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationType = new DigitalTwinsAuthenticationType(property.Value.GetString());

@@ -72,7 +72,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("Test file IRS-1040_2.pdf hasn't been uploaded to GitHub yet.")]
         public async Task ClassifyDocumentFromUri(bool useTokenCredential)
         {
             var client = CreateDocumentAnalysisClient(useTokenCredential);

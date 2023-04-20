@@ -31,7 +31,6 @@ namespace Azure.Communication.Email
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     info = property.Value.GetObject();

@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalUsage = property.Value.GetInt64();
@@ -70,7 +69,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<long> array = new List<long>();
@@ -85,7 +83,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kernelModeUsage = property.Value.GetInt64();
@@ -95,7 +92,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userModeUsage = property.Value.GetInt64();

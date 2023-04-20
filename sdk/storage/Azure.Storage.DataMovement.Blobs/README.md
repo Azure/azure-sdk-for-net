@@ -52,7 +52,7 @@ TransferManager transferManager = new TransferManager(new TransferManagerOptions
 ```C# Snippet:CreateTransferManagerWithOptions
 // Create BlobTransferManager with event handler in Options bag
 TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
-ContainerTransferOptions options = new ContainerTransferOptions()
+TransferOptions options = new TransferOptions()
 {
     MaximumTransferChunkSize = 4 * Constants.MB,
     CreateMode = StorageResourceCreateMode.Overwrite,
@@ -121,8 +121,8 @@ DataTransfer downloadDirectoryJobId2 = await transferManager.StartTransferAsync(
 ```C# Snippet:SimpleLoggingSample
 // Create BlobTransferManager with event handler in Options bag
 TransferManagerOptions options = new TransferManagerOptions();
-ContainerTransferOptions containerTransferOptions = new ContainerTransferOptions();
-containerTransferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
+TransferOptions transferOptions = new TransferOptions();
+transferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
 {
     using (StreamWriter logStream = File.AppendText(logFile))
     {
@@ -134,7 +134,7 @@ containerTransferOptions.SingleTransferCompleted += (SingleTransferCompletedEven
 
 ### Simple Failed Event Delegation for Container Transfer Options
 ```C# Snippet:FailedEventDelegation
-containerTransferOptions.TransferFailed += (TransferFailedEventArgs args) =>
+transferOptions.TransferFailed += (TransferFailedEventArgs args) =>
 {
     using (StreamWriter logStream = File.AppendText(logFile))
     {

@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -90,7 +89,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PrePostStep> array = new List<PrePostStep>();
@@ -110,7 +108,6 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PrePostStep> array = new List<PrePostStep>();

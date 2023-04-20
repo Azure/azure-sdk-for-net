@@ -39,7 +39,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PolicyAssignmentSummary> array = new List<PolicyAssignmentSummary>();
