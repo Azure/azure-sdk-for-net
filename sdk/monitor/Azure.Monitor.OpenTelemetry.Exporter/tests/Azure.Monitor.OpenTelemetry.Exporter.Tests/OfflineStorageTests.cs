@@ -11,11 +11,9 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
-using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
-
+using OpenTelemetry.PersistentStorage.Abstractions;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
