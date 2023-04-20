@@ -6,8 +6,8 @@
 
 ### Breaking Changes
 
-- `DataSourceInfo.ResourceUri` changed from `Uri` to `string`
-- `DataSourceSetInfo.ResourceUri` changed from `Uri` to `string`
+- Add property `ResourceUriString` to class `DataSourceInfo`, replace the `ResourceUri`.
+- Add property `ResourceUriString` to class `DataSourceSetInfo`, replace the `ResourceUri`.
 
 ### Bugs Fixed
 
