@@ -13,8 +13,9 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     internal class RecognizeDtmfCompleted : RecognizeCompleted
     {
-        /// <summary> Get the recognize Tone result. </summary>
+        /// <summary> The recognize collect tones result. </summary>
         public CollectTonesResult CollectTonesResult { get; }
+
         /// <summary>
         /// The recognition type.
         /// </summary>

@@ -68,7 +68,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             SpeechLanguage = "en-US",
         };
 
-        private static CallMediaRecognizeSpeechOptions _speechRecognizeOptions = new CallMediaRecognizeSpeechOptions(RecognizeInputType.Speech, new CommunicationUserIdentifier("targetUserId"), 500)
+        private static CallMediaRecognizeSpeechOptions _speechRecognizeOptions = new CallMediaRecognizeSpeechOptions(new CommunicationUserIdentifier("targetUserId"), 500)
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
@@ -82,7 +82,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             },
         };
 
-        private static CallMediaRecognizeSpeechOptions _speechOrDtmfRecognizeOptions = new CallMediaRecognizeSpeechOptions(RecognizeInputType.SpeechOrDtmf, new CommunicationUserIdentifier("targetUserId"), 500)
+        private static CallMediaRecognizeSpeechOrDtmfOptions _speechOrDtmfRecognizeOptions = new CallMediaRecognizeSpeechOrDtmfOptions(new CommunicationUserIdentifier("targetUserId"), 10, 100L)
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
@@ -95,6 +95,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceName = "LULU"
             },
         };
+
         private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);
 
         private static readonly SendDtmfOptions _sendDmtfOptions = new(new CommunicationUserIdentifier("targetUserId"),

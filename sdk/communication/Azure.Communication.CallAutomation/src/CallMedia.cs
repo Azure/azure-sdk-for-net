@@ -351,6 +351,36 @@ namespace Azure.Communication.CallAutomation
 
                 return request;
             }
+            else if (recognizeOptions is CallMediaRecognizeSpeechOrDtmfOptions recognizeSpeechOrDtmfOptions)
+            {
+                SpeechOptionsInternal speechConfigurations = new SpeechOptionsInternal()
+                {
+                    EndSilenceTimeoutInMs = recognizeSpeechOrDtmfOptions.EndSilenceTimeoutInMs
+                };
+
+                DtmfOptionsInternal dtmfConfigurations = new DtmfOptionsInternal()
+                {
+                    InterToneTimeoutInSeconds = (int)recognizeSpeechOrDtmfOptions.InterToneTimeout.TotalSeconds,
+                    MaxTonesToCollect = recognizeSpeechOrDtmfOptions.MaxTonesToCollect,
+                    StopTones = recognizeSpeechOrDtmfOptions.StopTones
+                };
+
+                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeSpeechOrDtmfOptions.TargetParticipant))
+                {
+                    InterruptPrompt = recognizeSpeechOrDtmfOptions.InterruptPrompt,
+                    InitialSilenceTimeoutInSeconds = (int)recognizeSpeechOrDtmfOptions.InitialSilenceTimeout.TotalSeconds,
+                    SpeechOptions = speechConfigurations,
+                    DtmfOptions = dtmfConfigurations,
+                };
+
+                RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeSpeechOrDtmfOptions.InputType, recognizeConfigurationsInternal);
+
+                request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOrDtmfOptions.Prompt);
+                request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
+                request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
+
+                return request;
+            }
             else
             {
                 throw new NotSupportedException(recognizeOptions.GetType().Name);

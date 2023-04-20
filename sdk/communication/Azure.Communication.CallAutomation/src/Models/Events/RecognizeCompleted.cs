@@ -16,8 +16,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The abstract recognize result. </summary>
         public RecognizeResult RecognizeResult { get; }
 
-        /// <summary> The recognize speech result. </summary>
-        private SpeechResult SpeechResult { get; }
+        private static string SPEECH_DTMF_ERROR = "Speech or Dtmf Recognition return two results!";
 
         /// <summary>
         /// The recognition type.
@@ -43,7 +42,8 @@ namespace Azure.Communication.CallAutomation
         /// </param>
         /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
         /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
-        internal RecognizeCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, ChoiceResult choiceResult)
+        /// <param name="speechResult"> Defines the result for RecognitionType = Speech. </param>
+        internal RecognizeCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, ChoiceResult choiceResult, SpeechResult speechResult)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -62,7 +62,7 @@ namespace Azure.Communication.CallAutomation
             }
             else if (RecognitionType == CallMediaRecognitionType.Speech || RecognitionType == CallMediaRecognitionType.SpeechOrDtmf)
             {
-                RecognizeResult = SpeechResult;
+                RecognizeResult = speechResult;
             }
         }
 
@@ -83,10 +83,24 @@ namespace Azure.Communication.CallAutomation
             {
                 RecognizeResult = internalEvent.ChoiceResult;
             }
-            else if (internalEvent.RecognitionType == CallMediaRecognitionType.Speech || RecognitionType == CallMediaRecognitionType.SpeechOrDtmf)
+            else if (internalEvent.RecognitionType == CallMediaRecognitionType.Speech)
             {
                 RecognizeResult = internalEvent.SpeechResult;
-                SpeechResult = internalEvent.SpeechResult;
+            }
+            else if (internalEvent.RecognitionType == CallMediaRecognitionType.SpeechOrDtmf)
+            {
+                if (internalEvent.SpeechResult != null)
+                {
+                    RecognizeResult = internalEvent.SpeechResult;
+                }
+                else if (internalEvent.CollectTonesResult != null)
+                {
+                    RecognizeResult = internalEvent.CollectTonesResult;
+                }
+                else
+                {
+                    throw new Exception(SPEECH_DTMF_ERROR);
+                }
             }
         }
 

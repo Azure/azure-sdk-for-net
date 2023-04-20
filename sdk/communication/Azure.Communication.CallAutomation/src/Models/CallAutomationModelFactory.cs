@@ -196,10 +196,11 @@ namespace Azure.Communication.CallAutomation
         /// </param>
         /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
         /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
+        /// <param name="speechResult"> Defines the result for RecognitionType = Speech. </param>
         /// <returns> A new <see cref="CallAutomation.RecognizeCompleted"/> instance for mocking. </returns>
-        public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null, ChoiceResult choiceResult = null)
+        public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null, ChoiceResult choiceResult = null, SpeechResult speechResult = null)
         {
-            return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, collectTonesResult, choiceResult);
+            return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, collectTonesResult, choiceResult, speechResult);
         }
 
         /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
