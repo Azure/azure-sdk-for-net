@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
 
             // invoke the operation and iterate over the result
-            QueryRequestOptions options = new QueryRequestOptions()
+            NetworkManagementQueryContent content = new NetworkManagementQueryContent()
             {
                 SkipToken = "FakeSkipTokenCode",
             };
-            await foreach (EffectiveConnectivityConfiguration item in virtualNetwork.GetNetworkManagerEffectiveConnectivityConfigurationsAsync(options))
+            await foreach (EffectiveConnectivityConfiguration item in virtualNetwork.GetNetworkManagerEffectiveConnectivityConfigurationsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
 
             // invoke the operation and iterate over the result
-            QueryRequestOptions options = new QueryRequestOptions()
+            NetworkManagementQueryContent content = new NetworkManagementQueryContent()
             {
                 SkipToken = "FakeSkipTokenCode",
             };
-            await foreach (EffectiveBaseSecurityAdminRule item in virtualNetwork.GetNetworkManagerEffectiveSecurityAdminRulesAsync(options))
+            await foreach (EffectiveBaseSecurityAdminRule item in virtualNetwork.GetNetworkManagerEffectiveSecurityAdminRulesAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

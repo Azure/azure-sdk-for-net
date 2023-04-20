@@ -41,15 +41,15 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkManagerResource networkManager = client.GetNetworkManagerResource(networkManagerResourceId);
 
             // invoke the operation and iterate over the result
-            ActiveConfigurationParameter activeConfigurationParameter = new ActiveConfigurationParameter()
+            ActiveConfigurationContent content = new ActiveConfigurationContent()
             {
                 Regions =
 {
-"westus"
+new AzureLocation("westus")
 },
                 SkipToken = "fakeSkipTokenCode",
             };
-            await foreach (ActiveConnectivityConfiguration item in networkManager.GetActiveConnectivityConfigurationsAsync(activeConfigurationParameter))
+            await foreach (ActiveConnectivityConfiguration item in networkManager.GetActiveConnectivityConfigurationsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkManagerResource networkManager = client.GetNetworkManagerResource(networkManagerResourceId);
 
             // invoke the operation and iterate over the result
-            ActiveConfigurationParameter activeConfigurationParameter = new ActiveConfigurationParameter()
+            ActiveConfigurationContent content = new ActiveConfigurationContent()
             {
                 Regions =
 {
-"westus"
+new AzureLocation("westus")
 },
                 SkipToken = "fakeSkipTokenCode",
             };
-            await foreach (ActiveBaseSecurityAdminRule item in networkManager.GetActiveSecurityAdminRulesAsync(activeConfigurationParameter))
+            await foreach (ActiveBaseSecurityAdminRule item in networkManager.GetActiveSecurityAdminRulesAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkManagerCommit networkManagerCommit = new NetworkManagerCommit(new string[]
             {
 "useast"
-            }, ConfigurationType.SecurityAdmin)
+            }, NetworkConfigurationDeploymentType.SecurityAdmin)
             {
                 ConfigurationIds =
 {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network.Samples
 },
                 DeploymentTypes =
 {
-ConfigurationType.Connectivity,new ConfigurationType("AdminPolicy")
+NetworkConfigurationDeploymentType.Connectivity,new NetworkConfigurationDeploymentType("AdminPolicy")
 },
                 SkipToken = "FakeSkipTokenCode",
             };

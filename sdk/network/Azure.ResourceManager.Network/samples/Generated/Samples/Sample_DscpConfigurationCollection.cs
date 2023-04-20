@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 QosDefinitionCollection =
 {
-new QosDefinition()
+new DscpQosDefinition()
 {
 Markings =
 {
@@ -91,7 +91,7 @@ End = 15,
 }
 },
 Protocol = ProtocolType.Tcp,
-},new QosDefinition()
+},new DscpQosDefinition()
 {
 Markings =
 {

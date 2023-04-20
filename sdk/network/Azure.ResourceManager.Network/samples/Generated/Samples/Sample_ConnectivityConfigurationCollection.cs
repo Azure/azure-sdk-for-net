@@ -116,19 +116,19 @@ namespace Azure.ResourceManager.Network.Samples
                 ConnectivityTopology = ConnectivityTopology.HubAndSpoke,
                 Hubs =
 {
-new Hub()
+new ConnectivityHub()
 {
 ResourceId = new ResourceIdentifier("subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myTestConnectivityConfig"),
 ResourceType = "Microsoft.Network/virtualNetworks",
 }
 },
-                IsGlobal = IsGlobal.True,
+                IsGlobal = GlobalMeshSupportFlag.True,
                 AppliesToGroups =
 {
 new ConnectivityGroupItem("subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkManagers/testNetworkManager/networkGroups/group1",GroupConnectivity.None)
 {
-UseHubGateway = UseHubGateway.True,
-IsGlobal = IsGlobal.False,
+UseHubGateway = HubGatewayUsageFlag.True,
+IsGlobal = GlobalMeshSupportFlag.False,
 }
 },
                 DeleteExistingPeering = DeleteExistingPeering.True,

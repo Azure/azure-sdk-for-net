@@ -1210,7 +1210,7 @@ namespace Azure.ResourceManager.Network
         public bool? AllowNonVirtualWanTraffic { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds AutoScaleBounds { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Network.ExpressRouteConnectionData> ExpressRouteConnections { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.ExpressRouteConnectionData> ExpressRouteConnections { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualHubId { get { throw null; } set { } }
     }
@@ -6259,6 +6259,9 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicy SslPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> TrustedClientCertificates { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
+        public bool? VerifyClientCertIssuerDN { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ApplicationGatewaySslProtocol : System.IEquatable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol>
@@ -10710,6 +10713,9 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.Core.ResourceIdentifier InboundRouteMapId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier OutboundRouteMapId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.PropagatedRouteTable PropagatedRouteTables { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.StaticRoute> StaticRoutes { get { throw null; } }
         public Azure.ResourceManager.Network.Models.VnetRoute VnetRoutes { get { throw null; } set { } }
     }
     public partial class RoutingPolicy
@@ -11666,7 +11672,10 @@ namespace Azure.ResourceManager.Network.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public VpnAuthenticationType(string value) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This value is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public static Azure.ResourceManager.Network.Models.VpnAuthenticationType AAD { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.VpnAuthenticationType Aad { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnAuthenticationType Certificate { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnAuthenticationType Radius { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VpnAuthenticationType other) { throw null; }
@@ -11960,7 +11969,7 @@ namespace Azure.ResourceManager.Network.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public VpnPolicyMemberAttributeType(string value) { throw null; }
-        public static Azure.ResourceManager.Network.Models.VpnPolicyMemberAttributeType Aad { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.VpnPolicyMemberAttributeType AadGroupId { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnPolicyMemberAttributeType CertificateGroupId { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.VpnPolicyMemberAttributeType RadiusAzureGroupId { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.VpnPolicyMemberAttributeType other) { throw null; }

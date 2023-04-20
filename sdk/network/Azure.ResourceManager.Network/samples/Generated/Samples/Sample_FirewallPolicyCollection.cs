@@ -160,7 +160,7 @@ WorkspaceIdId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg1/
                     EnableProxy = true,
                     RequireProxyForNetworkRules = false,
                 },
-                ExplicitProxy = new ExplicitProxy()
+                ExplicitProxy = new FirewallPolicyExplicitProxy()
                 {
                     EnableExplicitProxy = true,
                     HttpPort = 8087,

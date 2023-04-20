@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string ruleName = "SampleDefaultAdminRule";
-            BaseAdminRuleData data = new DefaultAdminRule()
+            BaseAdminRuleData data = new NetworkDefaultAdminRule()
             {
                 Flag = "AllowVnetInbound",
             };
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string ruleName = "SampleAdminRule";
-            BaseAdminRuleData data = new AdminRule()
+            BaseAdminRuleData data = new NetworkAdminRule()
             {
                 Description = "This is Sample Admin Rule",
                 Protocol = SecurityConfigurationRuleProtocol.Tcp,

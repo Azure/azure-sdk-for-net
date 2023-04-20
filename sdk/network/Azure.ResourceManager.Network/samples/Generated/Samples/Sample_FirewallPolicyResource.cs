@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.Network.Samples
             FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
 
             // invoke the operation
-            IdpsQueryObject idpsQueryObject = new IdpsQueryObject()
+            IdpsQueryContent content = new IdpsQueryContent()
             {
                 Filters =
 {
-new FilterItems()
+new IdpsQueryFilterItems()
 {
 Field = "Mode",
 Values =
@@ -184,7 +184,7 @@ Values =
 }
 },
                 Search = "",
-                OrderBy = new OrderBy()
+                OrderBy = new IdpsQueryOrderBy()
                 {
                     Field = "severity",
                     Order = FirewallPolicyIdpsQuerySortOrder.Ascending,
@@ -192,7 +192,7 @@ Values =
                 ResultsPerPage = 20,
                 Skip = 0,
             };
-            QueryResults result = await firewallPolicy.GetFirewallPolicyIdpsSignatureAsync(idpsQueryObject);
+            IdpsSignatureListResult result = await firewallPolicy.GetFirewallPolicyIdpsSignatureAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -219,11 +219,11 @@ Values =
             FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
 
             // invoke the operation
-            SignatureOverridesFilterValuesQuery signatureOverridesFilterValuesQuery = new SignatureOverridesFilterValuesQuery()
+            SignatureOverridesFilterValuesQueryContent content = new SignatureOverridesFilterValuesQueryContent()
             {
                 FilterName = "severity",
             };
-            SignatureOverridesFilterValuesResponse result = await firewallPolicy.GetFirewallPolicyIdpsSignaturesFilterValueAsync(signatureOverridesFilterValuesQuery);
+            SignatureOverridesFilterValuesResult result = await firewallPolicy.GetFirewallPolicyIdpsSignaturesFilterValueAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

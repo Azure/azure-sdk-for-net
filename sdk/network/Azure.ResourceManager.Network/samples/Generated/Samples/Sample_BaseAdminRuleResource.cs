@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Samples
             BaseAdminRuleResource baseAdminRule = client.GetBaseAdminRuleResource(baseAdminRuleResourceId);
 
             // invoke the operation
-            BaseAdminRuleData data = new DefaultAdminRule()
+            BaseAdminRuleData data = new NetworkDefaultAdminRule()
             {
                 Flag = "AllowVnetInbound",
             };
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Samples
             BaseAdminRuleResource baseAdminRule = client.GetBaseAdminRuleResource(baseAdminRuleResourceId);
 
             // invoke the operation
-            BaseAdminRuleData data = new AdminRule()
+            BaseAdminRuleData data = new NetworkAdminRule()
             {
                 Description = "This is Sample Admin Rule",
                 Protocol = SecurityConfigurationRuleProtocol.Tcp,

@@ -89,7 +89,7 @@ new RouteMapRule()
 Name = "rule1",
 MatchCriteria =
 {
-new Criterion()
+new RouteCriterion()
 {
 RoutePrefix =
 {
@@ -106,12 +106,12 @@ MatchCondition = RouteMapMatchCondition.Contains,
 },
 Actions =
 {
-new Models.Action()
+new RouteMapAction()
 {
-RouteMapActionType = RouteMapActionType.Add,
+ActionType = RouteMapActionType.Add,
 Parameters =
 {
-new Parameter()
+new RouteMapActionParameter()
 {
 RoutePrefix =
 {
@@ -127,7 +127,7 @@ AsPath =
 },
 }
 },
-NextStepIfMatched = NextStep.Continue,
+NextStepIfMatched = RouteMapNextStepBehavior.Continue,
 }
 },
             };

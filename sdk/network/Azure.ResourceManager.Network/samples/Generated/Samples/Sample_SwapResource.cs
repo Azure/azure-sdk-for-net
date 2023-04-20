@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             SwapResourceData data = new SwapResourceData()
             {
-                SwapResourceSlotType = SlotType.Production,
+                SwapResourceSlotType = SwapSlotType.Production,
             };
             await swapResource.UpdateAsync(WaitUntil.Completed, data);
 

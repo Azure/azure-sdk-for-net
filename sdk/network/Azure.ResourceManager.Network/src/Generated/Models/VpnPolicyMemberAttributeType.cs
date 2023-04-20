@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         private const string CertificateGroupIdValue = "CertificateGroupId";
-        private const string AadValue = "AADGroupId";
+        private const string AadGroupIdValue = "AADGroupId";
         private const string RadiusAzureGroupIdValue = "RadiusAzureGroupId";
 
         /// <summary> CertificateGroupId. </summary>
         public static VpnPolicyMemberAttributeType CertificateGroupId { get; } = new VpnPolicyMemberAttributeType(CertificateGroupIdValue);
         /// <summary> AADGroupId. </summary>
-        public static VpnPolicyMemberAttributeType Aad { get; } = new VpnPolicyMemberAttributeType(AadValue);
+        public static VpnPolicyMemberAttributeType AadGroupId { get; } = new VpnPolicyMemberAttributeType(AadGroupIdValue);
         /// <summary> RadiusAzureGroupId. </summary>
         public static VpnPolicyMemberAttributeType RadiusAzureGroupId { get; } = new VpnPolicyMemberAttributeType(RadiusAzureGroupIdValue);
         /// <summary> Determines if two <see cref="VpnPolicyMemberAttributeType"/> values are the same. </summary>

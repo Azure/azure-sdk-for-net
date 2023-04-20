@@ -139,9 +139,10 @@ rename-mapping:
   SlotType: SwapSlotType
   UseHubGateway: HubGatewayUsageFlag
   VirtualNetworkEncryption.enabled: IsEnabled
-  VpnPolicyMemberAttributeType.AADGroupId: Aad
+  VpnPolicyMemberAttributeType.AADGroupId: AadGroupId
   CustomIpPrefix.properties.customIpPrefixParent: ParentCustomIpPrefix
   CustomIpPrefix.properties.childCustomIpPrefixes: ChildCustomIpPrefixList
+  VpnAuthenticationType.AAD: Aad
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -234,10 +235,11 @@ directive:
   - remove-operation: 'GetActiveSessions'
   - remove-operation: 'DisconnectActiveSessions'
   - remove-operation: 'VirtualNetworks_ListDdosProtectionStatus'
-  - from: serviceEndpointPolicy.json # Resource type should be readonly for this resource.
+  - from: serviceEndpointPolicy.json
     where: $.definitions
     transform: >
       $.ServiceEndpointPolicyDefinition.properties['type']['readOnly'] = true;
+    reason: Resource type should be readonly for this resource.
   - from: virtualNetworkGateway.json
     where: $.definitions
     transform: >
@@ -378,6 +380,11 @@ directive:
         delete $.properties.type;
       }
     reason: Resources with id, name and type should inherit from NetworkResource/NetworkWritableResource instead of SubResource.
+  - from: virtualWan.json
+    where: $.definitions
+    transform: >
+      $.ExpressRouteGatewayProperties.properties.expressRouteConnections['readOnly'] = true;
+    reason: This collection property should be readonly.
   - from: virtualWan.json
     where: $.definitions
     transform: >

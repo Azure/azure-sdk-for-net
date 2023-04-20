@@ -202,11 +202,11 @@ Rules =
 new ManagedRuleOverride("931120")
 {
 State = ManagedRuleEnabledState.Enabled,
-Action = ActionType.Log,
+Action = RuleMatchActionType.Log,
 },new ManagedRuleOverride("931130")
 {
 State = ManagedRuleEnabledState.Disabled,
-Action = ActionType.AnomalyScoring,
+Action = RuleMatchActionType.AnomalyScoring,
 }
 },
 }

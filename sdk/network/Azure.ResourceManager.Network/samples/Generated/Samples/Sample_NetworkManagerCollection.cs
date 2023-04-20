@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Samples
                 },
                 NetworkManagerScopeAccesses =
 {
-ConfigurationType.Connectivity
+NetworkConfigurationDeploymentType.Connectivity
 },
             };
             ArmOperation<NetworkManagerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkManagerName, data);
