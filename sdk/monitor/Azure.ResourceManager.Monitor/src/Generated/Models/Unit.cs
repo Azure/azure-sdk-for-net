@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The unit of the metric. </summary>
-    internal enum Unit
+    public enum Unit
     {
         /// <summary> Unspecified. </summary>
         Unspecified,
