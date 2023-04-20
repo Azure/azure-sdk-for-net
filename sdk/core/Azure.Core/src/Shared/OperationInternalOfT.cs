@@ -72,26 +72,41 @@ namespace Azure.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal{T}"/> class.
         /// </summary>
-        /// <param name="clientDiagnostics">Used for diagnostic scope and exception creation. This is expected to be the instance created during the construction of your main client.</param>
         /// <param name="operation">The long-running operation making use of this class. Passing "<c>this</c>" is expected.</param>
+        /// <param name="clientDiagnostics">Used for diagnostic scope and exception creation. This is expected to be the instance created during the construction of your main client.</param>
         /// <param name="rawResponse">
-        /// The initial value of <see cref="OperationInternalBase.RawResponse"/>. Usually, long-running operation objects can be instantiated in two ways:
-        /// <list type="bullet">
-        ///   <item>
-        ///   When calling a client's "<c>Start&lt;OperationName&gt;</c>" method, a service call is made to start the operation, and an <see cref="Operation{T}"/> instance is returned.
-        ///   In this case, the response received from this service call can be passed here.
-        ///   </item>
-        ///   <item>
-        ///   When a user instantiates an <see cref="Operation{T}"/> directly using a public constructor, there's no previous service call. In this case, passing <c>null</c> is expected.
-        ///   </item>
-        /// </list>
+        ///     The initial value of <see cref="OperationInternalBase.RawResponse"/>. Usually, long-running operation objects can be instantiated in two ways:
+        ///     <list type="bullet">
+        ///         <item>
+        ///             When calling a client's "<c>Start&lt;OperationName&gt;</c>" method, a service call is made to start the operation, and an <see cref="Operation{T}"/> instance is returned.
+        ///             In this case, the response received from this service call can be passed here.
+        ///         </item>
+        ///         <item>
+        ///             When a user instantiates an <see cref="Operation{T}"/> directly using a public constructor, there's no previous service call. In this case, passing <c>null</c> is expected.
+        ///         </item>
+        ///     </list>
         /// </param>
         /// <param name="operationTypeName">
-        /// The type name of the long-running operation making use of this class. Used when creating diagnostic scopes. If left <c>null</c>, the type name will be inferred based on the
-        /// parameter <paramref name="operation"/>.
+        ///     The type name of the long-running operation making use of this class. Used when creating diagnostic scopes. If left <c>null</c>, the type name will be inferred based on the
+        ///     parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
-        /// <param name="fallbackStrategy">The fallback delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used. Default is <see cref="ConstantDelayStrategy"/>.</param>
+        /// <param name="fallbackStrategy">The delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used.
+        ///     Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
+        public OperationInternal(IOperation<T> operation,
+            ClientDiagnostics clientDiagnostics,
+            Response rawResponse,
+            string? operationTypeName = null,
+            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
+            DelayStrategy? fallbackStrategy = null)
+            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+        {
+            _operation = operation;
+            _rawResponse = rawResponse;
+            _stateLock = new AsyncLockWithValue<OperationState<T>>();
+        }
+
+        //TEMP for backcompat with AutoRest
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
             IOperation<T> operation,
@@ -99,12 +114,17 @@ namespace Azure.Core
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
             DelayStrategyInternal? fallbackStrategy = null)
-            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+            : base(
+                clientDiagnostics,
+                operationTypeName ?? operation.GetType().Name,
+                scopeAttributes,
+                fallbackStrategy is ExponentialDelayStrategy ? new SequentialDelayStrategy() : (fallbackStrategy is ConstantDelayStrategy) ? new FixedDelayWithNoJitterStrategy() : null)
         {
             _operation = operation;
             _rawResponse = rawResponse;
             _stateLock = new AsyncLockWithValue<OperationState<T>>();
         }
+        //end TEMP for backcompat with AutoRest
 
         private OperationInternal(OperationState<T> finalState)
             : base(finalState.RawResponse)
@@ -160,8 +180,7 @@ namespace Azure.Core
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes.
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategyInternal"/>
-        /// is then used as the wait interval.
+        /// for status change until the specified time has passed.
         /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms",
         /// <example>Usage example:
         /// <code>
@@ -200,8 +219,7 @@ namespace Azure.Core
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatus(CancellationToken)"/> until the long-running operation completes.
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategyInternal"/>
-        /// is then use as the wait interval.
+        /// for status change until the specified time has passed.
         /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms",
         /// <example>Usage example:
         /// <code>
@@ -218,11 +236,8 @@ namespace Azure.Core
 
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatus(CancellationToken)"/> until the long-running operation completes. The interval
-        /// between calls is defined by the property <see cref="ConstantDelayStrategy.DefaultPollingInterval"/>, but it can change based on information returned
-        /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
-        /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="ConstantDelayStrategy.DefaultPollingInterval"/>
-        /// property and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
-        /// and "x-ms-retry-after-ms".
+        /// between calls is defined by the <see cref="FixedDelayWithNoJitterStrategy"/>, which takes into account any retry-after header that is returned
+        /// from the server.
         /// <example>Usage example:
         /// <code>
         ///   public async ValueTask&lt;Response&lt;T&gt;&gt; WaitForCompletionAsync(CancellationToken cancellationToken) =>

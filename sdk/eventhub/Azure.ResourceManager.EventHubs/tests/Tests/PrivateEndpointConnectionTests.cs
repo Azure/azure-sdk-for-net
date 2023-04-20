@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
         [Test]
         public async Task GetAllPrivateEndpointConnection()
         {
-            PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
-            Assert.AreEqual(privateEndpoint.Data.ManualPrivateLinkServiceConnections.Count, 1);
+            PrivateEndpointResource privateEndpoint1 = await CreatePrivateEndpoint();
+            Assert.AreEqual(privateEndpoint1.Data.ManualPrivateLinkServiceConnections.Count, 1);
 
-            List<EventHubsPrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(1, privateEndpointConnections.Count);
-            VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnections[0]);
+            List<EventHubsPrivateEndpointConnectionResource> privateEndpointConnections1 = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(1, privateEndpointConnections1.Count);
+            VerifyPrivateEndpointConnections(privateEndpoint1.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnections1[0]);
         }
         [Test]
         public async Task PrivateEndpointConnectionDelete()

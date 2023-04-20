@@ -50,10 +50,10 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationLocalPath,
             int waitTimeInSec = 10,
             TransferManagerOptions transferManagerOptions = default,
-            ContainerTransferOptions options = default)
+            TransferOptions options = default)
         {
             // Set transfer options
-            options ??= new ContainerTransferOptions();
+            options ??= new TransferOptions();
             FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
             transferManagerOptions ??= new TransferManagerOptions()
@@ -418,7 +418,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobContainerClient containerClient,
             string destinationFolder,
             int concurrency,
-            ContainerTransferOptions options = default,
+            TransferOptions options = default,
             int size = Constants.KB)
         {
             // Arrange
@@ -455,7 +455,7 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Create transfer to do a AwaitCompletion
-                ContainerTransferOptions options = new ContainerTransferOptions();
+                TransferOptions options = new TransferOptions();
                 FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
                 DataTransfer transfer = await CreateStartTransfer(
                     test.Container,
@@ -479,7 +479,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_AwaitCompletion_Failed()
@@ -490,7 +490,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             try
             {
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Fail
                 };
@@ -515,7 +515,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.IsTrue(transfer.HasCompleted);
                 Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
                 Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
-                Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
+                Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
             }
             finally
             {
@@ -523,7 +523,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_AwaitCompletion_Skipped()
@@ -535,7 +535,7 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Create transfer options with Skipping available
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Skip
                 };
@@ -578,7 +578,7 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Create transfer to do a EnsureCompleted
-                ContainerTransferOptions options = new ContainerTransferOptions();
+                TransferOptions options = new TransferOptions();
                 FailureTransferHolder failureTransferHolder = new FailureTransferHolder(options);
 
                 DataTransfer transfer = await CreateStartTransfer(
@@ -603,7 +603,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_EnsureCompleted_Failed()
@@ -614,7 +614,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             try
             {
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Fail
                 };
@@ -639,7 +639,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.IsTrue(transfer.HasCompleted);
                 Assert.AreEqual(StorageTransferStatus.CompletedWithFailedTransfers, transfer.TransferStatus);
                 Assert.AreEqual(1, failureTransferHolder.FailedEvents.Count);
-                Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
+                Assert.IsTrue(failureTransferHolder.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
             }
             finally
             {
@@ -647,7 +647,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
+        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35209")]
         [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_EnsureCompleted_Skipped()
@@ -659,7 +659,7 @@ namespace Azure.Storage.DataMovement.Tests
             try
             {
                 // Create transfer options with Skipping available
-                ContainerTransferOptions options = new ContainerTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     CreateMode = StorageResourceCreateMode.Skip
                 };

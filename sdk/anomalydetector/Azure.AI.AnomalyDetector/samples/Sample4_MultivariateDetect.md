@@ -164,7 +164,7 @@ private MultivariateLastDetectionResult DetectLast(AnomalyDetectorClient client,
                 variables.Add(new VariableValues(lastDetectVariables[index].GetProperty("variable").ToString(), JsonConvert.DeserializeObject<IEnumerable<String>>(lastDetectVariables[index].GetProperty("timestamps").ToString()), JsonConvert.DeserializeObject<IEnumerable<float>>(lastDetectVariables[index].GetProperty("values").ToString())));
             }
         }
-        MultivariateLastDetectionOptions request = new MultivariateLastDetectionOptions(variables, 1);
+        MultivariateLastDetectionOptions request = new MultivariateLastDetectionOptions(variables);
         MultivariateLastDetectionResult response = client.DetectMultivariateLastAnomaly(model_id, request);
         return response;
     }

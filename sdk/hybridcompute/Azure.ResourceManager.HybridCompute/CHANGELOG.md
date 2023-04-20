@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2023-04-17)
+
+### Bugs Fixed
+- Fixed an issue that `System.UriFormatException` is thrown when `Uri` type field is empty during serialization of `AgentConfiguration`.
 
 ## 1.0.0-beta.2 (2023-02-17)
 

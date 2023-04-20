@@ -35,7 +35,7 @@ namespace Azure.Storage.DataMovement
         /// this will be the value.
         ///
         /// This status is a resumable state, only
-        /// transfers that failed will be retried when <see cref="TransferManager.StartTransferAsync(StorageResource, StorageResource, Models.SingleTransferOptions)"/>
+        /// transfers that failed will be retried when <see cref="TransferManager.StartTransferAsync(StorageResource, StorageResource, Models.TransferOptions)"/>
         /// with the respective transfer ID to resume.
         /// </summary>
         Paused = 3,

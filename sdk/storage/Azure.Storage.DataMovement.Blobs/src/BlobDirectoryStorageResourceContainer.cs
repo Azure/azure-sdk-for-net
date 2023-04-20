@@ -83,19 +83,19 @@ namespace Azure.Storage.DataMovement.Blobs
             if (_options?.BlobType == BlobType.Append)
             {
                 return new AppendBlobStorageResource(
-                    _blobContainerClient.GetAppendBlobClient(System.IO.Path.Combine(_directoryPrefix, path)),
+                    _blobContainerClient.GetAppendBlobClient(string.Join("/", _directoryPrefix, path)),
                     _options?.ToAppendBlobStorageResourceOptions());
             }
             else if (_options?.BlobType == BlobType.Page)
             {
                 return new PageBlobStorageResource(
-                    _blobContainerClient.GetPageBlobClient(System.IO.Path.Combine(_directoryPrefix, path)),
+                    _blobContainerClient.GetPageBlobClient(string.Join("/", _directoryPrefix, path)),
                     _options?.ToPageBlobStorageResourceOptions());
             }
             else // BlobType.Block or null
             {
                 return new BlockBlobStorageResource(
-                    _blobContainerClient.GetBlockBlobClient(System.IO.Path.Combine(_directoryPrefix, path)),
+                    _blobContainerClient.GetBlockBlobClient(string.Join("/", _directoryPrefix, path)),
                     _options?.ToBlockBlobStorageResourceOptions());
             }
         }
