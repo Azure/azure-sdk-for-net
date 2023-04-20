@@ -8,8 +8,6 @@ namespace Microsoft.Azure.Functions.Worker
     /// </summary>
     public abstract class WebPubSubAction
     {
-        private static string _actionName;
-
         /// <summary>
         /// Readonly name to deserialize to correct WebPubSubAction.
         /// </summary>
@@ -17,8 +15,7 @@ namespace Microsoft.Azure.Functions.Worker
         {
             get
             {
-                _actionName ??= GetType().Name.Replace("Action", "");
-                return _actionName;
+                return GetType().Name.Replace("Action", "");
             }
         }
     }
