@@ -52,27 +52,6 @@ namespace Azure.ResourceManager.CostManagement
             return GetCachedClient(Client => new ExportCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of CostDetailsOperationResultResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of CostDetailsOperationResultResources and their operations over a CostDetailsOperationResultResource. </returns>
-        public virtual CostDetailsOperationResultCollection GetCostDetailsOperationResults()
-        {
-            return GetCachedClient(Client => new CostDetailsOperationResultCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of GenerateDetailedCostReportOperationResultResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of GenerateDetailedCostReportOperationResultResources and their operations over a GenerateDetailedCostReportOperationResultResource. </returns>
-        public virtual GenerateDetailedCostReportOperationResultCollection GetGenerateDetailedCostReportOperationResults()
-        {
-            return GetCachedClient(Client => new GenerateDetailedCostReportOperationResultCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of GenerateDetailedCostReportOperationStatusResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of GenerateDetailedCostReportOperationStatusResources and their operations over a GenerateDetailedCostReportOperationStatusResource. </returns>
-        public virtual GenerateDetailedCostReportOperationStatusCollection GetGenerateDetailedCostReportOperationStatuses()
-        {
-            return GetCachedClient(Client => new GenerateDetailedCostReportOperationStatusCollection(Client, Id));
-        }
-
         /// <summary> Gets a collection of ScheduledActionResources in the ArmResource. </summary>
         /// <returns> An object representing collection of ScheduledActionResources and their operations over a ScheduledActionResource. </returns>
         public virtual ScheduledActionCollection GetScheduledActions()
