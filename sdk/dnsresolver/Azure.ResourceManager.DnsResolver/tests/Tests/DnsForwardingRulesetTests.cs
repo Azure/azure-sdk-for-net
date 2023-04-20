@@ -32,18 +32,15 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             //_vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
             //_subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{SubnetName}";
 
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                await CreateVirtualNetworkAsync();
-            }
+            (var vnetId, var subnetId) = await CreateVirtualNetworkAsync();
             var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
             {
-                Id = new ResourceIdentifier(DefaultVnetID)
+                Id = new ResourceIdentifier(vnetId)
             });
 
             dnsResolverData.VirtualNetwork = new WritableSubResource()
             {
-                Id = new ResourceIdentifier(DefaultVnetID)
+                Id = new ResourceIdentifier(vnetId)
             };
 
             _dnsResolver = (await resourceGroup.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
@@ -51,7 +48,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 
             var outboundEndpointData = new DnsResolverOutboundEndpointData(this.DefaultLocation, new WritableSubResource
             {
-                Id = new ResourceIdentifier(DefaultSubnetID),
+                Id = new ResourceIdentifier(subnetId),
             });
 
             var outboundEndpoint = await _dnsResolver.GetDnsResolverOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
