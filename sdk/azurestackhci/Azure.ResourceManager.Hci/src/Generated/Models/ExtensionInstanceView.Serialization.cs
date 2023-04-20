@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = ExtensionInstanceViewStatus.DeserializeExtensionInstanceViewStatus(property.Value);
