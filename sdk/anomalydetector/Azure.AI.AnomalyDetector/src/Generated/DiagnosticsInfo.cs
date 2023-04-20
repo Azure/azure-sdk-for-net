@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> Diagnostics information to help inspect the states of model or variable. </summary>
+    /// <summary> Diagnostics information to help inspect the states of a model or variable. </summary>
     public partial class DiagnosticsInfo
     {
         /// <summary> Initializes a new instance of DiagnosticsInfo. </summary>
@@ -22,7 +22,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Initializes a new instance of DiagnosticsInfo. </summary>
         /// <param name="modelState"> Model status. </param>
-        /// <param name="variableStates"> Variable Status. </param>
+        /// <param name="variableStates"> Variable status. </param>
         internal DiagnosticsInfo(ModelState modelState, IList<VariableState> variableStates)
         {
             ModelState = modelState;
@@ -31,7 +31,7 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Model status. </summary>
         public ModelState ModelState { get; set; }
-        /// <summary> Variable Status. </summary>
+        /// <summary> Variable status. </summary>
         public IList<VariableState> VariableStates { get; }
     }
 }
