@@ -54,7 +54,7 @@ Schema for <c>Environment</c>:
   description: string, # Optional. Description of the Environment.
   catalogName: string, # Optional. Name of the catalog.
   catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: AnyObject, # Optional. Parameters object for the deploy action
+  parameters: Intrinsic, # Optional. Parameters object for the deploy action
   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
 }
@@ -115,7 +115,7 @@ Schema for <c>Environment</c>:
   description: string, # Optional. Description of the Environment.
   catalogName: string, # Optional. Name of the catalog.
   catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: AnyObject, # Optional. Parameters object for the deploy action
+  parameters: Intrinsic, # Optional. Parameters object for the deploy action
   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
 }
@@ -199,7 +199,7 @@ Request Body:
   description: string, # Optional. Description of the Environment.
   catalogName: string, # Optional. Name of the catalog.
   catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: AnyObject, # Optional. Parameters object for the deploy action
+  parameters: Intrinsic, # Optional. Parameters object for the deploy action
   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
 }
@@ -218,7 +218,7 @@ Schema for <c>Environment</c>:
   description: string, # Optional. Description of the Environment.
   catalogName: string, # Optional. Name of the catalog.
   catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: AnyObject, # Optional. Parameters object for the deploy action
+  parameters: Intrinsic, # Optional. Parameters object for the deploy action
   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
 }
@@ -302,7 +302,7 @@ Request Body:
   description: string, # Optional. Description of the Environment.
   catalogName: string, # Optional. Name of the catalog.
   catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: AnyObject, # Optional. Parameters object for the deploy action
+  parameters: Intrinsic, # Optional. Parameters object for the deploy action
   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
 }
@@ -321,7 +321,7 @@ Schema for <c>Environment</c>:
   description: string, # Optional. Description of the Environment.
   catalogName: string, # Optional. Name of the catalog.
   catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: AnyObject, # Optional. Parameters object for the deploy action
+  parameters: Intrinsic, # Optional. Parameters object for the deploy action
   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
 }
@@ -458,11 +458,11 @@ Schema for <c>CatalogItemVersion</c>:
       id: string, # Optional. Unique ID of the parameter
       name: string, # Optional. Display name of the parameter
       description: string, # Optional. Description of the parameter
-      default: AnyObject, # Optional. Default value of the parameter
+      default: Intrinsic, # Optional. Default value of the parameter
       type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
       readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
       required: boolean, # Optional. Whether or not this parameter is required
-      allowed: [AnyObject], # Optional. An array of allowed values
+      allowed: [Intrinsic], # Optional. An array of allowed values
     }
   ], # Optional. Input parameters passed to actions
   actions: [
@@ -552,11 +552,11 @@ Schema for <c>CatalogItemVersion</c>:
       id: string, # Optional. Unique ID of the parameter
       name: string, # Optional. Display name of the parameter
       description: string, # Optional. Description of the parameter
-      default: AnyObject, # Optional. Default value of the parameter
+      default: Intrinsic, # Optional. Default value of the parameter
       type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
       readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
       required: boolean, # Optional. Whether or not this parameter is required
-      allowed: [AnyObject], # Optional. An array of allowed values
+      allowed: [Intrinsic], # Optional. An array of allowed values
     }
   ], # Optional. Input parameters passed to actions
   actions: [
@@ -634,7 +634,7 @@ Schema for <c>EnvironmentListResultValue</c>:
   description: string, # Optional. Description of the Environment.
   catalogName: string, # Optional. Name of the catalog.
   catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: AnyObject, # Optional. Parameters object for the deploy action
+  parameters: Intrinsic, # Optional. Parameters object for the deploy action
   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
 }
@@ -697,7 +697,7 @@ Schema for <c>EnvironmentListResultValue</c>:
   description: string, # Optional. Description of the Environment.
   catalogName: string, # Optional. Name of the catalog.
   catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: AnyObject, # Optional. Parameters object for the deploy action
+  parameters: Intrinsic, # Optional. Parameters object for the deploy action
   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
 }
@@ -760,7 +760,7 @@ Schema for <c>EnvironmentListResultValue</c>:
   description: string, # Optional. Description of the Environment.
   catalogName: string, # Optional. Name of the catalog.
   catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: AnyObject, # Optional. Parameters object for the deploy action
+  parameters: Intrinsic, # Optional. Parameters object for the deploy action
   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
 }
@@ -823,7 +823,7 @@ Schema for <c>EnvironmentListResultValue</c>:
   description: string, # Optional. Description of the Environment.
   catalogName: string, # Optional. Name of the catalog.
   catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: AnyObject, # Optional. Parameters object for the deploy action
+  parameters: Intrinsic, # Optional. Parameters object for the deploy action
   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
 }
@@ -999,11 +999,11 @@ Schema for <c>CatalogItemVersionListResultValue</c>:
       id: string, # Optional. Unique ID of the parameter
       name: string, # Optional. Display name of the parameter
       description: string, # Optional. Description of the parameter
-      default: AnyObject, # Optional. Default value of the parameter
+      default: Intrinsic, # Optional. Default value of the parameter
       type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
       readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
       required: boolean, # Optional. Whether or not this parameter is required
-      allowed: [AnyObject], # Optional. An array of allowed values
+      allowed: [Intrinsic], # Optional. An array of allowed values
     }
   ], # Optional. Input parameters passed to actions
   actions: [
@@ -1106,11 +1106,11 @@ Schema for <c>CatalogItemVersionListResultValue</c>:
       id: string, # Optional. Unique ID of the parameter
       name: string, # Optional. Display name of the parameter
       description: string, # Optional. Description of the parameter
-      default: AnyObject, # Optional. Default value of the parameter
+      default: Intrinsic, # Optional. Default value of the parameter
       type: &quot;array&quot; | &quot;boolean&quot; | &quot;integer&quot; | &quot;null&quot; | &quot;number&quot; | &quot;object&quot; | &quot;string&quot;, # Optional. A string of one of the basic JSON types (number, integer, null, array, object, boolean, string)
       readOnly: boolean, # Optional. Whether or not this parameter is read-only.  If true, default should have a value.
       required: boolean, # Optional. Whether or not this parameter is required
-      allowed: [AnyObject], # Optional. An array of allowed values
+      allowed: [Intrinsic], # Optional. An array of allowed values
     }
   ], # Optional. Input parameters passed to actions
   actions: [
@@ -1299,7 +1299,7 @@ Schema for <c>Environment</c>:
   description: string, # Optional. Description of the Environment.
   catalogName: string, # Optional. Name of the catalog.
   catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: AnyObject, # Optional. Parameters object for the deploy action
+  parameters: Intrinsic, # Optional. Parameters object for the deploy action
   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
 }
@@ -1317,7 +1317,7 @@ Schema for <c>Environment</c>:
   description: string, # Optional. Description of the Environment.
   catalogName: string, # Optional. Name of the catalog.
   catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: AnyObject, # Optional. Parameters object for the deploy action
+  parameters: Intrinsic, # Optional. Parameters object for the deploy action
   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
 }
@@ -1403,7 +1403,7 @@ Schema for <c>Environment</c>:
   description: string, # Optional. Description of the Environment.
   catalogName: string, # Optional. Name of the catalog.
   catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: AnyObject, # Optional. Parameters object for the deploy action
+  parameters: Intrinsic, # Optional. Parameters object for the deploy action
   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
 }
@@ -1421,7 +1421,7 @@ Schema for <c>Environment</c>:
   description: string, # Optional. Description of the Environment.
   catalogName: string, # Optional. Name of the catalog.
   catalogItemName: string, # Optional. Name of the catalog item.
-  parameters: AnyObject, # Optional. Parameters object for the deploy action
+  parameters: Intrinsic, # Optional. Parameters object for the deploy action
   scheduledTasks: Dictionary&lt;string, ScheduledTask&gt;, # Optional. Set of supported scheduled tasks to help manage cost.
   tags: Dictionary&lt;string, string&gt;, # Optional. Key value pairs that will be applied to resources deployed in this environment as tags.
 }
@@ -1517,7 +1517,7 @@ Request Body:
 Schema for <c>ActionRequest</c>:
 <code>{
   actionId: string, # Required. The Catalog Item action id to execute
-  parameters: AnyObject, # Optional. Parameters object for the Action
+  parameters: Intrinsic, # Optional. Parameters object for the Action
 }
 </code>
 
@@ -1563,7 +1563,7 @@ Request Body:
 Schema for <c>ActionRequest</c>:
 <code>{
   actionId: string, # Required. The Catalog Item action id to execute
-  parameters: AnyObject, # Optional. Parameters object for the Action
+  parameters: Intrinsic, # Optional. Parameters object for the Action
 }
 </code>
 
@@ -1609,7 +1609,7 @@ Request Body:
 Schema for <c>ActionRequest</c>:
 <code>{
   actionId: string, # Required. The Catalog Item action id to execute
-  parameters: AnyObject, # Optional. Parameters object for the Action
+  parameters: Intrinsic, # Optional. Parameters object for the Action
 }
 </code>
 
@@ -1655,7 +1655,7 @@ Request Body:
 Schema for <c>ActionRequest</c>:
 <code>{
   actionId: string, # Required. The Catalog Item action id to execute
-  parameters: AnyObject, # Optional. Parameters object for the Action
+  parameters: Intrinsic, # Optional. Parameters object for the Action
 }
 </code>
 
