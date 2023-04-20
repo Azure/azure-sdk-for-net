@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Specification of data sources that will be collected.
-    /// Serialized Name: DataSourcesSpec
-    /// </summary>
+    /// <summary> Specification of data sources that will be collected. </summary>
     public partial class DataSourcesSpec
     {
         /// <summary> Initializes a new instance of DataSourcesSpec. </summary>
@@ -31,46 +28,16 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataSourcesSpec. </summary>
-        /// <param name="performanceCounters">
-        /// The list of performance counter data source configurations.
-        /// Serialized Name: DataSourcesSpec.performanceCounters
-        /// </param>
-        /// <param name="windowsEventLogs">
-        /// The list of Windows Event Log data source configurations.
-        /// Serialized Name: DataSourcesSpec.windowsEventLogs
-        /// </param>
-        /// <param name="syslog">
-        /// The list of Syslog data source configurations.
-        /// Serialized Name: DataSourcesSpec.syslog
-        /// </param>
-        /// <param name="extensions">
-        /// The list of Azure VM extension data source configurations.
-        /// Serialized Name: DataSourcesSpec.extensions
-        /// </param>
-        /// <param name="logFiles">
-        /// The list of Log files source configurations.
-        /// Serialized Name: DataSourcesSpec.logFiles
-        /// </param>
-        /// <param name="iisLogs">
-        /// The list of IIS logs source configurations.
-        /// Serialized Name: DataSourcesSpec.iisLogs
-        /// </param>
-        /// <param name="windowsFirewallLogs">
-        /// The list of Windows Firewall logs source configurations.
-        /// Serialized Name: DataSourcesSpec.windowsFirewallLogs
-        /// </param>
-        /// <param name="prometheusForwarder">
-        /// The list of Prometheus forwarder data source configurations.
-        /// Serialized Name: DataSourcesSpec.prometheusForwarder
-        /// </param>
-        /// <param name="platformTelemetry">
-        /// The list of platform telemetry configurations
-        /// Serialized Name: DataSourcesSpec.platformTelemetry
-        /// </param>
-        /// <param name="dataImports">
-        /// Specifications of pull based data sources
-        /// Serialized Name: DataSourcesSpec.dataImports
-        /// </param>
+        /// <param name="performanceCounters"> The list of performance counter data source configurations. </param>
+        /// <param name="windowsEventLogs"> The list of Windows Event Log data source configurations. </param>
+        /// <param name="syslog"> The list of Syslog data source configurations. </param>
+        /// <param name="extensions"> The list of Azure VM extension data source configurations. </param>
+        /// <param name="logFiles"> The list of Log files source configurations. </param>
+        /// <param name="iisLogs"> The list of IIS logs source configurations. </param>
+        /// <param name="windowsFirewallLogs"> The list of Windows Firewall logs source configurations. </param>
+        /// <param name="prometheusForwarder"> The list of Prometheus forwarder data source configurations. </param>
+        /// <param name="platformTelemetry"> The list of platform telemetry configurations. </param>
+        /// <param name="dataImports"> Specifications of pull based data sources. </param>
         internal DataSourcesSpec(IList<PerfCounterDataSource> performanceCounters, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs, IList<WindowsFirewallLogsDataSource> windowsFirewallLogs, IList<PrometheusForwarderDataSource> prometheusForwarder, IList<PlatformTelemetryDataSource> platformTelemetry, DataSourcesSpecDataImports dataImports)
         {
             PerformanceCounters = performanceCounters;
@@ -85,60 +52,27 @@ namespace Azure.ResourceManager.Monitor.Models
             DataImports = dataImports;
         }
 
-        /// <summary>
-        /// The list of performance counter data source configurations.
-        /// Serialized Name: DataSourcesSpec.performanceCounters
-        /// </summary>
+        /// <summary> The list of performance counter data source configurations. </summary>
         public IList<PerfCounterDataSource> PerformanceCounters { get; }
-        /// <summary>
-        /// The list of Windows Event Log data source configurations.
-        /// Serialized Name: DataSourcesSpec.windowsEventLogs
-        /// </summary>
+        /// <summary> The list of Windows Event Log data source configurations. </summary>
         public IList<WindowsEventLogDataSource> WindowsEventLogs { get; }
-        /// <summary>
-        /// The list of Syslog data source configurations.
-        /// Serialized Name: DataSourcesSpec.syslog
-        /// </summary>
+        /// <summary> The list of Syslog data source configurations. </summary>
         public IList<SyslogDataSource> Syslog { get; }
-        /// <summary>
-        /// The list of Azure VM extension data source configurations.
-        /// Serialized Name: DataSourcesSpec.extensions
-        /// </summary>
+        /// <summary> The list of Azure VM extension data source configurations. </summary>
         public IList<ExtensionDataSource> Extensions { get; }
-        /// <summary>
-        /// The list of Log files source configurations.
-        /// Serialized Name: DataSourcesSpec.logFiles
-        /// </summary>
+        /// <summary> The list of Log files source configurations. </summary>
         public IList<LogFilesDataSource> LogFiles { get; }
-        /// <summary>
-        /// The list of IIS logs source configurations.
-        /// Serialized Name: DataSourcesSpec.iisLogs
-        /// </summary>
+        /// <summary> The list of IIS logs source configurations. </summary>
         public IList<IisLogsDataSource> IisLogs { get; }
-        /// <summary>
-        /// The list of Windows Firewall logs source configurations.
-        /// Serialized Name: DataSourcesSpec.windowsFirewallLogs
-        /// </summary>
+        /// <summary> The list of Windows Firewall logs source configurations. </summary>
         public IList<WindowsFirewallLogsDataSource> WindowsFirewallLogs { get; }
-        /// <summary>
-        /// The list of Prometheus forwarder data source configurations.
-        /// Serialized Name: DataSourcesSpec.prometheusForwarder
-        /// </summary>
+        /// <summary> The list of Prometheus forwarder data source configurations. </summary>
         public IList<PrometheusForwarderDataSource> PrometheusForwarder { get; }
-        /// <summary>
-        /// The list of platform telemetry configurations
-        /// Serialized Name: DataSourcesSpec.platformTelemetry
-        /// </summary>
+        /// <summary> The list of platform telemetry configurations. </summary>
         public IList<PlatformTelemetryDataSource> PlatformTelemetry { get; }
-        /// <summary>
-        /// Specifications of pull based data sources
-        /// Serialized Name: DataSourcesSpec.dataImports
-        /// </summary>
+        /// <summary> Specifications of pull based data sources. </summary>
         internal DataSourcesSpecDataImports DataImports { get; set; }
-        /// <summary>
-        /// Definition of Event Hub configuration.
-        /// Serialized Name: DataImportSources.eventHub
-        /// </summary>
+        /// <summary> Definition of Event Hub configuration. </summary>
         public DataImportSourcesEventHub DataImportsEventHub
         {
             get => DataImports is null ? default : DataImports.EventHub;

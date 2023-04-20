@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Properties that define the scope private link mode settings exclusion item. This setting applies to a specific private endpoint connection and overrides the default settings for that private endpoint connection.
-    /// Serialized Name: AccessModeSettingsExclusion
-    /// </summary>
+    /// <summary> Properties that define the scope private link mode settings exclusion item. This setting applies to a specific private endpoint connection and overrides the default settings for that private endpoint connection. </summary>
     public partial class MonitorPrivateLinkAccessModeSettingsExclusion
     {
         /// <summary> Initializes a new instance of MonitorPrivateLinkAccessModeSettingsExclusion. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorPrivateLinkAccessModeSettingsExclusion. </summary>
-        /// <param name="privateEndpointConnectionName">
-        /// The private endpoint connection name associated to the private endpoint on which we want to apply the specific access mode settings.
-        /// Serialized Name: AccessModeSettingsExclusion.privateEndpointConnectionName
-        /// </param>
-        /// <param name="queryAccessMode">
-        /// Specifies the access mode of queries through the specified private endpoint connection in the exclusion.
-        /// Serialized Name: AccessModeSettingsExclusion.queryAccessMode
-        /// </param>
-        /// <param name="ingestionAccessMode">
-        /// Specifies the access mode of ingestion through the specified private endpoint connection in the exclusion.
-        /// Serialized Name: AccessModeSettingsExclusion.ingestionAccessMode
-        /// </param>
+        /// <param name="privateEndpointConnectionName"> The private endpoint connection name associated to the private endpoint on which we want to apply the specific access mode settings. </param>
+        /// <param name="queryAccessMode"> Specifies the access mode of queries through the specified private endpoint connection in the exclusion. </param>
+        /// <param name="ingestionAccessMode"> Specifies the access mode of ingestion through the specified private endpoint connection in the exclusion. </param>
         internal MonitorPrivateLinkAccessModeSettingsExclusion(string privateEndpointConnectionName, MonitorPrivateLinkAccessMode? queryAccessMode, MonitorPrivateLinkAccessMode? ingestionAccessMode)
         {
             PrivateEndpointConnectionName = privateEndpointConnectionName;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.Monitor.Models
             IngestionAccessMode = ingestionAccessMode;
         }
 
-        /// <summary>
-        /// The private endpoint connection name associated to the private endpoint on which we want to apply the specific access mode settings.
-        /// Serialized Name: AccessModeSettingsExclusion.privateEndpointConnectionName
-        /// </summary>
+        /// <summary> The private endpoint connection name associated to the private endpoint on which we want to apply the specific access mode settings. </summary>
         public string PrivateEndpointConnectionName { get; set; }
-        /// <summary>
-        /// Specifies the access mode of queries through the specified private endpoint connection in the exclusion.
-        /// Serialized Name: AccessModeSettingsExclusion.queryAccessMode
-        /// </summary>
+        /// <summary> Specifies the access mode of queries through the specified private endpoint connection in the exclusion. </summary>
         public MonitorPrivateLinkAccessMode? QueryAccessMode { get; set; }
-        /// <summary>
-        /// Specifies the access mode of ingestion through the specified private endpoint connection in the exclusion.
-        /// Serialized Name: AccessModeSettingsExclusion.ingestionAccessMode
-        /// </summary>
+        /// <summary> Specifies the access mode of ingestion through the specified private endpoint connection in the exclusion. </summary>
         public MonitorPrivateLinkAccessMode? IngestionAccessMode { get; set; }
     }
 }

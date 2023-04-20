@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The PerfCounterDataSourceStream.
-    /// Serialized Name: KnownPerfCounterDataSourceStreams
-    /// </summary>
+    /// <summary> The PerfCounterDataSourceStream. </summary>
     public readonly partial struct PerfCounterDataSourceStream : IEquatable<PerfCounterDataSourceStream>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string MicrosoftPerfValue = "Microsoft-Perf";
         private const string MicrosoftInsightsMetricsValue = "Microsoft-InsightsMetrics";
 
-        /// <summary>
-        /// Microsoft-Perf
-        /// Serialized Name: KnownPerfCounterDataSourceStreams.Microsoft-Perf
-        /// </summary>
+        /// <summary> Microsoft-Perf. </summary>
         public static PerfCounterDataSourceStream MicrosoftPerf { get; } = new PerfCounterDataSourceStream(MicrosoftPerfValue);
-        /// <summary>
-        /// Microsoft-InsightsMetrics
-        /// Serialized Name: KnownPerfCounterDataSourceStreams.Microsoft-InsightsMetrics
-        /// </summary>
+        /// <summary> Microsoft-InsightsMetrics. </summary>
         public static PerfCounterDataSourceStream MicrosoftInsightsMetrics { get; } = new PerfCounterDataSourceStream(MicrosoftInsightsMetricsValue);
         /// <summary> Determines if two <see cref="PerfCounterDataSourceStream"/> values are the same. </summary>
         public static bool operator ==(PerfCounterDataSourceStream left, PerfCounterDataSourceStream right) => left.Equals(right);

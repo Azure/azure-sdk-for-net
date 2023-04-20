@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The DataCollectionRuleEventHubDataSource.
-    /// Serialized Name: EventHubDataSource
-    /// </summary>
+    /// <summary> The DataCollectionRuleEventHubDataSource. </summary>
     public partial class DataCollectionRuleEventHubDataSource
     {
         /// <summary> Initializes a new instance of DataCollectionRuleEventHubDataSource. </summary>
@@ -22,16 +19,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name">
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
-        /// Serialized Name: EventHubDataSource.name
         /// </param>
-        /// <param name="consumerGroup">
-        /// Event Hub consumer group name
-        /// Serialized Name: EventHubDataSource.consumerGroup
-        /// </param>
-        /// <param name="stream">
-        /// The stream to collect from EventHub
-        /// Serialized Name: EventHubDataSource.stream
-        /// </param>
+        /// <param name="consumerGroup"> Event Hub consumer group name. </param>
+        /// <param name="stream"> The stream to collect from EventHub. </param>
         internal DataCollectionRuleEventHubDataSource(string name, string consumerGroup, string stream)
         {
             Name = name;
@@ -42,18 +32,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary>
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
-        /// Serialized Name: EventHubDataSource.name
         /// </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Event Hub consumer group name
-        /// Serialized Name: EventHubDataSource.consumerGroup
-        /// </summary>
+        /// <summary> Event Hub consumer group name. </summary>
         public string ConsumerGroup { get; set; }
-        /// <summary>
-        /// The stream to collect from EventHub
-        /// Serialized Name: EventHubDataSource.stream
-        /// </summary>
+        /// <summary> The stream to collect from EventHub. </summary>
         public string Stream { get; set; }
     }
 }

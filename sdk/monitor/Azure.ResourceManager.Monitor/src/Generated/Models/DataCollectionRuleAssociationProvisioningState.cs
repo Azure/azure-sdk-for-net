@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The resource provisioning state.
-    /// Serialized Name: KnownDataCollectionRuleAssociationProvisioningState
-    /// </summary>
+    /// <summary> The resource provisioning state. </summary>
     public readonly partial struct DataCollectionRuleAssociationProvisioningState : IEquatable<DataCollectionRuleAssociationProvisioningState>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Creating
-        /// Serialized Name: KnownDataCollectionRuleAssociationProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static DataCollectionRuleAssociationProvisioningState Creating { get; } = new DataCollectionRuleAssociationProvisioningState(CreatingValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: KnownDataCollectionRuleAssociationProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static DataCollectionRuleAssociationProvisioningState Updating { get; } = new DataCollectionRuleAssociationProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: KnownDataCollectionRuleAssociationProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static DataCollectionRuleAssociationProvisioningState Deleting { get; } = new DataCollectionRuleAssociationProvisioningState(DeletingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: KnownDataCollectionRuleAssociationProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static DataCollectionRuleAssociationProvisioningState Succeeded { get; } = new DataCollectionRuleAssociationProvisioningState(SucceededValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: KnownDataCollectionRuleAssociationProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static DataCollectionRuleAssociationProvisioningState Canceled { get; } = new DataCollectionRuleAssociationProvisioningState(CanceledValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: KnownDataCollectionRuleAssociationProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static DataCollectionRuleAssociationProvisioningState Failed { get; } = new DataCollectionRuleAssociationProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="DataCollectionRuleAssociationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DataCollectionRuleAssociationProvisioningState left, DataCollectionRuleAssociationProvisioningState right) => left.Equals(right);

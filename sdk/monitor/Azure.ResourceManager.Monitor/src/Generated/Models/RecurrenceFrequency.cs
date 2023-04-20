@@ -7,51 +7,24 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// the recurrence frequency. How often the schedule profile should take effect. This value must be Week, meaning each week will have the same set of profiles. For example, to set a daily schedule, set **schedule** to every day of the week. The frequency property specifies that the schedule is repeated weekly.
-    /// Serialized Name: RecurrenceFrequency
-    /// </summary>
+    /// <summary> the recurrence frequency. How often the schedule profile should take effect. This value must be Week, meaning each week will have the same set of profiles. For example, to set a daily schedule, set **schedule** to every day of the week. The frequency property specifies that the schedule is repeated weekly. </summary>
     public enum RecurrenceFrequency
     {
-        /// <summary>
-        /// None
-        /// Serialized Name: RecurrenceFrequency.None
-        /// </summary>
+        /// <summary> None. </summary>
         None,
-        /// <summary>
-        /// Second
-        /// Serialized Name: RecurrenceFrequency.Second
-        /// </summary>
+        /// <summary> Second. </summary>
         Second,
-        /// <summary>
-        /// Minute
-        /// Serialized Name: RecurrenceFrequency.Minute
-        /// </summary>
+        /// <summary> Minute. </summary>
         Minute,
-        /// <summary>
-        /// Hour
-        /// Serialized Name: RecurrenceFrequency.Hour
-        /// </summary>
+        /// <summary> Hour. </summary>
         Hour,
-        /// <summary>
-        /// Day
-        /// Serialized Name: RecurrenceFrequency.Day
-        /// </summary>
+        /// <summary> Day. </summary>
         Day,
-        /// <summary>
-        /// Week
-        /// Serialized Name: RecurrenceFrequency.Week
-        /// </summary>
+        /// <summary> Week. </summary>
         Week,
-        /// <summary>
-        /// Month
-        /// Serialized Name: RecurrenceFrequency.Month
-        /// </summary>
+        /// <summary> Month. </summary>
         Month,
-        /// <summary>
-        /// Year
-        /// Serialized Name: RecurrenceFrequency.Year
-        /// </summary>
+        /// <summary> Year. </summary>
         Year
     }
 }

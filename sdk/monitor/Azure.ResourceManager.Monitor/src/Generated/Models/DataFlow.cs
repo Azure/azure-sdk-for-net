@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Definition of which streams are sent to which destinations.
-    /// Serialized Name: DataFlow
-    /// </summary>
+    /// <summary> Definition of which streams are sent to which destinations. </summary>
     public partial class DataFlow
     {
         /// <summary> Initializes a new instance of DataFlow. </summary>
@@ -24,26 +21,11 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataFlow. </summary>
-        /// <param name="streams">
-        /// List of streams for this data flow.
-        /// Serialized Name: DataFlow.streams
-        /// </param>
-        /// <param name="destinations">
-        /// List of destinations for this data flow.
-        /// Serialized Name: DataFlow.destinations
-        /// </param>
-        /// <param name="transformKql">
-        /// The KQL query to transform stream data.
-        /// Serialized Name: DataFlow.transformKql
-        /// </param>
-        /// <param name="outputStream">
-        /// The output stream of the transform. Only required if the transform changes data to a different stream.
-        /// Serialized Name: DataFlow.outputStream
-        /// </param>
-        /// <param name="builtInTransform">
-        /// The builtIn transform to transform stream data
-        /// Serialized Name: DataFlow.builtInTransform
-        /// </param>
+        /// <param name="streams"> List of streams for this data flow. </param>
+        /// <param name="destinations"> List of destinations for this data flow. </param>
+        /// <param name="transformKql"> The KQL query to transform stream data. </param>
+        /// <param name="outputStream"> The output stream of the transform. Only required if the transform changes data to a different stream. </param>
+        /// <param name="builtInTransform"> The builtIn transform to transform stream data. </param>
         internal DataFlow(IList<DataFlowStream> streams, IList<string> destinations, string transformKql, string outputStream, string builtInTransform)
         {
             Streams = streams;
@@ -53,30 +35,15 @@ namespace Azure.ResourceManager.Monitor.Models
             BuiltInTransform = builtInTransform;
         }
 
-        /// <summary>
-        /// List of streams for this data flow.
-        /// Serialized Name: DataFlow.streams
-        /// </summary>
+        /// <summary> List of streams for this data flow. </summary>
         public IList<DataFlowStream> Streams { get; }
-        /// <summary>
-        /// List of destinations for this data flow.
-        /// Serialized Name: DataFlow.destinations
-        /// </summary>
+        /// <summary> List of destinations for this data flow. </summary>
         public IList<string> Destinations { get; }
-        /// <summary>
-        /// The KQL query to transform stream data.
-        /// Serialized Name: DataFlow.transformKql
-        /// </summary>
+        /// <summary> The KQL query to transform stream data. </summary>
         public string TransformKql { get; set; }
-        /// <summary>
-        /// The output stream of the transform. Only required if the transform changes data to a different stream.
-        /// Serialized Name: DataFlow.outputStream
-        /// </summary>
+        /// <summary> The output stream of the transform. Only required if the transform changes data to a different stream. </summary>
         public string OutputStream { get; set; }
-        /// <summary>
-        /// The builtIn transform to transform stream data
-        /// Serialized Name: DataFlow.builtInTransform
-        /// </summary>
+        /// <summary> The builtIn transform to transform stream data. </summary>
         public string BuiltInTransform { get; set; }
     }
 }

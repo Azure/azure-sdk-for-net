@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The WindowsEventLogDataSourceStream.
-    /// Serialized Name: KnownWindowsEventLogDataSourceStreams
-    /// </summary>
+    /// <summary> The WindowsEventLogDataSourceStream. </summary>
     public readonly partial struct WindowsEventLogDataSourceStream : IEquatable<WindowsEventLogDataSourceStream>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string MicrosoftWindowsEventValue = "Microsoft-WindowsEvent";
         private const string MicrosoftEventValue = "Microsoft-Event";
 
-        /// <summary>
-        /// Microsoft-WindowsEvent
-        /// Serialized Name: KnownWindowsEventLogDataSourceStreams.Microsoft-WindowsEvent
-        /// </summary>
+        /// <summary> Microsoft-WindowsEvent. </summary>
         public static WindowsEventLogDataSourceStream MicrosoftWindowsEvent { get; } = new WindowsEventLogDataSourceStream(MicrosoftWindowsEventValue);
-        /// <summary>
-        /// Microsoft-Event
-        /// Serialized Name: KnownWindowsEventLogDataSourceStreams.Microsoft-Event
-        /// </summary>
+        /// <summary> Microsoft-Event. </summary>
         public static WindowsEventLogDataSourceStream MicrosoftEvent { get; } = new WindowsEventLogDataSourceStream(MicrosoftEventValue);
         /// <summary> Determines if two <see cref="WindowsEventLogDataSourceStream"/> values are the same. </summary>
         public static bool operator ==(WindowsEventLogDataSourceStream left, WindowsEventLogDataSourceStream right) => left.Equals(right);

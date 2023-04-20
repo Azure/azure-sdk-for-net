@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// the criteria operator.
-    /// Serialized Name: Operator
-    /// </summary>
+    /// <summary> the criteria operator. </summary>
     public readonly partial struct MetricCriteriaOperator : IEquatable<MetricCriteriaOperator>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string LessThanValue = "LessThan";
         private const string LessThanOrEqualValue = "LessThanOrEqual";
 
-        /// <summary>
-        /// Equals
-        /// Serialized Name: Operator.Equals
-        /// </summary>
+        /// <summary> Equals. </summary>
         public static MetricCriteriaOperator EqualsValue { get; } = new MetricCriteriaOperator(EqualsValueValue);
-        /// <summary>
-        /// GreaterThan
-        /// Serialized Name: Operator.GreaterThan
-        /// </summary>
+        /// <summary> GreaterThan. </summary>
         public static MetricCriteriaOperator GreaterThan { get; } = new MetricCriteriaOperator(GreaterThanValue);
-        /// <summary>
-        /// GreaterThanOrEqual
-        /// Serialized Name: Operator.GreaterThanOrEqual
-        /// </summary>
+        /// <summary> GreaterThanOrEqual. </summary>
         public static MetricCriteriaOperator GreaterThanOrEqual { get; } = new MetricCriteriaOperator(GreaterThanOrEqualValue);
-        /// <summary>
-        /// LessThan
-        /// Serialized Name: Operator.LessThan
-        /// </summary>
+        /// <summary> LessThan. </summary>
         public static MetricCriteriaOperator LessThan { get; } = new MetricCriteriaOperator(LessThanValue);
-        /// <summary>
-        /// LessThanOrEqual
-        /// Serialized Name: Operator.LessThanOrEqual
-        /// </summary>
+        /// <summary> LessThanOrEqual. </summary>
         public static MetricCriteriaOperator LessThanOrEqual { get; } = new MetricCriteriaOperator(LessThanOrEqualValue);
         /// <summary> Determines if two <see cref="MetricCriteriaOperator"/> values are the same. </summary>
         public static bool operator ==(MetricCriteriaOperator left, MetricCriteriaOperator right) => left.Equals(right);

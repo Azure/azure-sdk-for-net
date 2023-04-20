@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<KnownPrometheusForwarderDataSourceStream>> streams = default;
+            Optional<IList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>> streams = default;
             Optional<IDictionary<string, string>> labelIncludeFilter = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<KnownPrometheusForwarderDataSourceStream> array = new List<KnownPrometheusForwarderDataSourceStream>();
+                    List<DataCollectionRuleKnownPrometheusForwarderDataSourceStream> array = new List<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new KnownPrometheusForwarderDataSourceStream(item.GetString()));
+                        array.Add(new DataCollectionRuleKnownPrometheusForwarderDataSourceStream(item.GetString()));
                     }
                     streams = array;
                     continue;

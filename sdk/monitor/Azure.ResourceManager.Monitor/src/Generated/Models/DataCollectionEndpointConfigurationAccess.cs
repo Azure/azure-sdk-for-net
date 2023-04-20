@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The endpoint used by clients to access their configuration.
-    /// Serialized Name: DataCollectionEndpointConfigurationAccess
-    /// </summary>
+    /// <summary> The endpoint used by clients to access their configuration. </summary>
     internal partial class DataCollectionEndpointConfigurationAccess : ConfigurationAccessEndpointSpec
     {
         /// <summary> Initializes a new instance of DataCollectionEndpointConfigurationAccess. </summary>
@@ -19,10 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataCollectionEndpointConfigurationAccess. </summary>
-        /// <param name="endpoint">
-        /// The endpoint. This property is READ-ONLY.
-        /// Serialized Name: ConfigurationAccessEndpointSpec.endpoint
-        /// </param>
+        /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
         internal DataCollectionEndpointConfigurationAccess(string endpoint) : base(endpoint)
         {
         }

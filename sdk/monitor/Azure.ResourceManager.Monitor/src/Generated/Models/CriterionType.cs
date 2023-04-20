@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Specifies the type of threshold criteria
-    /// Serialized Name: CriterionType
-    /// </summary>
+    /// <summary> Specifies the type of threshold criteria. </summary>
     internal readonly partial struct CriterionType : IEquatable<CriterionType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string StaticThresholdCriterionValue = "StaticThresholdCriterion";
         private const string DynamicThresholdCriterionValue = "DynamicThresholdCriterion";
 
-        /// <summary>
-        /// StaticThresholdCriterion
-        /// Serialized Name: CriterionType.StaticThresholdCriterion
-        /// </summary>
+        /// <summary> StaticThresholdCriterion. </summary>
         public static CriterionType StaticThresholdCriterion { get; } = new CriterionType(StaticThresholdCriterionValue);
-        /// <summary>
-        /// DynamicThresholdCriterion
-        /// Serialized Name: CriterionType.DynamicThresholdCriterion
-        /// </summary>
+        /// <summary> DynamicThresholdCriterion. </summary>
         public static CriterionType DynamicThresholdCriterion { get; } = new CriterionType(DynamicThresholdCriterionValue);
         /// <summary> Determines if two <see cref="CriterionType"/> values are the same. </summary>
         public static bool operator ==(CriterionType left, CriterionType right) => left.Equals(right);

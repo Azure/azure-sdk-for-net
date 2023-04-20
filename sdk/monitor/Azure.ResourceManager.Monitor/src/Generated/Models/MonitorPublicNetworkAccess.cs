@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The configuration to set whether network access from public internet to the endpoints are allowed.
-    /// Serialized Name: KnownPublicNetworkAccessOptions
-    /// </summary>
+    /// <summary> The configuration to set whether network access from public internet to the endpoints are allowed. </summary>
     public readonly partial struct MonitorPublicNetworkAccess : IEquatable<MonitorPublicNetworkAccess>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string DisabledValue = "Disabled";
         private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: KnownPublicNetworkAccessOptions.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static MonitorPublicNetworkAccess Enabled { get; } = new MonitorPublicNetworkAccess(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: KnownPublicNetworkAccessOptions.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static MonitorPublicNetworkAccess Disabled { get; } = new MonitorPublicNetworkAccess(DisabledValue);
-        /// <summary>
-        /// SecuredByPerimeter
-        /// Serialized Name: KnownPublicNetworkAccessOptions.SecuredByPerimeter
-        /// </summary>
+        /// <summary> SecuredByPerimeter. </summary>
         public static MonitorPublicNetworkAccess SecuredByPerimeter { get; } = new MonitorPublicNetworkAccess(SecuredByPerimeterValue);
         /// <summary> Determines if two <see cref="MonitorPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(MonitorPublicNetworkAccess left, MonitorPublicNetworkAccess right) => left.Equals(right);

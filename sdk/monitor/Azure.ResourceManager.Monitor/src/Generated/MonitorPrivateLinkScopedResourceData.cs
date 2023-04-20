@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing the MonitorPrivateLinkScopedResource data model.
     /// A private link scoped resource
-    /// Serialized Name: ScopedResource
     /// </summary>
     public partial class MonitorPrivateLinkScopedResourceData : ResourceData
     {
@@ -27,29 +26,17 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="linkedResourceId">
-        /// The resource id of the scoped Azure monitor resource.
-        /// Serialized Name: ScopedResource.properties.linkedResourceId
-        /// </param>
-        /// <param name="provisioningState">
-        /// State of the private endpoint connection.
-        /// Serialized Name: ScopedResource.properties.provisioningState
-        /// </param>
+        /// <param name="linkedResourceId"> The resource id of the scoped Azure monitor resource. </param>
+        /// <param name="provisioningState"> State of the private endpoint connection. </param>
         internal MonitorPrivateLinkScopedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier linkedResourceId, string provisioningState) : base(id, name, resourceType, systemData)
         {
             LinkedResourceId = linkedResourceId;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary>
-        /// The resource id of the scoped Azure monitor resource.
-        /// Serialized Name: ScopedResource.properties.linkedResourceId
-        /// </summary>
+        /// <summary> The resource id of the scoped Azure monitor resource. </summary>
         public ResourceIdentifier LinkedResourceId { get; set; }
-        /// <summary>
-        /// State of the private endpoint connection.
-        /// Serialized Name: ScopedResource.properties.provisioningState
-        /// </summary>
+        /// <summary> State of the private endpoint connection. </summary>
         public string ProvisioningState { get; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// the authorization used by the user who has performed the operation that led to this event. This captures the RBAC properties of the event. These usually include the &apos;action&apos;, &apos;role&apos; and the &apos;scope&apos;
-    /// Serialized Name: SenderAuthorization
-    /// </summary>
+    /// <summary> the authorization used by the user who has performed the operation that led to this event. This captures the RBAC properties of the event. These usually include the &apos;action&apos;, &apos;role&apos; and the &apos;scope&apos;. </summary>
     public partial class SenderAuthorization
     {
         /// <summary> Initializes a new instance of SenderAuthorization. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of SenderAuthorization. </summary>
-        /// <param name="action">
-        /// the permissible actions. For instance: microsoft.support/supporttickets/write
-        /// Serialized Name: SenderAuthorization.action
-        /// </param>
-        /// <param name="role">
-        /// the role of the user. For instance: Subscription Admin
-        /// Serialized Name: SenderAuthorization.role
-        /// </param>
-        /// <param name="scope">
-        /// the scope.
-        /// Serialized Name: SenderAuthorization.scope
-        /// </param>
+        /// <param name="action"> the permissible actions. For instance: microsoft.support/supporttickets/write. </param>
+        /// <param name="role"> the role of the user. For instance: Subscription Admin. </param>
+        /// <param name="scope"> the scope. </param>
         internal SenderAuthorization(string action, string role, string scope)
         {
             Action = action;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Scope = scope;
         }
 
-        /// <summary>
-        /// the permissible actions. For instance: microsoft.support/supporttickets/write
-        /// Serialized Name: SenderAuthorization.action
-        /// </summary>
+        /// <summary> the permissible actions. For instance: microsoft.support/supporttickets/write. </summary>
         public string Action { get; }
-        /// <summary>
-        /// the role of the user. For instance: Subscription Admin
-        /// Serialized Name: SenderAuthorization.role
-        /// </summary>
+        /// <summary> the role of the user. For instance: Subscription Admin. </summary>
         public string Role { get; }
-        /// <summary>
-        /// the scope.
-        /// Serialized Name: SenderAuthorization.scope
-        /// </summary>
+        /// <summary> the scope. </summary>
         public string Scope { get; }
     }
 }

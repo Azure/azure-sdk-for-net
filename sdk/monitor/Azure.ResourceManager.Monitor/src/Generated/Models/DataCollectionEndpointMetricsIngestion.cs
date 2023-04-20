@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The endpoint used by clients to ingest metrics.
-    /// Serialized Name: DataCollectionEndpointMetricsIngestion
-    /// </summary>
+    /// <summary> The endpoint used by clients to ingest metrics. </summary>
     internal partial class DataCollectionEndpointMetricsIngestion : MetricsIngestionEndpointSpec
     {
         /// <summary> Initializes a new instance of DataCollectionEndpointMetricsIngestion. </summary>
@@ -19,10 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataCollectionEndpointMetricsIngestion. </summary>
-        /// <param name="endpoint">
-        /// The endpoint. This property is READ-ONLY.
-        /// Serialized Name: MetricsIngestionEndpointSpec.endpoint
-        /// </param>
+        /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
         internal DataCollectionEndpointMetricsIngestion(string endpoint) : base(endpoint)
         {
         }

@@ -13,17 +13,11 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Represents a collection of log profiles.
-    /// Serialized Name: LogProfileCollection
-    /// </summary>
+    /// <summary> Represents a collection of log profiles. </summary>
     internal partial class LogProfileCollection
     {
         /// <summary> Initializes a new instance of LogProfileCollection. </summary>
-        /// <param name="value">
-        /// the values of the log profiles.
-        /// Serialized Name: LogProfileCollection.value
-        /// </param>
+        /// <param name="value"> the values of the log profiles. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LogProfileCollection(IEnumerable<LogProfileData> value)
         {
@@ -33,19 +27,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of LogProfileCollection. </summary>
-        /// <param name="value">
-        /// the values of the log profiles.
-        /// Serialized Name: LogProfileCollection.value
-        /// </param>
+        /// <param name="value"> the values of the log profiles. </param>
         internal LogProfileCollection(IReadOnlyList<LogProfileData> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// the values of the log profiles.
-        /// Serialized Name: LogProfileCollection.value
-        /// </summary>
+        /// <summary> the values of the log profiles. </summary>
         public IReadOnlyList<LogProfileData> Value { get; }
     }
 }

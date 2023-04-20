@@ -11,10 +11,7 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// A list of Activity Log Alert rules.
-    /// Serialized Name: AlertRuleList
-    /// </summary>
+    /// <summary> A list of Activity Log Alert rules. </summary>
     internal partial class AlertRuleList
     {
         /// <summary> Initializes a new instance of AlertRuleList. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of AlertRuleList. </summary>
-        /// <param name="value">
-        /// The list of Activity Log Alert rules.
-        /// Serialized Name: AlertRuleList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Provides the link to retrieve the next set of elements.
-        /// Serialized Name: AlertRuleList.nextLink
-        /// </param>
+        /// <param name="value"> The list of Activity Log Alert rules. </param>
+        /// <param name="nextLink"> Provides the link to retrieve the next set of elements. </param>
         internal AlertRuleList(IReadOnlyList<ActivityLogAlertData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of Activity Log Alert rules.
-        /// Serialized Name: AlertRuleList.value
-        /// </summary>
+        /// <summary> The list of Activity Log Alert rules. </summary>
         public IReadOnlyList<ActivityLogAlertData> Value { get; }
-        /// <summary>
-        /// Provides the link to retrieve the next set of elements.
-        /// Serialized Name: AlertRuleList.nextLink
-        /// </summary>
+        /// <summary> Provides the link to retrieve the next set of elements. </summary>
         public string NextLink { get; }
     }
 }

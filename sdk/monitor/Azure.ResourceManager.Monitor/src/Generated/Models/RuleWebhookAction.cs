@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Specifies the action to post to service when the rule condition is evaluated. The discriminator is always RuleWebhookAction in this case.
-    /// Serialized Name: RuleWebhookAction
-    /// </summary>
+    /// <summary> Specifies the action to post to service when the rule condition is evaluated. The discriminator is always RuleWebhookAction in this case. </summary>
     public partial class RuleWebhookAction : AlertRuleAction
     {
         /// <summary> Initializes a new instance of RuleWebhookAction. </summary>
@@ -25,18 +22,9 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of RuleWebhookAction. </summary>
-        /// <param name="odataType">
-        /// specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction.
-        /// Serialized Name: RuleAction.odata.type
-        /// </param>
-        /// <param name="serviceUri">
-        /// the service uri to Post the notification when the alert activates or resolves.
-        /// Serialized Name: RuleWebhookAction.serviceUri
-        /// </param>
-        /// <param name="properties">
-        /// the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload.
-        /// Serialized Name: RuleWebhookAction.properties
-        /// </param>
+        /// <param name="odataType"> specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction. </param>
+        /// <param name="serviceUri"> the service uri to Post the notification when the alert activates or resolves. </param>
+        /// <param name="properties"> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </param>
         internal RuleWebhookAction(string odataType, Uri serviceUri, IDictionary<string, string> properties) : base(odataType)
         {
             ServiceUri = serviceUri;
@@ -44,15 +32,9 @@ namespace Azure.ResourceManager.Monitor.Models
             OdataType = odataType ?? "Microsoft.Azure.Management.Insights.Models.RuleWebhookAction";
         }
 
-        /// <summary>
-        /// the service uri to Post the notification when the alert activates or resolves.
-        /// Serialized Name: RuleWebhookAction.serviceUri
-        /// </summary>
+        /// <summary> the service uri to Post the notification when the alert activates or resolves. </summary>
         public Uri ServiceUri { get; set; }
-        /// <summary>
-        /// the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload.
-        /// Serialized Name: RuleWebhookAction.properties
-        /// </summary>
+        /// <summary> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </summary>
         public IDictionary<string, string> Properties { get; }
     }
 }

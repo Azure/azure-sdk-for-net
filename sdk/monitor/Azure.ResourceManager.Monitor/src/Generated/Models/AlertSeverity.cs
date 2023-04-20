@@ -11,10 +11,7 @@ using System.Globalization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert.
-    /// Serialized Name: AlertSeverity
-    /// </summary>
+    /// <summary> Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert. </summary>
     public readonly partial struct AlertSeverity : IEquatable<AlertSeverity>
     {
         private readonly long _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.Monitor.Models
         private const long ThreeValue = 3L;
         private const long FourValue = 4L;
 
-        /// <summary>
-        /// 0
-        /// Serialized Name: AlertSeverity.0
-        /// </summary>
+        /// <summary> 0. </summary>
         public static AlertSeverity Zero { get; } = new AlertSeverity(ZeroValue);
-        /// <summary>
-        /// 1
-        /// Serialized Name: AlertSeverity.1
-        /// </summary>
+        /// <summary> 1. </summary>
         public static AlertSeverity One { get; } = new AlertSeverity(OneValue);
-        /// <summary>
-        /// 2
-        /// Serialized Name: AlertSeverity.2
-        /// </summary>
+        /// <summary> 2. </summary>
         public static AlertSeverity Two { get; } = new AlertSeverity(TwoValue);
-        /// <summary>
-        /// 3
-        /// Serialized Name: AlertSeverity.3
-        /// </summary>
+        /// <summary> 3. </summary>
         public static AlertSeverity Three { get; } = new AlertSeverity(ThreeValue);
-        /// <summary>
-        /// 4
-        /// Serialized Name: AlertSeverity.4
-        /// </summary>
+        /// <summary> 4. </summary>
         public static AlertSeverity Four { get; } = new AlertSeverity(FourValue);
 
         internal long ToSerialInt64() => _value;

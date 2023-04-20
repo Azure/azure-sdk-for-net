@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary>
     /// An Activity Log Alert rule condition that is met by comparing the field and value of an Activity Log event.
     /// This condition must contain &apos;field&apos; and either &apos;equals&apos; or &apos;containsAny&apos;.
-    /// Serialized Name: AlertRuleLeafCondition
     /// </summary>
     public partial class AlertRuleLeafCondition
     {
@@ -27,16 +26,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="field">
         /// The name of the Activity Log event&apos;s field that this condition will examine.
         /// The possible values for this field are (case-insensitive): &apos;resourceId&apos;, &apos;category&apos;, &apos;caller&apos;, &apos;level&apos;, &apos;operationName&apos;, &apos;resourceGroup&apos;, &apos;resourceProvider&apos;, &apos;status&apos;, &apos;subStatus&apos;, &apos;resourceType&apos;, or anything beginning with &apos;properties&apos;.
-        /// Serialized Name: AlertRuleLeafCondition.field
         /// </param>
-        /// <param name="equalsValue">
-        /// The value of the event&apos;s field will be compared to this value (case-insensitive) to determine if the condition is met.
-        /// Serialized Name: AlertRuleLeafCondition.equals
-        /// </param>
-        /// <param name="containsAny">
-        /// The value of the event&apos;s field will be compared to the values in this array (case-insensitive) to determine if the condition is met.
-        /// Serialized Name: AlertRuleLeafCondition.containsAny
-        /// </param>
+        /// <param name="equalsValue"> The value of the event&apos;s field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
+        /// <param name="containsAny"> The value of the event&apos;s field will be compared to the values in this array (case-insensitive) to determine if the condition is met. </param>
         internal AlertRuleLeafCondition(string field, string equalsValue, IList<string> containsAny)
         {
             Field = field;
@@ -47,18 +39,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary>
         /// The name of the Activity Log event&apos;s field that this condition will examine.
         /// The possible values for this field are (case-insensitive): &apos;resourceId&apos;, &apos;category&apos;, &apos;caller&apos;, &apos;level&apos;, &apos;operationName&apos;, &apos;resourceGroup&apos;, &apos;resourceProvider&apos;, &apos;status&apos;, &apos;subStatus&apos;, &apos;resourceType&apos;, or anything beginning with &apos;properties&apos;.
-        /// Serialized Name: AlertRuleLeafCondition.field
         /// </summary>
         public string Field { get; set; }
-        /// <summary>
-        /// The value of the event&apos;s field will be compared to this value (case-insensitive) to determine if the condition is met.
-        /// Serialized Name: AlertRuleLeafCondition.equals
-        /// </summary>
+        /// <summary> The value of the event&apos;s field will be compared to this value (case-insensitive) to determine if the condition is met. </summary>
         public string EqualsValue { get; set; }
-        /// <summary>
-        /// The value of the event&apos;s field will be compared to the values in this array (case-insensitive) to determine if the condition is met.
-        /// Serialized Name: AlertRuleLeafCondition.containsAny
-        /// </summary>
+        /// <summary> The value of the event&apos;s field will be compared to the values in this array (case-insensitive) to determine if the condition is met. </summary>
         public IList<string> ContainsAny { get; }
     }
 }

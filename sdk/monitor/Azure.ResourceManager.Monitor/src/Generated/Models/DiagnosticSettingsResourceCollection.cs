@@ -11,10 +11,7 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Represents a collection of alert rule resources.
-    /// Serialized Name: DiagnosticSettingsResourceCollection
-    /// </summary>
+    /// <summary> Represents a collection of alert rule resources. </summary>
     internal partial class DiagnosticSettingsResourceCollection
     {
         /// <summary> Initializes a new instance of DiagnosticSettingsResourceCollection. </summary>
@@ -24,19 +21,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DiagnosticSettingsResourceCollection. </summary>
-        /// <param name="value">
-        /// The collection of diagnostic settings resources;.
-        /// Serialized Name: DiagnosticSettingsResourceCollection.value
-        /// </param>
+        /// <param name="value"> The collection of diagnostic settings resources;. </param>
         internal DiagnosticSettingsResourceCollection(IReadOnlyList<DiagnosticSettingData> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// The collection of diagnostic settings resources;.
-        /// Serialized Name: DiagnosticSettingsResourceCollection.value
-        /// </summary>
+        /// <summary> The collection of diagnostic settings resources;. </summary>
         public IReadOnlyList<DiagnosticSettingData> Value { get; }
     }
 }

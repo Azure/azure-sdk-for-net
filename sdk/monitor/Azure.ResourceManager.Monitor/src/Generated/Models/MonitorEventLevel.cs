@@ -7,36 +7,18 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// the event level
-    /// Serialized Name: EventLevel
-    /// </summary>
+    /// <summary> the event level. </summary>
     public enum MonitorEventLevel
     {
-        /// <summary>
-        /// Critical
-        /// Serialized Name: EventLevel.Critical
-        /// </summary>
+        /// <summary> Critical. </summary>
         Critical,
-        /// <summary>
-        /// Error
-        /// Serialized Name: EventLevel.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         Error,
-        /// <summary>
-        /// Warning
-        /// Serialized Name: EventLevel.Warning
-        /// </summary>
+        /// <summary> Warning. </summary>
         Warning,
-        /// <summary>
-        /// Informational
-        /// Serialized Name: EventLevel.Informational
-        /// </summary>
+        /// <summary> Informational. </summary>
         Informational,
-        /// <summary>
-        /// Verbose
-        /// Serialized Name: EventLevel.Verbose
-        /// </summary>
+        /// <summary> Verbose. </summary>
         Verbose
     }
 }

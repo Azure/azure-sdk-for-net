@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The unit of the metric.
-    /// Serialized Name: MetricUnit
-    /// </summary>
+    /// <summary> The unit of the metric. </summary>
     public readonly partial struct MonitorMetricUnit : IEquatable<MonitorMetricUnit>
     {
         private readonly string _value;
@@ -39,70 +36,31 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string NanoCoresValue = "NanoCores";
         private const string BitsPerSecondValue = "BitsPerSecond";
 
-        /// <summary>
-        /// Count
-        /// Serialized Name: MetricUnit.Count
-        /// </summary>
+        /// <summary> Count. </summary>
         public static MonitorMetricUnit Count { get; } = new MonitorMetricUnit(CountValue);
-        /// <summary>
-        /// Bytes
-        /// Serialized Name: MetricUnit.Bytes
-        /// </summary>
+        /// <summary> Bytes. </summary>
         public static MonitorMetricUnit Bytes { get; } = new MonitorMetricUnit(BytesValue);
-        /// <summary>
-        /// Seconds
-        /// Serialized Name: MetricUnit.Seconds
-        /// </summary>
+        /// <summary> Seconds. </summary>
         public static MonitorMetricUnit Seconds { get; } = new MonitorMetricUnit(SecondsValue);
-        /// <summary>
-        /// CountPerSecond
-        /// Serialized Name: MetricUnit.CountPerSecond
-        /// </summary>
+        /// <summary> CountPerSecond. </summary>
         public static MonitorMetricUnit CountPerSecond { get; } = new MonitorMetricUnit(CountPerSecondValue);
-        /// <summary>
-        /// BytesPerSecond
-        /// Serialized Name: MetricUnit.BytesPerSecond
-        /// </summary>
+        /// <summary> BytesPerSecond. </summary>
         public static MonitorMetricUnit BytesPerSecond { get; } = new MonitorMetricUnit(BytesPerSecondValue);
-        /// <summary>
-        /// Percent
-        /// Serialized Name: MetricUnit.Percent
-        /// </summary>
+        /// <summary> Percent. </summary>
         public static MonitorMetricUnit Percent { get; } = new MonitorMetricUnit(PercentValue);
-        /// <summary>
-        /// MilliSeconds
-        /// Serialized Name: MetricUnit.MilliSeconds
-        /// </summary>
+        /// <summary> MilliSeconds. </summary>
         public static MonitorMetricUnit MilliSeconds { get; } = new MonitorMetricUnit(MilliSecondsValue);
-        /// <summary>
-        /// ByteSeconds
-        /// Serialized Name: MetricUnit.ByteSeconds
-        /// </summary>
+        /// <summary> ByteSeconds. </summary>
         public static MonitorMetricUnit ByteSeconds { get; } = new MonitorMetricUnit(ByteSecondsValue);
-        /// <summary>
-        /// Unspecified
-        /// Serialized Name: MetricUnit.Unspecified
-        /// </summary>
+        /// <summary> Unspecified. </summary>
         public static MonitorMetricUnit Unspecified { get; } = new MonitorMetricUnit(UnspecifiedValue);
-        /// <summary>
-        /// Cores
-        /// Serialized Name: MetricUnit.Cores
-        /// </summary>
+        /// <summary> Cores. </summary>
         public static MonitorMetricUnit Cores { get; } = new MonitorMetricUnit(CoresValue);
-        /// <summary>
-        /// MilliCores
-        /// Serialized Name: MetricUnit.MilliCores
-        /// </summary>
+        /// <summary> MilliCores. </summary>
         public static MonitorMetricUnit MilliCores { get; } = new MonitorMetricUnit(MilliCoresValue);
-        /// <summary>
-        /// NanoCores
-        /// Serialized Name: MetricUnit.NanoCores
-        /// </summary>
+        /// <summary> NanoCores. </summary>
         public static MonitorMetricUnit NanoCores { get; } = new MonitorMetricUnit(NanoCoresValue);
-        /// <summary>
-        /// BitsPerSecond
-        /// Serialized Name: MetricUnit.BitsPerSecond
-        /// </summary>
+        /// <summary> BitsPerSecond. </summary>
         public static MonitorMetricUnit BitsPerSecond { get; } = new MonitorMetricUnit(BitsPerSecondValue);
         /// <summary> Determines if two <see cref="MonitorMetricUnit"/> values are the same. </summary>
         public static bool operator ==(MonitorMetricUnit left, MonitorMetricUnit right) => left.Equals(right);

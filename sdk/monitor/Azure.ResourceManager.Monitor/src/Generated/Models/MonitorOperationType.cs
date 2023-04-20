@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// the operation associated with the notification and its value must be &quot;scale&quot;
-    /// Serialized Name: OperationType
-    /// </summary>
+    /// <summary> the operation associated with the notification and its value must be &quot;scale&quot;. </summary>
     public readonly partial struct MonitorOperationType : IEquatable<MonitorOperationType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         private const string ScaleValue = "Scale";
 
-        /// <summary>
-        /// Scale
-        /// Serialized Name: OperationType.Scale
-        /// </summary>
+        /// <summary> Scale. </summary>
         public static MonitorOperationType Scale { get; } = new MonitorOperationType(ScaleValue);
         /// <summary> Determines if two <see cref="MonitorOperationType"/> values are the same. </summary>
         public static bool operator ==(MonitorOperationType left, MonitorOperationType right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The ExtensionDataSourceStream.
-    /// Serialized Name: KnownExtensionDataSourceStreams
-    /// </summary>
+    /// <summary> The ExtensionDataSourceStream. </summary>
     public readonly partial struct ExtensionDataSourceStream : IEquatable<ExtensionDataSourceStream>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string MicrosoftSyslogValue = "Microsoft-Syslog";
         private const string MicrosoftWindowsEventValue = "Microsoft-WindowsEvent";
 
-        /// <summary>
-        /// Microsoft-Event
-        /// Serialized Name: KnownExtensionDataSourceStreams.Microsoft-Event
-        /// </summary>
+        /// <summary> Microsoft-Event. </summary>
         public static ExtensionDataSourceStream MicrosoftEvent { get; } = new ExtensionDataSourceStream(MicrosoftEventValue);
-        /// <summary>
-        /// Microsoft-InsightsMetrics
-        /// Serialized Name: KnownExtensionDataSourceStreams.Microsoft-InsightsMetrics
-        /// </summary>
+        /// <summary> Microsoft-InsightsMetrics. </summary>
         public static ExtensionDataSourceStream MicrosoftInsightsMetrics { get; } = new ExtensionDataSourceStream(MicrosoftInsightsMetricsValue);
-        /// <summary>
-        /// Microsoft-Perf
-        /// Serialized Name: KnownExtensionDataSourceStreams.Microsoft-Perf
-        /// </summary>
+        /// <summary> Microsoft-Perf. </summary>
         public static ExtensionDataSourceStream MicrosoftPerf { get; } = new ExtensionDataSourceStream(MicrosoftPerfValue);
-        /// <summary>
-        /// Microsoft-Syslog
-        /// Serialized Name: KnownExtensionDataSourceStreams.Microsoft-Syslog
-        /// </summary>
+        /// <summary> Microsoft-Syslog. </summary>
         public static ExtensionDataSourceStream MicrosoftSyslog { get; } = new ExtensionDataSourceStream(MicrosoftSyslogValue);
-        /// <summary>
-        /// Microsoft-WindowsEvent
-        /// Serialized Name: KnownExtensionDataSourceStreams.Microsoft-WindowsEvent
-        /// </summary>
+        /// <summary> Microsoft-WindowsEvent. </summary>
         public static ExtensionDataSourceStream MicrosoftWindowsEvent { get; } = new ExtensionDataSourceStream(MicrosoftWindowsEventValue);
         /// <summary> Determines if two <see cref="ExtensionDataSourceStream"/> values are the same. </summary>
         public static bool operator ==(ExtensionDataSourceStream left, ExtensionDataSourceStream right) => left.Equals(right);

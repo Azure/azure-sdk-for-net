@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The DataCollectionRuleEventHubDestination.
-    /// Serialized Name: EventHubDestination
-    /// </summary>
+    /// <summary> The DataCollectionRuleEventHubDestination. </summary>
     public partial class DataCollectionRuleEventHubDestination
     {
         /// <summary> Initializes a new instance of DataCollectionRuleEventHubDestination. </summary>
@@ -21,14 +18,10 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleEventHubDestination. </summary>
-        /// <param name="eventHubResourceId">
-        /// The resource ID of the event hub.
-        /// Serialized Name: EventHubDestination.eventHubResourceId
-        /// </param>
+        /// <param name="eventHubResourceId"> The resource ID of the event hub. </param>
         /// <param name="name">
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// Serialized Name: EventHubDestination.name
         /// </param>
         internal DataCollectionRuleEventHubDestination(ResourceIdentifier eventHubResourceId, string name)
         {
@@ -36,15 +29,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
         }
 
-        /// <summary>
-        /// The resource ID of the event hub.
-        /// Serialized Name: EventHubDestination.eventHubResourceId
-        /// </summary>
+        /// <summary> The resource ID of the event hub. </summary>
         public ResourceIdentifier EventHubResourceId { get; set; }
         /// <summary>
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// Serialized Name: EventHubDestination.name
         /// </summary>
         public string Name { get; set; }
     }

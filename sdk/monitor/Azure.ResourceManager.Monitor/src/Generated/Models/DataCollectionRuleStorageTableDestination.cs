@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The DataCollectionRuleStorageTableDestination.
-    /// Serialized Name: StorageTableDestination
-    /// </summary>
+    /// <summary> The DataCollectionRuleStorageTableDestination. </summary>
     public partial class DataCollectionRuleStorageTableDestination
     {
         /// <summary> Initializes a new instance of DataCollectionRuleStorageTableDestination. </summary>
@@ -21,18 +18,11 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleStorageTableDestination. </summary>
-        /// <param name="tableName">
-        /// The name of the Storage Table.
-        /// Serialized Name: StorageTableDestination.tableName
-        /// </param>
-        /// <param name="storageAccountResourceId">
-        /// The resource ID of the storage account.
-        /// Serialized Name: StorageTableDestination.storageAccountResourceId
-        /// </param>
+        /// <param name="tableName"> The name of the Storage Table. </param>
+        /// <param name="storageAccountResourceId"> The resource ID of the storage account. </param>
         /// <param name="name">
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// Serialized Name: StorageTableDestination.name
         /// </param>
         internal DataCollectionRuleStorageTableDestination(string tableName, ResourceIdentifier storageAccountResourceId, string name)
         {
@@ -41,20 +31,13 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
         }
 
-        /// <summary>
-        /// The name of the Storage Table.
-        /// Serialized Name: StorageTableDestination.tableName
-        /// </summary>
+        /// <summary> The name of the Storage Table. </summary>
         public string TableName { get; set; }
-        /// <summary>
-        /// The resource ID of the storage account.
-        /// Serialized Name: StorageTableDestination.storageAccountResourceId
-        /// </summary>
+        /// <summary> The resource ID of the storage account. </summary>
         public ResourceIdentifier StorageAccountResourceId { get; set; }
         /// <summary>
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// Serialized Name: StorageTableDestination.name
         /// </summary>
         public string Name { get; set; }
     }

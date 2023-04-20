@@ -10,25 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Information about a Log Analytics Workspace.
-    /// Serialized Name: WorkspaceInfo
-    /// </summary>
+    /// <summary> Information about a Log Analytics Workspace. </summary>
     public partial class DataContainerWorkspace
     {
         /// <summary> Initializes a new instance of DataContainerWorkspace. </summary>
-        /// <param name="id">
-        /// Azure Resource Manager identifier of the Log Analytics Workspace.
-        /// Serialized Name: WorkspaceInfo.id
-        /// </param>
-        /// <param name="location">
-        /// Location of the Log Analytics workspace.
-        /// Serialized Name: WorkspaceInfo.location
-        /// </param>
-        /// <param name="customerId">
-        /// Log Analytics workspace identifier.
-        /// Serialized Name: WorkspaceInfo.properties.customerId
-        /// </param>
+        /// <param name="id"> Azure Resource Manager identifier of the Log Analytics Workspace. </param>
+        /// <param name="location"> Location of the Log Analytics workspace. </param>
+        /// <param name="customerId"> Log Analytics workspace identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="customerId"/> is null. </exception>
         internal DataContainerWorkspace(ResourceIdentifier id, AzureLocation location, string customerId)
         {
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.Monitor.Models
             CustomerId = customerId;
         }
 
-        /// <summary>
-        /// Azure Resource Manager identifier of the Log Analytics Workspace.
-        /// Serialized Name: WorkspaceInfo.id
-        /// </summary>
+        /// <summary> Azure Resource Manager identifier of the Log Analytics Workspace. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary>
-        /// Location of the Log Analytics workspace.
-        /// Serialized Name: WorkspaceInfo.location
-        /// </summary>
+        /// <summary> Location of the Log Analytics workspace. </summary>
         public AzureLocation Location { get; }
-        /// <summary>
-        /// Log Analytics workspace identifier.
-        /// Serialized Name: WorkspaceInfo.properties.customerId
-        /// </summary>
+        /// <summary> Log Analytics workspace identifier. </summary>
         public string CustomerId { get; }
     }
 }

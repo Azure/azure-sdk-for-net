@@ -10,10 +10,7 @@ using Azure;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The status of operation.
-    /// Serialized Name: OperationStatus
-    /// </summary>
+    /// <summary> The status of operation. </summary>
     public partial class MonitorPrivateLinkScopeOperationStatus
     {
         /// <summary> Initializes a new instance of MonitorPrivateLinkScopeOperationStatus. </summary>
@@ -22,30 +19,12 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorPrivateLinkScopeOperationStatus. </summary>
-        /// <param name="id">
-        /// The operation Id.
-        /// Serialized Name: OperationStatus.id
-        /// </param>
-        /// <param name="name">
-        /// The operation name.
-        /// Serialized Name: OperationStatus.name
-        /// </param>
-        /// <param name="startOn">
-        /// Start time of the job in standard ISO8601 format.
-        /// Serialized Name: OperationStatus.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// End time of the job in standard ISO8601 format.
-        /// Serialized Name: OperationStatus.endTime
-        /// </param>
-        /// <param name="status">
-        /// The status of the operation.
-        /// Serialized Name: OperationStatus.status
-        /// </param>
-        /// <param name="error">
-        /// The error detail of the operation if any.
-        /// Serialized Name: OperationStatus.error
-        /// </param>
+        /// <param name="id"> The operation Id. </param>
+        /// <param name="name"> The operation name. </param>
+        /// <param name="startOn"> Start time of the job in standard ISO8601 format. </param>
+        /// <param name="endOn"> End time of the job in standard ISO8601 format. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="error"> The error detail of the operation if any. </param>
         internal MonitorPrivateLinkScopeOperationStatus(string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, ResponseError error)
         {
             Id = id;
@@ -56,35 +35,17 @@ namespace Azure.ResourceManager.Monitor.Models
             Error = error;
         }
 
-        /// <summary>
-        /// The operation Id.
-        /// Serialized Name: OperationStatus.id
-        /// </summary>
+        /// <summary> The operation Id. </summary>
         public string Id { get; }
-        /// <summary>
-        /// The operation name.
-        /// Serialized Name: OperationStatus.name
-        /// </summary>
+        /// <summary> The operation name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Start time of the job in standard ISO8601 format.
-        /// Serialized Name: OperationStatus.startTime
-        /// </summary>
+        /// <summary> Start time of the job in standard ISO8601 format. </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// End time of the job in standard ISO8601 format.
-        /// Serialized Name: OperationStatus.endTime
-        /// </summary>
+        /// <summary> End time of the job in standard ISO8601 format. </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// The status of the operation.
-        /// Serialized Name: OperationStatus.status
-        /// </summary>
+        /// <summary> The status of the operation. </summary>
         public string Status { get; }
-        /// <summary>
-        /// The error detail of the operation if any.
-        /// Serialized Name: OperationStatus.error
-        /// </summary>
+        /// <summary> The error detail of the operation if any. </summary>
         public ResponseError Error { get; }
     }
 }

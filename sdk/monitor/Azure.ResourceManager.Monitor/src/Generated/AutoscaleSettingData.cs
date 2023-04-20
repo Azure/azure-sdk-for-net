@@ -17,16 +17,12 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing the AutoscaleSetting data model.
     /// The autoscale setting resource.
-    /// Serialized Name: AutoscaleSettingResource
     /// </summary>
     public partial class AutoscaleSettingData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AutoscaleSettingData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="profiles">
-        /// the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified.
-        /// Serialized Name: AutoscaleSettingResource.properties.profiles
-        /// </param>
+        /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profiles"/> is null. </exception>
         public AutoscaleSettingData(AzureLocation location, IEnumerable<AutoscaleProfile> profiles) : base(location)
         {
@@ -43,34 +39,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="profiles">
-        /// the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified.
-        /// Serialized Name: AutoscaleSettingResource.properties.profiles
-        /// </param>
-        /// <param name="notifications">
-        /// the collection of notifications.
-        /// Serialized Name: AutoscaleSettingResource.properties.notifications
-        /// </param>
-        /// <param name="isEnabled">
-        /// the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;false&apos;.
-        /// Serialized Name: AutoscaleSettingResource.properties.enabled
-        /// </param>
-        /// <param name="predictiveAutoscalePolicy">
-        /// the predictive autoscale policy mode.
-        /// Serialized Name: AutoscaleSettingResource.properties.predictiveAutoscalePolicy
-        /// </param>
-        /// <param name="autoscaleSettingName">
-        /// the name of the autoscale setting.
-        /// Serialized Name: AutoscaleSettingResource.properties.name
-        /// </param>
-        /// <param name="targetResourceId">
-        /// the resource identifier of the resource that the autoscale setting should be added to.
-        /// Serialized Name: AutoscaleSettingResource.properties.targetResourceUri
-        /// </param>
-        /// <param name="targetResourceLocation">
-        /// the location of the resource that the autoscale setting should be added to.
-        /// Serialized Name: AutoscaleSettingResource.properties.targetResourceLocation
-        /// </param>
+        /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
+        /// <param name="notifications"> the collection of notifications. </param>
+        /// <param name="isEnabled"> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;false&apos;. </param>
+        /// <param name="predictiveAutoscalePolicy"> the predictive autoscale policy mode. </param>
+        /// <param name="autoscaleSettingName"> the name of the autoscale setting. </param>
+        /// <param name="targetResourceId"> the resource identifier of the resource that the autoscale setting should be added to. </param>
+        /// <param name="targetResourceLocation"> the location of the resource that the autoscale setting should be added to. </param>
         internal AutoscaleSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AutoscaleProfile> profiles, IList<AutoscaleNotification> notifications, bool? isEnabled, PredictiveAutoscalePolicy predictiveAutoscalePolicy, string autoscaleSettingName, ResourceIdentifier targetResourceId, AzureLocation? targetResourceLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             Profiles = profiles;
@@ -82,40 +57,19 @@ namespace Azure.ResourceManager.Monitor
             TargetResourceLocation = targetResourceLocation;
         }
 
-        /// <summary>
-        /// the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified.
-        /// Serialized Name: AutoscaleSettingResource.properties.profiles
-        /// </summary>
+        /// <summary> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </summary>
         public IList<AutoscaleProfile> Profiles { get; }
-        /// <summary>
-        /// the collection of notifications.
-        /// Serialized Name: AutoscaleSettingResource.properties.notifications
-        /// </summary>
+        /// <summary> the collection of notifications. </summary>
         public IList<AutoscaleNotification> Notifications { get; set; }
-        /// <summary>
-        /// the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;false&apos;.
-        /// Serialized Name: AutoscaleSettingResource.properties.enabled
-        /// </summary>
+        /// <summary> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;false&apos;. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// the predictive autoscale policy mode.
-        /// Serialized Name: AutoscaleSettingResource.properties.predictiveAutoscalePolicy
-        /// </summary>
+        /// <summary> the predictive autoscale policy mode. </summary>
         public PredictiveAutoscalePolicy PredictiveAutoscalePolicy { get; set; }
-        /// <summary>
-        /// the name of the autoscale setting.
-        /// Serialized Name: AutoscaleSettingResource.properties.name
-        /// </summary>
+        /// <summary> the name of the autoscale setting. </summary>
         public string AutoscaleSettingName { get; set; }
-        /// <summary>
-        /// the resource identifier of the resource that the autoscale setting should be added to.
-        /// Serialized Name: AutoscaleSettingResource.properties.targetResourceUri
-        /// </summary>
+        /// <summary> the resource identifier of the resource that the autoscale setting should be added to. </summary>
         public ResourceIdentifier TargetResourceId { get; set; }
-        /// <summary>
-        /// the location of the resource that the autoscale setting should be added to.
-        /// Serialized Name: AutoscaleSettingResource.properties.targetResourceLocation
-        /// </summary>
+        /// <summary> the location of the resource that the autoscale setting should be added to. </summary>
         public AzureLocation? TargetResourceLocation { get; set; }
     }
 }

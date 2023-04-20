@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Operator for dimension values
-    /// Serialized Name: DimensionOperator
-    /// </summary>
+    /// <summary> Operator for dimension values. </summary>
     public readonly partial struct MonitorDimensionOperator : IEquatable<MonitorDimensionOperator>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string IncludeValue = "Include";
         private const string ExcludeValue = "Exclude";
 
-        /// <summary>
-        /// Include
-        /// Serialized Name: DimensionOperator.Include
-        /// </summary>
+        /// <summary> Include. </summary>
         public static MonitorDimensionOperator Include { get; } = new MonitorDimensionOperator(IncludeValue);
-        /// <summary>
-        /// Exclude
-        /// Serialized Name: DimensionOperator.Exclude
-        /// </summary>
+        /// <summary> Exclude. </summary>
         public static MonitorDimensionOperator Exclude { get; } = new MonitorDimensionOperator(ExcludeValue);
         /// <summary> Determines if two <see cref="MonitorDimensionOperator"/> values are the same. </summary>
         public static bool operator ==(MonitorDimensionOperator left, MonitorDimensionOperator right) => left.Equals(right);

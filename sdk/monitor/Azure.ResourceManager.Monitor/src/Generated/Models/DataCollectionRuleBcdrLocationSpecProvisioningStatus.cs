@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The resource provisioning state in this location.
-    /// Serialized Name: KnownLocationSpecProvisioningStatus
-    /// </summary>
+    /// <summary> The resource provisioning state in this location. </summary>
     public readonly partial struct DataCollectionRuleBcdrLocationSpecProvisioningStatus : IEquatable<DataCollectionRuleBcdrLocationSpecProvisioningStatus>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Creating
-        /// Serialized Name: KnownLocationSpecProvisioningStatus.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static DataCollectionRuleBcdrLocationSpecProvisioningStatus Creating { get; } = new DataCollectionRuleBcdrLocationSpecProvisioningStatus(CreatingValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: KnownLocationSpecProvisioningStatus.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static DataCollectionRuleBcdrLocationSpecProvisioningStatus Updating { get; } = new DataCollectionRuleBcdrLocationSpecProvisioningStatus(UpdatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: KnownLocationSpecProvisioningStatus.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static DataCollectionRuleBcdrLocationSpecProvisioningStatus Deleting { get; } = new DataCollectionRuleBcdrLocationSpecProvisioningStatus(DeletingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: KnownLocationSpecProvisioningStatus.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static DataCollectionRuleBcdrLocationSpecProvisioningStatus Succeeded { get; } = new DataCollectionRuleBcdrLocationSpecProvisioningStatus(SucceededValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: KnownLocationSpecProvisioningStatus.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static DataCollectionRuleBcdrLocationSpecProvisioningStatus Canceled { get; } = new DataCollectionRuleBcdrLocationSpecProvisioningStatus(CanceledValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: KnownLocationSpecProvisioningStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static DataCollectionRuleBcdrLocationSpecProvisioningStatus Failed { get; } = new DataCollectionRuleBcdrLocationSpecProvisioningStatus(FailedValue);
         /// <summary> Determines if two <see cref="DataCollectionRuleBcdrLocationSpecProvisioningStatus"/> values are the same. </summary>
         public static bool operator ==(DataCollectionRuleBcdrLocationSpecProvisioningStatus left, DataCollectionRuleBcdrLocationSpecProvisioningStatus right) => left.Equals(right);

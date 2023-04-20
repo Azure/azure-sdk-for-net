@@ -7,31 +7,16 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// the type of action that should occur when the scale rule fires.
-    /// Serialized Name: ScaleType
-    /// </summary>
+    /// <summary> the type of action that should occur when the scale rule fires. </summary>
     public enum MonitorScaleType
     {
-        /// <summary>
-        /// ChangeCount
-        /// Serialized Name: ScaleType.ChangeCount
-        /// </summary>
+        /// <summary> ChangeCount. </summary>
         ChangeCount,
-        /// <summary>
-        /// PercentChangeCount
-        /// Serialized Name: ScaleType.PercentChangeCount
-        /// </summary>
+        /// <summary> PercentChangeCount. </summary>
         PercentChangeCount,
-        /// <summary>
-        /// ExactCount
-        /// Serialized Name: ScaleType.ExactCount
-        /// </summary>
+        /// <summary> ExactCount. </summary>
         ExactCount,
-        /// <summary>
-        /// ServiceAllowedNextValue
-        /// Serialized Name: ScaleType.ServiceAllowedNextValue
-        /// </summary>
+        /// <summary> ServiceAllowedNextValue. </summary>
         ServiceAllowedNextValue
     }
 }

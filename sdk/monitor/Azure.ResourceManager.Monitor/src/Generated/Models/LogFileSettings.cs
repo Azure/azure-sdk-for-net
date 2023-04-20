@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Settings for different log file formats
-    /// Serialized Name: LogFileSettings
-    /// </summary>
+    /// <summary> Settings for different log file formats. </summary>
     internal partial class LogFileSettings
     {
         /// <summary> Initializes a new instance of LogFileSettings. </summary>
@@ -19,24 +16,15 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of LogFileSettings. </summary>
-        /// <param name="text">
-        /// Text settings
-        /// Serialized Name: LogFileSettings.text
-        /// </param>
+        /// <param name="text"> Text settings. </param>
         internal LogFileSettings(LogFileSettingsText text)
         {
             Text = text;
         }
 
-        /// <summary>
-        /// Text settings
-        /// Serialized Name: LogFileSettings.text
-        /// </summary>
+        /// <summary> Text settings. </summary>
         internal LogFileSettingsText Text { get; set; }
-        /// <summary>
-        /// One of the supported timestamp formats
-        /// Serialized Name: LogFileTextSettings.recordStartTimestampFormat
-        /// </summary>
+        /// <summary> One of the supported timestamp formats. </summary>
         public LogFileTextSettingsRecordStartTimestampFormat? TextRecordStartTimestampFormat
         {
             get => Text is null ? default(LogFileTextSettingsRecordStartTimestampFormat?) : Text.RecordStartTimestampFormat;

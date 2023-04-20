@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The DataImportSources.
-    /// Serialized Name: DataImportSources
-    /// </summary>
+    /// <summary> The DataImportSources. </summary>
     internal partial class DataImportSources
     {
         /// <summary> Initializes a new instance of DataImportSources. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataImportSources. </summary>
-        /// <param name="eventHub">
-        /// Definition of Event Hub configuration.
-        /// Serialized Name: DataImportSources.eventHub
-        /// </param>
+        /// <param name="eventHub"> Definition of Event Hub configuration. </param>
         internal DataImportSources(DataImportSourcesEventHub eventHub)
         {
             EventHub = eventHub;
         }
 
-        /// <summary>
-        /// Definition of Event Hub configuration.
-        /// Serialized Name: DataImportSources.eventHub
-        /// </summary>
+        /// <summary> Definition of Event Hub configuration. </summary>
         public DataImportSourcesEventHub EventHub { get; set; }
     }
 }

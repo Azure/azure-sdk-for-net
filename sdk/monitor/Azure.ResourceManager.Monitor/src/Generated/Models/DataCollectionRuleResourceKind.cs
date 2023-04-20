@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The kind of the resource.
-    /// Serialized Name: KnownDataCollectionRuleResourceKind
-    /// </summary>
+    /// <summary> The kind of the resource. </summary>
     public readonly partial struct DataCollectionRuleResourceKind : IEquatable<DataCollectionRuleResourceKind>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string LinuxValue = "Linux";
         private const string WindowsValue = "Windows";
 
-        /// <summary>
-        /// Linux
-        /// Serialized Name: KnownDataCollectionRuleResourceKind.Linux
-        /// </summary>
+        /// <summary> Linux. </summary>
         public static DataCollectionRuleResourceKind Linux { get; } = new DataCollectionRuleResourceKind(LinuxValue);
-        /// <summary>
-        /// Windows
-        /// Serialized Name: KnownDataCollectionRuleResourceKind.Windows
-        /// </summary>
+        /// <summary> Windows. </summary>
         public static DataCollectionRuleResourceKind Windows { get; } = new DataCollectionRuleResourceKind(WindowsValue);
         /// <summary> Determines if two <see cref="DataCollectionRuleResourceKind"/> values are the same. </summary>
         public static bool operator ==(DataCollectionRuleResourceKind left, DataCollectionRuleResourceKind right) => left.Equals(right);

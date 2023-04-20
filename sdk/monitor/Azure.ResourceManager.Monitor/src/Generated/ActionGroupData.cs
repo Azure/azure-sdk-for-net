@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing the ActionGroup data model.
     /// An action group resource.
-    /// Serialized Name: ActionGroupResource
     /// </summary>
     public partial class ActionGroupData : TrackedResourceData
     {
@@ -43,58 +42,19 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="groupShortName">
-        /// The short name of the action group. This will be used in SMS messages.
-        /// Serialized Name: ActionGroupResource.properties.groupShortName
-        /// </param>
-        /// <param name="isEnabled">
-        /// Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications.
-        /// Serialized Name: ActionGroupResource.properties.enabled
-        /// </param>
-        /// <param name="emailReceivers">
-        /// The list of email receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.emailReceivers
-        /// </param>
-        /// <param name="smsReceivers">
-        /// The list of SMS receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.smsReceivers
-        /// </param>
-        /// <param name="webhookReceivers">
-        /// The list of webhook receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.webhookReceivers
-        /// </param>
-        /// <param name="itsmReceivers">
-        /// The list of ITSM receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.itsmReceivers
-        /// </param>
-        /// <param name="azureAppPushReceivers">
-        /// The list of AzureAppPush receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.azureAppPushReceivers
-        /// </param>
-        /// <param name="automationRunbookReceivers">
-        /// The list of AutomationRunbook receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.automationRunbookReceivers
-        /// </param>
-        /// <param name="voiceReceivers">
-        /// The list of voice receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.voiceReceivers
-        /// </param>
-        /// <param name="logicAppReceivers">
-        /// The list of logic app receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.logicAppReceivers
-        /// </param>
-        /// <param name="azureFunctionReceivers">
-        /// The list of azure function receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.azureFunctionReceivers
-        /// </param>
-        /// <param name="armRoleReceivers">
-        /// The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported.
-        /// Serialized Name: ActionGroupResource.properties.armRoleReceivers
-        /// </param>
-        /// <param name="eventHubReceivers">
-        /// The list of event hub receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.eventHubReceivers
-        /// </param>
+        /// <param name="groupShortName"> The short name of the action group. This will be used in SMS messages. </param>
+        /// <param name="isEnabled"> Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications. </param>
+        /// <param name="emailReceivers"> The list of email receivers that are part of this action group. </param>
+        /// <param name="smsReceivers"> The list of SMS receivers that are part of this action group. </param>
+        /// <param name="webhookReceivers"> The list of webhook receivers that are part of this action group. </param>
+        /// <param name="itsmReceivers"> The list of ITSM receivers that are part of this action group. </param>
+        /// <param name="azureAppPushReceivers"> The list of AzureAppPush receivers that are part of this action group. </param>
+        /// <param name="automationRunbookReceivers"> The list of AutomationRunbook receivers that are part of this action group. </param>
+        /// <param name="voiceReceivers"> The list of voice receivers that are part of this action group. </param>
+        /// <param name="logicAppReceivers"> The list of logic app receivers that are part of this action group. </param>
+        /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
+        /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
+        /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
         internal ActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupShortName, bool? isEnabled, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<MonitorWebhookReceiver> webhookReceivers, IList<MonitorItsmReceiver> itsmReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IList<MonitorLogicAppReceiver> logicAppReceivers, IList<MonitorAzureFunctionReceiver> azureFunctionReceivers, IList<MonitorArmRoleReceiver> armRoleReceivers, IList<MonitorEventHubReceiver> eventHubReceivers) : base(id, name, resourceType, systemData, tags, location)
         {
             GroupShortName = groupShortName;
@@ -112,70 +72,31 @@ namespace Azure.ResourceManager.Monitor
             EventHubReceivers = eventHubReceivers;
         }
 
-        /// <summary>
-        /// The short name of the action group. This will be used in SMS messages.
-        /// Serialized Name: ActionGroupResource.properties.groupShortName
-        /// </summary>
+        /// <summary> The short name of the action group. This will be used in SMS messages. </summary>
         public string GroupShortName { get; set; }
-        /// <summary>
-        /// Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications.
-        /// Serialized Name: ActionGroupResource.properties.enabled
-        /// </summary>
+        /// <summary> Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// The list of email receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.emailReceivers
-        /// </summary>
+        /// <summary> The list of email receivers that are part of this action group. </summary>
         public IList<MonitorEmailReceiver> EmailReceivers { get; }
-        /// <summary>
-        /// The list of SMS receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.smsReceivers
-        /// </summary>
+        /// <summary> The list of SMS receivers that are part of this action group. </summary>
         public IList<MonitorSmsReceiver> SmsReceivers { get; }
-        /// <summary>
-        /// The list of webhook receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.webhookReceivers
-        /// </summary>
+        /// <summary> The list of webhook receivers that are part of this action group. </summary>
         public IList<MonitorWebhookReceiver> WebhookReceivers { get; }
-        /// <summary>
-        /// The list of ITSM receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.itsmReceivers
-        /// </summary>
+        /// <summary> The list of ITSM receivers that are part of this action group. </summary>
         public IList<MonitorItsmReceiver> ItsmReceivers { get; }
-        /// <summary>
-        /// The list of AzureAppPush receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.azureAppPushReceivers
-        /// </summary>
+        /// <summary> The list of AzureAppPush receivers that are part of this action group. </summary>
         public IList<MonitorAzureAppPushReceiver> AzureAppPushReceivers { get; }
-        /// <summary>
-        /// The list of AutomationRunbook receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.automationRunbookReceivers
-        /// </summary>
+        /// <summary> The list of AutomationRunbook receivers that are part of this action group. </summary>
         public IList<MonitorAutomationRunbookReceiver> AutomationRunbookReceivers { get; }
-        /// <summary>
-        /// The list of voice receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.voiceReceivers
-        /// </summary>
+        /// <summary> The list of voice receivers that are part of this action group. </summary>
         public IList<MonitorVoiceReceiver> VoiceReceivers { get; }
-        /// <summary>
-        /// The list of logic app receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.logicAppReceivers
-        /// </summary>
+        /// <summary> The list of logic app receivers that are part of this action group. </summary>
         public IList<MonitorLogicAppReceiver> LogicAppReceivers { get; }
-        /// <summary>
-        /// The list of azure function receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.azureFunctionReceivers
-        /// </summary>
+        /// <summary> The list of azure function receivers that are part of this action group. </summary>
         public IList<MonitorAzureFunctionReceiver> AzureFunctionReceivers { get; }
-        /// <summary>
-        /// The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported.
-        /// Serialized Name: ActionGroupResource.properties.armRoleReceivers
-        /// </summary>
+        /// <summary> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </summary>
         public IList<MonitorArmRoleReceiver> ArmRoleReceivers { get; }
-        /// <summary>
-        /// The list of event hub receivers that are part of this action group.
-        /// Serialized Name: ActionGroupResource.properties.eventHubReceivers
-        /// </summary>
+        /// <summary> The list of event hub receivers that are part of this action group. </summary>
         public IList<MonitorEventHubReceiver> EventHubReceivers { get; }
     }
 }

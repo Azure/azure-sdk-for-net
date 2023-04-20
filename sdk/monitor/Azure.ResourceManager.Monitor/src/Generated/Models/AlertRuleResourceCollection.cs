@@ -11,10 +11,7 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Represents a collection of alert rule resources.
-    /// Serialized Name: AlertRuleResourceCollection
-    /// </summary>
+    /// <summary> Represents a collection of alert rule resources. </summary>
     internal partial class AlertRuleResourceCollection
     {
         /// <summary> Initializes a new instance of AlertRuleResourceCollection. </summary>
@@ -24,19 +21,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of AlertRuleResourceCollection. </summary>
-        /// <param name="value">
-        /// the values for the alert rule resources.
-        /// Serialized Name: AlertRuleResourceCollection.value
-        /// </param>
+        /// <param name="value"> the values for the alert rule resources. </param>
         internal AlertRuleResourceCollection(IReadOnlyList<AlertRuleData> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// the values for the alert rule resources.
-        /// Serialized Name: AlertRuleResourceCollection.value
-        /// </summary>
+        /// <summary> the values for the alert rule resources. </summary>
         public IReadOnlyList<AlertRuleData> Value { get; }
     }
 }

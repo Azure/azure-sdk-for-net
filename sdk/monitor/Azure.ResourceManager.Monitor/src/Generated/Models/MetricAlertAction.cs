@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// An alert action.
-    /// Serialized Name: MetricAlertAction
-    /// </summary>
+    /// <summary> An alert action. </summary>
     public partial class MetricAlertAction
     {
         /// <summary> Initializes a new instance of MetricAlertAction. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MetricAlertAction. </summary>
-        /// <param name="actionGroupId">
-        /// the id of the action group to use.
-        /// Serialized Name: MetricAlertAction.actionGroupId
-        /// </param>
-        /// <param name="webHookProperties">
-        /// This field allows specifying custom properties, which would be appended to the alert payload sent as input to the webhook.
-        /// Serialized Name: MetricAlertAction.webHookProperties
-        /// </param>
+        /// <param name="actionGroupId"> the id of the action group to use. </param>
+        /// <param name="webHookProperties"> This field allows specifying custom properties, which would be appended to the alert payload sent as input to the webhook. </param>
         internal MetricAlertAction(ResourceIdentifier actionGroupId, IDictionary<string, string> webHookProperties)
         {
             ActionGroupId = actionGroupId;
             WebHookProperties = webHookProperties;
         }
 
-        /// <summary>
-        /// the id of the action group to use.
-        /// Serialized Name: MetricAlertAction.actionGroupId
-        /// </summary>
+        /// <summary> the id of the action group to use. </summary>
         public ResourceIdentifier ActionGroupId { get; set; }
-        /// <summary>
-        /// This field allows specifying custom properties, which would be appended to the alert payload sent as input to the webhook.
-        /// Serialized Name: MetricAlertAction.webHookProperties
-        /// </summary>
+        /// <summary> This field allows specifying custom properties, which would be appended to the alert payload sent as input to the webhook. </summary>
         public IDictionary<string, string> WebHookProperties { get; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// List of private endpoint connection associated with the specified storage account
-    /// Serialized Name: PrivateEndpointConnectionListResult
-    /// </summary>
+    /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
     internal partial class MonitorPrivateEndpointConnectionListResult
     {
         /// <summary> Initializes a new instance of MonitorPrivateEndpointConnectionListResult. </summary>
@@ -24,19 +21,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorPrivateEndpointConnectionListResult. </summary>
-        /// <param name="value">
-        /// Array of private endpoint connections
-        /// Serialized Name: PrivateEndpointConnectionListResult.value
-        /// </param>
+        /// <param name="value"> Array of private endpoint connections. </param>
         internal MonitorPrivateEndpointConnectionListResult(IReadOnlyList<MonitorPrivateEndpointConnectionData> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// Array of private endpoint connections
-        /// Serialized Name: PrivateEndpointConnectionListResult.value
-        /// </summary>
+        /// <summary> Array of private endpoint connections. </summary>
         public IReadOnlyList<MonitorPrivateEndpointConnectionData> Value { get; }
     }
 }

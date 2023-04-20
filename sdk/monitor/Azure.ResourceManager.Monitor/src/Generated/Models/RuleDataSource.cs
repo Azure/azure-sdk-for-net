@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
     /// The resource from which the rule collects its data.
-    /// Serialized Name: RuleDataSource
     /// Please note <see cref="RuleDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RuleManagementEventDataSource"/> and <see cref="RuleMetricDataSource"/>.
     /// </summary>
@@ -23,26 +22,11 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of RuleDataSource. </summary>
-        /// <param name="odataType">
-        /// specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource
-        /// Serialized Name: RuleDataSource.odata.type
-        /// </param>
-        /// <param name="resourceId">
-        /// the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule.
-        /// Serialized Name: RuleDataSource.resourceUri
-        /// </param>
-        /// <param name="legacyResourceId">
-        /// the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule.
-        /// Serialized Name: RuleDataSource.legacyResourceId
-        /// </param>
-        /// <param name="resourceLocation">
-        /// the location of the resource.
-        /// Serialized Name: RuleDataSource.resourceLocation
-        /// </param>
-        /// <param name="metricNamespace">
-        /// the namespace of the metric.
-        /// Serialized Name: RuleDataSource.metricNamespace
-        /// </param>
+        /// <param name="odataType"> specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource. </param>
+        /// <param name="resourceId"> the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
+        /// <param name="legacyResourceId"> the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
+        /// <param name="resourceLocation"> the location of the resource. </param>
+        /// <param name="metricNamespace"> the namespace of the metric. </param>
         internal RuleDataSource(string odataType, ResourceIdentifier resourceId, ResourceIdentifier legacyResourceId, string resourceLocation, string metricNamespace)
         {
             OdataType = odataType;
@@ -52,30 +36,15 @@ namespace Azure.ResourceManager.Monitor.Models
             MetricNamespace = metricNamespace;
         }
 
-        /// <summary>
-        /// specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource
-        /// Serialized Name: RuleDataSource.odata.type
-        /// </summary>
+        /// <summary> specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource. </summary>
         internal string OdataType { get; set; }
-        /// <summary>
-        /// the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule.
-        /// Serialized Name: RuleDataSource.resourceUri
-        /// </summary>
+        /// <summary> the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </summary>
         public ResourceIdentifier ResourceId { get; set; }
-        /// <summary>
-        /// the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule.
-        /// Serialized Name: RuleDataSource.legacyResourceId
-        /// </summary>
+        /// <summary> the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </summary>
         public ResourceIdentifier LegacyResourceId { get; set; }
-        /// <summary>
-        /// the location of the resource.
-        /// Serialized Name: RuleDataSource.resourceLocation
-        /// </summary>
+        /// <summary> the location of the resource. </summary>
         public string ResourceLocation { get; set; }
-        /// <summary>
-        /// the namespace of the metric.
-        /// Serialized Name: RuleDataSource.metricNamespace
-        /// </summary>
+        /// <summary> the namespace of the metric. </summary>
         public string MetricNamespace { get; set; }
     }
 }

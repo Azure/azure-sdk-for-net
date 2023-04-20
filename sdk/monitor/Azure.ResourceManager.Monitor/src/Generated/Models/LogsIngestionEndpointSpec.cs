@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Definition of the endpoint used for ingesting logs.
-    /// Serialized Name: LogsIngestionEndpointSpec
-    /// </summary>
+    /// <summary> Definition of the endpoint used for ingesting logs. </summary>
     internal partial class LogsIngestionEndpointSpec
     {
         /// <summary> Initializes a new instance of LogsIngestionEndpointSpec. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of LogsIngestionEndpointSpec. </summary>
-        /// <param name="endpoint">
-        /// The endpoint. This property is READ-ONLY.
-        /// Serialized Name: LogsIngestionEndpointSpec.endpoint
-        /// </param>
+        /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
         internal LogsIngestionEndpointSpec(string endpoint)
         {
             Endpoint = endpoint;
         }
 
-        /// <summary>
-        /// The endpoint. This property is READ-ONLY.
-        /// Serialized Name: LogsIngestionEndpointSpec.endpoint
-        /// </summary>
+        /// <summary> The endpoint. This property is READ-ONLY. </summary>
         public string Endpoint { get; }
     }
 }

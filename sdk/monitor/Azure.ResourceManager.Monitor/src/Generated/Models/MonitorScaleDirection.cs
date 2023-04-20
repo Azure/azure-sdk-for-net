@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// the scale direction. Whether the scaling action increases or decreases the number of instances.
-    /// Serialized Name: ScaleDirection
-    /// </summary>
+    /// <summary> the scale direction. Whether the scaling action increases or decreases the number of instances. </summary>
     public enum MonitorScaleDirection
     {
-        /// <summary>
-        /// None
-        /// Serialized Name: ScaleDirection.None
-        /// </summary>
+        /// <summary> None. </summary>
         None,
-        /// <summary>
-        /// Increase
-        /// Serialized Name: ScaleDirection.Increase
-        /// </summary>
+        /// <summary> Increase. </summary>
         Increase,
-        /// <summary>
-        /// Decrease
-        /// Serialized Name: ScaleDirection.Decrease
-        /// </summary>
+        /// <summary> Decrease. </summary>
         Decrease
     }
 }

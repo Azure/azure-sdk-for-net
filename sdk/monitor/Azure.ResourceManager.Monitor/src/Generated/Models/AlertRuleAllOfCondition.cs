@@ -12,17 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// An Activity Log Alert rule condition that is met when all its member conditions are met.
-    /// Serialized Name: AlertRuleAllOfCondition
-    /// </summary>
+    /// <summary> An Activity Log Alert rule condition that is met when all its member conditions are met. </summary>
     internal partial class AlertRuleAllOfCondition
     {
         /// <summary> Initializes a new instance of AlertRuleAllOfCondition. </summary>
-        /// <param name="allOf">
-        /// The list of Activity Log Alert rule conditions.
-        /// Serialized Name: AlertRuleAllOfCondition.allOf
-        /// </param>
+        /// <param name="allOf"> The list of Activity Log Alert rule conditions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allOf"/> is null. </exception>
         public AlertRuleAllOfCondition(IEnumerable<ActivityLogAlertAnyOfOrLeafCondition> allOf)
         {
@@ -32,19 +26,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of AlertRuleAllOfCondition. </summary>
-        /// <param name="allOf">
-        /// The list of Activity Log Alert rule conditions.
-        /// Serialized Name: AlertRuleAllOfCondition.allOf
-        /// </param>
+        /// <param name="allOf"> The list of Activity Log Alert rule conditions. </param>
         internal AlertRuleAllOfCondition(IList<ActivityLogAlertAnyOfOrLeafCondition> allOf)
         {
             AllOf = allOf;
         }
 
-        /// <summary>
-        /// The list of Activity Log Alert rule conditions.
-        /// Serialized Name: AlertRuleAllOfCondition.allOf
-        /// </summary>
+        /// <summary> The list of Activity Log Alert rule conditions. </summary>
         public IList<ActivityLogAlertAnyOfOrLeafCondition> AllOf { get; }
     }
 }

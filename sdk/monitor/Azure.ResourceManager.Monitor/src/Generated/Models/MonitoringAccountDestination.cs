@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Monitoring account destination.
-    /// Serialized Name: MonitoringAccountDestination
-    /// </summary>
+    /// <summary> Monitoring account destination. </summary>
     public partial class MonitoringAccountDestination
     {
         /// <summary> Initializes a new instance of MonitoringAccountDestination. </summary>
@@ -21,18 +18,11 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitoringAccountDestination. </summary>
-        /// <param name="accountResourceId">
-        /// The resource ID of the monitoring account.
-        /// Serialized Name: MonitoringAccountDestination.accountResourceId
-        /// </param>
-        /// <param name="accountId">
-        /// The immutable ID  of the account.
-        /// Serialized Name: MonitoringAccountDestination.accountId
-        /// </param>
+        /// <param name="accountResourceId"> The resource ID of the monitoring account. </param>
+        /// <param name="accountId"> The immutable ID  of the account. </param>
         /// <param name="name">
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// Serialized Name: MonitoringAccountDestination.name
         /// </param>
         internal MonitoringAccountDestination(ResourceIdentifier accountResourceId, string accountId, string name)
         {
@@ -41,20 +31,13 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
         }
 
-        /// <summary>
-        /// The resource ID of the monitoring account.
-        /// Serialized Name: MonitoringAccountDestination.accountResourceId
-        /// </summary>
+        /// <summary> The resource ID of the monitoring account. </summary>
         public ResourceIdentifier AccountResourceId { get; set; }
-        /// <summary>
-        /// The immutable ID  of the account.
-        /// Serialized Name: MonitoringAccountDestination.accountId
-        /// </summary>
+        /// <summary> The immutable ID  of the account. </summary>
         public string AccountId { get; }
         /// <summary>
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// Serialized Name: MonitoringAccountDestination.name
         /// </summary>
         public string Name { get; set; }
     }

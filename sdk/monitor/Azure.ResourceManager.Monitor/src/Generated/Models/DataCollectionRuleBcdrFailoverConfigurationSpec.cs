@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The DataCollectionRuleBcdrFailoverConfigurationSpec.
-    /// Serialized Name: FailoverConfigurationSpec
-    /// </summary>
+    /// <summary> The DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>
     public partial class DataCollectionRuleBcdrFailoverConfigurationSpec
     {
         /// <summary> Initializes a new instance of DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>
-        /// <param name="activeLocation">
-        /// Active location where data flow will occur.
-        /// Serialized Name: FailoverConfigurationSpec.activeLocation
-        /// </param>
-        /// <param name="locations">
-        /// Locations that are configured for failover.
-        /// Serialized Name: FailoverConfigurationSpec.locations
-        /// </param>
+        /// <param name="activeLocation"> Active location where data flow will occur. </param>
+        /// <param name="locations"> Locations that are configured for failover. </param>
         internal DataCollectionRuleBcdrFailoverConfigurationSpec(string activeLocation, IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations)
         {
             ActiveLocation = activeLocation;
             Locations = locations;
         }
 
-        /// <summary>
-        /// Active location where data flow will occur.
-        /// Serialized Name: FailoverConfigurationSpec.activeLocation
-        /// </summary>
+        /// <summary> Active location where data flow will occur. </summary>
         public string ActiveLocation { get; }
-        /// <summary>
-        /// Locations that are configured for failover.
-        /// Serialized Name: FailoverConfigurationSpec.locations
-        /// </summary>
+        /// <summary> Locations that are configured for failover. </summary>
         public IReadOnlyList<DataCollectionRuleBcdrLocationSpec> Locations { get; }
     }
 }

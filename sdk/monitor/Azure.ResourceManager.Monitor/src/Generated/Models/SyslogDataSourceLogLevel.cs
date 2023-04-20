@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The SyslogDataSourceLogLevel.
-    /// Serialized Name: KnownSyslogDataSourceLogLevels
-    /// </summary>
+    /// <summary> The SyslogDataSourceLogLevel. </summary>
     public readonly partial struct SyslogDataSourceLogLevel : IEquatable<SyslogDataSourceLogLevel>
     {
         private readonly string _value;
@@ -35,50 +32,23 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string EmergencyValue = "Emergency";
         private const string AsteriskValue = "*";
 
-        /// <summary>
-        /// Debug
-        /// Serialized Name: KnownSyslogDataSourceLogLevels.Debug
-        /// </summary>
+        /// <summary> Debug. </summary>
         public static SyslogDataSourceLogLevel Debug { get; } = new SyslogDataSourceLogLevel(DebugValue);
-        /// <summary>
-        /// Info
-        /// Serialized Name: KnownSyslogDataSourceLogLevels.Info
-        /// </summary>
+        /// <summary> Info. </summary>
         public static SyslogDataSourceLogLevel Info { get; } = new SyslogDataSourceLogLevel(InfoValue);
-        /// <summary>
-        /// Notice
-        /// Serialized Name: KnownSyslogDataSourceLogLevels.Notice
-        /// </summary>
+        /// <summary> Notice. </summary>
         public static SyslogDataSourceLogLevel Notice { get; } = new SyslogDataSourceLogLevel(NoticeValue);
-        /// <summary>
-        /// Warning
-        /// Serialized Name: KnownSyslogDataSourceLogLevels.Warning
-        /// </summary>
+        /// <summary> Warning. </summary>
         public static SyslogDataSourceLogLevel Warning { get; } = new SyslogDataSourceLogLevel(WarningValue);
-        /// <summary>
-        /// Error
-        /// Serialized Name: KnownSyslogDataSourceLogLevels.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         public static SyslogDataSourceLogLevel Error { get; } = new SyslogDataSourceLogLevel(ErrorValue);
-        /// <summary>
-        /// Critical
-        /// Serialized Name: KnownSyslogDataSourceLogLevels.Critical
-        /// </summary>
+        /// <summary> Critical. </summary>
         public static SyslogDataSourceLogLevel Critical { get; } = new SyslogDataSourceLogLevel(CriticalValue);
-        /// <summary>
-        /// Alert
-        /// Serialized Name: KnownSyslogDataSourceLogLevels.Alert
-        /// </summary>
+        /// <summary> Alert. </summary>
         public static SyslogDataSourceLogLevel Alert { get; } = new SyslogDataSourceLogLevel(AlertValue);
-        /// <summary>
-        /// Emergency
-        /// Serialized Name: KnownSyslogDataSourceLogLevels.Emergency
-        /// </summary>
+        /// <summary> Emergency. </summary>
         public static SyslogDataSourceLogLevel Emergency { get; } = new SyslogDataSourceLogLevel(EmergencyValue);
-        /// <summary>
-        /// *
-        /// Serialized Name: KnownSyslogDataSourceLogLevels.*
-        /// </summary>
+        /// <summary> *. </summary>
         public static SyslogDataSourceLogLevel Asterisk { get; } = new SyslogDataSourceLogLevel(AsteriskValue);
         /// <summary> Determines if two <see cref="SyslogDataSourceLogLevel"/> values are the same. </summary>
         public static bool operator ==(SyslogDataSourceLogLevel left, SyslogDataSourceLogLevel right) => left.Equals(right);

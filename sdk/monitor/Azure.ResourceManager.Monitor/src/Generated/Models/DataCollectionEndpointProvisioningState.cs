@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The resource provisioning state. This property is READ-ONLY.
-    /// Serialized Name: KnownDataCollectionEndpointProvisioningState
-    /// </summary>
+    /// <summary> The resource provisioning state. This property is READ-ONLY. </summary>
     public readonly partial struct DataCollectionEndpointProvisioningState : IEquatable<DataCollectionEndpointProvisioningState>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Creating
-        /// Serialized Name: KnownDataCollectionEndpointProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static DataCollectionEndpointProvisioningState Creating { get; } = new DataCollectionEndpointProvisioningState(CreatingValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: KnownDataCollectionEndpointProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static DataCollectionEndpointProvisioningState Updating { get; } = new DataCollectionEndpointProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: KnownDataCollectionEndpointProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static DataCollectionEndpointProvisioningState Deleting { get; } = new DataCollectionEndpointProvisioningState(DeletingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: KnownDataCollectionEndpointProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static DataCollectionEndpointProvisioningState Succeeded { get; } = new DataCollectionEndpointProvisioningState(SucceededValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: KnownDataCollectionEndpointProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static DataCollectionEndpointProvisioningState Canceled { get; } = new DataCollectionEndpointProvisioningState(CanceledValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: KnownDataCollectionEndpointProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static DataCollectionEndpointProvisioningState Failed { get; } = new DataCollectionEndpointProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="DataCollectionEndpointProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DataCollectionEndpointProvisioningState left, DataCollectionEndpointProvisioningState right) => left.Equals(right);

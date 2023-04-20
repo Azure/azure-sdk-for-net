@@ -15,8 +15,6 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-mgmt-debug:
-  show-serialized-names: true
 
 format-by-name-rules:
   "tenantId": "uuid"
@@ -270,7 +268,7 @@ rename-mapping:
   FailoverConfigurationSpec: DataCollectionRuleBcdrFailoverConfigurationSpec
   FailoverConfigurationSpec.ActiveLocation: -|azure-location
   KnownLocationSpecProvisioningStatus: DataCollectionRuleBcdrLocationSpecProvisioningStatus
-  KnownPrometheusForwarderDataSourceStream: DataCollectionRuleKnownPrometheusForwarderDataSourceStream
+  KnownPrometheusForwarderDataSourceStreams: DataCollectionRuleKnownPrometheusForwarderDataSourceStream
   LocationSpec: DataCollectionRuleBcdrLocationSpec
   Metadata: DataCollectionRuleRelatedResourceMetadata
   Metadata.ProvisionedByResourceId: -|arm-id

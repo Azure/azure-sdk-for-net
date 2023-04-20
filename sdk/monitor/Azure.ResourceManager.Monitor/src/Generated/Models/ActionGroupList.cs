@@ -11,10 +11,7 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// A list of action groups.
-    /// Serialized Name: ActionGroupList
-    /// </summary>
+    /// <summary> A list of action groups. </summary>
     internal partial class ActionGroupList
     {
         /// <summary> Initializes a new instance of ActionGroupList. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of ActionGroupList. </summary>
-        /// <param name="value">
-        /// The list of action groups.
-        /// Serialized Name: ActionGroupList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Provides the link to retrieve the next set of elements.
-        /// Serialized Name: ActionGroupList.nextLink
-        /// </param>
+        /// <param name="value"> The list of action groups. </param>
+        /// <param name="nextLink"> Provides the link to retrieve the next set of elements. </param>
         internal ActionGroupList(IReadOnlyList<ActionGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of action groups.
-        /// Serialized Name: ActionGroupList.value
-        /// </summary>
+        /// <summary> The list of action groups. </summary>
         public IReadOnlyList<ActionGroupData> Value { get; }
-        /// <summary>
-        /// Provides the link to retrieve the next set of elements.
-        /// Serialized Name: ActionGroupList.nextLink
-        /// </summary>
+        /// <summary> Provides the link to retrieve the next set of elements. </summary>
         public string NextLink { get; }
     }
 }

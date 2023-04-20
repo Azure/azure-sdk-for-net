@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Metadata about the resource
-    /// Serialized Name: Metadata
-    /// </summary>
+    /// <summary> Metadata about the resource. </summary>
     public partial class DataCollectionRuleRelatedResourceMetadata
     {
         /// <summary> Initializes a new instance of DataCollectionRuleRelatedResourceMetadata. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleRelatedResourceMetadata. </summary>
-        /// <param name="provisionedBy">
-        /// Azure offering managing this resource on-behalf-of customer.
-        /// Serialized Name: Metadata.provisionedBy
-        /// </param>
-        /// <param name="provisionedByResourceId">
-        /// Resource Id of azure offering managing this resource on-behalf-of customer.
-        /// Serialized Name: Metadata.provisionedByResourceId
-        /// </param>
+        /// <param name="provisionedBy"> Azure offering managing this resource on-behalf-of customer. </param>
+        /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
         internal DataCollectionRuleRelatedResourceMetadata(string provisionedBy, string provisionedByResourceId)
         {
             ProvisionedBy = provisionedBy;
             ProvisionedByResourceId = provisionedByResourceId;
         }
 
-        /// <summary>
-        /// Azure offering managing this resource on-behalf-of customer.
-        /// Serialized Name: Metadata.provisionedBy
-        /// </summary>
+        /// <summary> Azure offering managing this resource on-behalf-of customer. </summary>
         public string ProvisionedBy { get; }
-        /// <summary>
-        /// Resource Id of azure offering managing this resource on-behalf-of customer.
-        /// Serialized Name: Metadata.provisionedByResourceId
-        /// </summary>
+        /// <summary> Resource Id of azure offering managing this resource on-behalf-of customer. </summary>
         public string ProvisionedByResourceId { get; }
     }
 }

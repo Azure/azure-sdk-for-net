@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The DataCollectionRuleEventHubDirectDestination.
-    /// Serialized Name: EventHubDirectDestination
-    /// </summary>
+    /// <summary> The DataCollectionRuleEventHubDirectDestination. </summary>
     public partial class DataCollectionRuleEventHubDirectDestination
     {
         /// <summary> Initializes a new instance of DataCollectionRuleEventHubDirectDestination. </summary>
@@ -21,14 +18,10 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleEventHubDirectDestination. </summary>
-        /// <param name="eventHubResourceId">
-        /// The resource ID of the event hub.
-        /// Serialized Name: EventHubDirectDestination.eventHubResourceId
-        /// </param>
+        /// <param name="eventHubResourceId"> The resource ID of the event hub. </param>
         /// <param name="name">
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// Serialized Name: EventHubDirectDestination.name
         /// </param>
         internal DataCollectionRuleEventHubDirectDestination(ResourceIdentifier eventHubResourceId, string name)
         {
@@ -36,15 +29,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
         }
 
-        /// <summary>
-        /// The resource ID of the event hub.
-        /// Serialized Name: EventHubDirectDestination.eventHubResourceId
-        /// </summary>
+        /// <summary> The resource ID of the event hub. </summary>
         public ResourceIdentifier EventHubResourceId { get; set; }
         /// <summary>
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// Serialized Name: EventHubDirectDestination.name
         /// </summary>
         public string Name { get; set; }
     }

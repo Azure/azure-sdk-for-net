@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// A time series result type. The discriminator value is always TimeSeries in this case.
-    /// Serialized Name: TimeSeriesElement
-    /// </summary>
+    /// <summary> A time series result type. The discriminator value is always TimeSeries in this case. </summary>
     public partial class MonitorTimeSeriesElement
     {
         /// <summary> Initializes a new instance of MonitorTimeSeriesElement. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorTimeSeriesElement. </summary>
-        /// <param name="metadatavalues">
-        /// the metadata values returned if $filter was specified in the call.
-        /// Serialized Name: TimeSeriesElement.metadatavalues
-        /// </param>
-        /// <param name="data">
-        /// An array of data points representing the metric values.  This is only returned if a result type of data is specified.
-        /// Serialized Name: TimeSeriesElement.data
-        /// </param>
+        /// <param name="metadatavalues"> the metadata values returned if $filter was specified in the call. </param>
+        /// <param name="data"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
         internal MonitorTimeSeriesElement(IReadOnlyList<MonitorMetadataValue> metadatavalues, IReadOnlyList<MonitorMetricValue> data)
         {
             Metadatavalues = metadatavalues;
             Data = data;
         }
 
-        /// <summary>
-        /// the metadata values returned if $filter was specified in the call.
-        /// Serialized Name: TimeSeriesElement.metadatavalues
-        /// </summary>
+        /// <summary> the metadata values returned if $filter was specified in the call. </summary>
         public IReadOnlyList<MonitorMetadataValue> Metadatavalues { get; }
-        /// <summary>
-        /// An array of data points representing the metric values.  This is only returned if a result type of data is specified.
-        /// Serialized Name: TimeSeriesElement.data
-        /// </summary>
+        /// <summary> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </summary>
         public IReadOnlyList<MonitorMetricValue> Data { get; }
     }
 }

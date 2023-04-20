@@ -7,36 +7,18 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// the metric statistic type. How the metrics from multiple instances are combined.
-    /// Serialized Name: MetricStatisticType
-    /// </summary>
+    /// <summary> the metric statistic type. How the metrics from multiple instances are combined. </summary>
     public enum MetricStatisticType
     {
-        /// <summary>
-        /// Average
-        /// Serialized Name: MetricStatisticType.Average
-        /// </summary>
+        /// <summary> Average. </summary>
         Average,
-        /// <summary>
-        /// Min
-        /// Serialized Name: MetricStatisticType.Min
-        /// </summary>
+        /// <summary> Min. </summary>
         Min,
-        /// <summary>
-        /// Max
-        /// Serialized Name: MetricStatisticType.Max
-        /// </summary>
+        /// <summary> Max. </summary>
         Max,
-        /// <summary>
-        /// Sum
-        /// Serialized Name: MetricStatisticType.Sum
-        /// </summary>
+        /// <summary> Sum. </summary>
         Sum,
-        /// <summary>
-        /// Count
-        /// Serialized Name: MetricStatisticType.Count
-        /// </summary>
+        /// <summary> Count. </summary>
         Count
     }
 }

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Declaration of a custom stream.
-    /// Serialized Name: StreamDeclaration
-    /// </summary>
+    /// <summary> Declaration of a custom stream. </summary>
     public partial class DataStreamDeclaration
     {
         /// <summary> Initializes a new instance of DataStreamDeclaration. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataStreamDeclaration. </summary>
-        /// <param name="columns">
-        /// List of columns used by data in this stream.
-        /// Serialized Name: StreamDeclaration.columns
-        /// </param>
+        /// <param name="columns"> List of columns used by data in this stream. </param>
         internal DataStreamDeclaration(IList<DataColumnDefinition> columns)
         {
             Columns = columns;
         }
 
-        /// <summary>
-        /// List of columns used by data in this stream.
-        /// Serialized Name: StreamDeclaration.columns
-        /// </summary>
+        /// <summary> List of columns used by data in this stream. </summary>
         public IList<DataColumnDefinition> Columns { get; }
     }
 }

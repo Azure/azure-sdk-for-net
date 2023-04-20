@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Monitor.Models
     ///   * __AnyOf Condition -__ must contain __only__ &apos;anyOf&apos; (which is an array of Leaf Conditions).
     ///   _Please note, &apos;field&apos;, &apos;equals&apos; and &apos;containsAny&apos; should __not__ be set in an AnyOf Condition._
     /// 
-    /// Serialized Name: AlertRuleAnyOfOrLeafCondition
     /// </summary>
     public partial class ActivityLogAlertAnyOfOrLeafCondition : AlertRuleLeafCondition
     {
@@ -33,29 +32,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="field">
         /// The name of the Activity Log event&apos;s field that this condition will examine.
         /// The possible values for this field are (case-insensitive): &apos;resourceId&apos;, &apos;category&apos;, &apos;caller&apos;, &apos;level&apos;, &apos;operationName&apos;, &apos;resourceGroup&apos;, &apos;resourceProvider&apos;, &apos;status&apos;, &apos;subStatus&apos;, &apos;resourceType&apos;, or anything beginning with &apos;properties&apos;.
-        /// Serialized Name: AlertRuleLeafCondition.field
         /// </param>
-        /// <param name="equalsValue">
-        /// The value of the event&apos;s field will be compared to this value (case-insensitive) to determine if the condition is met.
-        /// Serialized Name: AlertRuleLeafCondition.equals
-        /// </param>
-        /// <param name="containsAny">
-        /// The value of the event&apos;s field will be compared to the values in this array (case-insensitive) to determine if the condition is met.
-        /// Serialized Name: AlertRuleLeafCondition.containsAny
-        /// </param>
-        /// <param name="anyOf">
-        /// An Activity Log Alert rule condition that is met when at least one of its member leaf conditions are met.
-        /// Serialized Name: AlertRuleAnyOfOrLeafCondition.anyOf
-        /// </param>
+        /// <param name="equalsValue"> The value of the event&apos;s field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
+        /// <param name="containsAny"> The value of the event&apos;s field will be compared to the values in this array (case-insensitive) to determine if the condition is met. </param>
+        /// <param name="anyOf"> An Activity Log Alert rule condition that is met when at least one of its member leaf conditions are met. </param>
         internal ActivityLogAlertAnyOfOrLeafCondition(string field, string equalsValue, IList<string> containsAny, IList<AlertRuleLeafCondition> anyOf) : base(field, equalsValue, containsAny)
         {
             AnyOf = anyOf;
         }
 
-        /// <summary>
-        /// An Activity Log Alert rule condition that is met when at least one of its member leaf conditions are met.
-        /// Serialized Name: AlertRuleAnyOfOrLeafCondition.anyOf
-        /// </summary>
+        /// <summary> An Activity Log Alert rule condition that is met when at least one of its member leaf conditions are met. </summary>
         public IList<AlertRuleLeafCondition> AnyOf { get; }
     }
 }

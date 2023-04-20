@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The DataCollectionRuleStorageBlobDestination.
-    /// Serialized Name: StorageBlobDestination
-    /// </summary>
+    /// <summary> The DataCollectionRuleStorageBlobDestination. </summary>
     public partial class DataCollectionRuleStorageBlobDestination
     {
         /// <summary> Initializes a new instance of DataCollectionRuleStorageBlobDestination. </summary>
@@ -21,18 +18,11 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleStorageBlobDestination. </summary>
-        /// <param name="containerName">
-        /// The container name of the Storage Blob.
-        /// Serialized Name: StorageBlobDestination.containerName
-        /// </param>
-        /// <param name="storageAccountResourceId">
-        /// The resource ID of the storage account.
-        /// Serialized Name: StorageBlobDestination.storageAccountResourceId
-        /// </param>
+        /// <param name="containerName"> The container name of the Storage Blob. </param>
+        /// <param name="storageAccountResourceId"> The resource ID of the storage account. </param>
         /// <param name="name">
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// Serialized Name: StorageBlobDestination.name
         /// </param>
         internal DataCollectionRuleStorageBlobDestination(string containerName, ResourceIdentifier storageAccountResourceId, string name)
         {
@@ -41,20 +31,13 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
         }
 
-        /// <summary>
-        /// The container name of the Storage Blob.
-        /// Serialized Name: StorageBlobDestination.containerName
-        /// </summary>
+        /// <summary> The container name of the Storage Blob. </summary>
         public string ContainerName { get; set; }
-        /// <summary>
-        /// The resource ID of the storage account.
-        /// Serialized Name: StorageBlobDestination.storageAccountResourceId
-        /// </summary>
+        /// <summary> The resource ID of the storage account. </summary>
         public ResourceIdentifier StorageAccountResourceId { get; set; }
         /// <summary>
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// Serialized Name: StorageBlobDestination.name
         /// </summary>
         public string Name { get; set; }
     }

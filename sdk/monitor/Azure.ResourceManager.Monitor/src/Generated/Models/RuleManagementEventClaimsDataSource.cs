@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The claims for a rule management event data source.
-    /// Serialized Name: RuleManagementEventClaimsDataSource
-    /// </summary>
+    /// <summary> The claims for a rule management event data source. </summary>
     internal partial class RuleManagementEventClaimsDataSource
     {
         /// <summary> Initializes a new instance of RuleManagementEventClaimsDataSource. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of RuleManagementEventClaimsDataSource. </summary>
-        /// <param name="emailAddress">
-        /// the email address.
-        /// Serialized Name: RuleManagementEventClaimsDataSource.emailAddress
-        /// </param>
+        /// <param name="emailAddress"> the email address. </param>
         internal RuleManagementEventClaimsDataSource(string emailAddress)
         {
             EmailAddress = emailAddress;
         }
 
-        /// <summary>
-        /// the email address.
-        /// Serialized Name: RuleManagementEventClaimsDataSource.emailAddress
-        /// </summary>
+        /// <summary> the email address. </summary>
         public string EmailAddress { get; set; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Specifications of pull based data sources
-    /// Serialized Name: DataSourcesSpecDataImports
-    /// </summary>
+    /// <summary> Specifications of pull based data sources. </summary>
     internal partial class DataSourcesSpecDataImports : DataImportSources
     {
         /// <summary> Initializes a new instance of DataSourcesSpecDataImports. </summary>
@@ -19,10 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataSourcesSpecDataImports. </summary>
-        /// <param name="eventHub">
-        /// Definition of Event Hub configuration.
-        /// Serialized Name: DataImportSources.eventHub
-        /// </param>
+        /// <param name="eventHub"> Definition of Event Hub configuration. </param>
         internal DataSourcesSpecDataImports(DataImportSourcesEventHub eventHub) : base(eventHub)
         {
         }

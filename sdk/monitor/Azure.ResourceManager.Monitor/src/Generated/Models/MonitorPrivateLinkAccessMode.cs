@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Access mode types.
-    /// Serialized Name: AccessMode
-    /// </summary>
+    /// <summary> Access mode types. </summary>
     public readonly partial struct MonitorPrivateLinkAccessMode : IEquatable<MonitorPrivateLinkAccessMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string OpenValue = "Open";
         private const string PrivateOnlyValue = "PrivateOnly";
 
-        /// <summary>
-        /// Open
-        /// Serialized Name: AccessMode.Open
-        /// </summary>
+        /// <summary> Open. </summary>
         public static MonitorPrivateLinkAccessMode Open { get; } = new MonitorPrivateLinkAccessMode(OpenValue);
-        /// <summary>
-        /// PrivateOnly
-        /// Serialized Name: AccessMode.PrivateOnly
-        /// </summary>
+        /// <summary> PrivateOnly. </summary>
         public static MonitorPrivateLinkAccessMode PrivateOnly { get; } = new MonitorPrivateLinkAccessMode(PrivateOnlyValue);
         /// <summary> Determines if two <see cref="MonitorPrivateLinkAccessMode"/> values are the same. </summary>
         public static bool operator ==(MonitorPrivateLinkAccessMode left, MonitorPrivateLinkAccessMode right) => left.Equals(right);

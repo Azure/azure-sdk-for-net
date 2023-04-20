@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The alert rule object for patch operations.
-    /// Serialized Name: AlertRuleResourcePatch
-    /// </summary>
+    /// <summary> The alert rule object for patch operations. </summary>
     public partial class AlertRulePatch
     {
         /// <summary> Initializes a new instance of AlertRulePatch. </summary>
@@ -24,56 +21,35 @@ namespace Azure.ResourceManager.Monitor.Models
             Actions = new ChangeTrackingList<AlertRuleAction>();
         }
 
-        /// <summary>
-        /// Resource tags
-        /// Serialized Name: AlertRuleResourcePatch.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// the name of the alert rule.
-        /// Serialized Name: AlertRuleResourcePatch.properties.name
-        /// </summary>
+        /// <summary> the name of the alert rule. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// the description of the alert rule that will be included in the alert email.
-        /// Serialized Name: AlertRuleResourcePatch.properties.description
-        /// </summary>
+        /// <summary> the description of the alert rule that will be included in the alert email. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// the provisioning state.
-        /// Serialized Name: AlertRuleResourcePatch.properties.provisioningState
-        /// </summary>
+        /// <summary> the provisioning state. </summary>
         public string ProvisioningState { get; set; }
-        /// <summary>
-        /// the flag that indicates whether the alert rule is enabled.
-        /// Serialized Name: AlertRuleResourcePatch.properties.isEnabled
-        /// </summary>
+        /// <summary> the flag that indicates whether the alert rule is enabled. </summary>
         public bool? IsEnabled { get; set; }
         /// <summary>
         /// the condition that results in the alert rule being activated.
-        /// Serialized Name: AlertRuleResourcePatch.properties.condition
         /// Please note <see cref="AlertRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
         /// </summary>
         public AlertRuleCondition Condition { get; set; }
         /// <summary>
         /// action that is performed when the alert rule becomes active, and when an alert condition is resolved.
-        /// Serialized Name: AlertRuleResourcePatch.properties.action
         /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </summary>
         public AlertRuleAction Action { get; set; }
         /// <summary>
         /// the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved.
-        /// Serialized Name: AlertRuleResourcePatch.properties.actions
         /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </summary>
         public IList<AlertRuleAction> Actions { get; }
-        /// <summary>
-        /// Last time the rule was updated in ISO8601 format.
-        /// Serialized Name: AlertRuleResourcePatch.properties.lastUpdatedTime
-        /// </summary>
+        /// <summary> Last time the rule was updated in ISO8601 format. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

@@ -10,29 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// An azure function receiver.
-    /// Serialized Name: AzureFunctionReceiver
-    /// </summary>
+    /// <summary> An azure function receiver. </summary>
     public partial class MonitorAzureFunctionReceiver
     {
         /// <summary> Initializes a new instance of MonitorAzureFunctionReceiver. </summary>
-        /// <param name="name">
-        /// The name of the azure function receiver. Names must be unique across all receivers within an action group.
-        /// Serialized Name: AzureFunctionReceiver.name
-        /// </param>
-        /// <param name="functionAppResourceId">
-        /// The azure resource id of the function app.
-        /// Serialized Name: AzureFunctionReceiver.functionAppResourceId
-        /// </param>
-        /// <param name="functionName">
-        /// The function name in the function app.
-        /// Serialized Name: AzureFunctionReceiver.functionName
-        /// </param>
-        /// <param name="httpTriggerUri">
-        /// The http trigger url where http request sent to.
-        /// Serialized Name: AzureFunctionReceiver.httpTriggerUrl
-        /// </param>
+        /// <param name="name"> The name of the azure function receiver. Names must be unique across all receivers within an action group. </param>
+        /// <param name="functionAppResourceId"> The azure resource id of the function app. </param>
+        /// <param name="functionName"> The function name in the function app. </param>
+        /// <param name="httpTriggerUri"> The http trigger url where http request sent to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="functionAppResourceId"/>, <paramref name="functionName"/> or <paramref name="httpTriggerUri"/> is null. </exception>
         public MonitorAzureFunctionReceiver(string name, ResourceIdentifier functionAppResourceId, string functionName, Uri httpTriggerUri)
         {
@@ -48,26 +33,11 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorAzureFunctionReceiver. </summary>
-        /// <param name="name">
-        /// The name of the azure function receiver. Names must be unique across all receivers within an action group.
-        /// Serialized Name: AzureFunctionReceiver.name
-        /// </param>
-        /// <param name="functionAppResourceId">
-        /// The azure resource id of the function app.
-        /// Serialized Name: AzureFunctionReceiver.functionAppResourceId
-        /// </param>
-        /// <param name="functionName">
-        /// The function name in the function app.
-        /// Serialized Name: AzureFunctionReceiver.functionName
-        /// </param>
-        /// <param name="httpTriggerUri">
-        /// The http trigger url where http request sent to.
-        /// Serialized Name: AzureFunctionReceiver.httpTriggerUrl
-        /// </param>
-        /// <param name="useCommonAlertSchema">
-        /// Indicates whether to use common alert schema.
-        /// Serialized Name: AzureFunctionReceiver.useCommonAlertSchema
-        /// </param>
+        /// <param name="name"> The name of the azure function receiver. Names must be unique across all receivers within an action group. </param>
+        /// <param name="functionAppResourceId"> The azure resource id of the function app. </param>
+        /// <param name="functionName"> The function name in the function app. </param>
+        /// <param name="httpTriggerUri"> The http trigger url where http request sent to. </param>
+        /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
         internal MonitorAzureFunctionReceiver(string name, ResourceIdentifier functionAppResourceId, string functionName, Uri httpTriggerUri, bool? useCommonAlertSchema)
         {
             Name = name;
@@ -77,30 +47,15 @@ namespace Azure.ResourceManager.Monitor.Models
             UseCommonAlertSchema = useCommonAlertSchema;
         }
 
-        /// <summary>
-        /// The name of the azure function receiver. Names must be unique across all receivers within an action group.
-        /// Serialized Name: AzureFunctionReceiver.name
-        /// </summary>
+        /// <summary> The name of the azure function receiver. Names must be unique across all receivers within an action group. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The azure resource id of the function app.
-        /// Serialized Name: AzureFunctionReceiver.functionAppResourceId
-        /// </summary>
+        /// <summary> The azure resource id of the function app. </summary>
         public ResourceIdentifier FunctionAppResourceId { get; set; }
-        /// <summary>
-        /// The function name in the function app.
-        /// Serialized Name: AzureFunctionReceiver.functionName
-        /// </summary>
+        /// <summary> The function name in the function app. </summary>
         public string FunctionName { get; set; }
-        /// <summary>
-        /// The http trigger url where http request sent to.
-        /// Serialized Name: AzureFunctionReceiver.httpTriggerUrl
-        /// </summary>
+        /// <summary> The http trigger url where http request sent to. </summary>
         public Uri HttpTriggerUri { get; set; }
-        /// <summary>
-        /// Indicates whether to use common alert schema.
-        /// Serialized Name: AzureFunctionReceiver.useCommonAlertSchema
-        /// </summary>
+        /// <summary> Indicates whether to use common alert schema. </summary>
         public bool? UseCommonAlertSchema { get; set; }
     }
 }

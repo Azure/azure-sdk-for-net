@@ -13,17 +13,11 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// A pageable list of resources.
-    /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResourceListResult
-    /// </summary>
+    /// <summary> A pageable list of resources. </summary>
     internal partial class DataCollectionRuleAssociationProxyOnlyResourceListResult
     {
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationProxyOnlyResourceListResult. </summary>
-        /// <param name="value">
-        /// A list of resources.
-        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResourceListResult.value
-        /// </param>
+        /// <param name="value"> A list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataCollectionRuleAssociationProxyOnlyResourceListResult(IEnumerable<DataCollectionRuleAssociationData> value)
         {
@@ -33,29 +27,17 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationProxyOnlyResourceListResult. </summary>
-        /// <param name="value">
-        /// A list of resources.
-        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResourceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to use for getting the next set of results.
-        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResourceListResult.nextLink
-        /// </param>
+        /// <param name="value"> A list of resources. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal DataCollectionRuleAssociationProxyOnlyResourceListResult(IReadOnlyList<DataCollectionRuleAssociationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// A list of resources.
-        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResourceListResult.value
-        /// </summary>
+        /// <summary> A list of resources. </summary>
         public IReadOnlyList<DataCollectionRuleAssociationData> Value { get; }
-        /// <summary>
-        /// The URL to use for getting the next set of results.
-        /// Serialized Name: DataCollectionRuleAssociationProxyOnlyResourceListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }
 }

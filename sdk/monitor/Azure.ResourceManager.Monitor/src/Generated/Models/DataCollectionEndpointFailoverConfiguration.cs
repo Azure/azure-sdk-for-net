@@ -9,10 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Failover configuration on this endpoint. This property is READ-ONLY.
-    /// Serialized Name: DataCollectionEndpointFailoverConfiguration
-    /// </summary>
+    /// <summary> Failover configuration on this endpoint. This property is READ-ONLY. </summary>
     public partial class DataCollectionEndpointFailoverConfiguration : DataCollectionRuleBcdrFailoverConfigurationSpec
     {
         /// <summary> Initializes a new instance of DataCollectionEndpointFailoverConfiguration. </summary>
@@ -21,14 +18,8 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataCollectionEndpointFailoverConfiguration. </summary>
-        /// <param name="activeLocation">
-        /// Active location where data flow will occur.
-        /// Serialized Name: FailoverConfigurationSpec.activeLocation
-        /// </param>
-        /// <param name="locations">
-        /// Locations that are configured for failover.
-        /// Serialized Name: FailoverConfigurationSpec.locations
-        /// </param>
+        /// <param name="activeLocation"> Active location where data flow will occur. </param>
+        /// <param name="locations"> Locations that are configured for failover. </param>
         internal DataCollectionEndpointFailoverConfiguration(string activeLocation, IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations) : base(activeLocation, locations)
         {
         }

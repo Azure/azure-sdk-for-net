@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// A list of Activity Log Alert rule actions.
-    /// Serialized Name: ActionList
-    /// </summary>
+    /// <summary> A list of Activity Log Alert rule actions. </summary>
     internal partial class ActionList
     {
         /// <summary> Initializes a new instance of ActionList. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of ActionList. </summary>
-        /// <param name="actionGroups">
-        /// The list of the Action Groups.
-        /// Serialized Name: ActionList.actionGroups
-        /// </param>
+        /// <param name="actionGroups"> The list of the Action Groups. </param>
         internal ActionList(IList<ActivityLogAlertActionGroup> actionGroups)
         {
             ActionGroups = actionGroups;
         }
 
-        /// <summary>
-        /// The list of the Action Groups.
-        /// Serialized Name: ActionList.actionGroups
-        /// </summary>
+        /// <summary> The list of the Action Groups. </summary>
         public IList<ActivityLogAlertActionGroup> ActionGroups { get; }
     }
 }

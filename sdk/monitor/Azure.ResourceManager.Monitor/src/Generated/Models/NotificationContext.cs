@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The context info
-    /// Serialized Name: Context
-    /// </summary>
+    /// <summary> The context info. </summary>
     public partial class NotificationContext
     {
         /// <summary> Initializes a new instance of NotificationContext. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of NotificationContext. </summary>
-        /// <param name="notificationSource">
-        /// The source of the notification request
-        /// Serialized Name: Context.notificationSource
-        /// </param>
-        /// <param name="contextType">
-        /// The context id type
-        /// Serialized Name: Context.contextType
-        /// </param>
+        /// <param name="notificationSource"> The source of the notification request. </param>
+        /// <param name="contextType"> The context id type. </param>
         internal NotificationContext(string notificationSource, string contextType)
         {
             NotificationSource = notificationSource;
             ContextType = contextType;
         }
 
-        /// <summary>
-        /// The source of the notification request
-        /// Serialized Name: Context.notificationSource
-        /// </summary>
+        /// <summary> The source of the notification request. </summary>
         public string NotificationSource { get; }
-        /// <summary>
-        /// The context id type
-        /// Serialized Name: Context.contextType
-        /// </summary>
+        /// <summary> The context id type. </summary>
         public string ContextType { get; }
     }
 }

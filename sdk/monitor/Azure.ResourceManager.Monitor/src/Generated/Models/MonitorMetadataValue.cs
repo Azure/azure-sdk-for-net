@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Represents a metric metadata value.
-    /// Serialized Name: MetadataValue
-    /// </summary>
+    /// <summary> Represents a metric metadata value. </summary>
     public partial class MonitorMetadataValue
     {
         /// <summary> Initializes a new instance of MonitorMetadataValue. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorMetadataValue. </summary>
-        /// <param name="name">
-        /// the name of the metadata.
-        /// Serialized Name: MetadataValue.name
-        /// </param>
-        /// <param name="value">
-        /// the value of the metadata.
-        /// Serialized Name: MetadataValue.value
-        /// </param>
+        /// <param name="name"> the name of the metadata. </param>
+        /// <param name="value"> the value of the metadata. </param>
         internal MonitorMetadataValue(MonitorLocalizableString name, string value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary>
-        /// the name of the metadata.
-        /// Serialized Name: MetadataValue.name
-        /// </summary>
+        /// <summary> the name of the metadata. </summary>
         public MonitorLocalizableString Name { get; }
-        /// <summary>
-        /// the value of the metadata.
-        /// Serialized Name: MetadataValue.value
-        /// </summary>
+        /// <summary> the value of the metadata. </summary>
         public string Value { get; }
     }
 }

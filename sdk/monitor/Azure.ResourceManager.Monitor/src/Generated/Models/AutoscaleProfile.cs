@@ -12,25 +12,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Autoscale profile.
-    /// Serialized Name: AutoscaleProfile
-    /// </summary>
+    /// <summary> Autoscale profile. </summary>
     public partial class AutoscaleProfile
     {
         /// <summary> Initializes a new instance of AutoscaleProfile. </summary>
-        /// <param name="name">
-        /// the name of the profile.
-        /// Serialized Name: AutoscaleProfile.name
-        /// </param>
-        /// <param name="capacity">
-        /// the number of instances that can be used during this profile.
-        /// Serialized Name: AutoscaleProfile.capacity
-        /// </param>
-        /// <param name="rules">
-        /// the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified.
-        /// Serialized Name: AutoscaleProfile.rules
-        /// </param>
+        /// <param name="name"> the name of the profile. </param>
+        /// <param name="capacity"> the number of instances that can be used during this profile. </param>
+        /// <param name="rules"> the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="capacity"/> or <paramref name="rules"/> is null. </exception>
         public AutoscaleProfile(string name, MonitorScaleCapacity capacity, IEnumerable<AutoscaleRule> rules)
         {
@@ -44,26 +32,11 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of AutoscaleProfile. </summary>
-        /// <param name="name">
-        /// the name of the profile.
-        /// Serialized Name: AutoscaleProfile.name
-        /// </param>
-        /// <param name="capacity">
-        /// the number of instances that can be used during this profile.
-        /// Serialized Name: AutoscaleProfile.capacity
-        /// </param>
-        /// <param name="rules">
-        /// the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified.
-        /// Serialized Name: AutoscaleProfile.rules
-        /// </param>
-        /// <param name="fixedDate">
-        /// the specific date-time for the profile. This element is not used if the Recurrence element is used.
-        /// Serialized Name: AutoscaleProfile.fixedDate
-        /// </param>
-        /// <param name="recurrence">
-        /// the repeating times at which this profile begins. This element is not used if the FixedDate element is used.
-        /// Serialized Name: AutoscaleProfile.recurrence
-        /// </param>
+        /// <param name="name"> the name of the profile. </param>
+        /// <param name="capacity"> the number of instances that can be used during this profile. </param>
+        /// <param name="rules"> the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified. </param>
+        /// <param name="fixedDate"> the specific date-time for the profile. This element is not used if the Recurrence element is used. </param>
+        /// <param name="recurrence"> the repeating times at which this profile begins. This element is not used if the FixedDate element is used. </param>
         internal AutoscaleProfile(string name, MonitorScaleCapacity capacity, IList<AutoscaleRule> rules, MonitorTimeWindow fixedDate, MonitorRecurrence recurrence)
         {
             Name = name;
@@ -73,30 +46,15 @@ namespace Azure.ResourceManager.Monitor.Models
             Recurrence = recurrence;
         }
 
-        /// <summary>
-        /// the name of the profile.
-        /// Serialized Name: AutoscaleProfile.name
-        /// </summary>
+        /// <summary> the name of the profile. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// the number of instances that can be used during this profile.
-        /// Serialized Name: AutoscaleProfile.capacity
-        /// </summary>
+        /// <summary> the number of instances that can be used during this profile. </summary>
         public MonitorScaleCapacity Capacity { get; set; }
-        /// <summary>
-        /// the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified.
-        /// Serialized Name: AutoscaleProfile.rules
-        /// </summary>
+        /// <summary> the collection of rules that provide the triggers and parameters for the scaling action. A maximum of 10 rules can be specified. </summary>
         public IList<AutoscaleRule> Rules { get; }
-        /// <summary>
-        /// the specific date-time for the profile. This element is not used if the Recurrence element is used.
-        /// Serialized Name: AutoscaleProfile.fixedDate
-        /// </summary>
+        /// <summary> the specific date-time for the profile. This element is not used if the Recurrence element is used. </summary>
         public MonitorTimeWindow FixedDate { get; set; }
-        /// <summary>
-        /// the repeating times at which this profile begins. This element is not used if the FixedDate element is used.
-        /// Serialized Name: AutoscaleProfile.recurrence
-        /// </summary>
+        /// <summary> the repeating times at which this profile begins. This element is not used if the FixedDate element is used. </summary>
         public MonitorRecurrence Recurrence { get; set; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Metadata about the resource
-    /// Serialized Name: DataCollectionRuleMetadata
-    /// </summary>
+    /// <summary> Metadata about the resource. </summary>
     public partial class DataCollectionRuleMetadata : DataCollectionRuleRelatedResourceMetadata
     {
         /// <summary> Initializes a new instance of DataCollectionRuleMetadata. </summary>
@@ -19,14 +16,8 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleMetadata. </summary>
-        /// <param name="provisionedBy">
-        /// Azure offering managing this resource on-behalf-of customer.
-        /// Serialized Name: Metadata.provisionedBy
-        /// </param>
-        /// <param name="provisionedByResourceId">
-        /// Resource Id of azure offering managing this resource on-behalf-of customer.
-        /// Serialized Name: Metadata.provisionedByResourceId
-        /// </param>
+        /// <param name="provisionedBy"> Azure offering managing this resource on-behalf-of customer. </param>
+        /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
         internal DataCollectionRuleMetadata(string provisionedBy, string provisionedByResourceId) : base(provisionedBy, provisionedByResourceId)
         {
         }

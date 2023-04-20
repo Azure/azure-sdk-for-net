@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Log Analytics destination.
-    /// Serialized Name: LogAnalyticsDestination
-    /// </summary>
+    /// <summary> Log Analytics destination. </summary>
     public partial class LogAnalyticsDestination
     {
         /// <summary> Initializes a new instance of LogAnalyticsDestination. </summary>
@@ -21,18 +18,11 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of LogAnalyticsDestination. </summary>
-        /// <param name="workspaceResourceId">
-        /// The resource ID of the Log Analytics workspace.
-        /// Serialized Name: LogAnalyticsDestination.workspaceResourceId
-        /// </param>
-        /// <param name="workspaceId">
-        /// The Customer ID of the Log Analytics workspace.
-        /// Serialized Name: LogAnalyticsDestination.workspaceId
-        /// </param>
+        /// <param name="workspaceResourceId"> The resource ID of the Log Analytics workspace. </param>
+        /// <param name="workspaceId"> The Customer ID of the Log Analytics workspace. </param>
         /// <param name="name">
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// Serialized Name: LogAnalyticsDestination.name
         /// </param>
         internal LogAnalyticsDestination(ResourceIdentifier workspaceResourceId, string workspaceId, string name)
         {
@@ -41,20 +31,13 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
         }
 
-        /// <summary>
-        /// The resource ID of the Log Analytics workspace.
-        /// Serialized Name: LogAnalyticsDestination.workspaceResourceId
-        /// </summary>
+        /// <summary> The resource ID of the Log Analytics workspace. </summary>
         public ResourceIdentifier WorkspaceResourceId { get; set; }
-        /// <summary>
-        /// The Customer ID of the Log Analytics workspace.
-        /// Serialized Name: LogAnalyticsDestination.workspaceId
-        /// </summary>
+        /// <summary> The Customer ID of the Log Analytics workspace. </summary>
         public string WorkspaceId { get; }
         /// <summary>
         /// A friendly name for the destination. 
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// Serialized Name: LogAnalyticsDestination.name
         /// </summary>
         public string Name { get; set; }
     }

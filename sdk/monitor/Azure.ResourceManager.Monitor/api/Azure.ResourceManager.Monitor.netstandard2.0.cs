@@ -1128,6 +1128,23 @@ namespace Azure.ResourceManager.Monitor.Models
         public Azure.Core.ResourceIdentifier EventHubResourceId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataCollectionRuleKnownPrometheusForwarderDataSourceStream : System.IEquatable<Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataCollectionRuleKnownPrometheusForwarderDataSourceStream(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream MicrosoftPrometheusMetrics { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream left, Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream left, Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DataCollectionRuleMetadata : Azure.ResourceManager.Monitor.Models.DataCollectionRuleRelatedResourceMetadata
     {
         internal DataCollectionRuleMetadata() { }
@@ -1453,23 +1470,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public System.Collections.Generic.IList<string> LogDirectories { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Streams { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KnownPrometheusForwarderDataSourceStream : System.IEquatable<Azure.ResourceManager.Monitor.Models.KnownPrometheusForwarderDataSourceStream>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KnownPrometheusForwarderDataSourceStream(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.KnownPrometheusForwarderDataSourceStream MicrosoftPrometheusMetrics { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.KnownPrometheusForwarderDataSourceStream other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.KnownPrometheusForwarderDataSourceStream left, Azure.ResourceManager.Monitor.Models.KnownPrometheusForwarderDataSourceStream right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.KnownPrometheusForwarderDataSourceStream (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.KnownPrometheusForwarderDataSourceStream left, Azure.ResourceManager.Monitor.Models.KnownPrometheusForwarderDataSourceStream right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class LocationThresholdRuleCondition : Azure.ResourceManager.Monitor.Models.AlertRuleCondition
     {
@@ -2290,7 +2290,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public PrometheusForwarderDataSource() { }
         public System.Collections.Generic.IDictionary<string, string> LabelIncludeFilter { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.KnownPrometheusForwarderDataSourceStream> Streams { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream> Streams { get { throw null; } }
     }
     public enum RecurrenceFrequency
     {

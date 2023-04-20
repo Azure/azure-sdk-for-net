@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// An email receiver.
-    /// Serialized Name: EmailReceiver
-    /// </summary>
+    /// <summary> An email receiver. </summary>
     public partial class MonitorEmailReceiver
     {
         /// <summary> Initializes a new instance of MonitorEmailReceiver. </summary>
-        /// <param name="name">
-        /// The name of the email receiver. Names must be unique across all receivers within an action group.
-        /// Serialized Name: EmailReceiver.name
-        /// </param>
-        /// <param name="emailAddress">
-        /// The email address of this receiver.
-        /// Serialized Name: EmailReceiver.emailAddress
-        /// </param>
+        /// <param name="name"> The name of the email receiver. Names must be unique across all receivers within an action group. </param>
+        /// <param name="emailAddress"> The email address of this receiver. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="emailAddress"/> is null. </exception>
         public MonitorEmailReceiver(string name, string emailAddress)
         {
@@ -36,22 +27,10 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorEmailReceiver. </summary>
-        /// <param name="name">
-        /// The name of the email receiver. Names must be unique across all receivers within an action group.
-        /// Serialized Name: EmailReceiver.name
-        /// </param>
-        /// <param name="emailAddress">
-        /// The email address of this receiver.
-        /// Serialized Name: EmailReceiver.emailAddress
-        /// </param>
-        /// <param name="useCommonAlertSchema">
-        /// Indicates whether to use common alert schema.
-        /// Serialized Name: EmailReceiver.useCommonAlertSchema
-        /// </param>
-        /// <param name="status">
-        /// The receiver status of the e-mail.
-        /// Serialized Name: EmailReceiver.status
-        /// </param>
+        /// <param name="name"> The name of the email receiver. Names must be unique across all receivers within an action group. </param>
+        /// <param name="emailAddress"> The email address of this receiver. </param>
+        /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
+        /// <param name="status"> The receiver status of the e-mail. </param>
         internal MonitorEmailReceiver(string name, string emailAddress, bool? useCommonAlertSchema, MonitorReceiverStatus? status)
         {
             Name = name;
@@ -60,25 +39,13 @@ namespace Azure.ResourceManager.Monitor.Models
             Status = status;
         }
 
-        /// <summary>
-        /// The name of the email receiver. Names must be unique across all receivers within an action group.
-        /// Serialized Name: EmailReceiver.name
-        /// </summary>
+        /// <summary> The name of the email receiver. Names must be unique across all receivers within an action group. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The email address of this receiver.
-        /// Serialized Name: EmailReceiver.emailAddress
-        /// </summary>
+        /// <summary> The email address of this receiver. </summary>
         public string EmailAddress { get; set; }
-        /// <summary>
-        /// Indicates whether to use common alert schema.
-        /// Serialized Name: EmailReceiver.useCommonAlertSchema
-        /// </summary>
+        /// <summary> Indicates whether to use common alert schema. </summary>
         public bool? UseCommonAlertSchema { get; set; }
-        /// <summary>
-        /// The receiver status of the e-mail.
-        /// Serialized Name: EmailReceiver.status
-        /// </summary>
+        /// <summary> The receiver status of the e-mail. </summary>
         public MonitorReceiverStatus? Status { get; }
     }
 }

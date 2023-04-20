@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The MonitorDayOfWeek.
-    /// Serialized Name: MonitorDayOfWeek
-    /// </summary>
+    /// <summary> The MonitorDayOfWeek. </summary>
     public readonly partial struct MonitorDayOfWeek : IEquatable<MonitorDayOfWeek>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string FridayValue = "Friday";
         private const string SaturdayValue = "Saturday";
 
-        /// <summary>
-        /// Sunday
-        /// Serialized Name: MonitorDayOfWeek.Sunday
-        /// </summary>
+        /// <summary> Sunday. </summary>
         public static MonitorDayOfWeek Sunday { get; } = new MonitorDayOfWeek(SundayValue);
-        /// <summary>
-        /// Monday
-        /// Serialized Name: MonitorDayOfWeek.Monday
-        /// </summary>
+        /// <summary> Monday. </summary>
         public static MonitorDayOfWeek Monday { get; } = new MonitorDayOfWeek(MondayValue);
-        /// <summary>
-        /// Tuesday
-        /// Serialized Name: MonitorDayOfWeek.Tuesday
-        /// </summary>
+        /// <summary> Tuesday. </summary>
         public static MonitorDayOfWeek Tuesday { get; } = new MonitorDayOfWeek(TuesdayValue);
-        /// <summary>
-        /// Wednesday
-        /// Serialized Name: MonitorDayOfWeek.Wednesday
-        /// </summary>
+        /// <summary> Wednesday. </summary>
         public static MonitorDayOfWeek Wednesday { get; } = new MonitorDayOfWeek(WednesdayValue);
-        /// <summary>
-        /// Thursday
-        /// Serialized Name: MonitorDayOfWeek.Thursday
-        /// </summary>
+        /// <summary> Thursday. </summary>
         public static MonitorDayOfWeek Thursday { get; } = new MonitorDayOfWeek(ThursdayValue);
-        /// <summary>
-        /// Friday
-        /// Serialized Name: MonitorDayOfWeek.Friday
-        /// </summary>
+        /// <summary> Friday. </summary>
         public static MonitorDayOfWeek Friday { get; } = new MonitorDayOfWeek(FridayValue);
-        /// <summary>
-        /// Saturday
-        /// Serialized Name: MonitorDayOfWeek.Saturday
-        /// </summary>
+        /// <summary> Saturday. </summary>
         public static MonitorDayOfWeek Saturday { get; } = new MonitorDayOfWeek(SaturdayValue);
         /// <summary> Determines if two <see cref="MonitorDayOfWeek"/> values are the same. </summary>
         public static bool operator ==(MonitorDayOfWeek left, MonitorDayOfWeek right) => left.Equals(right);

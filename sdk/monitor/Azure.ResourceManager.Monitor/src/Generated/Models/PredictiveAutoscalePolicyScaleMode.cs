@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// the predictive autoscale mode
-    /// Serialized Name: PredictiveAutoscalePolicyScaleMode
-    /// </summary>
+    /// <summary> the predictive autoscale mode. </summary>
     public enum PredictiveAutoscalePolicyScaleMode
     {
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: PredictiveAutoscalePolicyScaleMode.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         Disabled,
-        /// <summary>
-        /// ForecastOnly
-        /// Serialized Name: PredictiveAutoscalePolicyScaleMode.ForecastOnly
-        /// </summary>
+        /// <summary> ForecastOnly. </summary>
         ForecastOnly,
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: PredictiveAutoscalePolicyScaleMode.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         Enabled
     }
 }

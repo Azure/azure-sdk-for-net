@@ -7,36 +7,18 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Operators allowed in the rule condition.
-    /// Serialized Name: ConditionOperator
-    /// </summary>
+    /// <summary> Operators allowed in the rule condition. </summary>
     public enum MonitorConditionOperator
     {
-        /// <summary>
-        /// GreaterThan
-        /// Serialized Name: ConditionOperator.GreaterThan
-        /// </summary>
+        /// <summary> GreaterThan. </summary>
         GreaterThan,
-        /// <summary>
-        /// GreaterThanOrEqual
-        /// Serialized Name: ConditionOperator.GreaterThanOrEqual
-        /// </summary>
+        /// <summary> GreaterThanOrEqual. </summary>
         GreaterThanOrEqual,
-        /// <summary>
-        /// LessThan
-        /// Serialized Name: ConditionOperator.LessThan
-        /// </summary>
+        /// <summary> LessThan. </summary>
         LessThan,
-        /// <summary>
-        /// LessThanOrEqual
-        /// Serialized Name: ConditionOperator.LessThanOrEqual
-        /// </summary>
+        /// <summary> LessThanOrEqual. </summary>
         LessThanOrEqual,
-        /// <summary>
-        /// Equals
-        /// Serialized Name: ConditionOperator.Equals
-        /// </summary>
+        /// <summary> Equals. </summary>
         EqualsValue
     }
 }

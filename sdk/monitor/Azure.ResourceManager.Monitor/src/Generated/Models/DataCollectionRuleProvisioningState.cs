@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The resource provisioning state.
-    /// Serialized Name: KnownDataCollectionRuleProvisioningState
-    /// </summary>
+    /// <summary> The resource provisioning state. </summary>
     public readonly partial struct DataCollectionRuleProvisioningState : IEquatable<DataCollectionRuleProvisioningState>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.Monitor.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Creating
-        /// Serialized Name: KnownDataCollectionRuleProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static DataCollectionRuleProvisioningState Creating { get; } = new DataCollectionRuleProvisioningState(CreatingValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: KnownDataCollectionRuleProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static DataCollectionRuleProvisioningState Updating { get; } = new DataCollectionRuleProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: KnownDataCollectionRuleProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static DataCollectionRuleProvisioningState Deleting { get; } = new DataCollectionRuleProvisioningState(DeletingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: KnownDataCollectionRuleProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static DataCollectionRuleProvisioningState Succeeded { get; } = new DataCollectionRuleProvisioningState(SucceededValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: KnownDataCollectionRuleProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static DataCollectionRuleProvisioningState Canceled { get; } = new DataCollectionRuleProvisioningState(CanceledValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: KnownDataCollectionRuleProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static DataCollectionRuleProvisioningState Failed { get; } = new DataCollectionRuleProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="DataCollectionRuleProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DataCollectionRuleProvisioningState left, DataCollectionRuleProvisioningState right) => left.Equals(right);

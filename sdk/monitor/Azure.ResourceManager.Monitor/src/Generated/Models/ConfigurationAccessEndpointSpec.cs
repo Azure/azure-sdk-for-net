@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Definition of the endpoint used for accessing configuration.
-    /// Serialized Name: ConfigurationAccessEndpointSpec
-    /// </summary>
+    /// <summary> Definition of the endpoint used for accessing configuration. </summary>
     internal partial class ConfigurationAccessEndpointSpec
     {
         /// <summary> Initializes a new instance of ConfigurationAccessEndpointSpec. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of ConfigurationAccessEndpointSpec. </summary>
-        /// <param name="endpoint">
-        /// The endpoint. This property is READ-ONLY.
-        /// Serialized Name: ConfigurationAccessEndpointSpec.endpoint
-        /// </param>
+        /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
         internal ConfigurationAccessEndpointSpec(string endpoint)
         {
             Endpoint = endpoint;
         }
 
-        /// <summary>
-        /// The endpoint. This property is READ-ONLY.
-        /// Serialized Name: ConfigurationAccessEndpointSpec.endpoint
-        /// </summary>
+        /// <summary> The endpoint. This property is READ-ONLY. </summary>
         public string Endpoint { get; }
     }
 }

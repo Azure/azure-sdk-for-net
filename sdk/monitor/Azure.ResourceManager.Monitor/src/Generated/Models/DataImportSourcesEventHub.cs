@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// Definition of Event Hub configuration.
-    /// Serialized Name: DataImportSourcesEventHub
-    /// </summary>
+    /// <summary> Definition of Event Hub configuration. </summary>
     public partial class DataImportSourcesEventHub : DataCollectionRuleEventHubDataSource
     {
         /// <summary> Initializes a new instance of DataImportSourcesEventHub. </summary>
@@ -22,16 +19,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name">
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
-        /// Serialized Name: EventHubDataSource.name
         /// </param>
-        /// <param name="consumerGroup">
-        /// Event Hub consumer group name
-        /// Serialized Name: EventHubDataSource.consumerGroup
-        /// </param>
-        /// <param name="stream">
-        /// The stream to collect from EventHub
-        /// Serialized Name: EventHubDataSource.stream
-        /// </param>
+        /// <param name="consumerGroup"> Event Hub consumer group name. </param>
+        /// <param name="stream"> The stream to collect from EventHub. </param>
         internal DataImportSourcesEventHub(string name, string consumerGroup, string stream) : base(name, consumerGroup, stream)
         {
         }

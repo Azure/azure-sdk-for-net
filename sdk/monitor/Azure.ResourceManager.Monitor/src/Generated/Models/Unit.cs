@@ -7,76 +7,34 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The unit of the metric.
-    /// Serialized Name: Unit
-    /// </summary>
+    /// <summary> The unit of the metric. </summary>
     internal enum Unit
     {
-        /// <summary>
-        /// Unspecified
-        /// Serialized Name: Unit.Unspecified
-        /// </summary>
+        /// <summary> Unspecified. </summary>
         Unspecified,
-        /// <summary>
-        /// Count
-        /// Serialized Name: Unit.Count
-        /// </summary>
+        /// <summary> Count. </summary>
         Count,
-        /// <summary>
-        /// Bytes
-        /// Serialized Name: Unit.Bytes
-        /// </summary>
+        /// <summary> Bytes. </summary>
         Bytes,
-        /// <summary>
-        /// Seconds
-        /// Serialized Name: Unit.Seconds
-        /// </summary>
+        /// <summary> Seconds. </summary>
         Seconds,
-        /// <summary>
-        /// CountPerSecond
-        /// Serialized Name: Unit.CountPerSecond
-        /// </summary>
+        /// <summary> CountPerSecond. </summary>
         CountPerSecond,
-        /// <summary>
-        /// BytesPerSecond
-        /// Serialized Name: Unit.BytesPerSecond
-        /// </summary>
+        /// <summary> BytesPerSecond. </summary>
         BytesPerSecond,
-        /// <summary>
-        /// Percent
-        /// Serialized Name: Unit.Percent
-        /// </summary>
+        /// <summary> Percent. </summary>
         Percent,
-        /// <summary>
-        /// MilliSeconds
-        /// Serialized Name: Unit.MilliSeconds
-        /// </summary>
+        /// <summary> MilliSeconds. </summary>
         MilliSeconds,
-        /// <summary>
-        /// ByteSeconds
-        /// Serialized Name: Unit.ByteSeconds
-        /// </summary>
+        /// <summary> ByteSeconds. </summary>
         ByteSeconds,
-        /// <summary>
-        /// Cores
-        /// Serialized Name: Unit.Cores
-        /// </summary>
+        /// <summary> Cores. </summary>
         Cores,
-        /// <summary>
-        /// MilliCores
-        /// Serialized Name: Unit.MilliCores
-        /// </summary>
+        /// <summary> MilliCores. </summary>
         MilliCores,
-        /// <summary>
-        /// NanoCores
-        /// Serialized Name: Unit.NanoCores
-        /// </summary>
+        /// <summary> NanoCores. </summary>
         NanoCores,
-        /// <summary>
-        /// BitsPerSecond
-        /// Serialized Name: Unit.BitsPerSecond
-        /// </summary>
+        /// <summary> BitsPerSecond. </summary>
         BitsPerSecond
     }
 }
