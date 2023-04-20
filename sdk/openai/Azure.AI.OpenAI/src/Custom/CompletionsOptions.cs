@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -156,11 +157,21 @@ namespace Azure.AI.OpenAI
         internal string InternalNonAzureModelName { get; set; }
 
         /// <summary> Initializes a new instance of CompletionsOptions. </summary>
-        public CompletionsOptions()
+        /// <param name="prompts"> The prompts to generate completions from. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="prompts"/> is null. </exception>
+        public CompletionsOptions(IEnumerable<string> prompts)
         {
-            Prompts = new ChangeTrackingList<string>();
+            Argument.AssertNotNull(prompts, nameof(prompts));
+
+            Prompts = prompts.ToList();
             TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
             StopSequences = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of CompletionsOptions. </summary>
+        public CompletionsOptions()
+            : this(new ChangeTrackingList<string>())
+        {
         }
     }
 }

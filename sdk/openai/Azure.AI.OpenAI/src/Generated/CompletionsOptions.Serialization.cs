@@ -21,7 +21,7 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<IList<string>> prompt = default;
+            IList<string> prompt = default;
             Optional<int?> maxTokens = default;
             Optional<float?> temperature = default;
             Optional<float?> topP = default;
@@ -40,11 +40,6 @@ namespace Azure.AI.OpenAI
             {
                 if (property.NameEquals("prompt"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -194,7 +189,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new CompletionsOptions(Optional.ToList(prompt), Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user, Optional.ToNullable(n), Optional.ToNullable(logprobs), Optional.ToNullable(echo), Optional.ToList(stop), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(bestOf), Optional.ToNullable(stream), model);
+            return new CompletionsOptions(prompt, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user, Optional.ToNullable(n), Optional.ToNullable(logprobs), Optional.ToNullable(echo), Optional.ToList(stop), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(bestOf), Optional.ToNullable(stream), model);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

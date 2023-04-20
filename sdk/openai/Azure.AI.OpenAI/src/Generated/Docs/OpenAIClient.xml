@@ -167,13 +167,17 @@ vector-based relatedness of the provided input.
     </member>
     <member name="GetCompletionsAsync(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call GetCompletionsAsync with required parameters and parse the result.
+This sample shows how to call GetCompletionsAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new OpenAIClient(endpoint, credential);
 
-var data = new {};
+var data = new {
+    prompt = new[] {
+        "<String>"
+    },
+};
 
 Response response = await client.GetCompletionsAsync("<deploymentId>", RequestContent.Create(data));
 
@@ -238,8 +242,7 @@ Request Body:
 
 Schema for <c>CompletionsOptions</c>:
 <code>{
-  prompt: [string], # Optional. The prompts to generate completions from. Defaults to a single prompt of &amp;lt;|endoftext|&amp;gt; if not
-otherwise specified.
+  prompt: [string], # Required. The prompts to generate completions from.
   max_tokens: number, # Optional. The maximum number of tokens to generate.
   temperature: number, # Optional. The sampling temperature to use that controls the apparent creativity of generated completions.
 Higher values will make output more random while lower values will make results more focused
@@ -323,13 +326,17 @@ Token limits and other settings may limit the number of choices generated.
     </member>
     <member name="GetCompletions(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call GetCompletions with required parameters and parse the result.
+This sample shows how to call GetCompletions with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new OpenAIClient(endpoint, credential);
 
-var data = new {};
+var data = new {
+    prompt = new[] {
+        "<String>"
+    },
+};
 
 Response response = client.GetCompletions("<deploymentId>", RequestContent.Create(data));
 
@@ -394,8 +401,7 @@ Request Body:
 
 Schema for <c>CompletionsOptions</c>:
 <code>{
-  prompt: [string], # Optional. The prompts to generate completions from. Defaults to a single prompt of &amp;lt;|endoftext|&amp;gt; if not
-otherwise specified.
+  prompt: [string], # Required. The prompts to generate completions from.
   max_tokens: number, # Optional. The maximum number of tokens to generate.
   temperature: number, # Optional. The sampling temperature to use that controls the apparent creativity of generated completions.
 Higher values will make output more random while lower values will make results more focused

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
@@ -20,10 +21,7 @@ namespace Azure.AI.OpenAI
     {
 
         /// <summary> Initializes a new instance of CompletionsOptions. </summary>
-        /// <param name="prompts">
-        /// The prompts to generate completions from. Defaults to a single prompt of &lt;|endoftext|&gt; if not
-        /// otherwise specified.
-        /// </param>
+        /// <param name="prompts"> The prompts to generate completions from. </param>
         /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
         /// <param name="temperature">
         /// The sampling temperature to use that controls the apparent creativity of generated completions.

@@ -18,7 +18,8 @@ namespace Azure.AI.OpenAI
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Prompts))
+            // CUSTOM: only serialize if prompts is non-empty
+            if (Optional.IsCollectionDefined(Prompts) && Prompts.Count > 0)
             {
                 writer.WritePropertyName("prompt"u8);
                 writer.WriteStartArray();

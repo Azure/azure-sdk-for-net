@@ -101,6 +101,7 @@ namespace Azure.AI.OpenAI
     public partial class CompletionsOptions
     {
         public CompletionsOptions() { }
+        public CompletionsOptions(System.Collections.Generic.IEnumerable<string> prompts) { }
         public int? ChoicesPerPrompt { get { throw null; } set { } }
         public bool? Echo { get { throw null; } set { } }
         public float? FrequencyPenalty { get { throw null; } set { } }
