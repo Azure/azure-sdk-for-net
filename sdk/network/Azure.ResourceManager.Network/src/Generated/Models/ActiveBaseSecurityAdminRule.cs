@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         protected ActiveBaseSecurityAdminRule()
         {
             RuleCollectionAppliesToGroups = new ChangeTrackingList<NetworkManagerSecurityGroupItem>();
-            RuleGroups = new ChangeTrackingList<ConfigurationGroup>();
+            RuleGroups = new ChangeTrackingList<NetworkConfigurationGroup>();
         }
 
         /// <summary> Initializes a new instance of ActiveBaseSecurityAdminRule. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleCollectionAppliesToGroups"> Groups for rule collection. </param>
         /// <param name="ruleGroups"> Effective configuration groups. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
-        internal ActiveBaseSecurityAdminRule(string id, DateTimeOffset? commitOn, string region, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<ConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind)
+        internal ActiveBaseSecurityAdminRule(string id, DateTimeOffset? commitOn, string region, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind)
         {
             Id = id;
             CommitOn = commitOn;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Groups for rule collection. </summary>
         public IReadOnlyList<NetworkManagerSecurityGroupItem> RuleCollectionAppliesToGroups { get; }
         /// <summary> Effective configuration groups. </summary>
-        public IReadOnlyList<ConfigurationGroup> RuleGroups { get; }
+        public IReadOnlyList<NetworkConfigurationGroup> RuleGroups { get; }
         /// <summary> Whether the rule is custom or default. </summary>
         internal EffectiveAdminRuleKind Kind { get; set; }
     }

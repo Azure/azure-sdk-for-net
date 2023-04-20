@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Network
             {
                 switch (discriminator.GetString())
                 {
-                    case "Custom": return AdminRule.DeserializeAdminRule(element);
-                    case "Default": return DefaultAdminRule.DeserializeDefaultAdminRule(element);
+                    case "Custom": return NetworkAdminRule.DeserializeNetworkAdminRule(element);
+                    case "Default": return NetworkDefaultAdminRule.DeserializeNetworkDefaultAdminRule(element);
                 }
             }
             AdminRuleKind kind = default;

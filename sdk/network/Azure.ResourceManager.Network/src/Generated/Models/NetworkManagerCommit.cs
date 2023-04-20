@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetLocations"> List of target locations. </param>
         /// <param name="commitType"> Commit Type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLocations"/> is null. </exception>
-        public NetworkManagerCommit(IEnumerable<string> targetLocations, ConfigurationType commitType)
+        public NetworkManagerCommit(IEnumerable<string> targetLocations, NetworkConfigurationDeploymentType commitType)
         {
             Argument.AssertNotNull(targetLocations, nameof(targetLocations));
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetLocations"> List of target locations. </param>
         /// <param name="configurationIds"> List of configuration ids. </param>
         /// <param name="commitType"> Commit Type. </param>
-        internal NetworkManagerCommit(string commitId, IList<string> targetLocations, IList<string> configurationIds, ConfigurationType commitType)
+        internal NetworkManagerCommit(string commitId, IList<string> targetLocations, IList<string> configurationIds, NetworkConfigurationDeploymentType commitType)
         {
             CommitId = commitId;
             TargetLocations = targetLocations;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of configuration ids. </summary>
         public IList<string> ConfigurationIds { get; }
         /// <summary> Commit Type. </summary>
-        public ConfigurationType CommitType { get; set; }
+        public NetworkConfigurationDeploymentType CommitType { get; set; }
     }
 }

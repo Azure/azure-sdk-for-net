@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network
             Optional<FirewallPolicySnat> snat = default;
             Optional<FirewallPolicySQL> sql = default;
             Optional<DnsSettings> dnsSettings = default;
-            Optional<ExplicitProxy> explicitProxy = default;
+            Optional<FirewallPolicyExplicitProxy> explicitProxy = default;
             Optional<FirewallPolicyIntrusionDetection> intrusionDetection = default;
             Optional<FirewallPolicyTransportSecurity> transportSecurity = default;
             Optional<FirewallPolicySku> sku = default;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            explicitProxy = ExplicitProxy.DeserializeExplicitProxy(property0.Value);
+                            explicitProxy = FirewallPolicyExplicitProxy.DeserializeFirewallPolicyExplicitProxy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("intrusionDetection"u8))

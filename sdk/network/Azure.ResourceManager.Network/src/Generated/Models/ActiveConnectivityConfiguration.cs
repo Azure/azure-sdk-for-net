@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
-        /// <param name="commitOn"> Deployment time string. </param>
+        /// <param name="committedOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>
-        internal ActiveConnectivityConfiguration(string id, IReadOnlyList<ConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<Hub> hubs, IsGlobal? isGlobal, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, DateTimeOffset? commitOn, string region) : base(id, configurationGroups, description, connectivityTopology, hubs, isGlobal, appliesToGroups, provisioningState, deleteExistingPeering)
+        internal ActiveConnectivityConfiguration(string id, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, DateTimeOffset? committedOn, AzureLocation? region) : base(id, configurationGroups, description, connectivityTopology, hubs, isGlobal, appliesToGroups, provisioningState, deleteExistingPeering)
         {
-            CommitOn = commitOn;
+            CommittedOn = committedOn;
             Region = region;
         }
 
         /// <summary> Deployment time string. </summary>
-        public DateTimeOffset? CommitOn { get; }
+        public DateTimeOffset? CommittedOn { get; }
         /// <summary> Deployment region. </summary>
-        public string Region { get; }
+        public AzureLocation? Region { get; }
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> description = default;
             Optional<NetworkManagerPropertiesNetworkManagerScopes> networkManagerScopes = default;
-            Optional<IList<ConfigurationType>> networkManagerScopeAccesses = default;
+            Optional<IList<NetworkConfigurationDeploymentType>> networkManagerScopeAccesses = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ConfigurationType> array = new List<ConfigurationType>();
+                            List<NetworkConfigurationDeploymentType> array = new List<NetworkConfigurationDeploymentType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new ConfigurationType(item.GetString()));
+                                array.Add(new NetworkConfigurationDeploymentType(item.GetString()));
                             }
                             networkManagerScopeAccesses = array;
                             continue;

@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IList<Criterion>> matchCriteria = default;
-            Optional<IList<Action>> actions = default;
-            Optional<NextStep> nextStepIfMatched = default;
+            Optional<IList<RouteCriterion>> matchCriteria = default;
+            Optional<IList<RouteMapAction>> actions = default;
+            Optional<RouteMapNextStepBehavior> nextStepIfMatched = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Criterion> array = new List<Criterion>();
+                    List<RouteCriterion> array = new List<RouteCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Criterion.DeserializeCriterion(item));
+                        array.Add(RouteCriterion.DeserializeRouteCriterion(item));
                     }
                     matchCriteria = array;
                     continue;
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Action> array = new List<Action>();
+                    List<RouteMapAction> array = new List<RouteMapAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Action.DeserializeAction(item));
+                        array.Add(RouteMapAction.DeserializeRouteMapAction(item));
                     }
                     actions = array;
                     continue;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nextStepIfMatched = new NextStep(property.Value.GetString());
+                    nextStepIfMatched = new RouteMapNextStepBehavior(property.Value.GetString());
                     continue;
                 }
             }

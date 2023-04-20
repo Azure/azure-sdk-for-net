@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the BaseAdminRule data model.
     /// Network base admin rule.
     /// Please note <see cref="BaseAdminRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AdminRule"/> and <see cref="DefaultAdminRule"/>.
+    /// The available derived classes include <see cref="NetworkAdminRule"/> and <see cref="NetworkDefaultAdminRule"/>.
     /// </summary>
     public partial class BaseAdminRuleData : ResourceData
     {

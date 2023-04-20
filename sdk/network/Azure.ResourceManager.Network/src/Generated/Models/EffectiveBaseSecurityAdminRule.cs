@@ -21,19 +21,19 @@ namespace Azure.ResourceManager.Network.Models
         protected EffectiveBaseSecurityAdminRule()
         {
             RuleCollectionAppliesToGroups = new ChangeTrackingList<NetworkManagerSecurityGroupItem>();
-            RuleGroups = new ChangeTrackingList<ConfigurationGroup>();
+            RuleGroups = new ChangeTrackingList<NetworkConfigurationGroup>();
         }
 
         /// <summary> Initializes a new instance of EffectiveBaseSecurityAdminRule. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="resourceId"> Resource ID. </param>
         /// <param name="configurationDescription"> A description of the security admin configuration. </param>
         /// <param name="ruleCollectionDescription"> A description of the rule collection. </param>
         /// <param name="ruleCollectionAppliesToGroups"> Groups for rule collection. </param>
         /// <param name="ruleGroups"> Effective configuration groups. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
-        internal EffectiveBaseSecurityAdminRule(string id, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<ConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind)
+        internal EffectiveBaseSecurityAdminRule(ResourceIdentifier resourceId, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind)
         {
-            Id = id;
+            ResourceId = resourceId;
             ConfigurationDescription = configurationDescription;
             RuleCollectionDescription = ruleCollectionDescription;
             RuleCollectionAppliesToGroups = ruleCollectionAppliesToGroups;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> A description of the security admin configuration. </summary>
         public string ConfigurationDescription { get; }
         /// <summary> A description of the rule collection. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Groups for rule collection. </summary>
         public IReadOnlyList<NetworkManagerSecurityGroupItem> RuleCollectionAppliesToGroups { get; }
         /// <summary> Effective configuration groups. </summary>
-        public IReadOnlyList<ConfigurationGroup> RuleGroups { get; }
+        public IReadOnlyList<NetworkConfigurationGroup> RuleGroups { get; }
         /// <summary> Whether the rule is custom or default. </summary>
         internal EffectiveAdminRuleKind Kind { get; set; }
     }

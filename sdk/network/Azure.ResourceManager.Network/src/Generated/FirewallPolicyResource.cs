@@ -372,18 +372,18 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="idpsQueryObject"> The IdpsQueryObject to use. </param>
+        /// <param name="content"> The IdpsQueryContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="idpsQueryObject"/> is null. </exception>
-        public virtual async Task<Response<QueryResults>> GetFirewallPolicyIdpsSignatureAsync(IdpsQueryObject idpsQueryObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<IdpsSignatureListResult>> GetFirewallPolicyIdpsSignatureAsync(IdpsQueryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(idpsQueryObject, nameof(idpsQueryObject));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _firewallPolicyIdpsSignaturesClientDiagnostics.CreateScope("FirewallPolicyResource.GetFirewallPolicyIdpsSignature");
             scope.Start();
             try
             {
-                var response = await _firewallPolicyIdpsSignaturesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, idpsQueryObject, cancellationToken).ConfigureAwait(false);
+                var response = await _firewallPolicyIdpsSignaturesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -406,18 +406,18 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="idpsQueryObject"> The IdpsQueryObject to use. </param>
+        /// <param name="content"> The IdpsQueryContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="idpsQueryObject"/> is null. </exception>
-        public virtual Response<QueryResults> GetFirewallPolicyIdpsSignature(IdpsQueryObject idpsQueryObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<IdpsSignatureListResult> GetFirewallPolicyIdpsSignature(IdpsQueryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(idpsQueryObject, nameof(idpsQueryObject));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _firewallPolicyIdpsSignaturesClientDiagnostics.CreateScope("FirewallPolicyResource.GetFirewallPolicyIdpsSignature");
             scope.Start();
             try
             {
-                var response = _firewallPolicyIdpsSignaturesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, idpsQueryObject, cancellationToken);
+                var response = _firewallPolicyIdpsSignaturesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -440,18 +440,18 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="signatureOverridesFilterValuesQuery"> The SignatureOverridesFilterValuesQuery to use. </param>
+        /// <param name="content"> The SignatureOverridesFilterValuesQueryContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="signatureOverridesFilterValuesQuery"/> is null. </exception>
-        public virtual async Task<Response<SignatureOverridesFilterValuesResponse>> GetFirewallPolicyIdpsSignaturesFilterValueAsync(SignatureOverridesFilterValuesQuery signatureOverridesFilterValuesQuery, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<SignatureOverridesFilterValuesResult>> GetFirewallPolicyIdpsSignaturesFilterValueAsync(SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(signatureOverridesFilterValuesQuery, nameof(signatureOverridesFilterValuesQuery));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics.CreateScope("FirewallPolicyResource.GetFirewallPolicyIdpsSignaturesFilterValue");
             scope.Start();
             try
             {
-                var response = await _firewallPolicyIdpsSignaturesFilterValuesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, signatureOverridesFilterValuesQuery, cancellationToken).ConfigureAwait(false);
+                var response = await _firewallPolicyIdpsSignaturesFilterValuesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -474,18 +474,18 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="signatureOverridesFilterValuesQuery"> The SignatureOverridesFilterValuesQuery to use. </param>
+        /// <param name="content"> The SignatureOverridesFilterValuesQueryContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="signatureOverridesFilterValuesQuery"/> is null. </exception>
-        public virtual Response<SignatureOverridesFilterValuesResponse> GetFirewallPolicyIdpsSignaturesFilterValue(SignatureOverridesFilterValuesQuery signatureOverridesFilterValuesQuery, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<SignatureOverridesFilterValuesResult> GetFirewallPolicyIdpsSignaturesFilterValue(SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(signatureOverridesFilterValuesQuery, nameof(signatureOverridesFilterValuesQuery));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics.CreateScope("FirewallPolicyResource.GetFirewallPolicyIdpsSignaturesFilterValue");
             scope.Start();
             try
             {
-                var response = _firewallPolicyIdpsSignaturesFilterValuesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, signatureOverridesFilterValuesQuery, cancellationToken);
+                var response = _firewallPolicyIdpsSignaturesFilterValuesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

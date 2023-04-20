@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("authorizationMessage"u8);
                 writer.WriteStringValue(AuthorizationMessage);
             }
-            if (Optional.IsDefined(CustomIPPrefixParent))
+            if (Optional.IsDefined(ParentCustomIPPrefix))
             {
                 writer.WritePropertyName("customIpPrefixParent"u8);
-                JsonSerializer.Serialize(writer, CustomIPPrefixParent);
+                JsonSerializer.Serialize(writer, ParentCustomIPPrefix);
             }
             if (Optional.IsDefined(CommissionedState))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network
             Optional<IReadOnlyList<WritableSubResource>> childCustomIPPrefixes = default;
             Optional<CommissionedState> commissionedState = default;
             Optional<bool> expressRouteAdvertise = default;
-            Optional<Geo> geo = default;
+            Optional<CidrAdvertisingGeoCode> geo = default;
             Optional<bool> noInternetAdvertise = default;
             Optional<CustomIPPrefixType> prefixType = default;
             Optional<IReadOnlyList<WritableSubResource>> publicIPPrefixes = default;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            geo = new Geo(property0.Value.GetString());
+                            geo = new CidrAdvertisingGeoCode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("noInternetAdvertise"u8))

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> region = default;
             Optional<DeploymentStatus> deploymentStatus = default;
             Optional<IReadOnlyList<string>> configurationIds = default;
-            Optional<ConfigurationType> deploymentType = default;
+            Optional<NetworkConfigurationDeploymentType> deploymentType = default;
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    deploymentType = new ConfigurationType(property.Value.GetString());
+                    deploymentType = new NetworkConfigurationDeploymentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorMessage"u8))

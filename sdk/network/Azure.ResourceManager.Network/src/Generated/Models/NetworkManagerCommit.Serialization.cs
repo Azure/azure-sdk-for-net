@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> commitId = default;
             IList<string> targetLocations = default;
             Optional<IList<string>> configurationIds = default;
-            ConfigurationType commitType = default;
+            NetworkConfigurationDeploymentType commitType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commitId"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("commitType"u8))
                 {
-                    commitType = new ConfigurationType(property.Value.GetString());
+                    commitType = new NetworkConfigurationDeploymentType(property.Value.GetString());
                     continue;
                 }
             }

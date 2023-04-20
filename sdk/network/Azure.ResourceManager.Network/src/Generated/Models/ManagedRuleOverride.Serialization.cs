@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string ruleId = default;
             Optional<ManagedRuleEnabledState> state = default;
-            Optional<ActionType> action = default;
+            Optional<RuleMatchActionType> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    action = new ActionType(property.Value.GetString());
+                    action = new RuleMatchActionType(property.Value.GetString());
                     continue;
                 }
             }

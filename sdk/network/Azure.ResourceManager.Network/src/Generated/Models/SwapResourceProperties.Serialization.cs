@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<SlotType> slotType = default;
+            Optional<SwapSlotType> slotType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("slotType"u8))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    slotType = property.Value.GetString().ToSlotType();
+                    slotType = property.Value.GetString().ToSwapSlotType();
                     continue;
                 }
             }

@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<string> id = default;
-            Optional<IReadOnlyList<ConfigurationGroup>> configurationGroups = default;
+            Optional<IReadOnlyList<NetworkConfigurationGroup>> configurationGroups = default;
             Optional<string> description = default;
             Optional<ConnectivityTopology> connectivityTopology = default;
-            Optional<IReadOnlyList<Hub>> hubs = default;
-            Optional<IsGlobal> isGlobal = default;
+            Optional<IReadOnlyList<ConnectivityHub>> hubs = default;
+            Optional<GlobalMeshSupportFlag> isGlobal = default;
             Optional<IReadOnlyList<ConnectivityGroupItem>> appliesToGroups = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<DeleteExistingPeering> deleteExistingPeering = default;
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConfigurationGroup> array = new List<ConfigurationGroup>();
+                    List<NetworkConfigurationGroup> array = new List<NetworkConfigurationGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationGroup.DeserializeConfigurationGroup(item));
+                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item));
                     }
                     configurationGroups = array;
                     continue;
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Hub> array = new List<Hub>();
+                            List<ConnectivityHub> array = new List<ConnectivityHub>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Hub.DeserializeHub(item));
+                                array.Add(ConnectivityHub.DeserializeConnectivityHub(item));
                             }
                             hubs = array;
                             continue;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            isGlobal = new IsGlobal(property0.Value.GetString());
+                            isGlobal = new GlobalMeshSupportFlag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("appliesToGroups"u8))

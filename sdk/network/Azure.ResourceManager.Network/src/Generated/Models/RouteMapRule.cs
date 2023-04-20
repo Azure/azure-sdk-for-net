@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of RouteMapRule. </summary>
         public RouteMapRule()
         {
-            MatchCriteria = new ChangeTrackingList<Criterion>();
-            Actions = new ChangeTrackingList<Action>();
+            MatchCriteria = new ChangeTrackingList<RouteCriterion>();
+            Actions = new ChangeTrackingList<RouteMapAction>();
         }
 
         /// <summary> Initializes a new instance of RouteMapRule. </summary>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="matchCriteria"> List of matching criterion which will be applied to traffic. </param>
         /// <param name="actions"> List of actions which will be applied on a match. </param>
         /// <param name="nextStepIfMatched"> Next step after rule is evaluated. Current supported behaviors are &apos;Continue&apos;(to next rule) and &apos;Terminate&apos;. </param>
-        internal RouteMapRule(string name, IList<Criterion> matchCriteria, IList<Action> actions, NextStep? nextStepIfMatched)
+        internal RouteMapRule(string name, IList<RouteCriterion> matchCriteria, IList<RouteMapAction> actions, RouteMapNextStepBehavior? nextStepIfMatched)
         {
             Name = name;
             MatchCriteria = matchCriteria;
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The unique name for the rule. </summary>
         public string Name { get; set; }
         /// <summary> List of matching criterion which will be applied to traffic. </summary>
-        public IList<Criterion> MatchCriteria { get; }
+        public IList<RouteCriterion> MatchCriteria { get; }
         /// <summary> List of actions which will be applied on a match. </summary>
-        public IList<Action> Actions { get; }
+        public IList<RouteMapAction> Actions { get; }
         /// <summary> Next step after rule is evaluated. Current supported behaviors are &apos;Continue&apos;(to next rule) and &apos;Terminate&apos;. </summary>
-        public NextStep? NextStepIfMatched { get; set; }
+        public RouteMapNextStepBehavior? NextStepIfMatched { get; set; }
     }
 }

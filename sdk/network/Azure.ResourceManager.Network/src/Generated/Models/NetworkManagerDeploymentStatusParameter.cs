@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Network.Models
         public NetworkManagerDeploymentStatusParameter()
         {
             Regions = new ChangeTrackingList<string>();
-            DeploymentTypes = new ChangeTrackingList<ConfigurationType>();
+            DeploymentTypes = new ChangeTrackingList<NetworkConfigurationDeploymentType>();
         }
 
         /// <summary> List of locations. </summary>
         public IList<string> Regions { get; }
         /// <summary> List of deployment types. </summary>
-        public IList<ConfigurationType> DeploymentTypes { get; }
+        public IList<NetworkConfigurationDeploymentType> DeploymentTypes { get; }
         /// <summary> Continuation token for pagination, capturing the next page size and offset, as well as the context of the query. </summary>
         public string SkipToken { get; set; }
     }

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of SwapResourceProperties. </summary>
         /// <param name="slotType"> Specifies slot info on a cloud service. </param>
-        internal SwapResourceProperties(SlotType? slotType)
+        internal SwapResourceProperties(SwapSlotType? slotType)
         {
             SlotType = slotType;
         }
 
         /// <summary> Specifies slot info on a cloud service. </summary>
-        public SlotType? SlotType { get; set; }
+        public SwapSlotType? SlotType { get; set; }
     }
 }

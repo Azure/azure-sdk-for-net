@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Network
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<ConnectivityTopology> connectivityTopology = default;
-            Optional<IList<Hub>> hubs = default;
-            Optional<IsGlobal> isGlobal = default;
+            Optional<IList<ConnectivityHub>> hubs = default;
+            Optional<GlobalMeshSupportFlag> isGlobal = default;
             Optional<IList<ConnectivityGroupItem>> appliesToGroups = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<DeleteExistingPeering> deleteExistingPeering = default;
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Hub> array = new List<Hub>();
+                            List<ConnectivityHub> array = new List<ConnectivityHub>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Hub.DeserializeHub(item));
+                                array.Add(ConnectivityHub.DeserializeConnectivityHub(item));
                             }
                             hubs = array;
                             continue;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            isGlobal = new IsGlobal(property0.Value.GetString());
+                            isGlobal = new GlobalMeshSupportFlag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("appliesToGroups"u8))

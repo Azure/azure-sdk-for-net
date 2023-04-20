@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<QosPortRange>> sourcePortRanges = default;
             Optional<IList<QosPortRange>> destinationPortRanges = default;
             Optional<ProtocolType> protocol = default;
-            Optional<IList<QosDefinition>> qosDefinitionCollection = default;
+            Optional<IList<DscpQosDefinition>> qosDefinitionCollection = default;
             Optional<string> qosCollectionId = default;
             Optional<IReadOnlyList<NetworkInterfaceData>> associatedNetworkInterfaces = default;
             Optional<Guid> resourceGuid = default;
@@ -297,10 +297,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<QosDefinition> array = new List<QosDefinition>();
+                            List<DscpQosDefinition> array = new List<DscpQosDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosDefinition.DeserializeQosDefinition(item));
+                                array.Add(DscpQosDefinition.DeserializeDscpQosDefinition(item));
                             }
                             qosDefinitionCollection = array;
                             continue;

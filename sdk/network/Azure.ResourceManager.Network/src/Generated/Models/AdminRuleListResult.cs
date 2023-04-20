@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="value">
         /// A list of admin rules
         /// Please note <see cref="BaseAdminRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AdminRule"/> and <see cref="DefaultAdminRule"/>.
+        /// The available derived classes include <see cref="NetworkAdminRule"/> and <see cref="NetworkDefaultAdminRule"/>.
         /// </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal AdminRuleListResult(IReadOnlyList<BaseAdminRuleData> value, string nextLink)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary>
         /// A list of admin rules
         /// Please note <see cref="BaseAdminRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AdminRule"/> and <see cref="DefaultAdminRule"/>.
+        /// The available derived classes include <see cref="NetworkAdminRule"/> and <see cref="NetworkDefaultAdminRule"/>.
         /// </summary>
         public IReadOnlyList<BaseAdminRuleData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>

@@ -11,23 +11,23 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VirtualNetworkEncryption
     {
         /// <summary> Initializes a new instance of VirtualNetworkEncryption. </summary>
-        /// <param name="enabled"> Indicates if encryption is enabled on the virtual network. </param>
-        public VirtualNetworkEncryption(bool enabled)
+        /// <param name="isEnabled"> Indicates if encryption is enabled on the virtual network. </param>
+        public VirtualNetworkEncryption(bool isEnabled)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkEncryption. </summary>
-        /// <param name="enabled"> Indicates if encryption is enabled on the virtual network. </param>
+        /// <param name="isEnabled"> Indicates if encryption is enabled on the virtual network. </param>
         /// <param name="enforcement"> If the encrypted VNet allows VM that does not support encryption. </param>
-        internal VirtualNetworkEncryption(bool enabled, VirtualNetworkEncryptionEnforcement? enforcement)
+        internal VirtualNetworkEncryption(bool isEnabled, VirtualNetworkEncryptionEnforcement? enforcement)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Enforcement = enforcement;
         }
 
         /// <summary> Indicates if encryption is enabled on the virtual network. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
         /// <summary> If the encrypted VNet allows VM that does not support encryption. </summary>
         public VirtualNetworkEncryptionEnforcement? Enforcement { get; set; }
     }

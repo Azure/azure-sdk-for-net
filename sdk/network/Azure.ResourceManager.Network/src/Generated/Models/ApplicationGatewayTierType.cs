@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         private const string StandardValue = "Standard";
-        private const string WAFValue = "WAF";
+        private const string WafValue = "WAF";
         private const string StandardV2Value = "Standard_v2";
-        private const string WAFV2Value = "WAF_v2";
+        private const string WafV2Value = "WAF_v2";
 
         /// <summary> Standard. </summary>
         public static ApplicationGatewayTierType Standard { get; } = new ApplicationGatewayTierType(StandardValue);
         /// <summary> WAF. </summary>
-        public static ApplicationGatewayTierType WAF { get; } = new ApplicationGatewayTierType(WAFValue);
+        public static ApplicationGatewayTierType Waf { get; } = new ApplicationGatewayTierType(WafValue);
         /// <summary> Standard_v2. </summary>
         public static ApplicationGatewayTierType StandardV2 { get; } = new ApplicationGatewayTierType(StandardV2Value);
         /// <summary> WAF_v2. </summary>
-        public static ApplicationGatewayTierType WAFV2 { get; } = new ApplicationGatewayTierType(WAFV2Value);
+        public static ApplicationGatewayTierType WafV2 { get; } = new ApplicationGatewayTierType(WafV2Value);
         /// <summary> Determines if two <see cref="ApplicationGatewayTierType"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewayTierType left, ApplicationGatewayTierType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayTierType"/> values are not the same. </summary>

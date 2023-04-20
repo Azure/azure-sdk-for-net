@@ -19,6 +19,9 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
+# mgmt-debug: 
+#   show-serialized-names: true
+
 rename-mapping:
   ConnectionMonitor: ConnectionMonitorInput
   ConnectionMonitorResult: ConnectionMonitor
@@ -101,6 +104,44 @@ rename-mapping:
   ConnectionState: NetworkConnectionState
   ApplicationGatewayAvailableSslOptions: ApplicationGatewayAvailableSslOptionsInfo
   EffectiveNetworkSecurityGroup.tagMap: tagToIPAddresses
+  Action: RouteMapAction
+  ActionType: RuleMatchActionType
+  ActiveConfigurationParameter: ActiveConfigurationContent
+  ActiveConfigurationParameter.regions: -|azure-location
+  ActiveConnectivityConfiguration.region: -|azure-location
+  ActiveConnectivityConfiguration.commitTime: CommittedOn
+  AdminRule: NetworkAdminRule
+  ApplicationGatewayBackendSettings.properties.timeout: TimeoutInSeconds
+  ApplicationGatewayTierTypes.WAF: Waf
+  ApplicationGatewayTierTypes.WAF_v2: WafV2
+  ConfigurationGroup: NetworkConfigurationGroup
+  ConfigurationType: NetworkConfigurationDeploymentType
+  Criterion: RouteCriterion
+  DefaultAdminRule: NetworkDefaultAdminRule
+  EffectiveBaseSecurityAdminRule.id: ResourceId|arm-id
+  ExplicitProxy: FirewallPolicyExplicitProxy
+  IdpsQueryObject: IdpsQueryContent
+  FilterItems: IdpsQueryFilterItems
+  OrderBy: IdpsQueryOrderBy
+  Geo: CidrAdvertisingGeoCode
+  Geo.NAM: Nam
+  Hub: ConnectivityHub
+  IsGlobal: GlobalMeshSupportFlag
+  IsWorkloadProtected: WorkloadProtectedFlag
+  NextStep: RouteMapNextStepBehavior
+  Parameter: RouteMapActionParameter
+  QosDefinition: DscpQosDefinition
+  QueryResults: IdpsSignatureListResult
+  SingleQueryResult: IdpsSignatureResult
+  QueryRequestOptions: NetworkManagementQueryContent
+  SignatureOverridesFilterValuesQuery: SignatureOverridesFilterValuesQueryContent
+  SignatureOverridesFilterValuesResponse: SignatureOverridesFilterValuesResult
+  SlotType: SwapSlotType
+  UseHubGateway: HubGatewayUsageFlag
+  VirtualNetworkEncryption.enabled: IsEnabled
+  VpnPolicyMemberAttributeType.AADGroupId: Aad
+  CustomIpPrefix.properties.customIpPrefixParent: ParentCustomIpPrefix
+  CustomIpPrefix.properties.childCustomIpPrefixes: ChildCustomIpPrefixList
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -193,6 +234,10 @@ directive:
   - remove-operation: 'GetActiveSessions'
   - remove-operation: 'DisconnectActiveSessions'
   - remove-operation: 'VirtualNetworks_ListDdosProtectionStatus'
+  - from: serviceEndpointPolicy.json # Resource type should be readonly for this resource.
+    where: $.definitions
+    transform: >
+      $.ServiceEndpointPolicyDefinition.properties['type']['readOnly'] = true;
   - from: virtualNetworkGateway.json
     where: $.definitions
     transform: >
@@ -334,12 +379,10 @@ directive:
       }
     reason: Resources with id, name and type should inherit from NetworkResource/NetworkWritableResource instead of SubResource.
   - from: virtualWan.json
-    where: $.definitions.VpnServerConfigurationProperties.properties.name
-    transform: 'return undefined'
-    reason: The same property is defined in VpnServerConfiguration and service only returns value there.
-  - from: virtualWan.json
-    where: $.definitions.VpnServerConfigurationProperties.properties.etag
-    transform: 'return undefined'
+    where: $.definitions
+    transform: >
+      delete $.VpnServerConfigurationProperties.properties.name;
+      delete $.VpnServerConfigurationProperties.properties.etag;
     reason: The same property is defined in VpnServerConfiguration and service only returns value there.
   - from: azureFirewall.json
     where: $.definitions

@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<DateTimeOffset> commitTime = default;
-            Optional<string> region = default;
+            Optional<AzureLocation> region = default;
             Optional<string> id = default;
-            Optional<IReadOnlyList<ConfigurationGroup>> configurationGroups = default;
+            Optional<IReadOnlyList<NetworkConfigurationGroup>> configurationGroups = default;
             Optional<string> description = default;
             Optional<ConnectivityTopology> connectivityTopology = default;
-            Optional<IReadOnlyList<Hub>> hubs = default;
-            Optional<IsGlobal> isGlobal = default;
+            Optional<IReadOnlyList<ConnectivityHub>> hubs = default;
+            Optional<GlobalMeshSupportFlag> isGlobal = default;
             Optional<IReadOnlyList<ConnectivityGroupItem>> appliesToGroups = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<DeleteExistingPeering> deleteExistingPeering = default;
@@ -45,7 +45,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("region"u8))
                 {
-                    region = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    region = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -60,10 +65,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConfigurationGroup> array = new List<ConfigurationGroup>();
+                    List<NetworkConfigurationGroup> array = new List<NetworkConfigurationGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationGroup.DeserializeConfigurationGroup(item));
+                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item));
                     }
                     configurationGroups = array;
                     continue;
@@ -99,10 +104,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Hub> array = new List<Hub>();
+                            List<ConnectivityHub> array = new List<ConnectivityHub>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Hub.DeserializeHub(item));
+                                array.Add(ConnectivityHub.DeserializeConnectivityHub(item));
                             }
                             hubs = array;
                             continue;
@@ -114,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            isGlobal = new IsGlobal(property0.Value.GetString());
+                            isGlobal = new GlobalMeshSupportFlag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("appliesToGroups"u8))
@@ -156,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ActiveConnectivityConfiguration(id.Value, Optional.ToList(configurationGroups), description.Value, Optional.ToNullable(connectivityTopology), Optional.ToList(hubs), Optional.ToNullable(isGlobal), Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(commitTime), region.Value);
+            return new ActiveConnectivityConfiguration(id.Value, Optional.ToList(configurationGroups), description.Value, Optional.ToNullable(connectivityTopology), Optional.ToList(hubs), Optional.ToNullable(isGlobal), Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(commitTime), Optional.ToNullable(region));
         }
     }
 }

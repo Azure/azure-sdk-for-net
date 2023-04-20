@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicIPAddress"> IP Address of the Public IP Resource. </param>
         /// <param name="isWorkloadProtected"> Value indicating whether the IP address is DDoS workload protected or not. </param>
         /// <param name="ddosProtectionPlanId"> DDoS protection plan Resource Id of a if IP address is protected through a plan. </param>
-        internal PublicIPDdosProtectionStatusResult(string publicIPAddressId, string publicIPAddress, IsWorkloadProtected? isWorkloadProtected, string ddosProtectionPlanId)
+        internal PublicIPDdosProtectionStatusResult(string publicIPAddressId, string publicIPAddress, WorkloadProtectedFlag? isWorkloadProtected, string ddosProtectionPlanId)
         {
             PublicIPAddressId = publicIPAddressId;
             PublicIPAddress = publicIPAddress;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> IP Address of the Public IP Resource. </summary>
         public string PublicIPAddress { get; }
         /// <summary> Value indicating whether the IP address is DDoS workload protected or not. </summary>
-        public IsWorkloadProtected? IsWorkloadProtected { get; }
+        public WorkloadProtectedFlag? IsWorkloadProtected { get; }
         /// <summary> DDoS protection plan Resource Id of a if IP address is protected through a plan. </summary>
         public string DdosProtectionPlanId { get; }
     }

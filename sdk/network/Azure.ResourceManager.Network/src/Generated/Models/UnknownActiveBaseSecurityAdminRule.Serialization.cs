@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> configurationDescription = default;
             Optional<string> ruleCollectionDescription = default;
             Optional<IReadOnlyList<NetworkManagerSecurityGroupItem>> ruleCollectionAppliesToGroups = default;
-            Optional<IReadOnlyList<ConfigurationGroup>> ruleGroups = default;
+            Optional<IReadOnlyList<NetworkConfigurationGroup>> ruleGroups = default;
             EffectiveAdminRuleKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConfigurationGroup> array = new List<ConfigurationGroup>();
+                    List<NetworkConfigurationGroup> array = new List<NetworkConfigurationGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationGroup.DeserializeConfigurationGroup(item));
+                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item));
                     }
                     ruleGroups = array;
                     continue;

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="useHubGateway"> Flag if need to use hub gateway. </param>
         /// <param name="isGlobal"> Flag if global is supported. </param>
         /// <param name="groupConnectivity"> Group connectivity type. </param>
-        internal ConnectivityGroupItem(string networkGroupId, UseHubGateway? useHubGateway, IsGlobal? isGlobal, GroupConnectivity groupConnectivity)
+        internal ConnectivityGroupItem(string networkGroupId, HubGatewayUsageFlag? useHubGateway, GlobalMeshSupportFlag? isGlobal, GroupConnectivity groupConnectivity)
         {
             NetworkGroupId = networkGroupId;
             UseHubGateway = useHubGateway;
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Network group Id. </summary>
         public string NetworkGroupId { get; set; }
         /// <summary> Flag if need to use hub gateway. </summary>
-        public UseHubGateway? UseHubGateway { get; set; }
+        public HubGatewayUsageFlag? UseHubGateway { get; set; }
         /// <summary> Flag if global is supported. </summary>
-        public IsGlobal? IsGlobal { get; set; }
+        public GlobalMeshSupportFlag? IsGlobal { get; set; }
         /// <summary> Group connectivity type. </summary>
         public GroupConnectivity GroupConnectivity { get; set; }
     }

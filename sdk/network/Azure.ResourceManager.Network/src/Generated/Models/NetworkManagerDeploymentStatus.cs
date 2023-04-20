@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="configurationIds"> List of configuration ids. </param>
         /// <param name="deploymentType"> Configuration Deployment Type. </param>
         /// <param name="errorMessage"> Error Message. </param>
-        internal NetworkManagerDeploymentStatus(DateTimeOffset? commitOn, string region, DeploymentStatus? deploymentStatus, IReadOnlyList<string> configurationIds, ConfigurationType? deploymentType, string errorMessage)
+        internal NetworkManagerDeploymentStatus(DateTimeOffset? commitOn, string region, DeploymentStatus? deploymentStatus, IReadOnlyList<string> configurationIds, NetworkConfigurationDeploymentType? deploymentType, string errorMessage)
         {
             CommitOn = commitOn;
             Region = region;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of configuration ids. </summary>
         public IReadOnlyList<string> ConfigurationIds { get; }
         /// <summary> Configuration Deployment Type. </summary>
-        public ConfigurationType? DeploymentType { get; }
+        public NetworkConfigurationDeploymentType? DeploymentType { get; }
         /// <summary> Error Message. </summary>
         public string ErrorMessage { get; }
     }

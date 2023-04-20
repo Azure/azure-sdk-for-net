@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ConnectivityConfigurationData. </summary>
         public ConnectivityConfigurationData()
         {
-            Hubs = new ChangeTrackingList<Hub>();
+            Hubs = new ChangeTrackingList<ConnectivityHub>();
             AppliesToGroups = new ChangeTrackingList<ConnectivityGroupItem>();
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ConnectivityConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ConnectivityTopology? connectivityTopology, IList<Hub> hubs, IsGlobal? isGlobal, IList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, ETag? etag) : base(id, name, resourceType, systemData)
+        internal ConnectivityConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ConnectivityTopology? connectivityTopology, IList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ConnectivityTopology = connectivityTopology;
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Connectivity topology type. </summary>
         public ConnectivityTopology? ConnectivityTopology { get; set; }
         /// <summary> List of hubItems. </summary>
-        public IList<Hub> Hubs { get; }
+        public IList<ConnectivityHub> Hubs { get; }
         /// <summary> Flag if global mesh is supported. </summary>
-        public IsGlobal? IsGlobal { get; set; }
+        public GlobalMeshSupportFlag? IsGlobal { get; set; }
         /// <summary> Groups for configuration. </summary>
         public IList<ConnectivityGroupItem> AppliesToGroups { get; }
         /// <summary> The provisioning state of the connectivity configuration resource. </summary>

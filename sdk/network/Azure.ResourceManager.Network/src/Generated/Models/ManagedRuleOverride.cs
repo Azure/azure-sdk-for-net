@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="state"> The state of the managed rule. Defaults to Disabled if not specified. </param>
         /// <param name="action"> Describes the override action to be applied when rule matches. </param>
-        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? state, ActionType? action)
+        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? state, RuleMatchActionType? action)
         {
             RuleId = ruleId;
             State = state;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The state of the managed rule. Defaults to Disabled if not specified. </summary>
         public ManagedRuleEnabledState? State { get; set; }
         /// <summary> Describes the override action to be applied when rule matches. </summary>
-        public ActionType? Action { get; set; }
+        public RuleMatchActionType? Action { get; set; }
     }
 }

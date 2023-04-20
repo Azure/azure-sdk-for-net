@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of EffectiveConnectivityConfiguration. </summary>
         internal EffectiveConnectivityConfiguration()
         {
-            ConfigurationGroups = new ChangeTrackingList<ConfigurationGroup>();
-            Hubs = new ChangeTrackingList<Hub>();
+            ConfigurationGroups = new ChangeTrackingList<NetworkConfigurationGroup>();
+            Hubs = new ChangeTrackingList<ConnectivityHub>();
             AppliesToGroups = new ChangeTrackingList<ConnectivityGroupItem>();
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
-        internal EffectiveConnectivityConfiguration(string id, IReadOnlyList<ConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<Hub> hubs, IsGlobal? isGlobal, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering)
+        internal EffectiveConnectivityConfiguration(string id, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering)
         {
             Id = id;
             ConfigurationGroups = configurationGroups;
@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Connectivity configuration ID. </summary>
         public string Id { get; }
         /// <summary> Effective configuration groups. </summary>
-        public IReadOnlyList<ConfigurationGroup> ConfigurationGroups { get; }
+        public IReadOnlyList<NetworkConfigurationGroup> ConfigurationGroups { get; }
         /// <summary> A description of the connectivity configuration. </summary>
         public string Description { get; }
         /// <summary> Connectivity topology type. </summary>
         public ConnectivityTopology? ConnectivityTopology { get; }
         /// <summary> List of hubItems. </summary>
-        public IReadOnlyList<Hub> Hubs { get; }
+        public IReadOnlyList<ConnectivityHub> Hubs { get; }
         /// <summary> Flag if global mesh is supported. </summary>
-        public IsGlobal? IsGlobal { get; }
+        public GlobalMeshSupportFlag? IsGlobal { get; }
         /// <summary> Groups for configuration. </summary>
         public IReadOnlyList<ConnectivityGroupItem> AppliesToGroups { get; }
         /// <summary> The provisioning state of the connectivity configuration resource. </summary>

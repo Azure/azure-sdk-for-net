@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             Optional<string> publicIPAddressId = default;
             Optional<string> publicIPAddress = default;
-            Optional<IsWorkloadProtected> isWorkloadProtected = default;
+            Optional<WorkloadProtectedFlag> isWorkloadProtected = default;
             Optional<string> ddosProtectionPlanId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    isWorkloadProtected = new IsWorkloadProtected(property.Value.GetString());
+                    isWorkloadProtected = new WorkloadProtectedFlag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ddosProtectionPlanId"u8))

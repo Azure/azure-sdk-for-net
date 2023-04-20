@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of NetworkManagerData. </summary>
         public NetworkManagerData()
         {
-            NetworkManagerScopeAccesses = new ChangeTrackingList<ConfigurationType>();
+            NetworkManagerScopeAccesses = new ChangeTrackingList<NetworkConfigurationDeploymentType>();
         }
 
         /// <summary> Initializes a new instance of NetworkManagerData. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkManagerScopes"> Scope of Network Manager. </param>
         /// <param name="networkManagerScopeAccesses"> Scope Access. </param>
         /// <param name="provisioningState"> The provisioning state of the network manager resource. </param>
-        internal NetworkManagerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, SystemData systemData, string description, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes, IList<ConfigurationType> networkManagerScopeAccesses, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal NetworkManagerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, SystemData systemData, string description, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes, IList<NetworkConfigurationDeploymentType> networkManagerScopeAccesses, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             ETag = etag;
             SystemData = systemData;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Scope of Network Manager. </summary>
         public NetworkManagerPropertiesNetworkManagerScopes NetworkManagerScopes { get; set; }
         /// <summary> Scope Access. </summary>
-        public IList<ConfigurationType> NetworkManagerScopeAccesses { get; }
+        public IList<NetworkConfigurationDeploymentType> NetworkManagerScopeAccesses { get; }
         /// <summary> The provisioning state of the network manager resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
     }

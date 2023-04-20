@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string networkGroupId = default;
-            Optional<UseHubGateway> useHubGateway = default;
-            Optional<IsGlobal> isGlobal = default;
+            Optional<HubGatewayUsageFlag> useHubGateway = default;
+            Optional<GlobalMeshSupportFlag> isGlobal = default;
             GroupConnectivity groupConnectivity = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    useHubGateway = new UseHubGateway(property.Value.GetString());
+                    useHubGateway = new HubGatewayUsageFlag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isGlobal"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    isGlobal = new IsGlobal(property.Value.GetString());
+                    isGlobal = new GlobalMeshSupportFlag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("groupConnectivity"u8))
