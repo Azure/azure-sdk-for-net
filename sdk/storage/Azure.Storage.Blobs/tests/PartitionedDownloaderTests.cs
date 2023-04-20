@@ -27,6 +27,7 @@ namespace Azure.Storage.Blobs.Test
             IfModifiedSince = DateTimeOffset.Now,
             LeaseId = "MyImportantLease"
         };
+        private static readonly DownloadTransferValidationOptions s_validationOptions = new DownloadTransferValidationOptions();
         private static readonly ETag s_etag = new ETag("0xQWERTY");
 
         public PartitionedDownloaderTests(bool async)
@@ -44,7 +45,9 @@ namespace Azure.Storage.Blobs.Test
 
             SetupDownload(blockClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object);
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                transferValidation: s_validationOptions);
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -62,7 +65,9 @@ namespace Azure.Storage.Blobs.Test
 
             SetupDownload(blockClient, dataSource);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object);
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                transferValidation: s_validationOptions);
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -85,7 +90,8 @@ namespace Azure.Storage.Blobs.Test
                 {
                     MaximumTransferLength = 10,
                     InitialTransferLength = 20
-                });
+                },
+                transferValidation: s_validationOptions);
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -110,7 +116,8 @@ namespace Azure.Storage.Blobs.Test
                 {
                     MaximumTransferLength = 40,
                     InitialTransferLength = 10
-                });
+                },
+                transferValidation: s_validationOptions);
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -135,7 +142,8 @@ namespace Azure.Storage.Blobs.Test
                 {
                     MaximumTransferLength = 10,
                     InitialTransferLength = 10
-                });
+                },
+                transferValidation: s_validationOptions);
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
 
@@ -180,7 +188,10 @@ namespace Azure.Storage.Blobs.Test
                 _async,
                 s_cancellationToken)).ThrowsAsync(e);
 
-            PartitionedDownloader downloader = new PartitionedDownloader(blockClient.Object, new StorageTransferOptions() { MaximumTransferLength = 10});
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions() { MaximumTransferLength = 10},
+                transferValidation: s_validationOptions);
 
             Exception thrown = Assert.ThrowsAsync<Exception>(async () => await InvokeDownloadToAsync(downloader, stream));
 
@@ -209,7 +220,14 @@ namespace Azure.Storage.Blobs.Test
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 _async,
                 s_cancellationToken)
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
+            )
+            .Callback<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, async, cancellation) =>
+                {
+                    Assert.IsNotNull(validation);
+                    Assert.AreNotEqual(s_validationOptions, validation);
+                })
+            .Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
                 (range, conditions, validation, progress, operationName, async, cancellation) => async
                     ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
                     : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
