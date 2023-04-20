@@ -215,19 +215,13 @@ namespace Azure.Storage.Blobs.Test
             blockClient.Setup(c => c.DownloadStreamingInternal(
                 It.IsAny<HttpRange>(),
                 It.IsAny<BlobRequestConditions>(),
-                It.IsAny<DownloadTransferValidationOptions>(),
+                It.Is<DownloadTransferValidationOptions>(options =>
+                    options != null && options != s_validationOptions && !options.AutoValidateChecksum),
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 _async,
                 s_cancellationToken)
-            )
-            .Callback<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
-                (range, conditions, validation, progress, operationName, async, cancellation) =>
-                {
-                    Assert.IsNotNull(validation);
-                    Assert.AreNotEqual(s_validationOptions, validation);
-                })
-            .Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
                 (range, conditions, validation, progress, operationName, async, cancellation) => async
                     ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
                     : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
