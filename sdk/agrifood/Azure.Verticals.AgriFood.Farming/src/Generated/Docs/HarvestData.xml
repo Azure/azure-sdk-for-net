@@ -200,7 +200,7 @@ Note: this will be specified by the source provider itself.
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -311,7 +311,7 @@ Note: this will be specified by the source provider itself.
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -505,7 +505,7 @@ Note: this will be specified by the source provider itself.
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -555,7 +555,7 @@ Note: this will be specified by the source provider itself.
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -749,7 +749,7 @@ Note: this will be specified by the source provider itself.
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -799,7 +799,7 @@ Note: this will be specified by the source provider itself.
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -946,7 +946,7 @@ Note: this will be specified by the source provider itself.
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -1069,7 +1069,7 @@ Note: this will be specified by the source provider itself.
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -1192,7 +1192,7 @@ Note: this will be specified by the source provider itself.
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -1315,7 +1315,7 @@ Note: this will be specified by the source provider itself.
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,

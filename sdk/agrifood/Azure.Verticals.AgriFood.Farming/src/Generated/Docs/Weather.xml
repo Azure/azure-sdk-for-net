@@ -62,7 +62,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -133,7 +133,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -187,7 +187,7 @@ Schema for <c>WeatherDataIngestionJob</c>:
   partyId: string, # Required. The id of the party for which weather data is being fetched.
   extensionId: string, # Required. Id of the extension to be used for the providerInput. eg. DTN.ClearAg.
   extensionApiName: string, # Required. Extension api name to which request is to be made.
-  extensionApiInput: Dictionary&lt;string, any&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+  extensionApiInput: Dictionary&lt;string, Intrinsic&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
   extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
   extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
   id: string, # Optional. Unique job id.
@@ -204,7 +204,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -258,7 +258,7 @@ Schema for <c>WeatherDataIngestionJob</c>:
   partyId: string, # Required. The id of the party for which weather data is being fetched.
   extensionId: string, # Required. Id of the extension to be used for the providerInput. eg. DTN.ClearAg.
   extensionApiName: string, # Required. Extension api name to which request is to be made.
-  extensionApiInput: Dictionary&lt;string, any&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+  extensionApiInput: Dictionary&lt;string, Intrinsic&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
   extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
   extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
   id: string, # Optional. Unique job id.
@@ -275,7 +275,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -403,7 +403,7 @@ Schema for <c>WeatherDataListResponseValue</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 250 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
@@ -530,7 +530,7 @@ Schema for <c>WeatherDataListResponseValue</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 250 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
@@ -635,7 +635,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -668,7 +668,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -774,7 +774,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -807,7 +807,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -904,7 +904,7 @@ Schema for <c>WeatherDataIngestionJob</c>:
   partyId: string, # Required. The id of the party for which weather data is being fetched.
   extensionId: string, # Required. Id of the extension to be used for the providerInput. eg. DTN.ClearAg.
   extensionApiName: string, # Required. Extension api name to which request is to be made.
-  extensionApiInput: Dictionary&lt;string, any&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+  extensionApiInput: Dictionary&lt;string, Intrinsic&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
   extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
   extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
   id: string, # Optional. Unique job id.
@@ -921,7 +921,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -937,7 +937,7 @@ Schema for <c>WeatherDataIngestionJob</c>:
   partyId: string, # Required. The id of the party for which weather data is being fetched.
   extensionId: string, # Required. Id of the extension to be used for the providerInput. eg. DTN.ClearAg.
   extensionApiName: string, # Required. Extension api name to which request is to be made.
-  extensionApiInput: Dictionary&lt;string, any&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+  extensionApiInput: Dictionary&lt;string, Intrinsic&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
   extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
   extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
   id: string, # Optional. Unique job id.
@@ -954,7 +954,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -1051,7 +1051,7 @@ Schema for <c>WeatherDataIngestionJob</c>:
   partyId: string, # Required. The id of the party for which weather data is being fetched.
   extensionId: string, # Required. Id of the extension to be used for the providerInput. eg. DTN.ClearAg.
   extensionApiName: string, # Required. Extension api name to which request is to be made.
-  extensionApiInput: Dictionary&lt;string, any&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+  extensionApiInput: Dictionary&lt;string, Intrinsic&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
   extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
   extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
   id: string, # Optional. Unique job id.
@@ -1068,7 +1068,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -1084,7 +1084,7 @@ Schema for <c>WeatherDataIngestionJob</c>:
   partyId: string, # Required. The id of the party for which weather data is being fetched.
   extensionId: string, # Required. Id of the extension to be used for the providerInput. eg. DTN.ClearAg.
   extensionApiName: string, # Required. Extension api name to which request is to be made.
-  extensionApiInput: Dictionary&lt;string, any&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
+  extensionApiInput: Dictionary&lt;string, Intrinsic&gt;, # Required. Extension api input dictionary which would be used to feed request query/body/parameter information.
   extensionDataProviderAppId: string, # Optional. App id of the weather data provider.
   extensionDataProviderApiKey: string, # Optional. Api key of the weather data provider.
   id: string, # Optional. Unique job id.
@@ -1101,7 +1101,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,

@@ -202,7 +202,7 @@ Schema for <c>WeatherDataProviderResponse</c>:
         windSpeed: Measures, # Optional. Schema for storing measurement readings and unit.
         wxPhraseLong: [string], # Optional. Hourly sensible weather phrase containing longer description.
         wxPhraseShort: [string], # Optional. Hourly sensible weather phrase containing short description.
-        additionalAttributes: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource. Each pair must not have a key greater than 50 characters and must not have a value greater than 250 characters. Note: A maximum of 100 key value pairs can be provided for a resource and only string and numeral values are supported.
+        additionalAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource. Each pair must not have a key greater than 50 characters and must not have a value greater than 250 characters. Note: A maximum of 100 key value pairs can be provided for a resource and only string and numeral values are supported.
       }, # Optional. Schema of weather data.
     }
   ], # Optional. List of weather data for all the weather locations.
@@ -422,7 +422,7 @@ Schema for <c>WeatherDataProviderResponse</c>:
         windSpeed: Measures, # Optional. Schema for storing measurement readings and unit.
         wxPhraseLong: [string], # Optional. Hourly sensible weather phrase containing longer description.
         wxPhraseShort: [string], # Optional. Hourly sensible weather phrase containing short description.
-        additionalAttributes: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource. Each pair must not have a key greater than 50 characters and must not have a value greater than 250 characters. Note: A maximum of 100 key value pairs can be provided for a resource and only string and numeral values are supported.
+        additionalAttributes: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource. Each pair must not have a key greater than 50 characters and must not have a value greater than 250 characters. Note: A maximum of 100 key value pairs can be provided for a resource and only string and numeral values are supported.
       }, # Optional. Schema of weather data.
     }
   ], # Optional. List of weather data for all the weather locations.

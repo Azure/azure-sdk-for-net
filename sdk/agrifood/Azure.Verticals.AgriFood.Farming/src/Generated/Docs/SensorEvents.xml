@@ -47,7 +47,7 @@ Schema for <c>SensorEventListResponse</c>:
       boundaryId: string, # Optional. Id of the associated boundary.
       eventDateTime: string (ISO 8601 Format), # Optional. DateTime of sensor event observation.
       ingestionDateTime: string (ISO 8601 Format), # Optional. DateTime of sensor event ingestion to data store.
-      measures: Dictionary&lt;string, any&gt;, # Optional. Sensor measures.
+      measures: Dictionary&lt;string, Intrinsic&gt;, # Optional. Sensor measures.
     }
   ], # Required. List of requested objects.
   skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
@@ -103,7 +103,7 @@ Schema for <c>SensorEventListResponse</c>:
       boundaryId: string, # Optional. Id of the associated boundary.
       eventDateTime: string (ISO 8601 Format), # Optional. DateTime of sensor event observation.
       ingestionDateTime: string (ISO 8601 Format), # Optional. DateTime of sensor event ingestion to data store.
-      measures: Dictionary&lt;string, any&gt;, # Optional. Sensor measures.
+      measures: Dictionary&lt;string, Intrinsic&gt;, # Optional. Sensor measures.
     }
   ], # Required. List of requested objects.
   skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.

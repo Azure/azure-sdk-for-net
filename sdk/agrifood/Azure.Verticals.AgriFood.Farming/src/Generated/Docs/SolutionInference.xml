@@ -45,7 +45,7 @@ Schema for <c>SolutionInference</c>:
   requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
 Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
 Not following this format may result into validation errors.
-  partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
+  partnerRequestBody: Dictionary&lt;string, Intrinsic&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
 }
 </code>
 
@@ -95,7 +95,7 @@ Schema for <c>SolutionInference</c>:
   requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
 Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
 Not following this format may result into validation errors.
-  partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
+  partnerRequestBody: Dictionary&lt;string, Intrinsic&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
 }
 </code>
 
@@ -145,7 +145,7 @@ Schema for <c>SolutionInference</c>:
   requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
 Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
 Not following this format may result into validation errors.
-  partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
+  partnerRequestBody: Dictionary&lt;string, Intrinsic&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
 }
 </code>
 
@@ -195,7 +195,7 @@ Schema for <c>SolutionInference</c>:
   requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
 Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
 Not following this format may result into validation errors.
-  partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
+  partnerRequestBody: Dictionary&lt;string, Intrinsic&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
 }
 </code>
 
@@ -247,7 +247,7 @@ Schema for <c>SolutionInference</c>:
   requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
 Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
 Not following this format may result into validation errors.
-  partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
+  partnerRequestBody: Dictionary&lt;string, Intrinsic&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
 }
 </code>
 
@@ -299,7 +299,7 @@ Schema for <c>SolutionInference</c>:
   requestPath: string, # Required. RequestPath containing the api-version, query parameters and path route to be called for partner request.
 Expected format is &quot;/{api-version}/{resourceExposedByPartner}/{customerDefinedJobId}?query1=value1&quot;.
 Not following this format may result into validation errors.
-  partnerRequestBody: Dictionary&lt;string, any&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
+  partnerRequestBody: Dictionary&lt;string, Intrinsic&gt;, # Optional. Api input parameters required by partner to trigger/cancel job request.
 }
 </code>
 

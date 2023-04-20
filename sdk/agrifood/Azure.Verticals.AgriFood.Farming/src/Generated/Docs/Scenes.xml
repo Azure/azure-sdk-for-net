@@ -104,7 +104,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -181,7 +181,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -293,10 +293,10 @@ Schema for <c>SearchFeaturesResponse</c>:
       stacExtensions: [string], # Optional. A list of extensions the Feature implements.
       id: string, # Required. Provider identifier. Globally unique ID by Data provider.
       type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-      geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+      geometry: Intrinsic, # Optional. Defines the full footprint of the asset represented by this item.
 Its a GeoJSON geometry.
       bbox: [number], # Optional. Bounding box of the feature.
-      properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+      properties: Intrinsic, # Required. A dictionary of additional metadata for the item.
       links: [
         {
           href: string, # Required. The actual link in the format of an URL.
@@ -418,10 +418,10 @@ Schema for <c>SearchFeaturesResponse</c>:
       stacExtensions: [string], # Optional. A list of extensions the Feature implements.
       id: string, # Required. Provider identifier. Globally unique ID by Data provider.
       type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-      geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+      geometry: Intrinsic, # Optional. Defines the full footprint of the asset represented by this item.
 Its a GeoJSON geometry.
       bbox: [number], # Optional. Bounding box of the feature.
-      properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+      properties: Intrinsic, # Required. A dictionary of additional metadata for the item.
       links: [
         {
           href: string, # Required. The actual link in the format of an URL.
@@ -481,10 +481,10 @@ Schema for <c>StacFeature</c>:
   stacExtensions: [string], # Optional. A list of extensions the Feature implements.
   id: string, # Required. Provider identifier. Globally unique ID by Data provider.
   type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-  geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+  geometry: Intrinsic, # Optional. Defines the full footprint of the asset represented by this item.
 Its a GeoJSON geometry.
   bbox: [number], # Optional. Bounding box of the feature.
-  properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+  properties: Intrinsic, # Required. A dictionary of additional metadata for the item.
   links: [
     {
       href: string, # Required. The actual link in the format of an URL.
@@ -540,10 +540,10 @@ Schema for <c>StacFeature</c>:
   stacExtensions: [string], # Optional. A list of extensions the Feature implements.
   id: string, # Required. Provider identifier. Globally unique ID by Data provider.
   type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-  geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+  geometry: Intrinsic, # Optional. Defines the full footprint of the asset represented by this item.
 Its a GeoJSON geometry.
   bbox: [number], # Optional. Bounding box of the feature.
-  properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+  properties: Intrinsic, # Required. A dictionary of additional metadata for the item.
   links: [
     {
       href: string, # Required. The actual link in the format of an URL.
@@ -815,7 +815,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -852,7 +852,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -978,7 +978,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
@@ -1015,7 +1015,7 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
   description: string, # Optional. Textual description of the resource.
   createdBy: string, # Optional. Created by user/tenant id.
   modifiedBy: string, # Optional. Modified by user/tenant id.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+  properties: Dictionary&lt;string, Intrinsic&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
