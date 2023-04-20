@@ -633,10 +633,8 @@ namespace Azure.ResourceManager.Workloads.Models
     public partial class ImageReference
     {
         public ImageReference() { }
-        public string ExactVersion { get { throw null; } }
         public string Offer { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
-        public string SharedGalleryImageId { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
     }

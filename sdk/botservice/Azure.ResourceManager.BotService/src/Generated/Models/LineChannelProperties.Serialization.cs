@@ -52,7 +52,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        callbackUrl = null;
                         continue;
                     }
                     callbackUrl = new Uri(property.Value.GetString());
@@ -62,7 +61,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isValidated = property.Value.GetBoolean();

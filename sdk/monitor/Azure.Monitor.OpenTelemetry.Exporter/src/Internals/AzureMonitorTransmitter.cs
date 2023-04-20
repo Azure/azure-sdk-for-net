@@ -13,8 +13,8 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
-using OpenTelemetry.Extensions.PersistentStorage;
-using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.FileSystem;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -56,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
         }
 
-        private static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
+        internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
         {
             if (options.ConnectionString == null)
             {
@@ -106,11 +106,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
-                    var storageDirectory = options.StorageDirectory
-                        ?? StorageHelper.GetDefaultStorageDirectory(platform)
-                        ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
+                    var storageDirectory = StorageHelper.GetStorageDirectory(
+                        platform: platform,
+                        configuredStorageDirectory: options.StorageDirectory);
 
-                    // TODO: Fallback to default location if location provided via options does not work.
                     AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", storageDirectory);
 
                     return new FileBlobProvider(storageDirectory);

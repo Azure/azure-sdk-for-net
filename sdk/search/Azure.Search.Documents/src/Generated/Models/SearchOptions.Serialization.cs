@@ -192,7 +192,6 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetBoolean();
@@ -202,7 +201,6 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -237,7 +235,6 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minimumCoverage = property.Value.GetDouble();
@@ -252,7 +249,6 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queryType = property.Value.GetString().ToSearchQueryType();
@@ -262,7 +258,6 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scoringStatistics = property.Value.GetString().ToScoringStatistics();
@@ -277,7 +272,6 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -312,7 +306,6 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     searchMode = property.Value.GetString().ToSearchMode();
@@ -322,7 +315,6 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queryLanguage = new QueryLanguage(property.Value.GetString());
@@ -332,7 +324,6 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     speller = new QuerySpellerType(property.Value.GetString());
@@ -352,7 +343,6 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     skip = property.Value.GetInt32();
@@ -362,7 +352,6 @@ namespace Azure.Search.Documents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     top = property.Value.GetInt32();

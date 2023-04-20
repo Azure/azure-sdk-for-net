@@ -63,8 +63,8 @@ namespace Azure.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class.
         /// </summary>
-        /// <param name="clientDiagnostics">Used for diagnostic scope and exception creation. This is expected to be the instance created during the construction of your main client.</param>
         /// <param name="operation">The long-running operation making use of this class. Passing "<c>this</c>" is expected.</param>
+        /// <param name="clientDiagnostics">Used for diagnostic scope and exception creation. This is expected to be the instance created during the construction of your main client.</param>
         /// <param name="rawResponse">
         ///     The initial value of <see cref="OperationInternalBase.RawResponse"/>. Usually, long-running operation objects can be instantiated in two ways:
         ///     <list type="bullet">
@@ -77,20 +77,36 @@ namespace Azure.Core
         ///         </item>
         ///     </list>
         /// </param>
-        /// <param name="fallbackStrategy"> The delay strategy to use. Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
         /// <param name="operationTypeName">
         ///     The type name of the long-running operation making use of this class. Used when creating diagnostic scopes. If left <c>null</c>, the type name will be inferred based on the
         ///     parameter <paramref name="operation"/>.
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
+        /// <param name="fallbackStrategy"> The delay strategy to use. Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
+        public OperationInternal(IOperation operation,
+            ClientDiagnostics clientDiagnostics,
+            Response rawResponse,
+            string? operationTypeName = null,
+            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
+            DelayStrategy? fallbackStrategy = null)
+            :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+        {
+            _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
+        }
+
+        // TEMP backcompat with AutoRest
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
             IOperation operation,
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null)
-            :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+            DelayStrategyInternal? fallbackStrategy = null)
+            : base(
+                clientDiagnostics,
+                operationTypeName ?? operation.GetType().Name,
+                scopeAttributes,
+                fallbackStrategy is ExponentialDelayStrategy ? new SequentialDelayStrategy() : (fallbackStrategy is ConstantDelayStrategy) ? new FixedDelayWithNoJitterStrategy() : null)
         {
             _internalOperation = new OperationInternal<VoidValue>(clientDiagnostics, new OperationToOperationOfTProxy(operation), rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
         }

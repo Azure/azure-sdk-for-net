@@ -26,13 +26,18 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
         {
             _rgName ??= Recording.GenerateAssetName("netSdkTest-");
             const string filePath = "./payload/ams/createHaMonitorPayload.json";
-
             string resourceName = Recording.GenerateAssetName("haMonitor-");
             SapMonitorResource resource = await CreateMonitors(filePath, resourceName);
             await TestProvider(
                 resource.Id, "promethueusHa", "./payload/ams/createPrometheusHaPayload.json");
-            //Delete SAP monitor
+            await ListAndDeleteProvidersByMonitor(resource.Id);
+            // Create/Get/Patch/Delete SAP Landscape Monitor Groups
+            await SAPLandscapeMonitorGrpTest(
+                resource.Id, "./payload/ams/createSAPLandscapeMonitorPayload.json", "./payload/ams/updateSAPLandscapeMonitorPayload.json");
+            // Delete SAP monitor
+            Console.WriteLine("Deleting SAP Monitor Resource");
             await resource.DeleteAsync(WaitUntil.Completed);
+            Console.WriteLine("Deleted SAP Monitor Resource");
         }
 
         [TestCase]
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
 
             string resourceName = Recording.GenerateAssetName("nonHaMonitor-");
             SapMonitorResource resource = await CreateMonitors(filePath, resourceName);
+
             await TestProvider(
                 resource.Id, "db2", "./payload/ams/createDb2Payload.json");
             await TestProvider(
@@ -54,9 +60,12 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 resource.Id, "netweaver", "./payload/ams/createNetWeaverPayload.json");
             await TestProvider(
                 resource.Id, "sql", "./payload/ams/createSqlPayload.json");
-
+            await ListAndDeleteProvidersByMonitor(resource.Id);
             //Delete SAP monitor
+
+            Console.WriteLine("Deleting SAP Monitor Resource");
             await resource.DeleteAsync(WaitUntil.Completed);
+            Console.WriteLine("Deleted SAP Monitor Resource");
         }
 
         private async Task<SapMonitorResource> CreateMonitors(string filePath, string resourceName)
@@ -121,6 +130,53 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
             return result;
         }
 
+        private async Task SAPLandscapeMonitorGrpTest(ResourceIdentifier monitorId, string createLandscapePayloadPath, string updateLandscapePayloadPath)
+        {
+            SapMonitorResource sapMonitorResource = Client.GetSapMonitorResource(monitorId);
+            JsonDocument jsonElement = GetJsonElement(createLandscapePayloadPath);
+            var sapLandscapeMonitordata =
+                SapLandscapeMonitorData.DeserializeSapLandscapeMonitorData(jsonElement.RootElement);
+
+            SapLandscapeMonitorResource sapLandscapeMonitorResource = sapMonitorResource
+                .GetSapLandscapeMonitor();
+
+            Console.WriteLine("Creating Landscape Monitor resource with Payload " + await getObjectAsString(sapLandscapeMonitordata));
+            try
+            {
+                ArmOperation<SapLandscapeMonitorResource> sapLandscapeMonitorRes = await sapLandscapeMonitorResource
+                    .CreateOrUpdateAsync(
+                        WaitUntil.Completed,
+                        sapLandscapeMonitordata);
+
+                Console.WriteLine("Created resource with Payload " + await getObjectAsString(sapLandscapeMonitorRes.Value.Data));
+
+                // Patch SAP Ladnscape Monitor resource
+                JsonDocument jsonEle = GetJsonElement(updateLandscapePayloadPath);
+                var sapLandscapeMonitorUpdatedata =
+                    SapLandscapeMonitorData.DeserializeSapLandscapeMonitorData(jsonEle.RootElement);
+
+                Console.WriteLine("Updating Landscape Monitor resource with Payload " + await getObjectAsString(sapLandscapeMonitorUpdatedata));
+
+                Response<SapLandscapeMonitorResource> sapLandscapeResource = await sapLandscapeMonitorResource.UpdateAsync(sapLandscapeMonitorUpdatedata);
+                Console.WriteLine("Patched Landscape monitor resource with Payload " + await getObjectAsString(sapLandscapeResource.Value.Data));
+
+                //Get SAP Landscape Monitor Groups
+                Response<SapLandscapeMonitorResource> response = await sapLandscapeMonitorResource.GetAsync();
+                Console.WriteLine("Fetched resource with Payload " + await getObjectAsString(response.Value.Data));
+
+                // Delete SAP Landscape Monitor Groups
+                Console.WriteLine("Deleting SAPLandscape Monitor Resource " + response.Value.Id);
+                ArmOperation deleteResult =
+                    await response.Value.DeleteAsync(WaitUntil.Completed);
+                await response.Value.DeleteAsync(WaitUntil.Completed);
+                Console.WriteLine("Delete SAPLandscape Monitor Result status - " + deleteResult.HasCompleted);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Creating resource with Payload " + ex);
+            }
+        }
+
         private async Task TestProvider(ResourceIdentifier monitorId, string providerType, string filePath)
         {
             Console.WriteLine("Starting Provider Resource tests for providerType" + providerType);
@@ -131,6 +187,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
             var sapProviderInstanceData =
                 SapProviderInstanceData.DeserializeSapProviderInstanceData(jsonElement.RootElement);
             string providerName = Recording.GenerateAssetName(providerType);
+            Console.WriteLine(providerName);
             if (providerName.Length > 20)
                 providerName = providerName.Substring(0, 20);
 
@@ -153,16 +210,32 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
                 Assert.AreEqual(providerName, response.Value.Data.Name);
                 Console.WriteLine("Fetched resource with Payload " + await getObjectAsString(response.Value.Data));
 
-                // Delete SAP Hana provider
-                Console.WriteLine("Deleting Provider Resource " + response.Value.Id);
-                ArmOperation<ResourceManager.Models.OperationStatusResult> deleteResult =
-                    await response.Value.DeleteAsync(WaitUntil.Completed);
-                Console.WriteLine("Delete Provider Result status " + deleteResult.Value.Status);
                 Console.WriteLine("Done Provider Resource Tests for providerType" + providerType);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error Creating resource with Payload " + ex);
+            }
+        }
+
+        private async Task ListAndDeleteProvidersByMonitor(ResourceIdentifier monitorId)
+        {
+            SapMonitorResource sapMonitorResource = Client.GetSapMonitorResource(monitorId);
+            SapProviderInstanceCollection providerInstanceCollection = sapMonitorResource
+                .GetSapProviderInstances();
+
+            AsyncPageable<SapProviderInstanceResource> sapProviderInstances = providerInstanceCollection.GetAllAsync();
+            IAsyncEnumerator<SapProviderInstanceResource> asyncEnumerator = sapProviderInstances.GetAsyncEnumerator();
+            while (await asyncEnumerator.MoveNextAsync())
+            {
+                Console.WriteLine("Fetched Provider: " + await getObjectAsString(asyncEnumerator.Current.Data.Name));
+                Response<SapProviderInstanceResource> response =
+                    await providerInstanceCollection.GetAsync(asyncEnumerator.Current.Data.Name);
+
+                Console.WriteLine("Deleting Provider Resource " + response.Value.Id);
+                ArmOperation<ResourceManager.Models.OperationStatusResult> deleteResult =
+                    await response.Value.DeleteAsync(WaitUntil.Completed);
+                Console.WriteLine("Delete Provider Result status " + deleteResult.Value.Status);
             }
         }
     }

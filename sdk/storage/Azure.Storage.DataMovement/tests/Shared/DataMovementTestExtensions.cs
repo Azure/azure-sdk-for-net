@@ -32,5 +32,14 @@ namespace Azure.Storage.DataMovement.Tests
             Array.Copy(queryArr, arr, queryArr.Length);
             return arr;
         }
+
+        public static byte[] ToByteArray(this ushort query, int bufferSize)
+        {
+            // Convert query to byte array.
+            byte[] arr = new byte[bufferSize];
+            byte[] queryArr = BitConverter.GetBytes(query);
+            Array.Copy(queryArr, arr, queryArr.Length);
+            return arr;
+        }
     }
 }

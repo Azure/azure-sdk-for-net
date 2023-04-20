@@ -26,19 +26,7 @@ Set-StrictMode -Version 3
 
 . (Join-Path $PSScriptRoot common.ps1)
 
-$unencodedAuthToken = "nobody:$AccessToken"
-$unencodedAuthTokenBytes = [System.Text.Encoding]::UTF8.GetBytes($unencodedAuthToken)
-$encodedAuthToken = [System.Convert]::ToBase64String($unencodedAuthTokenBytes)
-
-if ($isDevOpsRun) {
-  # We are doing this here so that there is zero chance that this token is emitted in Azure Pipelines
-  # build logs. Azure Pipelines will see this text and register the secret as a value it should *** out
-  # before being transmitted to the server (and shown in logs). It means if the value is accidentally
-  # leaked anywhere else that it won't be visible. The downside is that when the script is executed
-  # on a local development box, it will be visible.
-  Write-Host "##vso[task.setvariable variable=_throwawayencodedaccesstoken;issecret=true;]$($encodedAuthToken)"
-}
-
+$encodedAuthToken = Get-Base64EncodedToken $AccessToken
 
 LogDebug "Checking for existing leases on run: $RunId"
 $existingLeases = Get-RetentionLeases -Organization $Organization -Project $Project -DefinitionId $DefinitionId -RunId $RunId -OwnerId $OwnerId -Base64EncodedAuthToken $encodedAuthToken

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Quota
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = UsagesProperties.DeserializeUsagesProperties(property.Value);
@@ -56,7 +55,6 @@ namespace Azure.ResourceManager.Quota
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

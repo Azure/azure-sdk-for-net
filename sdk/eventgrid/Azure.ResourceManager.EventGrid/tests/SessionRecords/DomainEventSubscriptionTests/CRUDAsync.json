@@ -336,7 +336,7 @@
           "destination": {
             "endpointType": "WebHook",
             "properties": {
-              "endpointUrl": "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1\u0026code=an3f31ORDSQ/llPPTaUDJiEJGoebE9ha7dODRhb1nIyg/LiYLfSVCA=="
+              "endpointUrl": "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1\u0026code=PASSWORDCODE"
             }
           },
           "filter": {
@@ -638,7 +638,7 @@
         "destination": {
           "endpointType": "WebHook",
           "properties": {
-            "endpointUrl": "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1\u0026code=an3f31ORDSQ/llPPTaUDJiEJGoebE9ha7dODRhb1nIyg/LiYLfSVCA=="
+            "endpointUrl": "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1\u0026code=PASSWORDCODE"
           }
         },
         "filter": {
@@ -902,7 +902,7 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20221017T073238Z:6aa9df2b-ee3d-49bc-9eb8-cdea9ddeb615"
       },
       "ResponseBody": {
-        "endpointUrl": "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1\u0026code=an3f31ORDSQ/llPPTaUDJiEJGoebE9ha7dODRhb1nIyg/LiYLfSVCA=="
+        "endpointUrl": "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1\u0026code=PASSWORDCODE"
       }
     },
     {
@@ -1334,7 +1334,7 @@
           "destination": {
             "endpointType": "WebHook",
             "properties": {
-              "endpointUrl": "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1\u0026code=an3f31ORDSQ/llPPTaUDJiEJGoebE9ha7dODRhb1nIyg/LiYLfSVCA=="
+              "endpointUrl": "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1\u0026code=PASSWORDCODE"
             }
           },
           "filter": {
@@ -1715,7 +1715,7 @@
         "x-ms-routing-request-id": "SOUTHEASTASIA:20221017T073259Z:4f9afa51-1ade-4c87-8bbf-f71899bd54b4"
       },
       "ResponseBody": {
-        "endpointUrl": "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1\u0026code=an3f31ORDSQ/llPPTaUDJiEJGoebE9ha7dODRhb1nIyg/LiYLfSVCA=="
+        "endpointUrl": "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1\u0026code=PASSWORDCODE"
       }
     },
     {

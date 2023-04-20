@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Timers;
 using OpenTelemetry;
-using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {

@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.Attestation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new AttestationPrivateEndpointServiceConnectionStatus(property.Value.GetString());

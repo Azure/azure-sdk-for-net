@@ -13,16 +13,16 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         // Specifies whether the timestamp of destination file has to be set to the modified time of source file
         public bool PreserveLastModifiedTime;
 
-        // says how MD5 verification failures should be actioned
-        // uint_8
-        public byte MD5VerificationOption;
+        // Says how checksum verification failures should be actioned
+        // TODO: Probably use an Enum once feature is implemented
+        public byte ChecksumVerificationOption;
 
         public JobPartPlanDestinationLocal(
             bool preserveLastModifiedTime,
-            byte md5VerificationOption)
+            byte checksumVerificationOption)
         {
             PreserveLastModifiedTime = preserveLastModifiedTime;
-            MD5VerificationOption = md5VerificationOption;
+            ChecksumVerificationOption = checksumVerificationOption;
         }
     }
 }

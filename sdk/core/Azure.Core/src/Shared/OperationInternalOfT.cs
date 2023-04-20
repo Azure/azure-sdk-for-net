@@ -72,8 +72,8 @@ namespace Azure.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal{T}"/> class.
         /// </summary>
-        /// <param name="clientDiagnostics">Used for diagnostic scope and exception creation. This is expected to be the instance created during the construction of your main client.</param>
         /// <param name="operation">The long-running operation making use of this class. Passing "<c>this</c>" is expected.</param>
+        /// <param name="clientDiagnostics">Used for diagnostic scope and exception creation. This is expected to be the instance created during the construction of your main client.</param>
         /// <param name="rawResponse">
         ///     The initial value of <see cref="OperationInternalBase.RawResponse"/>. Usually, long-running operation objects can be instantiated in two ways:
         ///     <list type="bullet">
@@ -93,8 +93,8 @@ namespace Azure.Core
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         /// <param name="fallbackStrategy">The delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used.
         ///     Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
-        public OperationInternal(ClientDiagnostics clientDiagnostics,
-            IOperation<T> operation,
+        public OperationInternal(IOperation<T> operation,
+            ClientDiagnostics clientDiagnostics,
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
@@ -105,6 +105,26 @@ namespace Azure.Core
             _rawResponse = rawResponse;
             _stateLock = new AsyncLockWithValue<OperationState<T>>();
         }
+
+        //TEMP for backcompat with AutoRest
+        public OperationInternal(
+            ClientDiagnostics clientDiagnostics,
+            IOperation<T> operation,
+            Response rawResponse,
+            string? operationTypeName = null,
+            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
+            DelayStrategyInternal? fallbackStrategy = null)
+            : base(
+                clientDiagnostics,
+                operationTypeName ?? operation.GetType().Name,
+                scopeAttributes,
+                fallbackStrategy is ExponentialDelayStrategy ? new SequentialDelayStrategy() : (fallbackStrategy is ConstantDelayStrategy) ? new FixedDelayWithNoJitterStrategy() : null)
+        {
+            _operation = operation;
+            _rawResponse = rawResponse;
+            _stateLock = new AsyncLockWithValue<OperationState<T>>();
+        }
+        //end TEMP for backcompat with AutoRest
 
         private OperationInternal(OperationState<T> finalState)
             : base(finalState.RawResponse)

@@ -24,7 +24,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         /// <summary>
         /// Specifies the length of MIME content type of the blob
         /// </summary>
-        public long ContentTypeLength;
+        public ushort ContentTypeLength;
 
         /// <summary>
         /// Specifies the MIME content type of the blob. The default type is application/octet-stream
@@ -34,7 +34,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         /// <summary>
         /// Specifies length of content encoding which have been applied to the blob.
         /// </summary>
-        public long ContentEncodingLength;
+        public ushort ContentEncodingLength;
 
         /// <summary>
         /// Specifies the MIME content type of the blob. The default type is application/octet-stream
@@ -44,7 +44,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         /// <summary>
         /// Specifies length of content language which has been applied to the blob.
         /// </summary>
-        public long ContentLanguageLength;
+        public ushort ContentLanguageLength;
 
         /// <summary>
         /// Specifies which content language has been applied to the blob.
@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         /// <summary>
         /// Specifies length of content disposition which has been applied to the blob.
         /// </summary>
-        public long ContentDispositionLength;
+        public ushort ContentDispositionLength;
 
         /// <summary>
         /// Specifies the content disposition of the blob
@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         /// <summary>
         /// Specifies the length of the cache control which has been applied to the blob.
         /// </summary>
-        public long CacheControlLength;
+        public ushort CacheControlLength;
 
         /// <summary>
         /// Specifies the cache control of the blob
@@ -85,7 +85,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         /// <summary>
         /// Length of metadata
         /// </summary>
-        public long MetadataLength;
+        public ushort MetadataLength;
 
         /// <summary>
         /// Metadata
@@ -110,7 +110,7 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         /// <summary>
         /// CPK encryption scope.
         /// </summary>
-        public long CpkScopeInfoLength;
+        public ushort CpkScopeInfoLength;
 
         /// <summary>
         /// Length of CPK encryption scope.
@@ -176,84 +176,84 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
         {
             BlobType = blobType;
             NoGuessMimeType = noGuessMimeType;
-            if (contentType.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
+            if (contentType.Length <= DataMovementConstants.PlanFile.HeaderValueMaxLength)
             {
                 ContentType = contentType;
-                ContentTypeLength = contentType.Length;
+                ContentTypeLength = (ushort) contentType.Length;
             }
             else
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(ContentType),
-                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxLength,
                     actualSize: contentType.Length);
             }
-            if (contentEncoding.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
+            if (contentEncoding.Length <= DataMovementConstants.PlanFile.HeaderValueMaxLength)
             {
                 ContentEncoding = contentEncoding;
-                ContentEncodingLength = contentEncoding.Length;
+                ContentEncodingLength = (ushort) contentEncoding.Length;
             }
             else
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(ContentEncoding),
-                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxLength,
                     actualSize: contentEncoding.Length);
             }
-            if (contentLanguage.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
+            if (contentLanguage.Length <= DataMovementConstants.PlanFile.HeaderValueMaxLength)
             {
                 ContentLanguage = contentLanguage;
-                ContentLanguageLength = contentLanguage.Length;
+                ContentLanguageLength = (ushort) contentLanguage.Length;
             }
             else
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(ContentLanguage),
-                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxLength,
                     actualSize: contentLanguage.Length);
             }
-            if (contentDisposition.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
+            if (contentDisposition.Length <= DataMovementConstants.PlanFile.HeaderValueMaxLength)
             {
                 ContentDisposition = contentDisposition;
-                ContentDispositionLength = contentDisposition.Length;
+                ContentDispositionLength = (ushort) contentDisposition.Length;
             }
             else
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(ContentDisposition),
-                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxLength,
                     actualSize: contentDisposition.Length);
             }
-            if (cacheControl.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
+            if (cacheControl.Length <= DataMovementConstants.PlanFile.HeaderValueMaxLength)
             {
                 CacheControl = cacheControl;
-                CacheControlLength = cacheControl.Length;
+                CacheControlLength = (ushort) cacheControl.Length;
             }
             else
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(CacheControl),
-                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxLength,
                     actualSize: cacheControl.Length);
             }
             BlockBlobTier = blockBlobTier;
             PageBlobTier = pageBlobTier;
             PutMd5 = putMd5;
             string metadataConvert = DictionaryToString(metadata);
-            if (metadataConvert.Length <= DataMovementConstants.PlanFile.MetadataStrMaxSize)
+            if (metadataConvert.Length <= DataMovementConstants.PlanFile.MetadataStrMaxLength)
             {
                 Metadata = metadataConvert;
-                MetadataLength = metadataConvert.Length;
+                MetadataLength = (ushort) metadataConvert.Length;
             }
             else
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(Metadata),
-                    expectedSize: DataMovementConstants.PlanFile.MetadataStrMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.MetadataStrMaxLength,
                     actualSize: metadataConvert.Length);
             }
             string blobTagsConvert = DictionaryToString(blobTags);
-            if (blobTagsConvert.Length <= DataMovementConstants.PlanFile.BlobTagsStrMaxSize)
+            if (blobTagsConvert.Length <= DataMovementConstants.PlanFile.BlobTagsStrMaxLength)
             {
                 BlobTags = blobTagsConvert;
                 BlobTagsLength = blobTagsConvert.Length;
@@ -262,20 +262,20 @@ namespace Azure.Storage.DataMovement.Models.JobPlan
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(blobTags),
-                    expectedSize: DataMovementConstants.PlanFile.BlobTagsStrMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.BlobTagsStrMaxLength,
                     actualSize: blobTagsConvert.Length);
             }
             IsSourceEncrypted = isSourceEncrypted;
-            if (cpkScopeInfo.Length <= DataMovementConstants.PlanFile.HeaderValueMaxSize)
+            if (cpkScopeInfo.Length <= DataMovementConstants.PlanFile.HeaderValueMaxLength)
             {
                 CpkScopeInfo = cpkScopeInfo;
-                CpkScopeInfoLength = cpkScopeInfo.Length;
+                CpkScopeInfoLength = (ushort) cpkScopeInfo.Length;
             }
             else
             {
                 throw Errors.InvalidPlanFileElement(
                     elementName: nameof(CpkScopeInfo),
-                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxSize,
+                    expectedSize: DataMovementConstants.PlanFile.HeaderValueMaxLength,
                     actualSize: cpkScopeInfo.Length);
             }
             BlockSize = blockSize;
