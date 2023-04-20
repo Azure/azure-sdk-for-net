@@ -11,7 +11,9 @@ using Azure.Core.TestFramework;
 using Azure.Monitor.Query;
 using Azure.Monitor.Query.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -24,6 +26,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
     {
         private const string _activitySourceName = "TestActivitySource";
         private const string _meterName = "TestMeterName";
+        private const string _logCategoryName = $"TestLogCategoryName";
+        private const LogLevel _logLevel = LogLevel.Error;
         private const string _roleName = nameof(Class1);
 
         private readonly LogsQueryClient _logsQueryClient;
@@ -55,28 +59,34 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             };
 
             IServiceCollection services = new ServiceCollection();
-            services.AddOpenTelemetry()
-                .ConfigureResource(x => x.AddAttributes(resourceAttributes))
-                .WithTracing(builder =>
+            services
+                .AddLogging(builder =>
                 {
-                    builder.AddSource(_activitySourceName);
+                    builder.AddFilter<OpenTelemetryLoggerProvider>(_logCategoryName, _logLevel);
                 })
-                .WithMetrics(builder =>
-                {
-                    builder.AddMeter(_meterName);
-                })
-                .UseAzureMonitor(o => o.ConnectionString = TestEnvironment.ConnectionString);
+                .AddOpenTelemetry()
+                    .ConfigureResource(x => x.AddAttributes(resourceAttributes))
+                    .WithTracing(builder =>
+                    {
+                        builder.AddSource(_activitySourceName);
+                    })
+                    .WithMetrics(builder =>
+                    {
+                        builder.AddMeter(_meterName);
+                    })
+                    .UseAzureMonitor(o => o.ConnectionString = TestEnvironment.ConnectionString);
 
             using var serviceProvider = services.BuildServiceProvider();
 
             // GetRequiredService must be invoked to initialize OTel.
             var tracerProvider = serviceProvider.GetRequiredService<TracerProvider>();
             var meterProvider = serviceProvider.GetRequiredService<MeterProvider>();
+            var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
 
             // ACT
             await TracesScenarioAsync(tracerProvider);
             await MetricsScenarioAsync(meterProvider);
-            await LogsScenarioAsync();
+            await LogsScenarioAsync(loggerFactory);
         }
 
         private async Task TracesScenarioAsync(TracerProvider tracerProvider)
@@ -140,12 +150,32 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             }
         }
 
-        private async Task LogsScenarioAsync()
+        private async Task LogsScenarioAsync(ILoggerFactory loggerFactory)
         {
-            // TODO
+            var logger = loggerFactory.CreateLogger(_logCategoryName);
+            logger.Log(
+                logLevel: _logLevel,
+                eventId: 0,
+                exception: null,
+                message: "Hello {name}.",
+                args: new object[] { "World" });
 
-            // PLACEHOLDER
-            await Task.Run(() => { });
+            // Query
+            //string query = $"AppMetrics | where Name == '{counterName}' | where AppRoleName == '{_roleName}' | top 1 by TimeGenerated";
+            string query = $"AppTraces | where Message == 'Hello World.' | top 1 by TimeGenerated";
+            LogsTable? table = await CheckForRecordAsync(_logsQueryClient, query);
+
+            // Assert
+            var rowCount = table?.Rows.Count;
+            if (rowCount == null || rowCount == 0)
+            {
+                // InConclusive due to ingestion delay.
+                Assert.Inconclusive("No telemetry records were found");
+            }
+            else
+            {
+                Assert.True(rowCount == 1);
+            }
         }
 
         private async Task<LogsTable?> CheckForRecordAsync(LogsQueryClient client, string query)
