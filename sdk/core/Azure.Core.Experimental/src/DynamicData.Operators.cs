@@ -194,6 +194,30 @@ namespace Azure.Core.Dynamic
             }
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="DynamicData"/> and <see cref="object"/> have the same value.
+        /// </summary>
+        /// <param name="left">The <see cref="DynamicData"/> to compare.</param>
+        /// <param name="right">The <see cref="object"/> to compare.</param>
+        /// <returns><c>true</c> if the value of <paramref name="left"/> is different to the value of <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        public static bool operator ==(DynamicData? left, object? right)
+        {
+            if (left is null)
+            {
+                return right is null;
+            }
+
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="DynamicData"/> and <see cref="object"/> have different values.
+        /// </summary>
+        /// <param name="left">The <see cref="DynamicData"/> to compare.</param>
+        /// <param name="right">The <see cref="object"/> to compare.</param>
+        /// <returns><c>true</c> if the value of <paramref name="left"/> is different to the value of <paramref name="right"/>; otherwise, <c>false</c>.</returns>
+        public static bool operator !=(DynamicData? left, object? right) => !(left == right);
+
         private static string GetInvalidCastExceptionText(Type target, MutableJsonElement element)
         {
             return $"Unable to cast element to '{target}'.  Element has kind '{element.ValueKind}'.";

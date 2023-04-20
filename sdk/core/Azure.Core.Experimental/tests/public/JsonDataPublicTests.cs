@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Azure.Core.Dynamic;
-using System.Text.Json;
-using NUnit.Framework;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core.Dynamic;
+using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public
 {
@@ -147,16 +147,6 @@ namespace Azure.Core.Tests.Public
 
             Assert.AreEqual(1, list.Count);
             Assert.AreEqual(5, list[0]);
-        }
-
-        [Test]
-        [Ignore(reason: "TODO: Feature to be added in later version.")]
-        public void GetMemberIsCaseInsensitive()
-        {
-            dynamic jsonData = new BinaryData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }").ToDynamicFromJson();
-
-            Assert.AreEqual("Hello", (string)jsonData.Primitive);
-            Assert.AreEqual(true, (bool)jsonData.Nested.NestedPrimitive);
         }
 
         [Test]
@@ -310,13 +300,53 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        [Ignore("To be implemented.")]
         public void EqualsHandlesStringsSpecial()
         {
             dynamic json = new BinaryData("\"test\"").ToDynamicFromJson();
 
             Assert.IsTrue(json.Equals("test"));
-            Assert.IsTrue(json.Equals(new BinaryData("\"test\"").ToDynamicFromJson()));
+            Assert.IsTrue(json == "test");
+        }
+
+        [Test]
+        [TestCase("\"test\"", "\"test\"", true)]
+        [TestCase("1", "1.0", true)]
+        [TestCase("5.5", "5.5", true)]
+        [TestCase("true", "true", true)]
+        [TestCase("false", "false", true)]
+        [TestCase("null", "null", true)]
+        [TestCase("\"test\"", "\"wrong\"", false)]
+        [TestCase("\"test\"", "1", false)]
+        [TestCase("true", "false", false)]
+        [TestCase("1.1", "1.2", false)]
+        [TestCase("1", "1.2", false)]
+        [TestCase("1", "2", false)]
+        [TestCase("1", "null", false)]
+        public void EqualsPrimitiveValues(string a, string b, bool expected)
+        {
+            dynamic aJson = new BinaryData(a).ToDynamicFromJson();
+            dynamic bJson = new BinaryData(b).ToDynamicFromJson();
+
+            Assert.AreEqual(expected, aJson.Equals(bJson));
+            Assert.AreEqual(expected, aJson == bJson);
+            Assert.AreEqual(expected, bJson.Equals(aJson));
+            Assert.AreEqual(expected, bJson == aJson);
+        }
+
+        [Test]
+        public void EqualsNull()
+        {
+            dynamic value = JsonDataTestHelpers.CreateFromJson("""{ "foo": null }""");
+            Assert.IsTrue(value.foo.Equals(null));
+            Assert.IsTrue(value.foo == null);
+
+            string nullString = null;
+            Assert.IsTrue(value.foo == nullString);
+            Assert.IsTrue(nullString == value.foo);
+
+            // We cannot overload the equality operator with two nullable values, so
+            // the following is the consequence:
+            Assert.IsFalse(null == value.foo);
         }
 
         [Test]
