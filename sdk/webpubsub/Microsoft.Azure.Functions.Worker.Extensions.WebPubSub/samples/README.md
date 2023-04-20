@@ -4,6 +4,7 @@ languages:
 - csharp
 products:
 - azure
+- azure-web-pubsub
 name: Microsoft.Azure.Functions.Worker.Extensions.WebPubSub samples for .NET
 description: Samples for the Microsoft.Azure.Functions.Worker.Extensions.WebPubSub client library
 ---
