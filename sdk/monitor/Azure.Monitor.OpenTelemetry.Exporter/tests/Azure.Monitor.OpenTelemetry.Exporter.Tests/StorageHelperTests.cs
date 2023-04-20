@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Xunit;
@@ -11,8 +12,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class StorageHelperTests
     {
-        // The directory separator is either '/' or '\' depending on the Platform, making unit testing tricky.
-        private static readonly char ds = Path.DirectorySeparatorChar;
+        private readonly string _testStorageDirectory;
+
+        public StorageHelperTests()
+        {
+            _testStorageDirectory = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                ? "C:\\UnitTest"
+                : "/var/UnitTest";
+        }
 
         [Fact]
         public void VerifyGetStorageDirectory_Configured()
@@ -24,10 +31,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     ProcessName ="w3wp",
                     ApplicationBaseDirectory = "C:\\inetpub\\wwwroot",
                 },
-                configuredStorageDirectory: $"C:{ds}Temp",
+                configuredStorageDirectory: _testStorageDirectory,
                 instrumentationKey: "testIkey");
 
-            Assert.Equal($"C:{ds}Temp{ds}f01a11b594e1f6d06cd96564b1f258b515bf98d956e8a1842c74479a1ecef4eb", directoryPath);
+            var expected = Path.Combine(_testStorageDirectory, "f01a11b594e1f6d06cd96564b1f258b515bf98d956e8a1842c74479a1ecef4eb");
+            Assert.Equal(expected, directoryPath);
         }
 
         [Theory]
@@ -42,14 +50,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ApplicationBaseDirectory = "C:\\inetpub\\wwwroot",
             };
             platform.IsOsPlatformFunc = (os) => os.ToString() == osName;
-            platform.SetEnvironmentVariable(envVarName, $"C:{ds}Temp");
+            platform.SetEnvironmentVariable(envVarName, _testStorageDirectory);
 
             var directoryPath = StorageHelper.GetStorageDirectory(
                 platform: platform,
                 configuredStorageDirectory: null,
                 instrumentationKey: "testIkey");
 
-            Assert.Equal($"C:{ds}Temp{ds}Microsoft{ds}AzureMonitor{ds}f01a11b594e1f6d06cd96564b1f258b515bf98d956e8a1842c74479a1ecef4eb", directoryPath);
+            var expected = Path.Combine(_testStorageDirectory, "Microsoft", "AzureMonitor", "f01a11b594e1f6d06cd96564b1f258b515bf98d956e8a1842c74479a1ecef4eb");
+            Assert.Equal(expected, directoryPath);
         }
 
         [Theory]
@@ -59,12 +68,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var platform = new MockPlatform();
             platform.IsOsPlatformFunc = (os) => os.ToString() == "WINDOWS";
-            platform.SetEnvironmentVariable(envVarName, $"C:{ds}Temp");
+            platform.SetEnvironmentVariable(envVarName, _testStorageDirectory);
 
             var directoryPath = StorageHelper.GetDefaultStorageDirectory(platform: platform);
 
             // when using a default directory, we will append /Microsoft/AzureMonitor
-            Assert.Equal($"C:{ds}Temp{ds}Microsoft{ds}AzureMonitor", directoryPath);
+            var expected = Path.Combine(_testStorageDirectory, "Microsoft", "AzureMonitor");
+            Assert.Equal(expected, directoryPath);
         }
 
         [Theory]
@@ -85,7 +95,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var directoryPath = StorageHelper.GetDefaultStorageDirectory(platform: platform);
 
             // when using a default directory, we will append /Microsoft/AzureMonitor
-            Assert.Equal($"{expectedDirectory}Microsoft{ds}AzureMonitor", directoryPath);
+            var expected = Path.Combine(expectedDirectory, "Microsoft", "AzureMonitor");
+            Assert.Equal(expected, directoryPath);
         }
 
         [Theory]
