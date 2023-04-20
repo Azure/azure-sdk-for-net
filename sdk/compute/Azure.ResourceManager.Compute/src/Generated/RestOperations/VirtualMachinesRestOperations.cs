@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string filter, ExpandTypeForListVm? expand)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string filter, GetVirtualMachineExpandType? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualMachineListResult>> ListAsync(string subscriptionId, string resourceGroupName, string filter = null, ExpandTypeForListVm? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineListResult>> ListAsync(string subscriptionId, string resourceGroupName, string filter = null, GetVirtualMachineExpandType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualMachineListResult> List(string subscriptionId, string resourceGroupName, string filter = null, ExpandTypeForListVm? expand = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineListResult> List(string subscriptionId, string resourceGroupName, string filter = null, GetVirtualMachineExpandType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2017,7 +2017,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string filter, ExpandTypeForListVm? expand)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string filter, GetVirtualMachineExpandType? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2040,7 +2040,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualMachineListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, ExpandTypeForListVm? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<VirtualMachineListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, GetVirtualMachineExpandType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -2071,7 +2071,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualMachineListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, ExpandTypeForListVm? expand = null, CancellationToken cancellationToken = default)
+        public Response<VirtualMachineListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, GetVirtualMachineExpandType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

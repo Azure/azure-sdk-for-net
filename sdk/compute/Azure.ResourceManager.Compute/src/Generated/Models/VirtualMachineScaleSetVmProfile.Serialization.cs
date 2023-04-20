@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<ApplicationProfile> applicationProfile = default;
             Optional<VirtualMachineScaleSetHardwareProfile> hardwareProfile = default;
             Optional<WritableSubResource> serviceArtifactReference = default;
-            Optional<SecurityPostureReference> securityPostureReference = default;
+            Optional<ComputeSecurityPostureReference> securityPostureReference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osProfile"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityPostureReference = SecurityPostureReference.DeserializeSecurityPostureReference(property.Value);
+                    securityPostureReference = ComputeSecurityPostureReference.DeserializeComputeSecurityPostureReference(property.Value);
                     continue;
                 }
             }

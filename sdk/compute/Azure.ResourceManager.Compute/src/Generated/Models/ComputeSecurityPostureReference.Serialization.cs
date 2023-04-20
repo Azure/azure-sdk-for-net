@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SecurityPostureReference : IUtf8JsonSerializable
+    public partial class ComputeSecurityPostureReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static SecurityPostureReference DeserializeSecurityPostureReference(JsonElement element)
+        internal static ComputeSecurityPostureReference DeserializeComputeSecurityPostureReference(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SecurityPostureReference(id.Value, Optional.ToList(excludeExtensions));
+            return new ComputeSecurityPostureReference(id.Value, Optional.ToList(excludeExtensions));
         }
     }
 }

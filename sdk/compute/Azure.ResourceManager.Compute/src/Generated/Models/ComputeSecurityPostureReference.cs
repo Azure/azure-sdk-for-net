@@ -12,18 +12,18 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the security posture to be used for all virtual machines in the scale set. Minimum api-version: 2023-03-01. </summary>
-    public partial class SecurityPostureReference
+    public partial class ComputeSecurityPostureReference
     {
-        /// <summary> Initializes a new instance of SecurityPostureReference. </summary>
-        public SecurityPostureReference()
+        /// <summary> Initializes a new instance of ComputeSecurityPostureReference. </summary>
+        public ComputeSecurityPostureReference()
         {
             ExcludeExtensions = new ChangeTrackingList<VirtualMachineExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityPostureReference. </summary>
+        /// <summary> Initializes a new instance of ComputeSecurityPostureReference. </summary>
         /// <param name="id"> The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest. </param>
         /// <param name="excludeExtensions"> List of virtual machine extensions to exclude when applying the Security Posture. </param>
-        internal SecurityPostureReference(string id, IList<VirtualMachineExtensionData> excludeExtensions)
+        internal ComputeSecurityPostureReference(string id, IList<VirtualMachineExtensionData> excludeExtensions)
         {
             Id = id;
             ExcludeExtensions = excludeExtensions;
