@@ -17,7 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public StorageHelperTests()
         {
             _testStorageDirectory = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? "C:\\UnitTest"
+                ? @"C:\UnitTest"
                 : "/var/UnitTest";
         }
 
