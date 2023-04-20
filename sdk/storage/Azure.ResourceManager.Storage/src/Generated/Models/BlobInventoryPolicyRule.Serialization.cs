@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static BlobInventoryPolicyRule DeserializeBlobInventoryPolicyRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             string name = default;
             string destination = default;

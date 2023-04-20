@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static UnknownRuleCondition DeserializeUnknownRuleCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             Optional<RuleDataSource> dataSource = default;
             foreach (var property in element.EnumerateObject())
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);

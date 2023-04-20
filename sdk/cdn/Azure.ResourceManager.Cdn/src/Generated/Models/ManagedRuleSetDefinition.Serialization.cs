@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleSetDefinition DeserializeManagedRuleSetDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CdnSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = CdnSku.DeserializeCdnSku(property.Value);
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -104,7 +106,6 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ManagedRuleGroupDefinition> array = new List<ManagedRuleGroupDefinition>();

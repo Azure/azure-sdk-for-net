@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static DeploymentExtensionSpec DeserializeDeploymentExtensionSpec(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> extensionType = default;
             Optional<string> version = default;
@@ -89,7 +93,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             settings = BinaryData.FromString(property0.Value.GetRawText());
@@ -99,7 +102,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             protectedSettings = BinaryData.FromString(property0.Value.GetRawText());

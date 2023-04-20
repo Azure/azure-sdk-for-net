@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventGridInboundIPRule DeserializeEventGridInboundIPRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ipMask = default;
             Optional<EventGridIPActionType> action = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     action = new EventGridIPActionType(property.Value.GetString());

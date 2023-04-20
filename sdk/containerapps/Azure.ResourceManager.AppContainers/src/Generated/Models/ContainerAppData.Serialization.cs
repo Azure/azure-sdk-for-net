@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppData DeserializeContainerAppData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppExtendedLocation> extendedLocation = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -103,7 +107,6 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value);
@@ -113,7 +116,6 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -124,7 +126,6 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -159,7 +160,6 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -178,7 +178,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ContainerAppProvisioningState(property0.Value.GetString());
@@ -188,7 +187,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             managedEnvironmentId = new ResourceIdentifier(property0.Value.GetString());
@@ -198,7 +196,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             environmentId = new ResourceIdentifier(property0.Value.GetString());
@@ -233,7 +230,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             configuration = ContainerAppConfiguration.DeserializeContainerAppConfiguration(property0.Value);
@@ -243,7 +239,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value);
@@ -253,13 +248,19 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPAddress.Parse(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPAddress.Parse(item.GetString()));
+                                }
                             }
                             outboundIPAddresses = array;
                             continue;
@@ -268,7 +269,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                eventStreamEndpoint = null;
                                 continue;
                             }
                             eventStreamEndpoint = new Uri(property0.Value.GetString());

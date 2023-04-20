@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Simple policy retention. </summary>
-    public partial class SimpleRetentionPolicy : RetentionPolicy
+    public partial class SimpleRetentionPolicy : BackupRetentionPolicy
     {
         /// <summary> Initializes a new instance of SimpleRetentionPolicy. </summary>
         public SimpleRetentionPolicy()

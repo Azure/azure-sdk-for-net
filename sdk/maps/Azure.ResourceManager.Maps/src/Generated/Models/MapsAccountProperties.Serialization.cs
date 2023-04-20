@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Maps.Models
 
         internal static MapsAccountProperties DeserializeMapsAccountProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> uniqueId = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> provisioningState = default;
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.Maps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uniqueId = property.Value.GetGuid();
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.Maps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableLocalAuth = property.Value.GetBoolean();

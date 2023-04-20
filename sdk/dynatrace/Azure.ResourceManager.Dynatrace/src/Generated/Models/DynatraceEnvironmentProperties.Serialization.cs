@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceEnvironmentProperties DeserializeDynatraceEnvironmentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userId = default;
             Optional<DynatraceAccountInfo> accountInfo = default;
             Optional<DynatraceEnvironmentInfo> environmentInfo = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accountInfo = DynatraceAccountInfo.DeserializeDynatraceAccountInfo(property.Value);
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     environmentInfo = DynatraceEnvironmentInfo.DeserializeDynatraceEnvironmentInfo(property.Value);
@@ -75,7 +77,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     singleSignOnProperties = DynatraceSingleSignOnProperties.DeserializeDynatraceSingleSignOnProperties(property.Value);

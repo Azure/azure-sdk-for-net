@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsAutomationRuleCondition DeserializeSecurityInsightsAutomationRuleCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("conditionType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

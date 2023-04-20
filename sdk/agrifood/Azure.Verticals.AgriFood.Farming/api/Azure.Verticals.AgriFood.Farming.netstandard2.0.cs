@@ -632,3 +632,11 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Azure.AsyncPageable<System.BinaryData> GetZonesByPartyIdAsync(string partyId, System.Collections.Generic.IEnumerable<string> types = null, System.Collections.Generic.IEnumerable<string> managementZoneIds = null, System.Collections.Generic.IEnumerable<string> sources = null, System.Collections.Generic.IEnumerable<string> ids = null, System.Collections.Generic.IEnumerable<string> names = null, System.Collections.Generic.IEnumerable<string> propertyFilters = null, System.Collections.Generic.IEnumerable<string> statuses = null, System.DateTimeOffset? minCreatedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? maxCreatedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? minLastModifiedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? maxLastModifiedDateTime = default(System.DateTimeOffset?), int? maxPageSize = default(int?), string skipToken = null, Azure.RequestContext context = null) { throw null; }
     }
 }
+namespace Microsoft.Extensions.Azure
+{
+    public static partial class FarmBeatsClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Verticals.AgriFood.Farming.FarmBeatsClient, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions> AddFarmBeatsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Verticals.AgriFood.Farming.FarmBeatsClient, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions> AddFarmBeatsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+    }
+}

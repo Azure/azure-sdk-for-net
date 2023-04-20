@@ -41,10 +41,80 @@ namespace Azure.Identity
         /// </summary>
         internal bool IsLoggingPIIEnabled { get; set; }
 
-        /// <summary>
-        /// For multi-tenant applications, specifies additional tenants for which the credential may acquire tokens. Add the wildcard value "*" to allow the credential to acquire tokens for any tenant in which the application is installed.
-        /// </summary>
-        internal List<string> AdditionallyAllowedTenantsCore { get; set; } = new List<string>();
+        internal virtual T Clone<T>()
+            where T : TokenCredentialOptions, new()
+        {
+            T clone = new T();
+
+            // copy TokenCredentialOptions Properties
+            clone.AuthorityHost = AuthorityHost;
+
+            clone.IsLoggingPIIEnabled = IsLoggingPIIEnabled;
+
+            // copy TokenCredentialDiagnosticsOptions specific options
+            clone.Diagnostics.IsAccountIdentifierLoggingEnabled = Diagnostics.IsAccountIdentifierLoggingEnabled;
+
+            // copy ISupportsDisableInstanceDiscovery
+            CloneIfImplemented<ISupportsDisableInstanceDiscovery>(this, clone, (o, c) => c.DisableInstanceDiscovery = o.DisableInstanceDiscovery);
+
+            // copy ISupportsTokenCachePersistenceOptions
+            CloneIfImplemented<ISupportsTokenCachePersistenceOptions>(this, clone, (o, c) => c.TokenCachePersistenceOptions = o.TokenCachePersistenceOptions);
+
+            // copy ISupportsAdditinallyAllowedTenants
+            CloneIfImplemented<ISupportsAdditionallyAllowedTenants>(this, clone, (o, c) => CloneListItems(o.AdditionallyAllowedTenants, c.AdditionallyAllowedTenants));
+
+            // copy base ClientOptions properties, this would be replaced by a similar method on the base class
+
+            // only copy transport if the original has changed from the default so as not to set IsCustomTransportSet unintentionally
+            if (Transport != ClientOptions.Default.Transport)
+            {
+                clone.Transport = Transport;
+            }
+
+            // clone base Diagnostic options
+            clone.Diagnostics.ApplicationId = Diagnostics.ApplicationId;
+            clone.Diagnostics.IsLoggingEnabled = Diagnostics.IsLoggingEnabled;
+            clone.Diagnostics.IsTelemetryEnabled = Diagnostics.IsTelemetryEnabled;
+            clone.Diagnostics.LoggedContentSizeLimit = Diagnostics.LoggedContentSizeLimit;
+            clone.Diagnostics.IsDistributedTracingEnabled = Diagnostics.IsDistributedTracingEnabled;
+            clone.Diagnostics.IsLoggingContentEnabled = Diagnostics.IsLoggingContentEnabled;
+
+            CloneListItems(Diagnostics.LoggedHeaderNames, clone.Diagnostics.LoggedHeaderNames);
+            CloneListItems(Diagnostics.LoggedQueryParameters, clone.Diagnostics.LoggedQueryParameters);
+
+            // clone base RetryOptions
+            clone.RetryPolicy = RetryPolicy;
+
+            clone.Retry.MaxRetries = Retry.MaxRetries;
+            clone.Retry.Delay = Retry.Delay;
+            clone.Retry.MaxDelay = Retry.MaxDelay;
+            clone.Retry.Mode = Retry.Mode;
+            clone.Retry.NetworkTimeout = Retry.NetworkTimeout;
+
+            // TODO: clone additional policies
+            // at the moment there is no way to access policies added to the ClientOptions
+
+            return clone;
+        }
+
+        private static void CloneListItems<T>(IList<T> original, IList<T> clone)
+        {
+            clone.Clear();
+
+            foreach (var item in original)
+            {
+                clone.Add(item);
+            }
+        }
+
+        private static void CloneIfImplemented<T>(TokenCredentialOptions original, TokenCredentialOptions clone, Action<T, T> cloneOperation)
+            where T : class
+        {
+            if (original is T originalAsT && clone is T cloneAsT)
+            {
+                cloneOperation(originalAsT, cloneAsT);
+            }
+        }
 
         /// <summary>
         /// Gets the credential diagnostic options.

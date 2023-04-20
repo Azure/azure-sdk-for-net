@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal static PostgreSqlFlexibleServerFastProvisioningEditionCapability DeserializePostgreSqlFlexibleServerFastProvisioningEditionCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> supportedSku = default;
             Optional<long> supportedStorageGb = default;
             Optional<string> supportedServerVersions = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     supportedStorageGb = property.Value.GetInt64();

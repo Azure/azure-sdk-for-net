@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    /// <summary> A class representing the PredictionResourceFormat data model. </summary>
+    /// <summary>
+    /// A class representing the PredictionResourceFormat data model.
+    /// The prediction resource format.
+    /// </summary>
     public partial class PredictionResourceFormatData : ResourceData
     {
         /// <summary> Initializes a new instance of PredictionResourceFormatData. </summary>

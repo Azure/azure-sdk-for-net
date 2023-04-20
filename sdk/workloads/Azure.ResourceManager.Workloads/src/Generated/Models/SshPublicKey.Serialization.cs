@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SshPublicKey DeserializeSshPublicKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyData = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal static CognitiveServicesAccountModelListResult DeserializeCognitiveServicesAccountModelListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<CognitiveServicesAccountModel>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CognitiveServicesAccountModel> array = new List<CognitiveServicesAccountModel>();

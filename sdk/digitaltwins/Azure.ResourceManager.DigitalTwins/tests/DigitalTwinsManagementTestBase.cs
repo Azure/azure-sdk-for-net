@@ -12,7 +12,13 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
 {
     public class DigitalTwinsManagementTestBase : ManagementRecordedTestBase<DigitalTwinsManagementTestEnvironment>
     {
+        protected AzureLocation Location { get; private set; } = AzureLocation.WestCentralUS;
+
         protected ArmClient Client { get; private set; }
+
+        protected SubscriptionResource Subscription { get; private set; }
+
+        protected ResourceGroupResource ResourceGroup { get; private set; }
 
         protected DigitalTwinsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -25,9 +31,17 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonTestResources()
         {
             Client = GetArmClient();
+            Subscription = await Client.GetSubscriptions().GetAsync(TestEnvironment.SubscriptionId).ConfigureAwait(false);
+            ResourceGroup = await CreateResourceGroup(Subscription, "digitaltwins-sdk-tests", Location).ConfigureAwait(false);
+        }
+
+        [TearDown]
+        public async Task DeleteCommonTestResources()
+        {
+            await ResourceGroup.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)

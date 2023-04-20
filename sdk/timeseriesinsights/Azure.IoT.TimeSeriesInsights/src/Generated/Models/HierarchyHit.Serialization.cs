@@ -14,6 +14,10 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static HierarchyHit DeserializeHierarchyHit(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> cumulativeInstanceCount = default;
             Optional<SearchHierarchyNodesResponse> hierarchyNodes = default;
@@ -28,7 +32,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cumulativeInstanceCount = property.Value.GetInt32();
@@ -38,7 +41,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hierarchyNodes = SearchHierarchyNodesResponse.DeserializeSearchHierarchyNodesResponse(property.Value);

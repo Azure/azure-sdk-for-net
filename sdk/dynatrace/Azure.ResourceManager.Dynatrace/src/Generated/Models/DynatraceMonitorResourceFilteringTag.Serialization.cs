@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceMonitorResourceFilteringTag DeserializeDynatraceMonitorResourceFilteringTag(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> value = default;
             Optional<DynatraceMonitorResourceTagAction> action = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     action = new DynatraceMonitorResourceTagAction(property.Value.GetString());

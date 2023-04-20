@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    /// <summary> A class representing the LogicWorkflowRunActionRepetitionDefinition data model. </summary>
+    /// <summary>
+    /// A class representing the LogicWorkflowRunActionRepetitionDefinition data model.
+    /// The workflow run action repetition definition.
+    /// </summary>
     public partial class LogicWorkflowRunActionRepetitionDefinitionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of LogicWorkflowRunActionRepetitionDefinitionData. </summary>

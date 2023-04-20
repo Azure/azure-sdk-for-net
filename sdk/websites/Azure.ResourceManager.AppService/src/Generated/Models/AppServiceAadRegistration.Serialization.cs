@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceAadRegistration DeserializeAppServiceAadRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> openIdIssuer = default;
             Optional<string> clientId = default;
             Optional<string> clientSecretSettingName = default;
@@ -82,7 +86,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientSecretCertificateThumbprint = BinaryData.FromString(property.Value.GetRawText());

@@ -103,7 +103,7 @@ namespace Azure.Storage.DataMovement
                 File.SetAttributes(_path, attributes | FileAttributes.Temporary);
                 return Task.CompletedTask;
             }
-            throw new IOException($"File path `{_path}` already exists. Cannot overwite file.");
+            throw Errors.LocalFileAlreadyExists(_path);
         }
 
         /// <summary>
@@ -238,6 +238,27 @@ namespace Azure.Storage.DataMovement
                 File.SetAttributes(_path, attributes | FileAttributes.Normal);
             }
             return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Deletes the respective storage resource.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the storage resource exists and is deleted, true will be returned.
+        /// Otherwise if the storage resource does not exist, false will be returned.
+        /// </returns>
+        public override Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
+        {
+            if (File.Exists(_path))
+            {
+                File.Delete(_path);
+                return Task.FromResult(true);
+            }
+            return Task.FromResult(false);
         }
     }
 }

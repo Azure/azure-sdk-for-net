@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightDiskBillingMeters DeserializeHDInsightDiskBillingMeters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> diskRpMeter = default;
             Optional<string> sku = default;
             Optional<HDInsightTier> tier = default;
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new HDInsightTier(property.Value.GetString());

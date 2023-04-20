@@ -77,10 +77,7 @@ namespace Azure.Core.Pipeline
                 // Clear the authorization header.
                 request.Headers.Remove(HttpHeader.Names.Authorization);
 
-                if (AzureCoreEventSource.Singleton.IsEnabled())
-                {
-                    AzureCoreEventSource.Singleton.RequestRedirect(request.ClientRequestId, request.Uri.ToString(), redirectUri.ToString(), response.Status);
-                }
+                AzureCoreEventSource.Singleton.RequestRedirect(request, redirectUri, response);
 
                 // Set up for the redirect
                 request.Uri.Reset(redirectUri);

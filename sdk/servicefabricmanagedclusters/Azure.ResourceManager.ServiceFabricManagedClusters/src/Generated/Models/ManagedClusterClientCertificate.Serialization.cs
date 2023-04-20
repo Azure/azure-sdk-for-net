@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedClusterClientCertificate DeserializeManagedClusterClientCertificate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool isAdmin = default;
             Optional<BinaryData> thumbprint = default;
             Optional<string> commonName = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     thumbprint = BinaryData.FromString(property.Value.GetRawText());
@@ -76,7 +79,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     issuerThumbprint = BinaryData.FromString(property.Value.GetRawText());

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal static HybridComputePrivateLinkScopeListResult DeserializeHybridComputePrivateLinkScopeListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<HybridComputePrivateLinkScopeData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

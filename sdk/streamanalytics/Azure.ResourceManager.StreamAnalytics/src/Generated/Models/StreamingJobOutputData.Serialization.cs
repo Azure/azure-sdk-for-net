@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         internal static StreamingJobOutputData DeserializeStreamingJobOutputData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -74,7 +78,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -89,7 +92,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -108,7 +110,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             datasource = StreamingJobOutputDataSource.DeserializeStreamingJobOutputDataSource(property0.Value);
@@ -118,7 +119,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timeWindow = property0.Value.GetTimeSpan("T");
@@ -128,7 +128,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sizeWindow = property0.Value.GetSingle();
@@ -138,7 +137,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property0.Value);
@@ -148,7 +146,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property0.Value);
@@ -158,7 +155,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             etag = new ETag(property0.Value.GetString());
@@ -168,7 +164,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<LastOutputEventTimestamp> array = new List<LastOutputEventTimestamp>();
@@ -183,7 +178,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             watermarkSettings = StreamingJobOutputWatermarkProperties.DeserializeStreamingJobOutputWatermarkProperties(property0.Value);

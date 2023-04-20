@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static DataShareOperationResult DeserializeDataShareOperationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> endTime = default;
             Optional<ResponseError> error = default;
             Optional<DateTimeOffset> startTime = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -36,7 +39,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
@@ -46,7 +48,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");

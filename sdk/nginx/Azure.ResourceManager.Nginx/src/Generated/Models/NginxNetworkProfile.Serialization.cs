@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxNetworkProfile DeserializeNginxNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NginxFrontendIPConfiguration> frontEndIPConfiguration = default;
             Optional<NginxNetworkInterfaceConfiguration> networkInterfaceConfiguration = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     frontEndIPConfiguration = NginxFrontendIPConfiguration.DeserializeNginxFrontendIPConfiguration(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkInterfaceConfiguration = NginxNetworkInterfaceConfiguration.DeserializeNginxNetworkInterfaceConfiguration(property.Value);

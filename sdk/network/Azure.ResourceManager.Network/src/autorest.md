@@ -100,6 +100,7 @@ rename-mapping:
   EndpointType: ConnectionMonitorEndpointType
   ConnectionState: NetworkConnectionState
   ApplicationGatewayAvailableSslOptions: ApplicationGatewayAvailableSslOptionsInfo
+  EffectiveNetworkSecurityGroup.tagMap: tagToIPAddresses
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -177,7 +178,7 @@ request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
 
 override-operation-name:
-  ApplicationGateways_ListAvailableWafRuleSets: GetApplicationGatewayAvailableWafRuleSetsAsync
+  ApplicationGateways_ListAvailableWafRuleSets: GetAppGatewayAvailableWafRuleSets
   VirtualNetworkGateways_VpnDeviceConfigurationScript: VpnDeviceConfigurationScript
   VirtualHubBgpConnections_ListLearnedRoutes: GetLearnedRoutesVirtualHubBgpConnection
   VirtualHubBgpConnections_ListAdvertisedRoutes: GetAdvertisedRoutesVirtualHubBgpConnection
@@ -382,6 +383,9 @@ directive:
     transform: >
       $.ResourceNavigationLinkFormat.properties.link['x-ms-format'] = 'arm-id';
       $.ServiceAssociationLinkPropertiesFormat.properties.link['x-ms-format'] = 'arm-id';
+  - from: networkInterface.json # a temporary fix for issue https://github.com/Azure/azure-sdk-for-net/issues/34094
+    where: $.definitions.EffectiveNetworkSecurityGroup.properties.tagMap.type
+    transform: return "object";
 ```
 
 ### Tag: package-track2-preview

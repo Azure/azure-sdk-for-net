@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventSubscriptionFilter DeserializeEventSubscriptionFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> subjectBeginsWith = default;
             Optional<string> subjectEndsWith = default;
             Optional<IList<string>> includedEventTypes = default;
@@ -83,7 +87,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -98,7 +101,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isSubjectCaseSensitive = property.Value.GetBoolean();
@@ -108,7 +110,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableAdvancedFilteringOnArrays = property.Value.GetBoolean();
@@ -118,7 +119,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AdvancedFilter> array = new List<AdvancedFilter>();

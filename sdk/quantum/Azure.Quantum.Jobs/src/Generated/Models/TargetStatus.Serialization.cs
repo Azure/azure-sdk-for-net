@@ -14,6 +14,10 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static TargetStatus DeserializeTargetStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<TargetAvailability> currentAvailability = default;
             Optional<long> averageQueueTime = default;
@@ -29,7 +33,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentAvailability = new TargetAvailability(property.Value.GetString());
@@ -39,7 +42,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     averageQueueTime = property.Value.GetInt64();

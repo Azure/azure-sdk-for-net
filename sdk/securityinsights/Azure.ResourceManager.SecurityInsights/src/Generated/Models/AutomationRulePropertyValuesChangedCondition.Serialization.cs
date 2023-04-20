@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AutomationRulePropertyValuesChangedCondition DeserializeAutomationRulePropertyValuesChangedCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomationRulePropertyChangedConditionSupportedPropertyType> propertyName = default;
             Optional<AutomationRulePropertyChangedConditionSupportedChangedType> changeType = default;
             Optional<AutomationRulePropertyConditionSupportedOperator> @operator = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     propertyName = new AutomationRulePropertyChangedConditionSupportedPropertyType(property.Value.GetString());
@@ -66,7 +69,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     changeType = new AutomationRulePropertyChangedConditionSupportedChangedType(property.Value.GetString());
@@ -76,7 +78,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @operator = new AutomationRulePropertyConditionSupportedOperator(property.Value.GetString());
@@ -86,7 +87,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

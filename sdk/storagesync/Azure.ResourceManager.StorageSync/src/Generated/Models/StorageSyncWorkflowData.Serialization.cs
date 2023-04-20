@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.StorageSync
 
         internal static StorageSyncWorkflowData DeserializeStorageSyncWorkflowData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -84,7 +88,6 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -108,7 +111,6 @@ namespace Azure.ResourceManager.StorageSync
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new StorageSyncWorkflowStatus(property0.Value.GetString());
@@ -118,7 +120,6 @@ namespace Azure.ResourceManager.StorageSync
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             operation = new StorageSyncOperationDirection(property0.Value.GetString());
@@ -133,7 +134,6 @@ namespace Azure.ResourceManager.StorageSync
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastOperationId = property0.Value.GetGuid();
@@ -148,7 +148,6 @@ namespace Azure.ResourceManager.StorageSync
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdTimestamp = property0.Value.GetDateTimeOffset("O");
@@ -158,7 +157,6 @@ namespace Azure.ResourceManager.StorageSync
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastStatusTimestamp = property0.Value.GetDateTimeOffset("O");

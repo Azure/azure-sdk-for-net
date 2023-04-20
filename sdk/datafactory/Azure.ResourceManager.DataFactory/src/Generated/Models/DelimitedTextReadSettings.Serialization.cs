@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DelimitedTextReadSettings DeserializeDelimitedTextReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> skipLineCount = default;
             Optional<CompressionReadSettings> compressionProperties = default;
             string type = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     skipLineCount = BinaryData.FromString(property.Value.GetRawText());
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value);

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static AutoscaleSettingPredicativeResult DeserializeAutoscaleSettingPredicativeResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> timespan = default;
             Optional<TimeSpan> interval = default;
             Optional<string> metricName = default;
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     interval = property.Value.GetTimeSpan("P");
@@ -47,7 +50,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetResourceId = new ResourceIdentifier(property.Value.GetString());
@@ -57,7 +59,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PredictiveValue> array = new List<PredictiveValue>();

@@ -112,6 +112,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static DigitalTwinsServiceBusProperties DeserializeDigitalTwinsServiceBusProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryConnectionString = default;
             Optional<string> secondaryConnectionString = default;
             Optional<Uri> endpointUri = default;
@@ -194,7 +198,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationType = new DigitalTwinsAuthenticationType(property.Value.GetString());

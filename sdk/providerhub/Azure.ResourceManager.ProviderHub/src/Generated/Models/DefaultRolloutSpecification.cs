@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutSpecification. </summary>
-        /// <param name="expeditedRollout"></param>
         /// <param name="canary"></param>
         /// <param name="lowTraffic"></param>
         /// <param name="mediumTraffic"></param>
@@ -30,9 +29,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="restOfTheWorldGroupTwo"></param>
         /// <param name="providerRegistration"></param>
         /// <param name="resourceTypeRegistrations"></param>
-        internal DefaultRolloutSpecification(DefaultRolloutSpecificationExpeditedRollout expeditedRollout, DefaultRolloutSpecificationCanary canary, DefaultRolloutSpecificationLowTraffic lowTraffic, DefaultRolloutSpecificationMediumTraffic mediumTraffic, DefaultRolloutSpecificationHighTraffic highTraffic, DefaultRolloutSpecificationRestOfTheWorldGroupOne restOfTheWorldGroupOne, DefaultRolloutSpecificationRestOfTheWorldGroupTwo restOfTheWorldGroupTwo, DefaultRolloutSpecificationProviderRegistration providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations)
+        internal DefaultRolloutSpecification(CanaryTrafficRegionRolloutConfiguration canary, TrafficRegionRolloutConfiguration lowTraffic, TrafficRegionRolloutConfiguration mediumTraffic, TrafficRegionRolloutConfiguration highTraffic, TrafficRegionRolloutConfiguration restOfTheWorldGroupOne, TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations)
         {
-            ExpeditedRollout = expeditedRollout;
             Canary = canary;
             LowTraffic = lowTraffic;
             MediumTraffic = mediumTraffic;
@@ -43,34 +41,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ResourceTypeRegistrations = resourceTypeRegistrations;
         }
 
-        /// <summary> Gets or sets the expedited rollout. </summary>
-        internal DefaultRolloutSpecificationExpeditedRollout ExpeditedRollout { get; set; }
-        /// <summary> Indicates whether expedited rollout is enabled/disabled. </summary>
-        public bool? ExpeditedRolloutEnabled
-        {
-            get => ExpeditedRollout is null ? default : ExpeditedRollout.Enabled;
-            set
-            {
-                if (ExpeditedRollout is null)
-                    ExpeditedRollout = new DefaultRolloutSpecificationExpeditedRollout();
-                ExpeditedRollout.Enabled = value;
-            }
-        }
-
         /// <summary> Gets or sets the canary. </summary>
-        public DefaultRolloutSpecificationCanary Canary { get; set; }
+        public CanaryTrafficRegionRolloutConfiguration Canary { get; set; }
         /// <summary> Gets or sets the low traffic. </summary>
-        public DefaultRolloutSpecificationLowTraffic LowTraffic { get; set; }
+        public TrafficRegionRolloutConfiguration LowTraffic { get; set; }
         /// <summary> Gets or sets the medium traffic. </summary>
-        public DefaultRolloutSpecificationMediumTraffic MediumTraffic { get; set; }
+        public TrafficRegionRolloutConfiguration MediumTraffic { get; set; }
         /// <summary> Gets or sets the high traffic. </summary>
-        public DefaultRolloutSpecificationHighTraffic HighTraffic { get; set; }
+        public TrafficRegionRolloutConfiguration HighTraffic { get; set; }
         /// <summary> Gets or sets the rest of the world group one. </summary>
-        public DefaultRolloutSpecificationRestOfTheWorldGroupOne RestOfTheWorldGroupOne { get; set; }
+        public TrafficRegionRolloutConfiguration RestOfTheWorldGroupOne { get; set; }
         /// <summary> Gets or sets the rest of the world group two. </summary>
-        public DefaultRolloutSpecificationRestOfTheWorldGroupTwo RestOfTheWorldGroupTwo { get; set; }
+        public TrafficRegionRolloutConfiguration RestOfTheWorldGroupTwo { get; set; }
         /// <summary> Gets or sets the provider registration. </summary>
-        public DefaultRolloutSpecificationProviderRegistration ProviderRegistration { get; set; }
+        public ProviderRegistrationData ProviderRegistration { get; set; }
         /// <summary> Gets the resource type registrations. </summary>
         public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
     }

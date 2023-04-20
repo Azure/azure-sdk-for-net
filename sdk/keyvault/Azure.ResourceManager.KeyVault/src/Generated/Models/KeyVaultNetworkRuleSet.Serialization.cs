@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultNetworkRuleSet DeserializeKeyVaultNetworkRuleSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KeyVaultNetworkRuleBypassOption> bypass = default;
             Optional<KeyVaultNetworkRuleAction> defaultAction = default;
             Optional<IList<KeyVaultIPRule>> ipRules = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bypass = new KeyVaultNetworkRuleBypassOption(property.Value.GetString());
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultAction = new KeyVaultNetworkRuleAction(property.Value.GetString());
@@ -81,7 +83,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KeyVaultIPRule> array = new List<KeyVaultIPRule>();
@@ -96,7 +97,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<KeyVaultVirtualNetworkRule> array = new List<KeyVaultVirtualNetworkRule>();

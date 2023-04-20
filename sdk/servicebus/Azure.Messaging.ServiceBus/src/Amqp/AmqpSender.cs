@@ -266,7 +266,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout).ConfigureAwait(false);
                 }
 
-                link = await _sendLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout), cancellationToken).ConfigureAwait(false);
+                link = await _sendLink.GetOrCreateAsync(timeout, cancellationToken).ConfigureAwait(false);
 
                 // Validate that the message is not too large to send.  This is done after the link is created to ensure
                 // that the maximum message size is known, as it is dictated by the service using the link.
@@ -461,13 +461,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 request.Map[ManagementConstants.Properties.Messages] = entries;
 
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
                     _connectionScope,
                     _managementLink,
                     request,
                     timeout).ConfigureAwait(false);
-
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {
@@ -547,13 +546,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 request.Map[ManagementConstants.Properties.SequenceNumbers] = sequenceNumbers;
 
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
                         _connectionScope,
                         _managementLink,
                         request,
                         timeout).ConfigureAwait(false);
-
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
                 {
@@ -627,18 +625,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw;
             }
         }
-
-        /// <summary>
-        ///   Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
-        /// </summary>
-        ///
-        /// <param name="firstOption">The first option to consider.</param>
-        /// <param name="secondOption">The second option to consider.</param>
-        ///
-        /// <returns>The smaller of the two specified intervals.</returns>
-        ///
-        private static TimeSpan UseMinimum(TimeSpan firstOption,
-                                           TimeSpan secondOption) => (firstOption < secondOption) ? firstOption : secondOption;
 
         private bool HasLinkCommunicationError(SendingAmqpLink link) =>
             !_closed && (link?.IsClosing() ?? false);

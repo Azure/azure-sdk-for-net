@@ -32,6 +32,10 @@ namespace Azure.Communication.JobRouter
 
         internal static ConditionalQueueSelectorAttachment DeserializeConditionalQueueSelectorAttachment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RouterRule condition = default;
             IList<QueueSelector> labelSelectors = default;
             string kind = default;

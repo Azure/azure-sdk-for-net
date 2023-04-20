@@ -12,12 +12,11 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void RecognizeEntitiesBatch()
         {
-            // Create a text analytics client.
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            #region Snippet:TextAnalyticsSample4RecognizeEntitiesBatch
+            #region Snippet:Sample4_RecognizeEntitiesBatch
             string documentA =
                 "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
                 + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
@@ -38,7 +37,9 @@ namespace Azure.AI.TextAnalytics.Samples
 
             string documentD = string.Empty;
 
-            List<TextDocumentInput> documents = new()
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<TextDocumentInput> batchedDocuments = new()
             {
                 new TextDocumentInput("1", documentA)
                 {
@@ -56,78 +57,45 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             TextAnalyticsRequestOptions options = new() { IncludeStatistics = true };
-            Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesBatch(documents, options);
+            Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesBatch(batchedDocuments, options);
             RecognizeEntitiesResultCollection entitiesInDocuments = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of \"Named Entity Recognition\" Model, version: \"{entitiesInDocuments.ModelVersion}\"");
+            Console.WriteLine($"Recognize Entities, model version: \"{entitiesInDocuments.ModelVersion}\"");
             Console.WriteLine();
 
-            foreach (RecognizeEntitiesResult entitiesInDocument in entitiesInDocuments)
+            foreach (RecognizeEntitiesResult documentResult in entitiesInDocuments)
             {
-                TextDocumentInput document = documents[i++];
+                TextDocumentInput document = batchedDocuments[i++];
 
-                Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\"):");
+                Console.WriteLine($"Result for document with Id = \"{document.Id}\" and Language = \"{document.Language}\":");
 
-                if (entitiesInDocument.HasError)
+                if (documentResult.HasError)
                 {
-                    Console.WriteLine("  Error!");
-                    Console.WriteLine($"  Document error code: {entitiesInDocument.Error.ErrorCode}.");
-                    Console.WriteLine($"  Message: {entitiesInDocument.Error.Message}");
+                    Console.WriteLine($"  Error!");
+                    Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                    Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                    Console.WriteLine();
+                    continue;
                 }
-                else
+
+                Console.WriteLine($"  Recognized {documentResult.Entities.Count} entities:");
+
+                foreach (CategorizedEntity entity in documentResult.Entities)
                 {
-                    Console.WriteLine($"  Recognized the following {entitiesInDocument.Entities.Count} entities:");
-
-                    foreach (CategorizedEntity entity in entitiesInDocument.Entities)
-                    {
-                        Console.WriteLine($"    Text: {entity.Text}");
-                        Console.WriteLine($"    Offset: {entity.Offset}");
-                        Console.WriteLine($"    Length: {entity.Length}");
-                        Console.WriteLine($"    Category: {entity.Category}");
-                        if (!string.IsNullOrEmpty(entity.SubCategory))
-                            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
-                        Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
-                        if (entity.Resolutions.Count > 0)
-                        {
-                            Console.WriteLine($"    Resolutions:");
-                            foreach (BaseResolution resolution in entity.Resolutions)
-                            {
-                                // There are several different kinds of resolutions. In this particular sample, we are
-                                // interested in viewing those of type DateTimeResolution and TemporalSpanResolution.
-
-                                if (resolution is DateTimeResolution dateTime)
-                                {
-                                    Console.WriteLine($"      Value: {dateTime.Value} ");
-                                    Console.WriteLine($"      DateTimeSubKind: {dateTime.DateTimeSubKind} ");
-                                    if (!string.IsNullOrEmpty(dateTime.Timex))
-                                        Console.WriteLine($"      Timex: {dateTime.Timex}");
-                                    if (dateTime.Modifier is not null)
-                                        Console.WriteLine($"      Modifier: {dateTime.Modifier}");
-                                }
-
-                                if (resolution is TemporalSpanResolution temporalSpan)
-                                {
-                                    if (!string.IsNullOrEmpty(temporalSpan.Begin))
-                                        Console.WriteLine($"      Begin: {temporalSpan.Begin}");
-                                    if (!string.IsNullOrEmpty(temporalSpan.End))
-                                        Console.WriteLine($"      End: {temporalSpan.End}");
-                                    if (!string.IsNullOrEmpty(temporalSpan.Duration))
-                                        Console.WriteLine($"      Duration: {temporalSpan.Duration}");
-                                    if (!string.IsNullOrEmpty(temporalSpan.End))
-                                        Console.WriteLine($"      Timex: {temporalSpan.Timex}");
-                                    if (temporalSpan.Modifier is not null)
-                                        Console.WriteLine($"      Modifier: {temporalSpan.Modifier}");
-                                }
-                            }
-                        }
-                        Console.WriteLine();
-                    }
-
-                    Console.WriteLine($"  Document statistics:");
-                    Console.WriteLine($"    Character count: {entitiesInDocument.Statistics.CharacterCount}");
-                    Console.WriteLine($"    Transaction count: {entitiesInDocument.Statistics.TransactionCount}");
+                    Console.WriteLine($"    Text: {entity.Text}");
+                    Console.WriteLine($"    Offset: {entity.Offset}");
+                    Console.WriteLine($"    Length: {entity.Length}");
+                    Console.WriteLine($"    Category: {entity.Category}");
+                    if (!string.IsNullOrEmpty(entity.SubCategory))
+                        Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                    Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
+                    Console.WriteLine();
                 }
+
+                Console.WriteLine($"  Document statistics:");
+                Console.WriteLine($"    Character count: {documentResult.Statistics.CharacterCount}");
+                Console.WriteLine($"    Transaction count: {documentResult.Statistics.TransactionCount}");
                 Console.WriteLine();
             }
 

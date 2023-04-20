@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static UnknownRoleManagementPolicyRule DeserializeUnknownRoleManagementPolicyRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = "Unknown";
             Optional<RoleManagementPolicyRuleTarget> target = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);

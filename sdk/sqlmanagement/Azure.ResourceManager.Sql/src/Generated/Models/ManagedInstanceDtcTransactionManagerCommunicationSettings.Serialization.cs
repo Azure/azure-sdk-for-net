@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedInstanceDtcTransactionManagerCommunicationSettings DeserializeManagedInstanceDtcTransactionManagerCommunicationSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> allowInboundEnabled = default;
             Optional<bool> allowOutboundEnabled = default;
             Optional<string> authentication = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowInboundEnabled = property.Value.GetBoolean();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowOutboundEnabled = property.Value.GetBoolean();

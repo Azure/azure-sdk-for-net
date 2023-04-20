@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static DataBoxValidationInputDiscriminator ToDataBoxValidationInputDiscriminator(this string value)
         {
-            if (string.Equals(value, "ValidateAddress", StringComparison.InvariantCultureIgnoreCase)) return DataBoxValidationInputDiscriminator.ValidateAddress;
-            if (string.Equals(value, "ValidateSubscriptionIsAllowedToCreateJob", StringComparison.InvariantCultureIgnoreCase)) return DataBoxValidationInputDiscriminator.ValidateSubscriptionIsAllowedToCreateJob;
-            if (string.Equals(value, "ValidatePreferences", StringComparison.InvariantCultureIgnoreCase)) return DataBoxValidationInputDiscriminator.ValidatePreferences;
-            if (string.Equals(value, "ValidateCreateOrderLimit", StringComparison.InvariantCultureIgnoreCase)) return DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit;
-            if (string.Equals(value, "ValidateSkuAvailability", StringComparison.InvariantCultureIgnoreCase)) return DataBoxValidationInputDiscriminator.ValidateSkuAvailability;
-            if (string.Equals(value, "ValidateDataTransferDetails", StringComparison.InvariantCultureIgnoreCase)) return DataBoxValidationInputDiscriminator.ValidateDataTransferDetails;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateAddress")) return DataBoxValidationInputDiscriminator.ValidateAddress;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateSubscriptionIsAllowedToCreateJob")) return DataBoxValidationInputDiscriminator.ValidateSubscriptionIsAllowedToCreateJob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidatePreferences")) return DataBoxValidationInputDiscriminator.ValidatePreferences;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateCreateOrderLimit")) return DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateSkuAvailability")) return DataBoxValidationInputDiscriminator.ValidateSkuAvailability;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ValidateDataTransferDetails")) return DataBoxValidationInputDiscriminator.ValidateDataTransferDetails;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxValidationInputDiscriminator value.");
         }
     }

@@ -30,7 +30,7 @@ namespace Azure.Identity
         internal const string Troubleshoot = "Please visit https://aka.ms/azure-dev for installation instructions and then, once installed, authenticate to your Azure account using 'azd login'.";
         internal const string InteractiveLoginRequired = "Azure Developer CLI could not login. Interactive login is required.";
         internal const string AzdCLIInternalError = "AzdCLIInternalError: The command failed with an unexpected error. Here is the traceback:";
-        internal TimeSpan AzdCliProcessTimeout { get; private set; }
+        internal TimeSpan ProcessTimeout { get; private set; }
 
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
         private const string DefaultWorkingDirNonWindows = "/bin/";
@@ -67,8 +67,8 @@ namespace Azure.Identity
             _pipeline = pipeline;
             _processService = processService ?? ProcessService.Default;
             TenantId = options?.TenantId;
-            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
-            AzdCliProcessTimeout = options?.AzdCliProcessTimeout ?? TimeSpan.FromSeconds(13);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
+            ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.Identity
 
             GetFileNameAndArguments(context.Scopes, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureDeveloperCliProcessStartInfo(fileName, argument);
-            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), AzdCliProcessTimeout, _logPII, cancellationToken);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, cancellationToken);
 
             string output;
             try

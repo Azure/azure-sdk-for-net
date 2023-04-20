@@ -1,9 +1,22 @@
 namespace Azure.AI.AnomalyDetector
 {
-    public enum AlignMode
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AlignMode : System.IEquatable<Azure.AI.AnomalyDetector.AlignMode>
     {
-        Inner = 0,
-        Outer = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AlignMode(string value) { throw null; }
+        public static Azure.AI.AnomalyDetector.AlignMode Inner { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.AlignMode Outer { get { throw null; } }
+        public bool Equals(Azure.AI.AnomalyDetector.AlignMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.AnomalyDetector.AlignMode left, Azure.AI.AnomalyDetector.AlignMode right) { throw null; }
+        public static implicit operator Azure.AI.AnomalyDetector.AlignMode (string value) { throw null; }
+        public static bool operator !=(Azure.AI.AnomalyDetector.AlignMode left, Azure.AI.AnomalyDetector.AlignMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AlignPolicy
     {
@@ -179,13 +192,13 @@ namespace Azure.AI.AnomalyDetector
         public Azure.AI.AnomalyDetector.AlignPolicy AlignPolicy { get { throw null; } set { } }
         public Azure.AI.AnomalyDetector.DataSchema? DataSchema { get { throw null; } set { } }
         public string DataSource { get { throw null; } set { } }
-        public Azure.AI.AnomalyDetector.DiagnosticsInfo DiagnosticsInfo { get { throw null; } set { } }
+        public Azure.AI.AnomalyDetector.DiagnosticsInfo DiagnosticsInfo { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset EndTime { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.ErrorResponse> Errors { get { throw null; } }
         public int? SlidingWindow { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } set { } }
-        public Azure.AI.AnomalyDetector.ModelStatus? Status { get { throw null; } set { } }
+        public Azure.AI.AnomalyDetector.ModelStatus? Status { get { throw null; } }
     }
     public partial class ModelState
     {
@@ -195,12 +208,25 @@ namespace Azure.AI.AnomalyDetector
         public System.Collections.Generic.IList<float> TrainLosses { get { throw null; } }
         public System.Collections.Generic.IList<float> ValidationLosses { get { throw null; } }
     }
-    public enum ModelStatus
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ModelStatus : System.IEquatable<Azure.AI.AnomalyDetector.ModelStatus>
     {
-        Created = 0,
-        Running = 1,
-        Ready = 2,
-        Failed = 3,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ModelStatus(string value) { throw null; }
+        public static Azure.AI.AnomalyDetector.ModelStatus Created { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.ModelStatus Failed { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.ModelStatus Ready { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.ModelStatus Running { get { throw null; } }
+        public bool Equals(Azure.AI.AnomalyDetector.ModelStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.AnomalyDetector.ModelStatus left, Azure.AI.AnomalyDetector.ModelStatus right) { throw null; }
+        public static implicit operator Azure.AI.AnomalyDetector.ModelStatus (string value) { throw null; }
+        public static bool operator !=(Azure.AI.AnomalyDetector.ModelStatus left, Azure.AI.AnomalyDetector.ModelStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MultivariateBatchDetectionOptions
     {
@@ -218,12 +244,25 @@ namespace Azure.AI.AnomalyDetector
         public Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.VariableState> VariableStates { get { throw null; } }
     }
-    public enum MultivariateBatchDetectionStatus
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MultivariateBatchDetectionStatus : System.IEquatable<Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus>
     {
-        Created = 0,
-        Running = 1,
-        Ready = 2,
-        Failed = 3,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MultivariateBatchDetectionStatus(string value) { throw null; }
+        public static Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus Created { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus Failed { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus Ready { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus Running { get { throw null; } }
+        public bool Equals(Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus left, Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus right) { throw null; }
+        public static implicit operator Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus left, Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MultivariateDetectionResult
     {
@@ -234,8 +273,8 @@ namespace Azure.AI.AnomalyDetector
     }
     public partial class MultivariateLastDetectionOptions
     {
-        public MultivariateLastDetectionOptions(System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.VariableValues> variables, int topContributorCount) { }
-        public int TopContributorCount { get { throw null; } }
+        public MultivariateLastDetectionOptions(System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.VariableValues> variables) { }
+        public int? TopContributorCount { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.AnomalyDetector.VariableValues> Variables { get { throw null; } }
     }
     public partial class MultivariateLastDetectionResult
@@ -244,17 +283,30 @@ namespace Azure.AI.AnomalyDetector
         public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.AnomalyState> Results { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.VariableState> VariableStates { get { throw null; } }
     }
-    public enum TimeGranularity
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TimeGranularity : System.IEquatable<Azure.AI.AnomalyDetector.TimeGranularity>
     {
-        Yearly = 0,
-        Monthly = 1,
-        Weekly = 2,
-        Daily = 3,
-        Hourly = 4,
-        PerMinute = 5,
-        PerSecond = 6,
-        Microsecond = 7,
-        None = 8,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TimeGranularity(string value) { throw null; }
+        public static Azure.AI.AnomalyDetector.TimeGranularity Daily { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.TimeGranularity Hourly { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.TimeGranularity Microsecond { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.TimeGranularity Monthly { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.TimeGranularity None { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.TimeGranularity PerMinute { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.TimeGranularity PerSecond { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.TimeGranularity Weekly { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.TimeGranularity Yearly { get { throw null; } }
+        public bool Equals(Azure.AI.AnomalyDetector.TimeGranularity other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.AnomalyDetector.TimeGranularity left, Azure.AI.AnomalyDetector.TimeGranularity right) { throw null; }
+        public static implicit operator Azure.AI.AnomalyDetector.TimeGranularity (string value) { throw null; }
+        public static bool operator !=(Azure.AI.AnomalyDetector.TimeGranularity left, Azure.AI.AnomalyDetector.TimeGranularity right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TimeSeriesPoint
     {
@@ -331,5 +383,13 @@ namespace Azure.AI.AnomalyDetector
         public System.Collections.Generic.IList<string> Timestamps { get { throw null; } }
         public System.Collections.Generic.IList<float> Values { get { throw null; } }
         public string Variable { get { throw null; } }
+    }
+}
+namespace Microsoft.Extensions.Azure
+{
+    public static partial class AnomalyDetectorClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.AnomalyDetector.AnomalyDetectorClient, Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions> AddAnomalyDetectorClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.AnomalyDetector.AnomalyDetectorClient, Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions> AddAnomalyDetectorClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

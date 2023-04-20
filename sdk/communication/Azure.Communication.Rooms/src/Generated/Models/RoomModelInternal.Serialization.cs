@@ -16,6 +16,10 @@ namespace Azure.Communication.Rooms
     {
         internal static RoomModelInternal DeserializeRoomModelInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<DateTimeOffset> createdDateTime = default;
             Optional<DateTimeOffset> validFrom = default;
@@ -33,7 +37,6 @@ namespace Azure.Communication.Rooms
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdDateTime = property.Value.GetDateTimeOffset("O");
@@ -43,7 +46,6 @@ namespace Azure.Communication.Rooms
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validFrom = property.Value.GetDateTimeOffset("O");
@@ -53,7 +55,6 @@ namespace Azure.Communication.Rooms
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validUntil = property.Value.GetDateTimeOffset("O");
@@ -63,7 +64,6 @@ namespace Azure.Communication.Rooms
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     roomJoinPolicy = new RoomJoinPolicy(property.Value.GetString());
@@ -73,7 +73,6 @@ namespace Azure.Communication.Rooms
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoomParticipantInternal> array = new List<RoomParticipantInternal>();

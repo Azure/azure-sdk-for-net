@@ -239,7 +239,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task WaitForCompletionCallsUntilOperationCompletes([Values(true, false)] bool useDefaultPollingInterval)
         {
-            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(5), InitialResponse, fallbackStrategy: new ZeroPollingStrategy());
+            var operationInternal = new OperationInternal(TestOperation.SucceededAfter(5), ClientDiagnostics, InitialResponse, fallbackStrategy: new ZeroPollingStrategy());
 
             var operationResponse = useDefaultPollingInterval
                 ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)
@@ -252,19 +252,28 @@ namespace Azure.Core.Tests
         [Test]
         public async Task WaitForCompletionUsesZeroPollingInterval([Values(true, false)] bool hasSuggest, [Values(1, 2, 3)] int retries)
         {
-            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(retries), InitialResponse, fallbackStrategy: new ZeroPollingStrategy());
+            var operationInternal = new OperationInternal(TestOperation.SucceededAfter(retries), ClientDiagnostics, InitialResponse, fallbackStrategy: new ZeroPollingStrategy());
 
             var stopwatch = Stopwatch.StartNew();
             if (hasSuggest)
             {
-                await operationInternal.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(10), CancellationToken.None);
+                await operationInternal.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(2), CancellationToken.None);
             }
             else
             {
                 await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None);
             }
             stopwatch.Stop();
-            Assert.IsTrue(stopwatch.Elapsed < TimeSpan.FromSeconds(1));
+
+            // if there is a suggested time, it should be used instead of the zero polling interval
+            if (hasSuggest)
+            {
+                Assert.IsTrue(stopwatch.Elapsed > TimeSpan.FromSeconds(1));
+            }
+            else
+            {
+                Assert.IsTrue(stopwatch.Elapsed < TimeSpan.FromSeconds(1));
+            }
         }
 
         [Test]
@@ -280,7 +289,7 @@ namespace Azure.Core.Tests
                 return new ValueTask<OperationState>(OperationState.Success(new MockResponse(200)));
             });
 
-            var operationInternal = new OperationInternal(ClientDiagnostics, operation, InitialResponse, fallbackStrategy: new ZeroPollingStrategy());
+            var operationInternal = new OperationInternal(operation, ClientDiagnostics, InitialResponse, fallbackStrategy: new ZeroPollingStrategy());
 
             _ = useDefaultPollingInterval
                 ? await operationInternal.WaitForCompletionResponseAsync(originalToken)
@@ -297,7 +306,7 @@ namespace Azure.Core.Tests
 
             tokenSource.Cancel();
 
-            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(1), InitialResponse, fallbackStrategy: new ZeroPollingStrategy());
+            var operationInternal = new OperationInternal(TestOperation.SucceededAfter(1), ClientDiagnostics, InitialResponse, fallbackStrategy: new ZeroPollingStrategy());
 
             _ = useDefaultPollingInterval
                 ? Assert.ThrowsAsync<TaskCanceledException>(async () => await operationInternal.WaitForCompletionResponseAsync(cancellationToken))
@@ -309,7 +318,7 @@ namespace Azure.Core.Tests
         {
             var fallbackStrategy = new MockDelayStrategy();
 
-            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(retries), InitialResponse, fallbackStrategy: fallbackStrategy);
+            var operationInternal = new OperationInternal(TestOperation.SucceededAfter(retries), ClientDiagnostics, InitialResponse, fallbackStrategy: fallbackStrategy);
             _ = await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None);
 
             Assert.AreEqual(retries, fallbackStrategy.CallCount);
@@ -320,7 +329,7 @@ namespace Azure.Core.Tests
         {
             var fallbackStrategy = new MockDelayStrategy();
 
-            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(retries), InitialResponse, fallbackStrategy: fallbackStrategy);
+            var operationInternal = new OperationInternal(TestOperation.SucceededAfter(retries), ClientDiagnostics, InitialResponse, fallbackStrategy: fallbackStrategy);
             _ = operationInternal.WaitForCompletionResponse(CancellationToken.None);
 
             Assert.AreEqual(retries, fallbackStrategy.CallCount);
@@ -356,7 +365,7 @@ namespace Azure.Core.Tests
                 return OperationState.Success(new MockResponse(200));
             });
 
-            var operationInternal = new OperationInternal(ClientDiagnostics, operation, InitialResponse, fallbackStrategy: fallbackStrategy);
+            var operationInternal = new OperationInternal(operation, ClientDiagnostics, InitialResponse, fallbackStrategy: fallbackStrategy);
 
             var tasks = new List<Task<Response>>();
             for (var i = 0; i < 50; i++)
@@ -435,7 +444,7 @@ namespace Azure.Core.Tests
         {
             public int CallCount { get; private set; }
 
-            public override TimeSpan GetNextDelay(Response response, TimeSpan? suggestedInterval)
+            protected override TimeSpan GetNextDelayCore(Response response, int retryNumber)
             {
                 CallCount++;
                 return TimeSpan.Zero;

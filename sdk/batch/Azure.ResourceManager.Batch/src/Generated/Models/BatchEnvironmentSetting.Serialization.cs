@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchEnvironmentSetting DeserializeBatchEnvironmentSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static GitHubClientSecret DeserializeGitHubClientSecret(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> byoaSecretAkvUrl = default;
             Optional<string> byoaSecretName = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        byoaSecretAkvUrl = null;
                         continue;
                     }
                     byoaSecretAkvUrl = new Uri(property.Value.GetString());

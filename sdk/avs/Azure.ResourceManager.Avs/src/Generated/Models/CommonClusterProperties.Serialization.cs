@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static CommonClusterProperties DeserializeCommonClusterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> clusterSize = default;
             Optional<AvsPrivateCloudClusterProvisioningState> provisioningState = default;
             Optional<int> clusterId = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterSize = property.Value.GetInt32();
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AvsPrivateCloudClusterProvisioningState(property.Value.GetString());
@@ -66,7 +68,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterId = property.Value.GetInt32();
@@ -76,7 +77,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

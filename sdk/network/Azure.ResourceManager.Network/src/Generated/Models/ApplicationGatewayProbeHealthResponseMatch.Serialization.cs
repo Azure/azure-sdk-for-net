@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayProbeHealthResponseMatch DeserializeApplicationGatewayProbeHealthResponseMatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> body = default;
             Optional<IList<string>> statusCodes = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     body = BinaryData.FromString(property.Value.GetRawText());
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

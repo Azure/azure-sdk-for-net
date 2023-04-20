@@ -6,7 +6,11 @@
 
 ### Breaking Changes
 
+- Method `NetworkExtensions.GetApplicationGatewayAvailableWafRuleSetsAsyncAsync` and `NetworkExtensions.GetApplicationGatewayAvailableWafRuleSetsAsync` were deprecated because it does not follow the guidelines of Azure SDKs. Please use `NetworkExtensions.GetAppGatewayAvailableWafRuleSetsAsync` and `NetworkExtensions.GetAppGatewayAvailableWafRuleSets` instead.
+
 ### Bugs Fixed
+
+- Fixed issue https://github.com/Azure/azure-sdk-for-net/issues/34094. Please use `EffectiveNetworkSecurityGroup.TagToIPAddresses` instead of `EffectiveNetworkSecurityGroup.TagMap`.
 
 ### Other Changes
 
@@ -185,14 +189,15 @@ vnet = await networkClient.VirtualNetworks
 ```
 
 After upgrade:
-
-```C# Snippet:Changelog_NewCode
+```C# Snippet:Changelog_NewCode_Namespaces
 using System;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+```
 
+```C# Snippet:Changelog_NewCode
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");

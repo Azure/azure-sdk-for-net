@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    /// <summary> A class representing the ConnectorMappingResourceFormat data model. </summary>
+    /// <summary>
+    /// A class representing the ConnectorMappingResourceFormat data model.
+    /// The connector mapping resource format.
+    /// </summary>
     public partial class ConnectorMappingResourceFormatData : ResourceData
     {
         /// <summary> Initializes a new instance of ConnectorMappingResourceFormatData. </summary>

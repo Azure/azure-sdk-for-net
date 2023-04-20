@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchPrivateLinkResource DeserializeSearchPrivateLinkResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SearchPrivateLinkResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = SearchPrivateLinkResourceProperties.DeserializeSearchPrivateLinkResourceProperties(property.Value);
@@ -57,7 +60,6 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiIssueComment data model. </summary>
+    /// <summary>
+    /// A class representing the ApiIssueComment data model.
+    /// Issue Comment Contract details.
+    /// </summary>
     public partial class ApiIssueCommentData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiIssueCommentData. </summary>

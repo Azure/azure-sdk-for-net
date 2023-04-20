@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         public static ServiceAccountKeyName ToServiceAccountKeyName(this string value)
         {
-            if (string.Equals(value, "Key1", StringComparison.InvariantCultureIgnoreCase)) return ServiceAccountKeyName.Key1;
-            if (string.Equals(value, "Key2", StringComparison.InvariantCultureIgnoreCase)) return ServiceAccountKeyName.Key2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Key1")) return ServiceAccountKeyName.Key1;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Key2")) return ServiceAccountKeyName.Key2;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceAccountKeyName value.");
         }
     }

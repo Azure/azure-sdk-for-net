@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ClusterFabricSettingsSection DeserializeClusterFabricSettingsSection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             IList<ClusterFabricSettingsParameterDescription> parameters = default;
             foreach (var property in element.EnumerateObject())

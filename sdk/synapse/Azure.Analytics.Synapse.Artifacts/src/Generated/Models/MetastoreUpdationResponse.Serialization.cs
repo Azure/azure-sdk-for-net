@@ -17,6 +17,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static MetastoreUpdationResponse DeserializeMetastoreUpdationResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RequestStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -24,7 +28,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new RequestStatus(property.Value.GetString());

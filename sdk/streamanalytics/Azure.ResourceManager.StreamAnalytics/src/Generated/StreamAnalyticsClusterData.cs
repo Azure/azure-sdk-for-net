@@ -13,7 +13,10 @@ using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    /// <summary> A class representing the StreamAnalyticsCluster data model. </summary>
+    /// <summary>
+    /// A class representing the StreamAnalyticsCluster data model.
+    /// A Stream Analytics Cluster object
+    /// </summary>
     public partial class StreamAnalyticsClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of StreamAnalyticsClusterData. </summary>

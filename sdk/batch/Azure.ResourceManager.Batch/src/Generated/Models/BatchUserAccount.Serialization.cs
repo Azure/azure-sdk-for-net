@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchUserAccount DeserializeBatchUserAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string password = default;
             Optional<BatchUserAccountElevationLevel> elevationLevel = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     elevationLevel = property.Value.GetString().ToBatchUserAccountElevationLevel();
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linuxUserConfiguration = BatchLinuxUserConfiguration.DeserializeBatchLinuxUserConfiguration(property.Value);
@@ -80,7 +82,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowsUserConfiguration = BatchWindowsUserConfiguration.DeserializeBatchWindowsUserConfiguration(property.Value);

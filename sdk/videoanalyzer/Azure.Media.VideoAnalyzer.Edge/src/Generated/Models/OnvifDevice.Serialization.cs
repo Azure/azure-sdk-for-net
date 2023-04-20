@@ -46,6 +46,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static OnvifDevice DeserializeOnvifDevice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OnvifHostName> hostname = default;
             Optional<OnvifSystemDateTime> systemDateTime = default;
             Optional<OnvifDns> dns = default;
@@ -56,7 +60,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hostname = OnvifHostName.DeserializeOnvifHostName(property.Value);
@@ -66,7 +69,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemDateTime = OnvifSystemDateTime.DeserializeOnvifSystemDateTime(property.Value);
@@ -76,7 +78,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dns = OnvifDns.DeserializeOnvifDns(property.Value);
@@ -86,7 +87,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaProfile> array = new List<MediaProfile>();

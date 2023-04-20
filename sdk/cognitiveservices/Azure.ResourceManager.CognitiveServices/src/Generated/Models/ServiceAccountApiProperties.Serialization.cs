@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static ServiceAccountApiProperties DeserializeServiceAccountApiProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> qnaRuntimeEndpoint = default;
             Optional<string> qnaAzureSearchEndpointKey = default;
             Optional<ResourceIdentifier> qnaAzureSearchEndpointId = default;
@@ -109,7 +113,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     qnaAzureSearchEndpointId = new ResourceIdentifier(property.Value.GetString());
@@ -119,7 +122,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statisticsEnabled = property.Value.GetBoolean();
@@ -139,7 +141,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aadClientId = property.Value.GetGuid();
@@ -149,7 +150,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aadTenantId = property.Value.GetGuid();

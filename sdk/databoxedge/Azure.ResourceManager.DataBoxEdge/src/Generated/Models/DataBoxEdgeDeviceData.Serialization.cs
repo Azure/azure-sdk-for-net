@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DataBoxEdgeDeviceData DeserializeDataBoxEdgeDeviceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeSku> sku = default;
             Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
@@ -93,7 +97,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = DataBoxEdgeSku.DeserializeDataBoxEdgeSku(property.Value);
@@ -103,7 +106,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -113,7 +115,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -123,7 +124,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new DataBoxEdgeDeviceKind(property.Value.GetString());
@@ -133,7 +133,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -168,7 +167,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -187,7 +185,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataBoxEdgeDeviceStatus = new DataBoxEdgeDeviceStatus(property0.Value.GetString());
@@ -212,7 +209,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deviceType = new DataBoxEdgeDeviceType(property0.Value.GetString());
@@ -242,7 +238,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deviceLocalCapacity = property0.Value.GetInt64();
@@ -262,7 +257,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataBoxEdgeRoleType> array = new List<DataBoxEdgeRoleType>();
@@ -277,7 +271,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nodeCount = property0.Value.GetInt32();
@@ -287,7 +280,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceMoveDetails = DataBoxEdgeResourceMoveDetails.DeserializeDataBoxEdgeResourceMoveDetails(property0.Value);
@@ -297,7 +289,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             edgeProfile = EdgeProfile.DeserializeEdgeProfile(property0.Value);
@@ -307,7 +298,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataResidency = DataResidency.DeserializeDataResidency(property0.Value);

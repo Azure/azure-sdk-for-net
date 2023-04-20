@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Orbital.Models
 
         internal static OrbitalContactEndpoint DeserializeOrbitalContactEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IPAddress ipAddress = default;
             string endPointName = default;
             string port = default;

@@ -87,6 +87,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static RuleManagementEventDataSource DeserializeRuleManagementEventDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> eventName = default;
             Optional<string> eventSource = default;
             Optional<string> level = default;
@@ -147,7 +151,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     claims = RuleManagementEventClaimsDataSource.DeserializeRuleManagementEventClaimsDataSource(property.Value);
@@ -162,7 +165,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceUri = new ResourceIdentifier(property.Value.GetString());
@@ -172,7 +174,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     legacyResourceId = new ResourceIdentifier(property.Value.GetString());

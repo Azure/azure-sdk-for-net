@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         public static RecurrenceFrequency ToRecurrenceFrequency(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return RecurrenceFrequency.None;
-            if (string.Equals(value, "Second", StringComparison.InvariantCultureIgnoreCase)) return RecurrenceFrequency.Second;
-            if (string.Equals(value, "Minute", StringComparison.InvariantCultureIgnoreCase)) return RecurrenceFrequency.Minute;
-            if (string.Equals(value, "Hour", StringComparison.InvariantCultureIgnoreCase)) return RecurrenceFrequency.Hour;
-            if (string.Equals(value, "Day", StringComparison.InvariantCultureIgnoreCase)) return RecurrenceFrequency.Day;
-            if (string.Equals(value, "Week", StringComparison.InvariantCultureIgnoreCase)) return RecurrenceFrequency.Week;
-            if (string.Equals(value, "Month", StringComparison.InvariantCultureIgnoreCase)) return RecurrenceFrequency.Month;
-            if (string.Equals(value, "Year", StringComparison.InvariantCultureIgnoreCase)) return RecurrenceFrequency.Year;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return RecurrenceFrequency.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Second")) return RecurrenceFrequency.Second;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Minute")) return RecurrenceFrequency.Minute;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Hour")) return RecurrenceFrequency.Hour;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Day")) return RecurrenceFrequency.Day;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Week")) return RecurrenceFrequency.Week;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Month")) return RecurrenceFrequency.Month;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Year")) return RecurrenceFrequency.Year;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecurrenceFrequency value.");
         }
     }

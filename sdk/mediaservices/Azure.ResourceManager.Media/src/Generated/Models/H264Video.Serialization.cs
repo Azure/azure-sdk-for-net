@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static H264Video DeserializeH264Video(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<H264Complexity> complexity = default;
             Optional<IList<H264Layer>> layers = default;
             Optional<H264RateControlMode> rateControlMode = default;
@@ -84,7 +88,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     complexity = new H264Complexity(property.Value.GetString());
@@ -94,7 +97,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<H264Layer> array = new List<H264Layer>();
@@ -109,7 +111,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rateControlMode = new H264RateControlMode(property.Value.GetString());
@@ -119,7 +120,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sceneChangeDetection = property.Value.GetBoolean();
@@ -129,7 +129,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyFrameInterval = property.Value.GetTimeSpan("P");
@@ -139,7 +138,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stretchMode = new InputVideoStretchMode(property.Value.GetString());
@@ -149,7 +147,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     syncMode = new VideoSyncMode(property.Value.GetString());

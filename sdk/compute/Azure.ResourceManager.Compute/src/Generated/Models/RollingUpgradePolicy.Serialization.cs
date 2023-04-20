@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RollingUpgradePolicy DeserializeRollingUpgradePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxBatchInstancePercent = default;
             Optional<int> maxUnhealthyInstancePercent = default;
             Optional<int> maxUnhealthyUpgradedInstancePercent = default;
@@ -74,7 +78,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxBatchInstancePercent = property.Value.GetInt32();
@@ -84,7 +87,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxUnhealthyInstancePercent = property.Value.GetInt32();
@@ -94,7 +96,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxUnhealthyUpgradedInstancePercent = property.Value.GetInt32();
@@ -109,7 +110,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableCrossZoneUpgrade = property.Value.GetBoolean();
@@ -119,7 +119,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     prioritizeUnhealthyInstances = property.Value.GetBoolean();
@@ -129,7 +128,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rollbackFailedInstancesOnPolicyBreach = property.Value.GetBoolean();
@@ -139,7 +137,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxSurge = property.Value.GetBoolean();

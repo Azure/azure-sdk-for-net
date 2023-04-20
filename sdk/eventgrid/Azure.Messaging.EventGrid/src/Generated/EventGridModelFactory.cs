@@ -164,6 +164,27 @@ namespace Azure.Messaging.EventGrid
             return new StorageBlobInventoryPolicyCompletedEventData(scheduleDateTime, accountName, ruleName, policyRunStatus, policyRunStatusMessage, policyRunId, manifestBlobUrl);
         }
 
+        /// <summary> Initializes a new instance of StorageTaskQueuedEventData. </summary>
+        /// <param name="queuedDateTime"> The time at which a storage task was queued. </param>
+        /// <param name="taskExecutionId"> The execution id for a storage task. </param>
+        /// <returns> A new <see cref="SystemEvents.StorageTaskQueuedEventData"/> instance for mocking. </returns>
+        public static StorageTaskQueuedEventData StorageTaskQueuedEventData(DateTimeOffset? queuedDateTime = null, string taskExecutionId = null)
+        {
+            return new StorageTaskQueuedEventData(queuedDateTime, taskExecutionId);
+        }
+
+        /// <summary> Initializes a new instance of StorageTaskCompletedEventData. </summary>
+        /// <param name="status"> The status for a storage task. </param>
+        /// <param name="completedDateTime"> The time at which a storage task was completed. </param>
+        /// <param name="taskExecutionId"> The execution id for a storage task. </param>
+        /// <param name="taskName"> The task name for a storage task. </param>
+        /// <param name="summaryReportBlobUri"> The summary report blob url for a storage task. </param>
+        /// <returns> A new <see cref="SystemEvents.StorageTaskCompletedEventData"/> instance for mocking. </returns>
+        public static StorageTaskCompletedEventData StorageTaskCompletedEventData(StorageTaskCompletedStatus? status = null, DateTimeOffset? completedDateTime = null, string taskExecutionId = null, string taskName = null, Uri summaryReportBlobUri = null)
+        {
+            return new StorageTaskCompletedEventData(status, completedDateTime, taskExecutionId, taskName, summaryReportBlobUri);
+        }
+
         /// <summary> Initializes a new instance of EventHubCaptureFileCreatedEventData. </summary>
         /// <param name="fileurl"> The path to the capture file. </param>
         /// <param name="fileType"> The file type of the capture file. </param>
@@ -2033,6 +2054,31 @@ namespace Azure.Messaging.EventGrid
         public static AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId = null, long? index = null, string endReason = null, string metadataLocation = null, string contentLocation = null, string deleteLocation = null)
         {
             return new AcsRecordingChunkInfoProperties(documentId, index, endReason, metadataLocation, contentLocation, deleteLocation);
+        }
+
+        /// <summary> Initializes a new instance of AcsEmailDeliveryReportReceivedEventData. </summary>
+        /// <param name="sender"> The Sender Email Address. </param>
+        /// <param name="recipient"> The recipient Email Address. </param>
+        /// <param name="messageId"> The Id of the email been sent. </param>
+        /// <param name="status"> The status of the email. </param>
+        /// <param name="deliveryAttemptTimestamp"> The time at which the email delivery report received timestamp. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsEmailDeliveryReportReceivedEventData"/> instance for mocking. </returns>
+        public static AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, AcsEmailDeliveryReportStatus? status = null, DateTimeOffset? deliveryAttemptTimestamp = null)
+        {
+            return new AcsEmailDeliveryReportReceivedEventData(sender, recipient, messageId, status, deliveryAttemptTimestamp);
+        }
+
+        /// <summary> Initializes a new instance of AcsEmailEngagementTrackingReportReceivedEventData. </summary>
+        /// <param name="sender"> The Sender Email Address. </param>
+        /// <param name="messageId"> The Id of the email that has been sent. </param>
+        /// <param name="userActionTimestamp"> The time at which the user interacted with the email. </param>
+        /// <param name="engagementContext"> The context of the type of engagement user had with email. </param>
+        /// <param name="userAgent"> The user agent interacting with the email. </param>
+        /// <param name="engagement"> The type of engagement user have with email. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData"/> instance for mocking. </returns>
+        public static AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender = null, string messageId = null, DateTimeOffset? userActionTimestamp = null, string engagementContext = null, string userAgent = null, AcsUserEngagement? engagement = null)
+        {
+            return new AcsEmailEngagementTrackingReportReceivedEventData(sender, messageId, userActionTimestamp, engagementContext, userAgent, engagement);
         }
 
         /// <summary> Initializes a new instance of PolicyInsightsPolicyStateCreatedEventData. </summary>

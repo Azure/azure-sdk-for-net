@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterAadSetting DeserializeClusterAadSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> tenantId = default;
             Optional<string> clusterApplication = default;
             Optional<string> clientApplication = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus
@@ -43,9 +44,9 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusSessionProcessor sessionProcessor,
             string sessionId,
             SemaphoreSlim concurrentAcceptSessionsSemaphore,
-            EntityScopeFactory scopeFactory,
+            MessagingClientDiagnostics clientDiagnostics,
             bool keepOpenOnReceiveTimeout)
-            : base(sessionProcessor.InnerProcessor, scopeFactory, true)
+            : base(sessionProcessor.InnerProcessor, clientDiagnostics, true)
         {
             _concurrentAcceptSessionsSemaphore = concurrentAcceptSessionsSemaphore;
             _sessionReceiverOptions = new ServiceBusSessionReceiverOptions

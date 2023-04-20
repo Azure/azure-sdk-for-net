@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static ProcessInfoListResult DeserializeProcessInfoListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ProcessInfoData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

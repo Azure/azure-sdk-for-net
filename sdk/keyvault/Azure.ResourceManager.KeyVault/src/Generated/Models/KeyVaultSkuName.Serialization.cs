@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         public static KeyVaultSkuName ToKeyVaultSkuName(this string value)
         {
-            if (string.Equals(value, "standard", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultSkuName.Standard;
-            if (string.Equals(value, "premium", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultSkuName.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "standard")) return KeyVaultSkuName.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "premium")) return KeyVaultSkuName.Premium;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultSkuName value.");
         }
     }

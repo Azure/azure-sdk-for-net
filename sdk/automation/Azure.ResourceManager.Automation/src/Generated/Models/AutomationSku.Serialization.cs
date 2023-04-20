@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationSku DeserializeAutomationSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AutomationSkuName name = default;
             Optional<string> family = default;
             Optional<int> capacity = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

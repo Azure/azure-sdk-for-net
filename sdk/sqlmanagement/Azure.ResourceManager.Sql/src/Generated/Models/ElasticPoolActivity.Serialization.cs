@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ElasticPoolActivity DeserializeElasticPoolActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -86,7 +89,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -105,7 +107,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endTime = property0.Value.GetDateTimeOffset("O");
@@ -115,7 +116,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             errorCode = property0.Value.GetInt32();
@@ -130,7 +130,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             errorSeverity = property0.Value.GetInt32();
@@ -145,7 +144,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             operationId = property0.Value.GetGuid();
@@ -155,7 +153,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             percentComplete = property0.Value.GetInt32();
@@ -165,7 +162,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedDatabaseDtuMax = property0.Value.GetInt32();
@@ -175,7 +171,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedDatabaseDtuMin = property0.Value.GetInt32();
@@ -185,7 +180,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedDtu = property0.Value.GetInt32();
@@ -200,7 +194,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedStorageLimitInGB = property0.Value.GetInt64();
@@ -220,7 +213,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTime = property0.Value.GetDateTimeOffset("O");
@@ -235,7 +227,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedStorageLimitInMB = property0.Value.GetInt32();
@@ -245,7 +236,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedDatabaseDtuGuarantee = property0.Value.GetInt32();
@@ -255,7 +245,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedDatabaseDtuCap = property0.Value.GetInt32();
@@ -265,7 +254,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedDtuGuarantee = property0.Value.GetInt32();

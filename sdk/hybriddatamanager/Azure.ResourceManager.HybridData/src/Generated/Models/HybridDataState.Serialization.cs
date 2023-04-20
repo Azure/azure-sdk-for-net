@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.HybridData.Models
 
         public static HybridDataState ToHybridDataState(this string value)
         {
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return HybridDataState.Disabled;
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return HybridDataState.Enabled;
-            if (string.Equals(value, "Supported", StringComparison.InvariantCultureIgnoreCase)) return HybridDataState.Supported;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return HybridDataState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return HybridDataState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Supported")) return HybridDataState.Supported;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HybridDataState value.");
         }
     }

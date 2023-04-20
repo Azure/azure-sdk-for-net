@@ -17,6 +17,10 @@ namespace Azure.Security.Attestation
     {
         internal static PolicyModificationResult DeserializePolicyModificationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolicyModification> xMsPolicyResult = default;
             Optional<string> xMsPolicyTokenHash = default;
             Optional<JsonWebKey> xMsPolicySigner = default;
@@ -27,7 +31,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsPolicyResult = new PolicyModification(property.Value.GetString());
@@ -42,7 +45,6 @@ namespace Azure.Security.Attestation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsPolicySigner = JsonWebKey.DeserializeJsonWebKey(property.Value);

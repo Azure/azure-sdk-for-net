@@ -11,6 +11,7 @@ using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
 using System.Globalization;
+using Azure.Core.Shared;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -425,7 +426,7 @@ namespace Azure.Messaging.ServiceBus
             batchOptions.MaxSizeInBytes ??= long.MaxValue;
 
             var transportBatch = new ListTransportBatch(batchOptions.MaxSizeInBytes.Value, batchSizeBytes, batchMessageStore, tryAddCallback);
-            return new ServiceBusMessageBatch(transportBatch, new EntityScopeFactory("mock", "mock"));
+            return new ServiceBusMessageBatch(transportBatch, new MessagingClientDiagnostics("mock", "mock", "mock", "mock", "mock"));
         }
 
         /// <summary>

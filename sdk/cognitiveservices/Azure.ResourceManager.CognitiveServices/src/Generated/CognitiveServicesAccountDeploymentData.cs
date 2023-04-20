@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    /// <summary> A class representing the CognitiveServicesAccountDeployment data model. </summary>
+    /// <summary>
+    /// A class representing the CognitiveServicesAccountDeployment data model.
+    /// Cognitive Services account deployment.
+    /// </summary>
     public partial class CognitiveServicesAccountDeploymentData : ResourceData
     {
         /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentData. </summary>

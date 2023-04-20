@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyTokenRestriction DeserializeContentKeyPolicyTokenRestriction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string issuer = default;
             string audience = default;
             ContentKeyPolicyRestrictionTokenKey primaryVerificationKey = default;
@@ -97,7 +101,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContentKeyPolicyRestrictionTokenKey> array = new List<ContentKeyPolicyRestrictionTokenKey>();
@@ -112,7 +115,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContentKeyPolicyTokenClaim> array = new List<ContentKeyPolicyTokenClaim>();

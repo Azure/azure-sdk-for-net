@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Quota.Models
 
         internal static LimitJsonObject DeserializeLimitJsonObject(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("limitObjectType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

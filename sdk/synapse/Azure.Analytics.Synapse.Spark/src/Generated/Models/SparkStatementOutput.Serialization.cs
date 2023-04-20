@@ -15,6 +15,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkStatementOutput DeserializeSparkStatementOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             int executionCount = default;
             Optional<object> data = default;
@@ -37,7 +41,6 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     data = property.Value.GetObject();

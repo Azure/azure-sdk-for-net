@@ -23,6 +23,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static DataDeletionDetectionPolicy DeserializeDataDeletionDetectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -32,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .Build();
 
             var dataPointType = DataPointType.Aggregation;
-            string name = null;
+            string? name = null;
             if (metricType == MetricType.DoubleSum)
             {
                 name = "TestDoubleCounter";
@@ -73,12 +71,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .Build();
 
             var dataPointType = DataPointType.Aggregation;
-            string name = null;
+            string? name = null;
             if (metricType == MetricType.DoubleSum)
             {
                 name = "TestDoubleCounter";
                 var doubleCounter = meter.CreateCounter<double>(name);
-                doubleCounter.Add(123.45, new KeyValuePair<string, object>("tag", "value"));
+                doubleCounter.Add(123.45, new KeyValuePair<string, object?>("tag", "value"));
             }
             else if (metricType == MetricType.DoubleGauge)
             {
@@ -87,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     name,
                     () => new List<Measurement<double>>()
                     {
-                    new(123.45, new KeyValuePair<string, object>("tag", "value")),
+                    new(123.45, new KeyValuePair<string, object?>("tag", "value")),
                     });
             }
 
@@ -181,8 +179,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void ThrowsIfMetricIsNull()
         {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             var metricPoint = new MetricPoint();
             Assert.Throws<ArgumentNullException>(() => new MetricsData(Version, null, metricPoint));
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
     }
 }

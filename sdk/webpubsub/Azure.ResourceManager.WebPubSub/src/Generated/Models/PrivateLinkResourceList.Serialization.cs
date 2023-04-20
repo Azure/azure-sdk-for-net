@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         internal static PrivateLinkResourceList DeserializePrivateLinkResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<WebPubSubPrivateLink>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WebPubSubPrivateLink> array = new List<WebPubSubPrivateLink>();

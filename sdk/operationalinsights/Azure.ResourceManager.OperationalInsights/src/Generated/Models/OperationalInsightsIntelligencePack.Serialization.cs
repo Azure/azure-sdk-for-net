@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static OperationalInsightsIntelligencePack DeserializeOperationalInsightsIntelligencePack(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<bool> enabled = default;
             Optional<string> displayName = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();

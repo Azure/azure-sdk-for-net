@@ -11,7 +11,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityContact data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityContact data model.
+    /// Contact details and configurations for notifications coming from Microsoft Defender for Cloud.
+    /// </summary>
     public partial class SecurityContactData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityContactData. </summary>

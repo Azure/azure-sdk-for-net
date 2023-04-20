@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceMonitorResourceLogRules DeserializeDynatraceMonitorResourceLogRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AadLogsSendingStatus> sendAadLogs = default;
             Optional<SubscriptionLogsSendingStatus> sendSubscriptionLogs = default;
             Optional<ActivityLogsSendingStatus> sendActivityLogs = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sendAadLogs = new AadLogsSendingStatus(property.Value.GetString());
@@ -66,7 +69,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sendSubscriptionLogs = new SubscriptionLogsSendingStatus(property.Value.GetString());
@@ -76,7 +78,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sendActivityLogs = new ActivityLogsSendingStatus(property.Value.GetString());
@@ -86,7 +87,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DynatraceMonitorResourceFilteringTag> array = new List<DynatraceMonitorResourceFilteringTag>();

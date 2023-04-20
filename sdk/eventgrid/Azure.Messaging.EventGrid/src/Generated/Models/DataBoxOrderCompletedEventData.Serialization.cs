@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static DataBoxOrderCompletedEventData DeserializeDataBoxOrderCompletedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serialNumber = default;
             Optional<DataBoxStageName> stageName = default;
             Optional<DateTimeOffset> stageTime = default;
@@ -31,7 +35,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stageName = new DataBoxStageName(property.Value.GetString());
@@ -41,7 +44,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stageTime = property.Value.GetDateTimeOffset("O");

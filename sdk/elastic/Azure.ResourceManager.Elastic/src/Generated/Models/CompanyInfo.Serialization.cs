@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static CompanyInfo DeserializeCompanyInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> domain = default;
             Optional<string> business = default;
             Optional<string> employeesNumber = default;

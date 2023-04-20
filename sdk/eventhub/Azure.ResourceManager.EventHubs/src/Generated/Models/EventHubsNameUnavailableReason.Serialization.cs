@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         public static EventHubsNameUnavailableReason ToEventHubsNameUnavailableReason(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return EventHubsNameUnavailableReason.None;
-            if (string.Equals(value, "InvalidName", StringComparison.InvariantCultureIgnoreCase)) return EventHubsNameUnavailableReason.InvalidName;
-            if (string.Equals(value, "SubscriptionIsDisabled", StringComparison.InvariantCultureIgnoreCase)) return EventHubsNameUnavailableReason.SubscriptionIsDisabled;
-            if (string.Equals(value, "NameInUse", StringComparison.InvariantCultureIgnoreCase)) return EventHubsNameUnavailableReason.NameInUse;
-            if (string.Equals(value, "NameInLockdown", StringComparison.InvariantCultureIgnoreCase)) return EventHubsNameUnavailableReason.NameInLockdown;
-            if (string.Equals(value, "TooManyNamespaceInCurrentSubscription", StringComparison.InvariantCultureIgnoreCase)) return EventHubsNameUnavailableReason.TooManyNamespaceInCurrentSubscription;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return EventHubsNameUnavailableReason.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidName")) return EventHubsNameUnavailableReason.InvalidName;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SubscriptionIsDisabled")) return EventHubsNameUnavailableReason.SubscriptionIsDisabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NameInUse")) return EventHubsNameUnavailableReason.NameInUse;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NameInLockdown")) return EventHubsNameUnavailableReason.NameInLockdown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TooManyNamespaceInCurrentSubscription")) return EventHubsNameUnavailableReason.TooManyNamespaceInCurrentSubscription;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EventHubsNameUnavailableReason value.");
         }
     }

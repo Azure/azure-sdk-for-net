@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource" /> object. </returns>
         public virtual ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourceProperty()
         {
-            return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, new ResourceIdentifier(Id.ToString() + "/detectorProperties/rootApi"));
+            return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
         }
 
         /// <summary> Gets a collection of ContainerAppManagedEnvironmentStorageResources in the ContainerAppManagedEnvironment. </summary>

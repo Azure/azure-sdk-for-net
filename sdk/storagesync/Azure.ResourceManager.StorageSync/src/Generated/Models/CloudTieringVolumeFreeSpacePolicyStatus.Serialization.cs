@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static CloudTieringVolumeFreeSpacePolicyStatus DeserializeCloudTieringVolumeFreeSpacePolicyStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<int> effectiveVolumeFreeSpacePolicy = default;
             Optional<int> currentVolumeFreeSpacePercent = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
@@ -34,7 +37,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     effectiveVolumeFreeSpacePolicy = property.Value.GetInt32();
@@ -44,7 +46,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentVolumeFreeSpacePercent = property.Value.GetInt32();

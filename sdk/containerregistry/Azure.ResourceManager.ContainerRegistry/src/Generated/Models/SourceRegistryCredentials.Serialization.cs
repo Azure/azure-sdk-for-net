@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static SourceRegistryCredentials DeserializeSourceRegistryCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SourceRegistryLoginMode> loginMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loginMode = new SourceRegistryLoginMode(property.Value.GetString());

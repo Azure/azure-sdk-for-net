@@ -13,7 +13,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServer data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServer data model.
+    /// An Azure SQL Database server.
+    /// </summary>
     public partial class SqlServerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SqlServerData. </summary>
@@ -39,14 +42,15 @@ namespace Azure.ResourceManager.Sql
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
         /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos; or &apos;SecuredByPerimeter&apos;. </param>
         /// <param name="workspaceFeature"> Whether or not existing server has a workspace created and if it allows connection from workspace. </param>
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
         /// <param name="federatedClientId"> The Client id used for cross tenant CMK scenario. </param>
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
-        /// <param name="administrators"> The Azure Active Directory identity of the server. </param>
+        /// <param name="administrators"> The Azure Active Directory administrator of the server. This can only be used at server create time. If used for server update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
         /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
-        internal SqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections, string minimalTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="externalGovernanceStatus"> Status of external governance. </param>
+        internal SqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections, string minimalTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ExternalGovernanceStatus? externalGovernanceStatus) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Kind = kind;
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.Sql
             KeyId = keyId;
             Administrators = administrators;
             RestrictOutboundNetworkAccess = restrictOutboundNetworkAccess;
+            ExternalGovernanceStatus = externalGovernanceStatus;
         }
 
         /// <summary> The Azure Active Directory identity of the server. </summary>
@@ -84,7 +89,7 @@ namespace Azure.ResourceManager.Sql
         public IReadOnlyList<SqlServerPrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> Minimal TLS version. Allowed values: &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </summary>
         public string MinimalTlsVersion { get; set; }
-        /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos; or &apos;SecuredByPerimeter&apos;. </summary>
         public ServerNetworkAccessFlag? PublicNetworkAccess { get; set; }
         /// <summary> Whether or not existing server has a workspace created and if it allows connection from workspace. </summary>
         public ServerWorkspaceFeature? WorkspaceFeature { get; }
@@ -94,9 +99,11 @@ namespace Azure.ResourceManager.Sql
         public Guid? FederatedClientId { get; set; }
         /// <summary> A CMK URI of the key to use for encryption. </summary>
         public Uri KeyId { get; set; }
-        /// <summary> The Azure Active Directory identity of the server. </summary>
+        /// <summary> The Azure Active Directory administrator of the server. This can only be used at server create time. If used for server update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </summary>
         public ServerExternalAdministrator Administrators { get; set; }
         /// <summary> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
         public ServerNetworkAccessFlag? RestrictOutboundNetworkAccess { get; set; }
+        /// <summary> Status of external governance. </summary>
+        public ExternalGovernanceStatus? ExternalGovernanceStatus { get; }
     }
 }

@@ -84,6 +84,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static USProgramBrief DeserializeUSProgramBrief(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Guid id = default;
             Optional<ProgramBriefStatus> status = default;
             Optional<string> number = default;
@@ -106,7 +110,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new ProgramBriefStatus(property.Value.GetString());
@@ -121,7 +124,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReviewNote> array = new List<ReviewNote>();
@@ -136,7 +138,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ShortCodeCost> array = new List<ShortCodeCost>();
@@ -151,7 +152,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     submissionDate = property.Value.GetDateTimeOffset("O");
@@ -161,7 +161,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusUpdatedDate = property.Value.GetDateTimeOffset("O");
@@ -171,7 +170,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     programDetails = ProgramDetails.DeserializeProgramDetails(property.Value);
@@ -181,7 +179,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     companyInformation = CompanyInformation.DeserializeCompanyInformation(property.Value);
@@ -191,7 +188,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     messageDetails = MessageDetails.DeserializeMessageDetails(property.Value);
@@ -201,7 +197,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trafficDetails = TrafficDetails.DeserializeTrafficDetails(property.Value);

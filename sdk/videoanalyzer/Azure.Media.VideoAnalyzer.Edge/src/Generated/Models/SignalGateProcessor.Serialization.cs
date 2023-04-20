@@ -52,6 +52,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SignalGateProcessor DeserializeSignalGateProcessor(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> activationEvaluationWindow = default;
             Optional<string> activationSignalOffset = default;
             Optional<string> minimumActivationTime = default;

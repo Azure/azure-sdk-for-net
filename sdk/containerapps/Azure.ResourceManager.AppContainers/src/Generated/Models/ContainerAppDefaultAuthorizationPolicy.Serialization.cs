@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDefaultAuthorizationPolicy DeserializeContainerAppDefaultAuthorizationPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppAllowedPrincipals> allowedPrincipals = default;
             Optional<IList<string>> allowedApplications = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowedPrincipals = ContainerAppAllowedPrincipals.DeserializeContainerAppAllowedPrincipals(property.Value);
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

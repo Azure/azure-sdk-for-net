@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheSecuritySettings DeserializeStorageCacheSecuritySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<NfsAccessPolicy>> accessPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NfsAccessPolicy> array = new List<NfsAccessPolicy>();

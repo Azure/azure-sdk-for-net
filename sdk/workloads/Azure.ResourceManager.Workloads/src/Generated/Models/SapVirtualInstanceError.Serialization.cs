@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SapVirtualInstanceError DeserializeSapVirtualInstanceError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SapVirtualInstanceErrorDetail> properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -21,7 +25,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = SapVirtualInstanceErrorDetail.DeserializeSapVirtualInstanceErrorDetail(property.Value);

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBExcludedPath DeserializeCosmosDBExcludedPath(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetUserTablesMySqlTaskInput DeserializeGetUserTablesMySqlTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MySqlConnectionInfo connectionInfo = default;
             IList<string> selectedDatabases = default;
             foreach (var property in element.EnumerateObject())

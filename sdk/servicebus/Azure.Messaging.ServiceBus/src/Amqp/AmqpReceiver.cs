@@ -360,7 +360,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 if (!_receiveLink.TryGetOpenedObject(out link))
                 {
-                    link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout), cancellationToken)
+                    link = await _receiveLink.GetOrCreateAsync(timeout, cancellationToken)
                         .ConfigureAwait(false);
                 }
 
@@ -476,7 +476,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout)
         {
             byte[] bufferForLockToken = ArrayPool<byte>.Shared.Rent(SizeOfGuidInBytes);
-            GuidUtilities.WriteGuidToBuffer(lockToken, bufferForLockToken);
+            GuidUtilities.WriteGuidToBuffer(lockToken, bufferForLockToken.AsSpan(0, SizeOfGuidInBytes));
 
             ArraySegment<byte> deliveryTag = new ArraySegment<byte>(bufferForLockToken, 0, SizeOfGuidInBytes);
             ReceivingAmqpLink receiveLink = null;
@@ -967,8 +967,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             RequestResponseAmqpLink link = await _managementLink.GetOrCreateAsync(
-                UseMinimum(_connectionScope.SessionTimeout,
-                timeout.CalculateRemaining(stopWatch.GetElapsedTime())),
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
                 cancellationToken)
                 .ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -1408,19 +1407,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ServiceBusEventSource.Log.ManagementLinkClosed(
             Identifier,
             managementLink);
-
-        /// <summary>
-        /// Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
-        /// </summary>
-        ///
-        /// <param name="firstOption">The first option to consider.</param>
-        /// <param name="secondOption">The second option to consider.</param>
-        ///
-        /// <returns>The smaller of the two specified intervals.</returns>
-        private static TimeSpan UseMinimum(
-            TimeSpan firstOption,
-            TimeSpan secondOption) =>
-            (firstOption < secondOption) ? firstOption : secondOption;
 
         /// <summary>
         /// Opens an AMQP link for use with session receiver operations.

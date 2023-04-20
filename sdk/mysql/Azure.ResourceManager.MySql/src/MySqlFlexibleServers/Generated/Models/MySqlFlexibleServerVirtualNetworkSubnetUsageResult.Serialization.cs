@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     {
         internal static MySqlFlexibleServerVirtualNetworkSubnetUsageResult DeserializeMySqlFlexibleServerVirtualNetworkSubnetUsageResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MySqlFlexibleServerDelegatedSubnetUsage>> delegatedSubnetsUsage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MySqlFlexibleServerDelegatedSubnetUsage> array = new List<MySqlFlexibleServerDelegatedSubnetUsage>();

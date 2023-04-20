@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -120,7 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             pipeline.SendAsync(message, CancellationToken.None);
 
             Assert.Equal("http://new.host/", mockTransport.Requests[1].Uri.ToString());
-            Assert.True(mockTransport.Requests[1].Headers.TryGetValue(HttpHeader.Names.Authorization, out string token));
+            Assert.True(mockTransport.Requests[1].Headers.TryGetValue(HttpHeader.Names.Authorization, out string? token));
             Assert.Equal(testToken, token);
         }
 

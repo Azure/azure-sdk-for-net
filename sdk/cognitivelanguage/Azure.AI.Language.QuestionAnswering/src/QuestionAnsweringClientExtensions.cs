@@ -3,6 +3,7 @@
 
 using System;
 using Azure;
+using Azure.Core;
 using Azure.AI.Language.QuestionAnswering;
 using Azure.Core.Extensions;
 
@@ -11,7 +12,8 @@ namespace Microsoft.Extensions.Azure
     /// <summary>
     /// Extension methods to add Question Answering clients to the Azure client builder.
     /// </summary>
-    public static class QuestionAnsweringClientExtensions
+    [CodeGenType("QuestionAnsweringClientBuilderExtensions")]
+    public static partial class QuestionAnsweringClientExtensions
     {
         /// <summary>
         /// Registers a <see cref="QuestionAnsweringClient"/> instance with the provider <paramref name="endpoint"/> and <paramref name="credential"/>.

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         internal static DataLakeStoreAccountKeyVaultMetaInfo DeserializeDataLakeStoreAccountKeyVaultMetaInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyVaultResourceId = default;
             string encryptionKeyName = default;
             string encryptionKeyVersion = default;

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAvailableWorkloadProfile DeserializeContainerAppAvailableWorkloadProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             Optional<ContainerAppAvailableWorkloadProfileProperties> properties = default;
             ResourceIdentifier id = default;
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -53,7 +56,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ContainerAppAvailableWorkloadProfileProperties.DeserializeContainerAppAvailableWorkloadProfileProperties(property.Value);
@@ -78,7 +80,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

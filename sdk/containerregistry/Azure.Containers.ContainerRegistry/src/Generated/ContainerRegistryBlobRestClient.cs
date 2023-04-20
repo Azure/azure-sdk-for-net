@@ -39,6 +39,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
+            message.BufferResponse = false;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
@@ -203,7 +204,6 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendPath("/blobs/", false);
             uri.AppendPath(digest, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/octet-stream");
             return message;
         }
 
@@ -212,7 +212,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders>> DeleteBlobAsync(string name, string digest, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ContainerRegistryBlobDeleteBlobHeaders>> DeleteBlobAsync(string name, string digest, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -229,10 +229,7 @@ namespace Azure.Containers.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -243,7 +240,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
-        public ResponseWithHeaders<Stream, ContainerRegistryBlobDeleteBlobHeaders> DeleteBlob(string name, string digest, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ContainerRegistryBlobDeleteBlobHeaders> DeleteBlob(string name, string digest, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -260,10 +257,7 @@ namespace Azure.Containers.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
@@ -697,6 +691,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
+            message.BufferResponse = false;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);

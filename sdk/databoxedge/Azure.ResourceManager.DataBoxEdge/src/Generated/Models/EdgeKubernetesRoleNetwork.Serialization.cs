@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static EdgeKubernetesRoleNetwork DeserializeEdgeKubernetesRoleNetwork(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CniConfig> cniConfig = default;
             Optional<DataBoxEdgeLoadBalancerConfig> loadBalancerConfig = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cniConfig = CniConfig.DeserializeCniConfig(property.Value);
@@ -32,7 +35,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loadBalancerConfig = DataBoxEdgeLoadBalancerConfig.DeserializeDataBoxEdgeLoadBalancerConfig(property.Value);

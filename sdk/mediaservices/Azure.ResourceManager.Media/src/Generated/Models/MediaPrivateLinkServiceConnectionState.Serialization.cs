@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaPrivateLinkServiceConnectionState DeserializeMediaPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MediaPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new MediaPrivateEndpointServiceConnectionStatus(property.Value.GetString());

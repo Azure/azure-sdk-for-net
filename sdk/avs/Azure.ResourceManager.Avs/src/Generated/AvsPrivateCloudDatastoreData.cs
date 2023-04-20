@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the AvsPrivateCloudDatastore data model. </summary>
+    /// <summary>
+    /// A class representing the AvsPrivateCloudDatastore data model.
+    /// A datastore resource
+    /// </summary>
     public partial class AvsPrivateCloudDatastoreData : ResourceData
     {
         /// <summary> Initializes a new instance of AvsPrivateCloudDatastoreData. </summary>

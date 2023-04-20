@@ -135,7 +135,7 @@ namespace Azure.Identity.Tests
 
                 VisualStudioCredential cred = (VisualStudioCredential)factory.CreateVisualStudioCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(30), cred.VisualStudioProcessTimeout);
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(30), cred.ProcessTimeout);
                 Assert.AreEqual(expVisualStudioTenantId ?? expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
             }
@@ -218,13 +218,13 @@ namespace Azure.Identity.Tests
 
                 AzureCliCredential cred = (AzureCliCredential)factory.CreateAzureCliCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), cred.CliProcessTimeout);
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), cred.ProcessTimeout);
                 Assert.AreEqual(expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
 
                 AzureDeveloperCliCredential credAzd = (AzureDeveloperCliCredential)factory.CreateAzureDeveloperCliCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), credAzd.AzdCliProcessTimeout);
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), credAzd.ProcessTimeout);
                 Assert.AreEqual(expTenantId, credAzd.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, credAzd.AdditionallyAllowedTenantIds);
             }
@@ -260,7 +260,7 @@ namespace Azure.Identity.Tests
 
                 AzurePowerShellCredential cred = (AzurePowerShellCredential)factory.CreateAzurePowerShellCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(10), cred.PowerShellProcessTimeout);
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(10), cred.ProcessTimeout);
                 Assert.AreEqual(expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
             }
@@ -322,6 +322,7 @@ namespace Azure.Identity.Tests
 
         [Test]
         public void ValidateExcludeOptionsHonored([Values(true, false)] bool excludeEnvironmentCredential,
+                                                   [Values(true, false)] bool excludeWorkloadIdentityCredential,
                                                    [Values(true, false)] bool excludeManagedIdentityCredential,
                                                    [Values(true, false)] bool excludeDeveloperCliCredential,
                                                    [Values(true, false)] bool excludeSharedTokenCacheCredential,
@@ -341,6 +342,7 @@ namespace Azure.Identity.Tests
             {
                 var expCredentialTypes = new List<Type>();
                 expCredentialTypes.ConditionalAdd(!excludeEnvironmentCredential, typeof(EnvironmentCredential));
+                expCredentialTypes.ConditionalAdd(!excludeWorkloadIdentityCredential, typeof(WorkloadIdentityCredential));
                 expCredentialTypes.ConditionalAdd(!excludeManagedIdentityCredential, typeof(ManagedIdentityCredential));
                 expCredentialTypes.ConditionalAdd(!excludeDeveloperCliCredential, typeof(AzureDeveloperCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeSharedTokenCacheCredential, typeof(SharedTokenCacheCredential));
@@ -353,6 +355,7 @@ namespace Azure.Identity.Tests
                 var options = new DefaultAzureCredentialOptions
                 {
                     ExcludeEnvironmentCredential = excludeEnvironmentCredential,
+                    ExcludeWorkloadIdentityCredential= excludeWorkloadIdentityCredential,
                     ExcludeManagedIdentityCredential = excludeManagedIdentityCredential,
                     ExcludeAzureDeveloperCliCredential = excludeDeveloperCliCredential,
                     ExcludeSharedTokenCacheCredential = excludeSharedTokenCacheCredential,

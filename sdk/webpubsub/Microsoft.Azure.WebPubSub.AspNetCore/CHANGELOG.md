@@ -1,21 +1,27 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0 (2023-03-22)
 
 ### Features Added
 
+- Generally available of `Microsoft.Azure.WebPubSub.AspNetCore` package.
+
 ### Breaking Changes
+
+- Rename `ServiceEndpoint` to `WebPubSubServiceEndpoint`.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fix `Headers` field in `ConnectEventRequest` that was missed.
 
 ## 1.0.0-beta.4 (2022-11-11)
 
 ### Features Added
+
 - Support `Headers` field in `ConnectEventRequest` to carry over client headers.
 
 ### Bugs Fixed
+
 - Fix the issue about `expiresAfter` with corner values.
 
 ## 1.0.0-beta.3 (2022-01-06)

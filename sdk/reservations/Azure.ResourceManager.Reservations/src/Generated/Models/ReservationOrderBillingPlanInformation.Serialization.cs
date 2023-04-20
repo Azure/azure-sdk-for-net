@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationOrderBillingPlanInformation DeserializeReservationOrderBillingPlanInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PurchasePrice> pricingCurrencyTotal = default;
             Optional<DateTimeOffset> startDate = default;
             Optional<DateTimeOffset> nextPaymentDueDate = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pricingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
@@ -36,7 +39,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startDate = property.Value.GetDateTimeOffset("D");
@@ -46,7 +48,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nextPaymentDueDate = property.Value.GetDateTimeOffset("D");
@@ -56,7 +57,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PaymentDetail> array = new List<PaymentDetail>();

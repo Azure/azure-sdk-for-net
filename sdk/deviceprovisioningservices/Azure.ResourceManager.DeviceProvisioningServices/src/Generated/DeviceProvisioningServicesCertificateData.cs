@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    /// <summary> A class representing the DeviceProvisioningServicesCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the DeviceProvisioningServicesCertificate data model.
+    /// The X509 Certificate.
+    /// </summary>
     public partial class DeviceProvisioningServicesCertificateData : ResourceData
     {
         /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateData. </summary>

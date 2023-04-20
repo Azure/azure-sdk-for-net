@@ -79,6 +79,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformConfigServerGitProperty DeserializeAppPlatformConfigServerGitProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ConfigServerGitPatternRepository>> repositories = default;
             Uri uri = default;
             Optional<string> label = default;
@@ -95,7 +99,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConfigServerGitPatternRepository> array = new List<ConfigServerGitPatternRepository>();
@@ -120,7 +123,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -160,7 +162,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     strictHostKeyChecking = property.Value.GetBoolean();

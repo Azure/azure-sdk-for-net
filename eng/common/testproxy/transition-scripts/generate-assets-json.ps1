@@ -72,7 +72,7 @@ if ($UseTestRepo) {
 # 3. ios
 $LangRecordingDirs = @{"cpp" = "recordings";
   "go"                       = "recordings";
-  "java"                     = "session-records";
+  "java"                     = "src.*?session-records";
   "js"                       = "recordings";
   "net"                      = "SessionRecords";
   "python"                   = "recordings";
@@ -321,8 +321,8 @@ Function Move-AssetsFromLangRepo {
   )
   $filter = $LangRecordingDirs[$language]
   Write-Host "Language recording directory name=$filter"
-  Write-Host "Get-ChildItem -Recurse -Filter ""*.json"" | Where-Object { `$_.DirectoryName.Split([IO.Path]::DirectorySeparatorChar) -contains ""$filter"" }"
-  $filesToMove = Get-ChildItem -Recurse -Filter "*.json" | Where-Object { $_.DirectoryName.Split([IO.Path]::DirectorySeparatorChar) -contains "$filter" }
+  Write-Host "Get-ChildItem -Recurse -Filter ""*.json"" | Where-Object { if ($filter.Contains(""*"")) { $_.DirectoryName -match $filter } else { $_.DirectoryName.Split([IO.Path]::DirectorySeparatorChar) -contains ""$filter"" }"
+  $filesToMove = Get-ChildItem -Recurse -Filter "*.json" | Where-Object { if ($filter.Contains("*")) { $_.DirectoryName -match $filter } else { $_.DirectoryName.Split([IO.Path]::DirectorySeparatorChar) -contains "$filter" } }
   [string] $currentDir = Get-Location
 
   foreach ($fromFile in $filesToMove) {

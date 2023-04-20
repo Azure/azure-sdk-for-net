@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static TrafficAnalyticsConfigurationProperties DeserializeTrafficAnalyticsConfigurationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<string> workspaceId = default;
             Optional<string> workspaceRegion = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -76,7 +79,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workspaceResourceId = new ResourceIdentifier(property.Value.GetString());
@@ -86,7 +88,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trafficAnalyticsInterval = property.Value.GetInt32();

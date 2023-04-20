@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
@@ -39,6 +40,10 @@ namespace Azure.ResourceManager.Workloads
 
         internal static SapDatabaseInstanceData DeserializeSapDatabaseInstanceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -49,6 +54,7 @@ namespace Azure.ResourceManager.Workloads
             Optional<string> databaseSid = default;
             Optional<string> databaseType = default;
             Optional<string> ipAddress = default;
+            Optional<SubResource> loadBalancerDetails = default;
             Optional<IReadOnlyList<DatabaseVmDetails>> vmDetails = default;
             Optional<SapVirtualInstanceStatus> status = default;
             Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
@@ -59,7 +65,6 @@ namespace Azure.ResourceManager.Workloads
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -94,7 +99,6 @@ namespace Azure.ResourceManager.Workloads
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -113,7 +117,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             subnet = new ResourceIdentifier(property0.Value.GetString());
@@ -134,11 +137,19 @@ namespace Azure.ResourceManager.Workloads
                             ipAddress = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("loadBalancerDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            loadBalancerDetails = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("vmDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DatabaseVmDetails> array = new List<DatabaseVmDetails>();
@@ -153,7 +164,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new SapVirtualInstanceStatus(property0.Value.GetString());
@@ -163,7 +173,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new SapVirtualInstanceProvisioningState(property0.Value.GetString());
@@ -173,7 +182,6 @@ namespace Azure.ResourceManager.Workloads
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value);
@@ -183,7 +191,7 @@ namespace Azure.ResourceManager.Workloads
                     continue;
                 }
             }
-            return new SapDatabaseInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnet.Value, databaseSid.Value, databaseType.Value, ipAddress.Value, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(provisioningState), errors.Value);
+            return new SapDatabaseInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnet.Value, databaseSid.Value, databaseType.Value, ipAddress.Value, loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(provisioningState), errors.Value);
         }
     }
 }

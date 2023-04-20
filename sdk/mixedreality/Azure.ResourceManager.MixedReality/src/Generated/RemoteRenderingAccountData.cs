@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MixedReality
 {
-    /// <summary> A class representing the RemoteRenderingAccount data model. </summary>
+    /// <summary>
+    /// A class representing the RemoteRenderingAccount data model.
+    /// RemoteRenderingAccount Response.
+    /// </summary>
     public partial class RemoteRenderingAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of RemoteRenderingAccountData. </summary>

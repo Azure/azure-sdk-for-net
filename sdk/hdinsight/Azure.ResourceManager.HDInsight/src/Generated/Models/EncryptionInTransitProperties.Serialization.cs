@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static EncryptionInTransitProperties DeserializeEncryptionInTransitProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isEncryptionInTransitEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isEncryptionInTransitEnabled = property.Value.GetBoolean();

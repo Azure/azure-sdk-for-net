@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningComputeInstanceAssignedUser DeserializeMachineLearningComputeInstanceAssignedUser(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string objectId = default;
             Guid tenantId = default;
             foreach (var property in element.EnumerateObject())

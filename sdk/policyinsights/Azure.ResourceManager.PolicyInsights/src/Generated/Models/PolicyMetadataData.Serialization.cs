@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.PolicyInsights
     {
         internal static PolicyMetadataData DeserializePolicyMetadataData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -88,7 +91,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                additionalContentUrl = null;
                                 continue;
                             }
                             additionalContentUrl = new Uri(property0.Value.GetString());
@@ -98,7 +100,6 @@ namespace Azure.ResourceManager.PolicyInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             metadata = BinaryData.FromString(property0.Value.GetRawText());

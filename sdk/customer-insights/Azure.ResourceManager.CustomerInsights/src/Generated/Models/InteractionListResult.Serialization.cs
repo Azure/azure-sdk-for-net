@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static InteractionListResult DeserializeInteractionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<InteractionResourceFormatData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InteractionResourceFormatData> array = new List<InteractionResourceFormatData>();

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    /// <summary> A class representing the SmartGroup data model. </summary>
+    /// <summary>
+    /// A class representing the SmartGroup data model.
+    /// Set of related alerts grouped together smartly by AMS.
+    /// </summary>
     public partial class SmartGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of SmartGroupData. </summary>

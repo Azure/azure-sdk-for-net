@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningPrivateLinkServiceConnectionState DeserializeMachineLearningPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new MachineLearningPrivateEndpointServiceConnectionStatus(property.Value.GetString());

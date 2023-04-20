@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureDatabricksDeltaLakeExportCommand DeserializeAzureDatabricksDeltaLakeExportCommand(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> dateFormat = default;
             Optional<BinaryData> timestampFormat = default;
             string type = default;
@@ -62,7 +66,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dateFormat = BinaryData.FromString(property.Value.GetRawText());
@@ -72,7 +75,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timestampFormat = BinaryData.FromString(property.Value.GetRawText());

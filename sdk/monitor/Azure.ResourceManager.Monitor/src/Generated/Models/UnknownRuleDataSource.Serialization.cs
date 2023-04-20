@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static UnknownRuleDataSource DeserializeUnknownRuleDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             Optional<ResourceIdentifier> resourceUri = default;
             Optional<ResourceIdentifier> legacyResourceId = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceUri = new ResourceIdentifier(property.Value.GetString());
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     legacyResourceId = new ResourceIdentifier(property.Value.GetString());

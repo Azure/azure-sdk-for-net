@@ -56,5 +56,7 @@ namespace Azure.ResourceManager.Media.Models
         public MediaServicesProvisioningState? ProvisioningState { get; }
         /// <summary> The Private Endpoint Connections created for the Media Service account. </summary>
         public IReadOnlyList<MediaServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary> The minimum TLS version allowed for this account&apos;s requests. This is an optional property. If unspecified, a secure default value will be used. </summary>
+        public MediaServicesMinimumTlsVersion? MinimumTlsVersion { get; set; }
     }
 }

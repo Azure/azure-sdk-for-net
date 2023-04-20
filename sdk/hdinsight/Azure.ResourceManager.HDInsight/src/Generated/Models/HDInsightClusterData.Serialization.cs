@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.HDInsight
 
         internal static HDInsightClusterData DeserializeHDInsightClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IList<string>> zones = default;
             Optional<HDInsightClusterProperties> properties = default;
@@ -78,7 +82,6 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -88,7 +91,6 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -103,7 +105,6 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = HDInsightClusterProperties.DeserializeHDInsightClusterProperties(property.Value);
@@ -113,7 +114,6 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -123,7 +123,6 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -158,7 +157,6 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

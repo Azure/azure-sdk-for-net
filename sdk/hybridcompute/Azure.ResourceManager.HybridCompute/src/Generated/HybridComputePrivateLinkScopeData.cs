@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    /// <summary> A class representing the HybridComputePrivateLinkScope data model. </summary>
+    /// <summary>
+    /// A class representing the HybridComputePrivateLinkScope data model.
+    /// An Azure Arc PrivateLinkScope definition.
+    /// </summary>
     public partial class HybridComputePrivateLinkScopeData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of HybridComputePrivateLinkScopeData. </summary>

@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.HybridData.Models
 
         internal static HybridDataJobStage DeserializeHybridDataJobStage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> stageName = default;
             HybridDataJobStatus stageStatus = default;
             Optional<BinaryData> jobStageDetails = default;
@@ -68,7 +72,6 @@ namespace Azure.ResourceManager.HybridData.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jobStageDetails = BinaryData.FromString(property.Value.GetRawText());
@@ -78,7 +81,6 @@ namespace Azure.ResourceManager.HybridData.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HybridDataJobErrorDetails> array = new List<HybridDataJobErrorDetails>();

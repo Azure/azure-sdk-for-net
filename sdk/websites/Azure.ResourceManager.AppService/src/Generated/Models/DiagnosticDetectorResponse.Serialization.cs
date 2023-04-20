@@ -71,6 +71,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
@@ -91,6 +96,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DiagnosticDetectorResponse DeserializeDiagnosticDetectorResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -130,7 +139,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -149,7 +157,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTime = property0.Value.GetDateTimeOffset("O");
@@ -159,7 +166,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endTime = property0.Value.GetDateTimeOffset("O");
@@ -169,7 +175,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             issueDetected = property0.Value.GetBoolean();
@@ -179,7 +184,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property0.Value);
@@ -189,7 +193,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DiagnosticMetricSet> array = new List<DiagnosticMetricSet>();
@@ -204,7 +207,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DetectorAbnormalTimePeriod> array = new List<DetectorAbnormalTimePeriod>();
@@ -219,18 +221,24 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<IList<AppServiceNameValuePair>> array = new List<IList<AppServiceNameValuePair>>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
-                                foreach (var item0 in item.EnumerateArray())
+                                if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                    array.Add(null);
                                 }
-                                array.Add(array0);
+                                else
+                                {
+                                    List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
+                                    foreach (var item0 in item.EnumerateArray())
+                                    {
+                                        array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                    }
+                                    array.Add(array0);
+                                }
                             }
                             data = array;
                             continue;
@@ -239,7 +247,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             responseMetaData = DetectorMetadata.DeserializeDetectorMetadata(property0.Value);

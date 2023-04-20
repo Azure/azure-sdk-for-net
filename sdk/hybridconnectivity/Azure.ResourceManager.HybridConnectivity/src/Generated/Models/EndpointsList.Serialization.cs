@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     {
         internal static EndpointsList DeserializeEndpointsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<EndpointResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EndpointResourceData> array = new List<EndpointResourceData>();

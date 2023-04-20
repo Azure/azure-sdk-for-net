@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleSetList DeserializeManagedRuleSetList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WafPolicyManagedRuleSet>> managedRuleSets = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WafPolicyManagedRuleSet> array = new List<WafPolicyManagedRuleSet>();

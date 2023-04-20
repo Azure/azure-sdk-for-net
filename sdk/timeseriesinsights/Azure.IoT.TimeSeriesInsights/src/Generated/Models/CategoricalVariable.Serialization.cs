@@ -47,6 +47,10 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static CategoricalVariable DeserializeCategoricalVariable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSeriesExpression value = default;
             Optional<TimeSeriesInterpolation> interpolation = default;
             Optional<IList<TimeSeriesAggregateCategory>> categories = default;
@@ -64,7 +68,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     interpolation = TimeSeriesInterpolation.DeserializeTimeSeriesInterpolation(property.Value);
@@ -74,7 +77,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TimeSeriesAggregateCategory> array = new List<TimeSeriesAggregateCategory>();
@@ -99,7 +101,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filter = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);

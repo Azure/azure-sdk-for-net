@@ -1,10 +1,37 @@
 # Release History
 
-## 1.9.0-beta.2 (Unreleased)
+## 1.9.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.9.0-beta.3 (2023-04-12)
+
+### Breaking Changes
+- Renamed the developer credential options timeout settings as follows:
+  - `AzureCliCredential` to `AzureCliCredentialOptions.ProcessTimeout`
+  - `AzurePowerShellCredential` to `AzurePowerShellCredentialOptions.ProcessTimeout`
+  - `VisualStudioCredential` to `VisualStudioCredentialOptions.ProcessTimeout`
+  - `AzureDeveloperCliCredential` to `AzureDeveloperCliCredentialOptions.ProcessTimeout`
+
+### Bugs Fixed
+- Setting `DefaultAzureCredentialOptions.ExcludeWorkloadIdentityCredential` to `true` also excludes `TokenExchangeManagedIdentitySource` when using `DefaultAzureCredential` selects the `ManagedIdentityCredential`
+
+## 1.9.0-beta.2 (2023-02-21)
 
 ### Features Added
  - Allow `VisualStudioCredential` on non-Windows platforms
  - Added `AzureDeveloperCliCredential` for Azure Developer CLI
+ - Added `WorkloadIdentityCredential` to support Azure Workload Identity authentication
+ - Added `WorkloadIdentityCredential` and `AzureDeveloperCliCredential` to the `DefaultAzureCredential` authentication flow.
+
+### Bugs Fixed
+- Fixed `ManagedIdentityCredential` authentication in sovereign clouds for services specifying `TenantId` through authentication challenge [#34077](https://github.com/Azure/azure-sdk-for-net/issues/34077)
 
 ### Breaking Changes
 - Previously, if environment variables for username and password auth are set in addition to the AZURE_CLIENT_CERTIFICATE_PATH, EnvironmentCredential would select the `UsernamePasswordCredential`. After this change, `ClientCertificateCredential` will be selected, which is consistent with all other languages. This is potentially a behavioral breaking change.

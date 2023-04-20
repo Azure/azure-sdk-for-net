@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static TagResourceContractDetails DeserializeTagResourceContractDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AssociatedTagProperties tag = default;
             Optional<AssociatedApiProperties> api = default;
             Optional<AssociatedOperationProperties> operation = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     api = AssociatedApiProperties.DeserializeAssociatedApiProperties(property.Value);
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     operation = AssociatedOperationProperties.DeserializeAssociatedOperationProperties(property.Value);
@@ -49,7 +51,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     product = AssociatedProductProperties.DeserializeAssociatedProductProperties(property.Value);

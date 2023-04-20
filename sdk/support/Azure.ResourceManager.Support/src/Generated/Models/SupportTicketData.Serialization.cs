@@ -91,6 +91,10 @@ namespace Azure.ResourceManager.Support
 
         internal static SupportTicketData DeserializeSupportTicketData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -136,7 +140,6 @@ namespace Azure.ResourceManager.Support
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -175,7 +178,6 @@ namespace Azure.ResourceManager.Support
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             severity = new SupportSeverityLevel(property0.Value.GetString());
@@ -190,7 +192,6 @@ namespace Azure.ResourceManager.Support
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             require24X7Response = property0.Value.GetBoolean();
@@ -200,7 +201,6 @@ namespace Azure.ResourceManager.Support
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             contactDetails = SupportContactProfile.DeserializeSupportContactProfile(property0.Value);
@@ -210,7 +210,6 @@ namespace Azure.ResourceManager.Support
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serviceLevelAgreement = SupportServiceLevelAgreement.DeserializeSupportServiceLevelAgreement(property0.Value);
@@ -220,7 +219,6 @@ namespace Azure.ResourceManager.Support
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             supportEngineer = SupportEngineer.DeserializeSupportEngineer(property0.Value);
@@ -240,7 +238,6 @@ namespace Azure.ResourceManager.Support
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             problemStartTime = property0.Value.GetDateTimeOffset("O");
@@ -265,7 +262,6 @@ namespace Azure.ResourceManager.Support
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdDate = property0.Value.GetDateTimeOffset("O");
@@ -275,7 +271,6 @@ namespace Azure.ResourceManager.Support
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             modifiedDate = property0.Value.GetDateTimeOffset("O");
@@ -285,7 +280,6 @@ namespace Azure.ResourceManager.Support
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             technicalTicketDetails = TechnicalTicketDetails.DeserializeTechnicalTicketDetails(property0.Value);
@@ -295,7 +289,6 @@ namespace Azure.ResourceManager.Support
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             quotaTicketDetails = QuotaTicketDetails.DeserializeQuotaTicketDetails(property0.Value);

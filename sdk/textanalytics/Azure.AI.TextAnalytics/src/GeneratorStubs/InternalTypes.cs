@@ -13,9 +13,6 @@ namespace Azure.AI.TextAnalytics.Models
     [CodeGenModel("CustomLabelClassificationResultDocumentsItem")]
     internal partial class CustomLabelClassificationResultDocumentsItem { }
 
-    [CodeGenModel("DynamicClassificationResultDocumentsItem")]
-    internal partial class DynamicClassificationResultDocumentsItem { }
-
     [CodeGenModel("KeyPhraseResultDocumentsItem")]
     internal partial class KeyPhraseResultDocumentsItem { }
 

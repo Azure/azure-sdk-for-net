@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisServiceProperties DeserializeHealthcareApisServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthcareApisProvisioningState> provisioningState = default;
             Optional<IList<HealthcareApisServiceAccessPolicyEntry>> accessPolicies = default;
             Optional<HealthcareApisServiceCosmosDbConfiguration> cosmosDbConfiguration = default;
@@ -93,7 +97,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new HealthcareApisProvisioningState(property.Value.GetString());
@@ -103,7 +106,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthcareApisServiceAccessPolicyEntry> array = new List<HealthcareApisServiceAccessPolicyEntry>();
@@ -118,7 +120,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cosmosDbConfiguration = HealthcareApisServiceCosmosDbConfiguration.DeserializeHealthcareApisServiceCosmosDbConfiguration(property.Value);
@@ -128,7 +129,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationConfiguration = HealthcareApisServiceAuthenticationConfiguration.DeserializeHealthcareApisServiceAuthenticationConfiguration(property.Value);
@@ -138,7 +138,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     corsConfiguration = HealthcareApisServiceCorsConfiguration.DeserializeHealthcareApisServiceCorsConfiguration(property.Value);
@@ -148,7 +147,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     exportConfiguration = ServiceExportConfigurationInfo.DeserializeServiceExportConfigurationInfo(property.Value);
@@ -158,7 +156,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthcareApisPrivateEndpointConnectionData> array = new List<HealthcareApisPrivateEndpointConnectionData>();
@@ -173,7 +170,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicNetworkAccess = new HealthcareApisPublicNetworkAccess(property.Value.GetString());
@@ -183,7 +179,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     acrConfiguration = HealthcareApisServiceAcrConfiguration.DeserializeHealthcareApisServiceAcrConfiguration(property.Value);
@@ -193,7 +188,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     importConfiguration = HealthcareApisServiceImportConfiguration.DeserializeHealthcareApisServiceImportConfiguration(property.Value);

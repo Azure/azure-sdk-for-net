@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary> A class representing the ProjectFile data model. </summary>
+    /// <summary>
+    /// A class representing the ProjectFile data model.
+    /// A file resource
+    /// </summary>
     public partial class ProjectFileData : ResourceData
     {
         /// <summary> Initializes a new instance of ProjectFileData. </summary>

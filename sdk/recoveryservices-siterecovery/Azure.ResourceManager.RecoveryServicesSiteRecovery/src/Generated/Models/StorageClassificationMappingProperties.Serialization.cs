@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static StorageClassificationMappingProperties DeserializeStorageClassificationMappingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> targetStorageClassificationId = default;
             foreach (var property in element.EnumerateObject())
             {

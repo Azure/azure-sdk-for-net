@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static NetworkInterfaces DeserializeNetworkInterfaces(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> displayName = default;
             Optional<IReadOnlyList<string>> ipv4Addresses = default;
@@ -83,7 +87,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -98,7 +101,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -128,7 +130,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ipv4AddressType = new AllocationMethod(property.Value.GetString());
@@ -138,7 +139,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ipv6AddressType = new AllocationMethod(property.Value.GetString());
@@ -148,7 +148,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     macAddressType = new AllocationMethod(property.Value.GetString());

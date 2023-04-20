@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Maps.Models
     {
         internal static MapsCreatorListResult DeserializeMapsCreatorListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MapsCreatorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Maps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MapsCreatorData> array = new List<MapsCreatorData>();

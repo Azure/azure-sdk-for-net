@@ -14,6 +14,10 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static TextAppearance DeserializeTextAppearance(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Style style = default;
             foreach (var property in element.EnumerateObject())
             {

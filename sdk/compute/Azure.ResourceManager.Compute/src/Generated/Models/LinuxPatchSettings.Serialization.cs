@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static LinuxPatchSettings DeserializeLinuxPatchSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinuxVmGuestPatchMode> patchMode = default;
             Optional<LinuxPatchAssessmentMode> assessmentMode = default;
             Optional<LinuxVmGuestPatchAutomaticByPlatformSettings> automaticByPlatformSettings = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     patchMode = new LinuxVmGuestPatchMode(property.Value.GetString());
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     assessmentMode = new LinuxPatchAssessmentMode(property.Value.GetString());
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     automaticByPlatformSettings = LinuxVmGuestPatchAutomaticByPlatformSettings.DeserializeLinuxVmGuestPatchAutomaticByPlatformSettings(property.Value);

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static GitHubAccessTokenResult DeserializeGitHubAccessTokenResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> gitHubAccessToken = default;
             foreach (var property in element.EnumerateObject())
             {

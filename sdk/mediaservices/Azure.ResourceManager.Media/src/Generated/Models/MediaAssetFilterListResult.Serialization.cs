@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static MediaAssetFilterListResult DeserializeMediaAssetFilterListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MediaAssetFilterData>> value = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaAssetFilterData> array = new List<MediaAssetFilterData>();

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Elastic
 {
-    /// <summary> A class representing the ElasticMonitorResource data model. </summary>
+    /// <summary>
+    /// A class representing the ElasticMonitorResource data model.
+    /// Monitor resource.
+    /// </summary>
     public partial class ElasticMonitorResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ElasticMonitorResourceData. </summary>

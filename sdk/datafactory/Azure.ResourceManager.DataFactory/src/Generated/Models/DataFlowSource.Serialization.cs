@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFlowSource DeserializeDataFlowSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FactoryLinkedServiceReference> schemaLinkedService = default;
             string name = default;
             Optional<string> description = default;
@@ -59,7 +63,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     schemaLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
@@ -79,7 +82,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataset = DatasetReference.DeserializeDatasetReference(property.Value);
@@ -89,7 +91,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
@@ -99,7 +100,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     flowlet = DataFlowReference.DeserializeDataFlowReference(property.Value);

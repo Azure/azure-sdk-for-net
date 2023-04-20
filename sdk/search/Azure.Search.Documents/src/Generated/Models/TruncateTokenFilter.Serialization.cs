@@ -29,6 +29,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static TruncateTokenFilter DeserializeTruncateTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> length = default;
             string odataType = default;
             string name = default;
@@ -38,7 +42,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     length = property.Value.GetInt32();

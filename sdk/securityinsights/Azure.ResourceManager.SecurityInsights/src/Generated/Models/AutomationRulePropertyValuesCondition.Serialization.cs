@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AutomationRulePropertyValuesCondition DeserializeAutomationRulePropertyValuesCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomationRulePropertyConditionSupportedProperty> propertyName = default;
             Optional<AutomationRulePropertyConditionSupportedOperator> @operator = default;
             Optional<IList<string>> propertyValues = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     propertyName = new AutomationRulePropertyConditionSupportedProperty(property.Value.GetString());
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @operator = new AutomationRulePropertyConditionSupportedOperator(property.Value.GetString());
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

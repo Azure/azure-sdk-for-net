@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static UnknownIntegrationRuntimeStatus DeserializeUnknownIntegrationRuntimeStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationRuntimeType type = "Unknown";
             Optional<string> dataFactoryName = default;
             Optional<SynapseIntegrationRuntimeState> state = default;
@@ -37,7 +41,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new SynapseIntegrationRuntimeState(property.Value.GetString());

@@ -54,6 +54,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static ShingleTokenFilter DeserializeShingleTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxShingleSize = default;
             Optional<int> minShingleSize = default;
             Optional<bool> outputUnigrams = default;
@@ -68,7 +72,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxShingleSize = property.Value.GetInt32();
@@ -78,7 +81,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minShingleSize = property.Value.GetInt32();
@@ -88,7 +90,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     outputUnigrams = property.Value.GetBoolean();
@@ -98,7 +99,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     outputUnigramsIfNoShingles = property.Value.GetBoolean();

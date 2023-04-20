@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VnetRoute DeserializeVnetRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<StaticRoute>> staticRoutes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StaticRoute> array = new List<StaticRoute>();

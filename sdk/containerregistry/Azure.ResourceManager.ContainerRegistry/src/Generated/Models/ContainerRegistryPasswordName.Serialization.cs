@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         public static ContainerRegistryPasswordName ToContainerRegistryPasswordName(this string value)
         {
-            if (string.Equals(value, "password", StringComparison.InvariantCultureIgnoreCase)) return ContainerRegistryPasswordName.Password;
-            if (string.Equals(value, "password2", StringComparison.InvariantCultureIgnoreCase)) return ContainerRegistryPasswordName.Password2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "password")) return ContainerRegistryPasswordName.Password;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "password2")) return ContainerRegistryPasswordName.Password2;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerRegistryPasswordName value.");
         }
     }

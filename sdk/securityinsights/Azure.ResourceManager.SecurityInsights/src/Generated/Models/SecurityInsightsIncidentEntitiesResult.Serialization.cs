@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static SecurityInsightsIncidentEntitiesResult DeserializeSecurityInsightsIncidentEntitiesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SecurityInsightsEntity>> entities = default;
             Optional<IReadOnlyList<SecurityInsightsIncidentEntitiesMetadata>> metaData = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SecurityInsightsEntity> array = new List<SecurityInsightsEntity>();
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SecurityInsightsIncidentEntitiesMetadata> array = new List<SecurityInsightsIncidentEntitiesMetadata>();

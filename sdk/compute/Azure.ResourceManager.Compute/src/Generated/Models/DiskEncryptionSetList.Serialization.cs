@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static DiskEncryptionSetList DeserializeDiskEncryptionSetList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DiskEncryptionSetData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

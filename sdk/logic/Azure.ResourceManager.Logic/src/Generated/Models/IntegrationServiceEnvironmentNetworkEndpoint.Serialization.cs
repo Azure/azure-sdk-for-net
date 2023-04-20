@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationServiceEnvironmentNetworkEndpoint DeserializeIntegrationServiceEnvironmentNetworkEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationServiceEnvironmentNetworkEndPointAccessibilityState> accessibility = default;
             Optional<string> domainName = default;
             Optional<IReadOnlyList<string>> ports = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accessibility = new IntegrationServiceEnvironmentNetworkEndPointAccessibilityState(property.Value.GetString());
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

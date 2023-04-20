@@ -15,6 +15,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteDirectionsBatchItemResponse DeserializeRouteDirectionsBatchItemResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ErrorDetail> error = default;
             Optional<string> formatVersion = default;
             Optional<IReadOnlyList<RouteData>> routes = default;
@@ -26,7 +30,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = Models.ErrorDetail.DeserializeErrorDetail(property.Value);
@@ -41,7 +44,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteData> array = new List<RouteData>();
@@ -56,7 +58,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteOptimizedWaypoint> array = new List<RouteOptimizedWaypoint>();
@@ -71,7 +72,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     report = RouteReport.DeserializeRouteReport(property.Value);

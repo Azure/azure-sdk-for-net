@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static EffectiveNetworkSecurityGroups DeserializeEffectiveNetworkSecurityGroups(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> networkInterface = default;
             Optional<IList<string>> networkSecurityGroups = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

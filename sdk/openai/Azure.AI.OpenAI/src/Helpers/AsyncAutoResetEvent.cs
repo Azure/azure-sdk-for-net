@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.AI.OpenAI.Custom
+namespace Azure.AI.OpenAI
 {
     // Adapted from https://devblogs.microsoft.com/pfxteam/building-async-coordination-primitives-part-2-asyncautoresetevent/
     internal class AsyncAutoResetEvent

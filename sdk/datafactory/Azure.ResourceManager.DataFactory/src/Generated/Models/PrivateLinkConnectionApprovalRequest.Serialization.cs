@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PrivateLinkConnectionApprovalRequest DeserializePrivateLinkConnectionApprovalRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
             Optional<WritableSubResource> privateEndpoint = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateLinkServiceConnectionState = PrivateLinkConnectionState.DeserializePrivateLinkConnectionState(property.Value);
@@ -49,7 +52,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

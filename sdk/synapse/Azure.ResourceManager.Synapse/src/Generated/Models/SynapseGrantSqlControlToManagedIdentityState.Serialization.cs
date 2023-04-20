@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Synapse.Models
 
         public static SynapseGrantSqlControlToManagedIdentityState ToSynapseGrantSqlControlToManagedIdentityState(this string value)
         {
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return SynapseGrantSqlControlToManagedIdentityState.Unknown;
-            if (string.Equals(value, "Enabling", StringComparison.InvariantCultureIgnoreCase)) return SynapseGrantSqlControlToManagedIdentityState.Enabling;
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return SynapseGrantSqlControlToManagedIdentityState.Enabled;
-            if (string.Equals(value, "Disabling", StringComparison.InvariantCultureIgnoreCase)) return SynapseGrantSqlControlToManagedIdentityState.Disabling;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return SynapseGrantSqlControlToManagedIdentityState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return SynapseGrantSqlControlToManagedIdentityState.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabling")) return SynapseGrantSqlControlToManagedIdentityState.Enabling;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return SynapseGrantSqlControlToManagedIdentityState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabling")) return SynapseGrantSqlControlToManagedIdentityState.Disabling;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SynapseGrantSqlControlToManagedIdentityState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SynapseGrantSqlControlToManagedIdentityState value.");
         }
     }

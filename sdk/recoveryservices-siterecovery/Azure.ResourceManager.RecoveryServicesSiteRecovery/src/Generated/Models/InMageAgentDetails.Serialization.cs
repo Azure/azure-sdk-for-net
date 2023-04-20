@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageAgentDetails DeserializeInMageAgentDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> agentVersion = default;
             Optional<string> agentUpdateStatus = default;
             Optional<string> postUpdateRebootStatus = default;
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     agentExpiryDate = property.Value.GetDateTimeOffset("O");

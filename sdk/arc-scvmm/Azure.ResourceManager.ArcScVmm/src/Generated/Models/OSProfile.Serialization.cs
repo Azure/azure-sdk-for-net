@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static OSProfile DeserializeOSProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> adminPassword = default;
             Optional<string> computerName = default;
             Optional<OSType> osType = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osType = new OSType(property.Value.GetString());

@@ -60,20 +60,24 @@
     "deserializable",
     "deserializes",
     "diagnoser",
+    "dicom",
     "dont",
     "dotnetcli",
     "dtmf",
     "epsg",
     "expando",
+    "fhir",
     "finalizer",
     "finalizers",
     "illumos",
+    "interventional",
     "ints",
     "kubernetes",
     "lucene",
     "mgmt",
     "nunit",
     "odata",
+    "onco",
     "otel",
     "overridden",
     "parallelization",
@@ -263,7 +267,12 @@
         "tcpkeepalive",
         "wasi",
         "wmem",
-        "Oidc"
+        "Oidc",
+        "Ebpf",
+        "Ipvs",
+        "Keda",
+        "Kata",
+        "Mshv"
       ]
     },
     {
@@ -414,6 +423,8 @@
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": [
+        "Upca",
+        "Upce",
         "ZhHant"
       ]
     },
@@ -632,6 +643,29 @@
       ]
     },
     {
+      "filename": "**/sdk/paloaltonetworks/**/*",
+      "words": [
+      	"armid",
+      	"cpus",
+      	"eastus",
+      	"cloudngfw",
+      	"fqdnlists",
+      	"isvtestuklegacy",
+      	"liftr",
+      	"liftrpantestplan",
+      	"msal",
+        "ngfw",
+        "panrsid",
+        "palo",
+        "paloaltonetworks",
+        "payg",
+        "praval",
+        "rgopenapi",
+        "vmos",
+        "vwan"
+      ]
+    },
+    {
       "filename": "**/sdk/peering/**/*.cs",
       "words": [
         "asns",
@@ -673,6 +707,12 @@
       "words": [
         "checkin",
         "regionality"
+      ]
+    },
+    {
+      "filename": "**/sdk/qumulo/**/*",
+      "words": [
+      	"qumulo"
       ]
     },
     {
@@ -726,6 +766,12 @@
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": [
         "Puid"
+      ]
+    },
+    {
+      "filename": "**/sdk/resourcehealth/**/*.cs",
+      "words": [
+        "occured"
       ]
     },
     {
@@ -935,7 +981,8 @@
       "words": [
         "ascs",
         "hana",
-        "ssdlrs"
+        "ssdlrs",
+        "Mbps"
       ]
     },
     {
@@ -978,6 +1025,14 @@
       "filename": "**/sdk/securitydevops/**/*.cs",
       "words": [
         "Orgs"
+      ]
+    },
+    {
+      "filename": "**/sdk/voiceservices/**/*.cs",
+      "words": [
+        "Esrp",
+        "Pcma",
+        "Pcmu"
       ]
     },
     {

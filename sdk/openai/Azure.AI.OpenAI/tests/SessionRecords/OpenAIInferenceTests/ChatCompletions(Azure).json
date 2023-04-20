@@ -1,0 +1,86 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk8428.openai.azure.com/openai/deployments/gpt-35-turbo/chat/completions?api-version=2023-03-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "api-key": "***********",
+        "Content-Length": "276",
+        "Content-Type": "application/json",
+        "traceparent": "00-c261fae386af9b4961421bc423be4981-5a6acf308ddd4ae7-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230320.1 (.NET 7.0.4; Microsoft Windows 10.0.25300)",
+        "x-ms-client-request-id": "c9db90f4cb5435ed6e6203f707eea437",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a helpful assistant."
+          },
+          {
+            "role": "user",
+            "content": "Can you help me?"
+          },
+          {
+            "role": "assistant",
+            "content": "Of course! What do you need help with?"
+          },
+          {
+            "role": "user",
+            "content": "What temperature should I bake pizza at?"
+          }
+        ],
+        "max_tokens": 512
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "apim-request-id": "ae5e651d-147b-45f6-a62e-a6818a8b71ea",
+        "Cache-Control": "must-revalidate, no-cache",
+        "Content-Type": "application/json",
+        "Date": "Tue, 21 Mar 2023 00:43:16 GMT",
+        "openai-model": "gpt-35-turbo",
+        "openai-processing-ms": "1242.7171",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-accel-buffering": "no",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c9db90f4cb5435ed6e6203f707eea437",
+        "x-ms-region": "East US",
+        "X-Request-ID": "eb9e4113-77ce-43df-bcad-af83b8a6c2fe"
+      },
+      "ResponseBody": {
+        "id": "chatcmpl-6wKNoLiprHtAAHG1RCdewhdMCds2n",
+        "object": "chat.completion",
+        "created": 1679359396,
+        "model": "gpt-35-turbo",
+        "usage": {
+          "prompt_tokens": 51,
+          "completion_tokens": 52,
+          "total_tokens": 103
+        },
+        "choices": [
+          {
+            "message": {
+              "role": "assistant",
+              "content": "The recommended temperature for baking pizza is usually between 425\u00B0F and 450\u00B0F. However, it can vary depending on the type of crust, toppings, and oven you have. It\u0027s always best to check the recipe or packaging for specific instructions."
+            },
+            "finish_reason": "stop",
+            "index": 0
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "OPENAI_CHAT_COMPLETIONS_DEPLOYMENT_ID": "gpt-35-turbo",
+    "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
+    "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-curie-001",
+    "OPENAI_ENDPOINT": "https://sdk8428.openai.azure.com/",
+    "RandomSeed": "1559156598",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
+  }
+}

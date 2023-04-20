@@ -1,6 +1,6 @@
 # Release History
 
-## 4.3.0-beta.2 (Unreleased)
+## 4.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.3.0 (2023-03-14)
+
+### Breaking Changes
+
+The following changes are only breaking from the previous beta. They are not breaking since version 4.4.0 when those types and members did not exist.
+
+- Service version "7.4-preview.1" is not supported.
+- Removed `KeyVaultSetting.AsBoolean` and `AsString`, and added `AsBoolean` to new `KeyVaultSetting.Value` property type, `KeyVaultSettingValue`.
+
+### Other Changes
+
+- The default service version is now "7.4".
 
 ## 4.3.0-beta.1 (2022-11-09)
 

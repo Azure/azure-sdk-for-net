@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterNotification DeserializeClusterNotification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool isEnabled = default;
             ClusterNotificationCategory notificationCategory = default;
             ClusterNotificationLevel notificationLevel = default;

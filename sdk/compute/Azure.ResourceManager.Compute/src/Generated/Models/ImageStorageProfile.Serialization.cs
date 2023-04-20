@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImageStorageProfile DeserializeImageStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ImageOSDisk> osDisk = default;
             Optional<IList<ImageDataDisk>> dataDisks = default;
             Optional<bool> zoneResilient = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osDisk = ImageOSDisk.DeserializeImageOSDisk(property.Value);
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ImageDataDisk> array = new List<ImageDataDisk>();
@@ -75,7 +77,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     zoneResilient = property.Value.GetBoolean();

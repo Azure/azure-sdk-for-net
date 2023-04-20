@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRouteGatewayList DeserializeExpressRouteGatewayList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ExpressRouteGatewayData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ExpressRouteGatewayData> array = new List<ExpressRouteGatewayData>();

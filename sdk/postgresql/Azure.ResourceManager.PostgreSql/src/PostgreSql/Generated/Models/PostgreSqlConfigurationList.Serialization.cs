@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         internal static PostgreSqlConfigurationList DeserializePostgreSqlConfigurationList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<PostgreSqlConfigurationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PostgreSqlConfigurationData> array = new List<PostgreSqlConfigurationData>();

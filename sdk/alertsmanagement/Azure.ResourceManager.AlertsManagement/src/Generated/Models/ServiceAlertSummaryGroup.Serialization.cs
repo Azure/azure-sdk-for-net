@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertSummaryGroup DeserializeServiceAlertSummaryGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> total = default;
             Optional<long> smartGroupsCount = default;
             Optional<string> groupedby = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     total = property.Value.GetInt64();
@@ -66,7 +69,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     smartGroupsCount = property.Value.GetInt64();
@@ -81,7 +83,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceAlertSummaryGroupItemInfo> array = new List<ServiceAlertSummaryGroupItemInfo>();

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static WebPubSubNetworkAcls DeserializeWebPubSubNetworkAcls(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AclAction> defaultAction = default;
             Optional<PublicNetworkAcls> publicNetwork = default;
             Optional<IList<PrivateEndpointAcl>> privateEndpoints = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultAction = new AclAction(property.Value.GetString());
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicNetwork = PublicNetworkAcls.DeserializePublicNetworkAcls(property.Value);
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PrivateEndpointAcl> array = new List<PrivateEndpointAcl>();

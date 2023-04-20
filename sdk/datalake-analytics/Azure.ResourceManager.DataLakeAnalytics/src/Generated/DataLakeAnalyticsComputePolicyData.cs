@@ -12,7 +12,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
-    /// <summary> A class representing the DataLakeAnalyticsComputePolicy data model. </summary>
+    /// <summary>
+    /// A class representing the DataLakeAnalyticsComputePolicy data model.
+    /// Data Lake Analytics compute policy information.
+    /// Serialized Name: ComputePolicy
+    /// </summary>
     public partial class DataLakeAnalyticsComputePolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of DataLakeAnalyticsComputePolicyData. </summary>

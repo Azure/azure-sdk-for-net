@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity.Value.ToString());
+                writer.WriteNumberValue(Severity.Value.ToSerialInt64());
             }
             if (Optional.IsDefined(IsEnabled))
             {
@@ -146,6 +146,10 @@ namespace Azure.ResourceManager.Monitor
 
         internal static ScheduledQueryRuleData DeserializeScheduledQueryRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ScheduledQueryRuleKind> kind = default;
             Optional<ETag> etag = default;
@@ -191,7 +195,6 @@ namespace Azure.ResourceManager.Monitor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new ScheduledQueryRuleKind(property.Value.GetString());
@@ -201,7 +204,6 @@ namespace Azure.ResourceManager.Monitor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -211,7 +213,6 @@ namespace Azure.ResourceManager.Monitor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -246,7 +247,6 @@ namespace Azure.ResourceManager.Monitor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -270,7 +270,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isLegacyLogAnalyticsRule = property0.Value.GetBoolean();
@@ -290,7 +289,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             severity = new AlertSeverity(property0.Value.GetInt64());
@@ -300,7 +298,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabled = property0.Value.GetBoolean();
@@ -320,7 +317,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -335,7 +331,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             evaluationFrequency = property0.Value.GetTimeSpan("P");
@@ -345,7 +340,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             windowSize = property0.Value.GetTimeSpan("P");
@@ -355,7 +349,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             overrideQueryTimeRange = property0.Value.GetTimeSpan("P");
@@ -365,7 +358,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -380,7 +372,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             criteria = ScheduledQueryRuleCriteria.DeserializeScheduledQueryRuleCriteria(property0.Value);
@@ -390,7 +381,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             muteActionsDuration = property0.Value.GetTimeSpan("P");
@@ -400,7 +390,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             actions = ScheduledQueryRuleActions.DeserializeScheduledQueryRuleActions(property0.Value);
@@ -410,7 +399,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isWorkspaceAlertsStorageConfigured = property0.Value.GetBoolean();
@@ -420,7 +408,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             checkWorkspaceAlertsStorageConfigured = property0.Value.GetBoolean();
@@ -430,7 +417,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             skipQueryValidation = property0.Value.GetBoolean();
@@ -440,7 +426,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoMitigate = property0.Value.GetBoolean();

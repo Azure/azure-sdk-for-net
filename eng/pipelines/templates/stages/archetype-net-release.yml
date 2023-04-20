@@ -14,7 +14,7 @@ stages:
         environment: esrp
         pool:
           name: azsdk-pool-mms-win-2022-general
-          vmImage: MMS2022
+          vmImage: windows-2022
 
         strategy:
           runOnce:
@@ -53,7 +53,7 @@ stages:
 
                 pool:
                   name: azsdk-pool-mms-win-2022-general
-                  vmImage: MMS2022
+                  vmImage: windows-2022
 
                 strategy:
                   runOnce:
@@ -131,7 +131,7 @@ stages:
 
                 pool:
                   name: azsdk-pool-mms-win-2022-general
-                  vmImage: MMS2022
+                  vmImage: windows-2022
 
                 strategy:
                   runOnce:
@@ -191,7 +191,7 @@ stages:
 
                 pool:
                   name: azsdk-pool-mms-win-2022-general
-                  vmImage: MMS2022
+                  vmImage: windows-2022
 
                 strategy:
                   runOnce:
@@ -217,7 +217,7 @@ stages:
 
                 pool:
                   name: azsdk-pool-mms-win-2022-general
-                  vmImage: MMS2022
+                  vmImage: windows-2022
 
                 strategy:
                   runOnce:
@@ -236,7 +236,6 @@ stages:
                             PRBranchName: increment-package-version-${{ parameters.ServiceDirectory }}-$(Build.BuildId)
                             CommitMsg: "Increment package version after release of ${{ artifact.name }}"
                             PRTitle: "Increment version for ${{ parameters.ServiceDirectory }} releases"
-                            PRLabels: "auto-merge"
                             CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
 
             - ${{if ne(artifact.skipSmokeTests, 'true')}}:
@@ -255,7 +254,7 @@ stages:
       displayName: Publish package to daily feed
       pool:
         name: azsdk-pool-mms-win-2022-general
-        vmImage: MMS2022
+        vmImage: windows-2022
       steps:
       - checkout: none
       - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools

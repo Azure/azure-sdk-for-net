@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementTenantSetting data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementTenantSetting data model.
+    /// Tenant Settings.
+    /// </summary>
     public partial class ApiManagementTenantSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementTenantSettingData. </summary>

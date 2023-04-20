@@ -45,6 +45,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static PiiEntitiesDocumentResult DeserializePiiEntitiesDocumentResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string redactedText = default;
             IList<Entity> entities = default;
             string id = default;
@@ -86,7 +90,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);

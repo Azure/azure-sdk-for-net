@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerExecResult DeserializeContainerExecResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> webSocketUri = default;
             Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        webSocketUri = null;
                         continue;
                     }
                     webSocketUri = new Uri(property.Value.GetString());

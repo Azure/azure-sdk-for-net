@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.Hci
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
 #endif
             }
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            {
+                writer.WritePropertyName("enableAutomaticUpgrade"u8);
+                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -73,6 +78,10 @@ namespace Azure.ResourceManager.Hci
 
         internal static ArcExtensionData DeserializeArcExtensionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -87,6 +96,7 @@ namespace Azure.ResourceManager.Hci
             Optional<bool> autoUpgradeMinorVersion = default;
             Optional<BinaryData> settings = default;
             Optional<BinaryData> protectedSettings = default;
+            Optional<bool> enableAutomaticUpgrade = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,7 +118,6 @@ namespace Azure.ResourceManager.Hci
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -127,7 +136,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new HciProvisioningState(property0.Value.GetString());
@@ -137,7 +145,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aggregateState = new ArcExtensionAggregateState(property0.Value.GetString());
@@ -147,7 +154,6 @@ namespace Azure.ResourceManager.Hci
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PerNodeExtensionState> array = new List<PerNodeExtensionState>();
@@ -191,7 +197,6 @@ namespace Azure.ResourceManager.Hci
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     autoUpgradeMinorVersion = property1.Value.GetBoolean();
@@ -201,7 +206,6 @@ namespace Azure.ResourceManager.Hci
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     settings = BinaryData.FromString(property1.Value.GetRawText());
@@ -211,10 +215,18 @@ namespace Azure.ResourceManager.Hci
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     protectedSettings = BinaryData.FromString(property1.Value.GetRawText());
+                                    continue;
+                                }
+                                if (property1.NameEquals("enableAutomaticUpgrade"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    enableAutomaticUpgrade = property1.Value.GetBoolean();
                                     continue;
                                 }
                             }
@@ -224,7 +236,7 @@ namespace Azure.ResourceManager.Hci
                     continue;
                 }
             }
-            return new ArcExtensionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value);
+            return new ArcExtensionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, Optional.ToNullable(enableAutomaticUpgrade));
         }
     }
 }

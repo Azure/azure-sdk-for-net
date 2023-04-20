@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static BackupVaultResourceList DeserializeBackupVaultResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataProtectionBackupVaultData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataProtectionBackupVaultData> array = new List<DataProtectionBackupVaultData>();

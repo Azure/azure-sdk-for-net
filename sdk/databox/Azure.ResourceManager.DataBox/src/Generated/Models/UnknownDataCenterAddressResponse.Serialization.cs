@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static UnknownDataCenterAddressResponse DeserializeUnknownDataCenterAddressResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataCenterAddressType dataCenterAddressType = default;
             Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
             Optional<AzureLocation> dataCenterAzureLocation = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -44,7 +47,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataCenterAzureLocation = new AzureLocation(property.Value.GetString());

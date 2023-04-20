@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AzureReachabilityReport DeserializeAzureReachabilityReport(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string aggregationLevel = default;
             AzureReachabilityReportLocation providerLocation = default;
             IReadOnlyList<AzureReachabilityReportItem> reachabilityReport = default;

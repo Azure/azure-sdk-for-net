@@ -1,39 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93?api-version=2021-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee?api-version=2021-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e4dae7188fd3aeb406a041303a2f3a81-c79a76bdd07ce7fb-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "c51ccc3ec21fb31b8ca490af7f624125",
+        "traceparent": "00-27462720c2d913fa6af26cbbdf7d6397-49a0a3037d36a5dc-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "e601ec62cd42ed54c6f39891ead19a2e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "400",
+        "Content-Length": "398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:09:59 GMT",
+        "Date": "Fri, 10 Mar 2023 06:31:58 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "464c7be3-62d3-4dbc-b1ff-48e05317cd04",
-        "x-ms-ratelimit-remaining-subscription-reads": "11993",
-        "x-ms-request-id": "464c7be3-62d3-4dbc-b1ff-48e05317cd04",
-        "x-ms-routing-request-id": "WESTUS:20220516T230959Z:464c7be3-62d3-4dbc-b1ff-48e05317cd04"
+        "x-ms-correlation-request-id": "8fb58594-5ac3-4ae9-8420-847e4b6eb94f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11983",
+        "x-ms-request-id": "8fb58594-5ac3-4ae9-8420-847e4b6eb94f",
+        "x-ms-routing-request-id": "WESTUS:20230310T063159Z:8fb58594-5ac3-4ae9-8420-847e4b6eb94f"
       },
       "ResponseBody": {
-        "id": "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+        "id": "/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-        "tenantId": "2fc06c85-616c-4845-9d37-2faa8091e955",
-        "displayName": "Azure subscription 1",
+        "subscriptionId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+        "tenantId": "f1a380c7-4edb-405c-9ffb-015823f5b32c",
+        "displayName": "PayG-UK-03-09-2021",
         "state": "Enabled",
         "subscriptionPolicies": {
           "locationPlacementId": "Public_2014-09-01",
@@ -43,40 +43,3312 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01\u0026reservedResourceType=BlockBlob\u0026location=westus",
+      "RequestUri": "https://management.azure.com/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/providers/Microsoft.Capacity/catalogs?api-version=2022-11-01\u0026reservedResourceType=BlockBlob\u0026location=westus",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-ee142e5066300242ca29a8313f4dbd7d-2228d3e389502ce7-00",
-        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.0.0-alpha.20220516.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "4620ddb2979cac39b872a565af2670ad",
+        "traceparent": "00-8e367dea8d3d9e350d66a1cb4186b7ba-1d101474fd24d965-00",
+        "User-Agent": "azsdk-net-ResourceManager.Reservations/1.3.0-alpha.20230309.1 (.NET 7.0.3; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "236fe7d2886e718ed6873fbf0f63099f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "30184",
+        "Content-Length": "36867",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 16 May 2022 23:09:59 GMT",
+        "Date": "Fri, 10 Mar 2023 06:31:58 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "43569daa-a20f-4ac5-ab97-56fd42b7cf6a",
-        "x-ms-ratelimit-remaining-subscription-reads": "11992",
-        "x-ms-request-id": "4620ddb2979cac39b872a565af2670ad",
-        "x-ms-routing-request-id": "WESTUS:20220516T231000Z:43569daa-a20f-4ac5-ab97-56fd42b7cf6a",
-        "x-ms-version": "1.0.1957.1107"
+        "x-ms-correlation-request-id": "48af1e40-16f3-40c1-9587-c92dc2cacdc2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "236fe7d2886e718ed6873fbf0f63099f",
+        "x-ms-routing-request-id": "WESTUS:20230310T063159Z:48af1e40-16f3-40c1-9587-c92dc2cacdc2",
+        "x-ms-version": "1.0.2251.115"
       },
-      "ResponseBody": "[{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022hot_lrs_data_stored_10 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1936762.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:4632525.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u002210485760\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022LRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Hot_LRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Hot\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u002210 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Hot - 10 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022290d414c-c892-4e22-bd94-fdba8a30798a\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Hot - 10 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022hot_grs_data_stored_10 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:4264601.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:10200463.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u002210485760\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Hot_GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Hot\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u002210 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Hot - 10 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002294f06d38-6599-4642-a40e-092f05bdc423\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Hot - 10 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022archive_lrs_data_stored_1 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:21391.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:58888.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u00221048576\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022LRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Archive_LRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Archive\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u00221 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Archive - 1 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002299de4b5b-6026-49c2-b3dd-1aac546bbfed\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Archive - 1 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022hot_ra-grs_data_stored_1 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:469141.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1118722.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u00221048576\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022RA-GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Hot_RA-GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Hot\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u00221 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Hot - 1 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022243a7ede-007c-474d-ae93-3a629da977e0\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Hot - 1 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022hot_lrs_data_stored_100 tb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:20958.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:50607.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u0022102400\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022LRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Hot_LRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Hot\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u0022100 TB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Hot - 100 TB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022290d414c-c892-4e22-bd94-fdba8a30798a\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Hot - 100 TB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022archive_grs_data_stored_100 tb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:3270.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:9038.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u0022102400\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Archive_GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Archive\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u0022100 TB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Archive - 100 TB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022b4323a07-0912-4dda-8547-5d62c6a2b000\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Archive - 100 TB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022hot_ra-grs_data_stored_10 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:4450828.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:10645899.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u002210485760\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022RA-GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Hot_RA-GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Hot\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u002210 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Hot - 10 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022243a7ede-007c-474d-ae93-3a629da977e0\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Hot - 10 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022cool_lrs_data_stored_10 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1070806.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:2865129.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u002210485760\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022LRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Cool_LRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Cool\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u002210 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Cool - 10 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00228c78a0f1-97b3-4df7-b87b-783874d4848c\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Cool - 10 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022cool_ra-grs_data_stored_100 tb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:29019.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:78565.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u0022102400\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022RA-GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Cool_RA-GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Cool\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u0022100 TB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Cool - 100 TB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022a0a1729d-abe9-4ab3-9934-fa48acebb542\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Cool - 100 TB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022cool_ra-grs_data_stored_1 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:282663.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:761015.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u00221048576\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022RA-GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Cool_RA-GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Cool\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u00221 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Cool - 1 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022a0a1729d-abe9-4ab3-9934-fa48acebb542\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Cool - 1 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022hot_grs_data_stored_100 tb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:46149.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:111432.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u0022102400\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Hot_GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Hot\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u0022100 TB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Hot - 100 TB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002294f06d38-6599-4642-a40e-092f05bdc423\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Hot - 100 TB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022cool_grs_data_stored_10 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:2141612.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:5730258.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u002210485760\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Cool_GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Cool\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u002210 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Cool - 10 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022cc7c7a41-fea2-42c6-83e9-3870205634f6\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Cool - 10 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022hot_grs_data_stored_1 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:449512.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:1071913.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u00221048576\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Hot_GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Hot\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u00221 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Hot - 1 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002294f06d38-6599-4642-a40e-092f05bdc423\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Hot - 1 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022cool_grs_data_stored_1 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:225737.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:607755.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u00221048576\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Cool_GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Cool\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u00221 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Cool - 1 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022cc7c7a41-fea2-42c6-83e9-3870205634f6\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Cool - 1 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022archive_lrs_data_stored_10 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:201327.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:558681.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u002210485760\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022LRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Archive_LRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Archive\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u002210 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Archive - 10 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002299de4b5b-6026-49c2-b3dd-1aac546bbfed\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Archive - 10 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022cool_ra-grs_data_stored_10 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:2681670.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:7175280.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u002210485760\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022RA-GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Cool_RA-GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Cool\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u002210 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Cool - 10 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022a0a1729d-abe9-4ab3-9934-fa48acebb542\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Cool - 10 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022archive_grs_data_stored_1 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:31979.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:88038.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u00221048576\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Archive_GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Archive\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u00221 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Archive - 1 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022b4323a07-0912-4dda-8547-5d62c6a2b000\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Archive - 1 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022cool_lrs_data_stored_1 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:112869.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:303877.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u00221048576\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022LRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Cool_LRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Cool\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u00221 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Cool - 1 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00228c78a0f1-97b3-4df7-b87b-783874d4848c\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Cool - 1 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022cool_lrs_data_stored_100 tb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:11588.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:31371.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u0022102400\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022LRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Cool_LRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Cool\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u0022100 TB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Cool - 100 TB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00228c78a0f1-97b3-4df7-b87b-783874d4848c\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Cool - 100 TB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022archive_ra-grs_data_stored_1 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:31979.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:88038.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u00221048576\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022RA-GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Archive_RA-GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Archive\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u00221 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Archive - 1 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00225ca02c0b-1f79-4c9f-a420-393f4ac56c8b\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Archive - 1 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022archive_lrs_data_stored_100 tb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:2187.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:6046.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u0022102400\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022LRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Archive_LRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Archive\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u0022100 TB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Archive - 100 TB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u002299de4b5b-6026-49c2-b3dd-1aac546bbfed\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Archive - 100 TB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022archive_grs_data_stored_10 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:300983.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:835229.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u002210485760\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Archive_GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Archive\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u002210 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Archive - 10 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022b4323a07-0912-4dda-8547-5d62c6a2b000\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Archive - 10 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022cool_grs_data_stored_100 tb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:23175.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:62743.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u0022102400\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Cool_GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Cool\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u0022100 TB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Cool - 100 TB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022cc7c7a41-fea2-42c6-83e9-3870205634f6\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Cool - 100 TB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022hot_lrs_data_stored_1 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:204145.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:486808.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u00221048576\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022LRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Hot_LRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Hot\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u00221 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Hot - 1 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022290d414c-c892-4e22-bd94-fdba8a30798a\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Hot - 1 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022hot_ra-grs_data_stored_100 tb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:48164.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:116299.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u0022102400\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022RA-GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Hot_RA-GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Hot\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u0022100 TB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Hot - 100 TB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u0022243a7ede-007c-474d-ae93-3a629da977e0\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Hot - 100 TB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022archive_ra-grs_data_stored_10 pb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:300983.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:835229.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u002210485760\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022RA-GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Archive_RA-GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Archive\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u002210 PB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Archive - 10 PB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00225ca02c0b-1f79-4c9f-a420-393f4ac56c8b\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Archive - 10 PB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]},{\u0022resourceType\u0022:\u0022BlockBlob\u0022,\u0022name\u0022:\u0022archive_ra-grs_data_stored_100 tb\u0022,\u0022terms\u0022:[\u0022P1Y\u0022,\u0022P3Y\u0022,\u0022P5Y\u0022],\u0022locations\u0022:[\u0022westus\u0022],\u0022billingPlans\u0022:{\u0022p1Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p3Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022],\u0022p5Y\u0022:[\u0022Upfront\u0022,\u0022Monthly\u0022]},\u0022msrp\u0022:{\u0022p1Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:3270.0},\u0022p3Y\u0022:{\u0022currencyCode\u0022:\u0022USD\u0022,\u0022amount\u0022:9038.0}},\u0022skuProperties\u0022:[{\u0022name\u0022:\u0022ReservedUnitCount\u0022,\u0022value\u0022:\u0022102400\u0022},{\u0022name\u0022:\u0022Feature\u0022,\u0022value\u0022:\u0022RA-GRS\u0022},{\u0022name\u0022:\u0022ReservationsAutofitGroup\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity_Archive_RA-GRS_US West\u0022},{\u0022name\u0022:\u0022ReservationsAutofitRatio\u0022,\u0022value\u0022:\u00221\u0022},{\u0022name\u0022:\u0022AccessTier\u0022,\u0022value\u0022:\u0022Archive\u0022},{\u0022name\u0022:\u0022Size\u0022,\u0022value\u0022:\u0022100 TB\u0022},{\u0022name\u0022:\u0022ProductShortName\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022ProductTitle\u0022,\u0022value\u0022:\u0022Storage Reserved Capacity\u0022},{\u0022name\u0022:\u0022SkuName\u0022,\u0022value\u0022:\u0022Archive - 100 TB\u0022},{\u0022name\u0022:\u0022MeterId\u0022,\u0022value\u0022:\u00225ca02c0b-1f79-4c9f-a420-393f4ac56c8b\u0022},{\u0022name\u0022:\u0022MeterType\u0022,\u0022value\u0022:\u0022Data Stored (GB/Month)\u0022},{\u0022name\u0022:\u0022SkuDisplayName\u0022,\u0022value\u0022:\u0022Archive - 100 TB\u0022},{\u0022name\u0022:\u0022billingPlans\u0022,\u0022value\u0022:\u0022[\\\u0022Upfront\\\u0022,\\\u0022Monthly\\\u0022]\u0022}],\u0022restrictions\u0022:[{\u0022type\u0022:\u0022Term\u0022,\u0022values\u0022:[\u0022P5Y\u0022],\u0022reasonCode\u0022:\u0022NotAvailableForSubscription\u0022}]}]"
+      "ResponseBody": {
+        "value": [
+          {
+            "resourceType": "BlockBlob",
+            "name": "hot_lrs_data_stored_10 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1936762.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 4632525.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "10485760"
+              },
+              {
+                "name": "Feature",
+                "value": "LRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Hot_LRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Hot"
+              },
+              {
+                "name": "Size",
+                "value": "10 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Hot - 10 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "290d414c-c892-4e22-bd94-fdba8a30798a"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Hot - 10 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "hot_grs_data_stored_10 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 4264601.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 10200463.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "10485760"
+              },
+              {
+                "name": "Feature",
+                "value": "GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Hot_GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Hot"
+              },
+              {
+                "name": "Size",
+                "value": "10 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Hot - 10 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "94f06d38-6599-4642-a40e-092f05bdc423"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Hot - 10 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "archive_lrs_data_stored_1 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 21391.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 58888.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1048576"
+              },
+              {
+                "name": "Feature",
+                "value": "LRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Archive_LRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Archive"
+              },
+              {
+                "name": "Size",
+                "value": "1 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Archive - 1 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "99de4b5b-6026-49c2-b3dd-1aac546bbfed"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Archive - 1 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "hot_ra-grs_data_stored_1 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 469141.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1118722.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1048576"
+              },
+              {
+                "name": "Feature",
+                "value": "RA-GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Hot_RA-GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Hot"
+              },
+              {
+                "name": "Size",
+                "value": "1 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Hot - 1 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "243a7ede-007c-474d-ae93-3a629da977e0"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Hot - 1 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "hot_lrs_data_stored_100 tb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 20958.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 50607.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "Feature",
+                "value": "LRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Hot_LRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Hot"
+              },
+              {
+                "name": "Size",
+                "value": "100 TB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Hot - 100 TB"
+              },
+              {
+                "name": "MeterId",
+                "value": "290d414c-c892-4e22-bd94-fdba8a30798a"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Hot - 100 TB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "archive_grs_data_stored_100 tb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 3270.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 9038.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "Feature",
+                "value": "GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Archive_GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Archive"
+              },
+              {
+                "name": "Size",
+                "value": "100 TB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Archive - 100 TB"
+              },
+              {
+                "name": "MeterId",
+                "value": "b4323a07-0912-4dda-8547-5d62c6a2b000"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Archive - 100 TB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "hot_ra-grs_data_stored_10 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 4450828.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 10645899.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "10485760"
+              },
+              {
+                "name": "Feature",
+                "value": "RA-GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Hot_RA-GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Hot"
+              },
+              {
+                "name": "Size",
+                "value": "10 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Hot - 10 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "243a7ede-007c-474d-ae93-3a629da977e0"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Hot - 10 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "cool_lrs_data_stored_10 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1070806.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 2865129.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "10485760"
+              },
+              {
+                "name": "Feature",
+                "value": "LRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Cool_LRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Cool"
+              },
+              {
+                "name": "Size",
+                "value": "10 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Cool - 10 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "8c78a0f1-97b3-4df7-b87b-783874d4848c"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Cool - 10 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "cool_ra-grs_data_stored_100 tb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 29019.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 78565.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "Feature",
+                "value": "RA-GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Cool_RA-GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Cool"
+              },
+              {
+                "name": "Size",
+                "value": "100 TB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Cool - 100 TB"
+              },
+              {
+                "name": "MeterId",
+                "value": "a0a1729d-abe9-4ab3-9934-fa48acebb542"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Cool - 100 TB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "cool_ra-grs_data_stored_1 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 282663.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 761015.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1048576"
+              },
+              {
+                "name": "Feature",
+                "value": "RA-GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Cool_RA-GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Cool"
+              },
+              {
+                "name": "Size",
+                "value": "1 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Cool - 1 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "a0a1729d-abe9-4ab3-9934-fa48acebb542"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Cool - 1 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "hot_grs_data_stored_100 tb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 46149.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 111432.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "Feature",
+                "value": "GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Hot_GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Hot"
+              },
+              {
+                "name": "Size",
+                "value": "100 TB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Hot - 100 TB"
+              },
+              {
+                "name": "MeterId",
+                "value": "94f06d38-6599-4642-a40e-092f05bdc423"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Hot - 100 TB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "cool_grs_data_stored_10 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2141612.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 5730258.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "10485760"
+              },
+              {
+                "name": "Feature",
+                "value": "GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Cool_GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Cool"
+              },
+              {
+                "name": "Size",
+                "value": "10 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Cool - 10 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "cc7c7a41-fea2-42c6-83e9-3870205634f6"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Cool - 10 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "hot_grs_data_stored_1 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 449512.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 1071913.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1048576"
+              },
+              {
+                "name": "Feature",
+                "value": "GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Hot_GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Hot"
+              },
+              {
+                "name": "Size",
+                "value": "1 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Hot - 1 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "94f06d38-6599-4642-a40e-092f05bdc423"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Hot - 1 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "cool_grs_data_stored_1 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 225737.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 607755.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1048576"
+              },
+              {
+                "name": "Feature",
+                "value": "GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Cool_GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Cool"
+              },
+              {
+                "name": "Size",
+                "value": "1 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Cool - 1 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "cc7c7a41-fea2-42c6-83e9-3870205634f6"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Cool - 1 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "archive_lrs_data_stored_10 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 201327.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 558681.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "10485760"
+              },
+              {
+                "name": "Feature",
+                "value": "LRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Archive_LRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Archive"
+              },
+              {
+                "name": "Size",
+                "value": "10 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Archive - 10 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "99de4b5b-6026-49c2-b3dd-1aac546bbfed"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Archive - 10 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "cool_ra-grs_data_stored_10 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2681670.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 7175280.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "10485760"
+              },
+              {
+                "name": "Feature",
+                "value": "RA-GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Cool_RA-GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Cool"
+              },
+              {
+                "name": "Size",
+                "value": "10 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Cool - 10 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "a0a1729d-abe9-4ab3-9934-fa48acebb542"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Cool - 10 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "archive_grs_data_stored_1 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 31979.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 88038.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1048576"
+              },
+              {
+                "name": "Feature",
+                "value": "GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Archive_GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Archive"
+              },
+              {
+                "name": "Size",
+                "value": "1 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Archive - 1 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "b4323a07-0912-4dda-8547-5d62c6a2b000"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Archive - 1 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "cool_lrs_data_stored_1 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 112869.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 303877.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1048576"
+              },
+              {
+                "name": "Feature",
+                "value": "LRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Cool_LRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Cool"
+              },
+              {
+                "name": "Size",
+                "value": "1 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Cool - 1 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "8c78a0f1-97b3-4df7-b87b-783874d4848c"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Cool - 1 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "cool_lrs_data_stored_100 tb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 11588.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 31371.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "Feature",
+                "value": "LRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Cool_LRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Cool"
+              },
+              {
+                "name": "Size",
+                "value": "100 TB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Cool - 100 TB"
+              },
+              {
+                "name": "MeterId",
+                "value": "8c78a0f1-97b3-4df7-b87b-783874d4848c"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Cool - 100 TB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "archive_ra-grs_data_stored_1 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 31979.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 88038.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1048576"
+              },
+              {
+                "name": "Feature",
+                "value": "RA-GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Archive_RA-GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Archive"
+              },
+              {
+                "name": "Size",
+                "value": "1 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Archive - 1 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "5ca02c0b-1f79-4c9f-a420-393f4ac56c8b"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Archive - 1 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "archive_lrs_data_stored_100 tb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2187.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 6046.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "Feature",
+                "value": "LRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Archive_LRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Archive"
+              },
+              {
+                "name": "Size",
+                "value": "100 TB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Archive - 100 TB"
+              },
+              {
+                "name": "MeterId",
+                "value": "99de4b5b-6026-49c2-b3dd-1aac546bbfed"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Archive - 100 TB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "archive_grs_data_stored_10 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 300983.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 835229.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "10485760"
+              },
+              {
+                "name": "Feature",
+                "value": "GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Archive_GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Archive"
+              },
+              {
+                "name": "Size",
+                "value": "10 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Archive - 10 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "b4323a07-0912-4dda-8547-5d62c6a2b000"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Archive - 10 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "cool_grs_data_stored_100 tb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 23175.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 62743.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "Feature",
+                "value": "GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Cool_GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Cool"
+              },
+              {
+                "name": "Size",
+                "value": "100 TB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Cool - 100 TB"
+              },
+              {
+                "name": "MeterId",
+                "value": "cc7c7a41-fea2-42c6-83e9-3870205634f6"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Cool - 100 TB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "hot_lrs_data_stored_1 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 204145.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 486808.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1048576"
+              },
+              {
+                "name": "Feature",
+                "value": "LRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Hot_LRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Hot"
+              },
+              {
+                "name": "Size",
+                "value": "1 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Hot - 1 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "290d414c-c892-4e22-bd94-fdba8a30798a"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Hot - 1 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "hot_ra-grs_data_stored_100 tb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 48164.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 116299.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "Feature",
+                "value": "RA-GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Hot_RA-GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Hot"
+              },
+              {
+                "name": "Size",
+                "value": "100 TB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Hot - 100 TB"
+              },
+              {
+                "name": "MeterId",
+                "value": "243a7ede-007c-474d-ae93-3a629da977e0"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Hot - 100 TB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "archive_ra-grs_data_stored_10 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 300983.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 835229.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "10485760"
+              },
+              {
+                "name": "Feature",
+                "value": "RA-GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Archive_RA-GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Archive"
+              },
+              {
+                "name": "Size",
+                "value": "10 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Archive - 10 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "5ca02c0b-1f79-4c9f-a420-393f4ac56c8b"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Archive - 10 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "archive_ra-grs_data_stored_100 tb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 3270.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 9038.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "Feature",
+                "value": "RA-GRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Archive_RA-GRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Archive"
+              },
+              {
+                "name": "Size",
+                "value": "100 TB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Archive - 100 TB"
+              },
+              {
+                "name": "MeterId",
+                "value": "5ca02c0b-1f79-4c9f-a420-393f4ac56c8b"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Archive - 100 TB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "hot_zrs_data_stored_10 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 2420952.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 6477683.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "10485760"
+              },
+              {
+                "name": "Feature",
+                "value": "ZRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Hot_ZRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Hot"
+              },
+              {
+                "name": "Size",
+                "value": "10 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Hot - 10 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "2f04d625-ed75-4c45-9393-8f90d112b1c3"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Hot - 10 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "cool_zrs_data_stored_10 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 1340835.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 3587640.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "10485760"
+              },
+              {
+                "name": "Feature",
+                "value": "ZRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Cool_ZRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Cool"
+              },
+              {
+                "name": "Size",
+                "value": "10 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Cool - 10 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "39baf0f6-1320-4cdb-847b-fa4100b34e48"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Cool - 10 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "cool_zrs_data_stored_100 tb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 14510.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 39282.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "Feature",
+                "value": "ZRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Cool_ZRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Cool"
+              },
+              {
+                "name": "Size",
+                "value": "100 TB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Cool - 100 TB"
+              },
+              {
+                "name": "MeterId",
+                "value": "39baf0f6-1320-4cdb-847b-fa4100b34e48"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Cool - 100 TB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "hot_zrs_data_stored_100 tb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 26198.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 70926.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "102400"
+              },
+              {
+                "name": "Feature",
+                "value": "ZRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Hot_ZRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Hot"
+              },
+              {
+                "name": "Size",
+                "value": "100 TB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Hot - 100 TB"
+              },
+              {
+                "name": "MeterId",
+                "value": "2f04d625-ed75-4c45-9393-8f90d112b1c3"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Hot - 100 TB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "hot_zrs_data_stored_1 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 255181.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 687027.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1048576"
+              },
+              {
+                "name": "Feature",
+                "value": "ZRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Hot_ZRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Hot"
+              },
+              {
+                "name": "Size",
+                "value": "1 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Hot - 1 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "2f04d625-ed75-4c45-9393-8f90d112b1c3"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Hot - 1 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          },
+          {
+            "resourceType": "BlockBlob",
+            "name": "cool_zrs_data_stored_1 pb",
+            "terms": [
+              "P1Y",
+              "P3Y",
+              "P5Y"
+            ],
+            "locations": [
+              "westus"
+            ],
+            "billingPlans": {
+              "p1Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p3Y": [
+                "Upfront",
+                "Monthly"
+              ],
+              "p5Y": [
+                "Upfront",
+                "Monthly"
+              ]
+            },
+            "msrp": {
+              "p1Y": {
+                "currencyCode": "USD",
+                "amount": 141331.0
+              },
+              "p3Y": {
+                "currencyCode": "USD",
+                "amount": 380507.0
+              }
+            },
+            "skuProperties": [
+              {
+                "name": "ReservedUnitCount",
+                "value": "1048576"
+              },
+              {
+                "name": "Feature",
+                "value": "ZRS"
+              },
+              {
+                "name": "ReservationsAutofitGroup",
+                "value": "Storage Reserved Capacity_Cool_ZRS_US West"
+              },
+              {
+                "name": "ReservationsAutofitRatio",
+                "value": "1"
+              },
+              {
+                "name": "AccessTier",
+                "value": "Cool"
+              },
+              {
+                "name": "Size",
+                "value": "1 PB"
+              },
+              {
+                "name": "ProductShortName",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "ProductTitle",
+                "value": "Storage Reserved Capacity"
+              },
+              {
+                "name": "SkuName",
+                "value": "Cool - 1 PB"
+              },
+              {
+                "name": "MeterId",
+                "value": "39baf0f6-1320-4cdb-847b-fa4100b34e48"
+              },
+              {
+                "name": "MeterType",
+                "value": "Data Stored (GB/Month)"
+              },
+              {
+                "name": "SkuDisplayName",
+                "value": "Cool - 1 PB"
+              },
+              {
+                "name": "billingPlans",
+                "value": "[\u0022Upfront\u0022,\u0022Monthly\u0022]"
+              }
+            ],
+            "restrictions": [
+              {
+                "type": "Term",
+                "values": [
+                  "P5Y"
+                ],
+                "reasonCode": "NotAvailableForSubscription"
+              }
+            ]
+          }
+        ],
+        "totalItems": 33
+      }
     }
   ],
   "Variables": {
-    "RandomSeed": "1867649125",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
-    "SUBSCRIPTION_ID": "6d5e2387-bdf5-4ca1-83db-795fd2398b93"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "806217331",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
   }
 }

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.IotCentral.Models
     {
         internal static IotCentralAppTemplate DeserializeIotCentralAppTemplate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> manifestId = default;
             Optional<string> manifestVersion = default;
             Optional<string> name = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.IotCentral.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     order = property.Value.GetInt32();
@@ -69,7 +72,6 @@ namespace Azure.ResourceManager.IotCentral.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IotCentralAppTemplateLocation> array = new List<IotCentralAppTemplateLocation>();

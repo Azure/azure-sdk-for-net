@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CassandraClusterPublicStatus DeserializeCassandraClusterPublicStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> eTag = default;
             Optional<CassandraReaperStatus> reaperStatus = default;
             Optional<IReadOnlyList<CassandraConnectionError>> connectionErrors = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
@@ -36,7 +39,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reaperStatus = CassandraReaperStatus.DeserializeCassandraReaperStatus(property.Value);
@@ -46,7 +48,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CassandraConnectionError> array = new List<CassandraConnectionError>();
@@ -61,7 +62,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CassandraClusterPublicStatusDataCentersItem> array = new List<CassandraClusterPublicStatusDataCentersItem>();

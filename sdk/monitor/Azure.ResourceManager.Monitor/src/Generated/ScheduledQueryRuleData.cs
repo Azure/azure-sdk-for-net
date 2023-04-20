@@ -14,7 +14,10 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the ScheduledQueryRule data model. </summary>
+    /// <summary>
+    /// A class representing the ScheduledQueryRule data model.
+    /// The scheduled query rule resource.
+    /// </summary>
     public partial class ScheduledQueryRuleData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ScheduledQueryRuleData. </summary>

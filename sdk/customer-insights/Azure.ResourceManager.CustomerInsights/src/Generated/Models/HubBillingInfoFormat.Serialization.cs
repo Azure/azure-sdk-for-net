@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static HubBillingInfoFormat DeserializeHubBillingInfoFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> skuName = default;
             Optional<int> minUnits = default;
             Optional<int> maxUnits = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minUnits = property.Value.GetInt32();
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxUnits = property.Value.GetInt32();

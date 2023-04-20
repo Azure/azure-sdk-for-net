@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ServicePlacementInvalidDomainPolicy DeserializeServicePlacementInvalidDomainPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string domainName = default;
             ServicePlacementPolicyType type = default;
             foreach (var property in element.EnumerateObject())

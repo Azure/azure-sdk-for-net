@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     {
         internal static InstanceList DeserializeInstanceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<DeviceUpdateInstanceData>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DeviceUpdateInstanceData> array = new List<DeviceUpdateInstanceData>();

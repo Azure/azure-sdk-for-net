@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the ContainerServicePrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerServicePrivateEndpointConnection data model.
+    /// A private endpoint connection
+    /// </summary>
     public partial class ContainerServicePrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerServicePrivateEndpointConnectionData. </summary>

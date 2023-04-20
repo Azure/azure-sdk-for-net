@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ExpressRouteCircuitRoutesTableSummary DeserializeExpressRouteCircuitRoutesTableSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> neighbor = default;
             Optional<int> v = default;
             Optional<int> @as = default;
@@ -30,7 +34,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     v = property.Value.GetInt32();
@@ -40,7 +43,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @as = property.Value.GetInt32();

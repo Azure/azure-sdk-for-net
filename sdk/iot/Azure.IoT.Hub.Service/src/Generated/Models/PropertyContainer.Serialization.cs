@@ -22,6 +22,11 @@ namespace Azure.IoT.Hub.Service.Models
                 foreach (var item in Desired)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -33,6 +38,11 @@ namespace Azure.IoT.Hub.Service.Models
                 foreach (var item in Reported)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();

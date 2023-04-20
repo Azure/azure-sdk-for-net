@@ -1125,6 +1125,9 @@ namespace Azure.ResourceManager.AppService
         public string Hostname { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier RelayArmId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release, please use `RelayArmId` instead", false)]
         public System.Uri RelayArmUri { get { throw null; } set { } }
         public string RelayName { get { throw null; } set { } }
         public string SendKeyName { get { throw null; } set { } }
@@ -7456,6 +7459,17 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class WebAppKeyInfo
     {
         public WebAppKeyInfo() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("Please use WebAppKeyInfo.Properties.Name instead")]
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WebAppKeyInfoProperties Properties { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("Please use WebAppKeyInfo.Properties.Value instead")]
+        public string Value { get { throw null; } set { } }
+    }
+    public partial class WebAppKeyInfoProperties
+    {
+        public WebAppKeyInfoProperties() { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         internal static StreamingJobInputData DeserializeStreamingJobInputData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamingJobInputProperties> properties = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = StreamingJobInputProperties.DeserializeStreamingJobInputProperties(property.Value);
@@ -51,7 +54,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -66,7 +68,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());

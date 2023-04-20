@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static PolicyDescriptionListResult DeserializePolicyDescriptionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PolicyDescriptionContractData>> value = default;
             Optional<long> count = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PolicyDescriptionContractData> array = new List<PolicyDescriptionContractData>();
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt64();

@@ -26,35 +26,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             foreach (var activity in batchActivity)
             {
-                var monitorTags = EnumerateActivityTags(activity);
-                telemetryItem = new TelemetryItem(activity, ref monitorTags, resource, instrumentationKey);
-
-                // Check for Exceptions events
-                if (activity.Events.Any())
+                try
                 {
-                    AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems);
-                }
+                    var activityTagsProcessor = EnumerateActivityTags(activity);
+                    telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, resource, instrumentationKey);
 
-                switch (activity.GetTelemetryType())
+                    // Check for Exceptions events
+                    if (activity.Events.Any())
+                    {
+                        AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems);
+                    }
+
+                    switch (activity.GetTelemetryType())
+                    {
+                        case TelemetryType.Request:
+                            telemetryItem.Data = new MonitorBase
+                            {
+                                BaseType = "RequestData",
+                                BaseData = new RequestData(Version, activity, ref activityTagsProcessor),
+                            };
+                            break;
+                        case TelemetryType.Dependency:
+                            telemetryItem.Data = new MonitorBase
+                            {
+                                BaseType = "RemoteDependencyData",
+                                BaseData = new RemoteDependencyData(Version, activity, ref activityTagsProcessor),
+                            };
+                            break;
+                    }
+
+                    activityTagsProcessor.Return();
+                    telemetryItems.Add(telemetryItem);
+                }
+                catch (Exception ex)
                 {
-                    case TelemetryType.Request:
-                        telemetryItem.Data = new MonitorBase
-                        {
-                            BaseType = "RequestData",
-                            BaseData = new RequestData(Version, activity, ref monitorTags),
-                        };
-                        break;
-                    case TelemetryType.Dependency:
-                        telemetryItem.Data = new MonitorBase
-                        {
-                            BaseType = "RemoteDependencyData",
-                            BaseData = new RemoteDependencyData(Version, activity, ref monitorTags),
-                        };
-                        break;
+                    AzureMonitorExporterEventSource.Log.WriteError("FailedToConvertActivity", ex);
                 }
-
-                monitorTags.Return();
-                telemetryItems.Add(telemetryItem);
             }
 
             return telemetryItems;
@@ -71,7 +78,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
 
-                    destination.Add(tag.Key, tag.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength));
+                    destination.Add(tag.Key, tag.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
                 }
             }
         }
@@ -80,18 +87,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// Converts Activity Links to custom property with key as _MS.links.
         /// Value will be a JSON string formatted as [{"operation_Id":"{TraceId}","id":"{SpanId}"}].
         /// </summary>
-        internal static void AddActivityLinksToProperties(IEnumerable<ActivityLink> links, ref AzMonList UnMappedTags)
+        internal static void AddActivityLinksToProperties(Activity activity, ref AzMonList UnMappedTags)
         {
             string msLinks = "_MS.links";
             // max number of links that can fit in this json formatted string is 107. it is based on assumption that traceid and spanid will be of fixed length.
             // Keeping max at 100 for now.
             int maxLinks = MaxlinksAllowed;
 
-            if (links != null && links.Any())
+            if (activity.Links != null && activity.Links.Any())
             {
                 var linksJson = new StringBuilder();
                 linksJson.Append('[');
-                foreach (var link in links)
+                foreach (var link in activity.EnumerateLinks())
                 {
                     linksJson
                         .Append('{')
@@ -110,7 +117,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     maxLinks--;
                     if (maxLinks == 0)
                     {
-                        if (MaxlinksAllowed < links.Count())
+                        if (MaxlinksAllowed < activity.Links.Count())
                         {
                             AzureMonitorExporterEventSource.Log.WriteInformational("ActivityLinksIgnored", $"Max count of {MaxlinksAllowed} has reached.");
                         }
@@ -126,20 +133,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 linksJson.Append(']');
 
-                AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object>(msLinks, linksJson.ToString()));
+                AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(msLinks, linksJson.ToString()));
             }
         }
 
-        internal static TagEnumerationState EnumerateActivityTags(Activity activity)
+        internal static ActivityTagsProcessor EnumerateActivityTags(Activity activity)
         {
-            var monitorTags = new TagEnumerationState
-            {
-                MappedTags = AzMonList.Initialize(),
-                UnMappedTags = AzMonList.Initialize()
-            };
-
-            monitorTags.ForEach(activity.TagObjects);
-            return monitorTags;
+            var activityTagsProcessor = new ActivityTagsProcessor();
+            activityTagsProcessor.CategorizeTags(activity);
+            return activityTagsProcessor;
         }
 
         internal static string? GetLocationIp(ref AzMonList MappedTags)
@@ -179,13 +181,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
         {
-            foreach (var evnt in activity.Events)
+            foreach (var evnt in activity.EnumerateEvents())
             {
                 try
                 {
                     if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
                     {
-                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt.Tags);
+                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt);
                         if (exceptionData != null)
                         {
                             var exceptionTelemetryItem = new TelemetryItem("Exception", telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
@@ -220,7 +222,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             var messageData = new MessageData(Version, activityEvent.Name);
 
-            foreach (var tag in activityEvent.Tags)
+            foreach (var tag in activityEvent.EnumerateTagObjects())
             {
                 if (tag.Value is Array arrayValue)
                 {
@@ -239,14 +241,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             };
         }
 
-        private static MonitorBase? GetExceptionDataDetailsOnTelemetryItem(IEnumerable<KeyValuePair<string, object?>> activityEventTags)
+        private static MonitorBase? GetExceptionDataDetailsOnTelemetryItem(ActivityEvent activityEvent)
         {
             string? exceptionType = null;
             string? exceptionStackTrace = null;
             string? exceptionMessage = null;
 
-            // TODO: update to use perf improvements in .NET7.0
-            foreach (var tag in activityEventTags)
+            foreach (var tag in activityEvent.EnumerateTagObjects())
             {
                 // TODO: see if these can be cached
                 if (tag.Key == SemanticConventions.AttributeExceptionType)

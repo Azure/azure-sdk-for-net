@@ -54,7 +54,6 @@ namespace Azure.Identity
     {
         private const string UnavailableErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/environmentcredential/troubleshoot";
         private readonly CredentialPipeline _pipeline;
-        private readonly TokenCredentialOptions _options;
 
         internal TokenCredential Credential { get; }
 
@@ -87,54 +86,36 @@ namespace Azure.Identity
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredentialOptions options = null)
         {
             _pipeline = pipeline;
-            _options = options ?? new TokenCredentialOptions();
+            options = options ?? new EnvironmentCredentialOptions();
 
-            string tenantId = EnvironmentVariables.TenantId;
-            string clientId = EnvironmentVariables.ClientId;
-            string clientSecret = EnvironmentVariables.ClientSecret;
-            string clientCertificatePath = EnvironmentVariables.ClientCertificatePath;
-            string clientCertificatePassword = EnvironmentVariables.ClientCertificatePassword;
-            string clientSendCertificateChain = EnvironmentVariables.ClientSendCertificateChain;
-            string username = EnvironmentVariables.Username;
-            string password = EnvironmentVariables.Password;
+            EnvironmentCredentialOptions envCredOptions = (options as EnvironmentCredentialOptions) ?? options.Clone<EnvironmentCredentialOptions>();
 
-            // Since the AdditionallyAllowedTenantsCore is internal it cannot be set by the application.
-            // Currently this is only set by the DefaultAzureCredential where it will default to the value
-            // of EnvironmentVariables.AdditionallyAllowedTenants, but can also be altered by the application.
-            // In either case we don't want to alter it.
-            if (_options.AdditionallyAllowedTenantsCore.Count == 0)
-            {
-                _options.AdditionallyAllowedTenantsCore = EnvironmentVariables.AdditionallyAllowedTenants;
-            }
+            string tenantId = envCredOptions.TenantId;
+            string clientId = envCredOptions.ClientId;
+            string clientSecret = envCredOptions.ClientSecret;
+            string clientCertificatePath = envCredOptions.ClientCertificatePath;
+            string clientCertificatePassword = envCredOptions.ClientCertificatePassword;
+            bool sendCertificateChain = envCredOptions.SendCertificateChain;
+            string username = envCredOptions.Username;
+            string password = envCredOptions.Password;
 
             if (!string.IsNullOrEmpty(tenantId) && !string.IsNullOrEmpty(clientId))
             {
                 if (!string.IsNullOrEmpty(clientSecret))
                 {
-                    Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, _options, _pipeline, null);
+                    Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, envCredOptions, _pipeline, null);
                 }
                 else if (!string.IsNullOrEmpty(clientCertificatePath))
                 {
-                    bool sendCertificateChain = !string.IsNullOrEmpty(clientSendCertificateChain) &&
-                        (clientSendCertificateChain == "1" || clientSendCertificateChain == "true");
+                    ClientCertificateCredentialOptions clientCertificateCredentialOptions = envCredOptions.Clone<ClientCertificateCredentialOptions>();
 
-                    ClientCertificateCredentialOptions clientCertificateCredentialOptions = new ClientCertificateCredentialOptions
-                    {
-                        AuthorityHost = _options.AuthorityHost,
-                        IsLoggingPIIEnabled = _options.IsLoggingPIIEnabled,
-                        Transport = _options.Transport,
-                        AdditionallyAllowedTenantsCore = new List<string>(_options.AdditionallyAllowedTenantsCore),
-                        SendCertificateChain = sendCertificateChain
-                    };
-                    if (_options is EnvironmentCredentialOptions environmentCredentialOptions)
-                    {
-                        clientCertificateCredentialOptions.DisableInstanceDiscovery = environmentCredentialOptions.DisableInstanceDiscovery;
-                    }
+                    clientCertificateCredentialOptions.SendCertificateChain = sendCertificateChain;
+
                     Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, clientCertificatePassword, clientCertificateCredentialOptions, _pipeline, null);
                 }
                 else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                 {
-                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _options, _pipeline, null);
+                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, envCredOptions, _pipeline, null);
                 }
             }
         }

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static UploadOciDriverTaskInput DeserializeUploadOciDriverTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FileShare> driverShare = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     driverShare = FileShare.DeserializeFileShare(property.Value);

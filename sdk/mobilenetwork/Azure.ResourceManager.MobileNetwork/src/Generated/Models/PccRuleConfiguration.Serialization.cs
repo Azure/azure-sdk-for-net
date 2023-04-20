@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PccRuleConfiguration DeserializePccRuleConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleName = default;
             int rulePrecedence = default;
             Optional<PccRuleQosPolicy> ruleQosPolicy = default;
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ruleQosPolicy = PccRuleQosPolicy.DeserializePccRuleQosPolicy(property.Value);
@@ -73,7 +76,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trafficControl = new TrafficControlPermission(property.Value.GetString());

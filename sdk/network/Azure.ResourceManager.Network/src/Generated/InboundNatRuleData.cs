@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the InboundNatRule data model. </summary>
+    /// <summary>
+    /// A class representing the InboundNatRule data model.
+    /// Inbound NAT rule of the load balancer.
+    /// </summary>
     public partial class InboundNatRuleData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of InboundNatRuleData. </summary>

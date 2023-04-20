@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static LinuxConfiguration DeserializeLinuxConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> disablePasswordAuthentication = default;
             Optional<SshConfiguration> ssh = default;
             Optional<SshKeyPair> sshKeyPair = default;
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disablePasswordAuthentication = property.Value.GetBoolean();
@@ -57,7 +60,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ssh = SshConfiguration.DeserializeSshConfiguration(property.Value);
@@ -67,7 +69,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sshKeyPair = SshKeyPair.DeserializeSshKeyPair(property.Value);

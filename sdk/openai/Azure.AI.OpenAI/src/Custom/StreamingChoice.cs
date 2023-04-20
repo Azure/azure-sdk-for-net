@@ -7,7 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace Azure.AI.OpenAI.Custom
+namespace Azure.AI.OpenAI
 {
     public class StreamingChoice
     {
@@ -34,6 +34,17 @@ namespace Azure.AI.OpenAI.Custom
         /// provides "length." If no value is present, this StreamingChoice is still in progress.
         /// </remarks>
         public string FinishReason => GetLocked(() => _baseChoices.Last().FinishReason);
+
+        internal bool StreamingDoneSignalReceived
+        {
+            get => _streamingDoneSignalReceived;
+            set
+            {
+                _streamingDoneSignalReceived = value;
+                _updateAvailableEvent.Set();
+            }
+        }
+        private bool _streamingDoneSignalReceived;
 
         /// <summary>
         /// Gets the log probabilities associated with tokens in this Choice.
@@ -76,10 +87,10 @@ namespace Azure.AI.OpenAI.Custom
                     {
                         Choice mostRecentChoice = _baseChoices.Last();
                         string mostRecentFinishReason = mostRecentChoice.FinishReason;
-                        bool choiceIsComplete = !string.IsNullOrEmpty(mostRecentFinishReason);
+                        bool choiceIsComplete = !string.IsNullOrEmpty(mostRecentFinishReason) || StreamingDoneSignalReceived;
 
                         doneWaiting = choiceIsComplete || i < _baseChoices.Count;
-                        isFinalIndex = choiceIsComplete && i == _baseChoices.Count - 1;
+                        isFinalIndex = choiceIsComplete && i >= _baseChoices.Count - 1;
                     }
 
                     if (!doneWaiting)

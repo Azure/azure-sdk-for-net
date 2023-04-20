@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> A class representing the ContainerApp data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerApp data model.
+    /// Container App.
+    /// </summary>
     public partial class ContainerAppData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppData. </summary>

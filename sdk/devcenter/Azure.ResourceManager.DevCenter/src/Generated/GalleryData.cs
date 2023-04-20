@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the Gallery data model. </summary>
+    /// <summary>
+    /// A class representing the Gallery data model.
+    /// Represents a gallery.
+    /// </summary>
     public partial class GalleryData : ResourceData
     {
         /// <summary> Initializes a new instance of GalleryData. </summary>

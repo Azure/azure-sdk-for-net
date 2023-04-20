@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Relay
 
         internal static RelayHybridConnectionData DeserializeRelayHybridConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.Relay
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -76,7 +79,6 @@ namespace Azure.ResourceManager.Relay
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -95,7 +97,6 @@ namespace Azure.ResourceManager.Relay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdAt = property0.Value.GetDateTimeOffset("O");
@@ -105,7 +106,6 @@ namespace Azure.ResourceManager.Relay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updatedAt = property0.Value.GetDateTimeOffset("O");
@@ -115,7 +115,6 @@ namespace Azure.ResourceManager.Relay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             listenerCount = property0.Value.GetInt32();
@@ -125,7 +124,6 @@ namespace Azure.ResourceManager.Relay
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requiresClientAuthorization = property0.Value.GetBoolean();

@@ -16,6 +16,8 @@ modelerfour:
 ``` yaml
 protocol-method-list:
   - Blob_GetProperties
+  - Blob_AcquireLease
+  - Container_AcquireLease
 ```
 
 ### Don't include container name or blob in path - we have direct URIs.

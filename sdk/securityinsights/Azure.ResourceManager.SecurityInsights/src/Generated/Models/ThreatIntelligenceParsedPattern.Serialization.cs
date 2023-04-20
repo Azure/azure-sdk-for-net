@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static ThreatIntelligenceParsedPattern DeserializeThreatIntelligenceParsedPattern(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> patternTypeKey = default;
             Optional<IList<ThreatIntelligenceParsedPatternTypeValue>> patternTypeValues = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ThreatIntelligenceParsedPatternTypeValue> array = new List<ThreatIntelligenceParsedPatternTypeValue>();

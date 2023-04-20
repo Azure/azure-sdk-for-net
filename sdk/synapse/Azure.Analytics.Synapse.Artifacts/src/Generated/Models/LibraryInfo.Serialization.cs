@@ -48,6 +48,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LibraryInfo DeserializeLibraryInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> path = default;
             Optional<string> containerName = default;
@@ -76,7 +80,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uploadedTimestamp = property.Value.GetDateTimeOffset("O");

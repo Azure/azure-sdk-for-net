@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using Azure;
 using Azure.Core;

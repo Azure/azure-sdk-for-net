@@ -8,24 +8,15 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     /// <summary> An object representing the email address and its display name. </summary>
-    public partial class EmailAddress
+    public readonly partial struct EmailAddress
     {
-        /// <summary> Initializes a new instance of EmailAddress. </summary>
-        /// <param name="email"> Email address. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
-        public EmailAddress(string email)
-        {
-            Argument.AssertNotNull(email, nameof(email));
-
-            Email = email;
-        }
 
         /// <summary> Email address. </summary>
-        public string Email { get; }
+        public string Address { get; }
         /// <summary> Email display name. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName { get; }
     }
 }

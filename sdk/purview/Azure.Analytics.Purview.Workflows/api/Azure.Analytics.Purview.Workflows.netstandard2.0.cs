@@ -44,3 +44,11 @@ namespace Azure.Analytics.Purview.Workflows
         }
     }
 }
+namespace Microsoft.Extensions.Azure
+{
+    public static partial class PurviewWorkflowServiceClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Workflows.PurviewWorkflowServiceClient, Azure.Analytics.Purview.Workflows.PurviewWorkflowServiceClientOptions> AddPurviewWorkflowServiceClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.Workflows.PurviewWorkflowServiceClient, Azure.Analytics.Purview.Workflows.PurviewWorkflowServiceClientOptions> AddPurviewWorkflowServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+    }
+}

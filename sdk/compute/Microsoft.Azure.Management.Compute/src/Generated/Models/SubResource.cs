@@ -10,12 +10,10 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class SubResource : IResource
+    public partial class SubResource
     {
         /// <summary>
         /// Initializes a new instance of the SubResource class.

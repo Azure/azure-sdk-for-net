@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
     {
         internal static ForwardingRuleListResult DeserializeForwardingRuleListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DnsForwardingRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DnsForwardingRuleData> array = new List<DnsForwardingRuleData>();

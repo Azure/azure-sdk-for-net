@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCustomDomain DeserializeContainerAppCustomDomain(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<ContainerAppCustomDomainBindingType> bindingType = default;
             ResourceIdentifier certificateId = default;
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bindingType = new ContainerAppCustomDomainBindingType(property.Value.GetString());

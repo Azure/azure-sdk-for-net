@@ -33,7 +33,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/test-container-58648446-4a8d-eb1a-50bc-c01b1046dae3?sv=2021-12-02&ss=b&srt=sco&st=2020-11-23T21%3A38%3A17Z&se=2020-11-23T23%3A38%3A17Z&sp=rwdxlacuptf&sig=Sanitized&restype=container&comp=rename",
+      "RequestUri": "https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/test-container-58648446-4a8d-eb1a-50bc-c01b1046dae3?sv=2022-11-02&ss=b&srt=sco&st=2020-11-23T21%3A38%3A17Z&se=2020-11-23T23%3A38%3A17Z&sp=rwdxlacuptf&sig=Sanitized&restype=container&comp=rename",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "traceparent": "00-dee759607afd0e4aa09c0d994b5e615f-46ac9799ad245546-00",
@@ -62,7 +62,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/test-container-58648446-4a8d-eb1a-50bc-c01b1046dae3?sv=2021-12-02&ss=b&srt=sco&st=2020-11-23T21%3A38%3A17Z&se=2020-11-23T23%3A38%3A17Z&sp=rwdxlacuptf&sig=Sanitized&restype=container",
+      "RequestUri": "https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/test-container-58648446-4a8d-eb1a-50bc-c01b1046dae3?sv=2022-11-02&ss=b&srt=sco&st=2020-11-23T21%3A38%3A17Z&se=2020-11-23T23%3A38%3A17Z&sp=rwdxlacuptf&sig=Sanitized&restype=container",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "User-Agent": [
@@ -97,7 +97,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/test-container-58648446-4a8d-eb1a-50bc-c01b1046dae3?sv=2021-12-02&ss=b&srt=sco&st=2020-11-23T21%3A38%3A17Z&se=2020-11-23T23%3A38%3A17Z&sp=rwdxlacuptf&sig=Sanitized&restype=container",
+      "RequestUri": "https://1emxscnapsn4prde17h.blob.preprod.core.windows.net/test-container-58648446-4a8d-eb1a-50bc-c01b1046dae3?sv=2022-11-02&ss=b&srt=sco&st=2020-11-23T21%3A38%3A17Z&se=2020-11-23T23%3A38%3A17Z&sp=rwdxlacuptf&sig=Sanitized&restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "User-Agent": [

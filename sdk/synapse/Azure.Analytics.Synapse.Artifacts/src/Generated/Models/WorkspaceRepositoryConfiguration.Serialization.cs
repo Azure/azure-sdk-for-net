@@ -78,6 +78,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static WorkspaceRepositoryConfiguration DeserializeWorkspaceRepositoryConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<string> hostName = default;
             Optional<string> accountName = default;
@@ -135,7 +139,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();
@@ -150,7 +153,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientSecret = GitHubClientSecret.DeserializeGitHubClientSecret(property.Value);
