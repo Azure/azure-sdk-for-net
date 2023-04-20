@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
+        protected ResourceIdentifier DefaultScope => DefaultSubscription.Id;
 
         protected CostManagementManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
