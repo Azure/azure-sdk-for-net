@@ -15,8 +15,6 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
             writer.WritePropertyName("tones"u8);
             writer.WriteStartArray();
             foreach (var item in Tones)
@@ -24,6 +22,8 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("targetParticipant"u8);
+            writer.WriteObjectValue(TargetParticipant);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

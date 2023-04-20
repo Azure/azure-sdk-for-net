@@ -460,7 +460,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                SendDtmfRequestInternal request = request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant), tones);
+                SendDtmfRequestInternal request = request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant));
 
                 request.OperationContext = operationContext;
 
@@ -493,7 +493,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                SendDtmfRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant), tones);
+                SendDtmfRequestInternal request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant));
 
                 request.OperationContext = operationContext;
 

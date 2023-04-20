@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
-        /// <param name="toneInfo"> The information about Tone. </param>
+        /// <param name="toneInfo"> Information about Tone. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId or skype chain ID. </param>
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
             ResultInformation = resultInformation;
         }
 
-        /// <summary> The information about Tone. </summary>
+        /// <summary> Information about Tone. </summary>
         public ToneInfo ToneInfo { get; }
     }
 }

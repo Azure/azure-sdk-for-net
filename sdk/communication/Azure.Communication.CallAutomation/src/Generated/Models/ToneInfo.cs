@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The information about Tone. </summary>
+    /// <summary> The information about the tone. </summary>
     public partial class ToneInfo
     {
         /// <summary> Initializes a new instance of ToneInfo. </summary>

@@ -17,22 +17,22 @@ namespace Azure.Communication.CallAutomation
     internal partial class SendDtmfRequestInternal
     {
         /// <summary> Initializes a new instance of SendDtmfRequestInternal. </summary>
-        /// <param name="targetParticipant"> Target participant of Send DTMF tone. </param>
-        /// <param name="tones"> The captured tones. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> or <paramref name="tones"/> is null. </exception>
-        public SendDtmfRequestInternal(CommunicationIdentifierModel targetParticipant, IEnumerable<DtmfTone> tones)
+        /// <param name="tones"> List of tones to be sent to target participant. </param>
+        /// <param name="targetParticipant"> Target participant of send DTMF. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tones"/> or <paramref name="targetParticipant"/> is null. </exception>
+        public SendDtmfRequestInternal(IEnumerable<DtmfTone> tones, CommunicationIdentifierModel targetParticipant)
         {
-            Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
             Argument.AssertNotNull(tones, nameof(tones));
+            Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
-            TargetParticipant = targetParticipant;
             Tones = tones.ToList();
+            TargetParticipant = targetParticipant;
         }
 
-        /// <summary> Target participant of Send DTMF tone. </summary>
-        public CommunicationIdentifierModel TargetParticipant { get; }
-        /// <summary> The captured tones. </summary>
+        /// <summary> List of tones to be sent to target participant. </summary>
         public IList<DtmfTone> Tones { get; }
+        /// <summary> Target participant of send DTMF. </summary>
+        public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
     }
