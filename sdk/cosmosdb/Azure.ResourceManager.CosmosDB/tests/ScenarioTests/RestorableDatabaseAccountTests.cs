@@ -32,6 +32,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [SetUp]
         public async Task TestSetup()
         {
+            _restorableDatabaseAccount = null;
+            _restoredDatabaseAccount = null;
             _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
@@ -47,13 +49,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 await _restoredDatabaseAccount.DeleteAsync(WaitUntil.Completed);
             }
+
+            _restorableDatabaseAccount = null;
+            _restoredDatabaseAccount = null;
         }
 
         [Test]
         [RecordedTest]
         public async Task RestorableDatabaseAccountList()
         {
-            _restorableDatabaseAccount = await CreateRestorableDatabaseAccount(Recording.GenerateAssetName("r-database-account-"), CosmosDBAccountKind.GlobalDocumentDB, AzureLocation.WestCentralUS);
+            _restorableDatabaseAccount = await CreateRestorableDatabaseAccount(Recording.GenerateAssetName("r-database-account-"), CosmosDBAccountKind.GlobalDocumentDB, AzureLocation.WestUS);
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
             Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
         }
@@ -63,8 +68,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [Ignore("Not recorded")]
         public async Task RestorableDatabaseAccountListByLocation()
         {
-            _restorableDatabaseAccount = await CreateRestorableDatabaseAccount(Recording.GenerateAssetName("r-database-account-"), CosmosDBAccountKind.GlobalDocumentDB, AzureLocation.WestCentralUS);
-            CosmosDBLocationResource location = await (await ArmClient.GetDefaultSubscriptionAsync()).GetCosmosDBLocations().GetAsync(AzureLocation.WestCentralUS);
+            _restorableDatabaseAccount = await CreateRestorableDatabaseAccount(Recording.GenerateAssetName("r-database-account-"), CosmosDBAccountKind.GlobalDocumentDB, AzureLocation.WestUS);
+            CosmosDBLocationResource location = await (await ArmClient.GetDefaultSubscriptionAsync()).GetCosmosDBLocations().GetAsync(AzureLocation.WestUS);
             var restorableAccounts = await location.GetRestorableCosmosDBAccounts().GetAllAsync().ToEnumerableAsync();
             Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
         }
@@ -101,7 +106,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        public async Task CrossRegionRestoreTest()
+        public async Task TestCrossRegionRestore()
         {
             _restorableDatabaseAccount = await GetDatabaseAccountForSpecificAPI(AccountType.PitrSql, AzureLocation.WestCentralUS);
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
